@@ -2,6 +2,7 @@
 namespace ACP3\Core\View\Renderer\Smarty;
 
 use ACP3\Application;
+use ACP3\Core\Modules;
 
 /**
  * Class LoadModule
@@ -10,9 +11,18 @@ use ACP3\Application;
 class LoadModule extends AbstractPlugin
 {
     /**
+     * @var Modules
+     */
+    protected $modules;
+    /**
      * @var string
      */
     protected $pluginName = 'load_module';
+
+    public function __construct(Modules $modules)
+    {
+        $this->modules = $modules;
+    }
 
     /**
      * @param $params
@@ -21,23 +31,20 @@ class LoadModule extends AbstractPlugin
      */
     public function process($params)
     {
-        $pathArray = array_map(function ($value) {
-            return str_replace(' ', '', ucwords(str_replace('_', ' ', $value)));
-        }, explode('/', $params['module']));
+        $pathArray = explode('/', strtolower($params['module']));
 
         if (empty($pathArray[2]) === true) {
-            $pathArray[2] = 'Index';
+            $pathArray[2] = 'index';
         }
         if (empty($pathArray[3]) === true) {
-            $pathArray[3] = 'Index';
+            $pathArray[3] = 'index';
         }
 
-        if ($pathArray[0] !== 'Frontend') {
-            $className = "\\ACP3\\Modules\\" . $pathArray[1] . "\\Controller\\" . $pathArray[0] . "\\" . $pathArray[2];
-        } else {
-            $className = "\\ACP3\\Modules\\" . $pathArray[1] . "\\Controller\\" . $pathArray[2];
-        }
+        $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
 
-        Application::dispatch($className, $pathArray[3]);
+        if ($this->modules->hasPermission($path)) {
+            $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2]);
+            Application::dispatch($serviceId, $pathArray[3]);
+        }
     }
 }

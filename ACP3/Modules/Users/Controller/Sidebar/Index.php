@@ -6,12 +6,31 @@ use ACP3\Core;
 use ACP3\Modules\Users;
 
 /**
- * Sidebar controller of the users module
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Users\Controller\Sidebar
  */
 class Index extends Core\Modules\Controller\Sidebar
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        \Doctrine\DBAL\Connection $db)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+
+        $this->db = $db;
+    }
+
     /**
      * Displays the login mask, if the user is not already logged in
      */
@@ -27,11 +46,13 @@ class Index extends Core\Modules\Controller\Sidebar
             $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
 
             $this->setLayout('Users/Sidebar/index.login.tpl');
+        } else {
+            $this->setNoOutput(true);
         }
     }
 
     /**
-     * Displays the user menu, if the user in logged in
+     * Displays the user menu, if the user is logged in
      */
     public function actionUserMenu()
     {
@@ -85,6 +106,8 @@ class Index extends Core\Modules\Controller\Sidebar
             $this->view->assign('user_sidebar', $userSidebar);
 
             $this->setLayout('Users/Sidebar/index.user_menu.tpl');
+        } else {
+            $this->setNoOutput(true);
         }
     }
 

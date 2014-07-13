@@ -2,6 +2,7 @@
 
 namespace ACP3\Installer\Modules\Update;
 
+use ACP3\Core\Cache2;
 use ACP3\Core\Registry;
 use ACP3\Core\Cache;
 use ACP3\Installer\Core;
@@ -49,9 +50,9 @@ class Update extends Core\Modules\Controller
             $this->view->assign('results', $results);
 
             // Cache leeren
-            Cache::purge('minify');
-            Cache::purge('sql');
-            Cache::purge('tpl_compiled');
+            Cache2::purge('minify');
+            Cache2::purge('sql');
+            Cache2::purge('tpl_compiled');
         }
     }
 
@@ -441,9 +442,9 @@ class Update extends Core\Modules\Controller
             $this->view->assign('results', $results);
 
             // Cache leeren
-            Cache::purge('sql');
-            Cache::purge('tpl_compiled');
-            Cache::purge('minify');
+            Cache2::purge('sql');
+            Cache2::purge('tpl_compiled');
+            Cache2::purge('minify');
         }
 
         $this->view->assign('legacy', true);

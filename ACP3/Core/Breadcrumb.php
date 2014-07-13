@@ -252,7 +252,7 @@ class Breadcrumb
             if ($module !== 'acp') {
                 $this->prepend($this->lang->t($module, $module), 'acp/' . $module);
             }
-            $this->prepend($this->lang->t('system', 'acp'), 'acp');
+            $this->prepend($this->lang->t('system', 'acp'), 'acp/acp');
         }
         $this->breadcrumbCache = $this->stepsFromModules;
     }

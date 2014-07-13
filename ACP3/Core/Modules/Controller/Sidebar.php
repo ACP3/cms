@@ -5,9 +5,8 @@ namespace ACP3\Core\Modules\Controller;
 use ACP3\Core;
 
 /**
- * Description of AdminController
- *
- * @author goratsch
+ * Class Sidebar
+ * @package ACP3\Core\Modules\Controller
  */
 class Sidebar extends Core\Modules\Controller
 {
@@ -15,6 +14,11 @@ class Sidebar extends Core\Modules\Controller
      * @var string
      */
     protected $layout = '';
+
+    public function preDispatch()
+    {
+        $this->setNoOutput(false);
+    }
 
     public function display()
     {

@@ -11,42 +11,22 @@ use ACP3\Core;
  */
 abstract class Controller
 {
-
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-
     /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
-
     /**
      * @var \ACP3\Core\Breadcrumb
      */
     protected $breadcrumb;
-
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerBuilder
      */
     protected $container;
-
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
     /**
      * @var \ACP3\Core\Lang
      */
     protected $lang;
-
     /**
      * @var \ACP3\Core\Modules
      */
@@ -58,11 +38,6 @@ abstract class Controller
     protected $seo;
 
     /**
-     * @var \ACP3\Core\Session
-     */
-    protected $session;
-
-    /**
      * @var \ACP3\Core\URI
      */
     protected $uri;
@@ -71,6 +46,10 @@ abstract class Controller
      * @var \ACP3\Core\View
      */
     protected $view;
+    /**
+     * @var Core\Helpers\RedirectMessages
+     */
+    protected $redirectMessages;
 
     /**
      * Nichts ausgeben
@@ -106,7 +85,6 @@ abstract class Controller
     protected $content = '';
 
     /**
-     *
      * @var string
      */
     protected $contentAppend = '';
@@ -114,27 +92,19 @@ abstract class Controller
     public function __construct(
         Core\Auth $auth,
         Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Lang $lang,
-        Core\Session $session,
         Core\URI $uri,
         Core\View $view,
         Core\SEO $seo,
-        Core\Modules $modules,
-        Core\ACL $acl)
+        Core\Modules $modules)
     {
         $this->auth = $auth;
         $this->breadcrumb = $breadcrumb;
-        $this->date = $date;
-        $this->db = $db;
         $this->lang = $lang;
-        $this->session = $session;
         $this->uri = $uri;
         $this->view = $view;
         $this->seo = $seo;
         $this->modules = $modules;
-        $this->acl = $acl;
     }
 
     /**
@@ -142,6 +112,11 @@ abstract class Controller
      */
     public function preDispatch()
     {
+        // Aktuelle Datensatzposition bestimmen
+        if (!defined('POS')) {
+            define('POS', (int)$this->uri->page >= 1 ? (int)($this->uri->page - 1) * $this->auth->entries : 0);
+        }
+
         $path = $this->uri->area . '/' . $this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file;
 
         if ($this->modules->hasPermission($path) === false) {
@@ -357,6 +332,18 @@ abstract class Controller
     public function get($serviceId)
     {
         return $this->container->get($serviceId);
+    }
+
+    /**
+     * @return Core\Helpers\RedirectMessages
+     */
+    public function redirectMessages()
+    {
+        if (!$this->redirectMessages) {
+            $this->redirectMessages = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        }
+
+        return $this->redirectMessages;
     }
 
     /**

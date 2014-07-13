@@ -6,12 +6,37 @@ use ACP3\Core;
 use ACP3\Modules\Contact;
 
 /**
- * Description of ContactFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Contact\Controller
  */
 class Index extends Core\Modules\Controller
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var \ACP3\Core\Session
+     */
+    protected $session;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        \Doctrine\DBAL\Connection $db,
+        Core\Session $session)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+
+        $this->db = $db;
+        $this->session = $session;
+    }
+
     public function actionIndex()
     {
         if (empty($_POST) === false) {
@@ -40,13 +65,14 @@ class Index extends Core\Modules\Controller
                 $this->setContent($alerts->confirmBox($bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'), $this->uri->route('contact')));
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'contact');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'contact');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
+
+        $this->redirectMessages()->getMessage();
 
         $defaults = array(
             'name' => '',

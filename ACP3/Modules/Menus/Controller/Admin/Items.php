@@ -7,23 +7,37 @@ use ACP3\Modules\Articles\Helpers;
 use ACP3\Modules\Menus;
 
 /**
- * Description of MenusAdmin
- *
- * @author Tino Goratsch
+ * Class Items
+ * @package ACP3\Modules\Menus\Controller\Admin
  */
 class Items extends Core\Modules\Controller\Admin
 {
     /**
-     *
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Menus\Model
      */
-    protected $model;
+    protected $menusModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        Menus\Model $menusModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Menus\Model($this->db);
+        $this->db = $db;
+        $this->menusModel = $menusModel;
     }
 
     public function actionCreate()
@@ -69,16 +83,14 @@ class Items extends Core\Modules\Controller\Admin
                     $this->seo->setCache();
                 }
 
-                $cache = new Menus\Cache($this->lang, $this->model);
+                $cache = new Menus\Cache($this->lang, $this->menusModel);
                 $cache->setMenuItemsCache();
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/menus');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -145,18 +157,17 @@ class Items extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
                 // URI-Alias löschen
-                $itemUri = $this->model->getMenuItemUriById($item);
+                $itemUri = $this->menusModel->getMenuItemUriById($item);
                 $bool = $nestedSet->deleteNode($item);
                 $this->uri->deleteUriAlias($itemUri);
             }
 
-            $cache = new Menus\Cache($this->lang, $this->model);
+            $cache = new Menus\Cache($this->lang, $this->menusModel);
             $cache->setMenuItemsCache();
 
             $this->seo->setCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -164,7 +175,7 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $menuItem = $this->model->getOneMenuItemById($this->uri->id);
+        $menuItem = $this->menusModel->getOneMenuItemById($this->uri->id);
 
         if (empty($menuItem) === false) {
             $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->uri->getUriAlias($menuItem['uri'], true) : '';
@@ -209,16 +220,14 @@ class Items extends Core\Modules\Controller\Admin
                         $this->seo->setCache();
                     }
 
-                    $cache = new Menus\Cache($this->lang, $this->model);
+                    $cache = new Menus\Cache($this->lang, $this->menusModel);
                     $cache->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/menus');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -278,11 +287,11 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->menuItemExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->menusModel->menuItemExists($this->uri->id) === true) {
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             $nestedSet->order($this->uri->id, $this->uri->action);
 
-            $cache = new Menus\Cache($this->lang, $this->model);
+            $cache = new Menus\Cache($this->lang, $this->menusModel);
             $cache->setMenuItemsCache();
 
             $this->uri->redirect('acp/menus');

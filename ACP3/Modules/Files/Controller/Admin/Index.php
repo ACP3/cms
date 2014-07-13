@@ -6,25 +6,44 @@ use ACP3\Core;
 use ACP3\Modules\Categories;
 use ACP3\Modules\Files;
 
-
 /**
- * Description of FilesAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Files\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
-
+    /**
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
     /**
      * @var Files\Model
      */
-    protected $model;
+    protected $filesModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Files\Model $filesModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Files\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->filesModel = $filesModel;
     }
 
     public function actionCreate()
@@ -71,7 +90,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
 
 
-                $lastId = $this->model->insert($insertValues);
+                $lastId = $this->filesModel->insert($insertValues);
 
                 $this->uri->insertUriAlias(
                     sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
@@ -83,11 +102,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/files');
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/files');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/files');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -143,8 +160,8 @@ class Index extends Core\Modules\Controller\Admin
             $upload = new Core\Helpers\Upload('files');
             foreach ($items as $item) {
                 if (!empty($item)) {
-                    $upload->removeUploadedFile($this->model->getFileById($item)); // Datei ebenfalls löschen
-                    $bool = $this->model->delete($item);
+                    $upload->removeUploadedFile($this->filesModel->getFileById($item)); // Datei ebenfalls löschen
+                    $bool = $this->filesModel->delete($item);
                     if ($commentsInstalled === true) {
                         $this->get('comments.helpers')->deleteCommentsByModuleAndResult('files', $item);
                     }
@@ -156,8 +173,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->seo->setCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -165,7 +181,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $dl = $this->model->getOneById((int)$this->uri->id);
+        $dl = $this->filesModel->getOneById((int)$this->uri->id);
 
         if (empty($dl) === false) {
             $config = new Core\Config($this->db, 'files');
@@ -220,7 +236,7 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues = array_merge($updateValues, $newFileSql);
                     }
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->filesModel->update($updateValues, $this->uri->id);
 
                     $this->uri->insertUriAlias(
                         sprintf(Files\Helpers::URL_KEY_PATTERN, $this->uri->id),
@@ -231,16 +247,14 @@ class Index extends Core\Modules\Controller\Admin
                     );
                     $this->seo->setCache();
 
-                    $cache = new Files\Cache($this->model);
+                    $cache = new Files\Cache($this->filesModel);
                     $cache->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/files');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/files');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/files');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -280,10 +294,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $files = $this->model->getAllInAcp();
+        $files = $this->filesModel->getAllInAcp();
         $c_files = count($files);
 
         if ($c_files > 0) {
@@ -322,11 +335,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/files');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/files');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/files');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

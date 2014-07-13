@@ -154,7 +154,7 @@ class Application
 
         define('DB_PRE', CONFIG_DB_PRE);
 
-        if (file_exists($file)) {
+        if (file_exists($file) && (!defined('DEBUG') || DEBUG === false)) {
             require_once $file;
             self::$di = new \ACP3ServiceContainer();
 
@@ -218,22 +218,12 @@ class Application
     {
         self::_checkForMaintenanceMode();
 
-        $auth = self::$di->get('core.auth');
         $uri = self::$di->get('core.uri');
 
-        // Aktuelle Datensatzposition bestimmen
-        define('POS', self::$di->get('core.validate')->isNumber($uri->page) && $uri->page >= 1 ? (int)($uri->page - 1) * $auth->entries : 0);
-
         try {
-            $module = ucfirst($uri->mod);
+            $serviceId = $uri->mod . '.controller.' . $uri->area . '.' . $uri->controller;
 
-            if ($uri->area !== 'frontend') {
-                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst($uri->area) . "\\" . ucfirst($uri->controller);
-            } else {
-                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst($uri->controller);
-            }
-
-            self::dispatch($className, $uri->file);
+            self::dispatch($serviceId, $uri->file);
         } catch (Core\Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
                 Core\Logger::error('404', $e);
@@ -267,27 +257,15 @@ class Application
     }
 
     /**
-     * @param $className
+     * @param $serviceId
      * @param $action
      * @throws Core\Exceptions\ControllerActionNotFound
      */
-    public static function dispatch($className, $action)
+    public static function dispatch($serviceId, $action)
     {
-        if (class_exists($className)) {
+        if (self::$di->has($serviceId)) {
             /** @var Controller $controller */
-            $controller = new $className(
-                self::$di->get('core.auth'),
-                self::$di->get('core.breadcrumb'),
-                self::$di->get('core.date'),
-                self::$di->get('core.db'),
-                self::$di->get('core.lang'),
-                self::$di->get('core.session'),
-                self::$di->get('core.uri'),
-                self::$di->get('core.view'),
-                self::$di->get('core.seo'),
-                self::$di->get('core.modules'),
-                self::$di->get('core.acl')
-            );
+            $controller = self::$di->get($serviceId);
 
             $action = 'action' . str_replace('_', '', $action);
 
@@ -297,10 +275,10 @@ class Application
                 $controller->$action();
                 $controller->display();
             } else {
-                throw new Core\Exceptions\ControllerActionNotFound('Controller action ' . $className . '::' . $action . '() was not found!');
+                throw new Core\Exceptions\ControllerActionNotFound('Controller action ' . get_class($controller) . '::' . $action . '() was not found!');
             }
         } else {
-            throw new Core\Exceptions\ControllerActionNotFound('Class ' . $className . '() was not found!');
+            throw new Core\Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
         }
     }
 

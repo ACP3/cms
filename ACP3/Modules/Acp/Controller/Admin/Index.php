@@ -5,9 +5,8 @@ namespace ACP3\Modules\Acp\Controller\Admin;
 use ACP3\Core;
 
 /**
- * Module Controller of the Admin Backend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Acp\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {

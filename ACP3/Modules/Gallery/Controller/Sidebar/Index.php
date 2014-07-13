@@ -6,24 +6,41 @@ use ACP3\Core;
 use ACP3\Modules\Gallery;
 
 /**
- * Description of GalleryFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Gallery\Controller\Sidebar
  */
 class Index extends Core\Modules\Controller\Sidebar
 {
-
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Gallery\Model
      */
-    protected $model;
+    protected $galleryModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Gallery\Model $galleryModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Gallery\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->galleryModel = $galleryModel;
     }
 
     public function actionIndex()
@@ -32,7 +49,7 @@ class Index extends Core\Modules\Controller\Sidebar
         $config = new Core\Config($this->db, 'gallery');
         $settings = $config->getSettings();
 
-        $galleries = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
+        $galleries = $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {

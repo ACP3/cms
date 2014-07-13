@@ -7,29 +7,49 @@ use ACP3\Modules\Articles;
 use ACP3\Modules\Menus;
 
 /**
- * Module controller of the articles backend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Articles\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Articles\Model
      */
-    protected $model;
-
+    protected $articlesModel;
     /**
      * @var \ACP3\Modules\Menus\Model
      */
-    protected $menuModel;
+    protected $menusModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Articles\Model $articlesModel,
+        Menus\Model $menusModel)
     {
-        $this->menuModel = new Menus\Model($this->db);
-        $this->model = new Articles\Model($this->db);
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        return parent::preDispatch();
+        $this->date = $date;
+        $this->db = $db;
+        $this->articlesModel = $articlesModel;
+        $this->menusModel = $menusModel;
     }
 
     public function actionCreate()
@@ -48,7 +68,7 @@ class Index extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $lastId = $this->model->insert($insertValues);
+                $lastId = $this->articlesModel->insert($insertValues);
 
                 $this->uri->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                     $_POST['alias'],
@@ -73,17 +93,15 @@ class Index extends Core\Modules\Controller\Admin
                     $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
                     $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
 
-                    $cacheMenu = new Menus\Cache($this->lang, $this->menuModel);
+                    $cacheMenu = $this->get('menus.cache');
                     $cacheMenu->setMenuItemsCache();
                 }
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/articles');
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/articles');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/articles');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -133,20 +151,19 @@ class Index extends Core\Modules\Controller\Admin
             foreach ($items as $item) {
                 $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
-                $bool = $this->model->delete($item);
-                $nestedSet->deleteNode($this->menuModel->getMenuItemIdByUri($uri));
+                $bool = $this->articlesModel->delete($item);
+                $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
 
                 $cache->delete(Articles\Cache::CACHE_ID . $item);
                 $this->uri->deleteUriAlias($uri);
             }
 
-            $cacheMenu = new Menus\Cache($this->lang, $this->menuModel);
+            $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
             $cacheMenu->setMenuItemsCache();
 
             $this->seo->setCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -154,7 +171,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $article = $this->model->getOneById($this->uri->id);
+        $article = $this->articlesModel->getOneById($this->uri->id);
 
         if (empty($article) === false) {
             if (empty($_POST) === false) {
@@ -170,7 +187,7 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->articlesModel->update($updateValues, $this->uri->id);
 
                     $this->uri->insertUriAlias(
                         sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->uri->id),
@@ -181,20 +198,18 @@ class Index extends Core\Modules\Controller\Admin
                     );
                     $this->seo->setCache();
 
-                    $cache = new Articles\Cache($this->model);
+                    $cache = new Articles\Cache($this->articlesModel);
                     $cache->setCache($this->uri->id);
 
                     // Aliase in der Navigation aktualisieren
-                    $cacheMenu = new Menus\Cache($this->lang, $this->menuModel);
+                    $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
                     $cacheMenu->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/articles');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/articles');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/articles');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -216,10 +231,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $articles = $this->model->getAllInAcp();
+        $articles = $this->articlesModel->getAllInAcp();
         $c_articles = count($articles);
 
         if ($c_articles > 0) {

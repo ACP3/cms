@@ -6,39 +6,51 @@ use ACP3\Core;
 use ACP3\Modules\Polls;
 
 /**
- * Description of PollsFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Polls\Controller\Sidebar
  */
 class Index extends Core\Modules\Controller\Sidebar
 {
 
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
      * @var Polls\Model
      */
-    protected $model;
+    protected $pollsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        Polls\Model $pollsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Polls\Model($this->db);
+        $this->date = $date;
+        $this->pollsModel = $pollsModel;
     }
 
     public function actionIndex()
     {
-        $poll = $this->model->getLatestPoll($this->date->getCurrentDateTime());
+        $poll = $this->pollsModel->getLatestPoll($this->date->getCurrentDateTime());
 
         if (!empty($poll)) {
-            $answers = $this->model->getAnswersByPollId($poll['id']);
+            $answers = $this->pollsModel->getAnswersByPollId($poll['id']);
 
             $this->view->assign('sidebar_polls', $poll);
 
             if ($this->auth->isUser() === true) {
-                $query = $this->model->getVotesByUserId($poll['id'], $this->auth->getUserId(), $_SERVER['REMOTE_ADDR']); // Check, whether the logged user has already voted
+                $query = $this->pollsModel->getVotesByUserId($poll['id'], $this->auth->getUserId(), $_SERVER['REMOTE_ADDR']); // Check, whether the logged user has already voted
             } else {
-                $query = $this->model->getVotesByIpAddress($poll['id'], $_SERVER['REMOTE_ADDR']); // For guest users check against the ip address
+                $query = $this->pollsModel->getVotesByIpAddress($poll['id'], $_SERVER['REMOTE_ADDR']); // For guest users check against the ip address
             }
 
             if ($query > 0) {

@@ -6,24 +6,37 @@ use ACP3\Core;
 use ACP3\Modules\Emoticons;
 
 /**
- * Description of EmoticonsAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Emoticons\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
-
     /**
-     *
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Emoticons\Model
      */
-    protected $model;
+    protected $emoticonsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        Emoticons\Model $emoticonsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Emoticons\Model($this->db);
+        $this->db = $db;
+        $this->emoticonsModel = $emoticonsModel;
     }
 
     public function actionCreate()
@@ -52,18 +65,16 @@ class Index extends Core\Modules\Controller\Admin
                     'img' => $result['name'],
                 );
 
-                $bool = $this->model->insert($insertValues);
+                $bool = $this->emoticonsModel->insert($insertValues);
 
-                $cache = new Emoticons\Cache($this->model);
+                $cache = new Emoticons\Cache($this->emoticonsModel);
                 $cache->setCache();
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/categories');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -84,19 +95,18 @@ class Index extends Core\Modules\Controller\Admin
 
             $upload = new Core\Helpers\Upload('emoticons');
             foreach ($items as $item) {
-                if (!empty($item) && $this->model->resultExists($item) === true) {
+                if (!empty($item) && $this->emoticonsModel->resultExists($item) === true) {
                     // Datei ebenfalls löschen
-                    $file = $this->model->getOneImageById($item);
+                    $file = $this->emoticonsModel->getOneImageById($item);
                     $upload->removeUploadedFile($file);
-                    $bool = $this->model->delete($item);
+                    $bool = $this->emoticonsModel->delete($item);
                 }
             }
 
-            $cache = new Emoticons\Cache($this->model);
+            $cache = new Emoticons\Cache($this->emoticonsModel);
             $cache->setCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -104,7 +114,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $emoticon = $this->model->getOneById((int)$this->uri->id);
+        $emoticon = $this->emoticonsModel->getOneById((int)$this->uri->id);
 
         if (empty($emoticon) === false) {
             if (empty($_POST) === false) {
@@ -133,18 +143,16 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues['img'] = $result['name'];
                     }
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->emoticonsModel->update($updateValues, $this->uri->id);
 
-                    $cache = new Emoticons\Cache($this->model);
+                    $cache = new Emoticons\Cache($this->emoticonsModel);
                     $cache->setCache();
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/news');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -161,10 +169,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $emoticons = $this->model->getAll();
+        $emoticons = $this->emoticonsModel->getAll();
         $c_emoticons = count($emoticons);
 
         if ($c_emoticons > 0) {
@@ -199,11 +206,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/emoticons');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/emoticons');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

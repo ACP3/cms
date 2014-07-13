@@ -6,16 +6,48 @@ use ACP3\Core;
 use ACP3\Modules\Users;
 
 /**
- * Description of UsersFrontend
- *
- * @author Tino Goratsch
+ * Class Account
+ * @package ACP3\Modules\Users\Controller
  */
 class Account extends Core\Modules\Controller
 {
     /**
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var \ACP3\Core\Session
+     */
+    protected $session;
+    /**
      * @var Users\Model
      */
-    protected $model;
+    protected $usersModel;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Users\Model $usersModel)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+
+        $this->date = $date;
+        $this->db = $db;
+        $this->session = $session;
+        $this->usersModel = $usersModel;
+    }
 
     public function preDispatch()
     {
@@ -24,8 +56,6 @@ class Account extends Core\Modules\Controller
         if ($this->auth->isUser() === false || $this->get('core.validate')->isNumber($this->auth->getUserId()) === false) {
             $this->uri->redirect('users/index/login');
         }
-
-        $this->model = $this->get('users.model');
     }
 
     public function actionEdit()
@@ -53,25 +83,23 @@ class Account extends Core\Modules\Controller
 
                 // Neues Passwort
                 if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-                    $securityHelper = new Core\Helpers\Secure();
+                    $securityHelper = $this->get('core.helpers.secure');
 
                     $salt = $securityHelper->salt(12);
                     $newPassword = $securityHelper->generateSaltedPassword($salt, $_POST['new_pwd']);
                     $updateValues['pwd'] = $newPassword . ':' . $salt;
                 }
 
-                $bool = $this->model->update($updateValues, $this->auth->getUserId());
+                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
                 $cookieArr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
                 $this->auth->setCookie($_POST['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'users/account');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -154,22 +182,20 @@ class Account extends Core\Modules\Controller
                     $updateValues['entries'] = (int)$_POST['entries'];
                 }
 
-                $bool = $this->model->update($updateValues, $this->auth->getUserId());
+                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'users/account');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
-        $user = $this->model->getOneById($this->auth->getUserId());
+        $user = $this->usersModel->getOneById($this->auth->getUserId());
 
         $this->view->assign('language_override', $settings['language_override']);
         $this->view->assign('entries_override', $settings['entries_override']);
@@ -210,16 +236,14 @@ class Account extends Core\Modules\Controller
             $updateValues = array(
                 'draft' => Core\Functions::strEncode($_POST['draft'], true)
             );
-            $bool = $this->model->update($updateValues, $this->auth->getUserId());
+            $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
         }
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $user = $this->model->getOneById($this->auth->getUserId());
+        $user = $this->usersModel->getOneById($this->auth->getUserId());
 
         $this->view->assign('draft', $user['draft']);
     }

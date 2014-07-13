@@ -6,30 +6,47 @@ use ACP3\Core;
 use ACP3\Modules\Gallery;
 
 /**
- * Description of GalleryFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Gallery\Controller
  */
 class Index extends Core\Modules\Controller
 {
-
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Gallery\Model
      */
-    protected $model;
+    protected $galleryModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Gallery\Model $galleryModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Gallery\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->galleryModel = $galleryModel;
     }
 
     public function actionDetails()
     {
-        if ($this->model->pictureExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $picture = $this->model->getPictureById((int) $this->uri->id);
+        if ($this->galleryModel->pictureExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
+            $picture = $this->galleryModel->getPictureById((int) $this->uri->id);
 
             $config = new Core\Config($this->db, 'gallery');
             $settings = $config->getSettings();
@@ -64,33 +81,25 @@ class Index extends Core\Modules\Controller
             $this->view->assign('picture', $picture);
 
             // Vorheriges Bild
-            $picture_back = $this->model->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
+            $picture_back = $this->galleryModel->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_back)) {
                 $this->seo->setPreviousPage($this->uri->route('gallery/index/details/id_' . $picture_back));
                 $this->view->assign('picture_back', $picture_back);
             }
 
             // Nächstes Bild
-            $picture_next = $this->model->getNextPictureId($picture['pic'], $picture['gallery_id']);
+            $picture_next = $this->galleryModel->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_next)) {
                 $this->seo->setNextPage($this->uri->route('gallery/index/details/id_' . $picture_next));
                 $this->view->assign('picture_next', $picture_next);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
-                $comments = new \ACP3\Modules\Comments\Controller\Index(
-                    $this->auth,
-                    $this->breadcrumb,
-                    $this->date,
-                    $this->db,
-                    $this->lang,
-                    $this->session,
-                    $this->uri,
-                    $this->view,
-                    $this->seo,
-                    'gallery',
-                    $this->uri->id
-                );
+                $comments = $this->get('comments.controller.frontend.index');
+                $comments
+                    ->setModule('gallery')
+                    ->setEntryId($this->uri->id);
+
                 $this->view->assign('comments', $comments->actionIndex());
             }
         } else {
@@ -104,7 +113,7 @@ class Index extends Core\Modules\Controller
 
         if ($this->get('core.validate')->isNumber($this->uri->id) === true) {
             @set_time_limit(20);
-            $picture = $this->model->getFileById($this->uri->id);
+            $picture = $this->galleryModel->getFileById($this->uri->id);
             $action = $this->uri->action === 'thumb' ? 'thumb' : '';
 
             $config = new Core\Config($this->db, 'gallery');
@@ -127,7 +136,7 @@ class Index extends Core\Modules\Controller
     {
         $time = $this->date->getCurrentDateTime();
 
-        $galleries = $this->model->getAll($time, POS, $this->auth->entries);
+        $galleries = $this->galleryModel->getAll($time, POS, $this->auth->entries);
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
@@ -138,7 +147,7 @@ class Index extends Core\Modules\Controller
                 $this->seo,
                 $this->uri,
                 $this->view,
-                $this->model->countAll($time)
+                $this->galleryModel->countAll($time)
             );
             $pagination->display();
 
@@ -156,13 +165,13 @@ class Index extends Core\Modules\Controller
 
     public function actionPics()
     {
-        if ($this->model->galleryExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->galleryModel->galleryExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
             // Cache der Galerie holen
-            $cache = new Gallery\Cache($this->db, $this->model);
+            $cache = new Gallery\Cache($this->db, $this->galleryModel);
             $pictures = $cache->getCache($this->uri->id);
             $c_pictures = count($pictures);
 
-            $galleryTitle = $this->model->getGalleryTitle($this->uri->id);
+            $galleryTitle = $this->galleryModel->getGalleryTitle($this->uri->id);
 
             // Brotkrümelspur
             $this->breadcrumb

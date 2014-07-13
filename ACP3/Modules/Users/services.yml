@@ -1,7 +1,24 @@
 services:
+  users.controller.admin.index:
+    class: ACP3\Modules\Users\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.acl', '@core.date', '@core.db', '@users.model', '@permissions.model']
+
+  users.controller.frontend.account:
+    class: ACP3\Modules\Users\Controller\Account
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.session', '@core.date', '@core.db', '@users.model']
+
+  users.controller.frontend.index:
+    class: ACP3\Modules\Users\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.session', '@core.date', '@core.db', '@users.model']
+
+  users.controller.sidebar.index:
+    class: ACP3\Modules\Users\Controller\Sidebar\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.db']
+
   users.model:
     class: ACP3\Modules\Users\Model
     arguments: ['@core.db']
+
   users.validator:
     class: ACP3\Modules\Users\Validator
     arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules', 'users.model']

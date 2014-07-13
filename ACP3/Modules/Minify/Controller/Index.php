@@ -6,12 +6,30 @@ use ACP3\Core;
 use ACP3\Modules\Minify;
 
 /**
- * Minify Index Controller
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Minify\Controller
  */
 class Index extends Core\Modules\Controller
 {
+    /**
+     * @var Minify\Helpers
+     */
+    protected $minifyHelpers;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Minify\Helpers $minifyHelpers)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+
+        $this->minifyHelpers = $minifyHelpers;
+    }
 
     public function actionIndex()
     {
@@ -21,15 +39,13 @@ class Index extends Core\Modules\Controller
             $libraries = !empty($this->uri->libraries) ? explode(',', $this->uri->libraries) : array();
             $layout = isset($this->uri->layout) && !preg_match('=/=', $this->uri->layout) ? $this->uri->layout : 'layout';
 
-            $helper = $this->get('minify.helpers');
-
             $options = array();
             switch ($this->uri->group) {
                 case 'css':
-                    $files = $helper->includeCssFiles($libraries, $layout);
+                    $files = $this->minifyHelpers->includeCssFiles($libraries, $layout);
                     break;
                 case 'js':
-                    $files = $helper->includeJsFiles($libraries, $layout);
+                    $files = $this->minifyHelpers->includeJsFiles($libraries, $layout);
                     break;
                 default:
                     $files = array();

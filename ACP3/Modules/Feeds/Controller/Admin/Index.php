@@ -6,17 +6,38 @@ use ACP3\Core;
 use ACP3\Modules\Feeds;
 
 /**
- * Description of FeedsAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Feeds\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
+
+        $this->db = $db;
+    }
+
     public function actionIndex()
     {
         $config = new Core\Config($this->db, 'feeds');
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect = $this->redirectMessages();
 
         if (empty($_POST) === false) {
             try {

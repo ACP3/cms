@@ -1,13 +1,20 @@
 services:
+  emoticons.controller.admin.index:
+    class: ACP3\Modules\Emoticons\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.db', '@emoticons.model']
+
   emoticons.model:
     class: ACP3\Modules\Emoticons\Model
     arguments: ['@core.db']
+
   emoticons.cache:
     class: ACP3\Modules\Emoticons\Cache
     arguments: ['@emoticons.model']
+
   emoticons.helpers:
     class: ACP3\Modules\Emoticons\Helpers
     arguments: ['@core.view', '@emoticons.cache']
+
   emoticons.validator:
     class: ACP3\Modules\Emoticons\Validator
     parent: core.validator.abstract

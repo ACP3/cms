@@ -6,24 +6,44 @@ use ACP3\Core;
 use ACP3\Modules\Comments;
 
 /**
- * Description of CommentsAdmin
- *
- * @author Tino Goratsch
+ * Class Details
+ * @package ACP3\Modules\Comments\Controller\Admin
  */
 class Details extends Core\Modules\Controller\Admin
 {
 
     /**
-     *
+     * @var \ACP3\Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Comments\Model
      */
-    protected $model;
+    protected $commentsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Comments\Model $commentsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Comments\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->commentsModel = $commentsModel;
     }
 
     public function actionDelete()
@@ -33,11 +53,10 @@ class Details extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
-                $bool = $this->model->delete($item);
+                $bool = $this->commentsModel->delete($item);
             }
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -45,7 +64,7 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $comment = $this->model->getOneById((int)$this->uri->id);
+        $comment = $this->commentsModel->getOneById((int)$this->uri->id);
 
         if (empty($comment) === false) {
             $this->breadcrumb
@@ -63,15 +82,13 @@ class Details extends Core\Modules\Controller\Admin
                         $update_values['name'] = Core\Functions::strEncode($_POST['name']);
                     }
 
-                    $bool = $this->model->update($update_values, $this->uri->id);
+                    $bool = $this->commentsModel->update($update_values, $this->uri->id);
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/comments');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -94,10 +111,9 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $comments = $this->model->getAllByModuleInAcp((int)$this->uri->id);
+        $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->uri->id);
 
         if (empty($comments) === false) {
             $module = $this->db->fetchColumn('SELECT name FROM ' . DB_PRE . 'modules WHERE id = ?', array($this->uri->id));

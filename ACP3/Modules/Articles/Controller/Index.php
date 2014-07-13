@@ -6,29 +6,42 @@ use ACP3\Core;
 use ACP3\Modules\Articles;
 
 /**
- * Module controller of the articles frontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Articles\Controller
  */
 class Index extends Core\Modules\Controller
 {
     /**
+     * @var \ACP3\Core\Date
+     */
+    protected $date;
+    /**
      * @var Articles\Model
      */
-    protected $model;
+    protected $articlesModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        Articles\Model $articlesModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Articles\Model($this->db);
+        $this->date = $date;
+        $this->articlesModel = $articlesModel;
     }
 
     public function actionIndex()
     {
         $time = $this->date->getCurrentDateTime();
 
-        $articles = $this->model->getAll($time, POS, $this->auth->entries);
+        $articles = $this->articlesModel->getAll($time, POS, $this->auth->entries);
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
@@ -39,7 +52,7 @@ class Index extends Core\Modules\Controller
                 $this->seo,
                 $this->uri,
                 $this->view,
-                $this->model->countAll($time)
+                $this->articlesModel->countAll($time)
             );
             $pagination->display();
 
@@ -54,8 +67,8 @@ class Index extends Core\Modules\Controller
 
     public function actionDetails()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $cache = new Articles\Cache($this->model);
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->articlesModel->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
+            $cache = new Articles\Cache($this->articlesModel);
             $article = $cache->getCache($this->uri->id);
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);

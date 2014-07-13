@@ -1,10 +1,24 @@
 services:
+  comments.controller.admin.details:
+    class: ACP3\Modules\Comments\Controller\Admin\Details
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@core.db', '@comments.model']
+
+  comments.controller.admin.index:
+    class: ACP3\Modules\Comments\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@core.db', '@comments.model']
+
+  comments.controller.frontend.index:
+    class: ACP3\Modules\Comments\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@core.db', '@core.session', '@comments.model']
+
   comments.helpers:
     class: ACP3\Modules\Comments\Helpers
     arguments: ['@comments.model']
+
   comments.model:
     class: ACP3\Modules\Comments\Model
     arguments: ['@core.db']
+
   comments.validator:
     class: ACP3\Modules\Comments\Validator
     arguments: ['@core.db', '@core.auth', '@core.date', '@core.modules', '@core.validate', '@comments.model']

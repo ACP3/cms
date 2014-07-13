@@ -6,29 +6,47 @@ use ACP3\Core;
 use ACP3\Modules\Newsletter;
 
 /**
- * Description of NewsletterFrontend
- *
- * @author Tino Goratsch
+ * Class Archive
+ * @package ACP3\Modules\Newsletter\Controller
  */
 class Archive extends Core\Modules\Controller
 {
 
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Newsletter\Model
      */
-    protected $model;
+    protected $newsletterModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Newsletter\Model $newsletterModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Newsletter\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->newsletterModel = $newsletterModel;
     }
 
     public function actionDetails()
     {
-        $newsletter = $this->model->getOneById((int)$this->uri->id, 1);
+        $newsletter = $this->newsletterModel->getOneById((int)$this->uri->id, 1);
 
         if (!empty($newsletter)) {
             $this->breadcrumb
@@ -50,7 +68,7 @@ class Archive extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $newsletters = $this->model->getAll(1, POS, $this->auth->entries);
+        $newsletters = $this->newsletterModel->getAll(1, POS, $this->auth->entries);
         $c_newsletters = count($newsletters);
 
         if ($c_newsletters > 0) {
@@ -61,7 +79,7 @@ class Archive extends Core\Modules\Controller
                 $this->seo,
                 $this->uri,
                 $this->view,
-                $this->model->countAll(1)
+                $this->newsletterModel->countAll(1)
             );
             $pagination->display();
 

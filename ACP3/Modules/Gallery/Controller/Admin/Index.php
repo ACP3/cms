@@ -6,24 +6,44 @@ use ACP3\Core;
 use ACP3\Modules\Gallery;
 
 /**
- * Description of GalleryAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Gallery\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
 
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Gallery\Model
      */
-    protected $model;
+    protected $galleryModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Gallery\Model $galleryModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Gallery\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->galleryModel = $galleryModel;
     }
 
     public function actionCreate()
@@ -41,7 +61,7 @@ class Index extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $lastId = $this->model->insert($insertValues);
+                $lastId = $this->galleryModel->insert($insertValues);
 
                 $this->uri->insertUriAlias(
                     sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
@@ -54,11 +74,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/gallery');
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/gallery');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/gallery');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -91,9 +109,9 @@ class Index extends Core\Modules\Controller\Admin
             $cache = new Core\Cache2('gallery');
 
             foreach ($items as $item) {
-                if (!empty($item) && $this->model->galleryExists($item) === true) {
+                if (!empty($item) && $this->galleryModel->galleryExists($item) === true) {
                     // Hochgeladene Bilder löschen
-                    $pictures = $this->model->getPicturesByGalleryId($item);
+                    $pictures = $this->galleryModel->getPicturesByGalleryId($item);
                     foreach ($pictures as $row) {
                         $this->get('gallery.helpers')->removePicture($row['file']);
                     }
@@ -104,15 +122,14 @@ class Index extends Core\Modules\Controller\Admin
                     $this->get('gallery.helpers')->deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
-                    $bool = $this->model->delete($item);
-                    $bool2 = $this->model->delete($item, 'gallery_id', Gallery\Model::TABLE_NAME_PICTURES);
+                    $bool = $this->galleryModel->delete($item);
+                    $bool2 = $this->galleryModel->delete($item, 'gallery_id', Gallery\Model::TABLE_NAME_PICTURES);
                 }
             }
 
             $this->seo->setCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/gallery');
+            $this->redirectMessages()->setMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/gallery');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -120,14 +137,14 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if ($this->model->galleryExists((int)$this->uri->id) === true) {
-            $gallery = $this->model->getGalleryById((int)$this->uri->id);
+        if ($this->galleryModel->galleryExists((int)$this->uri->id) === true) {
+            $gallery = $this->galleryModel->getGalleryById((int)$this->uri->id);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id)));
 
             $this->breadcrumb->append($gallery['title']);
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect = $this->redirectMessages();
 
             if (empty($_POST) === false) {
                 try {
@@ -141,7 +158,7 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->galleryModel->update($updateValues, $this->uri->id);
 
                     $this->uri->insertUriAlias(
                         sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id),
@@ -174,7 +191,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($gallery, $_POST));
 
-            $pictures = $this->model->getPicturesByGalleryId((int)$this->uri->id);
+            $pictures = $this->galleryModel->getPicturesByGalleryId((int)$this->uri->id);
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
@@ -206,7 +223,7 @@ class Index extends Core\Modules\Controller\Admin
         $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
         $redirect->getMessage();
 
-        $galleries = $this->model->getAllInAcp();
+        $galleries = $this->galleryModel->getAllInAcp();
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
@@ -258,7 +275,7 @@ class Index extends Core\Modules\Controller\Admin
                 if ($_POST['thumbwidth'] !== $settings['thumbwidth'] || $_POST['thumbheight'] !== $settings['thumbheight'] ||
                     $_POST['width'] !== $settings['width'] || $_POST['height'] !== $settings['height']
                 ) {
-                    Core\Cache::purge('images', 'gallery');
+                    Core\Cache2::purge('images', 'gallery');
 
                     $cache = new Core\Cache2('gallery');
                     $cache->getDriver()->deleteAll();
@@ -266,11 +283,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/gallery');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/gallery');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/gallery');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

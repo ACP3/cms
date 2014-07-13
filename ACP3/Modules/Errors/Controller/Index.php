@@ -5,9 +5,8 @@ namespace ACP3\Modules\Errors\Controller;
 use ACP3\Core;
 
 /**
- * Errors module controller
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Errors\Controller
  */
 class Index extends Core\Modules\Controller
 {

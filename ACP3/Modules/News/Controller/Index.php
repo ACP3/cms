@@ -6,35 +6,53 @@ use ACP3\Core;
 use ACP3\Modules\News;
 
 /**
- * Description of NewsFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\News\Controller
  */
 class Index extends Core\Modules\Controller
 {
 
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var News\Model
      */
-    protected $model;
+    protected $newsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        News\Model $newsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new News\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->newsModel = $newsModel;
     }
 
     public function actionDetails()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->newsModel->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
             $config = new Core\Config($this->db, 'news');
             /** @var Core\Helpers\StringFormatter $formatter */
             $formatter = $this->get('core.helpers.string.formatter');
             $settings = $config->getSettings();
 
-            $cache = new News\Cache($this->model);
+            $cache = new News\Cache($this->newsModel);
             $news = $cache->getCache($this->uri->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
@@ -104,9 +122,9 @@ class Index extends Core\Modules\Controller
         $time = $this->date->getCurrentDateTime();
         // Falls Kategorie angegeben, News nur aus eben jener selektieren
         if (!empty($cat)) {
-            $news = $this->model->getAllByCategoryId($cat, $time, POS, $this->auth->entries);
+            $news = $this->newsModel->getAllByCategoryId($cat, $time, POS, $this->auth->entries);
         } else {
-            $news = $this->model->getAll($time, POS, $this->auth->entries);
+            $news = $this->newsModel->getAll($time, POS, $this->auth->entries);
         }
         $c_news = count($news);
 
@@ -124,7 +142,7 @@ class Index extends Core\Modules\Controller
                 $this->seo,
                 $this->uri,
                 $this->view,
-                $this->model->countAll($time, $cat)
+                $this->newsModel->countAll($time, $cat)
             );
             $pagination->display();
 

@@ -6,24 +6,38 @@ use ACP3\Core;
 use ACP3\Modules\Polls;
 
 /**
- * Description of PollsAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Polls\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
 
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
      * @var Polls\Model
      */
-    protected $model;
+    protected $pollsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        Polls\Model $pollsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Polls\Model($this->db);
+        $this->date = $date;
+        $this->pollsModel = $pollsModel;
     }
 
     public function actionCreate()
@@ -42,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $pollId = $this->model->insert($insertValues);
+                $pollId = $this->pollsModel->insert($insertValues);
                 $bool2 = false;
 
                 if ($pollId !== false) {
@@ -53,18 +67,16 @@ class Index extends Core\Modules\Controller\Admin
                                 'text' => Core\Functions::strEncode($row),
                                 'poll_id' => $pollId,
                             );
-                            $bool2 = $this->model->insert($insertAnswer, Polls\Model::TABLE_NAME_ANSWERS);
+                            $bool2 = $this->pollsModel->insert($insertAnswer, Polls\Model::TABLE_NAME_ANSWERS);
                         }
                     }
                 }
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
+                $this->redirectMessages()->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/polls');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -108,12 +120,12 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
             foreach ($items as $item) {
-                $bool = $this->model->delete($item);
-                $bool2 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
-                $bool3 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                $bool = $this->pollsModel->delete($item);
+                $bool2 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
+                $bool3 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
             }
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool !== false && $bool2 !== false && $bool3 !== false, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
+
+            $this->redirectMessages()->setMessage($bool !== false && $bool2 !== false && $bool3 !== false, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -121,7 +133,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $poll = $this->model->getOneById($this->uri->id);
+        $poll = $this->pollsModel->getOneById($this->uri->id);
 
         if (empty($poll) === false) {
             if (isset($_POST['submit']) === true) {
@@ -138,11 +150,11 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->pollsModel->update($updateValues, $this->uri->id);
 
                     // Stimmen zurücksetzen
                     if (!empty($_POST['reset'])) {
-                        $this->model->delete($this->uri->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                        $this->pollsModel->delete($this->uri->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
                     }
 
                     // Antworten
@@ -151,24 +163,22 @@ class Index extends Core\Modules\Controller\Admin
                         if (empty($row['id'])) {
                             // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                             if (!empty($row['value']) && !isset($row['delete']))
-                                $this->model->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->uri->id), Polls\Model::TABLE_NAME_ANSWERS);
+                                $this->pollsModel->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->uri->id), Polls\Model::TABLE_NAME_ANSWERS);
                             // Antwort mitsamt Stimmen löschen
                         } elseif (isset($row['delete']) && $this->get('core.validate')->isNumber($row['id'])) {
-                            $this->model->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
-                            $this->model->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
+                            $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
+                            $this->pollsModel->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
                             // Antwort aktualisieren
                         } elseif (!empty($row['value']) && $this->get('core.validate')->isNumber($row['id'])) {
-                            $bool = $this->model->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
+                            $bool = $this->pollsModel->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
                         }
                     }
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/polls');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -193,7 +203,7 @@ class Index extends Core\Modules\Controller\Admin
                     $answers[$i]['value'] = '';
                 }
             } else {
-                $answers = $this->model->getAnswersByPollId($this->uri->id);
+                $answers = $this->pollsModel->getAnswersByPollId($this->uri->id);
                 $c_answers = count($answers);
 
                 for ($i = 0; $i < $c_answers; ++$i) {
@@ -224,10 +234,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $polls = $this->model->getAllInAcp();
+        $polls = $this->pollsModel->getAllInAcp();
         $c_polls = count($polls);
 
         if ($c_polls > 0) {

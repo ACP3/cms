@@ -36,8 +36,9 @@ class Cache
             foreach ($cacheDir as $row) {
                 if (is_file($path . $row) && $row !== '.htaccess') {
                     // Wenn eine $cache_id gesetzt wurde, nur diese Dateien löschen
-                    if ($cacheId !== '' && strpos($row, $cacheId) !== 0)
+                    if ($cacheId !== '' && strpos($row, $cacheId) !== 0) {
                         continue;
+                    }
                     @unlink($path . $row);
                 }
             }
