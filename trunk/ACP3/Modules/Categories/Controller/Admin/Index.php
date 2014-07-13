@@ -12,13 +12,17 @@ use ACP3\Modules\Categories;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Categories\Model
      */
     protected $categoriesModel;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $categoriesConfig;
+    /**
+     * @var \ACP3\Modules\Categories\Cache
+     */
+    protected $categoriesCache;
 
     public function __construct(
         Core\Auth $auth,
@@ -30,13 +34,15 @@ class Index extends Core\Modules\Controller\Admin
         Core\Modules $modules,
         Core\Validate $validate,
         Core\Session $session,
-        \Doctrine\DBAL\Connection $db,
-        Categories\Model $categoriesModel)
+        Categories\Model $categoriesModel,
+        Core\Config $categoriesConfig,
+        Categories\Cache $categoriesCache)
     {
         parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->db = $db;
         $this->categoriesModel = $categoriesModel;
+        $this->categoriesConfig = $categoriesConfig;
+        $this->categoriesCache = $categoriesCache;
     }
 
     public function actionCreate()
@@ -49,8 +55,8 @@ class Index extends Core\Modules\Controller\Admin
                     $file['name'] = $_FILES['picture']['name'];
                     $file['size'] = $_FILES['picture']['size'];
                 }
-                $config = new Core\Config($this->db, 'categories');
-                $settings = $config->getSettings();
+
+                $settings = $this->categoriesConfig->getSettings();
 
                 $validator = $this->get('categories.validator');
                 $validator->validate($_POST, $file, $settings);
@@ -70,8 +76,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $bool = $this->categoriesModel->insert($insertValues);
 
-                $cache = new Categories\Cache($this->categoriesModel);
-                $cache->setCache($_POST['module']);
+                $this->categoriesCache->setCache($_POST['module']);
 
                 $this->session->unsetFormToken();
 
@@ -111,11 +116,9 @@ class Index extends Core\Modules\Controller\Admin
                 if (!empty($item) && $this->categoriesModel->resultExists($item) === true) {
                     $category = $this->categoriesModel->getCategoryDeleteInfosById($item);
 
-                    $className = "\\ACP3\\Modules\\" . ucfirst($category['module']) . "\\Model";
-                    if (class_exists($className) === true) {
-                        /** @var \ACP3\Core\Model $model */
-                        $model = new $className($this->db);
-                        if ($model->countAll('', $item) > 0) {
+                    $serviceId = strtolower($category['module'] . '.model');
+                    if ($this->container->has($serviceId)) {
+                        if ($this->get($serviceId)->countAll('', $item) > 0) {
                             $isInUse = true;
                             continue;
                         }
@@ -157,8 +160,7 @@ class Index extends Core\Modules\Controller\Admin
                         $file['name'] = $_FILES['picture']['name'];
                         $file['size'] = $_FILES['picture']['size'];
                     }
-                    $config = new Core\Config($this->db, 'categories');
-                    $settings = $config->getSettings();
+                    $settings = $this->categoriesConfig->getSettings();
 
                     $validator = $this->get('categories.validator');
                     $validator->validate($_POST, $file, $settings, $this->uri->id);
@@ -177,8 +179,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->categoriesModel->update($updateValues, $this->uri->id);
 
-                    $cache = new Categories\Cache($this->categoriesModel);
-                    $cache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->uri->id));
+                    $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->uri->id));
 
                     $this->session->unsetFormToken();
 
@@ -225,7 +226,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'categories');
+        $config = $this->categoriesConfig;
 
         if (empty($_POST) === false) {
             try {

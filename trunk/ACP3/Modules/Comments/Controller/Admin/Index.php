@@ -16,13 +16,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Comments\Model
      */
     protected $commentsModel;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $commentsConfig;
 
     public function __construct(
         Core\Auth $auth,
@@ -35,14 +35,14 @@ class Index extends Core\Modules\Controller\Admin
         Core\Validate $validate,
         Core\Session $session,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Comments\Model $commentsModel)
+        Comments\Model $commentsModel,
+        Core\Config $commentsConfig)
     {
         parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
         $this->date = $date;
-        $this->db = $db;
         $this->commentsModel = $commentsModel;
+        $this->commentsConfig = $commentsConfig;
     }
 
     public function actionDelete()
@@ -87,7 +87,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'comments');
+        $config = $this->commentsConfig;
 
         if (empty($_POST) === false) {
             try {

@@ -55,4 +55,9 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT id, version, active FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
+    public function getModuleNameById($moduleId)
+    {
+        return $this->db->fetchColumn('SELECT name FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($moduleId));
+    }
+
 }

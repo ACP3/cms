@@ -17,10 +17,6 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Session
      */
     protected $session;
@@ -36,6 +32,10 @@ class Index extends Core\Modules\Controller
      * @var Comments\Model
      */
     protected $commentsModel;
+    /**
+     * @var Core\Config
+     */
+    protected $commentsConfig;
 
     public function __construct(
         Core\Auth $auth,
@@ -46,16 +46,16 @@ class Index extends Core\Modules\Controller
         Core\SEO $seo,
         Core\Modules $modules,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Session $session,
-        Comments\Model $commentsModel)
+        Comments\Model $commentsModel,
+        Core\Config $commentsConfig)
     {
         parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
         $this->date = $date;
-        $this->db = $db;
         $this->session = $session;
         $this->commentsModel = $commentsModel;
+        $this->commentsConfig = $commentsConfig;
     }
 
     /**
@@ -115,8 +115,7 @@ class Index extends Core\Modules\Controller
             }
         }
 
-        $config = new Core\Config($this->db, 'comments');
-        $settings = $config->getSettings();
+        $settings = $this->commentsConfig->getSettings();
 
         // Emoticons einbinden, falls diese aktiv sind
         if ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true) {
@@ -154,8 +153,7 @@ class Index extends Core\Modules\Controller
     {
         $this->redirectMessages()->getMessage();
 
-        $config = new Core\Config($this->db, 'comments');
-        $settings = $config->getSettings();
+        $settings = $this->commentsConfig->getSettings();
 
         // Auflistung der Kommentare
         $comments = $this->commentsModel->getAllByModule($this->module, $this->entryId, POS, $this->auth->entries);
