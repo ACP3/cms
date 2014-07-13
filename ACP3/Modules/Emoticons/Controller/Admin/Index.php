@@ -12,13 +12,17 @@ use ACP3\Modules\Emoticons;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Emoticons\Model
      */
     protected $emoticonsModel;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $emoticonsConfig;
+    /**
+     * @var \ACP3\Modules\Emoticons\Cache
+     */
+    protected $emoticonsCache;
 
     public function __construct(
         Core\Auth $auth,
@@ -30,13 +34,15 @@ class Index extends Core\Modules\Controller\Admin
         Core\Modules $modules,
         Core\Validate $validate,
         Core\Session $session,
-        \Doctrine\DBAL\Connection $db,
-        Emoticons\Model $emoticonsModel)
+        Emoticons\Model $emoticonsModel,
+        Core\Config $emoticonsConfig,
+        Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->db = $db;
         $this->emoticonsModel = $emoticonsModel;
+        $this->emoticonsConfig = $emoticonsConfig;
+        $this->emoticonsCache = $emoticonsCache;
     }
 
     public function actionCreate()
@@ -50,10 +56,8 @@ class Index extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['picture']['size'];
                 }
 
-                $config = new Core\Config($this->db, 'emoticons');
-
                 $validator = $this->get('emoticons.validator');
-                $validator->validateCreate($_POST, $file, $config->getSettings());
+                $validator->validateCreate($_POST, $file, $this->emoticonsConfig->getSettings());
 
                 $upload = new Core\Helpers\Upload('emoticons');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -67,8 +71,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $bool = $this->emoticonsModel->insert($insertValues);
 
-                $cache = new Emoticons\Cache($this->emoticonsModel);
-                $cache->setCache();
+                $this->emoticonsCache->setCache();
 
                 $this->session->unsetFormToken();
 
@@ -103,8 +106,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $cache = new Emoticons\Cache($this->emoticonsModel);
-            $cache->setCache();
+            $this->emoticonsCache->setCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
         } elseif (is_string($items)) {
@@ -126,10 +128,8 @@ class Index extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['picture']['size'];
                     }
 
-                    $config = new Core\Config($this->db, 'emoticons');
-
                     $validator = $this->get('emoticons.validator');
-                    $validator->validateEdit($_POST, $file, $config->getSettings());
+                    $validator->validateEdit($_POST, $file, $this->emoticonsConfig->getSettings());
 
                     $updateValues = array(
                         'code' => Core\Functions::strEncode($_POST['code']),
@@ -145,8 +145,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->emoticonsModel->update($updateValues, $this->uri->id);
 
-                    $cache = new Emoticons\Cache($this->emoticonsModel);
-                    $cache->setCache();
+                    $this->emoticonsCache->setCache();
 
                     $this->session->unsetFormToken();
 
@@ -190,7 +189,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'emoticons');
+        $config = $this->emoticonsConfig;
 
         if (empty($_POST) === false) {
             try {
