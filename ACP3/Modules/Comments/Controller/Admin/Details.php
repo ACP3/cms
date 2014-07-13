@@ -4,6 +4,7 @@ namespace ACP3\Modules\Comments\Controller\Admin;
 
 use ACP3\Core;
 use ACP3\Modules\Comments;
+use ACP3\Modules\System;
 
 /**
  * Class Details
@@ -17,13 +18,17 @@ class Details extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Comments\Model
      */
     protected $commentsModel;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $commentsConfig;
+    /**
+     * @var \ACP3\Modules\System\Model
+     */
+    protected $systemModel;
 
     public function __construct(
         Core\Auth $auth,
@@ -36,14 +41,16 @@ class Details extends Core\Modules\Controller\Admin
         Core\Validate $validate,
         Core\Session $session,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Comments\Model $commentsModel)
+        Comments\Model $commentsModel,
+        Core\Config $commentsConfig,
+        System\Model $systemModel)
     {
         parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
         $this->date = $date;
-        $this->db = $db;
         $this->commentsModel = $commentsModel;
+        $this->commentsConfig = $commentsConfig;
+        $this->systemModel = $systemModel;
     }
 
     public function actionDelete()
@@ -76,13 +83,13 @@ class Details extends Core\Modules\Controller\Admin
                     $validator = $this->get('comments.validator');
                     $validator->validateEdit($_POST);
 
-                    $update_values = array();
-                    $update_values['message'] = Core\Functions::strEncode($_POST['message']);
+                    $updateValues = array();
+                    $updateValues['message'] = Core\Functions::strEncode($_POST['message']);
                     if ((empty($comment['user_id']) || $this->get('core.validate')->isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
-                        $update_values['name'] = Core\Functions::strEncode($_POST['name']);
+                        $updateValues['name'] = Core\Functions::strEncode($_POST['name']);
                     }
 
-                    $bool = $this->commentsModel->update($update_values, $this->uri->id);
+                    $bool = $this->commentsModel->update($updateValues, $this->uri->id);
 
                     $this->session->unsetFormToken();
 
@@ -116,10 +123,10 @@ class Details extends Core\Modules\Controller\Admin
         $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->uri->id);
 
         if (empty($comments) === false) {
-            $module = $this->db->fetchColumn('SELECT name FROM ' . DB_PRE . 'modules WHERE id = ?', array($this->uri->id));
+            $moduleName = $this->systemModel->getModuleNameById($this->uri->id);
 
             //Brotkrümelspur
-            $this->breadcrumb->append($this->lang->t($module, $module));
+            $this->breadcrumb->append($this->lang->t($moduleName, $moduleName));
 
             $c_comments = count($comments);
 
@@ -133,8 +140,7 @@ class Details extends Core\Modules\Controller\Admin
                 );
                 $this->appendContent($this->get('core.functions')->dataTable($config));
 
-                $config = new Core\Config($this->db, 'comments');
-                $settings = $config->getSettings();
+                $settings = $this->commentsConfig->getSettings();
 
                 // Emoticons einbinden
                 $emoticons_active = false;
