@@ -1,11 +1,11 @@
 services:
   feeds.controller.admin.index:
     class: ACP3\Modules\Feeds\Controller\Admin\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.db']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.db']
 
   feeds.controller.frontend.index:
     class: ACP3\Modules\Feeds\Controller\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.db']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.db']
 
   feeds.validator:
     class: ACP3\Modules\Feeds\Validator

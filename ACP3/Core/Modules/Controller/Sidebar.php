@@ -15,9 +15,14 @@ class Sidebar extends Core\Modules\Controller
      */
     protected $layout = '';
 
+    /**
+     * @return $this
+     */
     public function preDispatch()
     {
         $this->setNoOutput(false);
+
+        return $this;
     }
 
     public function display()

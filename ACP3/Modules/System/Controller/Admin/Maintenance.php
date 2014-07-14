@@ -21,19 +21,15 @@ class Maintenance extends Core\Modules\Controller\Admin
     protected $systemModel;
 
     public function __construct(
-        Core\Auth $auth,
+        Core\Context $context,
         Core\Breadcrumb $breadcrumb,
-        Core\Lang $lang,
-        Core\URI $uri,
-        Core\View $view,
         Core\SEO $seo,
-        Core\Modules $modules,
         Core\Validate $validate,
         Core\Session $session,
         \Doctrine\DBAL\Connection $db,
         System\Model $systemModel)
     {
-        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
+        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
 
         $this->db = $db;
         $this->systemModel = $systemModel;

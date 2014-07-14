@@ -21,19 +21,15 @@ class Resources extends Core\Modules\Controller\Admin
     protected $permissionsModel;
 
     public function __construct(
-        Core\Auth $auth,
+        Core\Context $context,
         Core\Breadcrumb $breadcrumb,
-        Core\Lang $lang,
-        Core\URI $uri,
-        Core\View $view,
         Core\SEO $seo,
-        Core\Modules $modules,
         Core\Validate $validate,
         Core\Session $session,
         Core\ACL $acl,
         Permissions\Model $permissionsModel)
     {
-        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
+        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
 
         $this->acl = $acl;
         $this->permissionsModel = $permissionsModel;

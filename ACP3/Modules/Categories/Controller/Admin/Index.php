@@ -25,20 +25,16 @@ class Index extends Core\Modules\Controller\Admin
     protected $categoriesCache;
 
     public function __construct(
-        Core\Auth $auth,
+        Core\Context $context,
         Core\Breadcrumb $breadcrumb,
-        Core\Lang $lang,
-        Core\URI $uri,
-        Core\View $view,
         Core\SEO $seo,
-        Core\Modules $modules,
         Core\Validate $validate,
         Core\Session $session,
         Categories\Model $categoriesModel,
         Core\Config $categoriesConfig,
         Categories\Cache $categoriesCache)
     {
-        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
+        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
 
         $this->categoriesModel = $categoriesModel;
         $this->categoriesConfig = $categoriesConfig;
