@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Index
  * @package ACP3\Modules\Newsletter\Controller\Sidebar
  */
-class Index extends Core\Modules\Controller\Sidebar
+class Index extends Core\Modules\Controller
 {
     /**
      * @var Core\Session
@@ -17,11 +17,9 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function __construct(
         Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
         Core\Session $session)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->session = $session;
     }

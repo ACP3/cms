@@ -31,17 +31,13 @@ class Details extends Core\Modules\Controller\Admin
     protected $systemModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session,
+        Core\Context\Admin $context,
         Core\Date $date,
         Comments\Model $commentsModel,
         Core\Config $commentsConfig,
         System\Model $systemModel)
     {
-        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->commentsModel = $commentsModel;

@@ -1,15 +1,15 @@
 services:
   news.controller.admin.index:
     class: ACP3\Modules\News\Controller\Admin\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@core.db', '@news.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@news.model']
 
   news.controller.frontend.index:
     class: ACP3\Modules\News\Controller\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.db', '@news.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@news.model']
 
   news.controller.sidebar.index:
     class: ACP3\Modules\News\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.db', '@news.model']
+    arguments: ['@core.context', '@core.date', '@core.db', '@news.model']
 
   news.model:
     class: ACP3\Modules\News\Model

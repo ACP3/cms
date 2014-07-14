@@ -11,7 +11,7 @@ use ACP3\Modules\Files;
  * Class Index
  * @package ACP3\Modules\Files\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Frontend
 {
     /**
      * @var \ACP3\Core\Date
@@ -31,15 +31,13 @@ class Index extends Core\Modules\Controller
     protected $categoriesModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Files\Model $filesModel,
         Categories\Model $categoriesModel)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;

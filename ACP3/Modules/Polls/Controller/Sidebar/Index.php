@@ -9,7 +9,7 @@ use ACP3\Modules\Polls;
  * Class Index
  * @package ACP3\Modules\Polls\Controller\Sidebar
  */
-class Index extends Core\Modules\Controller\Sidebar
+class Index extends Core\Modules\Controller
 {
 
     /**
@@ -23,12 +23,10 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function __construct(
         Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
         Core\Date $date,
         Polls\Model $pollsModel)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->date = $date;
         $this->pollsModel = $pollsModel;

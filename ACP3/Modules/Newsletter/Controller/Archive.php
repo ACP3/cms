@@ -9,7 +9,7 @@ use ACP3\Modules\Newsletter;
  * Class Archive
  * @package ACP3\Modules\Newsletter\Controller
  */
-class Archive extends Core\Modules\Controller
+class Archive extends Core\Modules\Controller\Frontend
 {
 
     /**
@@ -26,14 +26,12 @@ class Archive extends Core\Modules\Controller
     protected $newsletterModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Newsletter\Model $newsletterModel)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;

@@ -25,16 +25,12 @@ class Index extends Core\Modules\Controller\Admin
     protected $commentsConfig;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session,
+        Core\Context\Admin $context,
         Core\Date $date,
         Comments\Model $commentsModel,
         Core\Config $commentsConfig)
     {
-        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->commentsModel = $commentsModel;

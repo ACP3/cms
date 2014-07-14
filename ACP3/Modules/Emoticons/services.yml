@@ -1,7 +1,7 @@
 services:
   emoticons.controller.admin.index:
     class: ACP3\Modules\Emoticons\Controller\Admin\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@emoticons.model', '@emoticons.config', '@emoticons.cache']
+    arguments: ['@core.context.admin', '@emoticons.model', '@emoticons.config', '@emoticons.cache']
 
   emoticons.model:
     class: ACP3\Modules\Emoticons\Model

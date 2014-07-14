@@ -3,6 +3,14 @@ services:
     class : ACP3\Core\Context
     arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.uri', '@core.view']
 
+  core.context.admin:
+    class : ACP3\Core\Context\Admin
+    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.uri', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session']
+
+  core.context.frontend:
+    class : ACP3\Core\Context\Frontend
+    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.uri', '@core.view', '@core.breadcrumb', '@core.seo']
+
   core.validate:
     class: ACP3\Core\Validate
     arguments: ['@core.acl', '@core.db', '@core.uri']
@@ -80,8 +88,12 @@ services:
 
   core.modules.controller:
     abstract: true
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo']
+    arguments: ['@core.context']
+
+  core.modules.controller.frontend:
+    abstract: true
+    arguments: ['@core.context.frontend']
 
   core.modules.controller.admin:
     abstract: true
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session']
+    arguments: ['@core.context.admin']

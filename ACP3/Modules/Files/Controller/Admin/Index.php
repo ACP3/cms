@@ -26,16 +26,12 @@ class Index extends Core\Modules\Controller\Admin
     protected $filesModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session,
+        Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Files\Model $filesModel)
     {
-        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;

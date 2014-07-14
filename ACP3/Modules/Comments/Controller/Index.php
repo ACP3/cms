@@ -9,7 +9,7 @@ use ACP3\Modules\Comments;
  * Class Index
  * @package ACP3\Modules\Comments\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Frontend
 {
 
     /**
@@ -38,15 +38,13 @@ class Index extends Core\Modules\Controller
     protected $commentsConfig;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $context,
         Core\Date $date,
         Core\Session $session,
         Comments\Model $commentsModel,
         Core\Config $commentsConfig)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->date = $date;
         $this->session = $session;

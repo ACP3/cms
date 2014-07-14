@@ -18,14 +18,10 @@ class Accounts extends Core\Modules\Controller\Admin
     protected $newsletterModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session,
+        Core\Context\Admin $context,
         Newsletter\Model $newsletterModel)
     {
-        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
+        parent::__construct($context);
 
         $this->newsletterModel = $newsletterModel;
     }

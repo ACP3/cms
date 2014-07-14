@@ -1,19 +1,19 @@
 services:
   gallery.controller.admin.index:
     class: ACP3\Modules\Gallery\Controller\Admin\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@core.db', '@gallery.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@gallery.model']
 
   gallery.controller.admin.pictures:
     class: ACP3\Modules\Gallery\Controller\Admin\Pictures
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@core.db', '@gallery.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@gallery.model']
 
   gallery.controller.frontend.index:
     class: ACP3\Modules\Gallery\Controller\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.db', '@gallery.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@gallery.model']
 
   gallery.controller.sidebar.index:
     class: ACP3\Modules\Gallery\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.db', '@gallery.model']
+    arguments: ['@core.context', '@core.date', '@core.db', '@gallery.model']
 
   gallery.model:
     class: ACP3\Modules\Gallery\Model
