@@ -1,15 +1,15 @@
 services:
   polls.controller.admin.index:
     class: ACP3\Modules\Polls\Controller\Admin\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@polls.model']
+    arguments: ['@core.context.admin', '@core.date', '@polls.model']
 
   polls.controller.frontend.index:
     class: ACP3\Modules\Polls\Controller\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@polls.model']
+    arguments: ['@core.context.frontend', '@core.date', '@polls.model']
 
   polls.controller.sidebar.index:
     class: ACP3\Modules\Polls\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@polls.model']
+    arguments: ['@core.context', '@core.date', '@polls.model']
 
   polls.model:
     class: ACP3\Modules\Polls\Model

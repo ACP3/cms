@@ -9,7 +9,7 @@ use ACP3\Modules\Articles;
  * Class Index
  * @package ACP3\Modules\Articles\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Frontend
 {
     /**
      * @var \ACP3\Core\Date
@@ -21,13 +21,11 @@ class Index extends Core\Modules\Controller
     protected $articlesModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $context,
         Core\Date $date,
         Articles\Model $articlesModel)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->date = $date;
         $this->articlesModel = $articlesModel;

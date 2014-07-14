@@ -1,15 +1,15 @@
 services:
   system.controller.admin.extensions:
     class: ACP3\Modules\System\Controller\Admin\Extensions
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.db', '@system.model', '@permissions.cache']
+    arguments: ['@core.context.admin', '@core.db', '@system.model', '@permissions.cache']
 
   system.controller.admin.index:
     class: ACP3\Modules\System\Controller\Admin\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.db', '@system.model']
+    arguments: ['@core.context.admin', '@core.db', '@system.model']
 
   system.controller.admin.maintenance:
     class: ACP3\Modules\System\Controller\Admin\Maintenance
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.db', '@system.model']
+    arguments: ['@core.context.admin', '@core.db', '@system.model']
 
   system.model:
     class: ACP3\Modules\System\Model

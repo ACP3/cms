@@ -22,15 +22,11 @@ class Index extends Core\Modules\Controller\Admin
     protected $pollsModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session,
+        Core\Context\Admin $context,
         Core\Date $date,
         Polls\Model $pollsModel)
     {
-        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->pollsModel = $pollsModel;

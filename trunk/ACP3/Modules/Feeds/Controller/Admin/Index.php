@@ -12,26 +12,22 @@ use ACP3\Modules\Feeds;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var \ACP3\Core\Config
      */
-    protected $db;
+    protected $feedsConfig;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session,
-        \Doctrine\DBAL\Connection $db)
+        Core\Context\Admin $context,
+        Core\Config $feedsConfig)
     {
-        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
+        parent::__construct($context);
 
-        $this->db = $db;
+        $this->feedsConfig = $feedsConfig;
     }
 
     public function actionIndex()
     {
-        $config = new Core\Config($this->db, 'feeds');
+        $config = $this->feedsConfig;
 
         $redirect = $this->redirectMessages();
 

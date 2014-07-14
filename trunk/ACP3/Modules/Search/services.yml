@@ -1,11 +1,11 @@
 services:
   search.controller.frontend.index:
     class: ACP3\Modules\Search\Controller\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.session']
+    arguments: ['@core.context.frontend', '@core.session']
 
   search.controller.sidebar.index:
     class: ACP3\Modules\Search\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.session']
+    arguments: ['@core.context', '@core.session']
 
   search.helpers:
     class: ACP3\Modules\Search\Helpers

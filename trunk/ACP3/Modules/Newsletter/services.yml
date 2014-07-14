@@ -1,23 +1,23 @@
 services:
   newsletter.controller.admin.accounts:
     class: ACP3\Modules\Newsletter\Controller\Admin\Accounts
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@newsletter.model']
+    arguments: ['@core.context.admin', '@newsletter.model']
 
   newsletter.controller.admin.index:
     class: ACP3\Modules\Newsletter\Controller\Admin\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@core.db', '@newsletter.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@newsletter.model']
 
   newsletter.controller.frontend.archive:
     class: ACP3\Modules\Newsletter\Controller\Archive
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.db', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@newsletter.model']
 
   newsletter.controller.frontend.index:
     class: ACP3\Modules\Newsletter\Controller\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.session', '@core.db', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.session', '@core.db', '@newsletter.model']
 
   newsletter.controller.sidebar.index:
     class: ACP3\Modules\Newsletter\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.session']
+    arguments: ['@core.context', '@core.session']
 
   newsletter.model:
     class: ACP3\Modules\Newsletter\Model

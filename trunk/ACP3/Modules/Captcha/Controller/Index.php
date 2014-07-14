@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Index
  * @package ACP3\Modules\Captcha\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Frontend
 {
 
     public function actionImage()

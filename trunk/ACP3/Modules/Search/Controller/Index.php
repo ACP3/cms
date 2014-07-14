@@ -9,7 +9,7 @@ use ACP3\Modules\Search;
  * Class Index
  * @package ACP3\Modules\Search\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Frontend
 {
 
     /**
@@ -18,12 +18,10 @@ class Index extends Core\Modules\Controller
     protected $session;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $context,
         Core\Session $session)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->session = $session;
     }

@@ -18,11 +18,9 @@ class Index extends Core\Modules\Controller
 
     public function __construct(
         Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
         Minify\Helpers $minifyHelpers)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->minifyHelpers = $minifyHelpers;
     }

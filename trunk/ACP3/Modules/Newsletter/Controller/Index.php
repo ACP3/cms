@@ -9,7 +9,7 @@ use ACP3\Modules\Newsletter;
  * Class Index
  * @package ACP3\Modules\Newsletter\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Frontend
 {
 
     /**
@@ -26,14 +26,12 @@ class Index extends Core\Modules\Controller
     protected $newsletterModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $context,
         Core\Session $session,
         \Doctrine\DBAL\Connection $db,
         Newsletter\Model $newsModel)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->db = $db;
         $this->session = $session;

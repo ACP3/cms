@@ -9,7 +9,7 @@ use ACP3\Modules\Gallery;
  * Class Index
  * @package ACP3\Modules\Gallery\Controller\Sidebar
  */
-class Index extends Core\Modules\Controller\Sidebar
+class Index extends Core\Modules\Controller
 {
     /**
      * @var Core\Date
@@ -26,13 +26,11 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function __construct(
         Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Gallery\Model $galleryModel)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;

@@ -9,7 +9,7 @@ use ACP3\Modules\Users;
  * Class Account
  * @package ACP3\Modules\Users\Controller
  */
-class Account extends Core\Modules\Controller
+class Account extends Core\Modules\Controller\Frontend
 {
     /**
      * @var Core\Date
@@ -29,15 +29,13 @@ class Account extends Core\Modules\Controller
     protected $usersModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $context,
         Core\Session $session,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Users\Model $usersModel)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;

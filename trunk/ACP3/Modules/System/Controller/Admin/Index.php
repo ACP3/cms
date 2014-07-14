@@ -21,15 +21,11 @@ class Index extends Core\Modules\Controller\Admin
     protected $systemModel;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session,
+        Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
         System\Model $systemModel)
     {
-        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
+        parent::__construct($context);
 
         $this->db = $db;
         $this->systemModel = $systemModel;

@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Admin
  * @package ACP3\Core\Modules\Controller
  */
-class Admin extends Core\Modules\Controller
+abstract class Admin extends Core\Modules\Controller\Frontend
 {
     /**
      * @var \ACP3\Core\Session
@@ -19,17 +19,12 @@ class Admin extends Core\Modules\Controller
      */
     protected $validate;
 
-    public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        Core\Validate $validate,
-        Core\Session $session)
+    public function __construct(Core\Context\Admin $adminContext)
     {
-        parent::__construct($context, $breadcrumb, $seo);
+        parent::__construct($adminContext);
 
-        $this->validate = $validate;
-        $this->session = $session;
+        $this->validate = $adminContext->getValidate();
+        $this->session = $adminContext->getSession();
     }
 
     /**
@@ -61,7 +56,7 @@ class Admin extends Core\Modules\Controller
             $entries = $this->uri->entries;
         }
 
-        $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+        $alerts = $this->get('core.helpers.alerts');
 
         if (!isset($entries)) {
             $this->setContent($alerts->errorBox($this->lang->t('system', 'no_entries_selected')));

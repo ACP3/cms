@@ -9,7 +9,7 @@ use ACP3\Modules\Users;
  * Class Index
  * @package ACP3\Modules\Users\Controller\Sidebar
  */
-class Index extends Core\Modules\Controller\Sidebar
+class Index extends Core\Modules\Controller
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -18,11 +18,9 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function __construct(
         Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
         \Doctrine\DBAL\Connection $db)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
         $this->db = $db;
     }

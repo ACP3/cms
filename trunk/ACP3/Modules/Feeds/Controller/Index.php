@@ -9,34 +9,33 @@ use ACP3\Modules\Feeds;
  * Class Index
  * @package ACP3\Modules\Feeds\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var \ACP3\Core\Config
      */
-    protected $db;
+    protected $feedsConfig;
 
     public function __construct(
-        Core\Context $context,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
-        \Doctrine\DBAL\Connection $db)
+        Core\Context\Frontend $context,
+        Core\Config $feedsConfig)
     {
-       parent::__construct($context, $breadcrumb, $seo);
+       parent::__construct($context);
 
-        $this->db = $db;
+        $this->feedsConfig = $feedsConfig;
     }
 
     public function actionIndex()
     {
         $module = $this->uri->feed;
-        $className = "\\ACP3\\Modules\\Feeds\\Extensions";
         $action = strtolower($module) . 'Feed';
+
+        $feed = $this->get('feeds.extensions');
+
         if ($this->modules->hasPermission('frontend/' . $module) === true &&
-            method_exists($className, $action) === true
+            method_exists($feed, $action) === true
         ) {
-            $config = new Core\Config($this->db, 'feeds');
-            $settings = $config->getSettings();
+            $settings = $this->feedsConfig->getSettings();
 
             define('FEED_LINK', 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES));
 
@@ -50,7 +49,6 @@ class Index extends Core\Modules\Controller
 
             Core\View::factory('FeedGenerator', $config);
 
-            $feed = $this->get('feeds.extensions');
             $feed->$action();
 
             $this->setContentType('text/xml');
