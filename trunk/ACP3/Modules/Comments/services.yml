@@ -1,15 +1,15 @@
 services:
   comments.controller.admin.details:
     class: ACP3\Modules\Comments\Controller\Admin\Details
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@comments.model', '@comments.config', '@system.model']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@comments.model', '@comments.config', '@system.model']
 
   comments.controller.admin.index:
     class: ACP3\Modules\Comments\Controller\Admin\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@comments.model', '@comments.config']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@comments.model', '@comments.config']
 
   comments.controller.frontend.index:
     class: ACP3\Modules\Comments\Controller\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@core.session', '@comments.model', '@comments.config']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.session', '@comments.model', '@comments.config']
 
   comments.config:
     class: ACP3\Core\Config

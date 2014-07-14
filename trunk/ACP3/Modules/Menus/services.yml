@@ -1,11 +1,11 @@
 services:
   menus.controller.admin.index:
     class: ACP3\Modules\Menus\Controller\Admin\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.db', '@menus.model']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.db', '@menus.model']
 
   menus.controller.admin.items:
     class: ACP3\Modules\Menus\Controller\Admin\Items
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.db', '@menus.model']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.db', '@menus.model']
 
   menus.cache:
     class: ACP3\Modules\Menus\Cache

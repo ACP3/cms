@@ -27,20 +27,16 @@ class Index extends Core\Modules\Controller\Admin
     protected $newsModel;
 
     public function __construct(
-        Core\Auth $auth,
+        Core\Context $context,
         Core\Breadcrumb $breadcrumb,
-        Core\Lang $lang,
-        Core\URI $uri,
-        Core\View $view,
         Core\SEO $seo,
-        Core\Modules $modules,
         Core\Validate $validate,
         Core\Session $session,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         News\Model $newsModel)
     {
-        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
+        parent::__construct($context, $breadcrumb, $seo, $validate, $session);
 
         $this->date = $date;
         $this->db = $db;

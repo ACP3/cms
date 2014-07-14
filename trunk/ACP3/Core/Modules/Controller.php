@@ -90,21 +90,17 @@ abstract class Controller
     protected $contentAppend = '';
 
     public function __construct(
-        Core\Auth $auth,
+        Core\Context $context,
         Core\Breadcrumb $breadcrumb,
-        Core\Lang $lang,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo,
-        Core\Modules $modules)
+        Core\SEO $seo)
     {
-        $this->auth = $auth;
+        $this->auth = $context->getAuth();
+        $this->lang = $context->getLang();
+        $this->uri = $context->getUri();
+        $this->view = $context->getView();
+        $this->modules = $context->getModules();
         $this->breadcrumb = $breadcrumb;
-        $this->lang = $lang;
-        $this->uri = $uri;
-        $this->view = $view;
         $this->seo = $seo;
-        $this->modules = $modules;
     }
 
     /**

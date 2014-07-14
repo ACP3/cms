@@ -1,15 +1,15 @@
 services:
   files.controller.admin.index:
     class: ACP3\Modules\Files\Controller\Admin\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@core.db', '@files.model']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.date', '@core.db', '@files.model']
 
   files.controller.frontend.index:
     class: ACP3\Modules\Files\Controller\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@core.db', '@files.model', '@categories.model']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.db', '@files.model', '@categories.model']
 
   files.controller.sidebar.index:
     class: ACP3\Modules\Files\Controller\Sidebar\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@core.db', '@files.model']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.date', '@core.db', '@files.model']
 
   files.model:
     class: ACP3\Modules\Files\Model

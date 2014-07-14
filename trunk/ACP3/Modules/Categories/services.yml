@@ -1,7 +1,7 @@
 services:
   categories.controller.admin.index:
     class: ACP3\Modules\Categories\Controller\Admin\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@categories.model', '@categories.config', '@categories.cache']
+    arguments: ['@core.context', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@categories.model', '@categories.config', '@categories.cache']
 
   categories.config:
     class: ACP3\Core\Config

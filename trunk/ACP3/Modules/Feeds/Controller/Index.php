@@ -17,16 +17,12 @@ class Index extends Core\Modules\Controller
     protected $db;
 
     public function __construct(
-        Core\Auth $auth,
+        Core\Context $context,
         Core\Breadcrumb $breadcrumb,
-        Core\Lang $lang,
-        Core\URI $uri,
-        Core\View $view,
         Core\SEO $seo,
-        Core\Modules $modules,
         \Doctrine\DBAL\Connection $db)
     {
-        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+       parent::__construct($context, $breadcrumb, $seo);
 
         $this->db = $db;
     }
