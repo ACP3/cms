@@ -93,8 +93,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $this->setContent($alerts->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'users/forgot_pwd');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/forgot_pwd');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

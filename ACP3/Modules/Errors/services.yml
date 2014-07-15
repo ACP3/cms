@@ -1,4 +1,0 @@
-services:
-  errors.controller.frontend.index:
-    class: ACP3\Modules\Errors\Controller\Index
-    parent: core.modules.controller

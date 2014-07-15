@@ -1,4 +1,0 @@
-services:
-  acp.controller.admin.index:
-    class: ACP3\Modules\Acp\Controller\Admin\Index
-    parent: core.modules.controller.admin

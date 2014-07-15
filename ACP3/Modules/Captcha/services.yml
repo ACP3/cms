@@ -1,7 +1,0 @@
-services:
-  captcha.controller.frontend.index:
-    class: ACP3\Modules\Captcha\Controller\Index
-    parent: core.modules.controller
-  captcha.helpers:
-    class: ACP3\Modules\Captcha\Helpers
-    arguments: ['@core.auth', '@core.uri', '@core.view', '@core.helpers.secure']

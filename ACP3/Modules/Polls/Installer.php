@@ -3,12 +3,31 @@
 namespace ACP3\Modules\Polls;
 
 use ACP3\Core\Modules;
+use ACP3\Modules\System;
+use ACP3\Modules\Permissions;
 
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'polls';
     const SCHEMA_VERSION = 33;
+
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel,
+        Permissions\Model $permissionsModel,
+        Modules $modules
+    )
+    {
+        parent::__construct($db, $systemModel, $permissionsModel);
+
+        $this->modules = $modules;
+    }
 
     public function createTables()
     {
@@ -68,9 +87,9 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "polls/", "polls/index/") WHERE uri LIKE "polls/%";',
             ),
             33 => array(
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/list/", "polls/index/index/") WHERE uri LIKE "polls/list/%";' : '',
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/vote/", "polls/index/vote/") WHERE uri LIKE "polls/vote/%";' : '',
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/result/", "polls/index/result/") WHERE uri LIKE "polls/result/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/list/", "polls/index/index/") WHERE uri LIKE "polls/list/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/vote/", "polls/index/vote/") WHERE uri LIKE "polls/vote/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/result/", "polls/index/result/") WHERE uri LIKE "polls/result/%";' : '',
             )
         );
     }

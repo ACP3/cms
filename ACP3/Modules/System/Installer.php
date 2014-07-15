@@ -3,6 +3,7 @@
 namespace ACP3\Modules\System;
 
 use ACP3\Core\Modules;
+use ACP3\Modules\Permissions;
 
 class Installer extends Modules\AbstractInstaller
 {
@@ -10,27 +11,42 @@ class Installer extends Modules\AbstractInstaller
     const MODULE_NAME = 'system';
     const SCHEMA_VERSION = 45;
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
-    {
-        parent::__construct($db);
-
-        $this->specialResources = array(
-            'Admin' => array(
-                'Extensions' => array(
-                    'index' => 7,
-                    'designs' => 7,
-                    'languages' => 7,
-                    'modules' => 7,
-                ),
-                'Index' => array(
-                    'configuration' => 7,
-                ),
-                'Maintenance' => array(
-                    'sql_export' => 7,
-                    'sql_import' => 7,
-                )
+    /**
+     * @var array
+     */
+    protected $specialResources = array(
+        'Admin' => array(
+            'Extensions' => array(
+                'index' => 7,
+                'designs' => 7,
+                'languages' => 7,
+                'modules' => 7,
+            ),
+            'Index' => array(
+                'configuration' => 7,
+            ),
+            'Maintenance' => array(
+                'sql_export' => 7,
+                'sql_import' => 7,
             )
-        );
+        )
+    );
+
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Model $systemModel,
+        Permissions\Model $permissionsModel,
+        Modules $modules
+    )
+    {
+        parent::__construct($db, $systemModel, $permissionsModel);
+
+        $this->modules = $modules;
     }
 
     public function removeResources()

@@ -3,12 +3,31 @@
 namespace ACP3\Modules\Guestbook;
 
 use ACP3\Core\Modules;
+use ACP3\Modules\System;
+use ACP3\Modules\Permissions;
 
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'guestbook';
     const SCHEMA_VERSION = 32;
+
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel,
+        Permissions\Model $permissionsModel,
+        Modules $modules
+    )
+    {
+        parent::__construct($db, $systemModel, $permissionsModel);
+
+        $this->modules = $modules;
+    }
 
     public function createTables()
     {
@@ -52,8 +71,8 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "guestbook/", "guestbook/index/") WHERE uri LIKE "guestbook/%";',
             ),
             32 => array(
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/list/", "guestbook/index/index/") WHERE uri LIKE "guestbook/list/%";' : '',
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/create/", "guestbook/index/create/") WHERE uri LIKE "guestbook/create/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/list/", "guestbook/index/index/") WHERE uri LIKE "guestbook/list/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/create/", "guestbook/index/create/") WHERE uri LIKE "guestbook/create/%";' : '',
             )
         );
     }

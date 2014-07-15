@@ -3,12 +3,31 @@
 namespace ACP3\Modules\Files;
 
 use ACP3\Core\Modules;
+use ACP3\Modules\System;
+use ACP3\Modules\Permissions;
 
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'files';
     const SCHEMA_VERSION = 34;
+
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel,
+        Permissions\Model $permissionsModel,
+        Modules $modules
+    )
+    {
+        parent::__construct($db, $systemModel, $permissionsModel);
+
+        $this->modules = $modules;
+    }
 
     public function createTables()
     {
@@ -61,9 +80,9 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "files/", "files/index/") WHERE uri LIKE "files/%";',
             ),
             34 => array(
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/list/", "files/index/index/") WHERE uri LIKE "files/list/%";' : '',
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/files/", "files/index/files/") WHERE uri LIKE "files/files/%";' : '',
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/details/", "files/index/details/") WHERE uri LIKE "files/details/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/list/", "files/index/index/") WHERE uri LIKE "files/list/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/files/", "files/index/files/") WHERE uri LIKE "files/files/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/details/", "files/index/details/") WHERE uri LIKE "files/details/%";' : '',
             )
         );
     }

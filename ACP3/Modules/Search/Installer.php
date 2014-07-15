@@ -3,12 +3,31 @@
 namespace ACP3\Modules\Search;
 
 use ACP3\Core\Modules;
+use ACP3\Modules\System;
+use ACP3\Modules\Permissions;
 
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'search';
     const SCHEMA_VERSION = 32;
+
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel,
+        Permissions\Model $permissionsModel,
+        Modules $modules
+    )
+    {
+        parent::__construct($db, $systemModel, $permissionsModel);
+
+        $this->modules = $modules;
+    }
 
     public function createTables()
     {
@@ -40,7 +59,7 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "search/", "search/index/") WHERE uri LIKE "search/%";',
             ),
             33 => array(
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "search/list/", "search/index/index/") WHERE uri LIKE "search/list/%";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "search/list/", "search/index/index/") WHERE uri LIKE "search/list/%";' : '',
             )
         );
     }

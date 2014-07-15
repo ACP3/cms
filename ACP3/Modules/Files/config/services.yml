@@ -1,0 +1,24 @@
+services:
+  files.controller.admin.index:
+    class: ACP3\Modules\Files\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@files.model']
+
+  files.controller.frontend.index:
+    class: ACP3\Modules\Files\Controller\Index
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@files.model', '@categories.model']
+
+  files.controller.sidebar.index:
+    class: ACP3\Modules\Files\Controller\Sidebar\Index
+    arguments: ['@core.context', '@core.date', '@core.db', '@files.model']
+
+  files.model:
+    class: ACP3\Modules\Files\Model
+    arguments: ['@core.db']
+
+  files.validator:
+    class: ACP3\Modules\Files\Validator
+    parent: core.validator.abstract
+
+  files.installer:
+    class: ACP3\Modules\Files\Installer
+    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']

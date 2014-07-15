@@ -4,10 +4,6 @@ namespace ACP3\Core\Modules;
 interface InstallerInterface
 {
     /**
-     * @param \Doctrine\DBAL\Connection $db
-     */
-    public function __construct(\Doctrine\DBAL\Connection $db);
-    /**
      * Liefert ein Array mit den zu erstellenden Datenbanktabellen des Moduls zurück
      */
     public function createTables();

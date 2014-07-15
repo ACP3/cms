@@ -1,0 +1,36 @@
+services:
+  newsletter.controller.admin.accounts:
+    class: ACP3\Modules\Newsletter\Controller\Admin\Accounts
+    arguments: ['@core.context.admin', '@newsletter.model']
+
+  newsletter.controller.admin.index:
+    class: ACP3\Modules\Newsletter\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@newsletter.model']
+
+  newsletter.controller.frontend.archive:
+    class: ACP3\Modules\Newsletter\Controller\Archive
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@newsletter.model']
+
+  newsletter.controller.frontend.index:
+    class: ACP3\Modules\Newsletter\Controller\Index
+    arguments: ['@core.context.frontend', '@core.session', '@core.db', '@newsletter.model']
+
+  newsletter.controller.sidebar.index:
+    class: ACP3\Modules\Newsletter\Controller\Sidebar\Index
+    arguments: ['@core.context', '@core.session']
+
+  newsletter.model:
+    class: ACP3\Modules\Newsletter\Model
+    arguments: ['@core.db']
+
+  newsletter.helpers:
+    class: ACP3\Modules\Newsletter\Helpers
+    arguments: ['@core.db', '@core.date', '@core.lang', '@core.modules', '@core.uri', '@core.view', '@core.helpers.string.formatter']
+
+  newsletter.validator:
+    class: ACP3\Modules\Newsletter\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules', '@newsletter.model']
+
+  newsletter.installer:
+    class: ACP3\Modules\Newsletter\Installer
+    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']

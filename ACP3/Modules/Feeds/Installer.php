@@ -10,18 +10,16 @@ class Installer extends Modules\AbstractInstaller
     const MODULE_NAME = 'feeds';
     const SCHEMA_VERSION = 31;
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
-    {
-        parent::__construct($db);
-
-        $this->specialResources = array(
-            'Admin' => array(
-                'Index' => array(
-                    'index' => 7
-                )
+    /**
+     * @var array
+     */
+    protected $specialResources = array(
+        'Admin' => array(
+            'Index' => array(
+                'index' => 7
             )
-        );
-    }
+        )
+    );
 
     public function createTables()
     {

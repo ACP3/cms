@@ -37,6 +37,9 @@ class Items extends Core\Modules\Controller\Admin
         if (empty($_POST) === false) {
             try {
                 $validator = $this->get('menus.validator');
+                if ($this->modules->isActive('articles') === true) {
+                    $validator->setArticlesHelpers($this->get('articles.helpers'));
+                }
                 $validator->validateItem($_POST);
 
                 $insertValues = array(
@@ -177,6 +180,9 @@ class Items extends Core\Modules\Controller\Admin
             if (empty($_POST) === false) {
                 try {
                     $validator = $this->get('menus.validator');
+                    if ($this->modules->isActive('articles') === true) {
+                        $validator->setArticlesHelpers($this->get('articles.helpers'));
+                    }
                     $validator->validateItem($_POST);
 
                     // Vorgenommene Änderungen am Datensatz anwenden

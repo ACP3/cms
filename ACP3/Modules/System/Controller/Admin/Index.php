@@ -35,7 +35,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $config = new Core\Config($this->db, 'system');
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect = $this->redirectMessages();
 
         if (empty($_POST) === false) {
             try {

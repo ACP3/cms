@@ -1,0 +1,8 @@
+services:
+  errors.controller.frontend.index:
+    class: ACP3\Modules\Errors\Controller\Index
+    parent: core.modules.controller.frontend
+
+  errors.installer:
+    class: ACP3\Modules\Errors\Installer
+    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']

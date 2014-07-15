@@ -1,0 +1,28 @@
+services:
+  system.controller.admin.extensions:
+    class: ACP3\Modules\System\Controller\Admin\Extensions
+    arguments: ['@core.context.admin', '@core.db', '@system.model', '@permissions.cache']
+
+  system.controller.admin.index:
+    class: ACP3\Modules\System\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.db', '@system.model']
+
+  system.controller.admin.maintenance:
+    class: ACP3\Modules\System\Controller\Admin\Maintenance
+    arguments: ['@core.context.admin', '@core.db', '@system.model']
+
+  system.model:
+    class: ACP3\Modules\System\Model
+    arguments: ['@core.db']
+
+  system.helpers:
+    class: ACP3\Modules\System\Helpers
+    arguments: ['@core.db', '@core.modules']
+
+  system.validator:
+    class: ACP3\Modules\System\Validator
+    parent: core.validator.abstract
+
+  system.installer:
+    class: ACP3\Modules\System\Installer
+    parent: core.modules.abstract.installer
