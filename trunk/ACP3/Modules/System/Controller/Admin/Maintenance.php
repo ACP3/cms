@@ -59,15 +59,14 @@ class Maintenance extends Core\Modules\Controller\Admin
 
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
-        $dbTables = $this->model->getSchemaTables();
+        $dbTables = $this->systemModel->getSchemaTables();
         $tables = array();
         foreach ($dbTables as $row) {
             $table = $row['TABLE_NAME'];
@@ -138,8 +137,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                 Core\Cache2::purge();
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

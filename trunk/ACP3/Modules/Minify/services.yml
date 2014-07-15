@@ -1,8 +1,0 @@
-services:
-  minify.controller.frontend.index:
-    class: ACP3\Modules\Minify\Controller\Index
-    arguments: ['@core.context.frontend', '@minify.helpers']
-
-  minify.helpers:
-    class: ACP3\Modules\Minify\Helpers
-    arguments: ['@core.modules']

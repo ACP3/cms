@@ -3,6 +3,8 @@
 namespace ACP3\Modules\Contact;
 
 use ACP3\Core\Modules;
+use ACP3\Modules\System;
+use ACP3\Modules\Permissions;
 
 class Installer extends Modules\AbstractInstaller
 {
@@ -10,17 +12,32 @@ class Installer extends Modules\AbstractInstaller
     const MODULE_NAME = 'contact';
     const SCHEMA_VERSION = 35;
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
-    {
-        parent::__construct($db);
-
-        $this->specialResources = array(
-            'Admin' => array(
-                'Index' => array(
-                    'index' => 7
-                )
+    /**
+     * @var array
+     */
+    protected $specialResources = array(
+        'Admin' => array(
+            'Index' => array(
+                'index' => 7
             )
-        );
+        )
+    );
+
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel,
+        Permissions\Model $permissionsModel,
+        Modules $modules
+    )
+    {
+        parent::__construct($db, $systemModel, $permissionsModel);
+
+        $this->modules = $modules;
     }
 
     public function createTables()
@@ -57,8 +74,8 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "contact/", "contact/index/") WHERE uri LIKE "contact/%";',
             ),
             34 => array(
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/index/" WHERE uri = "contact/list/";' : '',
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/imprint/" WHERE uri = "contact/imprint/";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/index/" WHERE uri = "contact/list/";' : '',
+                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/imprint/" WHERE uri = "contact/imprint/";' : '',
             ),
             35 => array(
                 'UPDATE `{pre}seo` SET uri = "contact/index/index/" WHERE uri = "contact/index/list/";',

@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+
 use ACP3\Modules\System;
 
 /**
@@ -13,12 +14,10 @@ class Modules
      * @var array
      */
     private $parseModules = array();
-
     /**
      * @var array
      */
     private $allModules = array();
-
     /**
      * @var ACL
      */
@@ -125,19 +124,16 @@ class Modules
      * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
      * Modulen des ACP3 mitsamt Modulinformationen aus
      *
-     * @param bool $onlyActiveModules
      * @return mixed
      */
-    public function getAllModules($onlyActiveModules = false)
+    public function getAllModules()
     {
         if (empty($this->allModules)) {
-            $dir = scandir(MODULES_DIR);
+            $dir = array_diff(scandir(MODULES_DIR), array('.', '..'));
             foreach ($dir as $module) {
-                if ($module !== '.' && $module !== '..') {
-                    $info = $this->getModuleInfo($module);
-                    if (!empty($info) && ($onlyActiveModules === false || ($onlyActiveModules === true && $this->isActive($module) === true))) {
-                        $this->allModules[$info['name']] = $info;
-                    }
+                $info = $this->getModuleInfo($module);
+                if (!empty($info)) {
+                    $this->allModules[$info['name']] = $info;
                 }
             }
             ksort($this->allModules);
@@ -153,7 +149,15 @@ class Modules
      */
     public function getActiveModules()
     {
-        return $this->getAllModules(true);
+        $activeModules = $this->getAllModules();
+
+        foreach ($this->allModules as $key => $values) {
+            if ($values['active'] === true) {
+                $activeModules[$key] = $values;
+            }
+        }
+
+        return $activeModules;
     }
 
     /**
@@ -192,7 +196,7 @@ class Modules
         $infos = array();
         $dirs = scandir(MODULES_DIR);
         foreach ($dirs as $dir) {
-            $path = MODULES_DIR . '/' . $dir . '/module.xml';
+            $path = MODULES_DIR . '/' . $dir . '/config/module.xml';
             if ($dir !== '.' && $dir !== '..' && is_file($path) === true) {
                 $moduleInfo = XML::parseXmlFile($path, 'info');
 
@@ -210,7 +214,6 @@ class Modules
                         'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
                         'categories' => isset($moduleInfo['categories']) ? true : false,
                         'protected' => isset($moduleInfo['protected']) ? true : false,
-                        'has_services' => isset($moduleInfo['services']) && $moduleInfo['services'] == 'true' ? true : false
                     );
                     $infos[$moduleName]['dependencies'] = array_values(XML::parseXmlFile($path, 'info/dependencies'));
                 }

@@ -20,18 +20,24 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Session
+     */
+    protected $session;
+    /**
      * @var Guestbook\Model
      */
     protected $guestbookModel;
 
     public function __construct(
         Core\Context\Frontend $context,
+        Core\Session $session,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Guestbook\Model $guestbookModel)
     {
        parent::__construct($context);
 
+        $this->session = $session;
         $this->date = $date;
         $this->db = $db;
         $this->guestbookModel = $guestbookModel;
@@ -84,11 +90,9 @@ class Index extends Core\Modules\Controller\Frontend
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'guestbook');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'guestbook');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -139,8 +143,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
         $config = new Core\Config($this->db, 'guestbook');
         $settings = $config->getSettings();

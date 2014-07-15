@@ -27,14 +27,24 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $articlesHelpers;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Model $menuModel, Articles\Helpers $articlesHelpers)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Model $menuModel)
     {
         parent::__construct($lang, $validate);
 
         $this->modules = $modules;
         $this->uri = $uri;
         $this->menuModel = $menuModel;
+    }
+
+    /**
+     * @param \ACP3\Modules\Articles\Helpers $articlesHelpers
+     * @return $this
+     */
+    public function setArticlesHelpers(Articles\Helpers $articlesHelpers)
+    {
         $this->articlesHelpers = $articlesHelpers;
+
+        return $this;
     }
 
     /**
@@ -96,7 +106,7 @@ class Validator extends Core\Validator\AbstractValidator
             $formData['mode'] == 1 && $this->modules->isInstalled($formData['module']) === false ||
             $formData['mode'] == 2 && $this->validate->isInternalURI($formData['uri']) === false ||
             $formData['mode'] == 3 && empty($formData['uri']) ||
-            $formData['mode'] == 4 && ($this->validate->isNumber($formData['articles']) === false || $this->articlesHelpers->articleExists($formData['articles']) === false)
+            $formData['mode'] == 4 && ($this->validate->isNumber($formData['articles']) === false || ($this->articlesHelpers && $this->articlesHelpers->articleExists($formData['articles']) === false))
         ) {
             $errors[] = $this->lang->t('menus', 'type_in_uri_and_target');
         }

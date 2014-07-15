@@ -52,12 +52,15 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected $specialResources = array();
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel,
+        Permissions\Model $permissionsModel
+    )
     {
         $this->db = $db;
-
-        $this->systemModel = new System\Model($db);
-        $this->aclModel = new Permissions\Model($db);
+        $this->systemModel = $systemModel;
+        $this->aclModel = $permissionsModel;
     }
 
     /**
@@ -100,7 +103,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function install()
     {
-        $bool1 = self::executeSqlQueries($this->createTables());
+        $bool1 = $this->executeSqlQueries($this->createTables());
         $bool2 = $this->addToModulesTable();
         $bool3 = $this->installSettings($this->settings());
         $bool4 = $this->addResources();
@@ -115,7 +118,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function uninstall()
     {
-        $bool1 = self::executeSqlQueries($this->removeTables());
+        $bool1 = $this->executeSqlQueries($this->removeTables());
         $bool2 = $this->removeFromModulesTable();
         $bool3 = $this->removeSettings();
         $bool4 = $this->removeResources();
@@ -129,23 +132,22 @@ abstract class AbstractInstaller implements InstallerInterface
      * @param array $queries
      * @return boolean
      */
-    public static function executeSqlQueries(array $queries)
+    public function executeSqlQueries(array $queries)
     {
         if (count($queries) > 0) {
-            $db = Core\Registry::get('Db');
             $search = array('{pre}', '{engine}', '{charset}');
             $replace = array(DB_PRE, 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
 
-            $db->beginTransaction();
+            $this->db->beginTransaction();
             try {
                 foreach ($queries as $query) {
                     if (!empty($query)) {
-                        $db->query(str_replace($search, $replace, $query));
+                        $this->db->query(str_replace($search, $replace, $query));
                     }
                 }
-                $db->commit();
+                $this->db->commit();
             } catch (\Exception $e) {
-                $db->rollBack();
+                $this->db->rollBack();
 
                 Core\Logger::warning('installer', $e);
                 return false;
@@ -365,7 +367,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeSettings()
     {
-        return $this->systemModel->delete((int) $this->getModuleId(), 'module_id', System\Model::TABLE_NAME_SETTINGS) !== false;
+        return $this->systemModel->delete((int)$this->getModuleId(), 'module_id', System\Model::TABLE_NAME_SETTINGS) !== false;
     }
 
     /**
@@ -441,13 +443,13 @@ abstract class AbstractInstaller implements InstallerInterface
             if ($installedSchemaVersion < $newSchemaVersion && $newSchemaVersion <= static::SCHEMA_VERSION) {
                 // Einzelne Schema-Änderung bei einer Version
                 if (!empty($queries) && is_array($queries) === false) {
-                    $result = self::executeSqlQueries((array)$queries) === true ? 1 : 0;
+                    $result = $this->executeSqlQueries((array)$queries) === true ? 1 : 0;
                     if ($result !== 0) {
                         $this->setNewSchemaVersion($newSchemaVersion);
                     }
                 } else { // Mehrere Schema-Änderungen bei einer Version
                     if (!empty($queries) && is_array($queries) === true) {
-                        $result = self::executeSqlQueries($queries) === true ? 1 : 0;
+                        $result = $this->executeSqlQueries($queries) === true ? 1 : 0;
                     }
                     // Falls kein Fehler aufgetreten ist, die Schema Version des Moduls erhöhen
                     if ($result !== 0) {

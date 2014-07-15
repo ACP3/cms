@@ -41,7 +41,7 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function actionDesigns()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect = $this->redirectMessages();
 
         if (isset($this->uri->dir)) {
             $bool = false;
@@ -99,8 +99,7 @@ class Extensions extends Core\Modules\Controller\Admin
                 $this->_uninstallModule();
                 break;
             default:
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->getMessage();
+                $this->redirectMessages()->getMessage();
 
                 $this->_renewCaches();
 
@@ -137,8 +136,7 @@ class Extensions extends Core\Modules\Controller\Admin
             $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
         }
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _disableModule()
@@ -164,8 +162,7 @@ class Extensions extends Core\Modules\Controller\Admin
             }
         }
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _installModule()
@@ -173,18 +170,15 @@ class Extensions extends Core\Modules\Controller\Admin
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
         if ($this->modules->isInstalled($this->uri->dir) === false) {
-            $moduleName = ucfirst($this->uri->dir);
-            $path = MODULES_DIR . $moduleName . '/Installer.php';
-            if (is_file($path) === true) {
+            $serviceId = strtolower($this->uri->dir . '.installer');
+
+            if ($this->container->has($serviceId) === true) {
                 // Modulabhängigkeiten prüfen
                 $deps = $this->get('system.helpers')->checkInstallDependencies($this->uri->dir);
 
                 // Modul installieren
                 if (empty($deps)) {
-                    $className = Core\Modules\AbstractInstaller::buildClassName($this->uri->dir);
-                    /** @var Core\Modules\AbstractInstaller $installer */
-                    $installer = new $className($this->db);
-                    $bool = $installer->install();
+                    $bool = $this->get($serviceId)->install();
 
                     $this->_renewCaches();
 
@@ -199,8 +193,7 @@ class Extensions extends Core\Modules\Controller\Admin
             $text = $this->lang->t('system', 'module_already_installed');
         }
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _uninstallModule()
@@ -209,18 +202,15 @@ class Extensions extends Core\Modules\Controller\Admin
         $info = $this->modules->getModuleInfo($this->uri->dir);
         // Nur installierte und Nicht-Core-Module berücksichtigen
         if ($info['protected'] === false && $this->modules->isInstalled($this->uri->dir) === true) {
-            $moduleName = ucfirst($this->uri->dir);
-            $path = MODULES_DIR . $moduleName . '/Installer.php';
-            if (is_file($path) === true) {
+            $serviceId = strtolower($this->uri->dir . '.installer');
+
+            if ($this->container->has($serviceId) === true) {
                 // Modulabhängigkeiten prüfen
                 $deps = $this->get('system.helpers')->checkUninstallDependencies($this->uri->dir);
 
                 // Modul deinstallieren
                 if (empty($deps)) {
-                    $className = Core\Modules\AbstractInstaller::buildClassName($this->uri->dir);
-                    /** @var Core\Modules\AbstractInstaller $installer */
-                    $installer = new $className($this->db);
-                    $bool = $installer->uninstall();
+                    $bool = $this->get($serviceId)->uninstall();
 
                     $this->_renewCaches();
 
@@ -235,8 +225,7 @@ class Extensions extends Core\Modules\Controller\Admin
             $text = $this->lang->t('system', 'protected_module_description');
         }
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _renewCaches()

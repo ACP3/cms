@@ -212,8 +212,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
         $galleries = $this->galleryModel->getAllInAcp();
         $c_galleries = count($galleries);

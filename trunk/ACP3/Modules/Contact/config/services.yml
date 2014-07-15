@@ -1,0 +1,24 @@
+services:
+  contact.controller.admin.index:
+    class: ACP3\Modules\Contact\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@contact.config']
+
+  contact.controller.frontend.index:
+    class: ACP3\Modules\Contact\Controller\Index
+    arguments: ['@core.context.frontend', '@core.session', '@contact.config']
+
+  contact.controller.sidebar.index:
+    class: ACP3\Modules\Contact\Controller\Sidebar\Index
+    arguments: ['@core.context', '@contact.config']
+
+  contact.config:
+    class: ACP3\Core\Config
+    arguments: ['@core.db', 'contact']
+
+  contact.validator:
+    class: ACP3\Modules\Contact\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules']
+
+  contact.installer:
+    class: ACP3\Modules\Contact\Installer
+    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']

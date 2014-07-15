@@ -55,11 +55,11 @@ class Application
         date_default_timezone_set('UTC');
 
         // DB-Config des ACP3 laden
-        $path = ACP3_DIR . 'config.php';
+        $path = ACP3_DIR . 'config/config.php';
         if (is_file($path) === false || filesize($path) === 0) {
             exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
         } else {
-            require_once ACP3_DIR . 'config.php';
+            require_once $path;
         }
     }
 
@@ -69,8 +69,8 @@ class Application
     public static function defineDirConstants()
     {
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-        $php_self = dirname(PHP_SELF);
-        define('ROOT_DIR', $php_self !== '/' ? $php_self . '/' : '/');
+        $phpSelf = dirname(PHP_SELF);
+        define('ROOT_DIR', $phpSelf !== '/' ? $phpSelf . '/' : '/');
         define('HOST_NAME', 'http://' . $_SERVER['HTTP_HOST']);
         define('ROOT_DIR_ABSOLUTE', HOST_NAME . ROOT_DIR);
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
@@ -174,7 +174,7 @@ class Application
         } else {
             self::$di = new ContainerBuilder();
             $loader = new YamlFileLoader(self::$di, new FileLocator(__DIR__));
-            $loader->load(CLASSES_DIR . 'services.yml');
+            $loader->load(ACP3_DIR . 'config/services.yml');
             $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 
             self::$di->set('core.db', $db);
@@ -194,11 +194,9 @@ class Application
             $modules = self::$di->get('core.modules');
             $activeModules = $modules->getActiveModules();
             foreach ($activeModules as $module) {
-                if ($module['has_services'] === true) {
-                    $path = MODULES_DIR . $module['dir'] . '/services.yml';
-                    if (is_file($path)) {
-                        $loader->load($path);
-                    }
+                $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
+                if (is_file($path)) {
+                    $loader->load($path);
                 }
             }
 
