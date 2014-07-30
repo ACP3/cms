@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller\Frontend
         $hasNewsletterAccess = $this->modules->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
-        if ($this->uri->getIsAjax() === true) {
+        if ($this->request->getIsAjax() === true) {
             $this->setContentTemplate('Guestbook/index.create_ajax.tpl');
             $this->setLayout('Guestbook/ajax.tpl');
         }
@@ -78,7 +78,7 @@ class Index extends Core\Modules\Controller\Frontend
                 // E-Mail-Adresse zusenden
                 if ($settings['notify'] == 1 || $settings['notify'] == 2) {
                     $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-                    $fullPath = $host . $this->uri->route('guestbook') . '#gb-entry-' . $this->db->lastInsertId();
+                    $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $this->db->lastInsertId();
                     $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
                     $this->get('core.functions')->generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
                 }
@@ -94,8 +94,7 @@ class Index extends Core\Modules\Controller\Frontend
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'guestbook');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -158,7 +157,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view,
                 $this->guestbookModel->countAll($settings['notify'])
             );

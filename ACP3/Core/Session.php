@@ -41,19 +41,19 @@ class Session
     protected $db;
 
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
-    protected $uri;
+    protected $request;
 
     /**
      * @var \ACP3\Core\View
      */
     protected $view;
 
-    public function __construct(\Doctrine\DBAL\Connection $db, \ACP3\Core\URI $uri, \ACP3\Core\View $view)
+    public function __construct(\Doctrine\DBAL\Connection $db, Request $request, View $view)
     {
         $this->db = $db;
-        $this->uri = $uri;
+        $this->request = $request;
         $this->view = $view;
 
         // php.ini Session Einstellungen konfigurieren
@@ -71,7 +71,12 @@ class Session
         // Eigene Session Handling Methoden setzen
         ini_set('session.save_handler', 'user');
         session_set_save_handler(
-            array($this, 'session_open'), array($this, 'session_close'), array($this, 'session_read'), array($this, 'session_write'), array($this, 'session_destroy'), array($this, 'session_gc')
+            array($this, 'session_open'),
+            array($this, 'session_close'),
+            array($this, 'session_read'),
+            array($this, 'session_write'),
+            array($this, 'session_destroy'),
+            array($this, 'session_gc')
         );
 
         // Session starten und anschließend sichern
@@ -206,7 +211,7 @@ class Session
             $_SESSION[$tokenName] = array();
         }
 
-        $path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : $this->uri->query;
+        $path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : $this->request->query;
 
         if (empty($_SESSION[$tokenName][$path])) {
             $_SESSION[$tokenName][$path] = sha1(uniqid(mt_rand(), true));
@@ -225,8 +230,8 @@ class Session
             $token = $_POST[$tokenName];
         }
         if (!empty($token) && is_array($_SESSION[$tokenName]) === true) {
-            if (isset($_SESSION[$tokenName][$this->uri->query])) {
-                unset($_SESSION[$tokenName][$this->uri->query]);
+            if (isset($_SESSION[$tokenName][$this->request->query])) {
+                unset($_SESSION[$tokenName][$this->request->query]);
             }
         }
     }

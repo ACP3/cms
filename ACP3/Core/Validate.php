@@ -18,15 +18,20 @@ class Validate
      */
     protected $db;
     /**
-     * @var URI
+     * @var Request
      */
-    protected $uri;
+    protected $request;
+    /**
+     * @var Router
+     */
+    protected $router;
 
-    public function __construct(ACL $acl, \Doctrine\DBAL\Connection $db, URI $uri)
+    public function __construct(ACL $acl, \Doctrine\DBAL\Connection $db, Request $request, Router $router)
     {
         $this->acl = $acl;
         $this->db = $db;
-        $this->uri = $uri;
+        $this->request = $request;
+        $this->router = $router;
     }
 
     /**
@@ -107,7 +112,7 @@ class Validate
      */
     public function captcha($input, $path = '')
     {
-        $index = 'captcha_' . sha1($this->uri->route(empty($path) === true ? $this->uri->query : $path));
+        $index = 'captcha_' . sha1($this->router->route(empty($path) === true ? $this->request->query : $path));
 
         return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION[$index]) && strtolower($input) === strtolower($_SESSION[$index]) ? true : false;
     }
@@ -218,7 +223,7 @@ class Validate
     public function formToken()
     {
         $tokenName = \ACP3\Core\Session::XSRF_TOKEN_NAME;
-        $urlQueryString = $this->uri->query;
+        $urlQueryString = $this->request->query;
 
         return (isset($_POST[$tokenName]) && isset($_SESSION[$tokenName][$urlQueryString]) && $_POST[$tokenName] === $_SESSION[$tokenName][$urlQueryString]);
     }

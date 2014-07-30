@@ -22,14 +22,15 @@ class Admin extends Frontend
         Core\Auth $auth,
         Core\Lang $lang,
         Core\Modules $modules,
-        Core\URI $uri,
+        Core\Request $request,
+        Core\Router $router,
         Core\View $view,
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo,
         Core\Validate $validate,
         Core\Session $session)
     {
-        parent::__construct($auth, $lang, $modules, $uri, $view, $breadcrumb, $seo);
+        parent::__construct($auth, $lang, $modules, $request, $router, $view, $breadcrumb, $seo);
 
         $this->validate = $validate;
         $this->session = $session;

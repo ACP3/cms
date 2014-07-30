@@ -108,8 +108,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -221,7 +220,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/users/index/delete', 'acp/users');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = $isAdminUser = $selfDelete = false;
             foreach ($items as $item) {
                 if ($item == 1) {
@@ -250,8 +249,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->usersModel->resultExists($this->uri->id) === true) {
-            $user = $this->auth->getUserInfo($this->uri->id);
+        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
+            $user = $this->auth->getUserInfo($this->request->id);
 
             if (empty($_POST) === false) {
                 try {
@@ -287,9 +286,9 @@ class Index extends Core\Modules\Controller\Admin
                     // Rollen aktualisieren
                     $this->db->beginTransaction();
                     try {
-                        $this->permissionsModel->delete(array('user_id' => $this->uri->id), Permissions\Model::TABLE_NAME_USER_ROLES);
+                        $this->permissionsModel->delete(array('user_id' => $this->request->id), Permissions\Model::TABLE_NAME_USER_ROLES);
                         foreach ($_POST['roles'] as $row) {
-                            $this->permissionsModel->insert(array('user_id' => $this->uri->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
+                            $this->permissionsModel->insert(array('user_id' => $this->request->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
                         }
                         $this->db->commit();
                     } catch (\Exception $e) {
@@ -305,10 +304,10 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues['pwd'] = $newPassword . ':' . $salt;
                     }
 
-                    $bool = $this->usersModel->update($updateValues, $this->uri->id);
+                    $bool = $this->usersModel->update($updateValues, $this->request->id);
 
                     // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-                    if ($this->uri->id == $this->auth->getUserId()) {
+                    if ($this->request->id == $this->auth->getUserId()) {
                         $cookieArray = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
                         $this->auth->setCookie($_POST['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
                     }
@@ -319,14 +318,13 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
             // Zugriffslevel holen
             $roles = $this->acl->getAllRoles();
             $c_roles = count($roles);
-            $userRoles = $this->acl->getUserRoles($this->uri->id);
+            $userRoles = $this->acl->getUserRoles($this->request->id);
             for ($i = 0; $i < $c_roles; ++$i) {
                 $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
                 $roles[$i]['selected'] = Core\Functions::selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $userRoles) ? $roles[$i]['id'] : '');
@@ -436,8 +434,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

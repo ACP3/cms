@@ -22,22 +22,24 @@ class Helpers
      * @var Model
      */
     protected $galleryModel;
-
     /**
-     * @var Core\URI
+     * @var Core\Router\Aliases
      */
-    protected $uri;
-
+    protected $aliases;
     /**
      * @var Core\SEO
      */
     protected $seo;
 
-    public function __construct(Core\URI $uri, Core\SEO $seo, Model $galleryModel)
+    public function __construct(
+        Core\Router\Aliases $aliases,
+        Core\SEO $seo,
+        Model $galleryModel
+    )
     {
-            $this->uri = $uri;
-            $this->seo = $seo;
-            $this->galleryModel = $galleryModel;
+        $this->aliases = $aliases;
+        $this->seo = $seo;
+        $this->galleryModel = $galleryModel;
     }
 
     /**
@@ -49,14 +51,14 @@ class Helpers
     public function generatePictureAlias($pictureId)
     {
         $galleryId = $this->galleryModel->getGalleryIdFromPictureId($pictureId);
-        $alias = $this->uri->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
+        $alias = $this->aliases->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
         if (!empty($alias)) {
             $alias .= '/img-' . $pictureId;
         }
         $seoKeywords = $this->seo->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
         $seoDescription = $this->seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
-        return $this->uri->insertUriAlias(
+        return $this->aliases->insertUriAlias(
             sprintf(self::URL_KEY_PATTERN_PICTURE, $pictureId),
             $alias,
             $seoKeywords,
@@ -75,7 +77,7 @@ class Helpers
         $pictures = $this->galleryModel->getPicturesByGalleryId($galleryId);
         $c_pictures = count($pictures);
 
-        $alias = $this->uri->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
+        $alias = $this->aliases->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
         if (!empty($alias)) {
             $alias .= '/img';
         }
@@ -83,7 +85,7 @@ class Helpers
         $seoDescription = $this->seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            $this->uri->insertUriAlias(
+            $this->aliases->insertUriAlias(
                 sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']),
                 !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '',
                 $seoKeywords,
@@ -107,7 +109,7 @@ class Helpers
         $c_pictures = count($pictures);
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            $this->uri->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
+            $this->aliases->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
         }
 
         return true;

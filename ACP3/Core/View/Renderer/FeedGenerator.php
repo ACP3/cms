@@ -8,12 +8,15 @@ namespace ACP3\Core\View\Renderer;
 class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
 {
     /**
+     * @var \FeedWriter\Feed renderer
+     */
+    public $renderer;
+
+    /**
      * @param array $params
      */
-    public function __construct($params)
+    public function configure(array $params = array())
     {
-        parent::__construct($params);
-
         switch ($this->config['feed_type']) {
             case 'ATOM':
                 $feedType = 'ATOM';
@@ -59,7 +62,7 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
         $this->renderer->setTitle($this->config['feed_title']);
         $this->renderer->setLink($link);
         if ($this->config['feed_type'] !== 'ATOM') {
-            $this->renderer->setDescription(\ACP3\Core\Registry::get('Lang')->t($this->config['module'], $this->config['module']));
+            $this->renderer->setDescription($this->container->get('core.lang')->t($this->config['module'], $this->config['module']));
         } else {
             $this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
             $this->renderer->setChannelElement('author', array('name' => $this->config['feed_title']));

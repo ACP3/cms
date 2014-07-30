@@ -1,14 +1,21 @@
 <?php
 namespace ACP3\Core;
+use ACP3\Core\Router\Aliases;
 
 /**
- * Klasse zum Setzen von URI Aliases, Keywords und Beschreibungen für Seiten
- *
- * @author Tino Goratsch
+ * Class SEO
+ * @package ACP3\Core
  */
 class SEO
 {
+    /**
+     * @var Cache2
+     */
     protected $cache;
+    /**
+     * @var Router\Aliases
+     */
+    protected $aliases;
     /**
      * @var Lang
      */
@@ -18,9 +25,9 @@ class SEO
      */
     protected $lang;
     /**
-     * @var URI
+     * @var Request
      */
-    protected $uri;
+    protected $request;
     /**
      * @var View
      */
@@ -46,23 +53,25 @@ class SEO
     /**
      * @var array
      */
-    protected $aliases = array();
+    protected $aliasCache = array();
 
     protected $metaDescriptionPostfix = '';
 
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Lang $lang,
-        URI $uri,
+        Request $request,
+        Aliases $aliases,
         View $view)
     {
         $this->cache = new Cache2('seo');
         $this->db = $db;
         $this->lang = $lang;
-        $this->uri = $uri;
+        $this->request = $request;
+        $this->aliases = $aliases;
         $this->view = $view;
 
-        $this->aliases = $this->getCache();
+        $this->aliasCache = $this->getCache();
     }
 
     /**
@@ -109,9 +118,9 @@ class SEO
     public function getMetaTags()
     {
         $meta = array(
-            'description' => $this->uri->area === 'admin' ? '' : $this->getPageDescription(),
-            'keywords' => $this->uri->area === 'admin' ? '' : $this->getPageKeywords(),
-            'robots' => $this->uri->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'description' => $this->request->area === 'admin' ? '' : $this->getPageDescription(),
+            'keywords' => $this->request->area === 'admin' ? '' : $this->getPageKeywords(),
+            'robots' => $this->request->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
             'canonical' => $this->canonical,
@@ -129,12 +138,12 @@ class SEO
     public function getPageDescription()
     {
         // Meta Description für die Homepage einer Website
-        if ($this->uri->query === CONFIG_HOMEPAGE) {
+        if ($this->request->query === CONFIG_HOMEPAGE) {
             return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
         } else {
-            $description = $this->getDescription($this->uri->getUriWithoutPages());
+            $description = $this->getDescription($this->request->getUriWithoutPages());
             if (empty($description)) {
-                $description = $this->getDescription($this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file);
+                $description = $this->getDescription($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
             }
 
             return $description . (!empty($description) && !empty($this->metaDescriptionPostfix) ? ' - ' . $this->metaDescriptionPostfix : '');
@@ -149,12 +158,12 @@ class SEO
      */
     public function getPageKeywords()
     {
-        $keywords = $this->getKeywords($this->uri->getUriWithoutPages());
+        $keywords = $this->getKeywords($this->request->getUriWithoutPages());
         if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file);
+            $keywords = $this->getKeywords($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
         }
         if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->uri->mod);
+            $keywords = $this->getKeywords($this->request->mod);
         }
 
         return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
@@ -168,12 +177,12 @@ class SEO
      */
     public function getPageRobotsSetting()
     {
-        $robots = $this->getRobotsSetting($this->uri->getUriWithoutPages());
+        $robots = $this->getRobotsSetting($this->request->getUriWithoutPages());
         if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file);
+            $robots = $this->getRobotsSetting($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
         }
         if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->uri->mod);
+            $robots = $this->getRobotsSetting($this->request->mod);
         }
 
         return strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
@@ -189,7 +198,7 @@ class SEO
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliases[$path]['description']) ? $this->aliases[$path]['description'] : '';
+        return !empty($this->aliasCache[$path]['description']) ? $this->aliasCache[$path]['description'] : '';
     }
 
     /**
@@ -211,7 +220,7 @@ class SEO
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliases[$path]['keywords']) ? $this->aliases[$path]['keywords'] : '';
+        return !empty($this->aliasCache[$path]['keywords']) ? $this->aliasCache[$path]['keywords'] : '';
     }
 
     /**
@@ -234,7 +243,7 @@ class SEO
         } else {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $robot = isset($this->aliases[$path]) === false || $this->aliases[$path]['robots'] == 0 ? CONFIG_SEO_ROBOTS : $this->aliases[$path]['robots'];
+            $robot = isset($this->aliasCache[$path]) === false || $this->aliasCache[$path]['robots'] == 0 ? CONFIG_SEO_ROBOTS : $this->aliasCache[$path]['robots'];
             return strtr($robot, $replace);
         }
     }
@@ -280,10 +289,10 @@ class SEO
         if (!empty($path)) {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->uri->getUriAlias($path, true);
+            $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->aliases->getUriAlias($path, true);
             $keywords = isset($_POST['seo_keywords']) ? $_POST['seo_keywords'] : $this->getKeywords($path);
             $description = isset($_POST['seo_description']) ? $_POST['seo_description'] : $this->getDescription($path);
-            $robots = isset($this->aliases[$path]) === true ? $this->aliases[$path]['robots'] : 0;
+            $robots = isset($this->aliasCache[$path]) === true ? $this->aliasCache[$path]['robots'] : 0;
         } else {
             $alias = $keywords = $description = '';
             $robots = 0;

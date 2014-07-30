@@ -22,12 +22,13 @@ class Frontend extends Core\Context
         Core\Auth $auth,
         Core\Lang $lang,
         Core\Modules $modules,
-        Core\URI $uri,
+        Core\Request $request,
+        Core\Router $router,
         Core\View $view,
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo)
     {
-        parent::__construct($auth, $lang, $modules, $uri, $view);
+        parent::__construct($auth, $lang, $modules, $request, $router, $view);
 
         $this->breadcrumb = $breadcrumb;
         $this->seo = $seo;

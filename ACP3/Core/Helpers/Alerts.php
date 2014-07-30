@@ -10,18 +10,23 @@ use ACP3\Core;
 class Alerts
 {
     /**
+     * @var \ACP3\Core\Functions
+     */
+    private $functions;
+    /**
      * @var Core\View
      */
     private $view;
     /**
-     * @var Core\URI
+     * @var Core\Request
      */
-    private $uri;
+    private $request;
 
-    public function __construct(Core\URI $uri, Core\View $view)
+    public function __construct(Core\Request $request, Core\View $view, Core\Functions $functions)
     {
-        $this->uri = $uri;
+        $this->request = $request;
         $this->view = $view;
+        $this->functions = $functions;
     }
 
     /**
@@ -96,7 +101,7 @@ class Alerts
 
         if (is_array($errors) === true) {
             foreach (array_keys($errors) as $key) {
-                if (Core\Validate::isNumber($key) === false) {
+                if (is_numeric($key) === false) {
                     $hasNonIntegerKeys = true;
                     break;
                 }
@@ -107,13 +112,13 @@ class Alerts
         $this->view->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
         $content = $this->view->fetchTemplate('system/error_box.tpl');
 
-        if ($this->uri->getIsAjax() === true) {
+        if ($this->request->getIsAjax() === true) {
             $return = array(
                 'success' => false,
                 'content' => $content,
             );
 
-            Core\Functions::outputJson($return);
+            $this->functions->outputJson($return);
         }
         return $content;
     }

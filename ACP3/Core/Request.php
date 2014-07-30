@@ -1,15 +1,15 @@
 <?php
-namespace ACP3\Installer\Core;
+namespace ACP3\Core;
 
-use ACP3\Core;
+use ACP3\Core\Router\Aliases;
 
 /**
- * URI Router
- *
- * @author Tino Goratsch
+ * Class Request
+ * @package ACP3\Core
  */
-class URI
+class Request
 {
+    const ADMIN_PANEL_PATTERN = '=^acp/=';
 
     /**
      * Array, welches die URI Parameter enthält
@@ -26,17 +26,18 @@ class URI
     public $query = '';
 
     /**
-     * @var bool
-     */
-    protected $isAjax = false;
-
-    /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      */
-    function __construct($defaultModule = '', $defaultFile = '')
+    function __construct()
     {
         $this->preprocessUriQuery();
-        $this->setUriParameters($defaultModule, $defaultFile);
+
+        // Set the user defined homepage of the website
+        if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
+            $this->query = CONFIG_HOMEPAGE;
+        }
+
+        $this->setUriParameters();
     }
 
     /**
@@ -58,7 +59,7 @@ class URI
      */
     public function __set($key, $value)
     {
-        // Parameter sollten nicht überschrieben werden können
+        // Make it impossible to overwrite already set parameters
         if (isset($this->params[$key]) === false) {
             $this->params[$key] = $value;
         }
@@ -76,45 +77,61 @@ class URI
     }
 
     /**
-     * @return bool
-     */
-    public function getIsAjax()
-    {
-        return $this->isAjax;
-    }
-
-    /**
      * Grundlegende Verarbeitung der URI-Query
      */
     protected function preprocessUriQuery()
     {
         $this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
         $this->query .= !preg_match('/\/$/', $this->query) ? '/' : '';
+
+        // Definieren, dass man sich im Administrationsbereich befindet
+        if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
+            $this->area = 'admin';
+            // "acp/" entfernen
+            $this->query = substr($this->query, 4);
+        } else {
+            $this->area = 'frontend';
+        }
+
+        return;
     }
 
+    /**
+     * @return bool
+     */
+    public function getIsAjax()
+    {
+        if (isset($this->isAjax) === false) {
+            if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                $this->isAjax = true;
+            }
+        }
+
+        return $this->isAjax;
+    }
 
     /**
      * Setzt alle in URI::query enthaltenen Parameter
      *
-     * @param string $defaultModule
-     * @param string $defaultFile
      * @return void
      */
-    protected function setUriParameters($defaultModule, $defaultFile)
+    protected function setUriParameters()
     {
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $this->isAjax = true;
-        }
-
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
-        $this->mod = isset($query[0]) ? $query[0] : $defaultModule;
-        $this->file = isset($query[1]) ? $query[1] : $defaultFile;
+        if (isset($query[0])) {
+            $this->mod = $query[0];
+        } else {
+            $this->mod = ($this->area === 'admin') ? 'acp' : 'news';
+        }
 
-        if (isset($query[2])) {
+        $this->controller = isset($query[1]) ? $query[1] : 'index';
+        $this->file = isset($query[2]) ? $query[2] : 'index';
+
+        if (isset($query[3])) {
             $c_query = count($query);
 
-            for ($i = 2; $i < $c_query; ++$i) {
+            for ($i = 3; $i < $c_query; ++$i) {
                 // Position
                 if (preg_match('/^(page_(\d+))$/', $query[$i])) {
                     $this->page = (int)substr($query[$i], 5);
@@ -125,15 +142,19 @@ class URI
                     $this->$param[0] = $param[1];
                 }
             }
-        } elseif (isset($query[0]) && !isset($query[1])) {
-            // Workaround für Securitytoken-Generierung,
-            // falls die URL nur aus dem Modulnamen besteht
-            $this->query .= $defaultFile . '/';
-        } elseif (!isset($query[0]) && !isset($query[1])) {
-            $this->query = $defaultModule . '/' . $defaultFile . '/';
         }
 
-        if (!empty($_POST['cat'])) {
+        if (!isset($query[0])) {
+            $this->query = $this->mod . '/';
+        }
+        if (!isset($query[1])) {
+            $this->query .= $this->controller . '/';
+        }
+        if (!isset($query[2])) {
+            $this->query .= $this->file . '/';
+        }
+
+        if (!empty($_POST['cat']) && is_numeric($_POST['cat']) === true) {
             $this->cat = (int)$_POST['cat'];
         }
         if (!empty($_POST['action'])) {
@@ -161,54 +182,6 @@ class URI
     public function getUriWithoutPages()
     {
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
-    }
-
-    /**
-     * Umleitung auf andere URLs
-     *
-     * @param string $args
-     *  Leitet auf eine interne ACP3 Seite weiter
-     * @param int|string $newPage
-     *  Leitet auf eine externe Seite weiter
-     * @param bool|int $movedPermanently
-     */
-    public function redirect($args, $newPage = '', $movedPermanently = false)
-    {
-        if (!empty($args)) {
-            $protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
-            $host = $_SERVER['HTTP_HOST'];
-            $url = $protocol . $host . $this->route($args);
-
-            if ($this->isAjax === true) {
-                $return = array(
-                    'redirect_url' => $url
-                );
-
-                Core\Functions::outputJson($return);
-            } else {
-                if ($movedPermanently === true) {
-                    header('HTTP/1.1 301 Moved Permanently');
-                }
-                header('Location: ' . $url);
-                exit;
-            }
-        }
-        header('Location:' . str_replace('&amp;', '&', $newPage));
-        exit;
-    }
-
-    /**
-     * Generiert die ACP3 internen Hyperlinks
-     *
-     * @param $path
-     * @return string
-     */
-    public function route($path)
-    {
-        $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
-
-        $prefix = PHP_SELF . '/';
-        return $prefix . $path;
     }
 
 }

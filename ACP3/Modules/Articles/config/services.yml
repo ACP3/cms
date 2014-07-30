@@ -17,7 +17,7 @@ services:
 
   articles.validator:
     class: ACP3\Modules\Articles\Validator
-    arguments: ['@core.lang', '@core.modules', '@core.uri', '@core.validate', '@menus.model']
+    arguments: ['@core.lang', '@core.modules', '@core.request', '@core.validate', '@menus.model']
 
   articles.installer:
     class: ACP3\Modules\Articles\Installer

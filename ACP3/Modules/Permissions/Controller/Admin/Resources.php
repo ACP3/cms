@@ -59,8 +59,7 @@ class Resources extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -86,7 +85,7 @@ class Resources extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/permissions/resources/delete', 'acp/permissions/resources');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
 
             foreach ($items as $item) {
@@ -104,7 +103,7 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $resource = $this->permissionsModel->getResourceById((int) $this->uri->id);
+        $resource = $this->permissionsModel->getResourceById((int) $this->request->id);
         if (!empty($resource)) {
             if (empty($_POST) === false) {
                 try {
@@ -117,7 +116,7 @@ class Resources extends Core\Modules\Controller\Admin
                         'page' => $_POST['resource'],
                         'privilege_id' => $_POST['privileges'],
                     );
-                    $bool = $this->permissionsModel->update($updateValues, $this->uri->id, Permissions\Model::TABLE_NAME_RESOURCES);
+                    $bool = $this->permissionsModel->update($updateValues, $this->request->id, Permissions\Model::TABLE_NAME_RESOURCES);
 
                     $cache = new Permissions\Cache($this->permissionsModel);
                     $cache->setResourcesCache();
@@ -128,8 +127,7 @@ class Resources extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 

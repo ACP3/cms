@@ -80,8 +80,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -102,7 +101,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/newsletter/index/delete', 'acp/newsletter');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->newsletterModel->delete($item);
@@ -116,7 +115,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $newsletter = $this->newsletterModel->getOneById($this->uri->id);
+        $newsletter = $this->newsletterModel->getOneById($this->request->id);
 
         if (empty($newsletter) === false) {
             $config = new Core\Config($this->db, 'newsletter');
@@ -134,11 +133,11 @@ class Index extends Core\Modules\Controller\Admin
                         'text' => Core\Functions::strEncode($_POST['text'], true),
                         'user_id' => $this->auth->getUserId(),
                     );
-                    $bool = $this->newsletterModel->update($updateValues, $this->uri->id);
+                    $bool = $this->newsletterModel->update($updateValues, $this->request->id);
 
                     // Test-Newsletter
                     if ($_POST['test'] == 1) {
-                        $bool2 = $this->get('newsletter.helpers')->sendNewsletter($this->uri->id, $settings['mail']);
+                        $bool2 = $this->get('newsletter.helpers')->sendNewsletter($this->request->id, $settings['mail']);
 
                         $lang = $this->lang->t('newsletter', 'create_success');
                         $result = $bool !== false && $bool2;
@@ -157,8 +156,7 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -209,7 +207,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSend()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->newsletterModel->newsletterExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->newsletterModel->newsletterExists($this->request->id) === true) {
             $accounts = $this->newsletterModel->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = array();
@@ -218,10 +216,10 @@ class Index extends Core\Modules\Controller\Admin
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool = $this->get('newsletter.helpers')->sendNewsletter($this->uri->id, $recipients);
+            $bool = $this->get('newsletter.helpers')->sendNewsletter($this->request->id, $recipients);
             $bool2 = false;
             if ($bool === true) {
-                $bool2 = $this->newsletterModel->update(array('status' => '1'), $this->uri->id);
+                $bool2 = $this->newsletterModel->update(array('status' => '1'), $this->request->id);
             }
 
             $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
@@ -253,8 +251,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

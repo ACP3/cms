@@ -50,10 +50,10 @@ abstract class Frontend extends Core\Modules\Controller
     {
         // Aktuelle Datensatzposition bestimmen
         if (!defined('POS')) {
-            define('POS', (int)$this->uri->page >= 1 ? (int)($this->uri->page - 1) * $this->auth->entries : 0);
+            define('POS', (int)$this->request->page >= 1 ? (int)($this->request->page - 1) * $this->auth->entries : 0);
         }
 
-        $path = $this->uri->area . '/' . $this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file;
+        $path = $this->request->area . '/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
 
         if ($this->modules->hasPermission($path) === false) {
             throw new Core\Exceptions\UnauthorizedAccess();
@@ -67,7 +67,7 @@ abstract class Frontend extends Core\Modules\Controller
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
         $this->view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
-        $this->view->assign('IN_ADM', $this->uri->area === 'admin');
+        $this->view->assign('IN_ADM', $this->request->area === 'admin');
 
         $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
         $this->view->assign('LANG', $this->lang->getLanguage2Characters());
@@ -106,7 +106,7 @@ abstract class Frontend extends Core\Modules\Controller
         if ($this->getNoOutput() === false) {
             // Content-Template automatisch setzen
             if ($this->getContentTemplate() === '') {
-                $this->setContentTemplate($this->uri->mod . '/' . $this->uri->controller . '.' . $this->uri->file . '.tpl');
+                $this->setContentTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
             }
 
             if ($this->getContent() === '') {
@@ -124,7 +124,7 @@ abstract class Frontend extends Core\Modules\Controller
                 $this->view->assign('META', $this->seo->getMetaTags());
                 $this->view->assign('CONTENT', $this->getContent() . $this->getContentAppend());
 
-                if ($this->uri->getIsAjax() === true) {
+                if ($this->request->getIsAjax() === true) {
                     if ($this->layout !== 'layout.tpl') {
                         $file = $this->layout;
                     } else {
@@ -153,5 +153,13 @@ abstract class Frontend extends Core\Modules\Controller
         }
 
         return $this->redirectMessages;
+    }
+
+    /**
+     * @return Core\Redirect
+     */
+    public function redirect()
+    {
+        return $this->get('core.redirect');
     }
 }

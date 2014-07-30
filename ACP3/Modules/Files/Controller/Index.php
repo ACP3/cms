@@ -58,11 +58,11 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->filesModel->resultExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->filesModel->resultExists((int) $this->request->id, $this->date->getCurrentDateTime()) === true) {
             $cache = new Files\Cache($this->filesModel);
-            $file = $cache->getCache($this->uri->id);
+            $file = $cache->getCache($this->request->id);
 
-            if ($this->uri->action === 'download') {
+            if ($this->request->action === 'download') {
                 $path = UPLOADS_DIR . 'files/';
                 if (is_file($path . $file['file'])) {
                     $formatter = $this->get('core.helpers.string.formatter');
@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller\Frontend
                     readfile($path . $file['file']);
                     exit;
                 } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) {
-                    $this->uri->redirect(0, $file['file']); // Externe Datei
+                    $this->redirect()->toNewPage($file['file']); // Externe Datei
                 } else {
                     throw new Core\Exceptions\ResultNotExists();
                 }
@@ -100,7 +100,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $comments = $this->get('comments.controller.frontend.index');
                     $comments
                         ->setModule('files')
-                        ->setEntryId($this->uri->id);
+                        ->setEntryId($this->request->id);
                     $this->view->assign('comments', $comments->actionIndex());
                 }
             }
@@ -111,14 +111,14 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionFiles()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->cat) && $this->categoriesModel->resultExists($this->uri->cat) === true) {
-            $category = $this->categoriesModel->getOneById($this->uri->cat);
+        if ($this->get('core.validate')->isNumber($this->request->cat) && $this->categoriesModel->resultExists($this->request->cat) === true) {
+            $category = $this->categoriesModel->getOneById($this->request->cat);
 
             $this->breadcrumb
                 ->append($this->lang->t('files', 'files'), 'files')
                 ->append($category['title']);
 
-            $files = $this->filesModel->getAllByCategoryId($this->uri->cat, $this->date->getCurrentDateTime());
+            $files = $this->filesModel->getAllByCategoryId($this->request->cat, $this->date->getCurrentDateTime());
             $c_files = count($files);
 
             if ($c_files > 0) {

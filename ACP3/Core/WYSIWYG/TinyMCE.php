@@ -3,6 +3,7 @@
 namespace ACP3\Core\WYSIWYG;
 
 use ACP3\Application;
+use ACP3\Core\Registry;
 
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
@@ -11,9 +12,9 @@ use ACP3\Application;
 class TinyMCE extends AbstractWYSIWYG
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+     * @var \Symfony\Component\DependencyInjection\Container
      */
-    protected $serviceContainer;
+    protected $container;
 
     public function __construct($id, $name, $value = '', $toolbar = '', $advanced = false, $height = '')
     {
@@ -24,7 +25,7 @@ class TinyMCE extends AbstractWYSIWYG
         $this->config['toolbar'] = $toolbar;
         $this->config['height'] = $height . 'px';
 
-        $this->serviceContainer = Application::getServiceContainer();
+        $this->container = Registry::get('services');
     }
 
     protected function configure()
@@ -85,7 +86,7 @@ class TinyMCE extends AbstractWYSIWYG
         if ($wysiwyg['advanced'] === true)
             $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
 
-        $view = $this->serviceContainer->get('core.view');
+        $view = $this->container->get('core.view');
 
         $view->assign('wysiwyg', $wysiwyg);
         return $view->fetchTemplate('system/wysiwyg.tpl');

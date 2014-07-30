@@ -80,8 +80,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -127,7 +126,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/permissions/index/delete', 'acp/permissions');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
             $levelUndeletable = false;
 
@@ -159,7 +158,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $role = $this->permissionsModel->getRoleById((int) $this->uri->id);
+        $role = $this->permissionsModel->getRoleById((int) $this->request->id);
 
         if (!empty($role)) {
             if (empty($_POST) === false) {
@@ -169,17 +168,17 @@ class Index extends Core\Modules\Controller\Admin
 
                     $updateValues = array(
                         'name' => Core\Functions::strEncode($_POST['name']),
-                        'parent_id' => $this->uri->id == 1 ? 0 : $_POST['parent'],
+                        'parent_id' => $this->request->id == 1 ? 0 : $_POST['parent'],
                     );
                     $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
-                    $bool = $nestedSet->EditNode($this->uri->id, $this->uri->id == 1 ? '' : (int)$_POST['parent'], 0, $updateValues);
+                    $bool = $nestedSet->EditNode($this->request->id, $this->request->id == 1 ? '' : (int)$_POST['parent'], 0, $updateValues);
 
                     $this->db->beginTransaction();
                     // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
-                    $this->permissionsModel->delete($this->uri->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
+                    $this->permissionsModel->delete($this->request->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
                     foreach ($_POST['privileges'] as $moduleId => $privileges) {
                         foreach ($privileges as $id => $permission) {
-                            $ruleInsertValues = array('id' => '', 'role_id' => $this->uri->id, 'module_id' => $moduleId, 'privilege_id' => $id, 'permission' => $permission);
+                            $ruleInsertValues = array('id' => '', 'role_id' => $this->request->id, 'module_id' => $moduleId, 'privilege_id' => $id, 'permission' => $permission);
                             $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                         }
                     }
@@ -194,12 +193,11 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
-            if ($this->uri->id != 1) {
+            if ($this->request->id != 1) {
                 $roles = $this->acl->getAllRoles();
                 $c_roles = count($roles);
                 for ($i = 0; $i < $c_roles; ++$i) {
@@ -213,7 +211,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('parent', $roles);
             }
 
-            $rules = $this->acl->getRules(array($this->uri->id));
+            $rules = $this->acl->getRules(array($this->request->id));
             $modules = $this->modules->getActiveModules();
             $privileges = $this->acl->getAllPrivileges();
             $c_privileges = count($privileges);
@@ -230,7 +228,7 @@ class Index extends Core\Modules\Controller\Admin
                     $select[1]['value'] = 1;
                     $select[1]['selected'] = !empty($_POST) === false && $privilegeValue == 1 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
                     $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
-                    if ($this->uri->id != 1) {
+                    if ($this->request->id != 1) {
                         $select[2]['value'] = 2;
                         $select[2]['selected'] = !empty($_POST) === false && $privilegeValue == 2 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
                         $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
@@ -270,14 +268,14 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->permissionsModel->roleExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->permissionsModel->roleExists($this->request->id) === true) {
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $nestedSet->order($this->uri->id, $this->uri->action);
+            $nestedSet->order($this->request->id, $this->request->action);
 
             $cache = new Core\Cache2('acl');
             $cache->getDriver()->deleteAll();
 
-            $this->uri->redirect('acp/permissions');
+            $this->redirect()->temporary('acp/permissions');
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

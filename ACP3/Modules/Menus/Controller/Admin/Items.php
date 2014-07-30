@@ -59,8 +59,8 @@ class Items extends Core\Modules\Controller\Admin
                 // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
                 if ($_POST['mode'] != 3) {
                     $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                    if ($this->uri->uriAliasExists($_POST['uri'])) {
-                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->uri->getUriAlias($_POST['uri']);
+                    if ($this->request->uriAliasExists($_POST['uri'])) {
+                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->request->getUriAlias($_POST['uri']);
                         $keywords = $this->seo->getKeywords($_POST['uri']);
                         $description = $this->seo->getDescription($_POST['uri']);
                     } else {
@@ -68,7 +68,7 @@ class Items extends Core\Modules\Controller\Admin
                         $keywords = $_POST['seo_keywords'];
                         $description = $_POST['seo_description'];
                     }
-                    $this->uri->insertUriAlias(
+                    $this->request->insertUriAlias(
                         $path,
                         $_POST['mode'] == 1 ? '' : $alias,
                         $keywords,
@@ -87,8 +87,7 @@ class Items extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -147,14 +146,14 @@ class Items extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/menus/items/delete', 'acp/menus');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
                 // URI-Alias löschen
                 $itemUri = $this->menusModel->getMenuItemUriById($item);
                 $bool = $nestedSet->deleteNode($item);
-                $this->uri->deleteUriAlias($itemUri);
+                $this->request->deleteUriAlias($itemUri);
             }
 
             $cache = new Menus\Cache($this->lang, $this->menusModel);
@@ -170,10 +169,10 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $menuItem = $this->menusModel->getOneMenuItemById($this->uri->id);
+        $menuItem = $this->menusModel->getOneMenuItemById($this->request->id);
 
         if (empty($menuItem) === false) {
-            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->uri->getUriAlias($menuItem['uri'], true) : '';
+            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->request->getUriAlias($menuItem['uri'], true) : '';
             $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
@@ -200,7 +199,7 @@ class Items extends Core\Modules\Controller\Admin
                     );
 
                     $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-                    $bool = $nestedSet->editNode($this->uri->id, (int)$_POST['parent'], (int)$_POST['block_id'], $updateValues);
+                    $bool = $nestedSet->editNode($this->request->id, (int)$_POST['parent'], (int)$_POST['block_id'], $updateValues);
 
                     // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
                     if ($_POST['mode'] != 3) {
@@ -208,7 +207,7 @@ class Items extends Core\Modules\Controller\Admin
                         $keywords = $_POST['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $_POST['seo_keywords'];
                         $description = $_POST['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $_POST['seo_description'];
                         $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                        $this->uri->insertUriAlias(
+                        $this->request->insertUriAlias(
                             $path,
                             $_POST['mode'] == 1 ? '' : $alias,
                             $keywords,
@@ -227,8 +226,7 @@ class Items extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -285,14 +283,14 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->menusModel->menuItemExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->menusModel->menuItemExists($this->request->id) === true) {
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $nestedSet->order($this->uri->id, $this->uri->action);
+            $nestedSet->order($this->request->id, $this->request->action);
 
             $cache = new Menus\Cache($this->lang, $this->menusModel);
             $cache->setMenuItemsCache();
 
-            $this->uri->redirect('acp/menus');
+            $this->redirect()->temporary('acp/menus');
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

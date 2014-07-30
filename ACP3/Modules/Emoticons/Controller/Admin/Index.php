@@ -71,8 +71,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -85,7 +84,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/emoticons/index/delete', 'acp/emoticons');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
 
             $upload = new Core\Helpers\Upload('emoticons');
@@ -108,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $emoticon = $this->emoticonsModel->getOneById((int)$this->uri->id);
+        $emoticon = $this->emoticonsModel->getOneById((int)$this->request->id);
 
         if (empty($emoticon) === false) {
             if (empty($_POST) === false) {
@@ -135,7 +134,7 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues['img'] = $result['name'];
                     }
 
-                    $bool = $this->emoticonsModel->update($updateValues, $this->uri->id);
+                    $bool = $this->emoticonsModel->update($updateValues, $this->request->id);
 
                     $this->emoticonsCache->setCache();
 
@@ -145,8 +144,7 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -201,8 +199,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/emoticons');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

@@ -100,12 +100,11 @@ class Index extends Core\Modules\Controller\Frontend
 
                 $this->session->unsetFormToken();
 
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->uri->query);
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->query);
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->uri->query);
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->request->query);
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -165,7 +164,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view,
                 $this->commentsModel->countAllByModule($this->module, $this->entryId)
             );

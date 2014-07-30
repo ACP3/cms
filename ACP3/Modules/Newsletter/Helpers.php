@@ -12,7 +12,7 @@ namespace ACP3\Modules\Newsletter;
 
 use ACP3\Core;
 
-abstract class Helpers
+class Helpers
 {
 
     /**
@@ -36,9 +36,9 @@ abstract class Helpers
      */
     protected $modules;
     /**
-     * @var Core\URI
+     * @var Core\Router
      */
-    protected $uri;
+    protected $router;
     /**
      * @var Core\View
      */
@@ -53,7 +53,7 @@ abstract class Helpers
         Core\Date $date,
         Core\Lang $lang,
         Core\Modules $modules,
-        Core\URI $uri,
+        Core\Router $router,
         Core\View $view,
         Core\Helpers\StringFormatter $stringFormatter
     )
@@ -62,7 +62,7 @@ abstract class Helpers
         $this->date = $date;
         $this->lang = $lang;
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->router = $router;
         $this->view = $view;
         $this->stringFormatter = $stringFormatter;
 
@@ -92,7 +92,7 @@ abstract class Helpers
         $mailer
             ->setFrom($from)
             ->setSubject($newsletter['title'])
-            ->setUrlWeb(HOST_NAME . $this->uri->route('newsletter/archive/details/id_' . $newsletterId))
+            ->setUrlWeb(HOST_NAME . $this->router->route('newsletter/archive/details/id_' . $newsletterId))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
@@ -118,7 +118,7 @@ abstract class Helpers
     {
         $hash = md5(mt_rand(0, microtime(true)));
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
-        $url = 'http://' . $host . $this->uri->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
+        $url = 'http://' . $host . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
         $config = new Core\Config($this->db, 'newsletter');
         $settings = $config->getSettings();

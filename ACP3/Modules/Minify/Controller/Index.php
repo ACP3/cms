@@ -29,12 +29,12 @@ class Index extends Core\Modules\Controller
     {
         $this->setNoOutput(true);
 
-        if (!empty($this->uri->group)) {
-            $libraries = !empty($this->uri->libraries) ? explode(',', $this->uri->libraries) : array();
-            $layout = isset($this->uri->layout) && !preg_match('=/=', $this->uri->layout) ? $this->uri->layout : 'layout';
+        if (!empty($this->request->group)) {
+            $libraries = !empty($this->request->libraries) ? explode(',', $this->request->libraries) : array();
+            $layout = isset($this->request->layout) && !preg_match('=/=', $this->request->layout) ? $this->request->layout : 'layout';
 
             $options = array();
-            switch ($this->uri->group) {
+            switch ($this->request->group) {
                 case 'css':
                     $files = $this->minifyHelpers->includeCssFiles($libraries, $layout);
                     break;

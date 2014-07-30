@@ -3,36 +3,41 @@
 namespace ACP3\Installer\Core;
 
 use ACP3\Core;
+use Doctrine\DBAL\Connection;
 
 /**
- * Manages the most used function of the installer
- *
- * @author Tino Goratsch
+ * Class Functions
+ * @package ACP3\Installer\Core
  */
-abstract class Functions
+class Functions
 {
-
     /**
-     * Gibt eine Box mit den aufgetretenen Fehlern aus
-     *
-     * @param string|array $errors
-     * @return string
+     * @var Connection
      */
-    public static function errorBox($errors)
-    {
-        $hasNonIntegerKeys = false;
-        if (is_array($errors) === true) {
-            foreach (array_keys($errors) as $key) {
-                if (Core\Validate::isNumber($key) === false) {
-                    $hasNonIntegerKeys = true;
-                    break;
-                }
-            }
-        } else {
-            $errors = (array)$errors;
-        }
-        Core\Registry::get('View')->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
-        return Core\Registry::get('View')->fetch('error_box.tpl');
+    protected $db;
+    /**
+     * @var Lang
+     */
+    protected $lang;
+    /**
+     * @var Core\Modules
+     */
+    protected $modules;
+    /**
+     * @var Core\Validate
+     */
+    protected $validate;
+
+    public function __construct(
+        Connection $db,
+        Lang $lang,
+        Core\Modules $modules,
+        Core\Validate $validate
+    ) {
+        $this->db = $db;
+        $this->lang = $lang;
+        $this->modules = $modules;
+        $this->validate = $validate;
     }
 
     /**
@@ -44,14 +49,14 @@ abstract class Functions
      *    Version der Datenbank, auf welche aktualisiert werden soll
      * @return array
      */
-    public static function executeSqlQueries(array $queries, $version)
+    public function executeSqlQueries(array $queries, $version)
     {
         $bool = Core\Modules\AbstractInstaller::executeSqlQueries($queries);
 
         $result = array(
-            'text' => sprintf(Core\Registry::get('Lang')->t('update_db_version_to'), $version),
+            'text' => sprintf($this->lang->t('update_db_version_to'), $version),
             'class' => $bool === true ? 'success' : 'important',
-            'result_text' => Core\Registry::get('Lang')->t($bool === true ? 'db_update_success' : 'db_update_error')
+            'result_text' => $this->lang->t($bool === true ? 'db_update_success' : 'db_update_error')
         );
 
         return $result;
@@ -63,7 +68,7 @@ abstract class Functions
      * @param string $module
      * @return boolean
      */
-    public static function installModule($module)
+    public function installModule($module)
     {
         $bool = false;
 
@@ -87,7 +92,7 @@ abstract class Functions
      * @param string $selectedLanguage
      * @return array
      */
-    public static function languagesDropdown($selectedLanguage)
+    public function languagesDropdown($selectedLanguage)
     {
         // Dropdown-Menü für die Sprachen
         $languages = array();
@@ -111,9 +116,9 @@ abstract class Functions
     /**
      * Setzt die Ressourcen-Tabelle auf die Standardwerte zurück
      */
-    public static function resetResources($mode = 1)
+    public function resetResources($mode = 1)
     {
-        Core\Registry::get('Db')->executeUpdate('TRUNCATE TABLE ' . DB_PRE . 'acl_resources');
+        $this->db->executeUpdate('TRUNCATE TABLE ' . DB_PRE . 'acl_resources');
 
         // Moduldaten in die ACL schreiben
         $modules = scandir(MODULES_DIR);
@@ -134,7 +139,7 @@ abstract class Functions
      * @param string $module
      * @return integer
      */
-    public static function updateModule($module)
+    public function updateModule($module)
     {
         $result = false;
 
@@ -145,7 +150,7 @@ abstract class Functions
             /** @var Core\Modules\AbstractInstaller $installer */
             $installer = new $className(Core\Registry::get('Db'));
             if ($installer instanceof Core\Modules\AbstractInstaller &&
-                (\ACP3\Core\Modules::isInstalled($module) || count($installer->renameModule()) > 0)
+                ($this->modules->isInstalled($module) || count($installer->renameModule()) > 0)
             ) {
                 $result = $installer->updateSchema();
             }
@@ -160,7 +165,7 @@ abstract class Functions
      * @param array $data
      * @return boolean
      */
-    public static function writeConfigFile(array $data)
+    public function writeConfigFile(array $data)
     {
         $path = ACP3_DIR . 'config.php';
         if (is_writable($path) === true) {
@@ -169,9 +174,7 @@ abstract class Functions
 
             $content = "<?php\n";
             $content .= "define('INSTALLED', true);\n";
-            if (defined('DEBUG') === true) {
-                $content .= "define('DEBUG', " . ((bool)DEBUG === true ? 'true' : 'false') . ");\n";
-            }
+
             $pattern = "define('CONFIG_%s', %s);\n";
             foreach ($data as $key => $value) {
                 if (is_bool($value) === true) {
@@ -182,7 +185,7 @@ abstract class Functions
                 $content .= sprintf($pattern, strtoupper($key), $value);
             }
             $bool = @file_put_contents($path, $content, LOCK_EX);
-            return $bool !== false ? true : false;
+            return $bool !== false;
         }
         return false;
     }

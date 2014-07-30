@@ -21,20 +21,26 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
-    protected $uri;
+    protected $request;
     /**
      * @var Model
      */
     protected $permissionsModel;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Model $permissionsModel)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validate $validate,
+        Core\Modules $modules,
+        Core\Request $request,
+        Model $permissionsModel
+    )
     {
         parent::__construct($lang, $validate);
 
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->request = $request;
         $this->permissionsModel = $permissionsModel;
     }
 
@@ -110,7 +116,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['name'])) {
             $errors['name'] = $this->lang->t('system', 'name_to_short');
         }
-        if (!empty($formData['name']) && $this->permissionsModel->roleExistsByName($formData['name'], $this->uri->id) === true) {
+        if (!empty($formData['name']) && $this->permissionsModel->roleExistsByName($formData['name'], $this->request->id) === true) {
             $errors['name'] = $this->lang->t('permissions', 'role_already_exists');
         }
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {

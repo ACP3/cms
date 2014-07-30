@@ -7,20 +7,20 @@ use ACP3\Core;
  * Class URI
  * @package ACP3\Core\View\Renderer\Smarty
  */
-class URI extends AbstractPlugin
+class Router extends AbstractPlugin
 {
     /**
-     * @var Core\URI
+     * @var Core\Router
      */
-    protected $uri;
+    protected $router;
     /**
      * @var string
      */
     protected $pluginName = 'uri';
 
-    public function __construct(Core\URI $uri)
+    public function __construct(Core\Router $router)
     {
-        $this->uri = $uri;
+        $this->router = $router;
     }
 
     /**
@@ -29,6 +29,6 @@ class URI extends AbstractPlugin
      */
     public function process($params)
     {
-        return $this->uri->route(!empty($params['args']) ? $params['args'] : '');
+        return $this->router->route(!empty($params['args']) ? $params['args'] : '');
     }
 }

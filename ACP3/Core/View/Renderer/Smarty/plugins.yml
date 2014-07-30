@@ -1,7 +1,7 @@
 services:
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\CheckAccess
-    arguments: ['@core.lang', '@core.modules', '@core.uri', '@core.validate', '@core.view']
+    arguments: ['@core.lang', '@core.modules', '@core.router', '@core.validate', '@core.view']
 
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\HasPermission
@@ -26,6 +26,8 @@ services:
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\LoadModule
     arguments: ['@core.modules']
+    calls:
+      - ['setContainer', ['@service_container']]
 
   smarty.plugin.mark:
     class: ACP3\Core\View\Renderer\Smarty\Mark
@@ -35,9 +37,9 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Navbar
     arguments: ['@core.modules', '@menus.helpers']
 
-  smarty.plugin.uri:
-    class: ACP3\Core\View\Renderer\Smarty\URI
-    arguments: ['@core.uri']
+  smarty.plugin.router:
+    class: ACP3\Core\View\Renderer\Smarty\Router
+    arguments: ['@core.router']
 
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\WYSIWYG

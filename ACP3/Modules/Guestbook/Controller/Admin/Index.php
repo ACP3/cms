@@ -41,7 +41,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/guestbook/index/delete', 'acp/guestbook');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->guestbookModel->delete($item);
@@ -55,7 +55,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $guestbook = $this->guestbookModel->getOneById($this->uri->id);
+        $guestbook = $this->guestbookModel->getOneById($this->request->id);
         if (empty($guestbook) === false) {
             $config = new Core\Config($this->db, 'guestbook');
             $settings = $config->getSettings();
@@ -71,7 +71,7 @@ class Index extends Core\Modules\Controller\Admin
                         'active' => $settings['notify'] == 2 ? $_POST['active'] : 1,
                     );
 
-                    $bool = $this->guestbookModel->update($updateValues, $this->uri->id);
+                    $bool = $this->guestbookModel->update($updateValues, $this->request->id);
 
                     $this->session->unsetFormToken();
 
@@ -79,8 +79,7 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -167,8 +166,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

@@ -46,31 +46,40 @@ class Breadcrumb
      * @var Lang
      */
     protected $lang;
-
     /**
-     * @var URI
+     * @var Request
      */
-    protected $uri;
-
+    protected $request;
+    /**
+     * @var Router
+     */
+    protected $router;
     /**
      * @var View
      */
     protected $view;
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Lang $lang, URI $uri, View $view)
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Lang $lang,
+        Request $request,
+        Router $router,
+        View $view
+    )
     {
         $this->lang = $lang;
-        $this->uri = $uri;
+        $this->request = $request;
+        $this->router = $router;
         $this->view = $view;
 
         // Frontendbereich
-        if ($uri->area !== 'admin') {
+        if ($request->area !== 'admin') {
             $in = array(
-                $uri->query,
-                $uri->getUriWithoutPages(),
-                $uri->mod . '/' . $uri->controller . '/' . $uri->file . '/',
-                $uri->mod . '/' . $uri->controller . '/',
-                $uri->mod
+                $request->query,
+                $request->getUriWithoutPages(),
+                $request->mod . '/' . $request->controller . '/' . $request->file . '/',
+                $request->mod . '/' . $request->controller . '/',
+                $request->mod
             );
             $items = $db->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
             $c_items = count($items);
@@ -131,7 +140,7 @@ class Breadcrumb
     {
         $this->stepsFromDb[] = array(
             'title' => $title,
-            'uri' => !empty($path) ? $this->uri->route($path) : ''
+            'uri' => !empty($path) ? $this->router->route($path) : ''
         );
 
         return $this;
@@ -150,7 +159,7 @@ class Breadcrumb
     {
         $this->stepsFromModules[] = array(
             'title' => $title,
-            'uri' => !empty($path) ? $this->uri->route($path) : ''
+            'uri' => !empty($path) ? $this->router->route($path) : ''
         );
 
         return $this;
@@ -169,7 +178,7 @@ class Breadcrumb
     {
         $step = array(
             'title' => $title,
-            'uri' => $this->uri->route($path)
+            'uri' => $this->router->route($path)
         );
         array_unshift($this->stepsFromModules, $step);
         return $this;
@@ -190,11 +199,11 @@ class Breadcrumb
         if ($dbSteps === true) {
             $index = count($this->stepsFromDb) - (!empty($this->stepsFromDb) ? 1 : 0);
             $this->stepsFromDb[$index]['title'] = $title;
-            $this->stepsFromDb[$index]['uri'] = !empty($path) ? $this->uri->route($path) : '';
+            $this->stepsFromDb[$index]['uri'] = !empty($path) ? $this->router->route($path) : '';
         } else {
             $index = count($this->stepsFromModules) - (!empty($this->stepsFromModules) ? 1 : 0);
             $this->stepsFromModules[$index]['title'] = $title;
-            $this->stepsFromModules[$index]['uri'] = !empty($path) ? $this->uri->route($path) : '';
+            $this->stepsFromModules[$index]['uri'] = !empty($path) ? $this->router->route($path) : '';
         }
 
         return $this;
@@ -206,7 +215,7 @@ class Breadcrumb
     private function _setBreadcrumbCache()
     {
         // Brotkrümelspur für das Admin-Panel
-        if ($this->uri->area === 'admin') {
+        if ($this->request->area === 'admin') {
             $this->_setBreadcrumbCacheForAdmin();
         } else { // Breadcrumb for frontend requests
             $this->_setBreadcrumbCacheForFrontend();
@@ -221,7 +230,7 @@ class Breadcrumb
      */
     private function _setBreadcrumbCacheForAdmin()
     {
-        $module = $this->uri->mod;
+        $module = $this->request->mod;
 
         if ($module !== 'acp') {
             $this->setTitlePostfix($this->lang->t('system', 'acp'));
@@ -229,10 +238,10 @@ class Breadcrumb
 
         // No breadcrumb is set yet
         if (empty($this->stepsFromModules)) {
-            $controller = $this->uri->controller;
-            $file = $this->uri->file;
-            $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
-            $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
+            $controller = $this->request->controller;
+            $file = $this->request->file;
+            $languageKey = $this->request->area . '_' . $controller . '_' . $file;
+            $languageKeyIndex = $this->request->area . '_' . $controller . '_index';
 
             $this->append($this->lang->t('system', 'acp'), 'acp/acp');
 
@@ -264,11 +273,11 @@ class Breadcrumb
     {
         // No breadcrumb has been set yet
         if (empty($this->stepsFromModules)) {
-            $module = $this->uri->mod;
-            $controller = $this->uri->controller;
-            $file = $this->uri->file;
-            $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
-            $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
+            $module = $this->request->mod;
+            $controller = $this->request->controller;
+            $file = $this->request->file;
+            $languageKey = $this->request->area . '_' . $controller . '_' . $file;
+            $languageKeyIndex = $this->request->area . '_' . $controller . '_index';
 
             if ($module !== 'errors') {
                 $this->append($this->lang->t($module, $module), $module);

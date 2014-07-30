@@ -39,8 +39,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->galleryModel->pictureExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $picture = $this->galleryModel->getPictureById((int) $this->uri->id);
+        if ($this->galleryModel->pictureExists((int) $this->request->id, $this->date->getCurrentDateTime()) === true) {
+            $picture = $this->galleryModel->getPictureById((int) $this->request->id);
 
             $config = new Core\Config($this->db, 'gallery');
             $settings = $config->getSettings();
@@ -77,14 +77,14 @@ class Index extends Core\Modules\Controller\Frontend
             // Vorheriges Bild
             $picture_back = $this->galleryModel->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_back)) {
-                $this->seo->setPreviousPage($this->uri->route('gallery/index/details/id_' . $picture_back));
+                $this->seo->setPreviousPage($this->router->route('gallery/index/details/id_' . $picture_back));
                 $this->view->assign('picture_back', $picture_back);
             }
 
             // Nächstes Bild
             $picture_next = $this->galleryModel->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_next)) {
-                $this->seo->setNextPage($this->uri->route('gallery/index/details/id_' . $picture_next));
+                $this->seo->setNextPage($this->router->route('gallery/index/details/id_' . $picture_next));
                 $this->view->assign('picture_next', $picture_next);
             }
 
@@ -92,7 +92,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
                     ->setModule('gallery')
-                    ->setEntryId($this->uri->id);
+                    ->setEntryId($this->request->id);
 
                 $this->view->assign('comments', $comments->actionIndex());
             }
@@ -105,10 +105,10 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->setNoOutput(true);
 
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->request->id) === true) {
             @set_time_limit(20);
-            $picture = $this->galleryModel->getFileById($this->uri->id);
-            $action = $this->uri->action === 'thumb' ? 'thumb' : '';
+            $picture = $this->galleryModel->getFileById($this->request->id);
+            $action = $this->request->action === 'thumb' ? 'thumb' : '';
 
             $config = new Core\Config($this->db, 'gallery');
             $settings = $config->getSettings();
@@ -139,7 +139,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view,
                 $this->galleryModel->countAll($time)
             );
@@ -159,13 +159,13 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionPics()
     {
-        if ($this->galleryModel->galleryExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->galleryModel->galleryExists((int) $this->request->id, $this->date->getCurrentDateTime()) === true) {
             // Cache der Galerie holen
             $cache = new Gallery\Cache($this->db, $this->galleryModel);
-            $pictures = $cache->getCache($this->uri->id);
+            $pictures = $cache->getCache($this->request->id);
             $c_pictures = count($pictures);
 
-            $galleryTitle = $this->galleryModel->getGalleryTitle($this->uri->id);
+            $galleryTitle = $this->galleryModel->getGalleryTitle($this->request->id);
 
             // Brotkrümelspur
             $this->breadcrumb
@@ -177,7 +177,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $settings = $config->getSettings();
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
-                    $pictures[$i]['uri'] = $this->uri->route($settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
+                    $pictures[$i]['uri'] = $this->request->route($settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
                     $pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
                 }
 

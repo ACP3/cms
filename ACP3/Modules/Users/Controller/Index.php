@@ -46,7 +46,7 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionForgotPwd()
     {
         if ($this->auth->isUser() === true) {
-            $this->uri->redirect(0, ROOT_DIR);
+            $this->redirect()->toNewPage(ROOT_DIR);
         } else {
             if (empty($_POST) === false) {
                 try {
@@ -89,14 +89,12 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $this->session->unsetFormToken();
 
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->setContent($alerts->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
+                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/forgot_pwd');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -122,7 +120,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view,
                 $allUsers
             );
@@ -142,17 +140,17 @@ class Index extends Core\Modules\Controller\Frontend
     {
         // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
         if ($this->auth->isUser() === true) {
-            $this->uri->redirect(0, ROOT_DIR);
+            $this->redirect()->toNewPage(ROOT_DIR);
         } elseif (empty($_POST) === false) {
             $result = $this->auth->login(Core\Functions::strEncode($_POST['nickname']), $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
             if ($result == 1) {
-                if ($this->uri->redirect) {
-                    $this->uri->redirect(base64_decode($this->uri->redirect));
+                if ($this->request->redirect) {
+                    $this->redirect()->temporary(base64_decode($this->request->redirect));
                 } else {
-                    $this->uri->redirect(0, ROOT_DIR);
+                    $this->redirect()->toNewPage(ROOT_DIR);
                 }
             } else {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $alerts = $this->get('core.helpers.alerts');
                 $this->view->assign('error_msg', $alerts->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
             }
         }
@@ -162,14 +160,14 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->auth->logout();
 
-        if ($this->uri->last) {
-            $lastPage = base64_decode($this->uri->last);
+        if ($this->request->last) {
+            $lastPage = base64_decode($this->request->last);
 
             if (!preg_match('/^((acp|users)\/)/', $lastPage)) {
-                $this->uri->redirect($lastPage);
+                $this->redirect()->temporary($lastPage);
             }
         }
-        $this->uri->redirect(0, ROOT_DIR);
+        $this->redirect()->toNewPage(ROOT_DIR);
     }
 
     public function actionRegister()
@@ -178,10 +176,9 @@ class Index extends Core\Modules\Controller\Frontend
         $settings = $config->getSettings();
 
         if ($this->auth->isUser() === true) {
-            $this->uri->redirect(0, ROOT_DIR);
+            $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($settings['enable_registration'] == 0) {
-            $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-            $this->setContent($alerts->errorBox($this->lang->t('users', 'user_registration_disabled')));
+            $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             if (empty($_POST) === false) {
                 try {
@@ -221,14 +218,12 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $this->session->unsetFormToken();
 
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->setContent($alerts->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
+                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/register');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -249,8 +244,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionViewProfile()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->usersModel->resultExists($this->uri->id) === true) {
-            $user = $this->auth->getUserInfo($this->uri->id);
+        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
+            $user = $this->auth->getUserInfo($this->request->id);
             $user['gender'] = str_replace(array(1, 2, 3), array('', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')), $user['gender']);
             $user['birthday'] = $this->date->format($user['birthday'], $user['birthday_display'] == 1 ? 'd.m.Y' : 'd.m.');
             if (!empty($user['website']) && (bool)preg_match('=^http(s)?://=', $user['website']) === false) {

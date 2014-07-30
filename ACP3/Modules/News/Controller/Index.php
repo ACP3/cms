@@ -40,14 +40,14 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->newsModel->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
+        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1) {
             $config = new Core\Config($this->db, 'news');
             /** @var Core\Helpers\StringFormatter $formatter */
             $formatter = $this->get('core.helpers.string.formatter');
             $settings = $config->getSettings();
 
             $cache = new News\Cache($this->newsModel);
-            $news = $cache->getCache($this->uri->id);
+            $news = $cache->getCache($this->request->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
 
@@ -74,11 +74,11 @@ class Index extends Core\Modules\Controller\Frontend
                     $this->db,
                     $this->lang,
                     $this->session,
-                    $this->uri,
+                    $this->request,
                     $this->view,
                     $this->seo,
                     'news',
-                    $this->uri->id
+                    $this->request->id
                 );
                 $this->view->assign('comments', $comments->actionIndex());
             }
@@ -91,8 +91,8 @@ class Index extends Core\Modules\Controller\Frontend
     {
         if (isset($_POST['cat']) && $this->get('core.validate')->isNumber($_POST['cat']) === true) {
             $cat = (int)$_POST['cat'];
-        } elseif ($this->get('core.validate')->isNumber($this->uri->cat) === true) {
-            $cat = (int)$this->uri->cat;
+        } elseif ($this->get('core.validate')->isNumber($this->request->cat) === true) {
+            $cat = (int)$this->request->cat;
         } else {
             $cat = 0;
         }
@@ -105,7 +105,7 @@ class Index extends Core\Modules\Controller\Frontend
         $settings = $config->getSettings();
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
-            $this->seo->setCanonicalUri($this->uri->route('news'));
+            $this->seo->setCanonicalUri($this->router->route('news'));
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
             $category = $this->db->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
             if (!empty($category)) {
@@ -134,7 +134,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view,
                 $this->newsModel->countAll($time, $cat)
             );
@@ -149,7 +149,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
                 }
                 if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $this->uri->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");
+                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");
                 }
             }
             $this->view->assign('news', $news);

@@ -15,20 +15,26 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
-    protected $uri;
+    protected $request;
     /**
      * @var Categories\Helpers
      */
     protected $categoriesHelpers;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Categories\Helpers $categoriesHelpers)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validate $validate,
+        Core\Modules $modules,
+        Core\Request $request,
+        Categories\Helpers $categoriesHelpers
+    )
     {
         parent::__construct($lang, $validate);
 
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->request = $request;
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
@@ -98,7 +104,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
         if (!empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
+            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }

@@ -18,7 +18,7 @@ class Controller
     protected $lang;
     /**
      *
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
     protected $uri;
 

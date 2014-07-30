@@ -48,7 +48,7 @@ class Account extends Core\Modules\Controller\Frontend
         parent::preDispatch();
 
         if ($this->auth->isUser() === false || $this->get('core.validate')->isNumber($this->auth->getUserId()) === false) {
-            $this->uri->redirect('users/index/login');
+            $this->redirect()->temporary('users/index/login');
         }
     }
 
@@ -95,8 +95,7 @@ class Account extends Core\Modules\Controller\Frontend
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -184,8 +183,7 @@ class Account extends Core\Modules\Controller\Frontend
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

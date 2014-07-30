@@ -40,7 +40,7 @@ class Archive extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        $newsletter = $this->newsletterModel->getOneById((int)$this->uri->id, 1);
+        $newsletter = $this->newsletterModel->getOneById((int)$this->request->id, 1);
 
         if (!empty($newsletter)) {
             $this->breadcrumb
@@ -71,7 +71,7 @@ class Archive extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view,
                 $this->newsletterModel->countAll(1)
             );

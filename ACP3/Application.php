@@ -4,10 +4,12 @@ namespace ACP3;
 
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\Controller;
+use ACP3\Core\Registry;
 use Doctrine\DBAL;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -21,35 +23,27 @@ use Symfony\Component\Config\FileLocator;
 class Application
 {
     /**
-     * @var ContainerBuilder
+     * @var Container
      */
-    private static $di;
-    /**
-     * @var \ACP3\Core\URI
-     */
-    private static $uri;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private static $view;
+    protected $container;
 
     /**
      * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
      */
-    public static function run()
+    public function run()
     {
-        self::defineDirConstants();
-        self::startupChecks();
-        self::includeAutoLoader();
-        self::setErrorHandler();
-        self::initializeClasses();
-        self::outputPage();
+        $this->defineDirConstants();
+        $this->startupChecks();
+        $this->includeAutoLoader();
+        $this->setErrorHandler();
+        $this->initializeClasses();
+        $this->outputPage();
     }
 
     /**
      * Überprüft, ob die config.php existiert
      */
-    public static function startupChecks()
+    public function startupChecks()
     {
         // Standardzeitzone festlegen
         date_default_timezone_set('UTC');
@@ -66,7 +60,7 @@ class Application
     /**
      * Einige Pfadkonstanten definieren
      */
-    public static function defineDirConstants()
+    public function defineDirConstants()
     {
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
         $phpSelf = dirname(PHP_SELF);
@@ -85,7 +79,7 @@ class Application
     /**
      * Klassen Autoloader inkludieren
      */
-    public static function includeAutoLoader()
+    public function includeAutoLoader()
     {
         require VENDOR_DIR . 'autoload.php';
     }
@@ -93,7 +87,7 @@ class Application
     /**
      * Set monolog as the default PHP error handler
      */
-    public static function setErrorHandler()
+    public function setErrorHandler()
     {
         $errorLevelMap = array(
             E_ERROR => Logger::ERROR,
@@ -120,16 +114,18 @@ class Application
     /**
      * Überprüfen, ob der Wartungsmodus aktiv ist
      */
-    private static function _checkForMaintenanceMode()
+    private function _checkForMaintenanceMode()
     {
+        $request = $this->container->get('core.request');
         if ((bool)CONFIG_MAINTENANCE_MODE === true &&
-            (self::$uri->area !== 'admin' && strpos(self::$uri->query, 'users/login/') !== 0)
+            ($request->area !== 'admin' && strpos($request->query, 'users/login/') !== 0)
         ) {
             header('HTTP/1.0 503 Service Unavailable');
 
-            self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-            self::$view->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
-            self::$view->displayTemplate('system/maintenance.tpl');
+            $view = $this->container->get('core.view');
+            $view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+            $view->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
+            $view->displayTemplate('system/maintenance.tpl');
             exit;
         }
     }
@@ -137,7 +133,7 @@ class Application
     /**
      * Initialisieren der anderen Klassen
      */
-    public static function initializeClasses()
+    public function initializeClasses()
     {
         $file = UPLOADS_DIR . 'cache/sql/container.php';
 
@@ -156,12 +152,12 @@ class Application
 
         if (file_exists($file) && (!defined('DEBUG') || DEBUG === false)) {
             require_once $file;
-            self::$di = new \ACP3ServiceContainer();
+            $this->container = new \ACP3ServiceContainer();
 
-            self::$di->set('core.db', $db);
+            $this->container->set('core.db', $db);
 
             // Systemeinstellungen laden
-            self::$di
+            $this->container
                 ->get('system.config')
                 ->getSettingsAsConstants();
 
@@ -170,17 +166,17 @@ class Application
             define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
             define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
 
-            Core\View::factory('Smarty');
+            $this->container->get('core.view')->setRenderer('smarty');
         } else {
-            self::$di = new ContainerBuilder();
-            $loader = new YamlFileLoader(self::$di, new FileLocator(__DIR__));
+            $this->container = new ContainerBuilder();
+            $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
             $loader->load(ACP3_DIR . 'config/services.yml');
             $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 
-            self::$di->set('core.db', $db);
+            $this->container->set('core.db', $db);
 
             // Systemeinstellungen laden
-            self::$di
+            $this->container
                 ->get('system.config')
                 ->getSettingsAsConstants();
 
@@ -191,7 +187,7 @@ class Application
 
             // Try to get all available services
             /** @var Modules $modules */
-            $modules = self::$di->get('core.modules');
+            $modules = $this->container->get('core.modules');
             $activeModules = $modules->getActiveModules();
             foreach ($activeModules as $module) {
                 $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
@@ -200,56 +196,107 @@ class Application
                 }
             }
 
-            Core\View::factory('Smarty');
+            $this->container->get('core.view')->setRenderer('smarty');
 
-            self::$di->compile();
+            $this->container->compile();
 
-            $dumper = new PhpDumper(self::$di);
+            $dumper = new PhpDumper($this->container);
             file_put_contents($file, $dumper->dump(array('class' => 'ACP3ServiceContainer')));
         }
+
+        Registry::set('services', $this->container);
+    }
+
+    /**
+     * Überprüft die URI auf einen möglichen URI-Alias und
+     * macht im Erfolgsfall einen Redirect darauf
+     *
+     * @return void
+     */
+    private function _checkForUriAlias()
+    {
+        $request = $this->container->get('core.request');
+
+        // Nur ausführen, falls URI-Aliase aktiviert sind
+        if ($request->area !== 'admin') {
+            // Falls für Query ein Alias existiert, zu diesem weiterleiten
+            if ($this->container->get('core.router.aliases')->uriAliasExists($request->query) === true) {
+                $this->container->get('core.redirect')->permanent($request->query); // URI-Alias wird von uri::route() erzeugt
+            }
+
+            $probableQuery = $request->query;
+            // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+            if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $request->query)) {
+                $query = preg_split('=/=', $request->query, -1, PREG_SPLIT_NO_EMPTY);
+                // Keine entsprechende Module-Action gefunden -> muss Alias sein
+                if ($this->container->get('core.modules')->actionExists($request->area . '/' . $query[0] . '/' . $query[1]) === false) {
+                    $length = 0;
+                    foreach ($query as $row) {
+                        if (strpos($row, '_') === false) {
+                            $length += strlen($row) + 1;
+                        } else {
+                            break;
+                        }
+                    }
+                    $params = substr($request->query, $length);
+                    $probableQuery = substr($request->query, 0, $length);
+                }
+            }
+
+            // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
+            $alias = $this->container->get('core.db')->fetchAssoc('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($probableQuery, 0, -1)));
+            if (!empty($alias)) {
+                $request->query = $alias['uri'] . (!empty($params) ? $params : '');
+            }
+        }
+
+        return;
     }
 
     /**
      * Gibt die Seite aus
      */
-    public static function outputPage()
+    public function outputPage()
     {
-        self::_checkForMaintenanceMode();
+        $this->_checkForMaintenanceMode();
 
-        $uri = self::$di->get('core.uri');
+        $this->_checkForUriAlias();
+
+        $request = $this->container->get('core.request');
+        $redirect = $this->container->get('core.redirect');
 
         try {
-            $serviceId = $uri->mod . '.controller.' . $uri->area . '.' . $uri->controller;
+            $serviceId = $request->mod . '.controller.' . $request->area . '.' . $request->controller;
 
-            self::dispatch($serviceId, $uri->file);
+            $this->dispatch($serviceId, $request->file);
         } catch (Core\Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
                 Core\Logger::error('404', $e);
             } else {
-                Core\Logger::error('404', 'Could not find any results for request: ' . $uri->query);
+                Core\Logger::error('404', 'Could not find any results for request: ' . $request->query);
             }
 
-            $uri->redirect('errors/index/404');
+            $redirect->temporary('errors/index/404');
         } catch (Core\Exceptions\UnauthorizedAccess $e) {
-            $uri->redirect('errors/index/401');
+            $redirect->temporary('errors/index/401');
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
-            Core\Logger::error('404', 'Request: ' . $uri->query);
+            Core\Logger::error('404', 'Request: ' . $request->query);
             Core\Logger::error('404', $e);
 
             if (defined('DEBUG') && DEBUG === true) {
                 $errorMessage = $e->getMessage();
-                self::_renderApplicationException($errorMessage);
+                $this->_renderApplicationException($errorMessage);
             } else {
-                $uri->redirect('errors/index/404');
+                $redirect->temporary('errors/index/404');
             }
         } catch (\Exception $e) {
             Core\Logger::error('exception', $e);
 
             if (defined('DEBUG') && DEBUG === true) {
                 $errorMessage = $e->getMessage();
-                self::_renderApplicationException($errorMessage);
+                $this->_renderApplicationException($errorMessage);
             } else {
-                $uri->redirect('errors/index/500');
+                $redirect->temporary('errors/index/500');
             }
         }
     }
@@ -259,16 +306,16 @@ class Application
      * @param $action
      * @throws Core\Exceptions\ControllerActionNotFound
      */
-    public static function dispatch($serviceId, $action)
+    public function dispatch($serviceId, $action)
     {
-        if (self::$di->has($serviceId)) {
+        if ($this->container->has($serviceId)) {
             /** @var Controller $controller */
-            $controller = self::$di->get($serviceId);
+            $controller = $this->container->get($serviceId);
 
             $action = 'action' . str_replace('_', '', $action);
 
             if (method_exists($controller, $action) === true) {
-                $controller->setContainer(self::$di);
+                $controller->setContainer($this->container);
                 $controller->preDispatch();
                 $controller->$action();
                 $controller->display();
@@ -281,20 +328,20 @@ class Application
     }
 
     /**
-     * @return ContainerBuilder
+     * @param Container $container
      */
-    public static function getServiceContainer()
+    public function setContainer(Container $container)
     {
-        return self::$di;
+        $this->container = $container;
     }
 
     /**
      * Renders an exception
      * @param $errorMessage
      */
-    private static function _renderApplicationException($errorMessage)
+    private function _renderApplicationException($errorMessage)
     {
-        $view = self::$di->get('core.view');
+        $view = $this->container->get('core.view');
         $view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
         $view->assign('CONTENT', $errorMessage);
         $view->displayTemplate('system/maintenance.tpl');

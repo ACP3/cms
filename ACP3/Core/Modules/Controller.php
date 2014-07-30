@@ -27,9 +27,13 @@ abstract class Controller
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
-    protected $uri;
+    protected $request;
+    /**
+     * @var \ACP3\Core\Router
+     */
+    protected $router;
     /**
      * @var \ACP3\Core\View
      */
@@ -71,7 +75,8 @@ abstract class Controller
     {
         $this->auth = $context->getAuth();
         $this->lang = $context->getLang();
-        $this->uri = $context->getUri();
+        $this->request = $context->getRequest();
+        $this->router = $context->getRouter();
         $this->view = $context->getView();
         $this->modules = $context->getModules();
     }
