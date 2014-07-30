@@ -43,9 +43,9 @@ class Extensions
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Router
      */
-    protected $uri;
+    protected $router;
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
@@ -58,11 +58,17 @@ class Extensions
      */
     protected $params = array();
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Date $date, Core\Lang $lang, Core\URI $uri, Core\Helpers\StringFormatter $stringFormatter)
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Core\Date $date,
+        Core\Lang $lang,
+        Core\Router $router,
+        Core\Helpers\StringFormatter $stringFormatter
+    )
     {
         $this->db = $db;
         $this->lang = $lang;
-        $this->uri = $uri;
+        $this->router = $router;
         $this->stringFormatter = $stringFormatter;
 
         $this->params = array(
@@ -126,7 +132,7 @@ class Extensions
             $name = $this->lang->t('articles', 'articles');
             $searchResults[$name]['dir'] = 'articles';
             for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i]['hyperlink'] = $this->uri->route('articles/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('articles/index/details/id_' . $results[$i]['id']);
                 $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
                 $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
@@ -156,7 +162,7 @@ class Extensions
             $name = $this->lang->t('files', 'files');
             $searchResults[$name]['dir'] = 'files';
             for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i]['hyperlink'] = $this->uri->route('files/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('files/index/details/id_' . $results[$i]['id']);
                 $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
                 $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
@@ -186,7 +192,7 @@ class Extensions
             $name = $this->lang->t('news', 'news');
             $searchResults[$name]['dir'] = 'news';
             for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i]['hyperlink'] = $this->uri->route('news/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('news/index/details/id_' . $results[$i]['id']);
                 $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
                 $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }

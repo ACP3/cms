@@ -2,16 +2,33 @@
 
 namespace ACP3\Installer;
 
+use ACP3\Core;
+use Doctrine\DBAL;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
+
 /**
- * Front Controller of the Installer
- *
- * @author Tino Goratsch
+ * Class Application
+ * @package ACP3\Installer
  */
 class Application
 {
+    /**
+     * @var ContainerBuilder
+     */
+    private static $di;
+    /**
+     * @var \ACP3\Core\Request
+     */
+    private static $uri;
+    /**
+     * @var \ACP3\Core\View
+     */
+    private static $view;
 
     /**
-     * run(9 Methode für den Installer
+     * run() method of the installer
      */
     public static function runInstaller()
     {
@@ -22,7 +39,7 @@ class Application
     }
 
     /**
-     * run() Methode für den Database Updater
+     * run() method of the database updater
      */
     public static function runUpdater()
     {
@@ -45,12 +62,12 @@ class Application
 
         if (defined('IN_UPDATER') === true) {
             // DB-Config des ACP3 laden
-            $path = ACP3_DIR . 'config.php';
+            $path = ACP3_DIR . 'config/config.php';
             if (is_file($path) === false || filesize($path) === 0) {
                 exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
                 // Wenn alles okay ist, config.php einbinden und error_reporting setzen
             } else {
-                require_once ACP3_DIR . 'config.php';
+                require_once $path;
             }
         }
     }
@@ -99,16 +116,16 @@ class Application
      */
     public static function initializeInstallerClasses()
     {
-        \ACP3\Core\Registry::set('View', new \ACP3\Core\View());
-
         \ACP3\Core\Registry::set('URI', new \ACP3\Installer\Core\URI('install', 'welcome'));
+
+        \ACP3\Core\Registry::set('View', new Core\View());
 
         $params = array(
             'compile_id' => 'installer',
             'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
             'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
         );
-        \ACP3\Core\View::factory('Smarty', $params);
+        Core\View::setRenderer('Smarty', $params);
     }
 
     /**
@@ -116,7 +133,7 @@ class Application
      */
     public static function initializeUpdaterClasses()
     {
-        $config = new \Doctrine\DBAL\Configuration();
+        $config = new DBAL\Configuration();
         $connectionParams = array(
             'dbname' => CONFIG_DB_NAME,
             'user' => CONFIG_DB_USER,
@@ -125,25 +142,44 @@ class Application
             'driver' => 'pdo_mysql',
             'charset' => 'utf8'
         );
-        $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-        \ACP3\Core\Registry::set('Db', $db);
+        $db = DBAL\DriverManager::getConnection($connectionParams, $config);
 
         define('DB_PRE', CONFIG_DB_PRE);
 
-        // Sytemeinstellungen laden
-        $config = new \ACP3\Core\Config($db, 'system');
-        $config->getSettingsAsConstants();
+        self::$di = new ContainerBuilder();
+        $loader = new YamlFileLoader(self::$di, new FileLocator(__DIR__));
+        $loader->load(ACP3_DIR . 'config/services.yml');
+        $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 
-        \ACP3\Core\Registry::set('View', new \ACP3\Core\View());
+        self::$di->set('core.db', $db);
 
-        \ACP3\Core\Registry::set('URI', new \ACP3\Installer\Core\URI('update', 'db_update'));
+        // Systemeinstellungen laden
+        self::$di
+            ->get('system.config')
+            ->getSettingsAsConstants();
+
+        // Pfade zum Theme setzen
+        define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+        define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
+
+        // Try to get all available services
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module . '/config/services.yml';
+            if (is_file($path)) {
+                $loader->load($path);
+            }
+        }
 
         $params = array(
             'compile_id' => 'installer',
             'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
             'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
         );
-        \ACP3\Core\View::factory('Smarty', $params);
+        Core\View::setRenderer('Smarty', $params);
+
+        self::$di->compile();
     }
 
     /**
@@ -193,6 +229,14 @@ class Application
         } else {
             $uri->redirect('errors/404');
         }
+    }
+
+    /**
+     * @return ContainerBuilder
+     */
+    public static function getServiceContainer()
+    {
+        return self::$di;
     }
 
 }

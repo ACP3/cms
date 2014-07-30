@@ -20,9 +20,9 @@ class Extensions
      */
     protected $date;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Router
      */
-    protected $uri;
+    protected $router;
     /**
      * @var \ACP3\Core\View
      */
@@ -35,14 +35,14 @@ class Extensions
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Core\Date $date,
-        Core\URI $uri,
+        Core\Router $router,
         Core\View $view,
         Core\Helpers\StringFormatter $stringFormatter
     )
     {
         $this->date = $date;
         $this->db = $db;
-        $this->uri = $uri;
+        $this->router = $router;
         $this->view = $view;
         $this->formatter = $stringFormatter;
     }
@@ -57,7 +57,7 @@ class Extensions
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
                 'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
-                'link' => FEED_LINK . $this->uri->route('news/index/details/id_' . $results[$i]['id'])
+                'link' => FEED_LINK . $this->router->route('news/index/details/id_' . $results[$i]['id'])
             );
             $this->view->assign($params);
         }
@@ -73,7 +73,7 @@ class Extensions
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
                 'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
-                'link' => FEED_LINK . $this->uri->route('files/index/details/id_' . $results[$i]['id'])
+                'link' => FEED_LINK . $this->router->route('files/index/details/id_' . $results[$i]['id'])
             );
             $this->view->assign($params);
         }

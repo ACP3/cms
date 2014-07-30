@@ -70,8 +70,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -109,7 +108,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/polls/index/delete', 'acp/polls');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
             foreach ($items as $item) {
                 $bool = $this->pollsModel->delete($item);
@@ -125,7 +124,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $poll = $this->pollsModel->getOneById($this->uri->id);
+        $poll = $this->pollsModel->getOneById($this->request->id);
 
         if (empty($poll) === false) {
             if (isset($_POST['submit']) === true) {
@@ -142,11 +141,11 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->pollsModel->update($updateValues, $this->uri->id);
+                    $bool = $this->pollsModel->update($updateValues, $this->request->id);
 
                     // Stimmen zurücksetzen
                     if (!empty($_POST['reset'])) {
-                        $this->pollsModel->delete($this->uri->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                        $this->pollsModel->delete($this->request->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
                     }
 
                     // Antworten
@@ -155,7 +154,7 @@ class Index extends Core\Modules\Controller\Admin
                         if (empty($row['id'])) {
                             // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                             if (!empty($row['value']) && !isset($row['delete']))
-                                $this->pollsModel->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->uri->id), Polls\Model::TABLE_NAME_ANSWERS);
+                                $this->pollsModel->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id), Polls\Model::TABLE_NAME_ANSWERS);
                             // Antwort mitsamt Stimmen löschen
                         } elseif (isset($row['delete']) && $this->get('core.validate')->isNumber($row['id'])) {
                             $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
@@ -172,8 +171,7 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -195,7 +193,7 @@ class Index extends Core\Modules\Controller\Admin
                     $answers[$i]['value'] = '';
                 }
             } else {
-                $answers = $this->pollsModel->getAnswersByPollId($this->uri->id);
+                $answers = $this->pollsModel->getAnswersByPollId($this->request->id);
                 $c_answers = count($answers);
 
                 for ($i = 0; $i < $c_answers; ++$i) {

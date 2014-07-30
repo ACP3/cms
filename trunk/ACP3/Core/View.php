@@ -1,18 +1,16 @@
 <?php
 
 namespace ACP3\Core;
+use ACP3\Core\View\AbstractRenderer;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Klasse für die Ausgabe der Seite
  *
  * @author Tino Goratsch
  */
-class View
+class View extends ContainerAware
 {
-    /**
-     * @var URI
-     */
-    protected $uri;
     /**
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
      *
@@ -31,13 +29,17 @@ class View
     protected $jsLibrariesCache = '';
 
     /**
-     * @var
+     * @var Router
      */
-    protected static $rendererObject;
+    protected $router;
+    /**
+     * @var AbstractRenderer
+     */
+    protected $renderer;
 
-    public function __construct(URI $uri)
+    public function __construct(Router $router)
     {
-        $this->uri = $uri;
+        $this->router = $router;
     }
 
     /**
@@ -45,9 +47,9 @@ class View
      *
      * @return object
      */
-    public static function getRenderer()
+    public function getRenderer()
     {
-        return self::$rendererObject;
+        return $this->renderer;
     }
 
     /**
@@ -71,20 +73,20 @@ class View
     }
 
     /**
-     * Set the disered renderer with an optional config array
+     * Set the desired renderer with an optional config array
      *
      * @param string $renderer
      * @param array $params
      * @throws \Exception
      */
-    public static function factory($renderer = 'Smarty', array $params = array())
+    public function setRenderer($renderer = 'smarty', array $params = array())
     {
-        $path = CLASSES_DIR . 'View/Renderer/' . $renderer . '.php';
-        if (is_file($path) === true) {
-            $className = "\\ACP3\\Core\\View\\Renderer\\{$renderer}";
-            self::$rendererObject = new $className($params);
+        $serviceId = 'core.view.renderer.' . $renderer;
+        if ($this->container->has($serviceId) === true) {
+            $this->renderer = $this->container->get($serviceId);
+            $this->renderer->configure($params);
         } else {
-            throw new \Exception('File ' . $path . ' not found!');
+            throw new \Exception('Renderer ' . $renderer . ' not found!');
         }
     }
 
@@ -107,7 +109,7 @@ class View
             $libraries = '/libraries_' . substr($libraries, 0, -1);
         }
 
-        return $this->uri->route('minify/index/index/group_' . $group . '/design_' . CONFIG_DESIGN . $layout . $libraries);
+        return $this->router->route('minify/index/index/group_' . $group . '/design_' . CONFIG_DESIGN . $layout . $libraries);
     }
 
     /**
@@ -160,7 +162,7 @@ class View
         }
 
         if ($this->templateExists($template)) {
-            return self::$rendererObject->fetch($template, $cacheId, $compileId, $parent, $display);
+            return $this->renderer->fetch($template, $cacheId, $compileId, $parent, $display);
         } else {
             // Pfad zerlegen
             $fragments = explode('/', $template);
@@ -172,7 +174,7 @@ class View
             }
 
             if (count($fragments) > 1 && $this->templateExists($path)) {
-                return self::$rendererObject->fetch($path, $cacheId, $compileId, $parent, $display);
+                return $this->renderer->fetch($path, $cacheId, $compileId, $parent, $display);
             } else {
                 throw new \Exception("The requested template " . $template . " can't be found!");
             }
@@ -187,7 +189,7 @@ class View
      */
     public function templateExists($template)
     {
-        return self::$rendererObject->templateExists($template);
+        return $this->renderer->templateExists($template);
     }
 
     /**
@@ -199,7 +201,7 @@ class View
      */
     public function assign($name, $value = null)
     {
-        return self::$rendererObject->assign($name, $value);
+        return $this->renderer->assign($name, $value);
     }
 
 }

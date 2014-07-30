@@ -34,8 +34,8 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     public function preDispatch()
     {
         if ($this->auth->isUser() === false) {
-            $redirectUri = base64_encode('acp/' . $this->uri->query);
-            $this->uri->redirect('users/index/login/redirect_' . $redirectUri);
+            $redirectUri = base64_encode('acp/' . $this->request->query);
+            $this->request->redirect('users/index/login/redirect_' . $redirectUri);
         }
 
         return parent::preDispatch();
@@ -52,20 +52,20 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     {
         if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
             $entries = $_POST['entries'];
-        } elseif ($this->validate->deleteEntries($this->uri->entries) === true) {
-            $entries = $this->uri->entries;
+        } elseif ($this->validate->deleteEntries($this->request->entries) === true) {
+            $entries = $this->request->entries;
         }
 
         $alerts = $this->get('core.helpers.alerts');
 
         if (!isset($entries)) {
             $this->setContent($alerts->errorBox($this->lang->t('system', 'no_entries_selected')));
-        } elseif (is_array($entries) === true && $this->uri->action !== 'confirmed') {
+        } elseif (is_array($entries) === true && $this->request->action !== 'confirmed') {
             $data = array(
                 'action' => 'confirmed',
                 'entries' => $entries
             );
-            $confirmBox = $alerts->confirmBoxPost($this->lang->t('system', 'confirm_delete'), $data, $this->uri->route($moduleConfirmUrl), $this->uri->route($moduleIndexUrl));
+            $confirmBox = $alerts->confirmBoxPost($this->lang->t('system', 'confirm_delete'), $data, $this->router->route($moduleConfirmUrl), $this->router->route($moduleIndexUrl));
             $this->setContent($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
@@ -76,7 +76,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     {
         // Content-Template automatisch setzen
         if ($this->getContentTemplate() === '') {
-            $this->setContentTemplate($this->uri->mod . '/Admin/' . $this->uri->controller . '.' . $this->uri->file . '.tpl');
+            $this->setContentTemplate($this->request->mod . '/Admin/' . $this->request->controller . '.' . $this->request->file . '.tpl');
         }
 
         parent::display();

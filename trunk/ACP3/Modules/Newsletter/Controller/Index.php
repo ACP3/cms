@@ -42,9 +42,9 @@ class Index extends Core\Modules\Controller\Frontend
     {
         try {
             $mail = $hash = '';
-            if ($this->get('core.validate')->email($this->uri->mail) && $this->get('core.validate')->isMD5($this->uri->hash)) {
-                $mail = $this->uri->mail;
-                $hash = $this->uri->hash;
+            if ($this->get('core.validate')->email($this->request->mail) && $this->get('core.validate')->isMD5($this->request->hash)) {
+                $mail = $this->request->mail;
+                $hash = $this->request->hash;
             }
 
             $validator = $this->get('newsletter.validator');
@@ -52,11 +52,9 @@ class Index extends Core\Modules\Controller\Frontend
 
             $bool = $this->newsletterModel->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-            $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-            $this->setContent($alerts->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
+            $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         } catch (Core\Exceptions\ValidationFailed $e) {
-            $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-            $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 
@@ -65,7 +63,7 @@ class Index extends Core\Modules\Controller\Frontend
         if (empty($_POST) === false) {
             try {
                 $validator = $this->get('newsletter.validator');
-                switch ($this->uri->action) {
+                switch ($this->request->action) {
                     case 'subscribe':
                         $validator->validateSubscribe($_POST);
 
@@ -73,8 +71,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                         $this->session->unsetFormToken();
 
-                        $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                        $this->setContent($alerts->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+                        $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                         return;
                     case 'unsubscribe':
                         $validator->validateUnsubscribe($_POST);
@@ -83,24 +80,21 @@ class Index extends Core\Modules\Controller\Frontend
 
                         $this->session->unsetFormToken();
 
-                        $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                        $this->setContent($alerts->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+                        $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                         return;
                     default:
                         throw new Core\Exceptions\ResultNotExists();
                 }
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->setContent($alerts->errorBox($e->getMessage()));
+                $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
         $this->view->assign('form', array_merge(array('mail' => ''), $_POST));
 
-        $field_value = $this->uri->action ? $this->uri->action : 'subscribe';
+        $field_value = $this->request->action ? $this->request->action : 'subscribe';
 
         $actions_Lang = array(
             $this->lang->t('newsletter', 'subscribe'),

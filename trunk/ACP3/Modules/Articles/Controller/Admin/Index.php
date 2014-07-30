@@ -62,7 +62,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->articlesModel->insert($insertValues);
 
-                $this->uri->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+                $this->request->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
                     $_POST['seo_description'],
@@ -95,8 +95,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -134,7 +133,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/articles/index/delete', 'acp/articles');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
@@ -147,7 +146,7 @@ class Index extends Core\Modules\Controller\Admin
                 $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
 
                 $cache->delete(Articles\Cache::CACHE_ID . $item);
-                $this->uri->deleteUriAlias($uri);
+                $this->request->deleteUriAlias($uri);
             }
 
             $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
@@ -163,7 +162,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $article = $this->articlesModel->getOneById($this->uri->id);
+        $article = $this->articlesModel->getOneById($this->request->id);
 
         if (empty($article) === false) {
             if (empty($_POST) === false) {
@@ -179,10 +178,10 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->articlesModel->update($updateValues, $this->uri->id);
+                    $bool = $this->articlesModel->update($updateValues, $this->request->id);
 
-                    $this->uri->insertUriAlias(
-                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                    $this->request->insertUriAlias(
+                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
                         $_POST['seo_description'],
@@ -191,7 +190,7 @@ class Index extends Core\Modules\Controller\Admin
                     $this->seo->setCache();
 
                     $cache = new Articles\Cache($this->articlesModel);
-                    $cache->setCache($this->uri->id);
+                    $cache->setCache($this->request->id);
 
                     // Aliase in der Navigation aktualisieren
                     $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
@@ -203,15 +202,14 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($article['start'], $article['end'])));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->uri->id)));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id)));
 
             $this->view->assign('form', array_merge($article, $_POST));
 

@@ -22,9 +22,17 @@ class TableOfContents
      */
     protected $seo;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
-    protected $uri;
+    protected $request;
+    /**
+     * @var \ACP3\Core\Router
+     */
+    protected $router;
+    /**
+     * @var \ACP3\Core\Validate
+     */
+    protected $validate;
     /**
      * @var \ACP3\Core\View
      */
@@ -33,15 +41,19 @@ class TableOfContents
     public function __construct(
         Core\Breadcrumb $breadcrumb, 
         Core\Lang $lang, 
-        Core\SEO $seo, 
-        Core\URI $uri, 
+        Core\SEO $seo,
+        Core\Request $request,
+        Core\Router $router,
+        Core\Validate $validate,
         Core\View $view
     )
     {
         $this->breadcrumb = $breadcrumb;
         $this->lang = $lang;
         $this->seo = $seo;
-        $this->uri = $uri;
+        $this->request = $request;
+        $this->router = $router;
+        $this->validate = $validate;
         $this->view = $view;
     }
 
@@ -57,8 +69,8 @@ class TableOfContents
     public function generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
     {
         if (!empty($pages)) {
-            $uri = $this->uri;
-            $path = empty($path) ? $uri->getUriWithoutPages() : $path;
+            $request = $this->request;
+            $path = empty($path) ? $request->getUriWithoutPages() : $path;
             $toc = array();
             $i = 0;
             foreach ($pages as $page) {
@@ -70,18 +82,18 @@ class TableOfContents
                     $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
                 }
 
-                $toc[$i]['uri'] = $customUris === true ? $page['uri'] : $uri->route($path) . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '');
+                $toc[$i]['uri'] = $customUris === true ? $page['uri'] : $this->router->route($path) . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '');
 
                 $toc[$i]['selected'] = false;
                 if ($customUris === true) {
-                    if ($page['uri'] === $uri->route($uri->query) ||
-                        $uri->route($uri->query) === $uri->route($uri->mod . '/' . $uri->controller . '/' . $uri->file) && $i == 0
+                    if ($page['uri'] === $this->router->route($request->query) ||
+                        $this->router->route($request->query) === $this->router->route($request->mod . '/' . $request->controller . '/' . $request->file) && $i == 0
                     ) {
                         $toc[$i]['selected'] = true;
                         $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
                     }
                 } else {
-                    if ((Core\Validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $pageNumber) {
+                    if (($this->validate->isNumber($request->page) === false && $i === 0) || $request->page === $pageNumber) {
                         $toc[$i]['selected'] = true;
                         $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
                     }
@@ -145,9 +157,9 @@ class TableOfContents
                 $matches = array();
                 preg_match_all($regex, $text, $matches);
 
-                $currentPage = Core\Validate::isNumber($this->uri->page) === true && $this->uri->page <= $c_pages ? $this->uri->page : 1;
-                $nextPage = !empty($pages[$currentPage]) ? $this->uri->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-                $previousPage = $currentPage > 1 ? $this->uri->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
+                $currentPage = $this->validate->isNumber($this->request->page) === true && $this->request->page <= $c_pages ? $this->request->page : 1;
+                $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
+                $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
                 if (!empty($nextPage)) {
                     $this->seo->setNextPage($nextPage);

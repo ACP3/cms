@@ -25,9 +25,13 @@ class Helpers
      */
     protected $navbar = array();
     /**
-     * @var Core\URI
+     * @var Core\Request
      */
-    protected $uri;
+    protected $request;
+    /**
+     * @var \ACP3\Core\Router
+     */
+    protected $router;
     /**
      * @var Model
      */
@@ -37,9 +41,15 @@ class Helpers
      */
     protected $cache;
 
-    public function __construct(Core\Lang $lang, Core\URI $uri, Model $menuModel)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Request $request,
+        Core\Router $router,
+        Model $menuModel
+    )
     {
-        $this->uri = $uri;
+        $this->request = $request;
+        $this->router = $router;
         $this->menuModel = $menuModel;
         $this->cache = new Cache($lang, $menuModel);
     }
@@ -126,20 +136,20 @@ class Helpers
         if (isset($this->navbar[$menu])) {
             return $this->navbar[$menu];
         } else { // ...ansonsten Verarbeitung starten
-            $uri = $this->uri;
+            $request = $this->request;
 
             $items = $this->cache->getVisibleMenuItems($menu);
             $c_items = count($items);
 
             if ($c_items > 0) {
                 // Selektion nur vornehmen, wenn man sich im Frontend befindet
-                if ($uri->area !== 'admin') {
+                if ($request->area !== 'admin') {
                     $in = array(
-                        $uri->query,
-                        $uri->getUriWithoutPages(),
-                        $uri->mod . '/' . $uri->controller . '/' . $uri->file . '/',
-                        $uri->mod . '/' . $uri->controller . '/',
-                        $uri->mod
+                        $request->query,
+                        $request->getUriWithoutPages(),
+                        $request->mod . '/' . $request->controller . '/' . $request->file . '/',
+                        $request->mod . '/' . $request->controller . '/',
+                        $request->mod
                     );
                     $selected = $this->menuModel->getLeftIdByUris($menu, $in);
                 }
@@ -157,7 +167,7 @@ class Helpers
                     }
 
                     // Link zusammenbauen
-                    $href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $uri->route($items[$i]['uri']) : $items[$i]['uri'];
+                    $href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $this->router->route($items[$i]['uri']) : $items[$i]['uri'];
                     $target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
                     $attributes = '';
                     $attributes .= !empty($linkCss) ? ' class="' . $linkCss . '"' : '';

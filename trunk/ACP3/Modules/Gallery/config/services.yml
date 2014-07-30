@@ -21,11 +21,11 @@ services:
 
   gallery.helpers:
     class: ACP3\Modules\Gallery\Helpers
-    arguments: ['@core.uri', '@core.seo', '@gallery.model']
+    arguments: ['@core.router.aliases', '@core.seo', '@gallery.model']
 
   gallery.validator:
     class: ACP3\Modules\Gallery\Validator
-    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.uri']
+    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.request']
 
   gallery.installer:
     class: ACP3\Modules\Gallery\Installer

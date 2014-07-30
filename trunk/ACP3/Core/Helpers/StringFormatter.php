@@ -16,18 +16,18 @@ class StringFormatter
     protected $modules;
 
     /**
-     * @var Core\URI
+     * @var Core\Router
      */
-    protected $uri;
+    protected $router;
     /**
      * @var Core\Validate
      */
     protected $validate;
 
-    public function __construct(Core\Modules $modules, Core\URI $uri, Core\Validate $validate)
+    public function __construct(Core\Modules $modules, Core\Router $router, Core\Validate $validate)
     {
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->router = $router;
         $this->validate = $validate;
     }
 
@@ -115,7 +115,7 @@ class StringFormatter
             }
 
             if ($this->modules->actionExists($path)) {
-                return '<a href="' . $this->uri->route($matches[6]) . '"';
+                return '<a href="' . $this->router->route($matches[6]) . '"';
             } else {
                 return $matches[0];
             }

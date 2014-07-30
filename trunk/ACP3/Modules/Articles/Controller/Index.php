@@ -44,7 +44,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view,
                 $this->articlesModel->countAll($time)
             );
@@ -61,9 +61,9 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->articlesModel->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->articlesModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) === true) {
             $cache = new Articles\Cache($this->articlesModel);
-            $article = $cache->getCache($this->uri->id);
+            $article = $cache->getCache($this->request->id);
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 
@@ -71,11 +71,11 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->breadcrumb,
                 $this->lang,
                 $this->seo,
-                $this->uri,
+                $this->request,
                 $this->view
             );
             $formatter = $this->get('core.helpers.string.formatter');
-            $this->view->assign('page', $toc->splitTextIntoPages($formatter->rewriteInternalUri($article['text']), $this->uri->getUriWithoutPages()));
+            $this->view->assign('page', $toc->splitTextIntoPages($formatter->rewriteInternalUri($article['text']), $this->request->getUriWithoutPages()));
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

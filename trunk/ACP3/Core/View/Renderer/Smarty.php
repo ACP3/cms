@@ -2,11 +2,12 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Application;
 use ACP3\Core\View\AbstractRenderer;
 
 /**
  * Renderer for the Smarty template engine
+ *
+ * @package ACP3\Core\View\Renderer
  */
 class Smarty extends AbstractRenderer
 {
@@ -17,10 +18,8 @@ class Smarty extends AbstractRenderer
      */
     public $renderer;
 
-    public function __construct(array $params = array())
+    public function configure(array $params = array())
     {
-        parent::__construct($params);
-
         $this->renderer = new \Smarty();
         $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
         $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : CONFIG_DESIGN;
@@ -35,18 +34,20 @@ class Smarty extends AbstractRenderer
             $this->renderer->addPluginsDir($params['plugins_dir']);
         }
 
-        $container = Application::getServiceContainer();
-
-        $services = $container->getServiceIds();
+        $services = $this->container->getServiceIds();
         foreach ($services as $service) {
             if (strpos($service, 'smarty.plugin.') === 0) {
-                $container->get($service)->registerPlugin($this->renderer);
+                $this->container->get($service)->registerPlugin($this->renderer);
             }
         }
 
         $this->renderer->registerClass('Validate', "\\ACP3\\Core\\Validate");
     }
 
+    /**
+     * @param $name
+     * @param null $value
+     */
     public function assign($name, $value = null)
     {
         if (is_array($name)) {
@@ -56,6 +57,14 @@ class Smarty extends AbstractRenderer
         }
     }
 
+    /**
+     * @param $template
+     * @param null $cache_id
+     * @param null $compile_id
+     * @param null $parent
+     * @param bool $display
+     * @return bool|mixed|string
+     */
     public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
     {
         return $this->renderer->fetch($template, $cache_id, $compile_id, $parent, $display);
@@ -66,6 +75,10 @@ class Smarty extends AbstractRenderer
         echo $this->renderer->display($template, $cache_id, $compile_id, $parent);
     }
 
+    /**
+     * @param $template
+     * @return bool
+     */
     public function templateExists($template)
     {
         return $this->renderer->templateExists($template);

@@ -18,7 +18,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
     protected $uri;
     /**
@@ -26,7 +26,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $userModel;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Modules $modules, Core\URI $uri, Model $userModel)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Modules $modules, Core\Request $uri, Model $userModel)
     {
         parent::__construct($lang, $validate);
 

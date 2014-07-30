@@ -15,9 +15,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
-    protected $uri;
+    protected $request;
     /**
      * @var Model
      */
@@ -27,12 +27,18 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $articlesHelpers;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Model $menuModel)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validate $validate,
+        Core\Modules $modules,
+        Core\Request $request,
+        Model $menuModel
+    )
     {
         parent::__construct($lang, $validate);
 
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->request = $request;
         $this->menuModel = $menuModel;
     }
 
@@ -133,7 +139,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
             $errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
         }
-        if (!isset($errors) && $this->menuModel->menuExistsByName($formData['index_name'], $this->uri->id) === true) {
+        if (!isset($errors) && $this->menuModel->menuExistsByName($formData['index_name'], $this->request->id) === true) {
             $errors['index-name'] = $this->lang->t('menus', 'index_name_unique');
         }
         if (strlen($formData['title']) < 3) {

@@ -41,7 +41,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/comments/index/delete', 'acp/comments');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->commentsModel->delete($item, 'module_id');
@@ -98,8 +98,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

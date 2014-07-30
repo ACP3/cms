@@ -66,7 +66,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->newsModel->insert($insertValues);
 
-                $this->uri->insertUriAlias(
+                $this->request->insertUriAlias(
                     sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
@@ -81,8 +81,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -126,7 +125,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/news/index/delete', 'acp/news');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             $commentsInstalled = $this->modules->isInstalled('comments');
             $cache = new Core\Cache2('news');
@@ -138,7 +137,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
 
                 $cache->delete(News\Cache::CACHE_ID . $item);
-                $this->uri->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
+                $this->request->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
             }
 
             $this->seo->setCache();
@@ -151,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $news = $this->newsModel->getOneById((int)$this->uri->id);
+        $news = $this->newsModel->getOneById((int)$this->request->id);
 
         if (empty($news) === false) {
             $config = new Core\Config($this->db, 'news');
@@ -176,10 +175,10 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->newsModel->update($updateValues, $this->uri->id);
+                    $bool = $this->newsModel->update($updateValues, $this->request->id);
 
-                    $this->uri->insertUriAlias(
-                        sprintf(News\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                    $this->request->insertUriAlias(
+                        sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
                         $_POST['seo_description'],
@@ -188,7 +187,7 @@ class Index extends Core\Modules\Controller\Admin
                     $this->seo->setCache();
 
                     $cache = new News\Cache($this->newsModel);
-                    $cache->setCache($this->uri->id);
+                    $cache->setCache($this->request->id);
 
                     $this->session->unsetFormToken();
 
@@ -196,8 +195,7 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -229,7 +227,7 @@ class Index extends Core\Modules\Controller\Admin
             $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
             $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $news['target']));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $this->uri->id)));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id)));
 
             $this->view->assign('form', array_merge($news, $_POST));
 
@@ -289,8 +287,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

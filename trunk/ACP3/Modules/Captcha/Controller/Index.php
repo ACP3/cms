@@ -15,13 +15,13 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->setNoOutput(true);
 
-        if (!empty($this->uri->path) &&
-            isset($_SESSION['captcha_' . $this->uri->path])
+        if (!empty($this->request->path) &&
+            isset($_SESSION['captcha_' . $this->request->path])
         ) {
             header('Cache-Control: no-cache, must-revalidate');
             header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
             header('Content-Type: image/gif');
-            $captcha = $_SESSION['captcha_' . $this->uri->path];
+            $captcha = $_SESSION['captcha_' . $this->request->path];
             $captchaLength = strlen($captcha);
             $width = $captchaLength * 25;
             $height = 30;

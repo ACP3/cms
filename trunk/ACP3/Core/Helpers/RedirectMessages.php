@@ -10,17 +10,26 @@ use ACP3\Core;
 class RedirectMessages
 {
     /**
-     * @var Core\URI
+     * @var Core\Request
      */
-    private $uri;
+    private $request;
+    /**
+     * @var Core\Redirect
+     */
+    private $redirect;
     /**
      * @var Core\View
      */
     private $view;
 
-    public function __construct(Core\URI $uri, Core\View $view)
+    public function __construct(
+        Core\Redirect $redirect,
+        Core\Request $request,
+        Core\View $view
+    )
     {
-        $this->uri = $uri;
+        $this->redirect = $redirect;
+        $this->request = $request;
         $this->view = $view;
     }
 
@@ -50,7 +59,12 @@ class RedirectMessages
                 'success' => is_int($success) ? true : (bool)$success,
                 'text' => $text
             );
-            $this->uri->redirect($path);
+
+            if ($this->request->getIsAjax()) {
+                $this->redirect->ajax($path);
+            } else {
+                $this->redirect->temporary($path);
+            }
         }
     }
 } 

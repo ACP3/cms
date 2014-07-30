@@ -31,7 +31,7 @@ class Index extends Core\Modules\Controller
     public function actionLogin()
     {
         if ($this->auth->isUser() === false) {
-            $currentPage = base64_encode(($this->uri->area === 'admin' ? 'acp/' : '') . $this->uri->query);
+            $currentPage = base64_encode(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->query);
 
             $config = new Core\Config($this->db, 'users');
             $settings = $config->getSettings();
@@ -52,7 +52,7 @@ class Index extends Core\Modules\Controller
     {
         if ($this->auth->isUser() === true) {
             $userSidebar = array();
-            $userSidebar['page'] = base64_encode(($this->uri->area === 'admin' ? 'acp/' : '') . $this->uri->query);
+            $userSidebar['page'] = base64_encode(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->query);
 
             $activeModules = $this->modules->getActiveModules();
             $navMods = $navSystem = array();
@@ -66,7 +66,7 @@ class Index extends Core\Modules\Controller
                     } else {
                         $navMods[$name]['name'] = $name;
                         $navMods[$name]['dir'] = $dir;
-                        $navMods[$name]['active'] = $this->uri->area === 'admin' && $dir === $this->uri->mod ? ' class="active"' : '';
+                        $navMods[$name]['active'] = $this->request->area === 'admin' && $dir === $this->request->mod ? ' class="active"' : '';
                     }
                 }
             }
@@ -80,19 +80,19 @@ class Index extends Core\Modules\Controller
                 if ($this->modules->hasPermission('admin/system/index/configuration') === true) {
                     $navSystem[$i]['path'] = 'system/index/configuration/';
                     $navSystem[$i]['name'] = $this->lang->t('system', 'configuration');
-                    $navSystem[$i]['active'] = $this->uri->query === $navSystem[$i]['path'] ? ' class="active"' : '';
+                    $navSystem[$i]['active'] = $this->request->query === $navSystem[$i]['path'] ? ' class="active"' : '';
                 }
                 if ($this->modules->hasPermission('admin/system/extensions/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/extensions/';
                     $navSystem[$i]['name'] = $this->lang->t('system', 'extensions');
-                    $navSystem[$i]['active'] = strpos($this->uri->query, $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
+                    $navSystem[$i]['active'] = strpos($this->request->query, $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
                 }
                 if ($this->modules->hasPermission('admin/system/maintenance/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/maintenance/';
                     $navSystem[$i]['name'] = $this->lang->t('system', 'maintenance');
-                    $navSystem[$i]['active'] = strpos($this->uri->query, $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
+                    $navSystem[$i]['active'] = strpos($this->request->query, $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
                 }
                 $userSidebar['system'] = $navSystem;
             }

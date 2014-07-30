@@ -84,7 +84,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->filesModel->insert($insertValues);
 
-                $this->uri->insertUriAlias(
+                $this->request->insertUriAlias(
                     sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
@@ -98,8 +98,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -144,7 +143,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/files/index/delete', 'acp/files');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             $commentsInstalled = $this->modules->isInstalled('comments');
 
@@ -159,7 +158,7 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     $cache->delete(Files\Cache::CACHE_ID);
-                    $this->uri->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
+                    $this->request->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                 }
             }
 
@@ -173,7 +172,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $dl = $this->filesModel->getOneById((int)$this->uri->id);
+        $dl = $this->filesModel->getOneById((int)$this->request->id);
 
         if (empty($dl) === false) {
             $config = new Core\Config($this->db, 'files');
@@ -228,10 +227,10 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues = array_merge($updateValues, $newFileSql);
                     }
 
-                    $bool = $this->filesModel->update($updateValues, $this->uri->id);
+                    $bool = $this->filesModel->update($updateValues, $this->request->id);
 
-                    $this->uri->insertUriAlias(
-                        sprintf(Files\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                    $this->request->insertUriAlias(
+                        sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
                         $_POST['seo_description'],
@@ -240,7 +239,7 @@ class Index extends Core\Modules\Controller\Admin
                     $this->seo->setCache();
 
                     $cache = new Files\Cache($this->filesModel);
-                    $cache->setCache($this->uri->id);
+                    $cache->setCache($this->request->id);
 
                     $this->session->unsetFormToken();
 
@@ -248,8 +247,7 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -275,7 +273,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
             $this->view->assign('current_file', $dl['file']);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->uri->id)));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id)));
             $this->view->assign('form', array_merge($dl, $_POST));
 
             $this->session->generateFormToken();
@@ -331,8 +329,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

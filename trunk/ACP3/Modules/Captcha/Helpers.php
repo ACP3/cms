@@ -27,18 +27,23 @@ class Helpers
      */
     protected $securityHelper;
     /**
-     * @var Core\URI
+     * @var Core\Router
      */
-    protected $uri;
+    protected $router;
     /**
      * @var Core\View
      */
     protected $view;
 
-    public function __construct(Core\Auth $auth, Core\URI $uri, Core\View $view, Core\Helpers\Secure $securityHelper)
+    public function __construct(
+        Core\Auth $auth,
+        Core\Router $router,
+        Core\View $view,
+        Core\Helpers\Secure $securityHelper
+    )
     {
         $this->auth = $auth;
-        $this->uri = $uri;
+        $this->router = $router;
         $this->view = $view;
         $this->securityHelper = $securityHelper;
     }
@@ -57,7 +62,7 @@ class Helpers
     {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
         if ($this->auth->isUser() === false) {
-            $path = sha1($this->uri->route(empty($path) === true ? $this->uri->query : $path));
+            $path = sha1($this->router->route(empty($path) === true ? $this->router->query : $path));
 
             $_SESSION['captcha_' . $path] = $this->securityHelper->salt($captchaLength);
 

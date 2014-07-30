@@ -10,11 +10,11 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Core\URI
+     * @var \ACP3\Core\Request
      */
     protected $uri;
 
-    public function __construct(Core\Lang $lang, Core\URI $uri)
+    public function __construct(Core\Lang $lang, Core\Request $uri)
     {
         parent::__construct($lang);
 

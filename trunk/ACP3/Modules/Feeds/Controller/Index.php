@@ -27,7 +27,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        $module = $this->uri->feed;
+        $module = $this->request->feed;
         $action = strtolower($module) . 'Feed';
 
         $feed = $this->get('feeds.extensions');
@@ -47,7 +47,7 @@ class Index extends Core\Modules\Controller\Frontend
                 'module' => $module,
             );
 
-            Core\View::factory('FeedGenerator', $config);
+            Core\View::setRenderer('FeedGenerator', $config);
 
             $feed->$action();
 

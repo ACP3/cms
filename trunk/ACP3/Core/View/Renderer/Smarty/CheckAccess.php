@@ -18,9 +18,9 @@ class CheckAccess extends AbstractPlugin
      */
     protected $modules;
     /**
-     * @var Core\URI
+     * @var Core\Router
      */
-    protected $uri;
+    protected $router;
     /**
      * @var Core\Validate
      */
@@ -34,11 +34,17 @@ class CheckAccess extends AbstractPlugin
      */
     protected $pluginName = 'check_access';
 
-    public function __construct(Core\Lang $lang, Core\Modules $modules, Core\URI $uri, Core\Validate $validate, Core\View $view)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Modules $modules,
+        Core\Router $router,
+        Core\Validate $validate,
+        Core\View $view
+    )
     {
         $this->lang = $lang;
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->router = $router;
         $this->validate = $validate;
         $this->view = $view;
     }
@@ -72,7 +78,7 @@ class CheckAccess extends AbstractPlugin
 
             if ($this->modules->hasPermission($permissionPath) === true) {
                 $accessCheck = array();
-                $accessCheck['uri'] = $this->uri->route($params['path']);
+                $accessCheck['uri'] = $this->router->route($params['path']);
 
                 $path = '';
                 if (isset($params['icon'])) {

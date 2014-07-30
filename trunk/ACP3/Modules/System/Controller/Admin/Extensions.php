@@ -43,14 +43,14 @@ class Extensions extends Core\Modules\Controller\Admin
     {
         $redirect = $this->redirectMessages();
 
-        if (isset($this->uri->dir)) {
+        if (isset($this->request->dir)) {
             $bool = false;
 
-            if ((bool)preg_match('=/=', $this->uri->dir) === false &&
-                is_file(ACP3_ROOT_DIR . 'designs/' . $this->uri->dir . '/info.xml') === true
+            if ((bool)preg_match('=/=', $this->request->dir) === false &&
+                is_file(ACP3_ROOT_DIR . 'designs/' . $this->request->dir . '/info.xml') === true
             ) {
                 $config = new Core\Config($this->db, 'system');
-                $bool = $config->setSettings(array('design' => $this->uri->dir));
+                $bool = $config->setSettings(array('design' => $this->request->dir));
 
                 // Template Cache leeren
                 Core\Cache2::purge('tpl_compiled');
@@ -85,7 +85,7 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function actionModules()
     {
-        switch ($this->uri->action) {
+        switch ($this->request->action) {
             case 'activate':
                 $this->_enableModule();
                 break;
@@ -123,13 +123,13 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _enableModule()
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($this->uri->dir);
+        $info = $this->modules->getModuleInfo($this->request->dir);
         if (empty($info)) {
             $text = $this->lang->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $bool = $this->systemModel->update(array('active' => 1), array('name' => $this->uri->dir));
+            $bool = $this->systemModel->update(array('active' => 1), array('name' => $this->request->dir));
 
             $this->_renewCaches();
 
@@ -142,17 +142,17 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _disableModule()
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($this->uri->dir);
+        $info = $this->modules->getModuleInfo($this->request->dir);
         if (empty($info)) {
             $text = $this->lang->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
             // Modulabhängigkeiten prüfen
-            $deps = $this->get('system.helpers')->checkUninstallDependencies($this->uri->dir);
+            $deps = $this->get('system.helpers')->checkUninstallDependencies($this->request->dir);
 
             if (empty($deps)) {
-                $bool = $this->systemModel->update(array('active' => 0), array('name' => $this->uri->dir));
+                $bool = $this->systemModel->update(array('active' => 0), array('name' => $this->request->dir));
 
                 $this->_renewCaches();
 
@@ -169,12 +169,12 @@ class Extensions extends Core\Modules\Controller\Admin
     {
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
-        if ($this->modules->isInstalled($this->uri->dir) === false) {
-            $serviceId = strtolower($this->uri->dir . '.installer');
+        if ($this->modules->isInstalled($this->request->dir) === false) {
+            $serviceId = strtolower($this->request->dir . '.installer');
 
             if ($this->container->has($serviceId) === true) {
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkInstallDependencies($this->uri->dir);
+                $deps = $this->get('system.helpers')->checkInstallDependencies($this->request->dir);
 
                 // Modul installieren
                 if (empty($deps)) {
@@ -199,14 +199,14 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _uninstallModule()
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($this->uri->dir);
+        $info = $this->modules->getModuleInfo($this->request->dir);
         // Nur installierte und Nicht-Core-Module berücksichtigen
-        if ($info['protected'] === false && $this->modules->isInstalled($this->uri->dir) === true) {
-            $serviceId = strtolower($this->uri->dir . '.installer');
+        if ($info['protected'] === false && $this->modules->isInstalled($this->request->dir) === true) {
+            $serviceId = strtolower($this->request->dir . '.installer');
 
             if ($this->container->has($serviceId) === true) {
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkUninstallDependencies($this->uri->dir);
+                $deps = $this->get('system.helpers')->checkUninstallDependencies($this->request->dir);
 
                 // Modul deinstallieren
                 if (empty($deps)) {

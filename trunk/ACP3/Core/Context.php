@@ -20,9 +20,13 @@ class Context
      */
     protected $modules;
     /**
-     * @var URI
+     * @var Request
      */
-    protected $uri;
+    protected $request;
+    /**
+     * @var Router
+     */
+    protected $router;
     /**
      * @var View
      */
@@ -32,13 +36,15 @@ class Context
         Auth $auth,
         Lang $lang,
         Modules $modules,
-        URI $uri,
+        Request $request,
+        Router $router,
         View $view)
     {
         $this->auth = $auth;
         $this->lang = $lang;
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->request = $request;
+        $this->router = $router;
         $this->view = $view;
     }
 
@@ -67,11 +73,19 @@ class Context
     }
 
     /**
-     * @return \ACP3\Core\URI
+     * @return \ACP3\Core\Request
      */
-    public function getUri()
+    public function getRequest()
     {
-        return $this->uri;
+        return $this->request;
+    }
+
+    /**
+     * @return \ACP3\Core\Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
     }
 
     /**
@@ -82,4 +96,4 @@ class Context
         return $this->view;
     }
 
-} 
+}

@@ -55,7 +55,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->galleryModel->insert($insertValues);
 
-                $this->uri->insertUriAlias(
+                $this->request->insertUriAlias(
                     sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
@@ -70,8 +70,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -95,7 +94,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/gallery/index/delete', 'acp/gallery');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = $bool2 = false;
 
             $cache = new Core\Cache2('gallery');
@@ -110,7 +109,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Galerie Cache löschen
                     $cache->delete(Gallery\Cache::CACHE_ID . $item);
-                    $this->uri->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
+                    $this->request->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
                     $this->get('gallery.helpers')->deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
@@ -129,10 +128,10 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if ($this->galleryModel->galleryExists((int)$this->uri->id) === true) {
-            $gallery = $this->galleryModel->getGalleryById((int)$this->uri->id);
+        if ($this->galleryModel->galleryExists((int)$this->request->id) === true) {
+            $gallery = $this->galleryModel->getGalleryById((int)$this->request->id);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id)));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id)));
 
             $this->breadcrumb->append($gallery['title']);
 
@@ -150,16 +149,16 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->galleryModel->update($updateValues, $this->uri->id);
+                    $bool = $this->galleryModel->update($updateValues, $this->request->id);
 
-                    $this->uri->insertUriAlias(
-                        sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id),
+                    $this->request->insertUriAlias(
+                        sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
                         $_POST['seo_description'],
                         (int)$_POST['seo_robots']
                     );
-                    $this->get('gallery.helpers')->generatePictureAliases($this->uri->id);
+                    $this->get('gallery.helpers')->generatePictureAliases($this->request->id);
 
                     $this->seo->setCache();
 
@@ -169,21 +168,20 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $redirect->setMessage(false, $e->getMessage(), 'acp/gallery');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
             $redirect->getMessage();
 
-            $this->view->assign('gallery_id', $this->uri->id);
+            $this->view->assign('gallery_id', $this->request->id);
 
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($gallery['start'], $gallery['end'])));
 
             $this->view->assign('form', array_merge($gallery, $_POST));
 
-            $pictures = $this->galleryModel->getPicturesByGalleryId((int)$this->uri->id);
+            $pictures = $this->galleryModel->getPicturesByGalleryId((int)$this->request->id);
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
@@ -278,8 +276,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

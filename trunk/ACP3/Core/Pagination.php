@@ -20,7 +20,7 @@ class Pagination
      */
     protected $seo;
     /**
-     * @var URI
+     * @var Request
      */
     protected $uri;
     /**
@@ -69,7 +69,7 @@ class Pagination
         Breadcrumb $breadcrumb,
         Lang $lang,
         SEO $seo,
-        URI $uri,
+        Request $uri,
         View $view,
         $totalResults)
     {

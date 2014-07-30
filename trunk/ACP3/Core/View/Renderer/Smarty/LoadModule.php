@@ -3,6 +3,7 @@ namespace ACP3\Core\View\Renderer\Smarty;
 
 use ACP3\Application;
 use ACP3\Core\Modules;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class LoadModule
@@ -15,6 +16,10 @@ class LoadModule extends AbstractPlugin
      */
     protected $modules;
     /**
+     * @var Container
+     */
+    protected $container;
+    /**
      * @var string
      */
     protected $pluginName = 'load_module';
@@ -22,6 +27,14 @@ class LoadModule extends AbstractPlugin
     public function __construct(Modules $modules)
     {
         $this->modules = $modules;
+    }
+
+    /**
+     * @param Container $container
+     */
+    public function setContainer(Container $container)
+    {
+        $this->container = $container;
     }
 
     /**
@@ -44,7 +57,10 @@ class LoadModule extends AbstractPlugin
 
         if ($this->modules->hasPermission($path)) {
             $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2]);
-            Application::dispatch($serviceId, $pathArray[3]);
+
+            $application = new Application();
+            $application->setContainer($this->container);
+            $application->dispatch($serviceId, $pathArray[3]);
         }
     }
 }

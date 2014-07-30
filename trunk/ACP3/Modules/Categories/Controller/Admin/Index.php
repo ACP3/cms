@@ -76,8 +76,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 
@@ -100,7 +99,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/categories/index/delete', 'acp/categories');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             $isInUse = false;
 
@@ -141,7 +140,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $category = $this->categoriesModel->getOneById($this->uri->id);
+        $category = $this->categoriesModel->getOneById($this->request->id);
 
         if (empty($category) === false) {
             if (empty($_POST) === false) {
@@ -155,7 +154,7 @@ class Index extends Core\Modules\Controller\Admin
                     $settings = $this->categoriesConfig->getSettings();
 
                     $validator = $this->get('categories.validator');
-                    $validator->validate($_POST, $file, $settings, $this->uri->id);
+                    $validator->validate($_POST, $file, $settings, $this->request->id);
 
                     $updateValues = array(
                         'title' => Core\Functions::strEncode($_POST['title']),
@@ -169,9 +168,9 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues['picture'] = $result['name'];
                     }
 
-                    $bool = $this->categoriesModel->update($updateValues, $this->uri->id);
+                    $bool = $this->categoriesModel->update($updateValues, $this->request->id);
 
-                    $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->uri->id));
+                    $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->request->id));
 
                     $this->session->unsetFormToken();
 
@@ -179,8 +178,7 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -238,8 +236,7 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
 

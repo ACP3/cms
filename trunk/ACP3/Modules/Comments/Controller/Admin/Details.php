@@ -49,7 +49,7 @@ class Details extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/comments/details/delete', 'acp/comments');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->commentsModel->delete($item);
@@ -63,7 +63,7 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $comment = $this->commentsModel->getOneById((int)$this->uri->id);
+        $comment = $this->commentsModel->getOneById((int)$this->request->id);
 
         if (empty($comment) === false) {
             $this->breadcrumb
@@ -81,7 +81,7 @@ class Details extends Core\Modules\Controller\Admin
                         $updateValues['name'] = Core\Functions::strEncode($_POST['name']);
                     }
 
-                    $bool = $this->commentsModel->update($updateValues, $this->uri->id);
+                    $bool = $this->commentsModel->update($updateValues, $this->request->id);
 
                     $this->session->unsetFormToken();
 
@@ -89,8 +89,7 @@ class Details extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
-                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
+                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
                 }
             }
 
@@ -112,10 +111,10 @@ class Details extends Core\Modules\Controller\Admin
     {
         $this->redirectMessages()->getMessage();
 
-        $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->uri->id);
+        $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->request->id);
 
         if (empty($comments) === false) {
-            $moduleName = $this->systemModel->getModuleNameById($this->uri->id);
+            $moduleName = $this->systemModel->getModuleNameById($this->request->id);
 
             //Brotkrümelspur
             $this->breadcrumb->append($this->lang->t($moduleName, $moduleName));

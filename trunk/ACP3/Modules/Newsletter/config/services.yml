@@ -25,7 +25,7 @@ services:
 
   newsletter.helpers:
     class: ACP3\Modules\Newsletter\Helpers
-    arguments: ['@core.db', '@core.date', '@core.lang', '@core.modules', '@core.uri', '@core.view', '@core.helpers.string.formatter']
+    arguments: ['@core.db', '@core.date', '@core.lang', '@core.modules', '@core.router', '@core.view', '@core.helpers.string.formatter']
 
   newsletter.validator:
     class: ACP3\Modules\Newsletter\Validator

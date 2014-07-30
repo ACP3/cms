@@ -2,10 +2,12 @@
 
 namespace ACP3\Core\View;
 
+use Symfony\Component\DependencyInjection\ContainerAware;
+
 /**
  * Abstract Class for the various renderers
  */
-abstract class AbstractRenderer implements RendererInterface
+abstract class AbstractRenderer extends ContainerAware implements RendererInterface
 {
 
     /**
@@ -21,7 +23,10 @@ abstract class AbstractRenderer implements RendererInterface
      */
     public $renderer;
 
-    public function __construct(array $params = array())
+    /**
+     * @param array $params
+     */
+    public function configure(array $params = array())
     {
         $this->config = $params;
     }

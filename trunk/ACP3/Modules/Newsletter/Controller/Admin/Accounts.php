@@ -29,8 +29,8 @@ class Accounts extends Core\Modules\Controller\Admin
     public function actionActivate()
     {
         $bool = false;
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true) {
-            $bool = $this->newsletterModel->update(array('hash' => ''), $this->uri->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
+        if ($this->get('core.validate')->isNumber($this->request->id) === true) {
+            $bool = $this->newsletterModel->update(array('hash' => ''), $this->request->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 
         $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter/accounts');
@@ -40,7 +40,7 @@ class Accounts extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem('acp/newsletter/accounts/delete', 'acp/newsletter/accounts');
 
-        if ($this->uri->action === 'confirmed') {
+        if ($this->request->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->newsletterModel->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);

@@ -14,16 +14,21 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var Core\URI
+     * @var Core\Request
      */
-    protected $uri;
+    protected $request;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validate $validate,
+        Core\Modules $modules,
+        Core\Request $request
+    )
     {
         parent::__construct($lang, $validate);
 
         $this->modules = $modules;
-        $this->uri = $uri;
+        $this->request = $request;
     }
 
     /**
@@ -93,7 +98,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
         if (!empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $this->uri->id)))
+            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $this->request->id)))
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
