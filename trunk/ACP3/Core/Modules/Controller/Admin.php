@@ -18,6 +18,10 @@ abstract class Admin extends Core\Modules\Controller\Frontend
      * @var Core\Validate
      */
     protected $validate;
+    /**
+     * @var Core\Router\Aliases
+     */
+    protected $aliases;
 
     public function __construct(Core\Context\Admin $adminContext)
     {
@@ -25,6 +29,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
 
         $this->validate = $adminContext->getValidate();
         $this->session = $adminContext->getSession();
+        $this->aliases = $adminContext->getAliases();
     }
 
     /**
@@ -35,7 +40,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     {
         if ($this->auth->isUser() === false) {
             $redirectUri = base64_encode('acp/' . $this->request->query);
-            $this->request->redirect('users/index/login/redirect_' . $redirectUri);
+            $this->redirect()->temporary('users/index/login/redirect_' . $redirectUri);
         }
 
         return parent::preDispatch();

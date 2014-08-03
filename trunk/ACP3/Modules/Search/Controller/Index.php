@@ -13,17 +13,17 @@ class Index extends Core\Modules\Controller\Frontend
 {
 
     /**
-     * @var Core\Session
+     * @var \ACP3\Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
 
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Session $session)
+        Core\Helpers\Secure $secureHelper)
     {
        parent::__construct($context);
 
-        $this->session = $session;
+        $this->secureHelper = $secureHelper;
     }
 
     public function actionIndex()
@@ -35,7 +35,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $validator = $this->get('search.validator');
                 $validator->validate($_POST);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->displaySearchResults($_POST['mods'], Core\Functions::strEncode($_POST['search_term']), $_POST['area'], strtoupper($_POST['sort']));
                 return;
@@ -64,7 +64,7 @@ class Index extends Core\Modules\Controller\Frontend
         $langSortHits = array($this->lang->t('search', 'asc'), $this->lang->t('search', 'desc'));
         $this->view->assign('sort_hits', Core\Functions::selectGenerator('sort', array('asc', 'desc'), $langSortHits, 'asc', 'checked'));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     protected function displaySearchResults($modules, $searchTerm, $area, $sort)

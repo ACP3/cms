@@ -12,6 +12,10 @@ use ACP3\Modules\Emoticons;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Emoticons\Model
      */
     protected $emoticonsModel;
@@ -26,12 +30,14 @@ class Index extends Core\Modules\Controller\Admin
 
     public function __construct(
         Core\Context\Admin $context,
+        Core\Helpers\Secure $secureHelper,
         Emoticons\Model $emoticonsModel,
         Core\Config $emoticonsConfig,
         Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($context);
 
+        $this->secureHelper = $secureHelper;
         $this->emoticonsModel = $emoticonsModel;
         $this->emoticonsConfig = $emoticonsConfig;
         $this->emoticonsCache = $emoticonsCache;
@@ -65,7 +71,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->emoticonsCache->setCache();
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -77,7 +83,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('code' => '', 'description' => ''), $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -138,7 +144,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->emoticonsCache->setCache();
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -150,7 +156,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($emoticon, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -193,7 +199,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -205,7 +211,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($config->getSettings(), $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

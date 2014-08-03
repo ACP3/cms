@@ -15,28 +15,39 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var \ACP3\Core\Lang
-     */
-    protected $lang;
-    /**
      * @var Cache
      */
     protected $cache;
     /**
      * @var Model
      */
-    protected $model;
+    protected $categoriesModel;
+    /**
+     * @var \ACP3\Core\Lang
+     */
+    protected $lang;
     /**
      * @var Core\Modules
      */
     protected $modules;
+    /**
+     * @var Core\View
+     */
+    protected $view;
 
-    public function __construct(Core\Lang $lang, Core\Modules $modules, Core\View $view, Cache $cache)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Modules $modules,
+        Core\View $view,
+        Cache $cache,
+        Model $categoriesModel
+    )
     {
         $this->lang = $lang;
         $this->modules = $modules;
         $this->view = $view;
         $this->cache = $cache;
+        $this->categoriesModel = $categoriesModel;
     }
 
     /**
@@ -47,7 +58,7 @@ class Helpers
      */
     public function categoryExists($categoryId)
     {
-        return $this->model->resultExists($categoryId);
+        return $this->categoriesModel->resultExists($categoryId);
     }
 
     /**
@@ -60,7 +71,7 @@ class Helpers
      */
     public function categoryIsDuplicate($title, $module, $categoryId = '')
     {
-        return $this->model->resultIsDuplicate($title, $module, $categoryId);
+        return $this->categoriesModel->resultIsDuplicate($title, $module, $categoryId);
     }
 
     /**
@@ -82,7 +93,7 @@ class Helpers
                 'description' => '',
                 'module_id' => $moduleInfo['id'],
             );
-            $result = $this->model->insert($insertValues);
+            $result = $this->categoriesModel->insert($insertValues);
 
             $this->cache->setCache($module);
 

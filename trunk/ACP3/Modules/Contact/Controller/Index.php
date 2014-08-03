@@ -12,9 +12,9 @@ use ACP3\Modules\Contact;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var \ACP3\Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
     /**
      * @var \ACP3\Core\Config
      */
@@ -22,12 +22,12 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Session $session,
+        Core\Helpers\Secure $secureHelper,
         Core\Config $contactConfig)
     {
        parent::__construct($context);
 
-        $this->session = $session;
+        $this->secureHelper = $secureHelper;
         $this->contactConfig = $contactConfig;
     }
 
@@ -52,7 +52,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $this->get('core.functions')->generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
                 }
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->setContent($this->get('core.helpers.alerts')->confirmBox($bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'), $this->router->route('contact')));
                 return;
@@ -90,7 +90,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionImprint()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{$LANG}">
+<html>
 <head>
     <title>{$PAGE_TITLE}</title>
     <meta charset="UTF-8">

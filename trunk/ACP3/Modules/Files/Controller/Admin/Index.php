@@ -21,6 +21,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Files\Model
      */
     protected $filesModel;
@@ -29,12 +33,14 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Files\Model $filesModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->filesModel = $filesModel;
     }
 
@@ -84,7 +90,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->filesModel->insert($insertValues);
 
-                $this->request->insertUriAlias(
+                $this->aliases->insertUriAlias(
                     sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
@@ -92,7 +98,7 @@ class Index extends Core\Modules\Controller\Admin
                     (int)$_POST['seo_robots']);
                 $this->seo->setCache();
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/files');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -136,7 +142,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -158,7 +164,7 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     $cache->delete(Files\Cache::CACHE_ID);
-                    $this->request->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
+                    $this->aliases->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                 }
             }
 
@@ -229,7 +235,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->filesModel->update($updateValues, $this->request->id);
 
-                    $this->request->insertUriAlias(
+                    $this->aliases->insertUriAlias(
                         sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
@@ -241,7 +247,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cache = new Files\Cache($this->filesModel);
                     $cache->setCache($this->request->id);
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/files');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -276,7 +282,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id)));
             $this->view->assign('form', array_merge($dl, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -323,7 +329,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/files');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -344,7 +350,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

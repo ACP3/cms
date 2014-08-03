@@ -61,6 +61,7 @@ class Redirect
 
             $response = new JsonResponse($return);
             $response->send();
+            exit;
         }
     }
 
@@ -99,6 +100,7 @@ class Redirect
 
         $response = new RedirectResponse($url, $status);
         $response->send();
+        exit;
     }
 
 } 

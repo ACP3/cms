@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Menus\Model
      */
     protected $menusModel;
@@ -23,11 +27,13 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Menus\Model $menusModel)
     {
         parent::__construct($context);
 
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->menusModel = $menusModel;
     }
 
@@ -46,7 +52,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->menusModel->insert($insertValues);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/menus');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -58,7 +64,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('index_name' => '', 'title' => ''), $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -113,7 +119,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cache = new Menus\Cache($this->lang, $this->menusModel);
                     $cache->setMenuItemsCache();
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -125,7 +131,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($menu, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

@@ -43,3 +43,4 @@ services:
 
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\WYSIWYG
+    arguments: ['@service_container']

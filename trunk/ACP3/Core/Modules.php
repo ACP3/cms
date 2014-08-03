@@ -4,9 +4,8 @@ namespace ACP3\Core;
 use ACP3\Modules\System;
 
 /**
- * Klasse für die Module
- *
- * @author Tino Goratsch
+ * Class Modules
+ * @package ACP3\Core
  */
 class Modules
 {
@@ -39,7 +38,11 @@ class Modules
      */
     protected $systemModel;
 
-    public function __construct(\Doctrine\DBAL\Connection $db, ACL $acl, Lang $lang)
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        ACL $acl,
+        Lang $lang
+    )
     {
         $this->db = $db;
         $this->acl = $acl;

@@ -1,11 +1,11 @@
 services:
   guestbook.controller.admin.index:
     class: ACP3\Modules\Guestbook\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.db', '@guestbook.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@core.helpers.secure', '@guestbook.model']
 
   guestbook.controller.frontend.index:
     class: ACP3\Modules\Guestbook\Controller\Index
-    arguments: ['@core.context.frontend', '@core.session', '@core.date', '@core.db', '@guestbook.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.helpers.secure', '@guestbook.model']
 
   guestbook.model:
     class: ACP3\Modules\Guestbook\Model

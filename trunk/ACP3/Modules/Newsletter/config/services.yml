@@ -5,7 +5,7 @@ services:
 
   newsletter.controller.admin.index:
     class: ACP3\Modules\Newsletter\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.db', '@newsletter.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@newsletter.model', '@core.helpers.secure']
 
   newsletter.controller.frontend.archive:
     class: ACP3\Modules\Newsletter\Controller\Archive
@@ -13,11 +13,11 @@ services:
 
   newsletter.controller.frontend.index:
     class: ACP3\Modules\Newsletter\Controller\Index
-    arguments: ['@core.context.frontend', '@core.session', '@core.db', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.db', '@core.helpers.secure', '@newsletter.model']
 
   newsletter.controller.sidebar.index:
     class: ACP3\Modules\Newsletter\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.session']
+    arguments: ['@core.context', '@core.helpers.secure']
 
   newsletter.model:
     class: ACP3\Modules\Newsletter\Model

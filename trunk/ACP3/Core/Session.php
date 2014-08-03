@@ -40,21 +40,9 @@ class Session
      */
     protected $db;
 
-    /**
-     * @var \ACP3\Core\Request
-     */
-    protected $request;
-
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-
-    public function __construct(\Doctrine\DBAL\Connection $db, Request $request, View $view)
+    public function __construct(\Doctrine\DBAL\Connection $db)
     {
         $this->db = $db;
-        $this->request = $request;
-        $this->view = $view;
 
         // php.ini Session Einstellungen konfigurieren
         ini_set('session.name', self::SESSION_NAME);
@@ -196,44 +184,6 @@ class Session
         $this->db->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
 
         return true;
-    }
-
-    /**
-     * Generiert für ein Formular ein Securitytoken
-     *
-     * @param string $path
-     *    Optionaler ACP3 interner URI Pfad, für welchen das Token gelten soll
-     */
-    public function generateFormToken($path = '')
-    {
-        $tokenName = self::XSRF_TOKEN_NAME;
-        if (!isset($_SESSION[$tokenName]) || is_array($_SESSION[$tokenName]) === false) {
-            $_SESSION[$tokenName] = array();
-        }
-
-        $path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : $this->request->query;
-
-        if (empty($_SESSION[$tokenName][$path])) {
-            $_SESSION[$tokenName][$path] = sha1(uniqid(mt_rand(), true));
-        }
-
-        $this->view->assign('form_token', '<input type="hidden" name="' . $tokenName . '" value="' . $_SESSION[$tokenName][$path] . '" />');
-    }
-
-    /**
-     * Entfernt das Securitytoken aus der Session
-     */
-    public function unsetFormToken($token = '')
-    {
-        $tokenName = self::XSRF_TOKEN_NAME;
-        if (empty($token) && isset($_POST[$tokenName])) {
-            $token = $_POST[$tokenName];
-        }
-        if (!empty($token) && is_array($_SESSION[$tokenName]) === true) {
-            if (isset($_SESSION[$tokenName][$this->request->query])) {
-                unset($_SESSION[$tokenName][$this->request->query]);
-            }
-        }
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty;
 
-use ACP3\Application;
+use ACP3\Core\FrontController;
 use ACP3\Core\Modules;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -58,9 +58,8 @@ class LoadModule extends AbstractPlugin
         if ($this->modules->hasPermission($path)) {
             $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2]);
 
-            $application = new Application();
-            $application->setContainer($this->container);
-            $application->dispatch($serviceId, $pathArray[3]);
+            $frontController = new FrontController($this->container);
+            $frontController->dispatch($serviceId, $pathArray[3]);
         }
     }
 }

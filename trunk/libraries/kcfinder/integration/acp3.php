@@ -27,15 +27,16 @@ class ACP3
 
             require_once ACP3_ROOT_DIR . 'ACP3/Application.php';
 
-            Application::defineDirConstants();
-            Application::startupChecks();
-            Application::includeAutoLoader();
-            Application::initializeClasses();
+            $application = new Application();
+            $application->defineDirConstants();
+            $application->startupChecks();
+            $application->includeAutoLoader();
+            $application->initializeClasses();
 
             chdir(ACP3_ROOT_DIR);
 
             // if user has access permission...
-            if (\ACP3\Core\Registry::get('Auth')->isUser()) {
+            if ($application->getContainer()->get('core.auth')->isUser()) {
                 if (!isset($_SESSION['KCFINDER'])) {
                     $_SESSION['KCFINDER'] = array();
                     $_SESSION['KCFINDER']['disabled'] = false;

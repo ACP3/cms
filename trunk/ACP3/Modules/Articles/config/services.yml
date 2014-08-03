@@ -1,7 +1,7 @@
 services:
   articles.controller.admin.index:
     class: ACP3\Modules\Articles\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.db', '@articles.model', '@menus.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@articles.model', '@menus.model', '@core.helpers.secure']
 
   articles.controller.frontend.index:
     class: ACP3\Modules\Articles\Controller\Index

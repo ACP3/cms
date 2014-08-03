@@ -23,18 +23,24 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Core\Config
      */
     protected $commentsConfig;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Comments\Model $commentsModel,
-        Core\Config $commentsConfig)
+        Core\Config $commentsConfig,
+        Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->commentsModel = $commentsModel;
         $this->commentsConfig = $commentsConfig;
+        $this->secureHelper = $secureHelper;
     }
 
     public function actionDelete()
@@ -92,7 +98,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -112,7 +118,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allowEmoticons, $settings['emoticons'], 'checked'));
         }
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

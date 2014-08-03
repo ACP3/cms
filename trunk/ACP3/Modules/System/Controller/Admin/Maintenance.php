@@ -16,6 +16,10 @@ class Maintenance extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var System\Model
      */
     protected $systemModel;
@@ -23,11 +27,13 @@ class Maintenance extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         System\Model $systemModel)
     {
         parent::__construct($context);
 
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->systemModel = $systemModel;
     }
 
@@ -43,7 +49,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                 $validator = $this->get('system.validator');
                 $validator->validateSqlExport($_POST);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $export = $this->get('system.helpers')->exportDatabase($_POST['tables'], $_POST['export_type'], isset($_POST['drop']) === true);
 
@@ -94,7 +100,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         $drop['lang'] = $this->lang->t('system', 'drop_tables');
         $this->view->assign('drop', $drop);
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionSqlImport()
@@ -111,7 +117,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                 $validator = $this->get('system.validator');
                 $validator->validateSqlImport($_POST, $file);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $data = isset($file) ? file_get_contents($file['tmp_name']) : $_POST['text'];
                 $importData = explode(";\n", str_replace(array("\r\n", "\r", "\n"), "\n", $data));
@@ -144,7 +150,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('text' => ''), $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionUpdateCheck()

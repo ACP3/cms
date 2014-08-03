@@ -21,6 +21,10 @@ class Pictures extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Gallery\Model
      */
     protected $galleryModel;
@@ -29,12 +33,14 @@ class Pictures extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Gallery\Model $guestbookModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->galleryModel = $guestbookModel;
     }
 
@@ -79,7 +85,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     $cache = new Gallery\Cache($this->db, $this->galleryModel);
                     $cache->setCache($this->request->id);
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $this->request->id);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -108,7 +114,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge(array('description' => ''), $_POST));
             $this->view->assign('gallery_id', $this->request->id);
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -130,7 +136,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     $this->get('gallery.helpers')->removePicture($picture['file']);
 
                     $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
-                    $this->request->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
+                    $this->aliases->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
 
                     $cache->setCache($picture['gallery_id']);
                 }
@@ -188,7 +194,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     $cache = new Gallery\Cache($this->db, $this->galleryModel);
                     $cache->setCache($picture['gallery_id']);
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -209,7 +215,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge($picture, $_POST));
             $this->view->assign('gallery_id', $this->request->id);
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

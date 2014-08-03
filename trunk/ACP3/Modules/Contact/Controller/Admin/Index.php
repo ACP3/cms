@@ -18,10 +18,12 @@ class Index extends Core\Modules\Controller\Admin
 
     public function __construct(
         Core\Context\Admin $context,
+        Core\Helpers\Secure $secureHelper,
         Core\Config $contactConfig)
     {
         parent::__construct($context);
 
+        $this->secureHelper = $secureHelper;
         $this->contactConfig = $contactConfig;
     }
 
@@ -44,7 +46,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -60,7 +62,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

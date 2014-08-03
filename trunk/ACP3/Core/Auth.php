@@ -45,36 +45,41 @@ class Auth
      * @var string
      */
     public $language = CONFIG_LANG;
-
     /**
      * @var array
      */
     protected $userInfo = array();
-
     /**
      * @var Session
      */
     protected $session;
-
     /**
      * @var \ACP3\Modules\Users\Model
      */
-    protected $userModel;
+    protected $usersModel;
+    /**
+     * @var Secure
+     */
+    protected $secureHelper;
 
     /**
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
      * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
      */
-    function __construct(\Doctrine\DBAL\Connection $db, Session $session)
+    function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Session $session,
+        Secure $secureHelper)
     {
         $this->session = $session;
-        $this->userModel = new Users\Model($db);
+        $this->usersModel = new Users\Model($db);
+        $this->secureHelper = $secureHelper;
 
         if (isset($_COOKIE[self::COOKIE_NAME])) {
             $cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
             $cookieData = explode('|', $cookie);
 
-            $user = $this->userModel->getOneActiveUserByNickname($cookieData[0]);
+            $user = $this->usersModel->getOneActiveUserByNickname($cookieData[0]);
             if (!empty($user)) {
                 $dbPassword = substr($user['pwd'], 0, 40);
                 if ($dbPassword === $cookieData[1]) {
@@ -119,7 +124,7 @@ class Auth
 
         if (empty($this->userInfo[$userId])) {
             $countries = Lang::worldCountries();
-            $info = $this->userModel->getOneById($userId);
+            $info = $this->usersModel->getOneById($userId);
             if (!empty($info)) {
                 $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
                 $this->userInfo[$userId] = $info;
@@ -172,7 +177,7 @@ class Auth
      */
     public function login($username, $password, $expiry)
     {
-        $user = $this->userModel->getOneByNickname($username);
+        $user = $this->usersModel->getOneByNickname($username);
 
         if (!empty($user)) {
             // Useraccount ist gesperrt
@@ -186,14 +191,13 @@ class Auth
             // Hash für eingegebenes Passwort generieren
             $salt = substr($user['pwd'], 41, 53);
 
-            $securityHelper = new Secure();
-            $formPasswordHash = $securityHelper->generateSaltedPassword($salt, $password);
+            $formPasswordHash = $this->secureHelper->generateSaltedPassword($salt, $password);
 
             // Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
             if ($dbHash === $formPasswordHash) {
                 // Login-Fehler zurücksetzen
                 if ($user['login_errors'] > 0) {
-                    $this->userModel->update(array('login_errors' => 0), (int)$user['id']);
+                    $this->usersModel->update(array('login_errors' => 0), (int)$user['id']);
                 }
 
                 $this->setCookie($username, $dbHash, $expiry);
@@ -207,7 +211,7 @@ class Auth
                 return 1;
             } else { // Beim dritten falschen Login den Account sperren
                 $loginErrors = $user['login_errors'] + 1;
-                $this->userModel->update(array('login_errors' => $loginErrors), (int)$user['id']);
+                $this->usersModel->update(array('login_errors' => $loginErrors), (int)$user['id']);
                 if ($loginErrors === 3) {
                     return -1;
                 }

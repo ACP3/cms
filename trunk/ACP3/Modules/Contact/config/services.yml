@@ -5,7 +5,7 @@ services:
 
   contact.controller.frontend.index:
     class: ACP3\Modules\Contact\Controller\Index
-    arguments: ['@core.context.frontend', '@core.session', '@contact.config']
+    arguments: ['@core.context.frontend', '@core.helpers.secure', '@contact.config']
 
   contact.controller.sidebar.index:
     class: ACP3\Modules\Contact\Controller\Sidebar\Index

@@ -29,13 +29,18 @@ class Details extends Core\Modules\Controller\Admin
      * @var \ACP3\Modules\System\Model
      */
     protected $systemModel;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Comments\Model $commentsModel,
         Core\Config $commentsConfig,
-        System\Model $systemModel)
+        System\Model $systemModel,
+        Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
 
@@ -43,6 +48,7 @@ class Details extends Core\Modules\Controller\Admin
         $this->commentsModel = $commentsModel;
         $this->commentsConfig = $commentsConfig;
         $this->systemModel = $systemModel;
+        $this->secureHelper = $secureHelper;
     }
 
     public function actionDelete()
@@ -83,7 +89,7 @@ class Details extends Core\Modules\Controller\Admin
 
                     $bool = $this->commentsModel->update($updateValues, $this->request->id);
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -101,7 +107,7 @@ class Details extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge($comment, $_POST));
             $this->view->assign('module_id', (int)$comment['module_id']);
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

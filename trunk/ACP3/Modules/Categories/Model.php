@@ -5,9 +5,8 @@ namespace ACP3\Modules\Categories;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author Tino Goratsch
+ * Class Model
+ * @package ACP3\Modules\Categories
  */
 class Model extends Core\Model
 {
