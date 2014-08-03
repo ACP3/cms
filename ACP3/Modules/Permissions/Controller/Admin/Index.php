@@ -20,6 +20,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Permissions\Model
      */
     protected $permissionsModel;
@@ -28,12 +32,14 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\ACL $acl,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Permissions\Model $permissionsModel)
     {
         parent::__construct($context);
 
         $this->acl = $acl;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->permissionsModel = $permissionsModel;
     }
 
@@ -74,7 +80,7 @@ class Index extends Core\Modules\Controller\Admin
                 $cache = new Permissions\Cache($this->permissionsModel);
                 $cache->setRolesCache();
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -119,7 +125,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('modules', $modules);
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -187,7 +193,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cache = new Core\Cache2('acl');
                     $cache->getDriver()->deleteAll();
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -243,7 +249,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($role, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

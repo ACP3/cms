@@ -20,9 +20,9 @@ class Account extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
-     * @var \ACP3\Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
     /**
      * @var Users\Model
      */
@@ -30,16 +30,16 @@ class Account extends Core\Modules\Controller\Frontend
 
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Session $session,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel)
     {
        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
-        $this->session = $session;
+        $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
     }
 
@@ -89,7 +89,7 @@ class Account extends Core\Modules\Controller\Frontend
                 $cookieArr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
                 $this->auth->setCookie($_POST['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -146,7 +146,7 @@ class Account extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($user, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionSettings()
@@ -177,7 +177,7 @@ class Account extends Core\Modules\Controller\Frontend
 
                 $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -219,7 +219,7 @@ class Account extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($user, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionIndex()

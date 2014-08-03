@@ -21,6 +21,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Newsletter\Model
      */
     protected $newsletterModel;
@@ -29,12 +33,14 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Newsletter\Model $newsletterModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->newsletterModel = $newsletterModel;
     }
 
@@ -71,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
                     $result = $lastId !== false;
                 }
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 if ($result === false) {
                     $lang = $this->lang->t('newsletter', 'create_save_error');
@@ -94,7 +100,7 @@ class Index extends Core\Modules\Controller\Admin
         $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
         $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -146,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
                         $result = $bool !== false;
                     }
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     if ($result === false) {
                         $lang = $this->lang->t('newsletter', 'create_save_error');
@@ -170,7 +176,7 @@ class Index extends Core\Modules\Controller\Admin
             $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
             $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -245,7 +251,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/newsletter');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -265,7 +271,7 @@ class Index extends Core\Modules\Controller\Admin
         );
         $this->view->assign('html', Core\Functions::selectGenerator('html', array(1, 0), $langHtml, $settings['html'], 'checked'));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

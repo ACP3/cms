@@ -17,6 +17,10 @@ class Items extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Menus\Model
      */
     protected $menusModel;
@@ -24,11 +28,13 @@ class Items extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Menus\Model $menusModel)
     {
         parent::__construct($context);
 
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->menusModel = $menusModel;
     }
 
@@ -60,7 +66,7 @@ class Items extends Core\Modules\Controller\Admin
                 if ($_POST['mode'] != 3) {
                     $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
                     if ($this->request->uriAliasExists($_POST['uri'])) {
-                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->request->getUriAlias($_POST['uri']);
+                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->aliases->getUriAlias($_POST['uri']);
                         $keywords = $this->seo->getKeywords($_POST['uri']);
                         $description = $this->seo->getDescription($_POST['uri']);
                     } else {
@@ -68,7 +74,7 @@ class Items extends Core\Modules\Controller\Admin
                         $keywords = $_POST['seo_keywords'];
                         $description = $_POST['seo_description'];
                     }
-                    $this->request->insertUriAlias(
+                    $this->aliases->insertUriAlias(
                         $path,
                         $_POST['mode'] == 1 ? '' : $alias,
                         $keywords,
@@ -81,7 +87,7 @@ class Items extends Core\Modules\Controller\Admin
                 $cache = new Menus\Cache($this->lang, $this->menusModel);
                 $cache->setMenuItemsCache();
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -139,7 +145,7 @@ class Items extends Core\Modules\Controller\Admin
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -153,7 +159,7 @@ class Items extends Core\Modules\Controller\Admin
                 // URI-Alias löschen
                 $itemUri = $this->menusModel->getMenuItemUriById($item);
                 $bool = $nestedSet->deleteNode($item);
-                $this->request->deleteUriAlias($itemUri);
+                $this->aliases->deleteUriAlias($itemUri);
             }
 
             $cache = new Menus\Cache($this->lang, $this->menusModel);
@@ -172,7 +178,7 @@ class Items extends Core\Modules\Controller\Admin
         $menuItem = $this->menusModel->getOneMenuItemById($this->request->id);
 
         if (empty($menuItem) === false) {
-            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->request->getUriAlias($menuItem['uri'], true) : '';
+            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->aliases->getUriAlias($menuItem['uri'], true) : '';
             $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
@@ -207,7 +213,7 @@ class Items extends Core\Modules\Controller\Admin
                         $keywords = $_POST['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $_POST['seo_keywords'];
                         $description = $_POST['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $_POST['seo_description'];
                         $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                        $this->request->insertUriAlias(
+                        $this->aliases->insertUriAlias(
                             $path,
                             $_POST['mode'] == 1 ? '' : $alias,
                             $keywords,
@@ -220,7 +226,7 @@ class Items extends Core\Modules\Controller\Admin
                     $cache = new Menus\Cache($this->lang, $this->menusModel);
                     $cache->setMenuItemsCache();
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -275,7 +281,7 @@ class Items extends Core\Modules\Controller\Admin
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
             $this->view->assign('form', array_merge($menuItem, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

@@ -11,17 +11,17 @@ use ACP3\Core;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
 
     public function __construct(
         Core\Context $context,
-        Core\Session $session)
+        Core\Helpers\Secure $secureHelper)
     {
        parent::__construct($context);
 
-        $this->session = $session;
+        $this->secureHelper = $secureHelper;
     }
 
 
@@ -31,7 +31,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha(3, 'captcha', true, 'newsletter'));
         }
 
-        $this->session->generateFormToken('newsletter/index/index');
+        $this->secureHelper->generateFormToken('newsletter/index/index');
 
         $this->setLayout('Newsletter/Sidebar/index.index.tpl');
     }

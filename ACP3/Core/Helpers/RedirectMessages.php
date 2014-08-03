@@ -34,7 +34,7 @@ class RedirectMessages
     }
 
     /**
-     * Holt sich die von setRedirectMessage() erzeugte Redirect Nachricht
+     * Gets the generated redirect message from setMessage()
      */
     public function getMessage()
     {

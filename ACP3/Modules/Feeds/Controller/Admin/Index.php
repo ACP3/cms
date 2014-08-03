@@ -12,16 +12,22 @@ use ACP3\Modules\Feeds;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
+     * @var Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var \ACP3\Core\Config
      */
     protected $feedsConfig;
 
     public function __construct(
         Core\Context\Admin $context,
+        Core\Helpers\Secure $secureHelper,
         Core\Config $feedsConfig)
     {
         parent::__construct($context);
 
+        $this->secureHelper = $secureHelper;
         $this->feedsConfig = $feedsConfig;
     }
 
@@ -43,7 +49,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/feeds');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -66,7 +72,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

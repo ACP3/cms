@@ -12,24 +12,24 @@ use ACP3\Modules\Search;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
 
     public function __construct(
         Core\Context $context,
-        Core\Session $session)
+        Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
 
-        $this->session = $session;
+        $this->secureHelper = $secureHelper;
     }
 
     public function actionIndex()
     {
         $this->view->assign('search_mods', $this->get('search.helpers')->getModules());
 
-        $this->session->generateFormToken('search/index/index');
+        $this->secureHelper->generateFormToken('search/index/index');
 
         $this->setLayout('Search/Sidebar/index.index.tpl');
     }

@@ -2,6 +2,7 @@
 
 namespace ACP3;
 
+use ACP3\Core\FrontController;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\Controller;
 use ACP3\Core\Registry;
@@ -203,54 +204,6 @@ class Application
             $dumper = new PhpDumper($this->container);
             file_put_contents($file, $dumper->dump(array('class' => 'ACP3ServiceContainer')));
         }
-
-        Registry::set('services', $this->container);
-    }
-
-    /**
-     * Überprüft die URI auf einen möglichen URI-Alias und
-     * macht im Erfolgsfall einen Redirect darauf
-     *
-     * @return void
-     */
-    private function _checkForUriAlias()
-    {
-        $request = $this->container->get('core.request');
-
-        // Nur ausführen, falls URI-Aliase aktiviert sind
-        if ($request->area !== 'admin') {
-            // Falls für Query ein Alias existiert, zu diesem weiterleiten
-            if ($this->container->get('core.router.aliases')->uriAliasExists($request->query) === true) {
-                $this->container->get('core.redirect')->permanent($request->query); // URI-Alias wird von uri::route() erzeugt
-            }
-
-            $probableQuery = $request->query;
-            // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
-            if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $request->query)) {
-                $query = preg_split('=/=', $request->query, -1, PREG_SPLIT_NO_EMPTY);
-                // Keine entsprechende Module-Action gefunden -> muss Alias sein
-                if ($this->container->get('core.modules')->actionExists($request->area . '/' . $query[0] . '/' . $query[1]) === false) {
-                    $length = 0;
-                    foreach ($query as $row) {
-                        if (strpos($row, '_') === false) {
-                            $length += strlen($row) + 1;
-                        } else {
-                            break;
-                        }
-                    }
-                    $params = substr($request->query, $length);
-                    $probableQuery = substr($request->query, 0, $length);
-                }
-            }
-
-            // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-            $alias = $this->container->get('core.db')->fetchAssoc('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($probableQuery, 0, -1)));
-            if (!empty($alias)) {
-                $request->query = $alias['uri'] . (!empty($params) ? $params : '');
-            }
-        }
-
-        return;
     }
 
     /**
@@ -260,15 +213,13 @@ class Application
     {
         $this->_checkForMaintenanceMode();
 
-        $this->_checkForUriAlias();
-
         $request = $this->container->get('core.request');
-        $redirect = $this->container->get('core.redirect');
+
+        $frontController = new FrontController($this->container);
+        $errorsServiceId = 'errors.controller.frontend.index';
 
         try {
-            $serviceId = $request->mod . '.controller.' . $request->area . '.' . $request->controller;
-
-            $this->dispatch($serviceId, $request->file);
+            $frontController->dispatch();
         } catch (Core\Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
                 Core\Logger::error('404', $e);
@@ -276,9 +227,9 @@ class Application
                 Core\Logger::error('404', 'Could not find any results for request: ' . $request->query);
             }
 
-            $redirect->temporary('errors/index/404');
+            $frontController->dispatch($errorsServiceId, '404');
         } catch (Core\Exceptions\UnauthorizedAccess $e) {
-            $redirect->temporary('errors/index/401');
+            $frontController->dispatch($errorsServiceId, '401');
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             Core\Logger::error('404', 'Request: ' . $request->query);
             Core\Logger::error('404', $e);
@@ -287,7 +238,7 @@ class Application
                 $errorMessage = $e->getMessage();
                 $this->_renderApplicationException($errorMessage);
             } else {
-                $redirect->temporary('errors/index/404');
+                $frontController->dispatch($errorsServiceId, '404');
             }
         } catch (\Exception $e) {
             Core\Logger::error('exception', $e);
@@ -296,34 +247,8 @@ class Application
                 $errorMessage = $e->getMessage();
                 $this->_renderApplicationException($errorMessage);
             } else {
-                $redirect->temporary('errors/index/500');
+                $frontController->dispatch($errorsServiceId, '500');
             }
-        }
-    }
-
-    /**
-     * @param $serviceId
-     * @param $action
-     * @throws Core\Exceptions\ControllerActionNotFound
-     */
-    public function dispatch($serviceId, $action)
-    {
-        if ($this->container->has($serviceId)) {
-            /** @var Controller $controller */
-            $controller = $this->container->get($serviceId);
-
-            $action = 'action' . str_replace('_', '', $action);
-
-            if (method_exists($controller, $action) === true) {
-                $controller->setContainer($this->container);
-                $controller->preDispatch();
-                $controller->$action();
-                $controller->display();
-            } else {
-                throw new Core\Exceptions\ControllerActionNotFound('Controller action ' . get_class($controller) . '::' . $action . '() was not found!');
-            }
-        } else {
-            throw new Core\Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
         }
     }
 
@@ -336,12 +261,21 @@ class Application
     }
 
     /**
+     * @return Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
      * Renders an exception
      * @param $errorMessage
      */
     private function _renderApplicationException($errorMessage)
     {
         $view = $this->container->get('core.view');
+        $view->assign('ROOT_DIR', ROOT_DIR);
         $view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
         $view->assign('CONTENT', $errorMessage);
         $view->displayTemplate('system/maintenance.tpl');

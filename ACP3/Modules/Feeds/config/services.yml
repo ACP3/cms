@@ -1,7 +1,7 @@
 services:
   feeds.controller.admin.index:
     class: ACP3\Modules\Feeds\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@feeds.config']
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@feeds.config']
 
   feeds.controller.frontend.index:
     class: ACP3\Modules\Feeds\Controller\Index

@@ -2,9 +2,6 @@
 
 namespace ACP3\Core\WYSIWYG;
 
-use ACP3\Application;
-use ACP3\Core\Registry;
-
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
  * @package ACP3\Core\WYSIWYG
@@ -12,25 +9,17 @@ use ACP3\Core\Registry;
 class TinyMCE extends AbstractWYSIWYG
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @param array $params
      */
-    protected $container;
-
-    public function __construct($id, $name, $value = '', $toolbar = '', $advanced = false, $height = '')
+    public function setParameters(array $params = array())
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->value = $value;
-        $this->advanced = (bool)$advanced;
-        $this->config['toolbar'] = $toolbar;
-        $this->config['height'] = $height . 'px';
+        $this->id = $params['id'];
+        $this->name = $params['name'];
+        $this->value = $params['value'];
+        $this->advanced = isset($params['advanced']) ? (bool)$params['advanced'] : false;
 
-        $this->container = Registry::get('services');
-    }
-
-    protected function configure()
-    {
-        return;
+        $this->config['toolbar'] = isset($params['toolbar']) ? $params['toolbar'] : '';
+        $this->config['height'] = $params['height'] . 'px';
     }
 
     /**

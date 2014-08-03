@@ -28,13 +28,18 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Modules\Menus\Model
      */
     protected $menusModel;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Articles\Model $articlesModel,
-        Menus\Model $menusModel)
+        Menus\Model $menusModel,
+        Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
 
@@ -42,6 +47,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->db = $db;
         $this->articlesModel = $articlesModel;
         $this->menusModel = $menusModel;
+        $this->secureHelper = $secureHelper;
     }
 
     public function actionCreate()
@@ -62,7 +68,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->articlesModel->insert($insertValues);
 
-                $this->request->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+                $this->aliases->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
                     $_POST['seo_description'],
@@ -89,7 +95,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cacheMenu->setMenuItemsCache();
                 }
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/articles');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -126,7 +132,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -146,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
                 $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
 
                 $cache->delete(Articles\Cache::CACHE_ID . $item);
-                $this->request->deleteUriAlias($uri);
+                $this->aliases->deleteUriAlias($uri);
             }
 
             $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
@@ -180,7 +186,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->articlesModel->update($updateValues, $this->request->id);
 
-                    $this->request->insertUriAlias(
+                    $this->aliases->insertUriAlias(
                         sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
@@ -196,7 +202,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
                     $cacheMenu->setMenuItemsCache();
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/articles');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -213,7 +219,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($article, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

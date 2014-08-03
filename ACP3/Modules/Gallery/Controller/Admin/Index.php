@@ -21,6 +21,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Gallery\Model
      */
     protected $galleryModel;
@@ -29,12 +33,14 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Gallery\Model $galleryModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->galleryModel = $galleryModel;
     }
 
@@ -55,7 +61,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->galleryModel->insert($insertValues);
 
-                $this->request->insertUriAlias(
+                $this->aliases->insertUriAlias(
                     sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
@@ -64,7 +70,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $this->seo->setCache();
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/gallery');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -87,7 +93,7 @@ class Index extends Core\Modules\Controller\Admin
         );
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -109,7 +115,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Galerie Cache löschen
                     $cache->delete(Gallery\Cache::CACHE_ID . $item);
-                    $this->request->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
+                    $this->aliases->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
                     $this->get('gallery.helpers')->deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
@@ -151,7 +157,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->galleryModel->update($updateValues, $this->request->id);
 
-                    $this->request->insertUriAlias(
+                    $this->aliases->insertUriAlias(
                         sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
@@ -162,7 +168,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->seo->setCache();
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -202,7 +208,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('can_edit_picture', $this->modules->hasPermission('admin/gallery/pictures/edit'));
             }
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -270,7 +276,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cache->getDriver()->deleteAll();
                 }
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/gallery');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -294,7 +300,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

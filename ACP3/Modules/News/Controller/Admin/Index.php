@@ -22,6 +22,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var News\Model
      */
     protected $newsModel;
@@ -30,12 +34,14 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         News\Model $newsModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->newsModel = $newsModel;
     }
 
@@ -66,7 +72,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->newsModel->insert($insertValues);
 
-                $this->request->insertUriAlias(
+                $this->aliases->insertUriAlias(
                     sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
                     $_POST['alias'],
                     $_POST['seo_keywords'],
@@ -75,7 +81,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $this->seo->setCache();
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/news');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -118,7 +124,7 @@ class Index extends Core\Modules\Controller\Admin
         $defaults = array('title' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => '');
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -137,7 +143,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
 
                 $cache->delete(News\Cache::CACHE_ID . $item);
-                $this->request->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
+                $this->aliases->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
             }
 
             $this->seo->setCache();
@@ -177,7 +183,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->newsModel->update($updateValues, $this->request->id);
 
-                    $this->request->insertUriAlias(
+                    $this->aliases->insertUriAlias(
                         sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id),
                         $_POST['alias'],
                         $_POST['seo_keywords'],
@@ -189,7 +195,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cache = new News\Cache($this->newsModel);
                     $cache->setCache($this->request->id);
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/news');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -231,7 +237,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($news, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -281,7 +287,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/news');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -310,7 +316,7 @@ class Index extends Core\Modules\Controller\Admin
         $lang_category_in_breadcrumb = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('category_in_breadcrumb', Core\Functions::selectGenerator('category_in_breadcrumb', array(1, 0), $lang_category_in_breadcrumb, $settings['category_in_breadcrumb'], 'checked'));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

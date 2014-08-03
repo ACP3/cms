@@ -1,7 +1,7 @@
 services:
   news.controller.admin.index:
     class: ACP3\Modules\News\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.db', '@news.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@core.helpers.secure', '@news.model']
 
   news.controller.frontend.index:
     class: ACP3\Modules\News\Controller\Index

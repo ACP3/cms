@@ -20,9 +20,9 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
-     * @var \ACP3\Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
     /**
      * @var Users\Model
      */
@@ -30,16 +30,16 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Session $session,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel)
     {
        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
-        $this->session = $session;
+        $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
     }
 
@@ -54,8 +54,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $validator->validateForgotPassword($_POST);
 
                     // Neues Passwort und neuen Zufallsschlüssel erstellen
-                    $securityHelper = new Core\Helpers\Secure();
-                    $newPassword = $securityHelper->salt(8);
+                    $newPassword = $this->secureHelper->salt(8);
                     $host = htmlentities($_SERVER['HTTP_HOST']);
 
                     // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
@@ -77,17 +76,15 @@ class Index extends Core\Modules\Controller\Frontend
 
                     // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                     if ($mailIsSent === true) {
-                        $securityHelper = new Core\Helpers\Secure();
-
-                        $salt = $securityHelper->salt(12);
+                        $salt = $this->secureHelper->salt(12);
                         $updateValues = array(
-                            'pwd' => $securityHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
+                            'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
                             'login_errors' => 0
                         );
                         $bool = $this->usersModel->update($updateValues, $user['id']);
                     }
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
                     return;
@@ -104,7 +101,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
             }
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         }
     }
 
@@ -191,12 +188,11 @@ class Index extends Core\Modules\Controller\Frontend
                     $body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_message'));
                     $mailIsSent = $this->get('core.functions')->generateEmail('', $_POST['mail'], $settings['mail'], $subject, $body);
 
-                    $securityHelper = new Core\Helpers\Secure();
-                    $salt = $securityHelper->salt(12);
+                    $salt = $this->secureHelper->salt(12);
                     $insertValues = array(
                         'id' => '',
                         'nickname' => Core\Functions::strEncode($_POST['nickname']),
-                        'pwd' => $securityHelper->generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
+                        'pwd' => $this->secureHelper->generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
                         'mail' => $_POST['mail'],
                         'date_format_long' => CONFIG_DATE_FORMAT_LONG,
                         'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
@@ -216,7 +212,7 @@ class Index extends Core\Modules\Controller\Frontend
                         $lastId = $bool2 = false;
                     }
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
                     return;
@@ -238,7 +234,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
             }
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         }
     }
 

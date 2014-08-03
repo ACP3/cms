@@ -17,6 +17,10 @@ class Admin extends Frontend
      * @var \ACP3\Core\Session
      */
     protected $session;
+    /**
+     * @var Core\Router\Aliases
+     */
+    protected $aliases;
 
     public function __construct(
         Core\Auth $auth,
@@ -28,12 +32,14 @@ class Admin extends Frontend
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo,
         Core\Validate $validate,
-        Core\Session $session)
+        Core\Session $session,
+        Core\Router\Aliases $aliases)
     {
         parent::__construct($auth, $lang, $modules, $request, $router, $view, $breadcrumb, $seo);
 
         $this->validate = $validate;
         $this->session = $session;
+        $this->aliases = $aliases;
     }
 
     /**
@@ -50,6 +56,11 @@ class Admin extends Frontend
     public function getValidate()
     {
         return $this->validate;
+    }
+
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 
 } 

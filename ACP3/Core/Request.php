@@ -12,6 +12,14 @@ class Request
     const ADMIN_PANEL_PATTERN = '=^acp/=';
 
     /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var Modules
+     */
+    protected $modules;
+    /**
      * Array, welches die URI Parameter enthält
      *
      * @var array
@@ -24,12 +32,19 @@ class Request
      * @var string
      */
     public $query = '';
+    /**
+     * @var string
+     */
+    public $originalQuery = '';
 
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      */
-    function __construct()
+    public function __construct(\Doctrine\DBAL\Connection $db, Modules $modules)
     {
+        $this->db = $db;
+        $this->modules  = $modules;
+
         $this->preprocessUriQuery();
 
         // Set the user defined homepage of the website
@@ -37,6 +52,7 @@ class Request
             $this->query = CONFIG_HOMEPAGE;
         }
 
+        $this->checkForUriAlias();
         $this->setUriParameters();
     }
 
@@ -81,8 +97,10 @@ class Request
      */
     protected function preprocessUriQuery()
     {
-        $this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
-        $this->query .= !preg_match('/\/$/', $this->query) ? '/' : '';
+        $this->originalQuery = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
+        $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
+
+        $this->query = $this->originalQuery;
 
         // Definieren, dass man sich im Administrationsbereich befindet
         if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
@@ -91,6 +109,39 @@ class Request
             $this->query = substr($this->query, 4);
         } else {
             $this->area = 'frontend';
+        }
+
+        return;
+    }
+
+    protected function checkForUriAlias()
+    {
+        // Nur ausführen, falls URI-Aliase aktiviert sind
+        if ($this->area !== 'admin') {
+            $probableQuery = $this->query;
+            // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+            if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+                $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+                // Keine entsprechende Module-Action gefunden -> muss Alias sein
+                if ($this->modules->actionExists($this->area . '/' . $query[0] . '/' . $query[1]) === false) {
+                    $length = 0;
+                    foreach ($query as $row) {
+                        if (strpos($row, '_') === false) {
+                            $length += strlen($row) + 1;
+                        } else {
+                            break;
+                        }
+                    }
+                    $params = substr($this->query, $length);
+                    $probableQuery = substr($this->query, 0, $length);
+                }
+            }
+
+            // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
+            $alias = $this->db->fetchColumn('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($probableQuery, 0, -1)));
+            if (!empty($alias)) {
+                $this->query = $alias . (!empty($params) ? $params : '');
+            }
         }
 
         return;
@@ -115,7 +166,7 @@ class Request
      *
      * @return void
      */
-    protected function setUriParameters()
+    public function setUriParameters()
     {
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 

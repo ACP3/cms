@@ -25,6 +25,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Users\Model
      */
     protected $usersModel;
@@ -38,6 +42,7 @@ class Index extends Core\Modules\Controller\Admin
         Core\ACL $acl,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
         Permissions\Model $permissionsModel)
     {
@@ -46,6 +51,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->acl = $acl;
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
         $this->permissionsModel = $permissionsModel;
     }
@@ -102,7 +108,7 @@ class Index extends Core\Modules\Controller\Admin
                     $lastId = false;
                 }
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/users');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -213,7 +219,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -297,10 +303,8 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Neues Passwort
                     if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-                        $securityHelper = new Core\Helpers\Secure();
-
-                        $salt = $securityHelper->salt(12);
-                        $newPassword = $securityHelper->generateSaltedPassword($salt, $_POST['new_pwd']);
+                        $salt = $this->secureHelper->salt(12);
+                        $newPassword = $this->secureHelper->generateSaltedPassword($salt, $_POST['new_pwd']);
                         $updateValues['pwd'] = $newPassword . ':' . $salt;
                     }
 
@@ -312,7 +316,7 @@ class Index extends Core\Modules\Controller\Admin
                         $this->auth->setCookie($_POST['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
                     }
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/users');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -405,7 +409,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($user, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -428,7 +432,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/users');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -451,7 +455,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('mail' => $settings['mail']), $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionIndex()

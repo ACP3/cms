@@ -1,11 +1,13 @@
 <?php
 namespace ACP3\Core\WYSIWYG;
 
+use Symfony\Component\DependencyInjection\ContainerAware;
+
 /**
  * Abstract Class for the various WYSIWYG editors
  * @package ACP3\Core\WYSIWYG
  */
-abstract class AbstractWYSIWYG
+abstract class AbstractWYSIWYG extends ContainerAware
 {
     /**
      * ID des WYSIWYG-Editors
@@ -18,25 +20,22 @@ abstract class AbstractWYSIWYG
      */
     protected $name;
     /**
-     * Seitenumbrücke aktivieren/deaktivieren
+     * Seitenumbrüche aktivieren/deaktivieren
      * @var boolean
      */
     protected $advanced;
     /**
+     * Default value of the WYSIWYG editor
+     * @var string
+     */
+    protected $value;
+    /**
      * Config-Array des WYSIWYG-Editors
-     *
      * @var array
      */
     protected $config = array();
 
-    abstract public function __construct($id, $name, $value = '', $toolbar = '', $advanced = false, $height = '');
-
-    public function setConfig($key, $value)
-    {
-        $this->config[$key] = $value;
-    }
-
-    abstract protected function configure();
+    abstract public function setParameters(array $params = array());
 
     abstract public function display();
 }

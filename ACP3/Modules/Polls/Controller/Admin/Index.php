@@ -17,6 +17,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Polls\Model
      */
     protected $pollsModel;
@@ -24,11 +28,13 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
+        Core\Helpers\Secure $secureHelper,
         Polls\Model $pollsModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
+        $this->secureHelper = $secureHelper;
         $this->pollsModel = $pollsModel;
     }
 
@@ -64,7 +70,7 @@ class Index extends Core\Modules\Controller\Admin
                     }
                 }
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -101,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('answers', $answers);
         $this->view->assign('multiple', Core\Functions::selectEntry('multiple', '1', '0', 'checked'));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -165,7 +171,7 @@ class Index extends Core\Modules\Controller\Admin
                         }
                     }
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -216,7 +222,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($poll['start'], $poll['end'])));
             $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

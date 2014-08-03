@@ -17,9 +17,9 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
     /**
      * @var string
      */
@@ -40,16 +40,16 @@ class Index extends Core\Modules\Controller\Frontend
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        Core\Session $session,
         Comments\Model $commentsModel,
-        Core\Config $commentsConfig)
+        Core\Config $commentsConfig,
+        Core\Helpers\Secure $secureHelper)
     {
        parent::__construct($context);
 
         $this->date = $date;
-        $this->session = $session;
         $this->commentsModel = $commentsModel;
         $this->commentsConfig = $commentsConfig;
+        $this->secureHelper = $secureHelper;
     }
 
     /**
@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                 $bool = $this->commentsModel->insert($insertValues);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->query);
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -137,7 +137,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
 
         return $this->view->fetchTemplate('comments/index.create.tpl');
     }

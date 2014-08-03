@@ -5,7 +5,7 @@ services:
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
-    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session']
+    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.router.aliases']
 
   core.context.frontend:
     class : ACP3\Core\Context\Frontend
@@ -37,6 +37,7 @@ services:
 
   core.request:
     class: ACP3\Core\Request
+    arguments: ['@core.db', '@core.modules']
 
   core.router:
     class: ACP3\Core\Router
@@ -48,11 +49,11 @@ services:
 
   core.session:
     class: ACP3\Core\Session
-    arguments: ['@core.db', '@core.request', '@core.view']
+    arguments: ['@core.db']
 
   core.auth:
     class: ACP3\Core\Auth
-    arguments: ['@core.db', '@core.session']
+    arguments: ['@core.db', '@core.session', '@core.helpers.secure']
 
   core.acl:
     class: ACP3\Core\ACL
@@ -92,6 +93,7 @@ services:
 
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
+    arguments: ['@core.view']
 
   core.helpers.string.formatter:
     class: ACP3\Core\Helpers\StringFormatter

@@ -17,9 +17,9 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
-     * @var Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
     /**
      * @var Newsletter\Model
      */
@@ -27,14 +27,14 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Session $session,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Newsletter\Model $newsModel)
     {
        parent::__construct($context);
 
         $this->db = $db;
-        $this->session = $session;
+        $this->secureHelper = $secureHelper;
         $this->newsletterModel = $newsModel;
     }
 
@@ -69,7 +69,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                         $bool = $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
 
-                        $this->session->unsetFormToken();
+                        $this->secureHelper->unsetFormToken();
 
                         $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                         return;
@@ -78,7 +78,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                         $bool = $this->newsletterModel->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-                        $this->session->unsetFormToken();
+                        $this->secureHelper->unsetFormToken();
 
                         $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                         return;
@@ -106,7 +106,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

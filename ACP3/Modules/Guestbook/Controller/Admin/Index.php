@@ -20,6 +20,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Guestbook\Model
      */
     protected $guestbookModel;
@@ -28,12 +32,14 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
     }
 
@@ -73,7 +79,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->guestbookModel->update($updateValues, $this->request->id);
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/guestbook');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -95,7 +101,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($guestbook, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -160,7 +166,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $bool = $config->setSettings($data);
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/guestbook');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -198,7 +204,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('notify_email' => $settings['notify_email']), $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
 }

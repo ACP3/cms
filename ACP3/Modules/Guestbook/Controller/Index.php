@@ -20,9 +20,9 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
-     * @var \ACP3\Core\Session
+     * @var Core\Helpers\Secure
      */
-    protected $session;
+    protected $secureHelper;
     /**
      * @var Guestbook\Model
      */
@@ -30,16 +30,16 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Session $session,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel)
     {
        parent::__construct($context);
 
-        $this->session = $session;
         $this->date = $date;
         $this->db = $db;
+        $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
     }
 
@@ -88,7 +88,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
                 }
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken();
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -137,7 +137,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionIndex()

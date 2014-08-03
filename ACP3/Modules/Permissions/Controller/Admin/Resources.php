@@ -16,6 +16,10 @@ class Resources extends Core\Modules\Controller\Admin
      */
     protected $acl;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var Permissions\Model
      */
     protected $permissionsModel;
@@ -23,11 +27,13 @@ class Resources extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\ACL $acl,
+        Core\Helpers\Secure $secureHelper,
         Permissions\Model $permissionsModel)
     {
         parent::__construct($context);
 
         $this->acl = $acl;
+        $this->secureHelper = $secureHelper;
         $this->permissionsModel = $permissionsModel;
     }
 
@@ -53,7 +59,7 @@ class Resources extends Core\Modules\Controller\Admin
                 $cache = new Permissions\Cache($this->permissionsModel);
                 $cache->setResourcesCache();
 
-                $this->session->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/resources');
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -78,7 +84,7 @@ class Resources extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('resource' => '', 'area' => '', 'controller' => ''), $_POST));
 
-        $this->session->generateFormToken();
+        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     public function actionDelete()
@@ -121,7 +127,7 @@ class Resources extends Core\Modules\Controller\Admin
                     $cache = new Permissions\Cache($this->permissionsModel);
                     $cache->setResourcesCache();
 
-                    $this->session->unsetFormToken();
+                    $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/resources');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -146,7 +152,7 @@ class Resources extends Core\Modules\Controller\Admin
             );
             $this->view->assign('form', array_merge($defaults, $_POST));
 
-            $this->session->generateFormToken();
+            $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
