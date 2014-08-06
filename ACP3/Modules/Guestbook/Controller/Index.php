@@ -88,7 +88,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
                 }
 
-                $this->secureHelper->unsetFormToken();
+                $this->secureHelper->unsetFormToken($this->request->query);
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
             } catch (Core\Exceptions\InvalidFormToken $e) {
