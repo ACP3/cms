@@ -1,0 +1,8 @@
+services:
+  installer.install.controller.index:
+    class: ACP3\Installer\Modules\Install\Controller\Index
+    parent: installer.core.modules.controller
+
+  installer.install.controller.install:
+    class: ACP3\Installer\Modules\Install\Controller\Install
+    parent: installer.core.modules.controller

@@ -182,6 +182,6 @@
     </p>
 </div>
 <div class="well well-sm text-center">
-    <a href="{uri args="install/requirements"}" class="btn btn-success">{lang t="accept"}</a>
-    <a href="{uri args="install/welcome"}" class="btn btn-danger">{lang t="decline"}</a>
+    <a href="{uri args="install/index/requirements"}" class="btn btn-success">{lang t="install|accept"}</a>
+    <a href="{uri args="install"}" class="btn btn-danger">{lang t="install|decline"}</a>
 </div>

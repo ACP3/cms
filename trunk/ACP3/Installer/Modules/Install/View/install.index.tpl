@@ -1,46 +1,46 @@
 {if isset($error_msg)}
     {$error_msg}
 {/if}
-<form action="{uri args="install/configuration"}" method="post" accept-charset="UTF-8" class="form-horizontal" id="config-form">
+<form action="{uri args="install/install"}" method="post" accept-charset="UTF-8" class="form-horizontal" id="config-form">
     <div class="tabbable">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#tabs-1" data-toggle="tab">{lang t="db_connection_settings"}</a></li>
-            <li><a href="#tabs-2" data-toggle="tab">{lang t="admin_account"}</a></li>
-            <li><a href="#tabs-3" data-toggle="tab">{lang t="general"}</a></li>
+            <li class="active"><a href="#tabs-1" data-toggle="tab">{lang t="install|db_connection_settings"}</a></li>
+            <li><a href="#tabs-2" data-toggle="tab">{lang t="install|admin_account"}</a></li>
+            <li><a href="#tabs-3" data-toggle="tab">{lang t="install|general"}</a></li>
         </ul>
         <div class="tab-content">
             <div id="tabs-1" class="tab-pane fade in active">
                 <div class="form-group">
-                    <label for="db-host" class="col-lg-2 control-label">{lang t="db_hostname"}</label>
+                    <label for="db-host" class="col-lg-2 control-label">{lang t="install|db_hostname"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="db_host" id="db-host" value="{$form.db_host}" required>
 
-                        <p class="help-block">{lang t="db_hostname_description"}</p>
+                        <p class="help-block">{lang t="install|db_hostname_description"}</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="db-user" class="col-lg-2 control-label">{lang t="db_username"}</label>
+                    <label for="db-user" class="col-lg-2 control-label">{lang t="install|db_username"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="db_user" id="db-user" value="{$form.db_user}" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="db-password" class="col-lg-2 control-label">{lang t="db_password"}</label>
+                    <label for="db-password" class="col-lg-2 control-label">{lang t="install|db_password"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="password" name="db_password" id="db-password" value=""></div>
                 </div>
                 <div class="form-group">
-                    <label for="db-name" class="col-lg-2 control-label">{lang t="db_name"}</label>
+                    <label for="db-name" class="col-lg-2 control-label">{lang t="install|db_name"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="db_name" id="db-name" value="{$form.db_name}" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="db-pre" class="col-lg-2 control-label">{lang t="db_table_prefix"}</label>
+                    <label for="db-pre" class="col-lg-2 control-label">{lang t="install|db_table_prefix"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="db_pre" id="db-pre" value="{$form.db_pre}"></div>
@@ -48,27 +48,27 @@
             </div>
             <div id="tabs-2" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="user-name" class="col-lg-2 control-label">{lang t="nickname"}</label>
+                    <label for="user-name" class="col-lg-2 control-label">{lang t="install|nickname"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="user_name" id="user-name" value="{$form.user_name}" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="user-pwd" class="col-lg-2 control-label">{lang t="pwd"}</label>
+                    <label for="user-pwd" class="col-lg-2 control-label">{lang t="install|pwd"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="password" name="user_pwd" id="user-pwd" required></div>
                 </div>
                 <div class="form-group">
-                    <label for="user-pwd-wdh" class="col-lg-2 control-label">{lang t="pwd_repeat"}</label>
+                    <label for="user-pwd-wdh" class="col-lg-2 control-label">{lang t="install|pwd_repeat"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="password" name="user_pwd_wdh" id="user-pwd-wdh" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="mail" class="col-lg-2 control-label">{lang t="email"}</label>
+                    <label for="mail" class="col-lg-2 control-label">{lang t="install|email"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="mail" id="mail" value="{$form.mail}" required>
@@ -77,30 +77,30 @@
             </div>
             <div id="tabs-3" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="seo-title" class="col-lg-2 control-label">{lang t="site-title"}</label>
+                    <label for="seo-title" class="col-lg-2 control-label">{lang t="install|site-title"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="seo_title" id="seo-title" value="{$form.seo_title}" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="date-format-long" class="col-lg-2 control-label">{lang t="date_format_long"}</label>
+                    <label for="date-format-long" class="col-lg-2 control-label">{lang t="install|date_format_long"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required>
 
-                        <p class="help-block">{lang t="php_date_function"}</p>
+                        <p class="help-block">{lang t="install|php_date_function"}</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="date-format-short" class="col-lg-2 control-label">{lang t="date_format_short"}</label>
+                    <label for="date-format-short" class="col-lg-2 control-label">{lang t="install|date_format_short"}</label>
 
                     <div class="col-lg-10">
                         <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="date-time-zone" class="col-lg-2 control-label">{lang t="time_zone"}</label>
+                    <label for="date-time-zone" class="col-lg-2 control-label">{lang t="install|time_zone"}</label>
 
                     <div class="col-lg-10">
                         <select class="form-control" name="date_time_zone" id="date-time-zone">
@@ -119,7 +119,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
-            <button type="submit" name="submit" class="btn btn-primary">{lang t="submit"}</button>
+            <button type="submit" name="submit" class="btn btn-primary">{lang t="install|submit"}</button>
         </div>
     </div>
 </form>

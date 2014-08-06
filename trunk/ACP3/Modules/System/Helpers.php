@@ -63,11 +63,11 @@ class Helpers
     public function checkUninstallDependencies($module)
     {
         $module = strtolower($module);
-        $modules = scandir(MODULES_DIR);
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
         $modulesToUninstall = array();
         foreach ($modules as $row) {
             $row = strtolower($row);
-            if ($row !== '.' && $row !== '..' && $row !== $module) {
+            if ($row !== $module) {
                 $deps = Core\Modules\AbstractInstaller::getDependencies($row); // Modulabhängigkeiten
                 if (!empty($deps) && $this->modules->isInstalled($row) === true && in_array($module, $deps) === true) {
                     $modulesToUninstall[] = ucfirst($row);

@@ -188,19 +188,17 @@ abstract class AbstractInstaller implements InstallerInterface
         $moduleName = static::MODULE_NAME;
         $dir = ucfirst($moduleName);
         $path = MODULES_DIR . $dir . '/Controller/';
-        $controllers = scandir($path);
+        $controllers = array_diff(scandir($path), array('.', '..'));
 
         foreach ($controllers as $controller) {
-            if ($controller !== '.' && $controller !== '..') {
-                if (is_file($path . $controller) === true) {
-                    $this->_insertAclResources($dir, substr($controller, 0, -4));
-                } elseif (is_dir($path . $controller) === true) {
-                    $subModuleControllers = scandir($path . $controller);
+            if (is_file($path . $controller) === true) {
+                $this->_insertAclResources($dir, substr($controller, 0, -4));
+            } elseif (is_dir($path . $controller) === true) {
+                $subModuleControllers = array_diff(scandir($path . $controller), array('.', '..'));
 
-                    foreach ($subModuleControllers as $subController) {
-                        if ($subController !== '.' && $subController !== '..' && is_file($path . $controller . '/' . $subController) === true) {
-                            $this->_insertAclResources($dir, substr($subController, 0, -4), $controller);
-                        }
+                foreach ($subModuleControllers as $subController) {
+                    if (is_file($path . $controller . '/' . $subController) === true) {
+                        $this->_insertAclResources($dir, substr($subController, 0, -4), $controller);
                     }
                 }
             }

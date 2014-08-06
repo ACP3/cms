@@ -15,7 +15,7 @@
     </script>
 {/if}
 <div id="error-box" class="alert">
-    <strong>{lang t="failure"}</strong>
+    <strong>{lang t="install|failure"}</strong>
     <ul>
         {foreach $error_box.errors as $key => $value}
             <li{if ACP3_validate::isNumber($key) === false} class="error-{$key}"{/if}>{$value}</li>

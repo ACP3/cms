@@ -3,6 +3,7 @@
 namespace ACP3\Installer;
 
 use ACP3\Core;
+use ACP3\Installer\Core\FrontController;
 use Doctrine\DBAL;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -17,43 +18,35 @@ class Application
     /**
      * @var ContainerBuilder
      */
-    private static $di;
-    /**
-     * @var \ACP3\Core\Request
-     */
-    private static $uri;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private static $view;
+    private $container;
 
     /**
      * run() method of the installer
      */
-    public static function runInstaller()
+    public function runInstaller()
     {
-        self::defineDirConstants();
-        self::includeAutoLoader();
-        self::initializeInstallerClasses();
-        self::outputPage();
+        $this->defineDirConstants();
+        $this->includeAutoLoader();
+        $this->initializeInstallerClasses();
+        $this->outputPage();
     }
 
     /**
      * run() method of the database updater
      */
-    public static function runUpdater()
+    public function runUpdater()
     {
-        self::defineDirConstants();
-        self::startupChecks();
-        self::includeAutoLoader();
-        self::initializeUpdaterClasses();
-        self::outputPage();
+        $this->defineDirConstants();
+        $this->startupChecks();
+        $this->includeAutoLoader();
+        $this->initializeUpdaterClasses();
+        $this->outputPage();
     }
 
     /**
      * Überprüft, ob die config.php existiert
      */
-    public static function startupChecks()
+    public function startupChecks()
     {
         // Standardzeitzone festlegen
         date_default_timezone_set('UTC');
@@ -75,7 +68,7 @@ class Application
     /**
      * Einige Pfadkonstanten definieren
      */
-    public static function defineDirConstants()
+    public function defineDirConstants()
     {
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
         $php_self = dirname(PHP_SELF);
@@ -89,13 +82,14 @@ class Application
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
         define('CACHE_DIR', UPLOADS_DIR . 'cache/');
 
-        define('INSTALLER_DIR', ACP3_ROOT_DIR . 'installation/');
-        define('INSTALLER_MODULES_DIR', ACP3_DIR . 'Installer/Modules/');
-        define('INSTALLER_CLASSES_DIR', ACP3_DIR . 'Installer/Core/');
+        define('INSTALLER_ACP3_DIR', ACP3_DIR . 'Installer/');
+        define('INSTALLER_MODULES_DIR', INSTALLER_ACP3_DIR . 'Modules/');
+        define('INSTALLER_CLASSES_DIR', INSTALLER_ACP3_DIR . 'Core/');
+        define('INSTALLATION_DIR', ACP3_ROOT_DIR . 'installation/');
 
         // Pfade zum Theme setzen
-        define('DESIGN_PATH', INSTALLER_DIR . 'design/');
-        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'installation/design/');
+        define('DESIGN_PATH', INSTALLATION_DIR . 'design/');
+        define('DESIGN_PATH_INTERNAL', INSTALLATION_DIR . 'design/');
 
         if (defined('IN_UPDATER') === false) {
             define('CONFIG_VERSION', '4.0-dev');
@@ -106,7 +100,7 @@ class Application
     /**
      * Klassen Autoloader inkludieren
      */
-    public static function includeAutoLoader()
+    public function includeAutoLoader()
     {
         require VENDOR_DIR . 'autoload.php';
     }
@@ -114,24 +108,36 @@ class Application
     /**
      * Initialisieren der Klassen für den Installer
      */
-    public static function initializeInstallerClasses()
+    public function initializeInstallerClasses()
     {
-        \ACP3\Core\Registry::set('URI', new \ACP3\Installer\Core\URI('install', 'welcome'));
+        $this->container = new ContainerBuilder();
+        $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
+        $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 
-        \ACP3\Core\Registry::set('View', new Core\View());
+        // Load installer modules services
+        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+        foreach ($modules as $module) {
+            $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
+            if (is_file($path) === true) {
+                $loader->load($path);
+            }
+        }
 
         $params = array(
             'compile_id' => 'installer',
             'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
             'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
         );
-        Core\View::setRenderer('Smarty', $params);
+        $this->container->get('core.view')->setRenderer('smarty', $params);
+
+        $this->container->compile();
     }
 
     /**
      * Initialisieren der Klassen für den Updater
      */
-    public static function initializeUpdaterClasses()
+    public function initializeUpdaterClasses()
     {
         $config = new DBAL\Configuration();
         $connectionParams = array(
@@ -146,15 +152,15 @@ class Application
 
         define('DB_PRE', CONFIG_DB_PRE);
 
-        self::$di = new ContainerBuilder();
-        $loader = new YamlFileLoader(self::$di, new FileLocator(__DIR__));
+        $this->container = new ContainerBuilder();
+        $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load(ACP3_DIR . 'config/services.yml');
         $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 
-        self::$di->set('core.db', $db);
+        $this->container->set('core.db', $db);
 
         // Systemeinstellungen laden
-        self::$di
+        $this->container
             ->get('system.config')
             ->getSettingsAsConstants();
 
@@ -179,64 +185,35 @@ class Application
         );
         Core\View::setRenderer('Smarty', $params);
 
-        self::$di->compile();
+        $this->container->compile();
     }
 
     /**
      * Gibt die Seite aus
      */
-    public static function outputPage()
+    public function outputPage()
     {
-        $view = \ACP3\Core\Registry::get('View');
-        $uri = \ACP3\Core\Registry::get('URI');
+        $request = $this->container->get('installer.core.request');
 
-        if (!empty($_POST['lang'])) {
-            setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
-            $uri->redirect($uri->mod . '/' . $uri->file);
-        }
+        $frontController = new FrontController($this->container);
+        $errorsServiceId = 'installer.errors.controller.index';
 
-        if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
-            is_file(ACP3_ROOT_DIR . 'installation/languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true
-        ) {
-            define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
-        } else {
-            define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
-        }
-        \ACP3\Core\Registry::set('Lang', new Core\Lang(LANG));
-
-        // Einige Template Variablen setzen
-        $view->assign('LANGUAGES', Core\Functions::languagesDropdown(LANG));
-        $view->assign('PHP_SELF', PHP_SELF);
-        $view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
-        $view->assign('ROOT_DIR', ROOT_DIR);
-        $view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
-        $view->assign('DESIGN_PATH', DESIGN_PATH);
-        $view->assign('UA_IS_MOBILE', \ACP3\Core\Functions::isMobileBrowser());
-
-        $lang_info = \ACP3\Core\XML::parseXmlFile(INSTALLER_DIR . 'languages/' . \ACP3\Core\Registry::get('Lang')->getLanguage() . '.xml', '/language/info');
-        $view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
-        $view->assign('LANG', \ACP3\Core\Registry::get('Lang')->getLanguage2Characters());
-
-        $module = ucfirst($uri->mod);
-        $className = "\\ACP3\\Installer\\Modules\\" . $module . "\\" . $module;
-        $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->file))));
-
-        if (method_exists($className, $action) === true) {
-            // Modul einbinden
-            $mod = new $className();
-            $mod->$action();
-            $mod->display();
-        } else {
-            $uri->redirect('errors/404');
+        try {
+            $serviceId = 'installer.' . $request->mod . '.controller.' . $request->controller;
+            $frontController->dispatch($serviceId, $request->file);
+        } catch (Core\Exceptions\ControllerActionNotFound $e) {
+            $frontController->dispatch($errorsServiceId, '404');
+        } catch (\Exception $e) {
+            $frontController->dispatch($errorsServiceId, '404');
         }
     }
 
     /**
      * @return ContainerBuilder
      */
-    public static function getServiceContainer()
+    public function getServiceContainer()
     {
-        return self::$di;
+        return $this->container;
     }
 
 }

@@ -7,16 +7,16 @@
             </li>
         {/foreach}
     </ul>
-    <form action="{uri args="install/db_update"}" method="post">
+    <form action="{uri args="update"}" method="post">
         <div class="well well-sm text-center">
-            <button type="submit" name="update" class="btn btn-primary">{lang t="forward"}</button>
+            <button type="submit" name="update" class="btn btn-primary">{lang t="install|forward"}</button>
         </div>
     </form>
 {else}
-    <p>{lang t="legacy_db_update_description"}</p>
+    <p>{lang t="update|legacy_db_update_description"}</p>
     <form action="{$REQUEST_URI}" method="post">
         <div class="well well-sm text-center">
-            <button type="submit" name="update" class="btn btn-primary">{lang t="do_db_update"}</button>
+            <button type="submit" name="update" class="btn btn-primary">{lang t="update|do_db_update"}</button>
         </div>
     </form>
 {/if}

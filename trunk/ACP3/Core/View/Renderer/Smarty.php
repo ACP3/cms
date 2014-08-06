@@ -13,7 +13,6 @@ class Smarty extends AbstractRenderer
 {
 
     /**
-     *
      * @var \Smarty
      */
     public $renderer;

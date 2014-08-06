@@ -17,38 +17,19 @@ class Lang extends \ACP3\Core\Lang
     }
 
     /**
-     * Cached die Sprachfiles, um diese schneller verarbeiten zu können
-     */
-    protected function parseLanguageFile()
-    {
-        $data = array();
-        $path = ACP3_ROOT_DIR . 'installation/languages/' . $this->lang . '.xml';
-        if (is_file($path) === true) {
-            $xml = simplexml_load_file($path);
-            // Über die einzelnen Sprachstrings iterieren
-            foreach ($xml->strings[0]->item as $item) {
-                $data[(string)$item['key']] = trim((string)$item);
-            }
-        }
-        return $data;
-    }
-
-    /**
      * Gibt den angeforderten Sprachstring aus
      *
+     * @param string $module
      * @param string $key
-     * @param string $unused
      * @return string
      */
-    public function t($key, $unused = '')
+    public function t($module, $key)
     {
-        static $lang_data = array();
-
-        if (empty($lang_data)) {
-            $lang_data = $this->parseLanguageFile();
+        if (empty($this->buffer)) {
+            $this->buffer = $this->getLanguageCache();
         }
 
-        return isset($lang_data[$key]) ? $lang_data[$key] : strtoupper('{' . $key . '}');
+        return isset($this->buffer['keys'][$module][$key]) ? $this->buffer['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
     }
 
     /**
@@ -59,7 +40,48 @@ class Lang extends \ACP3\Core\Lang
      */
     public static function languagePackExists($lang)
     {
-        return !preg_match('=/=', $lang) && is_file(ACP3_ROOT_DIR . 'installation/languages/' . $lang . '.xml') === true;
+        return !preg_match('=/=', $lang) && is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $lang . '.xml') === true;
+    }
+
+    /**
+     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
+     */
+    public function setLanguageCache()
+    {
+        $data = array();
+
+        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+
+        foreach ($modules as $module) {
+            $path = INSTALLER_MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';
+            if (is_file($path) === true) {
+                $xml = simplexml_load_file($path);
+                if (isset($data['info']['direction']) === false) {
+                    $data['info']['direction'] = (string)$xml->info->direction;
+                }
+
+                // Über die einzelnen Sprachstrings iterieren
+                foreach ($xml->keys->item as $item) {
+                    $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Gibt die gecacheten Sprachstrings aus
+     *
+     * @return array
+     */
+    protected function getLanguageCache()
+    {
+        if (empty($this->buffer) === true) {
+            $this->buffer = $this->setLanguageCache();
+        }
+
+        return $this->buffer;
     }
 
 }
