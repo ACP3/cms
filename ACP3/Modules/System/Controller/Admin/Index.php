@@ -103,13 +103,13 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
 
         // WYSIWYG-Editoren
-        $editors = scandir(CLASSES_DIR . 'WYSIWYG');
+        $editors = array_diff(scandir(CLASSES_DIR . 'WYSIWYG'), array('.', '..', 'AbstractWYSIWYG.php'));
         $c_editors = count($editors);
         $wysiwyg = array();
 
         for ($i = 0; $i < $c_editors; ++$i) {
             $editors[$i] = substr($editors[$i], 0, strrpos($editors[$i], '.php'));
-            if (!empty($editors[$i]) && !in_array($editors[$i], array('.', '..', 'AbstractWYSIWYG'))) {
+            if (!empty($editors[$i])) {
                 $wysiwyg[$i]['value'] = $editors[$i];
                 $wysiwyg[$i]['selected'] = Core\Functions::selectEntry('wysiwyg', $editors[$i], CONFIG_WYSIWYG);
                 $wysiwyg[$i]['lang'] = $editors[$i];

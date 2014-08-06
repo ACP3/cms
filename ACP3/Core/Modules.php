@@ -197,10 +197,10 @@ class Modules
     public function setModulesCache()
     {
         $infos = array();
-        $dirs = scandir(MODULES_DIR);
+        $dirs = array_diff(scandir(MODULES_DIR), array('.', '..'));
         foreach ($dirs as $dir) {
             $path = MODULES_DIR . '/' . $dir . '/config/module.xml';
-            if ($dir !== '.' && $dir !== '..' && is_file($path) === true) {
+            if (is_file($path) === true) {
                 $moduleInfo = XML::parseXmlFile($path, 'info');
 
                 if (!empty($moduleInfo)) {

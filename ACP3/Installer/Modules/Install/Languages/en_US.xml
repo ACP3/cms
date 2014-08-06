@@ -2,19 +2,15 @@
 <language>
     <info>
         <name>English (United States)</name>
-        <author>Tino Goratsch</author>
         <direction>ltr</direction>
     </info>
-    <strings>
-        <item key="404">Page not found</item>
+    <keys>
         <item key="accept">Accept</item>
+        <item key="acp3_installation">ACP3 Installation</item>
         <item key="admin_account">Administrator account</item>
         <item key="category_name">First category</item>
         <item key="category_description">This is the first category.</item>
         <item key="check_again">Check again</item>
-        <item key="config_file_error">While updating the config file an error has occurred!</item>
-        <item key="config_file_success">The config file has been successfully updated!</item>
-        <item key="configuration">Configuration</item>
         <item key="database">Database</item>
         <item key="date_format_long">Short date format</item>
         <item key="date_format_short">Long date format</item>
@@ -26,44 +22,31 @@
         <item key="db_name">Database name</item>
         <item key="db_password">Password</item>
         <item key="db_table_prefix">Table prefix</item>
-        <item key="db_update">Database update</item>
-        <item key="db_update_description">To start the database update, please click on the button below.</item>
-        <item key="db_update_error">While updating the database an error has occurred!</item>
-        <item key="db_update_legacy">Database update</item>
-        <item key="db_update_next_steps">The database has been successfully updated. You may now return to your website,
-            but please follow the instructions below.
-        </item>
-        <item key="db_update_no_update">The most recent version is already installed!</item>
-        <item key="db_update_text">Update of module &quot;%s&quot;:</item>
-        <item key="db_update_success">The database has been successfully updated!</item>
         <item key="db_username">Username</item>
-        <item key="do_db_update">Begin update process</item>
         <item key="decline">Decline</item>
         <item key="disclaimer">
             <![CDATA[Despite careful contentwise control we do not take over adhesion for contents of external hyperlinks. Exclusively the operators are responsible for the contents of the linked pages.]]></item>
         <item key="email">E-mail address</item>
-        <item key="error_404">File not found</item>
         <item key="error_messages">Output of error messages:</item>
         <item key="failure">The following errors have occured:</item>
-        <item key="file_not_found">
-            <![CDATA[The requested module or the requested file is either missing or has not been activated.<br />Please contact the administrator of this site, if the error should occur repeatedly.]]></item>
         <item key="forward">Forward</item>
         <item key="form_change_warning">ATTENTION: By changing the language you will lose all form changes!</item>
         <item key="found">Found</item>
         <item key="gd_library">GD library</item>
         <item key="go_to_website">Go to the website</item>
         <item key="general">General</item>
+        <item key="index_index">Welcome</item>
+        <item key="index_licence">Licence</item>
+        <item key="index_requirements">Requirements</item>
+        <item key="install_index">Configuration</item>
         <item key="installation">Installation</item>
         <item key="installation_error">
-            <![CDATA[During the installation an error has occured, whereby the installation can't be continued. Please re-check all the entries, especially if all the information in the configuration file is correct.<br />Please click on the &quot;Back&quot;-button, to go back to the start of the installation process.]]></item>
+            <![CDATA[During the installation an error has occurred, whereby the installation can't be continued. Please re-check all the entries, especially if all the information in the configuration file is correct.<br />Please click on the &quot;Back&quot;-button, to go back to the start of the installation process.]]></item>
         <item key="installation_impossible">Installation impossible!</item>
         <item key="installation_successful_1">
             <![CDATA[All queries have been successfully executed, so that the installation is now complete.<br />By the following button you can reach the frontend of your website. Afterwards you can log in and do further changes to your site, eg. changing the language, choosing an other design or publishing content.]]></item>
         <item key="installation_successful_2">
             <![CDATA[<strong>Attention:</strong> Please delete the "installation"-folder, because it could be a potential security risk if this folder should exist in a production environment.]]></item>
-        <item key="legacy_db_update_description">
-            <![CDATA[You are currently using a very old version of ACP3, therefore the database update process consists of 2 steps.<br />Please click &quot;Update Database&quot; first to adapt the database to the new module structure, and then click &quot;Forward&quot; so that the modules will ultimately be updated.]]></item>
-        <item key="licence">Licence</item>
         <item key="log_into_admin_panel">Log into the administration panel</item>
         <item key="magic_quotes">Magic Quotes:</item>
         <item key="maximum_uploadsize">Maximum uploadsize:</item>
@@ -101,7 +84,6 @@
         <item key="pwd_repeat">Repeat password</item>
         <item key="register_globals">register_globals</item>
         <item key="required">Required</item>
-        <item key="requirements">Requirements</item>
         <item key="safe_mode">Safe mode</item>
         <item key="sincerely">Sincerely,</item>
         <item key="site-title">Website title</item>
@@ -130,18 +112,17 @@
         </item>
         <item key="submit">Submit</item>
         <item key="time_zone">Time zone</item>
+        <item key="toggle_navigation">Toggle navigation</item>
         <item key="type_in_date_format">Please type in a date format.</item>
         <item key="type_in_db_host">Please type in the hostname, which belongs to the database.</item>
         <item key="type_in_db_name">Please type in the database name.</item>
         <item key="type_in_db_username">Please type in the user name for the database.</item>
         <item key="type_in_pwd">Either the password is empty or in the repetition is a typo.</item>
         <item key="type_in_user_name">Please type in an user name for the administrator account.</item>
-        <item key="update_db_version_from_to">Updating the database to version &quot;%d&quot;:</item>
-        <item key="welcome">Welcome</item>
         <item key="writable">Writable</item>
         <item key="wrong_chmod_for_config_file">Please set the CHMOD for the config.php, which is located in the
             "includes"-folder, to 777.
         </item>
         <item key="wrong_email_format">The E-mail address doesn't match the format &quot;name@domain.tld&quot;.</item>
-    </strings>
+    </keys>
 </language>

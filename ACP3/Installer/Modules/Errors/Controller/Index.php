@@ -1,13 +1,13 @@
 <?php
 
-namespace ACP3\Installer\Modules\Errors;
+namespace ACP3\Installer\Modules\Errors\Controller;
 
 /**
  * Module controller of the Errors installer module
  *
  * @author Tino Goratsch
  */
-class Errors extends \ACP3\Installer\Core\Modules\Controller
+class Index extends \ACP3\Installer\Core\Modules\Controller
 {
 
     public function action404()

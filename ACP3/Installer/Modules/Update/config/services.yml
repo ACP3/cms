@@ -1,0 +1,8 @@
+services:
+  installer.update.controller.index:
+    class: ACP3\Installer\Modules\Update\Controller\Index
+    parent: installer.core.modules.controller
+
+  installer.update.controller.legacy:
+    class: ACP3\Installer\Modules\Update\Controller\Legacy
+    parent: installer.core.modules.controller

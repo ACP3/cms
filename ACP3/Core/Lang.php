@@ -81,11 +81,11 @@ class Lang
     {
         $data = array();
 
-        $modules = scandir(MODULES_DIR);
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
 
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';
-            if ($module !== '.' && $module !== '..' && is_file($path) === true) {
+            if (is_file($path) === true) {
                 $xml = simplexml_load_file($path);
                 if (isset($data['info']['direction']) === false) {
                     $data['info']['direction'] = (string)$xml->info->direction;
@@ -445,16 +445,16 @@ class Lang
      */
     protected function _setLanguagesCache()
     {
-        $modules = scandir(MODULES_DIR);
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
         $languages = array();
 
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/Languages/';
-            if ($module !== '.' && $module !== '..' && is_dir($path) === true) {
-                $moduleLanguages = scandir($path);
+            if (is_dir($path) === true) {
+                $moduleLanguages = array_diff(scandir($path), array('.', '..'));
 
                 foreach ($moduleLanguages as $language) {
-                    if ($language !== '.' && $language !== '..' && is_file($path . $language) === true) {
+                    if (is_file($path . $language) === true) {
                         $xml = simplexml_load_file($path . $language);
                         $languageIso = substr($language, 0, -4);
                         if (!empty($xml) && isset($languages[$languageIso]) === false) {

@@ -33,7 +33,8 @@ class Functions
         Lang $lang,
         Core\Modules $modules,
         Core\Validate $validate
-    ) {
+    )
+    {
         $this->db = $db;
         $this->lang = $lang;
         $this->modules = $modules;
@@ -54,9 +55,9 @@ class Functions
         $bool = Core\Modules\AbstractInstaller::executeSqlQueries($queries);
 
         $result = array(
-            'text' => sprintf($this->lang->t('update_db_version_to'), $version),
+            'text' => sprintf($this->lang->t('update', 'update_db_version_to'), $version),
             'class' => $bool === true ? 'success' : 'important',
-            'result_text' => $this->lang->t($bool === true ? 'db_update_success' : 'db_update_error')
+            'result_text' => $this->lang->t('update', $bool === true ? 'db_update_success' : 'db_update_error')
         );
 
         return $result;
@@ -87,33 +88,6 @@ class Functions
     }
 
     /**
-     * Generiert das Dropdown-Menü mit der zur Verfügung stehenden Installersprachen
-     *
-     * @param string $selectedLanguage
-     * @return array
-     */
-    public function languagesDropdown($selectedLanguage)
-    {
-        // Dropdown-Menü für die Sprachen
-        $languages = array();
-        $path = ACP3_ROOT_DIR . 'installation/languages/';
-        $files = scandir($path);
-        foreach ($files as $row) {
-            if ($row !== '.' && $row !== '..') {
-                $lang_info = Core\XML::parseXmlFile($path . $row, '/language/info');
-                if (!empty($lang_info)) {
-                    $languages[] = array(
-                        'language' => substr($row, 0, -4),
-                        'selected' => $selectedLanguage === substr($row, 0, -4) ? ' selected="selected"' : '',
-                        'name' => $lang_info['name']
-                    );
-                }
-            }
-        }
-        return $languages;
-    }
-
-    /**
      * Setzt die Ressourcen-Tabelle auf die Standardwerte zurück
      */
     public function resetResources($mode = 1)
@@ -121,10 +95,10 @@ class Functions
         $this->db->executeUpdate('TRUNCATE TABLE ' . DB_PRE . 'acl_resources');
 
         // Moduldaten in die ACL schreiben
-        $modules = scandir(MODULES_DIR);
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/Installer.php';
-            if ($module !== '.' && $module !== '..' && is_file($path) === true) {
+            if (is_file($path) === true) {
                 $className = Core\Modules\AbstractInstaller::buildClassName($module);
                 /** @var Core\Modules\AbstractInstaller $installer */
                 $installer = new $className(Core\Registry::get('Db'));
@@ -167,7 +141,7 @@ class Functions
      */
     public function writeConfigFile(array $data)
     {
-        $path = ACP3_DIR . 'config.php';
+        $path = ACP3_DIR . 'config/config.php';
         if (is_writable($path) === true) {
             // Konfigurationsdatei in ein Array schreiben
             ksort($data);

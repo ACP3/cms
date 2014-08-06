@@ -1,0 +1,8 @@
+services:
+  smarty.plugin.lang:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Lang
+    arguments: ['@installer.core.lang']
+
+  smarty.plugin.router:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Router
+    arguments: ['@installer.core.router']

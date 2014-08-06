@@ -2,19 +2,15 @@
 <language>
     <info>
         <name>Deutsch (Deutschland)</name>
-        <author>Tino Goratsch</author>
         <direction>ltr</direction>
     </info>
-    <strings>
-        <item key="404">Seite nicht gefunden</item>
+    <keys>
         <item key="accept">Akzeptieren</item>
+        <item key="acp3_installation">ACP3 Installation</item>
         <item key="admin_account">Administrator Konto</item>
         <item key="category_name">Erste Kategorie</item>
         <item key="category_description">Das ist die erste Kategorie.</item>
         <item key="check_again">Erneut prüfen</item>
-        <item key="config_file_error">Beim Aktualisieren der Konfigurationsdatei ist ein Fehler aufgetreten!</item>
-        <item key="config_file_success">Die Konfigurationsdatei wurde erfolgreich aktualisiert!</item>
-        <item key="configuration">Konfiguration</item>
         <item key="database">Datenbank</item>
         <item key="date_format_long">Langes Datumsformat</item>
         <item key="date_format_short">Kurzes Datumsformat</item>
@@ -26,30 +22,14 @@
         <item key="db_name">Datenbankname</item>
         <item key="db_password">Passwort</item>
         <item key="db_table_prefix">Tabellenpräfix</item>
-        <item key="db_update">Datenbankaktualisierung</item>
-        <item key="db_update_description">Um die Aktualisierung der Datenbank zu beginnen, klicken Sie bitte auf die
-            unten stehende Schaltfläche.
-        </item>
-        <item key="db_update_error">Beim Aktualisieren der Datenbank ist ein Fehler aufgetreten!</item>
-        <item key="db_update_legacy">Datenbankaktualisierung</item>
-        <item key="db_update_next_steps">Die Aktualisierung der Datenbank wurde erfolgreich abgeschlossen. Sie können
-            nun zu Ihrer Website zurückkehren, beachten Sie aber bitte noch unten stehenden Hinweis.
-        </item>
-        <item key="db_update_no_update">Keine Aktualisierung notwendig!</item>
-        <item key="db_update_text">Datenbankupdate des Moduls &quot;%s&quot;:</item>
-        <item key="db_update_success">Die Aktualisierung der Datenbank war erfolgreich!</item>
         <item key="db_username">Benutzername</item>
-        <item key="do_db_update">Aktualisierung beginnen</item>
         <item key="decline">Ablehnen</item>
         <item key="disclaimer">Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte
             externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
         </item>
         <item key="email">E-Mail-Adresse</item>
-        <item key="error_404">Datei nicht gefunden</item>
         <item key="error_messages">Ausgabe von Fehlermeldungen:</item>
         <item key="failure">Es sind folgende Fehler aufgetreten:</item>
-        <item key="file_not_found">
-            <![CDATA[Das angeforderte Modul bzw. die angeforderte Datei ist entweder nicht vorhanden oder wurde noch nicht aktiviert.<br />Bitte wenden Sie sich an den Administrator dieser Seite, falls der Fehler wiederholt auftreten sollte.]]></item>
         <item key="form_change_warning">ACHTUNG: Durch das Wechseln der Sprache gehen alle Formulareingaben verloren!
         </item>
         <item key="forward">Weiter</item>
@@ -57,6 +37,10 @@
         <item key="gd_library">GD-Grafikbibliothek</item>
         <item key="go_to_website">Zur Website</item>
         <item key="general">Allgemeines</item>
+        <item key="index_index">Willkommen</item>
+        <item key="index_licence">Lizenz</item>
+        <item key="index_requirements">Voraussetzungen</item>
+        <item key="install_index">Konfiguration</item>
         <item key="installation">Installation</item>
         <item key="installation_error">
             <![CDATA[Während der Installation ist ein Fehler aufgetreten, wodurch die Installation nicht fortgesetzt werden kann. Bitte überprüfen Sie nochmals alle Eingaben, insbesondere ob alle Angaben in der Konfigurationsdatei stimmen.<br />Bitte klicken Sie auf &quot;Zurück&quot;, um wieder zum Anfang der Installation zu gelangen.]]></item>
@@ -65,9 +49,6 @@
             <![CDATA[Alle Abfragen wurden erfolgreich durchgeführt, womit die Installation nun abgeschlossen ist.<br />Über die unten stehende Schaltfläche können Sie zum Frontend Ihrer Website gelangen. Anschließend können Sie sich einloggen und weitere Änderungen an der Seite vornehmen, wie z.B. die Sprache wechseln, ein anderes Design wählen oder Inhalte veröffentlichen.]]></item>
         <item key="installation_successful_2">
             <![CDATA[<strong>Achtung:</strong> Bitte löschen Sie nun den &quot;installation&quot;-Ordner, da dies ein potentielles Sicherheitsrisiko darstellen könnte, falls dieser Ordner in einer Produktiv-Umgebung noch existieren sollte.]]></item>
-        <item key="legacy_db_update_description">
-            <![CDATA[Sie verwenden derzeit eine sehr alte Version des ACP3, weshalb die Aktualisierung der Datenbank aus 2 Schritten besteht.<br />Bitte klicken Sie zunächst auf &quot;Datenbank aktualisieren&quot;, um die Datenbank an die neue Modulstruktur anzupassen und anschließend auf &quot;Weiter&quot;, damit die Module letztendlich aktualisiert werden.]]></item>
-        <item key="licence">Lizenz</item>
         <item key="log_into_admin_panel">Zum Administrationsbereich</item>
         <item key="magic_quotes">Magic Quotes:</item>
         <item key="maximum_uploadsize">Maximale Uploadgröße:</item>
@@ -105,7 +86,6 @@
         <item key="pwd_repeat">Passwort wiederholen</item>
         <item key="register_globals">register_globals</item>
         <item key="required">Benötigt</item>
-        <item key="requirements">Voraussetzungen</item>
         <item key="safe_mode">Abgesicherter Modus</item>
         <item key="sincerely">Mit freundlichen Grüßen,</item>
         <item key="site-title">Titel der Website</item>
@@ -136,18 +116,17 @@
         </item>
         <item key="submit">Senden</item>
         <item key="time_zone">Zeitzone</item>
+        <item key="toggle_navigation">Navigation einblenden/ausblenden</item>
         <item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
         <item key="type_in_db_host">Bitte geben Sie den Hostnamen zur Datenbank ein.</item>
         <item key="type_in_db_name">Bitte geben Sie den Datenbankname ein.</item>
         <item key="type_in_db_username">Bitte geben Sie den Benutzernamen für die Datenbank ein.</item>
         <item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler.</item>
         <item key="type_in_user_name">Bitte geben Sie einen Benutzernamen für das Administrator Konto an.</item>
-        <item key="update_db_version_to">Aktualisierung der Datenbank auf Version &quot;%d&quot;:</item>
-        <item key="welcome">Willkommen</item>
         <item key="writable">Beschreibbar</item>
         <item key="wrong_chmod_for_config_file">Bitte geben Sie der Datei config.php, welche sich im "includes"-Ordner
             befindet, den CHMOD 777.
         </item>
         <item key="wrong_email_format">Die angegebene E-Mail-Adresse entspricht nicht dem Format &quot;name@domain.tld&quot;.</item>
-    </strings>
+    </keys>
 </language>

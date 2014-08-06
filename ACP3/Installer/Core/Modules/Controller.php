@@ -2,28 +2,35 @@
 
 namespace ACP3\Installer\Core\Modules;
 
-use ACP3\Core;
+use ACP3\Core\Redirect;
+use ACP3\Core\XML;
+use ACP3\Installer\Core\Context;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Module Controller of the installer modules
- *
- * @author Tino Goratsch
+ * @package ACP3\Installer\Core\Modules
  */
 class Controller
 {
 
     /**
+     * @var Container
+     */
+    protected $container;
+    /**
      * @var \ACP3\Installer\Core\Lang
      */
     protected $lang;
     /**
-     *
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Installer\Core\Request
      */
-    protected $uri;
-
+    protected $request;
     /**
-     *
+     * @var \ACP3\Installer\Core\Router
+     */
+    protected $router;
+    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -32,46 +39,121 @@ class Controller
      * Nicht ausgeben
      */
     protected $noOutput = false;
-
     /**
      * Der auszugebende Content-Type der Seite
      *
      * @var string
      */
     protected $contentType = 'Content-Type: text/html; charset=UTF-8';
-
     /**
      * Das zuverwendende Seitenlayout
      *
      * @var string
      */
     protected $layout = 'layout.tpl';
-
     /**
      * Das zuverwendende Template für den Contentbereich
      *
      * @var string
      */
     protected $contentTemplate = '';
-
     /**
      * Der auszugebende Seiteninhalt
      *
      * @var string
      */
     protected $content = '';
-
     /**
-     *
      * @var string
      */
     protected $contentAppend = '';
 
-    public function __construct()
+    public function __construct(Context $context)
     {
-        $this->lang = \ACP3\Core\Registry::get('Lang');
-        $this->uri = \ACP3\Core\Registry::get('URI');
-        $this->view = \ACP3\Core\Registry::get('View');
+        $this->lang = $context->getLang();
+        $this->request = $context->getRequest();
+        $this->router = $context->getRouter();
+        $this->view = $context->getView();
+    }
+
+    public function preDispatch()
+    {
+        if (!empty($_POST['lang'])) {
+            setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
+            $this->redirect()->temporary($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
+        }
+
+        if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
+            is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true
+        ) {
+            define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
+        } else {
+            define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
+        }
+
+        $this->lang->setLanguage(LANG);
+
+        // Einige Template Variablen setzen
+        $this->view->assign('LANGUAGES', $this->_languagesDropdown(LANG));
+        $this->view->assign('PHP_SELF', PHP_SELF);
+        $this->view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+        $this->view->assign('ROOT_DIR', ROOT_DIR);
+        $this->view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
+        $this->view->assign('DESIGN_PATH', DESIGN_PATH);
+        $this->view->assign('UA_IS_MOBILE', \ACP3\Core\Functions::isMobileBrowser());
+
+        $languageInfo = \ACP3\Core\XML::parseXmlFile(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->lang->getLanguage() . '.xml', '/language/info');
+        $this->view->assign('LANG_DIRECTION', isset($languageInfo['direction']) ? $languageInfo['direction'] : 'ltr');
+        $this->view->assign('LANG', $this->lang->getLanguage2Characters());
+    }
+
+
+    /**
+     * Generiert das Dropdown-Menü mit der zur Verfügung stehenden Installersprachen
+     *
+     * @param string $selectedLanguage
+     * @return array
+     */
+    private function _languagesDropdown($selectedLanguage)
+    {
+        // Dropdown-Menü für die Sprachen
+        $languages = array();
+        $path = INSTALLER_MODULES_DIR . 'Install/Languages/';
+        $files = array_diff(scandir($path), array('.', '..'));
+        foreach ($files as $row) {
+            $langInfo = XML::parseXmlFile($path . $row, '/language/info');
+            if (!empty($langInfo)) {
+                $languages[] = array(
+                    'language' => substr($row, 0, -4),
+                    'selected' => $selectedLanguage === substr($row, 0, -4) ? ' selected="selected"' : '',
+                    'name' => $langInfo['name']
+                );
+            }
+        }
+        return $languages;
+    }
+
+
+    /**
+     * Gets a class from the service container
+     *
+     * @param $serviceId
+     * @return mixed
+     */
+    public function get($serviceId)
+    {
+        return $this->container->get($serviceId);
+    }
+
+    /**
+     * @param $container
+     * @return $this
+     */
+    public function setContainer($container)
+    {
+        $this->container = $container;
+
+        return $this;
     }
 
     /**
@@ -217,7 +299,7 @@ class Controller
     {
         // Content-Template automatisch setzen
         if ($this->getContentTemplate() === '') {
-            $this->setContentTemplate($this->uri->mod . '/' . $this->uri->file . '.tpl');
+            $this->setContentTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
         }
 
         if ($this->getNoOutput() === false) {
@@ -229,8 +311,8 @@ class Controller
             header($this->getContentType());
 
             if ($this->getLayout() !== '') {
-                $this->view->assign('PAGE_TITLE', 'ACP3 Installation');
-                $this->view->assign('TITLE', $this->lang->t($this->uri->file));
+                $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));
+                $this->view->assign('TITLE', $this->lang->t($this->request->mod, $this->request->controller . '_' . $this->request->file));
                 $this->view->assign('CONTENT', $this->getContent() . $this->getContentAppend());
 
                 $this->view->displayTemplate($this->getLayout());
@@ -240,4 +322,11 @@ class Controller
         }
     }
 
+    /**
+     * @return Redirect
+     */
+    public function redirect()
+    {
+        return $this->get('core.redirect');
+    }
 }
