@@ -214,9 +214,9 @@ class Application
         $this->_checkForMaintenanceMode();
 
         $request = $this->container->get('core.request');
+        $redirect = $this->container->get('core.redirect');
 
         $frontController = new FrontController($this->container);
-        $errorsServiceId = 'errors.controller.frontend.index';
 
         try {
             $frontController->dispatch();
@@ -227,9 +227,9 @@ class Application
                 Core\Logger::error('404', 'Could not find any results for request: ' . $request->query);
             }
 
-            $frontController->dispatch($errorsServiceId, '404');
+            $redirect->temporary('errors/index/404');
         } catch (Core\Exceptions\UnauthorizedAccess $e) {
-            $frontController->dispatch($errorsServiceId, '401');
+            $redirect->temporary('errors/index/401');
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             Core\Logger::error('404', 'Request: ' . $request->query);
             Core\Logger::error('404', $e);
@@ -238,7 +238,7 @@ class Application
                 $errorMessage = $e->getMessage();
                 $this->_renderApplicationException($errorMessage);
             } else {
-                $frontController->dispatch($errorsServiceId, '404');
+                $redirect->temporary('errors/index/404');
             }
         } catch (\Exception $e) {
             Core\Logger::error('exception', $e);
@@ -247,7 +247,7 @@ class Application
                 $errorMessage = $e->getMessage();
                 $this->_renderApplicationException($errorMessage);
             } else {
-                $frontController->dispatch($errorsServiceId, '500');
+                $redirect->temporary('errors/index/500');
             }
         }
     }
