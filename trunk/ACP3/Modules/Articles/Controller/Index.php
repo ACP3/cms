@@ -25,7 +25,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Date $date,
         Articles\Model $articlesModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->articlesModel = $articlesModel;
@@ -67,13 +67,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 
-            $toc = new Core\Helpers\TableOfContents(
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view
-            );
+            $toc = $this->get('core.helpers.toc');
             $formatter = $this->get('core.helpers.string.formatter');
             $this->view->assign('page', $toc->splitTextIntoPages($formatter->rewriteInternalUri($article['text']), $this->request->getUriWithoutPages()));
         } else {
