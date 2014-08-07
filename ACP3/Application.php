@@ -216,9 +216,8 @@ class Application
         $request = $this->container->get('core.request');
         $redirect = $this->container->get('core.redirect');
 
-        $frontController = new FrontController($this->container);
-
         try {
+            $frontController = new FrontController($this->container);
             $frontController->dispatch();
         } catch (Core\Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
