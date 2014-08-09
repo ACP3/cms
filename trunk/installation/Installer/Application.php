@@ -82,7 +82,7 @@ class Application
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
         define('CACHE_DIR', UPLOADS_DIR . 'cache/');
 
-        define('INSTALLER_ACP3_DIR', ACP3_DIR . 'Installer/');
+        define('INSTALLER_ACP3_DIR', realpath(ACP3_DIR . '../installation/') . '/Installer/');
         define('INSTALLER_MODULES_DIR', INSTALLER_ACP3_DIR . 'Modules/');
         define('INSTALLER_CLASSES_DIR', INSTALLER_ACP3_DIR . 'Core/');
         define('INSTALLATION_DIR', ACP3_ROOT_DIR . 'installation/');
