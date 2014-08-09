@@ -8,7 +8,10 @@
         }
     ],
     "autoload": {
-        "psr-4": {"ACP3\\": "./ACP3"}
+        "psr-4": {
+            "ACP3\\Installer\\": "./installation/Installer",
+            "ACP3\\": "./ACP3"
+        }
     },
     "repositories": [
         {
