@@ -47,7 +47,7 @@ class Account extends Core\Modules\Controller\Frontend
     {
         parent::preDispatch();
 
-        if ($this->auth->isUser() === false || $this->get('core.validate')->isNumber($this->auth->getUserId()) === false) {
+        if ($this->auth->isUser() === false || $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId()) === false) {
             $this->redirect()->temporary('users/index/login');
         }
     }

@@ -83,7 +83,7 @@ class Details extends Core\Modules\Controller\Admin
 
                     $updateValues = array();
                     $updateValues['message'] = Core\Functions::strEncode($_POST['message']);
-                    if ((empty($comment['user_id']) || $this->get('core.validate')->isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
+                    if ((empty($comment['user_id']) || $this->get('core.validator.rules.misc')->isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
                         $updateValues['name'] = Core\Functions::strEncode($_POST['name']);
                     }
 

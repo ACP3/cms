@@ -1,8 +1,15 @@
 services:
-  installer.install.controller.index:
+  install.controller.install.index:
     class: ACP3\Installer\Modules\Install\Controller\Index
-    parent: installer.core.modules.controller
+    parent: core.modules.controller.install
 
-  installer.install.controller.install:
+  install.controller.install.install:
     class: ACP3\Installer\Modules\Install\Controller\Install
-    parent: installer.core.modules.controller
+    arguments: ['@core.context.install', '@install.helpers']
+
+  install.validator:
+    class: ACP3\Installer\Modules\Install\Validator
+    arguments: ['@core.lang']
+
+  install.helpers:
+    class: ACP3\Installer\Modules\Install\Helpers

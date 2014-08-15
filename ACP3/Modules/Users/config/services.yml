@@ -9,7 +9,7 @@ services:
 
   users.controller.frontend.index:
     class: ACP3\Modules\Users\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.helpers.secure', '@users.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.pagination', '@core.helpers.secure', '@users.model']
 
   users.controller.sidebar.index:
     class: ACP3\Modules\Users\Controller\Sidebar\Index
@@ -21,7 +21,7 @@ services:
 
   users.validator:
     class: ACP3\Modules\Users\Validator
-    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules', 'users.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.captcha', '@core.validator.rules.date', '@core.auth', '@core.modules', 'users.model']
 
   users.installer:
     class: ACP3\Modules\Users\Installer

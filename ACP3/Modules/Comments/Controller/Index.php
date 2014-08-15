@@ -17,6 +17,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
      * @var Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -40,6 +44,7 @@ class Index extends Core\Modules\Controller\Frontend
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
+        Core\Pagination $pagination,
         Comments\Model $commentsModel,
         Core\Config $commentsConfig,
         Core\Helpers\Secure $secureHelper)
@@ -47,6 +52,7 @@ class Index extends Core\Modules\Controller\Frontend
        parent::__construct($context);
 
         $this->date = $date;
+        $this->pagination = $pagination;
         $this->commentsModel = $commentsModel;
         $this->commentsConfig = $commentsConfig;
         $this->secureHelper = $secureHelper;
@@ -90,7 +96,7 @@ class Index extends Core\Modules\Controller\Frontend
                     'date' => $this->date->toSQL(),
                     'ip' => $ip,
                     'name' => Core\Functions::strEncode($_POST['name']),
-                    'user_id' => $this->auth->isUser() === true && $this->get('core.validate')->isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
+                    'user_id' => $this->auth->isUser() === true && $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
                     'message' => Core\Functions::strEncode($_POST['message']),
                     'module_id' => $moduleInfo['id'],
                     'entry_id' => $this->entryId,
@@ -159,16 +165,8 @@ class Index extends Core\Modules\Controller\Frontend
                 $emoticonsActive = $this->modules->isActive('emoticons');
             }
 
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view,
-                $this->commentsModel->countAllByModule($this->module, $this->entryId)
-            );
-            $pagination->display();
+            $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->module, $this->entryId));
+            $this->pagination->display();
 
             $formatter = $this->get('core.helpers.string.formatter');
             for ($i = 0; $i < $c_comments; ++$i) {

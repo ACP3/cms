@@ -111,7 +111,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionFiles()
     {
-        if ($this->get('core.validate')->isNumber($this->request->cat) && $this->categoriesModel->resultExists($this->request->cat) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->cat) && $this->categoriesModel->resultExists($this->request->cat) === true) {
             $category = $this->categoriesModel->getOneById($this->request->cat);
 
             $this->breadcrumb

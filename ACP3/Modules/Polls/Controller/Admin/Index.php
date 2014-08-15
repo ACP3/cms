@@ -162,11 +162,11 @@ class Index extends Core\Modules\Controller\Admin
                             if (!empty($row['value']) && !isset($row['delete']))
                                 $this->pollsModel->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id), Polls\Model::TABLE_NAME_ANSWERS);
                             // Antwort mitsamt Stimmen löschen
-                        } elseif (isset($row['delete']) && $this->get('core.validate')->isNumber($row['id'])) {
+                        } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
                             $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
                             $this->pollsModel->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
                             // Antwort aktualisieren
-                        } elseif (!empty($row['value']) && $this->get('core.validate')->isNumber($row['id'])) {
+                        } elseif (!empty($row['value']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
                             $bool = $this->pollsModel->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
                         }
                     }

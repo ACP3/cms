@@ -5,9 +5,8 @@ namespace ACP3\Installer\Modules\Install\Controller;
 use ACP3\Installer\Core;
 
 /**
- * Module controller of the Install installer module
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Installer\Modules\Install\Controller
  */
 class Index extends AbstractController
 {

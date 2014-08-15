@@ -20,6 +20,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
      * @var Gallery\Model
      */
     protected $galleryModel;
@@ -28,12 +32,14 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Pagination $pagination,
         Gallery\Model $galleryModel)
     {
        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->pagination = $pagination;
         $this->galleryModel = $galleryModel;
     }
 
@@ -105,7 +111,7 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->setNoOutput(true);
 
-        if ($this->get('core.validate')->isNumber($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true) {
             @set_time_limit(20);
             $picture = $this->galleryModel->getFileById($this->request->id);
             $action = $this->request->action === 'thumb' ? 'thumb' : '';
@@ -134,16 +140,9 @@ class Index extends Core\Modules\Controller\Frontend
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view,
-                $this->galleryModel->countAll($time)
-            );
-            $pagination->display();
+            $this->pagination->setTotalResults($this->galleryModel->countAll($time));
+            $this->pagination->display();
+
 
             $config = new Core\Config($this->db, 'gallery');
             $settings = $config->getSettings();

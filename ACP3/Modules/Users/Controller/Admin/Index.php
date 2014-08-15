@@ -255,7 +255,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
             $user = $this->auth->getUserInfo($this->request->id);
 
             if (empty($_POST) === false) {

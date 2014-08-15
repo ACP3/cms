@@ -5,7 +5,7 @@ services:
 
   news.controller.frontend.index:
     class: ACP3\Modules\News\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@news.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.pagination', '@news.model']
 
   news.controller.sidebar.index:
     class: ACP3\Modules\News\Controller\Sidebar\Index
@@ -17,7 +17,7 @@ services:
 
   news.validator:
     class: ACP3\Modules\News\Validator
-    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.request', '@categories.helpers']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@categories.helpers']
 
   news.installer:
     class: ACP3\Modules\News\Installer

@@ -60,7 +60,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionResult()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true &&
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
             $this->pollsModel->pollExists($this->request->id, $this->date->getCurrentDateTime()) === true
         ) {
             $this->redirectMessages()->getMessage();
@@ -84,12 +84,12 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionVote()
     {
         $time = $this->date->getCurrentDateTime();
-        if ($this->get('core.validate')->isNumber($this->request->id) === true &&
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
             $this->pollsModel->pollExists($this->request->id, $time, !empty($_POST['answer']) && is_array($_POST['answer'])) === true
         ) {
 
             // Wenn abgestimmt wurde
-            if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || $this->get('core.validate')->isNumber($_POST['answer']) === true)) {
+            if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || $this->get('core.validator.rules.misc')->isNumber($_POST['answer']) === true)) {
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $answers = $_POST['answer'];
 
@@ -109,7 +109,7 @@ class Index extends Core\Modules\Controller\Frontend
                     }
 
                     foreach ($answers as $answer) {
-                        if ($this->get('core.validate')->isNumber($answer) === true) {
+                        if ($this->get('core.validator.rules.misc')->isNumber($answer) === true) {
                             $insertValues = array(
                                 'poll_id' => $this->request->id,
                                 'answer_id' => $answer,

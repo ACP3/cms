@@ -10,6 +10,18 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Date
+     */
+    protected $dateValidator;
+    /**
+     * @var Core\Validator\Rules\Mime
+     */
+    protected $mimeValidator;
+    /**
+     * @var Core\Validator\Rules\Router\Aliases
+     */
+    protected $aliasesValidator;
+    /**
      * @var \ACP3\Core\Modules
      */
     protected $modules;
@@ -20,13 +32,19 @@ class Validator extends Core\Validator\AbstractValidator
 
     public function __construct(
         Core\Lang $lang,
-        Core\Validate $validate,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Router\Aliases $aliasesValidator,
+        Core\Validator\Rules\Date $dateValidator,
+        Core\Validator\Rules\Mime $mimeValidator,
         Core\Modules $modules,
         Core\Request $request
     )
     {
         parent::__construct($lang, $validate);
 
+        $this->aliasesValidator = $aliasesValidator;
+        $this->dateValidator = $dateValidator;
+        $this->mimeValidator = $mimeValidator;
         $this->modules = $modules;
         $this->request = $request;
     }
@@ -40,15 +58,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
-        if (!empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias']) === true)
-        ) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias']) === true) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
@@ -71,7 +87,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['file'] = $this->lang->t('gallery', 'no_picture_selected');
         }
         if (!empty($file['tmp_name']) &&
-            ($this->validate->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
+            ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
         ) {
             $errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
@@ -91,15 +107,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
-        if (!empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $this->request->id)))
-        ) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $this->request->id))) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
@@ -119,7 +133,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = array();
         if (!empty($file['tmp_name']) &&
-            ($this->validate->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
+            ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
         ) {
             $errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');

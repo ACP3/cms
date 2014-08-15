@@ -10,6 +10,34 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Date
+     */
+    protected $dateValidator;
+    /**
+     * @var Core\Validator\Rules\Mime
+     */
+    protected $mimeValidator;
+    /**
+     * @var Core\Validator\Rules\Router
+     */
+    protected $routerValidator;
+
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Date $dateValidator,
+        Core\Validator\Rules\Mime $mimeValidator,
+        Core\Validator\Rules\Router $routerValidator
+    )
+    {
+        parent::__construct($lang, $validate);
+
+        $this->dateValidator = $dateValidator;
+        $this->mimeValidator = $mimeValidator;
+        $this->routerValidator = $routerValidator;
+    }
+
+    /**
      * @param array $formData
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
@@ -18,7 +46,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->isInternalURI($formData['homepage']) === false) {
+        if ($this->routerValidator->isInternalURI($formData['homepage']) === false) {
             $errors['homepage'] = $this->lang->t('system', 'incorrect_homepage');
         }
         if ($this->validate->isNumber($formData['entries']) === false) {
@@ -39,7 +67,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['date_format_long']) || empty($formData['date_format_short'])) {
             $errors[] = $this->lang->t('system', 'type_in_date_format');
         }
-        if ($this->validate->timeZone($formData['date_time_zone']) === false) {
+        if ($this->dateValidator->timeZone($formData['date_time_zone']) === false) {
             $errors['date-time-zone'] = $this->lang->t('system', 'select_time_zone');
         }
         if ($this->validate->isNumber($formData['maintenance_mode']) === false) {
@@ -63,10 +91,10 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->validate->isNumber($formData['cache_minify']) === false) {
             $errors['cache-minify'] = $this->lang->t('system', 'type_in_minify_cache_lifetime');
         }
-        if (!empty($formData['extra_css']) && $this->validate->extraCSS($formData['extra_css']) === false) {
+        if (!empty($formData['extra_css']) && $this->_extraCSS($formData['extra_css']) === false) {
             $errors['extra-css'] = $this->lang->t('system', 'type_in_additional_stylesheets');
         }
-        if (!empty($formData['extra_js']) && $this->validate->extraJS($formData['extra_js']) === false) {
+        if (!empty($formData['extra_js']) && $this->_extraJS($formData['extra_js']) === false) {
             $errors['extra-js'] = $this->lang->t('system', 'type_in_additional_javascript_files');
         }
         if ($formData['mailer_type'] === 'smtp') {
@@ -124,7 +152,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['text'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
         }
         if (!empty($file['size']) &&
-            (!$this->validate->mimeType($file['tmp_name'], 'text/plain') ||
+            (!$this->mimeValidator->mimeType($file['tmp_name'], 'text/plain') ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
         ) {
             $errors['file'] = $this->lang->t('system', 'select_sql_file');
@@ -135,5 +163,46 @@ class Validator extends Core\Validator\AbstractValidator
         }
     }
 
+    /**
+     * Überprüft, ob die zusätzlich zu ladenden Stylesheets überhaupt existieren
+     *
+     * @param string $var
+     * @return boolean
+     */
+    private function _extraCSS($var)
+    {
+        if ((bool)preg_match('=/=', $var) === false) {
+            $var_ary = explode(',', $var);
+            foreach ($var_ary as $stylesheet) {
+                $stylesheet = trim($stylesheet);
+                if (is_file(DESIGN_PATH_INTERNAL . 'css/' . $stylesheet) === false) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Überprüft, ob die zusätzlich zu ladenden JavaScript Dateien überhaupt existieren
+     *
+     * @param string $var
+     * @return boolean
+     */
+    private function _extraJS($var)
+    {
+        if ((bool)preg_match('=/=', $var) === false) {
+            $var_ary = explode(',', $var);
+            foreach ($var_ary as $js) {
+                $js = trim($js);
+                if (is_file(DESIGN_PATH_INTERNAL . 'js/' . $js) === false) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
 } 

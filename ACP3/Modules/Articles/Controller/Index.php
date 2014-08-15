@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
      * @var Articles\Model
      */
     protected $articlesModel;
@@ -23,11 +27,13 @@ class Index extends Core\Modules\Controller\Frontend
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
+        Core\Pagination $pagination,
         Articles\Model $articlesModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
+        $this->pagination = $pagination;
         $this->articlesModel = $articlesModel;
     }
 
@@ -39,16 +45,8 @@ class Index extends Core\Modules\Controller\Frontend
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view,
-                $this->articlesModel->countAll($time)
-            );
-            $pagination->display();
+            $this->pagination->setTotalResults($this->articlesModel->countAll($time));
+            $this->pagination->display();
 
             for ($i = 0; $i < $c_articles; ++$i) {
                 $articles[$i]['date_formatted'] = $this->date->format($articles[$i]['start']);
@@ -61,7 +59,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->articlesModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->articlesModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) === true) {
             $cache = new Articles\Cache($this->articlesModel);
             $article = $cache->getCache($this->request->id);
 

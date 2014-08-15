@@ -9,7 +9,7 @@ services:
 
   newsletter.controller.frontend.archive:
     class: ACP3\Modules\Newsletter\Controller\Archive
-    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.pagination', '@newsletter.model']
 
   newsletter.controller.frontend.index:
     class: ACP3\Modules\Newsletter\Controller\Index
@@ -29,7 +29,7 @@ services:
 
   newsletter.validator:
     class: ACP3\Modules\Newsletter\Validator
-    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules', '@newsletter.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.auth', '@core.modules', '@newsletter.model']
 
   newsletter.installer:
     class: ACP3\Modules\Newsletter\Installer

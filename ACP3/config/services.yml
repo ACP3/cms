@@ -5,15 +5,11 @@ services:
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
-    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validate', '@core.session', '@core.router.aliases']
+    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validator.rules.misc', '@core.session', '@core.router.aliases']
 
   core.context.frontend:
     class : ACP3\Core\Context\Frontend
     arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo']
-
-  core.validate:
-    class: ACP3\Core\Validate
-    arguments: ['@core.acl', '@core.db', '@core.request', '@core.router']
 
   core.view:
     class: ACP3\Core\View
@@ -45,19 +41,19 @@ services:
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
-    arguments: ['@core.db']
+    arguments: ['@?core.db']
 
   core.session:
     class: ACP3\Core\Session
-    arguments: ['@core.db']
+    arguments: ['@?core.db']
 
   core.auth:
     class: ACP3\Core\Auth
-    arguments: ['@core.db', '@core.session', '@core.helpers.secure']
+    arguments: ['@?core.db', '@core.session', '@core.helpers.secure']
 
   core.acl:
     class: ACP3\Core\ACL
-    arguments: ['@core.auth', '@core.db']
+    arguments: ['@core.auth', '@?core.db']
 
   core.lang:
     class: ACP3\Core\Lang
@@ -65,27 +61,34 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@core.db', '@core.acl', '@core.lang']
+    arguments: ['@?core.db', '@core.acl', '@core.lang']
+
+  core.pagination:
+    class: ACP3\Core\Pagination
+    arguments: ['@core.auth', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.view']
+    arguments: ['@?core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.view']
 
   core.date:
     class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', '@core.validate', '@core.view']
+    arguments: ['@core.auth', '@core.lang', '@core.validator.rules.date', '@core.view']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@core.view']
+    arguments: ['@?core.db', '@core.lang', '@core.request', '@core.router', '@core.view']
 
   core.functions:
     class: ACP3\Core\Functions
-    arguments: ['@core.auth', '@core.db', '@core.view']
+    arguments: ['@core.auth', '@?core.db', '@core.view']
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
-    arguments: ['@core.request', '@core.view', '@core.functions']
+    arguments: ['@core.request', '@core.view', '@core.helpers.output']
+
+  core.helpers.output:
+    class: ACP3\Core\Helpers\Output
 
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages
@@ -97,19 +100,15 @@ services:
 
   core.helpers.string.formatter:
     class: ACP3\Core\Helpers\StringFormatter
-    arguments: ['@core.modules', '@core.router', '@core.validate']
+    arguments: ['@core.modules', '@core.router', '@core.validator.rules.router.aliases']
 
   core.helpers.toc:
     class: ACP3\Core\Helpers\TableOfContents
-    arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.validate', '@core.view']
+    arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.validator.rules.misc', '@core.view']
 
   system.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'system']
-
-  core.validator.abstract:
-    abstract: true
-    arguments: ['@core.lang', '@core.validate']
+    arguments: ['@?core.db', 'system']
 
   core.modules.controller:
     abstract: true
@@ -125,4 +124,7 @@ services:
 
   core.modules.abstract.installer:
     abstract: true
-    argument: ['@core.db', '@system.model', '@permissions.model']
+    argument: ['@?core.db', '@system.model', '@permissions.model']
+
+imports:
+  - { resource: validation.yml }

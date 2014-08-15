@@ -1,7 +1,7 @@
 services:
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\CheckAccess
-    arguments: ['@core.lang', '@core.modules', '@core.router', '@core.validate', '@core.view']
+    arguments: ['@core.lang', '@core.modules', '@core.router', '@core.validator.rules.misc', '@core.view']
 
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\HasPermission
@@ -9,7 +9,7 @@ services:
 
   smarty.plugin.icon:
     class: ACP3\Core\View\Renderer\Smarty\Icon
-    arguments: ['@core.validate']
+    arguments: ['@core.validator.rules.misc']
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\IncludeJs

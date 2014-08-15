@@ -42,7 +42,7 @@ class Index extends Core\Modules\Controller\Frontend
     {
         try {
             $mail = $hash = '';
-            if ($this->get('core.validate')->email($this->request->mail) && $this->get('core.validate')->isMD5($this->request->hash)) {
+            if ($this->get('core.validator.rules.misc')->email($this->request->mail) && $this->get('core.validator.rules.misc')->isMD5($this->request->hash)) {
                 $mail = $this->request->mail;
                 $hash = $this->request->hash;
             }

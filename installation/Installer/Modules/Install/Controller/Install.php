@@ -3,76 +3,51 @@
 namespace ACP3\Installer\Modules\Install\Controller;
 
 use ACP3\Core\Config;
+use ACP3\Core\Exceptions\ValidationFailed;
 use ACP3\Core\Helpers\Secure;
+use ACP3\Core\Modules\AbstractInstaller;
 use ACP3\Installer\Core;
+use ACP3\Installer\Modules\Install\Helpers;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
- * Module controller of the Install installer module
- *
- * @author Tino Goratsch
+ * Class Install
+ * @package ACP3\Installer\Modules\Install\Controller
  */
 class Install extends AbstractController
 {
+    /**
+     * @var string
+     */
+    protected $configFilePath = '';
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var Helpers
+     */
+    protected $installHelper;
+
+    public function __construct(
+        Core\Context $context,
+        Helpers $installHelper
+    )
+    {
+        parent::__construct($context);
+
+        $this->installHelper = $installHelper;
+        $this->configFilePath = ACP3_DIR . 'config/config.php';
+    }
 
     public function actionIndex()
     {
         if (isset($_POST['submit'])) {
-            $configPath = ACP3_DIR . 'config/config.php';
+            try {
+                $validator = $this->get('install.validator');
+                $validator->validateConfiguration($_POST, $this->configFilePath);
 
-            if (empty($_POST['db_host'])) {
-                $errors['db-host'] = $this->lang->t('install', 'type_in_db_host');
-            }
-            if (empty($_POST['db_user'])) {
-                $errors['db-user'] = $this->lang->t('install', 'type_in_db_username');
-            }
-            if (empty($_POST['db_name'])) {
-                $errors['db-name'] = $this->lang->t('install', 'type_in_db_name');
-            }
-            if (!empty($_POST['db_host']) && !empty($_POST['db_user']) && !empty($_POST['db_name'])) {
-                try {
-                    $config = new \Doctrine\DBAL\Configuration();
-
-                    $connectionParams = array(
-                        'dbname' => $_POST['db_name'],
-                        'user' => $_POST['db_user'],
-                        'password' => $_POST['db_password'],
-                        'host' => $_POST['db_host'],
-                        'driver' => 'pdo_mysql',
-                        'charset' => 'utf8'
-                    );
-                    $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-                    $db->query('USE `' . $_POST['db_name'] . '`');
-                } catch (\Exception $e) {
-                    $errors[] = sprintf($this->lang->t('install', 'db_connection_failed'), $e->getMessage());
-                }
-            }
-            if (empty($_POST['user_name'])) {
-                $errors['user-name'] = $this->lang->t('install', 'type_in_user_name');
-            }
-            if ((empty($_POST['user_pwd']) || empty($_POST['user_pwd_wdh'])) ||
-                (!empty($_POST['user_pwd']) && !empty($_POST['user_pwd_wdh']) && $_POST['user_pwd'] != $_POST['user_pwd_wdh'])
-            ) {
-                $errors['user-pwd'] = $this->lang->t('install', 'type_in_pwd');
-            }
-            if (\ACP3\Core\Validate::email($_POST['mail']) === false) {
-                $errors['mail'] = $this->lang->t('install', 'wrong_email_format');
-            }
-            if (empty($_POST['date_format_long'])) {
-                $errors['date-format-long'] = $this->lang->t('install', 'type_in_date_format');
-            }
-            if (empty($_POST['date_format_short'])) {
-                $errors['date-format-short'] = $this->lang->t('install', 'type_in_date_format');
-            }
-            if (\ACP3\Core\Validate::timeZone($_POST['date_time_zone']) === false) {
-                $errors['date-time-zone'] = $this->lang->t('install', 'select_time_zone');
-            }
-            if (is_file($configPath) === false || is_writable($configPath) === false) {
-                $errors[] = $this->lang->t('install', 'wrong_chmod_for_config_file');
-            }
-
-            if (isset($errors)) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } else {
                 $this->_initDatabase($_POST);
 
                 $bool = $this->_installModules();
@@ -82,27 +57,28 @@ class Install extends AbstractController
                     $this->_installSampleData($_POST);
                 }
 
-                $this->setContentTemplate('install/result.tpl');
+                $this->setContentTemplate('install/install.result.tpl');
+            } catch (ValidationFailed $e) {
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            // Zeitzonen
-            $this->view->assign('time_zones', \ACP3\Core\Date::getTimeZones(date_default_timezone_get()));
 
-            $defaults = array(
-                'db_host' => 'localhost',
-                'db_pre' => 'acp3_',
-                'db_user' => '',
-                'db_name' => '',
-                'user_name' => 'admin',
-                'mail' => '',
-                'date_format_long' => 'd.m.y, H:i',
-                'date_format_short' => 'd.m.y',
-                'seo_title' => 'ACP3',
-            );
+        // Zeitzonen
+        $this->view->assign('time_zones', \ACP3\Core\Date::getTimeZones(date_default_timezone_get()));
 
-            $this->view->assign('form', array_merge($defaults, $_POST));
-        }
+        $defaults = array(
+            'db_host' => 'localhost',
+            'db_pre' => 'acp3_',
+            'db_user' => '',
+            'db_name' => '',
+            'user_name' => 'admin',
+            'mail' => '',
+            'date_format_long' => 'd.m.y, H:i',
+            'date_format_short' => 'd.m.y',
+            'seo_title' => 'ACP3',
+        );
+
+        $this->view->assign('form', array_merge($defaults, $_POST));
     }
 
     /**
@@ -111,14 +87,15 @@ class Install extends AbstractController
     private function _initDatabase(array $formData)
     {
         // Systemkonfiguration erstellen
-        $configFile = array(
+        $configParams = array(
             'db_host' => $formData['db_host'],
             'db_name' => $formData['db_name'],
             'db_pre' => $formData['db_pre'],
             'db_password' => $formData['db_password'],
             'db_user' => $formData['db_user'],
         );
-        Core\Functions::writeConfigFile($configFile);
+
+        $this->installHelper->writeConfigFile($this->configFilePath, $configParams);
 
         // Doctrine DBAL Initialisieren
         $config = new \Doctrine\DBAL\Configuration();
@@ -130,9 +107,12 @@ class Install extends AbstractController
             'driver' => 'pdo_mysql',
             'charset' => 'utf8'
         );
-        \ACP3\Core\Registry::set('Db', \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config));
+
         define('DB_PRE', $formData['db_pre']);
 
+        $this->db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+
+        $this->container->set('core.db', $this->db);
     }
 
     /**
@@ -140,11 +120,21 @@ class Install extends AbstractController
      */
     private function _installModules()
     {
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
+
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module . '/config/services.yml';
+            if (is_file($path) === true) {
+                $loader->load($path);
+            }
+        }
+
         $bool = false;
         // Core-Module installieren
         $installFirst = array('system', 'permissions', 'users');
         foreach ($installFirst as $module) {
-            $bool = Core\Functions::installModule($module);
+            $bool = $this->installHelper->installModule($module, $this->container) === false;
             if ($bool === false) {
                 $this->view->assign('install_error', true);
                 break;
@@ -153,11 +143,10 @@ class Install extends AbstractController
 
         // "Normale" Module installieren
         if ($bool === true) {
-            $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
             foreach ($modules as $module) {
+                $module = strtolower($module);
                 if (in_array(strtolower($module), $installFirst) === false) {
-                    $bool = Core\Functions::installModule($module);
-                    if ($bool === false) {
+                    if ($this->installHelper->installModule($module, $this->container) === false) {
                         $this->view->assign('install_error', true);
                         break;
                     }
@@ -170,13 +159,13 @@ class Install extends AbstractController
 
     private function _installSampleData(array $formData)
     {
-        $securityHelper = new Secure();
+        $securityHelper = $this->get('core.helpers.secure');
         $salt = $securityHelper->salt(12);
         $currentDate = gmdate('Y-m-d H:i:s');
 
-        $newsModuleId = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
+        $newsModuleId = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
         $queries = array(
-            "INSERT INTO `{pre}users` VALUES ('', 1, " . \ACP3\Core\Registry::get('Db')->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . \ACP3\Core\Registry::get('Db')->quote($formData["date_format_long"]) . ", " . \ACP3\Core\Registry::get('Db')->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
+            "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->quote($formData["date_format_long"]) . ", " . $this->db->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
             'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('install', 'category_name') . '\', \'\', \'' . $this->lang->t('install', 'category_description') . '\', \'' . $newsModuleId . '\');',
             'INSERT INTO `{pre}news` VALUES (\'\', \'' . $currentDate . '\', \'' . $currentDate . '\', \'' . $this->lang->t('install', 'news_headline') . '\', \'' . $this->lang->t('install', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
             'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $this->lang->t('install', 'pages_news') . '\', \'news\', 1);',
@@ -192,7 +181,7 @@ class Install extends AbstractController
             'INSERT INTO `{pre}menus` VALUES (2, \'sidebar\', \'' . $this->lang->t('install', 'pages_sidebar') . '\');',
         );
 
-        if (\ACP3\Core\Modules\AbstractInstaller::executeSqlQueries($queries) === false) {
+        if ($this->installHelper->executeSqlQueries($queries, $this->db) === false) {
             $this->view->assign('install_error', true);
         }
 
@@ -226,16 +215,16 @@ class Install extends AbstractController
             'wysiwyg' => 'CKEditor'
         );
 
-        $configSystem = new Config(\ACP3\Core\Registry::get('Db'), 'system');
+        $configSystem = new Config($this->db, 'system');
         $configSystem->setSettings($systemSettings);
 
-        $configUsers = new Config(\ACP3\Core\Registry::get('Db'), 'users');
+        $configUsers = new Config($this->db, 'users');
         $configUsers->setSettings(array('mail' => $formData['mail']));
 
-        $configContact = new Config(\ACP3\Core\Registry::get('Db'), 'contact');
+        $configContact = new Config($this->db, 'contact');
         $configContact->setSettings(array('mail' => $formData['mail'], 'disclaimer' => $this->lang->t('install', 'disclaimer')));
 
-        $configNewsletter = new Config(\ACP3\Core\Registry::get('Db'), 'newsletter');
+        $configNewsletter = new Config($this->db, 'newsletter');
         $configNewsletter->setSettings(array('mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')));
 
     }

@@ -24,7 +24,7 @@ class Functions
      */
     protected $modules;
     /**
-     * @var Core\Validate
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
 
@@ -32,7 +32,7 @@ class Functions
         Connection $db,
         Lang $lang,
         Core\Modules $modules,
-        Core\Validate $validate
+        Core\Validator\Rules\Misc $validate
     )
     {
         $this->db = $db;
@@ -131,37 +131,6 @@ class Functions
         }
 
         return $result;
-    }
-
-    /**
-     * Schreibt die Systemkonfigurationsdatei
-     *
-     * @param array $data
-     * @return boolean
-     */
-    public function writeConfigFile(array $data)
-    {
-        $path = ACP3_DIR . 'config/config.php';
-        if (is_writable($path) === true) {
-            // Konfigurationsdatei in ein Array schreiben
-            ksort($data);
-
-            $content = "<?php\n";
-            $content .= "define('INSTALLED', true);\n";
-
-            $pattern = "define('CONFIG_%s', %s);\n";
-            foreach ($data as $key => $value) {
-                if (is_bool($value) === true) {
-                    $value = $value === true ? 'true' : 'false';
-                } elseif (is_numeric($value) !== true) {
-                    $value = '\'' . $value . '\'';
-                }
-                $content .= sprintf($pattern, strtoupper($key), $value);
-            }
-            $bool = @file_put_contents($path, $content, LOCK_EX);
-            return $bool !== false;
-        }
-        return false;
     }
 
 }

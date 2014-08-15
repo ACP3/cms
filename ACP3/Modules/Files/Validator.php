@@ -2,6 +2,7 @@
 namespace ACP3\Modules\Files;
 
 use ACP3\Core;
+use ACP3\Modules\Categories;
 
 /**
  * Class Validator
@@ -10,15 +11,43 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Router\Aliases
+     */
+    protected $aliasesValidator;
+    /**
+     * @var Core\Validator\Rules\Date
+     */
+    protected $dateValidator;
+    /**
+     * @var Core\Modules
+     */
+    protected $modules;
+    /**
      * @var \ACP3\Core\Request
      */
-    protected $uri;
+    protected $request;
+    /**
+     * @var Categories\Helpers
+     */
+    protected $categoriesHelpers;
 
-    public function __construct(Core\Lang $lang, Core\Request $uri)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Router\Aliases $aliasesValidator,
+        Core\Validator\Rules\Date $dateValidator,
+        Core\Modules $modules,
+        Core\Request $request,
+        Categories\Helpers $categoriesHelpers
+    )
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
-        $this->uri = $uri;
+        $this->aliasesValidator = $aliasesValidator;
+        $this->dateValidator = $dateValidator;
+        $this->modules = $modules;
+        $this->request = $request;
+        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     /**
@@ -31,7 +60,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -48,13 +77,13 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $errors['text'] = $this->lang->t('files', 'description_to_short');
         }
-        if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
+        if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $errors['cat'] = $this->lang->t('files', 'select_category');
         }
-        if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'files') === true) {
+        if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'files') === true) {
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
-        if (!empty($formData['alias']) && ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias']) === true)) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias']) === true) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
@@ -73,7 +102,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -90,15 +119,13 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $errors['text'] = $this->lang->t('files', 'description_to_short');
         }
-        if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
+        if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $errors['cat'] = $this->lang->t('files', 'select_category');
         }
-        if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'files') === true) {
+        if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'files') === true) {
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
-        if (!empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
-        ) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 

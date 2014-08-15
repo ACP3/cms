@@ -29,7 +29,7 @@ class Accounts extends Core\Modules\Controller\Admin
     public function actionActivate()
     {
         $bool = false;
-        if ($this->get('core.validate')->isNumber($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true) {
             $bool = $this->newsletterModel->update(array('hash' => ''), $this->request->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 

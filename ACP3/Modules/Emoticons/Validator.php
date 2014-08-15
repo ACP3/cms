@@ -10,6 +10,22 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Mime
+     */
+    protected $mimeValidator;
+
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Mime $mimeValidator
+    )
+    {
+        parent::__construct($lang, $validate);
+
+        $this->mimeValidator = $mimeValidator;
+    }
+
+    /**
      * @param array $formData
      * @param $file
      * @param array $settings
@@ -25,7 +41,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['description'])) {
             $errors['description'] = $this->lang->t('emoticons', 'type_in_description');
         }
-        if ($this->validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
+        if ($this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
             $_FILES['picture']['error'] !== UPLOAD_ERR_OK
         ) {
             $errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
@@ -52,7 +68,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['description'])) {
             $errors['description'] = $this->lang->t('emoticons', 'type_in_description');
         }
-        if (!empty($file) && ($this->validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $_FILES['picture']['error'] !== UPLOAD_ERR_OK)) {
+        if (!empty($file) && ($this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $_FILES['picture']['error'] !== UPLOAD_ERR_OK)) {
             $errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
         }
 

@@ -32,7 +32,7 @@ class Model extends Core\Model
 
     public function roleExistsByName($roleName, $id = '')
     {
-        if ($this->get('core.validate')->isNumber($id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($id) === true) {
             return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND name = ?', array($id, $roleName)) == 1 ? true : false;
         } else {
             return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($roleName)) == 1 ? true : false;

@@ -5,7 +5,7 @@ services:
 
   guestbook.controller.frontend.index:
     class: ACP3\Modules\Guestbook\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.helpers.secure', '@guestbook.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.pagination', '@core.helpers.secure', '@guestbook.model']
 
   guestbook.model:
     class: ACP3\Modules\Guestbook\Model
@@ -13,7 +13,7 @@ services:
 
   guestbook.validator:
     class: ACP3\Modules\Guestbook\Validator
-    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.date', '@core.modules', '@guestbook.model', '@newsletter.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.auth', '@core.date', '@core.modules', '@guestbook.model', '@newsletter.model']
 
   guestbook.installer:
     class: ACP3\Modules\Guestbook\Installer

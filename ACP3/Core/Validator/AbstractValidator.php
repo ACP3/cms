@@ -14,11 +14,14 @@ class AbstractValidator
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\Validate
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate)
+    public function __construct(
+        Core\Lang $lang,
+        Rules\Misc $validate
+    )
     {
         $this->lang = $lang;
         $this->validate = $validate;

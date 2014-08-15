@@ -20,15 +20,19 @@ class StringFormatter
      */
     protected $router;
     /**
-     * @var Core\Validate
+     * @var Core\Validator\Rules\Router\Aliases
      */
-    protected $validate;
+    protected $aliasesValidator;
 
-    public function __construct(Core\Modules $modules, Core\Router $router, Core\Validate $validate)
+    public function __construct(
+        Core\Modules $modules,
+        Core\Router $router,
+        Core\Validator\Rules\Router\Aliases $aliasValidator
+    )
     {
         $this->modules = $modules;
         $this->router = $router;
-        $this->validate = $validate;
+        $this->aliasesValidator = $aliasValidator;
     }
 
     /**
@@ -102,7 +106,7 @@ class StringFormatter
      */
     public function rewriteInternalUriCallback($matches)
     {
-        if ($this->validate->uriAliasExists($matches[6]) === true) {
+        if ($this->aliasesValidator->uriAliasExists($matches[6]) === true) {
             return $matches[0];
         } else {
             $uriArray = explode('/', $matches[6]);

@@ -8,9 +8,8 @@ use ACP3\Core\Cache;
 use ACP3\Installer\Core;
 
 /**
- * Module controller of the Update installer module
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Installer\Modules\Update\Controller
  */
 class Index extends Core\Modules\Controller
 {

@@ -10,6 +10,10 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Captcha
+     */
+    protected $captchaValidator;
+    /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
@@ -22,10 +26,18 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $newsletterModel;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Modules $modules, Model $newsletterModel)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Captcha $captchaValidator,
+        Core\Auth $auth,
+        Core\Modules $modules,
+        Model $newsletterModel
+    )
     {
         parent::__construct($lang, $validate);
 
+        $this->captchaValidator = $captchaValidator;
         $this->auth = $auth;
         $this->modules = $modules;
         $this->newsletterModel = $newsletterModel;
@@ -67,7 +79,7 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === true) {
             $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         }
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -91,7 +103,7 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === false) {
             $errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
