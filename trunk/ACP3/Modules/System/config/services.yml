@@ -21,7 +21,7 @@ services:
 
   system.validator:
     class: ACP3\Modules\System\Validator
-    parent: core.validator.abstract
+    arguments: ['@core.db', '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.validator.rules.router']
 
   system.installer:
     class: ACP3\Modules\System\Installer

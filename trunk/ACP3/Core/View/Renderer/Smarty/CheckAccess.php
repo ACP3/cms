@@ -22,7 +22,7 @@ class CheckAccess extends AbstractPlugin
      */
     protected $router;
     /**
-     * @var Core\Validate
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
     /**
@@ -38,7 +38,7 @@ class CheckAccess extends AbstractPlugin
         Core\Lang $lang,
         Core\Modules $modules,
         Core\Router $router,
-        Core\Validate $validate,
+        Core\Validator\Rules\Misc $validate,
         Core\View $view
     )
     {

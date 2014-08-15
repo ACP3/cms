@@ -34,7 +34,7 @@ class Request extends Core\Request
 
         $this->query = $this->originalQuery;
 
-        $this->area = 'installer';
+        $this->area = 'install';
 
         return;
     }

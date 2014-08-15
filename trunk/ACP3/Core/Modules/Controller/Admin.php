@@ -15,7 +15,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
      */
     protected $session;
     /**
-     * @var Core\Validate
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
     /**
@@ -57,7 +57,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     {
         if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
             $entries = $_POST['entries'];
-        } elseif ($this->validate->deleteEntries($this->request->entries) === true) {
+        } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->entries) === true) {
             $entries = $this->request->entries;
         }
 

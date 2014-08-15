@@ -3,9 +3,8 @@
 namespace ACP3\Installer\Modules\Errors\Controller;
 
 /**
- * Module controller of the Errors installer module
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Installer\Modules\Errors\Controller
  */
 class Index extends \ACP3\Installer\Core\Modules\Controller
 {

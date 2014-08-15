@@ -20,6 +20,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
      * @var Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -32,6 +36,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel)
     {
@@ -39,6 +44,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->date = $date;
         $this->db = $db;
+        $this->pagination = $pagination;
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
     }
@@ -152,16 +158,8 @@ class Index extends Core\Modules\Controller\Frontend
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view,
-                $this->guestbookModel->countAll($settings['notify'])
-            );
-            $pagination->display();
+            $this->pagination->setTotalResults($this->guestbookModel->countAll($settings['notify']));
+            $this->pagination->display();
 
             // Emoticons einbinden
             $emoticons_active = false;

@@ -10,6 +10,22 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Date
+     */
+    protected $dateValidator;
+
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Date $dateValidator
+    )
+    {
+        parent::__construct($lang, $validate);
+
+        $this->dateValidator = $dateValidator;
+    }
+
+    /**
      * @param array $formData
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
@@ -18,7 +34,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (empty($formData['title'])) {
@@ -48,7 +64,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (empty($formData['title'])) {

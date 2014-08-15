@@ -1,16 +1,14 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Validator\Rules\Misc;
+
 class Pagination
 {
     /**
      * @var Auth
      */
     protected $auth;
-    /**
-     * @var Breadcrumb
-     */
-    protected $breadcrumb;
     /**
      * @var Lang
      */
@@ -22,11 +20,19 @@ class Pagination
     /**
      * @var Request
      */
-    protected $uri;
+    protected $request;
+    /**
+     * @var Router
+     */
+    protected $router;
     /**
      * @var View
      */
     protected $view;
+    /**
+     * @var Misc
+     */
+    protected $miscValidator;
     /**
      * @var int
      */
@@ -66,22 +72,22 @@ class Pagination
 
     function __construct(
         Auth $auth,
-        Breadcrumb $breadcrumb,
         Lang $lang,
         SEO $seo,
-        Request $uri,
+        Request $request,
+        Router $router,
         View $view,
-        $totalResults)
+        Misc $miscValidator)
     {
         $this->auth = $auth;
-        $this->breadcrumb = $breadcrumb;
         $this->lang = $lang;
         $this->seo = $seo;
-        $this->uri = $uri;
+        $this->request = $request;
+        $this->router = $router;
         $this->view = $view;
+        $this->miscValidator = $miscValidator;
 
         $this->resultsPerPage = $auth->entries;
-        $this->totalResults = $totalResults;
     }
 
     /**
@@ -140,8 +146,8 @@ class Pagination
     {
         $output = '';
         if ($this->totalResults > $this->resultsPerPage) {
-            $link = $this->uri->route(($this->uri->area === 'admin' ? 'acp/' : '') . $this->uri->getUriWithoutPages());
-            $this->currentPage = Validate::isNumber($this->uri->page) ? (int)$this->uri->page : 1;
+            $link = $this->router->route(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->getUriWithoutPages());
+            $this->currentPage = $this->miscValidator->isNumber($this->request->page) ? (int)$this->request->page : 1;
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
             $this->setMetaStatements($link);
@@ -202,7 +208,7 @@ class Pagination
         }
 
         // Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
-        if ($this->uri->area !== 'admin') {
+        if ($this->request->area !== 'admin') {
             if ($this->currentPage - 1 > 0) {
                 // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
                 $this->seo->setDescriptionPostfix(sprintf($this->lang->t('system', 'page_x'), $this->currentPage));
@@ -211,7 +217,7 @@ class Pagination
             if ($this->currentPage + 1 <= $this->totalPages) {
                 $this->seo->setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');
             }
-            if (isset($this->uri->page) && $this->uri->page === 1) {
+            if (isset($this->request->page) && $this->request->page === 1) {
                 $this->seo->setCanonicalUri($link);
             }
         }

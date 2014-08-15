@@ -11,6 +11,14 @@ use ACP3\Modules\Articles;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Router\Aliases
+     */
+    protected $aliasesValidator;
+    /**
+     * @var Core\Validator\Rules\Router
+     */
+    protected $routerValidator;
+    /**
      * @var Core\Modules
      */
     protected $modules;
@@ -29,7 +37,9 @@ class Validator extends Core\Validator\AbstractValidator
 
     public function __construct(
         Core\Lang $lang,
-        Core\Validate $validate,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Router\Aliases $aliasesValidator,
+        Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
         Core\Request $request,
         Model $menuModel
@@ -37,6 +47,8 @@ class Validator extends Core\Validator\AbstractValidator
     {
         parent::__construct($lang, $validate);
 
+        $this->aliasesValidator = $aliasesValidator;
+        $this->routerValidator = $routerValidator;
         $this->modules = $modules;
         $this->request = $request;
         $this->menuModel = $menuModel;
@@ -110,15 +122,13 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if ($this->validate->isNumber($formData['target']) === false ||
             $formData['mode'] == 1 && $this->modules->isInstalled($formData['module']) === false ||
-            $formData['mode'] == 2 && $this->validate->isInternalURI($formData['uri']) === false ||
+            $formData['mode'] == 2 && $this->routerValidator->isInternalURI($formData['uri']) === false ||
             $formData['mode'] == 3 && empty($formData['uri']) ||
             $formData['mode'] == 4 && ($this->validate->isNumber($formData['articles']) === false || ($this->articlesHelpers && $this->articlesHelpers->articleExists($formData['articles']) === false))
         ) {
             $errors[] = $this->lang->t('menus', 'type_in_uri_and_target');
         }
-        if ($formData['mode'] == 2 && !empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], $formData['uri']) === true)
-        ) {
+        if ($formData['mode'] == 2 && !empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $formData['uri']) === true) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 

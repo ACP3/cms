@@ -223,7 +223,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true) {
             if (($this->request->action === 'up' || $this->request->action === 'down') && $this->galleryModel->pictureExists((int)$this->request->id) === true) {
                 $this->get('core.functions')->moveOneStep($this->request->action, Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->request->id, 'gallery_id');
 

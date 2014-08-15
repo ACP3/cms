@@ -17,7 +17,7 @@ services:
 
   files.validator:
     class: ACP3\Modules\Files\Validator
-    parent: core.validator.abstract
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@categories.helpers']
 
   files.installer:
     class: ACP3\Modules\Files\Installer

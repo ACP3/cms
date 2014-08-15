@@ -20,6 +20,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
      * @var Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -32,6 +36,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel)
     {
@@ -39,6 +44,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->date = $date;
         $this->db = $db;
+        $this->pagination = $pagination;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
     }
@@ -58,7 +64,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $host = htmlentities($_SERVER['HTTP_HOST']);
 
                     // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                    if ($this->get('core.validate')->email($_POST['nick_mail']) === true && $this->usersModel->resultExistsByEmail($_POST['nick_mail']) === true) {
+                    if ($this->get('core.validator.rules.misc')->email($_POST['nick_mail']) === true && $this->usersModel->resultExistsByEmail($_POST['nick_mail']) === true) {
                         $user = $this->usersModel->getOneByEmail($_POST['nick_mail']);
                     } else {
                         $user = $this->usersModel->getOneByNickname($_POST['nick_mail']);
@@ -112,16 +118,8 @@ class Index extends Core\Modules\Controller\Frontend
         $allUsers = $this->usersModel->countAll();
 
         if ($c_users > 0) {
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view,
-                $allUsers
-            );
-            $pagination->display();
+            $this->pagination->setTotalResults($allUsers);
+            $this->pagination->display();
 
             for ($i = 0; $i < $c_users; ++$i) {
                 if (!empty($users[$i]['website']) && (bool)preg_match('=^http(s)?://=', $users[$i]['website']) === false) {
@@ -240,7 +238,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionViewProfile()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
             $user = $this->auth->getUserInfo($this->request->id);
             $user['gender'] = str_replace(array(1, 2, 3), array('', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')), $user['gender']);
             $user['birthday'] = $this->date->format($user['birthday'], $user['birthday_display'] == 1 ? 'd.m.Y' : 'd.m.');

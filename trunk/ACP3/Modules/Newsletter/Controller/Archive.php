@@ -21,6 +21,10 @@ class Archive extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
      * @var Newsletter\Model
      */
     protected $newsletterModel;
@@ -29,12 +33,14 @@ class Archive extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Pagination $pagination,
         Newsletter\Model $newsletterModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->pagination = $pagination;
         $this->newsletterModel = $newsletterModel;
     }
 
@@ -66,16 +72,8 @@ class Archive extends Core\Modules\Controller\Frontend
         $c_newsletters = count($newsletters);
 
         if ($c_newsletters > 0) {
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view,
-                $this->newsletterModel->countAll(1)
-            );
-            $pagination->display();
+            $this->pagination->setTotalResults($this->newsletterModel->countAll(1));
+            $this->pagination->display();
 
             for ($i = 0; $i < $c_newsletters; ++$i) {
                 $newsletters[$i]['date_formatted'] = $this->date->format($newsletters[$i]['date'], 'short');

@@ -213,7 +213,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSend()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->newsletterModel->newsletterExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->newsletterModel->newsletterExists($this->request->id) === true) {
             $accounts = $this->newsletterModel->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = array();

@@ -11,6 +11,10 @@ use ACP3\Modules\Newsletter;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Captcha
+     */
+    protected $captchaValidator;
+    /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
@@ -31,10 +35,20 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $newsletterModel;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Date $date, Core\Modules $modules, Model $guestbookModel, Newsletter\Model $newsletterModel)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Captcha $captchaValidator,
+        Core\Auth $auth,
+        Core\Date $date,
+        Core\Modules $modules,
+        Model $guestbookModel,
+        Newsletter\Model $newsletterModel
+    )
     {
         parent::__construct($lang, $validate);
 
+        $this->captchaValidator = $captchaValidator;
         $this->auth = $auth;
         $this->date = $date;
         $this->modules = $modules;
@@ -69,7 +83,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['message']) < 3) {
             $errors['message'] = $this->lang->t('system', 'message_to_short');
         }
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {

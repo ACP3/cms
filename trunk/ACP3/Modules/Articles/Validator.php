@@ -7,6 +7,14 @@ use ACP3\Modules\Menus;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Router\Aliases
+     */
+    protected $aliasesValidator;
+    /**
+     * @var Core\Validator\Rules\Date
+     */
+    protected $dateValidator;
+    /**
      * @var \ACP3\Modules\Menus\Model
      */
     protected $menuModel;
@@ -21,13 +29,17 @@ class Validator extends Core\Validator\AbstractValidator
 
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Router\Aliases $aliasesValidator,
+        Core\Validator\Rules\Date $dateValidator,
         Core\Modules $modules,
         Core\Request $request,
-        Core\Validate $validate,
         Menus\Model $menuModel)
     {
         parent::__construct($lang, $validate);
 
+        $this->aliasesValidator = $aliasesValidator;
+        $this->dateValidator = $dateValidator;
         $this->request = $request;
         $this->modules = $modules;
         $this->menuModel = $menuModel;
@@ -42,7 +54,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -71,9 +83,7 @@ class Validator extends Core\Validator\AbstractValidator
                 }
             }
         }
-        if (!empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias']) === true)
-        ) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias']) === true) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
@@ -91,7 +101,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ($this->validate->date($formData['start'], $formData['end']) === false) {
+        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -100,9 +110,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $errors['text'] = $this->lang->t('articles', 'text_to_short');
         }
-        if (!empty($formData['alias']) &&
-            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true)
-        ) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 

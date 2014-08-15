@@ -21,7 +21,7 @@ services:
 
   categories.validator:
     class: ACP3\Modules\Categories\Validator
-    arguments: ['@core.lang', '@core.validate', '@categories.helpers', '@categories.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime', '@categories.helpers', '@categories.model']
 
   categories.installer:
     class: ACP3\Modules\Categories\Installer

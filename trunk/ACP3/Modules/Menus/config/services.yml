@@ -21,7 +21,7 @@ services:
 
   menus.validator:
     class: ACP3\Modules\Menus\Validator
-    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.request', '@menus.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.router', '@core.modules', '@core.request', '@menus.model']
 
   menus.installer:
     class: ACP3\Modules\Menus\Installer

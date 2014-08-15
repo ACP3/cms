@@ -22,7 +22,7 @@ class FrontController extends \ACP3\Core\FrontController
 
     public function __construct(Container $container)
     {
-        $this->request = $container->get('installer.core.request');
+        $this->request = $container->get('core.request');
         $this->container = $container;
     }
 

@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Validator\Rules\Misc;
+
 /**
  * Parst XML Dateien, z.B. die diversen info.xml bzw. module.xml Dateien
  *
@@ -83,8 +85,8 @@ class XML
                 if (array_key_exists($item->nodeName, $data) === true) {
                     $newitem = $xml->createElement($item->nodeName);
                     if (empty($data[$item->nodeName]) ||
-                        Validate::isNumber($data[$item->nodeName]) ||
-                        Validate::email($data[$item->nodeName]) ||
+                        Misc::isNumber($data[$item->nodeName]) ||
+                        Misc::email($data[$item->nodeName]) ||
                         preg_match('/^(\w+)$/', $data[$item->nodeName])
                     ) {
                         $newitem_content = $xml->createTextNode($data[$item->nodeName]);

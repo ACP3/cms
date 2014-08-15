@@ -10,6 +10,10 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\Mime
+     */
+    protected $mimeValidator;
+    /**
      * @var Model
      */
     protected $categoriesModel;
@@ -18,10 +22,17 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $categoriesHelpers;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Helpers $categoriesHelpers, Model $categoriesModel)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Mime $mimeValidator,
+        Helpers $categoriesHelpers,
+        Model $categoriesModel
+    )
     {
         parent::__construct($lang, $validate);
 
+        $this->mimeValidator = $mimeValidator;
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoriesModel = $categoriesModel;
     }
@@ -45,7 +56,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['description'] = $this->lang->t('categories', 'description_to_short');
         }
         if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) ||
-                $this->validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
+                $this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
                 $_FILES['picture']['error'] !== UPLOAD_ERR_OK)
         ) {
             $errors['picture'] = $this->lang->t('categories', 'invalid_image_selected');

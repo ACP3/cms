@@ -9,7 +9,7 @@ services:
 
   gallery.controller.frontend.index:
     class: ACP3\Modules\Gallery\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@gallery.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.pagination', '@gallery.model']
 
   gallery.controller.sidebar.index:
     class: ACP3\Modules\Gallery\Controller\Sidebar\Index
@@ -25,7 +25,7 @@ services:
 
   gallery.validator:
     class: ACP3\Modules\Gallery\Validator
-    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.request']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.modules', '@core.request']
 
   gallery.installer:
     class: ACP3\Modules\Gallery\Installer

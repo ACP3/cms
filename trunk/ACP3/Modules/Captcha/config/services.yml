@@ -5,7 +5,7 @@ services:
 
   captcha.helpers:
     class: ACP3\Modules\Captcha\Helpers
-    arguments: ['@core.auth', '@core.router', '@core.view', '@core.helpers.secure']
+    arguments: ['@core.auth', '@core.request', '@core.router', '@core.view', '@core.helpers.secure']
 
   captcha.installer:
     class: ACP3\Modules\Captcha\Installer

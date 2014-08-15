@@ -289,7 +289,7 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->menusModel->menuItemExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->menusModel->menuItemExists($this->request->id) === true) {
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             $nestedSet->order($this->request->id, $this->request->action);
 

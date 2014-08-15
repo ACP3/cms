@@ -10,7 +10,7 @@ use ACP3\Core;
 class Icon extends AbstractPlugin
 {
     /**
-     * @var Core\Validate
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
     /**
@@ -18,7 +18,7 @@ class Icon extends AbstractPlugin
      */
     protected $pluginName = 'icon';
 
-    public function __construct(Core\Validate $validate)
+    public function __construct(Core\Validator\Rules\Misc $validate)
     {
         $this->validate = $validate;
     }

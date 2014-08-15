@@ -9,7 +9,7 @@ services:
 
   comments.controller.frontend.index:
     class: ACP3\Modules\Comments\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@comments.model', '@comments.config', '@core.helpers.secure']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.config', '@core.helpers.secure']
 
   comments.config:
     class: ACP3\Core\Config
@@ -25,7 +25,7 @@ services:
 
   comments.validator:
     class: ACP3\Modules\Comments\Validator
-    arguments: ['@core.lang', '@core.auth', '@core.date', '@core.modules', '@core.validate', '@comments.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.auth', '@core.date', '@core.modules', '@comments.model']
 
   comments.installer:
     class: ACP3\Modules\Comments\Installer

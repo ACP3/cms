@@ -112,6 +112,7 @@ class Application
     {
         $this->container = new ContainerBuilder();
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
+        $loader->load(ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 
@@ -193,13 +194,13 @@ class Application
      */
     public function outputPage()
     {
-        $request = $this->container->get('installer.core.request');
+        $request = $this->container->get('core.request');
 
         $frontController = new FrontController($this->container);
-        $errorsServiceId = 'installer.errors.controller.index';
+        $errorsServiceId = 'errors.controller.install.index';
 
         try {
-            $serviceId = 'installer.' . $request->mod . '.controller.' . $request->controller;
+            $serviceId = $request->mod . '.controller.install.' . $request->controller;
             $frontController->dispatch($serviceId, $request->file);
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             $frontController->dispatch($errorsServiceId, '404');

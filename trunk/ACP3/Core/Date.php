@@ -36,9 +36,9 @@ class Date
      */
     protected $lang;
     /**
-     * @var Validate
+     * @var \ACP3\Core\Validator\Rules\Date
      */
-    protected $validate;
+    protected $dateValidator;
     /**
      * @var \ACP3\Core\View
      */
@@ -46,13 +46,23 @@ class Date
 
     /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
+     *
+     * @param Auth $auth
+     * @param Lang $lang
+     * @param Validator\Rules\Date $dateValidator
+     * @param View $view
      */
-    function __construct(Auth $auth, Lang $lang, Validate $validate, View $view)
+    function __construct(
+        Auth $auth,
+        Lang $lang,
+        \ACP3\Core\Validator\Rules\Date $dateValidator,
+        View $view
+    )
     {
         $info = $auth->getUserInfo();
 
         $this->lang = $lang;
-        $this->validate = $validate;
+        $this->dateValidator = $dateValidator;
         $this->view = $view;
 
         if (!empty($info)) {
@@ -100,7 +110,15 @@ class Date
      * @param bool $inputFieldOnly
      * @return string
      */
-    public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $withTime = true, $inputFieldOnly = false)
+    public function datepicker(
+        $name,
+        $value = '',
+        $format = 'Y-m-d H:i',
+        array $params = array(),
+        $range = 1,
+        $withTime = true,
+        $inputFieldOnly = false
+    )
     {
         $datepicker = array(
             'range' => is_array($name) === true && $range === 1 ? 1 : 0,
@@ -127,33 +145,33 @@ class Date
         // Veröffentlichungszeitraum
         if (is_array($name) === true && $range === 1) {
             if (!empty($_POST[$name[0]]) && !empty($_POST[$name[1]])) {
-                $value_start = $_POST[$name[0]];
-                $value_end = $_POST[$name[1]];
-                $value_start_r = $this->format($_POST[$name[0]], 'r', false);
-                $value_end_r = $this->format($_POST[$name[1]], 'r', false);
-            } elseif (is_array($value) === true && $this->validate->date($value[0], $value[1]) === true) {
-                $value_start = $this->format($value[0], $format);
-                $value_end = $this->format($value[1], $format);
-                $value_start_r = $this->format($value[0], 'r');
-                $value_end_r = $this->format($value[1], 'r');
+                $valueStart = $_POST[$name[0]];
+                $valueEnd = $_POST[$name[1]];
+                $valueStartR = $this->format($_POST[$name[0]], 'r', false);
+                $valueEndR = $this->format($_POST[$name[1]], 'r', false);
+            } elseif (is_array($value) === true && $this->dateValidator->date($value[0], $value[1]) === true) {
+                $valueStart = $this->format($value[0], $format);
+                $valueEnd = $this->format($value[1], $format);
+                $valueStartR = $this->format($value[0], 'r');
+                $valueEndR = $this->format($value[1], 'r');
             } else {
-                $value_start = $this->format('now', $format, false);
-                $value_end = $this->format('now', $format, false);
-                $value_start_r = $this->format('now', 'r', false);
-                $value_end_r = $this->format('now', 'r', false);
+                $valueStart = $this->format('now', $format, false);
+                $valueEnd = $this->format('now', $format, false);
+                $valueStartR = $this->format('now', 'r', false);
+                $valueEndR = $this->format('now', 'r', false);
             }
 
             $datepicker['name_start'] = $name[0];
             $datepicker['name_end'] = $name[1];
-            $datepicker['value_start'] = $value_start;
-            $datepicker['value_start_r'] = $value_start_r;
-            $datepicker['value_end'] = $value_end;
-            $datepicker['value_end_r'] = $value_end_r;
+            $datepicker['value_start'] = $valueStart;
+            $datepicker['value_start_r'] = $valueStartR;
+            $datepicker['value_end'] = $valueEnd;
+            $datepicker['value_end_r'] = $valueEndR;
             // Einfaches Inputfeld mit Datepicker
         } else {
             if (!empty($_POST[$name])) {
                 $value = $_POST[$name];
-            } elseif ($this->validate->date($value) === true) {
+            } elseif ($this->dateValidator->date($value) === true) {
                 $value = $this->format($value, $format);
             } else {
                 $value = $this->format('now', $format, false);

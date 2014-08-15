@@ -21,7 +21,7 @@ services:
 
   emoticons.validator:
     class: ACP3\Modules\Emoticons\Validator
-    parent: core.validator.abstract
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime']
 
   emoticons.installer:
     class: ACP3\Modules\Emoticons\Installer

@@ -5,7 +5,7 @@ services:
 
   articles.controller.frontend.index:
     class: ACP3\Modules\Articles\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@articles.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@articles.model']
 
   articles.helpers:
     class: ACP3\Modules\Articles\Helpers
@@ -17,7 +17,7 @@ services:
 
   articles.validator:
     class: ACP3\Modules\Articles\Validator
-    arguments: ['@core.lang', '@core.modules', '@core.request', '@core.validate', '@menus.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@menus.model']
 
   articles.installer:
     class: ACP3\Modules\Articles\Installer

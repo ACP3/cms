@@ -17,6 +17,14 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Validator\Rules\ACL
+     */
+    protected $aclValidator;
+    /**
+     * @var Core\Validator\Rules\Router
+     */
+    protected $routerValidator;
+    /**
      * @var \ACP3\Core\Modules
      */
     protected $modules;
@@ -31,7 +39,9 @@ class Validator extends Core\Validator\AbstractValidator
 
     public function __construct(
         Core\Lang $lang,
-        Core\Validate $validate,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\ACL $aclValidator,
+        Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
         Core\Request $request,
         Model $permissionsModel
@@ -39,6 +49,8 @@ class Validator extends Core\Validator\AbstractValidator
     {
         parent::__construct($lang, $validate);
 
+        $this->aclValidator = $aclValidator;
+        $this->routerValidator = $routerValidator;
         $this->modules = $modules;
         $this->request = $request;
         $this->permissionsModel = $permissionsModel;
@@ -62,7 +74,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'no_privilege_selected');
         }
-        if (!empty($formData['privileges']) && $this->validate->aclPrivilegesExist($formData['privileges']) === false) {
+        if (!empty($formData['privileges']) && $this->aclValidator->aclPrivilegesExist($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'invalid_privileges');
         }
 
@@ -89,7 +101,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['controller'])) {
             $errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
         }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->validate->isInternalURI(strtolower($formData['modules']) . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
+        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->routerValidator->isInternalURI(strtolower($formData['modules']) . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
             $errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
         }
         if (empty($formData['privileges']) || $this->validate->isNumber($formData['privileges']) === false) {
@@ -122,7 +134,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'no_privilege_selected');
         }
-        if (!empty($formData['privileges']) && $this->validate->aclPrivilegesExist($formData['privileges']) === false) {
+        if (!empty($formData['privileges']) && $this->aclValidator->aclPrivilegesExist($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'invalid_privileges');
         }
 
@@ -149,7 +161,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['controller'])) {
             $errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
         }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->validate->isInternalURI($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
+        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->routerValidator->isInternalURI($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
             $errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
         }
         if (empty($formData['privileges']) || $this->validate->isNumber($formData['privileges']) === false) {

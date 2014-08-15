@@ -17,7 +17,7 @@ services:
 
   polls.validator:
     class: ACP3\Modules\Polls\Validator
-    parent: core.validator.abstract
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date']
 
   polls.installer:
     class: ACP3\Modules\Polls\Installer

@@ -40,7 +40,7 @@ class Smarty extends AbstractRenderer
             }
         }
 
-        $this->renderer->registerClass('Validate', "\\ACP3\\Core\\Validate");
+        $this->renderer->registerClass('Misc', "\\ACP3\\Core\\Validator\\Rules\\Misc");
     }
 
     /**

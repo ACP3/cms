@@ -10,7 +10,10 @@ use ACP3\Core;
  */
 class Validator extends Core\Validator\AbstractValidator
 {
-
+    /**
+     * @var Core\Validator\Rules\Captcha
+     */
+    protected $captchaValidator;
     /**
      * @var \ACP3\Core\Auth
      */
@@ -20,10 +23,17 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
 
-    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Modules $modules)
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Rules\Misc $validate,
+        Core\Validator\Rules\Captcha $captchaValidator,
+        Core\Auth $auth,
+        Core\Modules $modules
+    )
     {
         parent::__construct($lang, $validate);
 
+        $this->captchaValidator = $captchaValidator;
         $this->auth = $auth;
         $this->modules;
     }
@@ -47,7 +57,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($this->modules->hasPermission('frontend/captcha/index/image') === true &&
-            $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
+            $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 

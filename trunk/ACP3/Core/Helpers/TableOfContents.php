@@ -30,7 +30,7 @@ class TableOfContents
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validate
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
     /**
@@ -44,7 +44,7 @@ class TableOfContents
         Core\SEO $seo,
         Core\Request $request,
         Core\Router $router,
-        Core\Validate $validate,
+        Core\Validator\Rules\Misc $validate,
         Core\View $view
     )
     {

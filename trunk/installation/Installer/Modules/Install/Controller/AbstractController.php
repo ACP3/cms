@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Installer\Modules\Install\Controller;
 
-
 use ACP3\Installer\Core;
 
 /**

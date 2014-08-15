@@ -10,7 +10,7 @@ use ACP3\Core;
 class Admin extends Frontend
 {
     /**
-     * @var \ACP3\Core\Validate
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
     /**
@@ -31,7 +31,7 @@ class Admin extends Frontend
         Core\View $view,
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo,
-        Core\Validate $validate,
+        Core\Validator\Rules\Misc $validate,
         Core\Session $session,
         Core\Router\Aliases $aliases)
     {
@@ -51,7 +51,7 @@ class Admin extends Frontend
     }
 
     /**
-     * @return \ACP3\Core\Validate
+     * @return \ACP3\Core\Validator\Rules\Misc
      */
     public function getValidate()
     {

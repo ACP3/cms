@@ -21,6 +21,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $db;
     /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
      * @var News\Model
      */
     protected $newsModel;
@@ -29,18 +33,20 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
+        Core\Pagination $pagination,
         News\Model $newsModel)
     {
        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
+        $this->pagination = $pagination;
         $this->newsModel = $newsModel;
     }
 
     public function actionDetails()
     {
-        if ($this->get('core.validate')->isNumber($this->request->id) === true && $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1) {
             $config = new Core\Config($this->db, 'news');
             /** @var Core\Helpers\StringFormatter $formatter */
             $formatter = $this->get('core.helpers.string.formatter');
@@ -89,9 +95,9 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        if (isset($_POST['cat']) && $this->get('core.validate')->isNumber($_POST['cat']) === true) {
+        if (isset($_POST['cat']) && $this->get('core.validator.rules.misc')->isNumber($_POST['cat']) === true) {
             $cat = (int)$_POST['cat'];
-        } elseif ($this->get('core.validate')->isNumber($this->request->cat) === true) {
+        } elseif ($this->get('core.validator.rules.misc')->isNumber($this->request->cat) === true) {
             $cat = (int)$this->request->cat;
         } else {
             $cat = 0;
@@ -129,16 +135,8 @@ class Index extends Core\Modules\Controller\Frontend
                 $commentsCheck = true;
             }
 
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->request,
-                $this->view,
-                $this->newsModel->countAll($time, $cat)
-            );
-            $pagination->display();
+            $this->pagination->setTotalResults($this->newsModel->countAll($time, $cat));
+            $this->pagination->display();
 
             $formatter = $this->get('core.helpers.string.formatter');
             for ($i = 0; $i < $c_news; ++$i) {

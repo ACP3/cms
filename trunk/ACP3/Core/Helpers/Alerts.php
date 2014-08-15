@@ -10,23 +10,27 @@ use ACP3\Core;
 class Alerts
 {
     /**
-     * @var \ACP3\Core\Functions
+     * @var \ACP3\Core\Helpers\Output
      */
-    private $functions;
+    protected $outputHelper;
     /**
      * @var Core\View
      */
-    private $view;
+    protected $view;
     /**
      * @var Core\Request
      */
-    private $request;
+    protected $request;
 
-    public function __construct(Core\Request $request, Core\View $view, Core\Functions $functions)
+    public function __construct(
+        Core\Request $request,
+        Core\View $view,
+        Core\Helpers\Output $outputHelper
+    )
     {
         $this->request = $request;
         $this->view = $view;
-        $this->functions = $functions;
+        $this->outputHelper = $outputHelper;
     }
 
     /**
@@ -118,9 +122,9 @@ class Alerts
                 'content' => $content,
             );
 
-            $this->functions->outputJson($return);
+            $this->outputHelper->outputJson($return);
         }
         return $content;
     }
 
-} 
+}

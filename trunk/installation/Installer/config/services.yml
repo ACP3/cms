@@ -1,34 +1,34 @@
 services:
   core.view:
     class: ACP3\Core\View
-    arguments: ['@installer.core.router']
+    arguments: ['@core.router']
     calls:
       - ['setContainer', ['@service_container']]
 
   core.redirect:
     class: ACP3\Core\Redirect
-    arguments: ['@installer.core.request', '@installer.core.router']
+    arguments: ['@core.request', '@core.router']
 
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty
     calls:
       - ['setContainer', ['@service_container']]
 
-  installer.core.context:
+  core.context.install:
     class : ACP3\Installer\Core\Context
-    arguments: ['@installer.core.lang', '@installer.core.request', '@installer.core.router', '@core.view']
+    arguments: ['@core.lang', '@core.request', '@core.router', '@core.view']
 
-  installer.core.request:
+  core.request:
     class: ACP3\Installer\Core\Request
     arguments: ['install']
 
-  installer.core.router:
+  core.router:
     class: ACP3\Installer\Core\Router
 
-  installer.core.lang:
+  core.lang:
     class: ACP3\Installer\Core\Lang
     arguments: ['en_US']
 
-  installer.core.modules.controller:
+  core.modules.controller.install:
     abstract: true
-    arguments: ['@installer.core.context']
+    arguments: ['@core.context.install']
