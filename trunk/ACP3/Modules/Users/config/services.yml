@@ -25,4 +25,4 @@ services:
 
   users.installer:
     class: ACP3\Modules\Users\Installer
-    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']
+    parent: core.modules.abstract.installer

@@ -41,19 +41,19 @@ services:
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
-    arguments: ['@?core.db']
+    arguments: ['@core.db']
 
   core.session:
     class: ACP3\Core\Session
-    arguments: ['@?core.db']
+    arguments: ['@core.db']
 
   core.auth:
     class: ACP3\Core\Auth
-    arguments: ['@?core.db', '@core.session', '@core.helpers.secure']
+    arguments: ['@core.db', '@core.session', '@core.helpers.secure']
 
   core.acl:
     class: ACP3\Core\ACL
-    arguments: ['@core.auth', '@?core.db']
+    arguments: ['@core.auth', '@core.db']
 
   core.lang:
     class: ACP3\Core\Lang
@@ -61,7 +61,7 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@?core.db', '@core.acl', '@core.lang']
+    arguments: ['@core.db', '@core.acl', '@core.lang']
 
   core.pagination:
     class: ACP3\Core\Pagination
@@ -69,7 +69,7 @@ services:
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@?core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.view']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.view']
 
   core.date:
     class: ACP3\Core\Date
@@ -77,11 +77,11 @@ services:
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@?core.db', '@core.lang', '@core.request', '@core.router', '@core.view']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@core.view']
 
   core.functions:
     class: ACP3\Core\Functions
-    arguments: ['@core.auth', '@?core.db', '@core.view']
+    arguments: ['@core.auth', '@core.db', '@core.view']
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
@@ -108,7 +108,7 @@ services:
 
   system.config:
     class: ACP3\Core\Config
-    arguments: ['@?core.db', 'system']
+    arguments: ['@core.db', 'system']
 
   core.modules.controller:
     abstract: true
@@ -124,7 +124,7 @@ services:
 
   core.modules.abstract.installer:
     abstract: true
-    argument: ['@?core.db', '@system.model', '@permissions.model']
+    arguments: ['@core.db', '@system.model', '@permissions.model']
 
 imports:
   - { resource: validation.yml }

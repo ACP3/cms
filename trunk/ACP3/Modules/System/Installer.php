@@ -32,23 +32,6 @@ class Installer extends Modules\AbstractInstaller
         )
     );
 
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-
-    public function __construct(
-        \Doctrine\DBAL\Connection $db,
-        Model $systemModel,
-        Permissions\Model $permissionsModel,
-        Modules $modules
-    )
-    {
-        parent::__construct($db, $systemModel, $permissionsModel);
-
-        $this->modules = $modules;
-    }
-
     public function removeResources()
     {
         return true;

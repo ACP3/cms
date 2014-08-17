@@ -33,4 +33,4 @@ services:
 
   newsletter.installer:
     class: ACP3\Modules\Newsletter\Installer
-    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']
+    parent: core.modules.abstract.installer

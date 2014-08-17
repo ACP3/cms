@@ -12,23 +12,6 @@ class Installer extends Modules\AbstractInstaller
     const MODULE_NAME = 'users';
     const SCHEMA_VERSION = 39;
 
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-
-    public function __construct(
-        \Doctrine\DBAL\Connection $db,
-        System\Model $systemModel,
-        Permissions\Model $permissionsModel,
-        Modules $modules
-    )
-    {
-        parent::__construct($db, $systemModel, $permissionsModel);
-
-        $this->modules = $modules;
-    }
-
     public function removeResources()
     {
         return true;
@@ -148,12 +131,12 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}users` SET language = "en_US" WHERE language = "en";',
             ),
             39 => array(
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/forgot_pwd/", "users/index/forgot_pwd/") WHERE uri LIKE "users/forgot_pwd/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/list/", "users/index/index/") WHERE uri LIKE "users/list/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/login/", "users/index/login/") WHERE uri LIKE "users/login/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/logout/", "users/index/logout/") WHERE uri LIKE "users/logout/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/register/", "users/index/register/") WHERE uri LIKE "users/register/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/view_profile/", "users/index/view_profile/") WHERE uri LIKE "users/view_profile/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/forgot_pwd/", "users/index/forgot_pwd/") WHERE uri LIKE "users/forgot_pwd/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/list/", "users/index/index/") WHERE uri LIKE "users/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/login/", "users/index/login/") WHERE uri LIKE "users/login/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/logout/", "users/index/logout/") WHERE uri LIKE "users/logout/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/register/", "users/index/register/") WHERE uri LIKE "users/register/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/view_profile/", "users/index/view_profile/") WHERE uri LIKE "users/view_profile/%";' : '',
             )
         );
     }

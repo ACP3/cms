@@ -21,4 +21,4 @@ services:
 
   contact.installer:
     class: ACP3\Modules\Contact\Installer
-    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']
+    parent: core.modules.abstract.installer

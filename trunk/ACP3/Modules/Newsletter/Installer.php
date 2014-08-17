@@ -23,23 +23,6 @@ class Installer extends Modules\AbstractInstaller
         )
     );
 
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-
-    public function __construct(
-        \Doctrine\DBAL\Connection $db,
-        System\Model $systemModel,
-        Permissions\Model $permissionsModel,
-        Modules $modules
-    )
-    {
-        parent::__construct($db, $systemModel, $permissionsModel);
-
-        $this->modules = $modules;
-    }
-
     public function createTables()
     {
         return array(
@@ -120,9 +103,9 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}acl_resources` SET controller = "accounts" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "admin" AND page = "activate";',
             ),
             41 => array(
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list/", "newsletter/index/index/") WHERE uri LIKE "newsletter/list/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list_archive/", "newsletter/archive/index/") WHERE uri LIKE "newsletter/list_archive/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/details/", "newsletter/archive/details/") WHERE uri LIKE "newsletter/details/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list/", "newsletter/index/index/") WHERE uri LIKE "newsletter/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list_archive/", "newsletter/archive/index/") WHERE uri LIKE "newsletter/list_archive/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/details/", "newsletter/archive/details/") WHERE uri LIKE "newsletter/details/%";' : '',
             ),
             42 => array(
                 'UPDATE `{pre}acl_resources` SET area = "frontend", controller = "archive", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "list_archive";',

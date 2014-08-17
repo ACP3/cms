@@ -21,4 +21,4 @@ services:
 
   files.installer:
     class: ACP3\Modules\Files\Installer
-    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']
+    parent: core.modules.abstract.installer
