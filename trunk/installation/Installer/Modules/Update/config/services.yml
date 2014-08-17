@@ -1,8 +1,12 @@
 services:
   update.controller.install.index:
     class: ACP3\Installer\Modules\Update\Controller\Index
-    parent: core.modules.controller.install
+    arguments: ['@core.context.install', '@update.helpers']
 
   update.controller.install.legacy:
     class: ACP3\Installer\Modules\Update\Controller\Legacy
     parent: core.modules.controller.install
+
+  update.helpers:
+    class: ACP3\Installer\Modules\Update\Helpers
+    arguments: ['@core.modules']

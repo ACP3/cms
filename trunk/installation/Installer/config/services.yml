@@ -1,3 +1,6 @@
+parameters:
+  default_request: 'install'
+
 services:
   core.view:
     class: ACP3\Core\View
@@ -20,7 +23,7 @@ services:
 
   core.request:
     class: ACP3\Installer\Core\Request
-    arguments: ['install']
+    arguments: [%default_request%]
 
   core.router:
     class: ACP3\Installer\Core\Router

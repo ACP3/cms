@@ -90,15 +90,15 @@ class Cache2
      * @param string $cacheId
      * @return bool
      */
-    public static function purge($dir = 'sql', $cacheId = '')
+    public static function purge($dir, $cacheId = '')
     {
-        $cacheDir = UPLOADS_DIR . 'cache/' . $dir;
-        $files = array_diff(scandir($cacheDir), array('.', '..'));
+        $files = array_diff(scandir($dir), array('.', '..'));
         foreach ($files as $file) {
-            $path = "$cacheDir/$file";
+            $path = "$dir/$file";
 
             if (is_dir($path) ) {
                 static::purge($path, $cacheId);
+                @rmdir($path);
             } else {
                 if (!empty($cacheId) && strpos($file, $cacheId) === false) {
                     continue;
@@ -112,6 +112,6 @@ class Cache2
             return true;
         }
 
-        return @rmdir($dir);
+        return true;
     }
 } 
