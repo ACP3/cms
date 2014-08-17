@@ -65,6 +65,10 @@ class Auth
     /**
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
      * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
+     *
+     * @param \Doctrine\DBAL\Connection $db
+     * @param \ACP3\Core\Session        $session
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
      */
     function __construct(
         \Doctrine\DBAL\Connection $db,
@@ -75,6 +79,14 @@ class Auth
         $this->usersModel = new Users\Model($db);
         $this->secureHelper = $secureHelper;
 
+        $this->authenticate();
+    }
+
+    /**
+     *
+     */
+    protected function authenticate()
+    {
         if (isset($_COOKIE[self::COOKIE_NAME])) {
             $cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
             $cookieData = explode('|', $cookie);
@@ -87,7 +99,7 @@ class Auth
                     $this->userId = (int)$user['id'];
                     $this->superUser = (bool)$user['super_user'];
 
-                    $config = new Config($db, 'users');
+                    $config = new Config($this->db, 'users');
                     $settings = $config->getSettings();
                     $this->entries = $settings['entries_override'] == 1 && $user['entries'] > 0 ? (int)$user['entries'] : (int)CONFIG_ENTRIES;
                     $this->language = $settings['language_override'] == 1 ? $user['language'] : CONFIG_LANG;
@@ -112,6 +124,7 @@ class Auth
      *
      * @param int $userId
      *    Der angeforderte Benutzer
+     *
      * @return mixed
      */
     public function getUserInfo($userId = 0)
@@ -167,12 +180,13 @@ class Auth
     /**
      * Loggt einen User ein
      *
-     * @param string $username
+     * @param string  $username
      *    Der zu verwendente Username
-     * @param string $password
+     * @param string  $password
      *    Das zu verwendente Passwort
      * @param integer $expiry
      *    Gibt die Zeit in Sekunden an, wie lange der User eingeloggt bleiben soll
+     *
      * @return integer
      */
     public function login($username, $password, $expiry)
@@ -234,12 +248,13 @@ class Auth
     /**
      * Setzt den internen Authentifizierungscookie
      *
-     * @param string $nickname
+     * @param string  $nickname
      *  Der Loginname des Users
-     * @param string $password
+     * @param string  $password
      *  Die Hashsumme des Passwortes
      * @param integer $expiry
      *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
+     *
      * @return bool
      */
     public function setCookie($nickname, $password, $expiry)

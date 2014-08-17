@@ -90,11 +90,6 @@ class Application
         // Pfade zum Theme setzen
         define('DESIGN_PATH', INSTALLATION_DIR . 'design/');
         define('DESIGN_PATH_INTERNAL', INSTALLATION_DIR . 'design/');
-
-        if (defined('IN_UPDATER') === false) {
-            define('CONFIG_VERSION', '4.0-dev');
-            define('CONFIG_SEO_MOD_REWRITE', false);
-        }
     }
 
     /**
@@ -113,6 +108,7 @@ class Application
         $this->container = new ContainerBuilder();
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load(ACP3_DIR . 'config/services.yml');
+        $loader->load(INSTALLER_ACP3_DIR . 'config/overridden.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 

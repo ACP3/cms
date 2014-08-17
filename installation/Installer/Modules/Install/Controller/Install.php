@@ -5,10 +5,10 @@ namespace ACP3\Installer\Modules\Install\Controller;
 use ACP3\Core\Config;
 use ACP3\Core\Exceptions\ValidationFailed;
 use ACP3\Core\Helpers\Secure;
-use ACP3\Core\Modules\AbstractInstaller;
 use ACP3\Installer\Core;
 use ACP3\Installer\Modules\Install\Helpers;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class Install extends AbstractController
 {
+    const ACP3_VERSION = '4.0-dev';
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class Install extends AbstractController
                 $validator->validateConfiguration($_POST, $this->configFilePath);
 
                 $this->_initDatabase($_POST);
-
+                $this->_setContainer();
                 $bool = $this->_installModules();
 
                 // Admin-User, Menüpunkte, News, etc. in die DB schreiben
@@ -58,6 +59,7 @@ class Install extends AbstractController
                 }
 
                 $this->setContentTemplate('install/install.result.tpl');
+                return;
             } catch (ValidationFailed $e) {
                 $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
             }
@@ -111,18 +113,30 @@ class Install extends AbstractController
         define('DB_PRE', $formData['db_pre']);
 
         $this->db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-
-        $this->container->set('core.db', $this->db);
     }
 
     /**
-     * @return bool
+     * @throws \Exception
      */
-    private function _installModules()
+    private function _setContainer()
     {
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
-        $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
+        $this->container = new ContainerBuilder();
 
+        $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
+        $loader->load(ACP3_DIR . 'config/services.yml');
+        $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
+
+        // Load installer modules services
+        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+        foreach ($installerModules as $module) {
+            $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
+            if (is_file($path) === true) {
+                $loader->load($path);
+            }
+        }
+
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
@@ -130,19 +144,43 @@ class Install extends AbstractController
             }
         }
 
+        $this->container->set('core.db', $this->db);
+
+        $params = array(
+            'compile_id' => 'installer',
+            'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
+            'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
+        );
+        $this->container->get('core.view')->setRenderer('smarty', $params);
+
+        $this->container->compile();
+    }
+
+    /**
+     * @return bool
+     */
+    private function _installModules()
+    {
         $bool = false;
-        // Core-Module installieren
+        // Install core modules
         $installFirst = array('system', 'permissions', 'users');
         foreach ($installFirst as $module) {
-            $bool = $this->installHelper->installModule($module, $this->container) === false;
+            $bool = $this->installHelper->installModule($module, $this->container);
             if ($bool === false) {
                 $this->view->assign('install_error', true);
                 break;
             }
         }
 
-        // "Normale" Module installieren
+        // Install "normal" modules
         if ($bool === true) {
+            // Systemeinstellungen laden
+            $this
+                ->get('system.config')
+                ->getSettingsAsConstants();
+
+            $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+
             foreach ($modules as $module) {
                 $module = strtolower($module);
                 if (in_array(strtolower($module), $installFirst) === false) {
@@ -195,7 +233,7 @@ class Install extends AbstractController
             'design' => 'acp3',
             'entries' => 20,
             'flood' => 30,
-            'homepage' => 'news/list/',
+            'homepage' => 'news/index/index/',
             'lang' => LANG,
             'mailer_smtp_auth' => 0,
             'mailer_smtp_host' => '',
@@ -211,7 +249,7 @@ class Install extends AbstractController
             'seo_mod_rewrite' => 1,
             'seo_robots' => 1,
             'seo_title' => !empty($formData['seo_title']) ? $formData['seo_title'] : 'ACP3',
-            'version' => CONFIG_VERSION,
+            'version' => self::ACP3_VERSION,
             'wysiwyg' => 'CKEditor'
         );
 

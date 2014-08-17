@@ -21,4 +21,4 @@ services:
 
   articles.installer:
     class: ACP3\Modules\Articles\Installer
-    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']
+    parent: core.modules.abstract.installer

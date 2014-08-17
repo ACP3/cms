@@ -50,7 +50,8 @@ class Helpers
     public function installModule($module, Container $container)
     {
         $bool = false;
-        $serviceId = $module . 'installer';
+        $serviceId = $module . '.installer';
+
         if ($container->has($serviceId)) {
             /** @var \ACP3\Core\Modules\AbstractInstaller $installer */
             $installer = $container->get($serviceId);

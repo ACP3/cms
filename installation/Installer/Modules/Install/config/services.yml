@@ -9,7 +9,7 @@ services:
 
   install.validator:
     class: ACP3\Installer\Modules\Install\Validator
-    arguments: ['@core.lang']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date']
 
   install.helpers:
     class: ACP3\Installer\Modules\Install\Helpers

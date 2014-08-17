@@ -36,7 +36,7 @@ abstract class AbstractInstaller implements InstallerInterface
     /**
      * @var \ACP3\Modules\Permissions\Model
      */
-    protected $aclModel;
+    protected $permissionsModel;
     /**
      * Die bei der Installation an das Modul zugewiesene ID
      *
@@ -60,11 +60,12 @@ abstract class AbstractInstaller implements InstallerInterface
     {
         $this->db = $db;
         $this->systemModel = $systemModel;
-        $this->aclModel = $permissionsModel;
+        $this->permissionsModel = $permissionsModel;
     }
 
     /**
      * @param $module
+     *
      * @return string
      */
     public static function buildClassName($module)
@@ -130,6 +131,7 @@ abstract class AbstractInstaller implements InstallerInterface
      * Führt die in $queries als Array übergebenen SQL-Statements aus
      *
      * @param array $queries
+     *
      * @return boolean
      */
     public function executeSqlQueries(array $queries)
@@ -160,6 +162,7 @@ abstract class AbstractInstaller implements InstallerInterface
      * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
      *
      * @param string $module
+     *
      * @return array
      */
     public static function getDependencies($module)
@@ -181,6 +184,7 @@ abstract class AbstractInstaller implements InstallerInterface
      * @param integer $mode
      *    1 = Ressourcen und Regeln einlesen
      *    2 = Nur die Ressourcen einlesen
+     *
      * @return boolean
      */
     public function addResources($mode = 1)
@@ -220,8 +224,8 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function _insertAclRules()
     {
-        $roles = $this->aclModel->getAllRoles();
-        $privileges = $this->aclModel->getAllResourceIds();
+        $roles = $this->permissionsModel->getAllRoles();
+        $privileges = $this->permissionsModel->getAllResourceIds();
         foreach ($roles as $role) {
             foreach ($privileges as $privilege) {
                 $permission = 0;
@@ -245,7 +249,7 @@ abstract class AbstractInstaller implements InstallerInterface
                     'privilege_id' => $privilege['id'],
                     'permission' => $permission
                 );
-                $this->aclModel->insert($insertValues, Permissions\Model::TABLE_NAME_RULES);
+                $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RULES);
             }
         }
     }
@@ -253,8 +257,8 @@ abstract class AbstractInstaller implements InstallerInterface
     /**
      * Inserts a new resource into the database
      *
-     * @param $module
-     * @param $controller
+     * @param        $module
+     * @param        $controller
      * @param string $area
      */
     protected function _insertAclResources($module, $controller, $area = '')
@@ -306,7 +310,7 @@ abstract class AbstractInstaller implements InstallerInterface
                     'params' => '',
                     'privilege_id' => (int)$privilegeId
                 );
-                $this->aclModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
+                $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
             }
         }
     }
@@ -318,8 +322,8 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeResources()
     {
-        $bool = $this->aclModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
-        $bool2 = $this->aclModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RULES);
+        $bool = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
+        $bool2 = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RULES);
 
         $cache = new Core\Cache2('acl');
         $cache->getDriver()->deleteAll();
@@ -331,6 +335,7 @@ abstract class AbstractInstaller implements InstallerInterface
      * Installiert die zu einem Module zugehörigen Einstellungen
      *
      * @param array $settings
+     *
      * @return boolean
      */
     protected function installSettings(array $settings)
@@ -429,8 +434,9 @@ abstract class AbstractInstaller implements InstallerInterface
 
     /**
      *
-     * @param array $schemaUpdates
+     * @param array   $schemaUpdates
      * @param integer $installedSchemaVersion
+     *
      * @return integer
      */
     protected function interateOverSchemaUpdates(array $schemaUpdates, $installedSchemaVersion)
@@ -463,6 +469,7 @@ abstract class AbstractInstaller implements InstallerInterface
      * Setzt die DB-Schema-Version auf die neue Versionsnummer
      *
      * @param integer $newVersion
+     *
      * @return boolean
      */
     public function setNewSchemaVersion($newVersion)
@@ -479,5 +486,15 @@ abstract class AbstractInstaller implements InstallerInterface
     public function renameModule()
     {
         return array();
+    }
+
+    /**
+     * @param $moduleName
+     *
+     * @return mixed
+     */
+    public function moduleIsInstalled($moduleName)
+    {
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = \'' . $moduleName . '\'') == 1;
     }
 }

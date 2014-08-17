@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Modules\System\Model;
+use ACP3\Modules\System;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -33,7 +33,7 @@ class Config
         $this->cache = new Cache2($module);
         $this->db = $db;
         $this->module = strtolower($module);
-        $this->systemModel = new Model($db);
+        $this->systemModel = new System\Model($db);
     }
 
     /**
@@ -55,7 +55,7 @@ class Config
                     'module_id' => $moduleId,
                     'name' => $key
                 );
-                $bool = $this->systemModel->update($updateValues, $where, Model::TABLE_NAME_SETTINGS);
+                $bool = $this->systemModel->update($updateValues, $where, System\Model::TABLE_NAME_SETTINGS);
             }
             $bool2 = $this->setCache();
         }

@@ -12,23 +12,6 @@ class Installer extends Modules\AbstractInstaller
     const MODULE_NAME = 'gallery';
     const SCHEMA_VERSION = 35;
 
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-
-    public function __construct(
-        \Doctrine\DBAL\Connection $db,
-        System\Model $systemModel,
-        Permissions\Model $permissionsModel,
-        Modules $modules
-    )
-    {
-        parent::__construct($db, $systemModel, $permissionsModel);
-
-        $this->modules = $modules;
-    }
-
     public function createTables()
     {
         return array(
@@ -95,9 +78,9 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "order";',
             ),
             35 => array(
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/list/", "gallery/index/index/") WHERE uri LIKE "gallery/list/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/pics/", "gallery/index/pics/") WHERE uri LIKE "gallery/pics/%";' : '',
-                $this->modules->isInstalled('menus') || $this->modules->isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/details/", "gallery/index/details/") WHERE uri LIKE "gallery/details/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/list/", "gallery/index/index/") WHERE uri LIKE "gallery/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/pics/", "gallery/index/pics/") WHERE uri LIKE "gallery/pics/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/details/", "gallery/index/details/") WHERE uri LIKE "gallery/details/%";' : '',
             )
         );
     }

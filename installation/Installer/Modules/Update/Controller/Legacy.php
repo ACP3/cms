@@ -345,7 +345,7 @@ class Legacy extends Core\Modules\Controller
                 $results[] = Core\Functions::executeSqlQueries($queries, 29);
             }
             if (CONFIG_DB_VERSION < 30) {
-                $system_settings = array(
+                $systemSettings = array(
                     'cache_images' => CONFIG_CACHE_IMAGES,
                     'cache_minify' => CONFIG_CACHE_MINIFY,
                     'date_format_long' => CONFIG_DATE_FORMAT_LONG,
@@ -375,7 +375,7 @@ class Legacy extends Core\Modules\Controller
                 );
 
                 $mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('system'));
-                foreach ($system_settings as $key => $value) {
+                foreach ($systemSettings as $key => $value) {
                     Registry::get('Db')->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $mod_id, 'name' => $key, 'value' => $value));
                 }
 
