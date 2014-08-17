@@ -64,30 +64,6 @@ class Functions
     }
 
     /**
-     * Führt die Installationsanweisungen des jeweiligen Moduls durch
-     *
-     * @param string $module
-     * @return boolean
-     */
-    public function installModule($module)
-    {
-        $bool = false;
-
-        $module = ucfirst($module);
-        $path = MODULES_DIR . $module . '/Installer.php';
-        if (is_file($path) === true) {
-            $className = Core\Modules\AbstractInstaller::buildClassName($module);
-            /** @var Core\Modules\AbstractInstaller $installer */
-            $installer = new $className(Core\Registry::get('db'));
-            if ($installer instanceof Core\Modules\AbstractInstaller) {
-                $bool = $installer->install();
-            }
-        }
-
-        return $bool;
-    }
-
-    /**
      * Setzt die Ressourcen-Tabelle auf die Standardwerte zurück
      */
     public function resetResources($mode = 1)
@@ -105,32 +81,6 @@ class Functions
                 $installer->addResources($mode);
             }
         }
-    }
-
-    /**
-     * Führt die Updateanweisungen eines Moduls aus
-     *
-     * @param string $module
-     * @return integer
-     */
-    public function updateModule($module)
-    {
-        $result = false;
-
-        $module = ucfirst($module);
-        $path = MODULES_DIR . $module . '/Installer.php';
-        if (is_file($path) === true) {
-            $className = Core\Modules\AbstractInstaller::buildClassName($module);
-            /** @var Core\Modules\AbstractInstaller $installer */
-            $installer = new $className(Core\Registry::get('Db'));
-            if ($installer instanceof Core\Modules\AbstractInstaller &&
-                ($this->modules->isInstalled($module) || count($installer->renameModule()) > 0)
-            ) {
-                $result = $installer->updateSchema();
-            }
-        }
-
-        return $result;
     }
 
 }

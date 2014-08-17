@@ -11,10 +11,10 @@
         {lang t="update|db_update_next_steps"}
     </p>
     <div class="alert alert-warning">
-        {lang t="update|installation_successful_2"}
+        {lang t="install|installation_successful_2"}
     </div>
     <div class="well well-sm text-center">
-        <a href="{$ROOT_DIR}" class="btn btn-primary">{lang t="update|go_to_website"}</a>
+        <a href="{$ROOT_DIR}" class="btn btn-primary">{lang t="install|go_to_website"}</a>
     </div>
 {else}
     <p>{lang t="update|db_update_description"}</p>

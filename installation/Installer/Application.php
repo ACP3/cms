@@ -150,9 +150,29 @@ class Application
         define('DB_PRE', CONFIG_DB_PRE);
 
         $this->container = new ContainerBuilder();
+
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load(ACP3_DIR . 'config/services.yml');
-        $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
+        $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
+        $loader->load(INSTALLER_ACP3_DIR . 'config/update.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
+
+        // Load installer modules services
+        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+        foreach ($installerModules as $module) {
+            $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
+            if (is_file($path) === true) {
+                $loader->load($path);
+            }
+        }
+
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module . '/config/services.yml';
+            if (is_file($path) === true) {
+                $loader->load($path);
+            }
+        }
 
         $this->container->set('core.db', $db);
 
@@ -161,26 +181,12 @@ class Application
             ->get('system.config')
             ->getSettingsAsConstants();
 
-        // Pfade zum Theme setzen
-        define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-        define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
-
-        // Try to get all available services
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
-        foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/config/services.yml';
-            if (is_file($path)) {
-                $loader->load($path);
-            }
-        }
-
         $params = array(
             'compile_id' => 'installer',
             'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
             'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
         );
-        Core\View::setRenderer('Smarty', $params);
+        $this->container->get('core.view')->setRenderer('smarty', $params);
 
         $this->container->compile();
     }

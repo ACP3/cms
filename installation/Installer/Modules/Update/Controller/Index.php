@@ -6,6 +6,7 @@ use ACP3\Core\Cache2;
 use ACP3\Core\Registry;
 use ACP3\Core\Cache;
 use ACP3\Installer\Core;
+use ACP3\Installer\Modules\Update\Helpers;
 
 /**
  * Class Index
@@ -13,6 +14,20 @@ use ACP3\Installer\Core;
  */
 class Index extends Core\Modules\Controller
 {
+    /**
+     * @var \ACP3\Installer\Modules\Update\Helpers
+     */
+    protected $updateHelper;
+
+    public function __construct(
+        Core\Context $context,
+        Helpers $updateHelper
+    )
+    {
+        parent::__construct($context);
+
+        $this->updateHelper = $updateHelper;
+    }
 
     public function actionIndex()
     {
@@ -21,12 +36,12 @@ class Index extends Core\Modules\Controller
             // Zuerst die wichtigen System-Module aktualisieren...
             $coreModules = array('system', 'permissions', 'users');
             foreach ($coreModules as $row) {
-                $result = Core\Functions::updateModule($row);
+                $result = $this->updateHelper->updateModule($row, $this->container);
                 $module = ucfirst($row);
                 $results[$module] = array(
-                    'text' => sprintf($this->lang->t('db_update_text'), $module),
+                    'text' => sprintf($this->lang->t('update', 'db_update_text'), $module),
                     'class' => $result === 1 ? 'success' : ($result === 0 ? 'danger' : 'info'),
-                    'result_text' => $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
+                    'result_text' => $this->lang->t('update', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
                 );
             }
 
@@ -34,12 +49,12 @@ class Index extends Core\Modules\Controller
             $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
             foreach ($modules as $row) {
                 if (in_array(strtolower($row), $coreModules) === false) {
-                    $result = Core\Functions::updateModule($row);
+                    $result = $this->updateHelper->updateModule($row, $this->container);
                     $module = ucfirst($row);
                     $results[$module] = array(
-                        'text' => sprintf($this->lang->t('db_update_text'), $module),
+                        'text' => sprintf($this->lang->t('update', 'db_update_text'), $module),
                         'class' => $result === 1 ? 'success' : ($result === 0 ? 'danger' : 'info'),
-                        'result_text' => $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
+                        'result_text' => $this->lang->t('update', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
                     );
                 }
             }
@@ -49,9 +64,9 @@ class Index extends Core\Modules\Controller
             $this->view->assign('results', $results);
 
             // Cache leeren
-            Cache2::purge('minify');
-            Cache2::purge('sql');
-            Cache2::purge('tpl_compiled');
+            Cache2::purge(UPLOADS_DIR . 'cache/minify');
+            Cache2::purge(UPLOADS_DIR . 'cache/sql');
+            Cache2::purge(UPLOADS_DIR . 'cache/tpl_compiled');
         }
     }
 
