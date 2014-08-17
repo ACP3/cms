@@ -3,9 +3,8 @@
 namespace ACP3\Installer\Modules\Update\Controller;
 
 use ACP3\Core\Cache2;
-use ACP3\Core\Registry;
-use ACP3\Core\Cache;
 use ACP3\Installer\Core;
+use ACP3\Installer\Modules\Update\Helpers;
 
 /**
  * Class Legacy
@@ -13,6 +12,32 @@ use ACP3\Installer\Core;
  */
 class Legacy extends Core\Modules\Controller
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var \ACP3\Installer\Modules\Update\Helpers
+     */
+    protected $updateHelper;
+    /**
+     * @var \ACP3\Installer\Modules\Install\Helpers
+     */
+    protected $installHelper;
+
+    public function __construct(
+        Core\Context $context,
+        \Doctrine\DBAL\Connection $db,
+        Helpers $updateHelper,
+        \ACP3\Installer\Modules\Install\Helpers $installHelper
+    )
+    {
+        parent::__construct($context);
+
+        $this->db = $db;
+        $this->updateHelper = $updateHelper;
+        $this->installHelper = $installHelper;
+    }
 
     public function actionIndex()
     {
@@ -57,7 +82,7 @@ class Legacy extends Core\Modules\Controller
                     'UPDATE `{pre}guestbook` SET `active` = 1;',
                     'CREATE TABLE `{pre}aliases` (`uri` VARCHAR(255) NOT NULL, `alias` VARCHAR(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset};',
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 1);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 1);
             }
             if (CONFIG_DB_VERSION < 2) {
                 $queries = array(
@@ -65,7 +90,7 @@ class Legacy extends Core\Modules\Controller
                     'ALTER TABLE `{pre}seo` ADD `keywords` VARCHAR(255) NOT NULL AFTER `alias`;',
                     'ALTER TABLE `{pre}seo` ADD `description` VARCHAR(255) NOT NULL AFTER `keywords`;',
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 2);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 2);
             }
             if (CONFIG_DB_VERSION < 3) {
                 $queries = array(
@@ -112,7 +137,7 @@ class Legacy extends Core\Modules\Controller
                     "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'users', 'entries_override', '1');",
                     "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'users', 'language_override', '1');",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 3);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 3);
             }
             if (CONFIG_DB_VERSION < 4) {
                 $queries = array(
@@ -124,27 +149,27 @@ class Legacy extends Core\Modules\Controller
                     'ALTER TABLE `{pre}newsletter_archive` ADD `user_id` INT UNSIGNED NOT NULL;',
                     'RENAME TABLE `{pre}poll_question` TO `{pre}polls`;',
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 4);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 4);
 
-                $user = Registry::get('Db')->fetchColumn('SELECT MIN(id) AS id FROM ' . DB_PRE . 'users');
+                $user = $this->db->fetchColumn('SELECT MIN(id) AS id FROM ' . DB_PRE . 'users');
 
-                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'files SET user_id = ?', array($user));
-                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'gallery SET user_id = ?', array($user));
-                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'news SET user_id = ?', array($user));
-                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'newsletter_archive SET user_id = ?', array($user));
-                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'polls SET user_id = ?', array($user));
-                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'static_pages SET user_id = ?', array($user));
+                $this->db->executeUpdate('UPDATE ' . DB_PRE . 'files SET user_id = ?', array($user));
+                $this->db->executeUpdate('UPDATE ' . DB_PRE . 'gallery SET user_id = ?', array($user));
+                $this->db->executeUpdate('UPDATE ' . DB_PRE . 'news SET user_id = ?', array($user));
+                $this->db->executeUpdate('UPDATE ' . DB_PRE . 'newsletter_archive SET user_id = ?', array($user));
+                $this->db->executeUpdate('UPDATE ' . DB_PRE . 'polls SET user_id = ?', array($user));
+                $this->db->executeUpdate('UPDATE ' . DB_PRE . 'static_pages SET user_id = ?', array($user));
             }
             if (CONFIG_DB_VERSION < 5) {
                 $queries = array(
                     'CREATE TABLE `{pre}modules` (`name` varchar(100) NOT NULL, `active` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`name`)) {engine} {charset}',
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 5);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 5);
 
                 $dir = array_diff(scandir(MODULES_DIR), array('.', '..'));
                 foreach ($dir as $row) {
                     if (is_file(MODULES_DIR . $row . '/module.xml') === true) {
-                        Registry::get('Db')->insert(DB_PRE . 'modules', array('name' => $row, 'active' => 1));
+                        $this->db->insert(DB_PRE . 'modules', array('name' => $row, 'active' => 1));
                     }
                 }
             }
@@ -167,63 +192,63 @@ class Legacy extends Core\Modules\Controller
                     'ALTER TABLE `{pre}menu_items` ADD `parent_id` INT(10) NOT NULL AFTER `root_id`;',
                     "TRUNCATE TABLE `{pre}acl_rules`;",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 10);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 10);
 
-                $roles = Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'acl_roles');
+                $roles = $this->db->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'acl_roles');
                 foreach ($roles as $row) {
-                    $parent_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'acl_roles WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
-                    Registry::get('Db')->update(DB_PRE . 'acl_roles', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
+                    $parent_id = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'acl_roles WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
+                    $this->db->update(DB_PRE . 'acl_roles', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
                 }
 
-                $pages = Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'menu_items');
+                $pages = $this->db->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'menu_items');
                 foreach ($pages as $row) {
-                    $parent_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
-                    Registry::get('Db')->update(DB_PRE . 'menu_items', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
+                    $parent_id = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
+                    $this->db->update(DB_PRE . 'menu_items', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
                 }
 
-                Core\Functions::resetResources();
+                $this->updateHelper->resetResources(1, $this->container);
             }
             if (CONFIG_DB_VERSION < 11) {
                 // Neue Module Seiten für das Permission Modul
-                Core\Functions::resetResources(2);
+                $this->updateHelper->resetResources(2, $this->container);
             }
             if (CONFIG_DB_VERSION < 12) {
                 $queries = array(
                     'CREATE TABLE `{pre}sessions` (`session_id` varchar(32) NOT NULL, `session_starttime` int(10) unsigned NOT NULL, `session_data` text NOT NULL, PRIMARY KEY (`session_id`)) {engine} {charset};'
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 12);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 12);
             }
             if (CONFIG_DB_VERSION < 13) {
                 $queries = array(
                     "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'news', 'category_in_breadcrumb', '1');",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 13);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 13);
             }
             if (CONFIG_DB_VERSION < 14) {
                 $queries = array(
                     "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'users', 'enable_registration', '1');",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 14);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 14);
             }
             if (CONFIG_DB_VERSION < 15) {
                 $queries = array(
                     "UPDATE `{pre}settings` SET name = 'overlay' WHERE module = 'gallery' AND name = 'colorbox';",
                     "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'guestbook', 'overlay', '1');",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 15);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 15);
             }
             if (CONFIG_DB_VERSION < 16) {
                 $queries = array(
                     "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'comments', 'emoticons', '1');",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 16);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 16);
             }
             if (CONFIG_DB_VERSION < 17) {
                 $queries = array(
                     "ALTER TABLE `{pre}menu_items` DROP `start`, DROP `end`;",
                     "ALTER TABLE `{pre}seo` DROP INDEX `alias`, ADD INDEX (`alias`);",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 17);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 17);
             }
             if (CONFIG_DB_VERSION < 18) {
                 $queries = array(
@@ -233,44 +258,44 @@ class Legacy extends Core\Modules\Controller
                     "ALTER TABLE `{pre}polls` CHANGE `start` `start` INT UNSIGNED NOT NULL, CHANGE `end` `end` INT UNSIGNED NOT NULL;",
                     "ALTER TABLE `{pre}static_pages` CHANGE `start` `start` INT UNSIGNED NOT NULL, CHANGE `end` `end` INT UNSIGNED NOT NULL;",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 18);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 18);
             }
             if (CONFIG_DB_VERSION < 19) {
                 $queries = array(
                     "ALTER TABLE `{pre}users` ADD COLUMN `super_user` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 19);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 19);
             }
             if (CONFIG_DB_VERSION < 20) {
                 $queries = array(
                     "ALTER TABLE `{pre}seo` ADD COLUMN `robots` TINYINT(1) UNSIGNED NOT NULL AFTER `description`;",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 20);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 20);
             }
             if (CONFIG_DB_VERSION < 21) {
                 $queries = array(
                     "ALTER TABLE `{pre}users` CHANGE `time_zone` `time_zone` VARCHAR(100) NOT NULL;",
                     "UPDATE `{pre}users` SET time_zone = 'Europe/Berlin';",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 21);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 21);
             }
             if (CONFIG_DB_VERSION < 22) {
-                $mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('access'));
+                $mod_id = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('access'));
                 $queries = array(
                     "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', '" . $mod_id . "', 'create_resources', '', 4);",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 22);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 22);
             }
             if (CONFIG_DB_VERSION < 23) {
                 $queries = array(
                     "ALTER TABLE `{pre}acl_roles` ADD COLUMN `root_id` INT UNSIGNED NOT NULL AFTER `name`;",
                     "UPDATE `{pre}acl_roles` SET root_id = 1",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 23);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 23);
             }
             if (CONFIG_DB_VERSION < 24) {
                 // Neue Modulseiten
-                Core\Functions::resetResources(2);
+                $this->updateHelper->resetResources(2, $this->container);
             }
             if (CONFIG_DB_VERSION < 25) {
                 $queries = array(
@@ -311,21 +336,21 @@ class Legacy extends Core\Modules\Controller
                     "ALTER TABLE `{pre}static_pages` DROP `start`, DROP `end`;",
                     "ALTER TABLE `{pre}static_pages` CHANGE `start2` `start` DATETIME NOT NULL, CHANGE `end2` `end` DATETIME NOT NULL;",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 25);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 25);
             }
             if (CONFIG_DB_VERSION < 26) {
                 // Neue Modulseiten
-                Core\Functions::resetResources(2);
+                $this->updateHelper->resetResources(2, $this->container);
             }
             if (CONFIG_DB_VERSION < 27) {
                 $queries = array(
                     "DELETE FROM `{pre}settings` WHERE module = 'contact' AND name = 'layout';",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 27);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 27);
             }
             if (CONFIG_DB_VERSION < 28) {
                 // Neue Modulseiten
-                Core\Functions::resetResources(2);
+                $this->updateHelper->resetResources(2, $this->container);
             }
             if (CONFIG_DB_VERSION < 29) {
                 $queries = array(
@@ -342,7 +367,7 @@ class Legacy extends Core\Modules\Controller
                     "ALTER TABLE `{pre}settings` DROP INDEX `module`, ADD UNIQUE (`module_id`, `name`);",
                     "ALTER TABLE `{pre}settings` DROP `module`;",
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 29);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 29);
             }
             if (CONFIG_DB_VERSION < 30) {
                 $systemSettings = array(
@@ -374,35 +399,35 @@ class Legacy extends Core\Modules\Controller
                     'wysiwyg' => CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG
                 );
 
-                $mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('system'));
+                $mod_id = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('system'));
                 foreach ($systemSettings as $key => $value) {
-                    Registry::get('Db')->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $mod_id, 'name' => $key, 'value' => $value));
+                    $this->db->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $mod_id, 'name' => $key, 'value' => $value));
                 }
 
                 // DB-Config anpassen
-                $system_config = array(
+                $systemConfig = array(
                     'db_host' => CONFIG_DB_HOST,
                     'db_name' => CONFIG_DB_NAME,
                     'db_password' => CONFIG_DB_PASSWORD,
                     'db_pre' => CONFIG_DB_PRE,
                     'db_user' => CONFIG_DB_USER,
                 );
-                Core\Functions::writeConfigFile($system_config);
+                $this->installHelper->writeConfigFile(ACP3_DIR . 'config/config.php', $systemConfig);
 
                 $queries = array(
                     "ALTER TABLE `{pre}modules` ADD `version` TINYINT(3) UNSIGNED NOT NULL AFTER `name`;",
                     // Interne DB-Schema-Version der Module
                     "UPDATE `{pre}modules` SET version = 30;"
                 );
-                $results[] = Core\Functions::executeSqlQueries($queries, 30);
+                $results[] = $this->updateHelper->executeSqlQueries($queries, 30);
             }
 
             $this->view->assign('results', $results);
 
             // Cache leeren
-            Cache2::purge('sql');
-            Cache2::purge('tpl_compiled');
-            Cache2::purge('minify');
+            Cache2::purge(UPLOADS_DIR . 'cache/sql');
+            Cache2::purge(UPLOADS_DIR . 'cache/tpl_compiled');
+            Cache2::purge(UPLOADS_DIR . 'cache/minify');
         }
 
         $this->view->assign('legacy', true);
