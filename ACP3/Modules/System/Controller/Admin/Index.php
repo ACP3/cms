@@ -85,7 +85,7 @@ class Index extends Core\Modules\Controller\Admin
                 if (CONFIG_EXTRA_CSS !== $_POST['extra_css'] ||
                     CONFIG_EXTRA_JS !== $_POST['extra_js']
                 ) {
-                    Core\Cache2::purge('minify');
+                    Core\Cache::purge(UPLOADS_DIR . 'cache/minify');
                 }
 
                 $this->secureHelper->unsetFormToken($this->request->query);

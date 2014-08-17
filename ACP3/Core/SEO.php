@@ -9,7 +9,7 @@ use ACP3\Core\Router\Aliases;
 class SEO
 {
     /**
-     * @var Cache2
+     * @var Cache
      */
     protected $cache;
     /**
@@ -64,7 +64,7 @@ class SEO
         Aliases $aliases,
         View $view)
     {
-        $this->cache = new Cache2('seo');
+        $this->cache = new Cache('seo');
         $this->db = $db;
         $this->lang = $lang;
         $this->request = $request;

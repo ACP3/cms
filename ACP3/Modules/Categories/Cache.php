@@ -10,14 +10,14 @@ class Cache
      */
     protected $categoriesModel;
     /**
-     * @var \ACP3\Core\Cache2
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
 
     public function __construct(Model $categoriesModel)
     {
         $this->categoriesModel = $categoriesModel;
-        $this->cache = new Core\Cache2('categories');
+        $this->cache = new Core\Cache('categories');
     }
 
     /**

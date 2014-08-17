@@ -1,48 +1,119 @@
 <?php
 namespace ACP3\Core;
 
+use Doctrine\Common\Cache\CacheProvider;
+
 /**
- * Klasse zur Erstellung des Caches, um die Leistung von bestimmten Aktionen des ACP3 zu steigern
- *
- * @author Tino Goratsch
+ * Class Cache
+ * @package ACP3\Core
  */
 class Cache
 {
     /**
-     *
      * @var string
      */
-    protected static $cacheDir = 'uploads/cache/';
+    protected $namespace = '';
     /**
-     *
-     * @var string
+     * @var CacheProvider
      */
-    protected static $sqlCacheDir = 'uploads/cache/sql/';
+    protected $driver;
 
-    /**
-     * Löscht den gesamten Cache
-     *
-     * @param string $dir
-     *    Einen Unterordner des Cache-Ordners löschen
-     * @param string $cacheId
-     */
-    public static function purge($dir = '', $cacheId = '')
+    public function __construct($namespace)
     {
-        $path = ACP3_ROOT_DIR . self::$cacheDir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : 'sql/');
-        if (is_dir($path)) {
-            $cacheId .= $cacheId !== '' ? '_' : '';
+        $this->namespace = $namespace;
 
-            $cacheDir = scandir($path);
-            foreach ($cacheDir as $row) {
-                if (is_file($path . $row) && $row !== '.htaccess') {
-                    // Wenn eine $cache_id gesetzt wurde, nur diese Dateien löschen
-                    if ($cacheId !== '' && strpos($row, $cacheId) !== 0) {
-                        continue;
-                    }
-                    @unlink($path . $row);
+        $driverName = defined('CONFIG_CACHE_DRIVER') ? CONFIG_CACHE_DRIVER : 'Array';
+
+        $driverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
+        if (class_exists($driverPath)) {
+            if ($driverName === 'PhpFile') {
+                $cacheDir = UPLOADS_DIR . 'cache/sql/';
+                $this->driver = new $driverPath($cacheDir);
+            } else {
+                $this->driver = new $driverPath();
+            }
+
+            $this->driver->setNamespace($namespace);
+        } else {
+            throw new \InvalidArgumentException(sprintf('Could not find the requested cache driver "%s"!', $driverPath));
+        }
+    }
+
+    /**
+     * @param $id
+     * @return bool|mixed|string
+     */
+    public function fetch($id)
+    {
+        return $this->driver->fetch($id);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function contains($id)
+    {
+        return $this->driver->contains($id);
+    }
+
+    /**
+     * @param $id
+     * @param $data
+     * @param int $lifetime
+     * @return bool
+     */
+    public function save($id, $data, $lifetime = 0)
+    {
+        return $this->driver->save($id, $data, $lifetime);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function delete($id)
+    {
+        return $this->driver->delete($id);
+    }
+
+    /**
+     * @return CacheProvider
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+
+    /**
+     * @param string $dir
+     * @param string $cacheId
+     * @return bool
+     */
+    public static function purge($dir, $cacheId = '')
+    {
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            $path = "$dir/$file";
+
+            if (is_dir($path) ) {
+                static::purge($path, $cacheId);
+                if (empty($cacheId)) {
+                    @rmdir($path);
                 }
+            } else {
+                if (!empty($cacheId) && strpos($file, $cacheId) === false) {
+                    continue;
+                }
+
+                @unlink($path);
             }
         }
-        return;
+
+        if (!empty($cacheId)) {
+            return true;
+        }
+
+        return true;
     }
-}
+} 

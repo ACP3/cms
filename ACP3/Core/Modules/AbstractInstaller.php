@@ -213,7 +213,7 @@ abstract class AbstractInstaller implements InstallerInterface
             $this->_insertAclRules();
         }
 
-        $cache = new Core\Cache2('acl');
+        $cache = new Core\Cache('acl');
         $cache->getDriver()->deleteAll();
 
         return true;
@@ -325,7 +325,7 @@ abstract class AbstractInstaller implements InstallerInterface
         $bool = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
         $bool2 = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RULES);
 
-        $cache = new Core\Cache2('acl');
+        $cache = new Core\Cache('acl');
         $cache->getDriver()->deleteAll();
 
         return $bool !== false && $bool2 !== false;

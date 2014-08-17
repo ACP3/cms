@@ -9,7 +9,7 @@ namespace ACP3\Core;
 class Lang
 {
     /**
-     * @var Cache2
+     * @var Cache
      */
     protected $cache;
     /**
@@ -37,7 +37,7 @@ class Lang
         $this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
         $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
 
-        $this->cache = new Cache2('lang');
+        $this->cache = new Cache('lang');
     }
 
     /**

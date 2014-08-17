@@ -128,7 +128,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $cache = new Core\Cache2('categories');
+            $cache = new Core\Cache('categories');
             $cache->getDriver()->deleteAll();
 
             if ($isInUse === true) {

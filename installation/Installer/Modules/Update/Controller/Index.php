@@ -2,8 +2,6 @@
 
 namespace ACP3\Installer\Modules\Update\Controller;
 
-use ACP3\Core\Cache2;
-use ACP3\Core\Registry;
 use ACP3\Core\Cache;
 use ACP3\Installer\Core;
 use ACP3\Installer\Modules\Update\Helpers;
@@ -64,9 +62,9 @@ class Index extends Core\Modules\Controller
             $this->view->assign('results', $results);
 
             // Cache leeren
-            Cache2::purge(UPLOADS_DIR . 'cache/minify');
-            Cache2::purge(UPLOADS_DIR . 'cache/sql');
-            Cache2::purge(UPLOADS_DIR . 'cache/tpl_compiled');
+            Cache::purge(UPLOADS_DIR . 'cache/minify');
+            Cache::purge(UPLOADS_DIR . 'cache/sql');
+            Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
         }
     }
 

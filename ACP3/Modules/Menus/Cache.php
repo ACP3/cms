@@ -9,7 +9,7 @@ class Cache
     const CACHE_ID_VISIBLE = 'visible_items_';
 
     /**
-     * @var Core\Cache2
+     * @var Core\Cache
      */
     protected $cache;
     /**
@@ -23,7 +23,7 @@ class Cache
 
     public function __construct(Core\Lang $lang, Model $menuModel)
     {
-        $this->cache = new Core\Cache2('menus');
+        $this->cache = new Core\Cache('menus');
         $this->lang = $lang;
         $this->menuModel = $menuModel;
     }

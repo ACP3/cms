@@ -11,7 +11,7 @@ class Cache
 {
     const CACHE_ID = 'list';
     /**
-     * @var \ACP3\Core\Cache2
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
     /**
@@ -21,7 +21,7 @@ class Cache
 
     public function __construct(Model $emoticonsModel)
     {
-        $this->cache = new Core\Cache2('emoticons');
+        $this->cache = new Core\Cache('emoticons');
         $this->emoticonsModel = $emoticonsModel;
     }
 

@@ -53,8 +53,8 @@ class Extensions extends Core\Modules\Controller\Admin
                 $bool = $config->setSettings(array('design' => $this->request->dir));
 
                 // Template Cache leeren
-                Core\Cache2::purge('tpl_compiled');
-                Core\Cache2::purge('tpl_cached');
+                Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
+                Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_cached');
             }
             $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
