@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $cache = new Core\Cache2('menus');
+            $cache = new Core\Cache('menus');
 
             foreach ($items as $item) {
                 if (!empty($item) && $this->menusModel->menuExists($item) === true) {

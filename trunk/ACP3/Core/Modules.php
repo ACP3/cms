@@ -30,7 +30,7 @@ class Modules
      */
     protected $lang;
     /**
-     * @var Cache2
+     * @var Cache
      */
     protected $cache;
     /**
@@ -47,7 +47,7 @@ class Modules
         $this->db = $db;
         $this->acl = $acl;
         $this->lang = $lang;
-        $this->cache = new Cache2('modules');
+        $this->cache = new Cache('modules');
         $this->systemModel = new System\Model($db);
     }
 

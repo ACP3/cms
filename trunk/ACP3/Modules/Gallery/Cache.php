@@ -10,7 +10,7 @@ class Cache
      */
     const CACHE_ID = 'pics_id_';
     /**
-     * @var \ACP3\Core\Cache2
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
     /**
@@ -24,7 +24,7 @@ class Cache
 
     public function __construct(\Doctrine\DBAL\Connection $db, Model $galleryModel)
     {
-        $this->cache = new Core\Cache2('gallery');
+        $this->cache = new Core\Cache('gallery');
         $this->db = $db;
         $this->galleryModel = $galleryModel;
     }

@@ -147,7 +147,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $cache = new Core\Cache2('acl');
+            $cache = new Core\Cache('acl');
             $cache->getDriver()->deleteAll();
 
             if ($levelUndeletable === true) {
@@ -190,7 +190,7 @@ class Index extends Core\Modules\Controller\Admin
                     }
                     $this->db->commit();
 
-                    $cache = new Core\Cache2('acl');
+                    $cache = new Core\Cache('acl');
                     $cache->getDriver()->deleteAll();
 
                     $this->secureHelper->unsetFormToken($this->request->query);
@@ -278,7 +278,7 @@ class Index extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             $nestedSet->order($this->request->id, $this->request->action);
 
-            $cache = new Core\Cache2('acl');
+            $cache = new Core\Cache('acl');
             $cache->getDriver()->deleteAll();
 
             $this->redirect()->temporary('acp/permissions');

@@ -11,7 +11,7 @@ class Cache
 {
     const CACHE_ID = 'details_id_';
     /**
-     * @var \ACP3\Core\Cache2
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
     /**
@@ -22,7 +22,7 @@ class Cache
     public function __construct(Model $newsModel)
     {
         $this->newsModel = $newsModel;
-        $this->cache = new Core\Cache2('news');
+        $this->cache = new Core\Cache('news');
     }
 
     /**

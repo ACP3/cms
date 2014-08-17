@@ -103,7 +103,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = $bool2 = false;
 
-            $cache = new Core\Cache2('gallery');
+            $cache = new Core\Cache('gallery');
 
             foreach ($items as $item) {
                 if (!empty($item) && $this->galleryModel->galleryExists($item) === true) {
@@ -270,9 +270,9 @@ class Index extends Core\Modules\Controller\Admin
                 if ($_POST['thumbwidth'] !== $settings['thumbwidth'] || $_POST['thumbheight'] !== $settings['thumbheight'] ||
                     $_POST['width'] !== $settings['width'] || $_POST['height'] !== $settings['height']
                 ) {
-                    Core\Cache2::purge('images', 'gallery');
+                    Core\Cache::purge(UPLOADS_DIR . 'cache/images', 'gallery');
 
-                    $cache = new Core\Cache2('gallery');
+                    $cache = new Core\Cache('gallery');
                     $cache->getDriver()->deleteAll();
                 }
 

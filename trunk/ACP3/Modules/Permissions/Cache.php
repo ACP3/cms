@@ -14,7 +14,7 @@ class Cache
     const CACHE_ID_RULES = 'rules_';
 
     /**
-     * @var \ACP3\Core\Cache2
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
     /**
@@ -25,7 +25,7 @@ class Cache
     public function __construct(Model $permissionsModel)
     {
         $this->permissionsModel = $permissionsModel;
-        $this->cache = new Core\Cache2('acl');
+        $this->cache = new Core\Cache('acl');
     }
 
     /**

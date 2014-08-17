@@ -16,7 +16,7 @@ class Aliases
     protected $aliases = array();
 
     /**
-     * @var \ACP3\Core\Cache2
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
     /**
@@ -34,7 +34,7 @@ class Aliases
     function __construct(\Doctrine\DBAL\Connection $db)
     {
         $this->systemModel = new System\Model($db);
-        $this->cache = new Core\Cache2('uri');
+        $this->cache = new Core\Cache('uri');
         $this->aliases = $this->getCache();
     }
 

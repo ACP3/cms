@@ -20,7 +20,7 @@ class Config
      */
     protected $systemModel;
     /**
-     * @var Cache2
+     * @var Cache
      */
     protected $cache;
     /**
@@ -30,7 +30,7 @@ class Config
 
     public function __construct(Connection $db, $module)
     {
-        $this->cache = new Cache2($module);
+        $this->cache = new Cache($module);
         $this->db = $db;
         $this->module = strtolower($module);
         $this->systemModel = new System\Model($db);
