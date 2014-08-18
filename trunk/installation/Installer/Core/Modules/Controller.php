@@ -199,7 +199,17 @@ class Controller
                 $this->view->assign('TITLE', $this->lang->t($this->request->mod, $this->request->controller . '_' . $this->request->file));
                 $this->view->assign('CONTENT', $this->getContent() . $this->getContentAppend());
 
-                $this->view->displayTemplate($this->getLayout());
+                if ($this->request->getIsAjax() === true) {
+                    if ($this->layout !== 'layout.tpl') {
+                        $file = $this->layout;
+                    } else {
+                        $file = 'ajax.tpl';
+                    }
+                } else {
+                    $file = $this->getLayout();
+                }
+
+                    $this->view->displayTemplate($file);
             } else {
                 echo $this->getContent();
             }

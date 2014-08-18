@@ -41,7 +41,7 @@ class Legacy extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        if (isset($_POST['update'])) {
+        if (empty($_POST) === false) {
             define('NEW_VERSION', '4.0 SVN');
             if (defined('CONFIG_DB_VERSION') === false) {
                 define('CONFIG_DB_VERSION', (int)0);

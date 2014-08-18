@@ -1,9 +1,12 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Class Output
+ * @package ACP3\Core\Helpers
+ */
 class Output
 {
     /**
@@ -11,7 +14,8 @@ class Output
      */
     public function outputJson(array $data)
     {
-        new JsonResponse($data);
+        $response = new JsonResponse($data);
+        $response->send();
         exit;
     }
 

@@ -44,7 +44,7 @@ class Install extends AbstractController
 
     public function actionIndex()
     {
-        if (isset($_POST['submit'])) {
+        if (empty($_POST) === false) {
             try {
                 $validator = $this->get('install.validator');
                 $validator->validateConfiguration($_POST, $this->configFilePath);

@@ -6,3 +6,7 @@ services:
   smarty.plugin.router:
     class: ACP3\Installer\Core\View\Renderer\Smarty\Router
     arguments: ['@core.router']
+
+  smarty.plugin.include_js:
+    class: ACP3\Core\View\Renderer\Smarty\IncludeJs
+    arguments: ['@core.view']

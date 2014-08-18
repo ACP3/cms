@@ -37,9 +37,9 @@ class Application
     public function defineDirConstants()
     {
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-        $php_self = dirname(PHP_SELF);
-        define('ROOT_DIR', substr($php_self !== '/' ? $php_self . '/' : '/', 0, -13));
-        define('INSTALLER_ROOT_DIR', $php_self !== '/' ? $php_self . '/' : '/');
+        $phpSelf = dirname(PHP_SELF);
+        define('ROOT_DIR', substr($phpSelf !== '/' ? $phpSelf . '/' : '/', 0, -13));
+        define('INSTALLER_ROOT_DIR', $phpSelf !== '/' ? $phpSelf . '/' : '/');
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
@@ -86,6 +86,8 @@ class Application
                 $loader->load($path);
             }
         }
+
+        $this->container->set('core.db', new \StdClass());
 
         $params = array(
             'compile_id' => 'installer',

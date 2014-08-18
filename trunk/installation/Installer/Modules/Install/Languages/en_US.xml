@@ -48,6 +48,7 @@
             <![CDATA[All queries have been successfully executed, so that the installation is now complete.<br />By the following button you can reach the frontend of your website. Afterwards you can log in and do further changes to your site, eg. changing the language, choosing an other design or publishing content.]]></item>
         <item key="installation_successful_2">
             <![CDATA[<strong>Attention:</strong> Please delete the "installation"-folder, because it could be a potential security risk if this folder should exist in a production environment.]]></item>
+        <item key="loading_please_wait">Loading - please wait...</item>
         <item key="log_into_admin_panel">Log into the administration panel</item>
         <item key="magic_quotes">Magic Quotes:</item>
         <item key="maximum_uploadsize">Maximum uploadsize:</item>

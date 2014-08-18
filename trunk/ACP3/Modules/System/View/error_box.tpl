@@ -2,7 +2,7 @@
     <h4>{lang t="system|failure"}</h4>
     <ul>
         {foreach $error_box.errors as $key => $value}
-            <li{if Validate::isNumber($key) === false} data-error="{$key}"{/if}>{$value}</li>
+            <li{if intval($key) === 0} data-error="{$key}"{/if}>{$value}</li>
         {/foreach}
     </ul>
     {if $error_box.non_integer_keys === true}

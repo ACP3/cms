@@ -44,7 +44,7 @@
         </div>
     </nav>
     <main role="main" id="content">
-        <h1>{$TITLE}</h1>
+        <h2>{$TITLE}</h2>
         {$CONTENT}
     </main>
 </div>

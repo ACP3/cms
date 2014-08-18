@@ -50,6 +50,7 @@
             <![CDATA[Alle Abfragen wurden erfolgreich durchgeführt, womit die Installation nun abgeschlossen ist.<br />Über die unten stehende Schaltfläche können Sie zum Frontend Ihrer Website gelangen. Anschließend können Sie sich einloggen und weitere Änderungen an der Seite vornehmen, wie z.B. die Sprache wechseln, ein anderes Design wählen oder Inhalte veröffentlichen.]]></item>
         <item key="installation_successful_2">
             <![CDATA[<strong>Achtung:</strong> Bitte löschen Sie nun den &quot;installation&quot;-Ordner, da dies ein potentielles Sicherheitsrisiko darstellen könnte, falls dieser Ordner in einer Produktiv-Umgebung noch existieren sollte.]]></item>
+        <item key="loading_please_wait">Lädt - bitte warten...</item>
         <item key="log_into_admin_panel">Zum Administrationsbereich</item>
         <item key="magic_quotes">Magic Quotes:</item>
         <item key="maximum_uploadsize">Maximale Uploadgröße:</item>
