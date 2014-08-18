@@ -1,5 +1,5 @@
 {if $dt.initialized === false}
-    {include_js module="system" file="datatable"}
+    {include_js module="system" file="dataTables.bootstrap"}
 {/if}
 <script type="text/javascript">
     $(document).ready(function () {
