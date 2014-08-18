@@ -50,6 +50,10 @@ class Auth
      */
     protected $userInfo = array();
     /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Session
      */
     protected $session;
@@ -75,6 +79,7 @@ class Auth
         Session $session,
         Secure $secureHelper)
     {
+        $this->db = $db;
         $this->session = $session;
         $this->usersModel = new Users\Model($db);
         $this->secureHelper = $secureHelper;
