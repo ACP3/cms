@@ -1,7 +1,7 @@
 {if isset($error_msg)}
     {$error_msg}
 {/if}
-<form action="{uri args="install/install"}" method="post" accept-charset="UTF-8" class="form-horizontal" id="config-form">
+<form action="{uri args="install/install"}" method="post" accept-charset="UTF-8" class="form-horizontal" id="config-form" data-ajax-form="true" data-ajax-form-loading-text="{lang t="install|loading_please_wait"}">
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tabs-1" data-toggle="tab">{lang t="install|db_connection_settings"}</a></li>
@@ -123,3 +123,4 @@
         </div>
     </div>
 </form>
+{include_js module="system" file="forms"}

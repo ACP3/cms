@@ -35,3 +35,7 @@ services:
   core.modules.controller.install:
     abstract: true
     arguments: ['@core.context.install']
+
+  core.helpers.alerts:
+    class: ACP3\Installer\Core\Helpers\Alerts
+    arguments: ['@core.request', '@core.view', '@core.helpers.output']
