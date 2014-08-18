@@ -79,6 +79,7 @@ class Extensions
 
     /**
      * @param $area
+     *
      * @return $this
      */
     public function setArea($area)
@@ -90,6 +91,7 @@ class Extensions
 
     /**
      * @param $sort
+     *
      * @return $this
      */
     public function setSort($sort)
@@ -101,6 +103,7 @@ class Extensions
 
     /**
      * @param $searchTerm
+     *
      * @return $this
      */
     public function setSearchTerm($searchTerm)

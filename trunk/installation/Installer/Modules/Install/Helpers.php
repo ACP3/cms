@@ -14,8 +14,9 @@ class Helpers
     /**
      * Writes the system config file
      *
-     * @param $configFilePath
+     * @param       $configFilePath
      * @param array $data
+     *
      * @return bool
      */
     public function writeConfigFile($configFilePath, array $data)
@@ -43,8 +44,9 @@ class Helpers
     }
 
     /**
-     * @param $module
+     * @param           $module
      * @param Container $container
+     *
      * @return bool
      */
     public function installModule($module, Container $container)

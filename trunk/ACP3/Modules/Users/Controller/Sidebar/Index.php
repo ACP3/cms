@@ -20,7 +20,7 @@ class Index extends Core\Modules\Controller
         Core\Context $context,
         \Doctrine\DBAL\Connection $db)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->db = $db;
     }

@@ -12,6 +12,7 @@ class Date
      *
      * @param string $var
      *  Das zu überprüfende Datum
+     *
      * @return boolean
      */
     public function birthday($var)
@@ -33,6 +34,7 @@ class Date
      *  Startdatum
      * @param string $end
      *  Enddatum
+     *
      * @return boolean
      */
     public function date($start, $end = null)
@@ -64,6 +66,7 @@ class Date
      *
      * @param string $var
      *    Die zu überprüfende Variable
+     *
      * @return boolean
      */
     public function timeZone($var)

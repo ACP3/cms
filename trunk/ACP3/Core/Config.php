@@ -40,6 +40,7 @@ class Config
      * Erstellt/Verändert die Konfigurationsdateien für die Module
      *
      * @param array $data
+     *
      * @return boolean
      */
     public function setSettings($data)
@@ -64,31 +65,6 @@ class Config
     }
 
     /**
-     * Gibt den Inhalt der Konfigurationsdateien der Module aus
-     *
-     * @return array
-     */
-    public function getSettings()
-    {
-        if ($this->cache->contains('settings') === false) {
-            $this->setCache();
-        }
-
-        return $this->cache->fetch('settings');
-    }
-
-    /**
-     * Outputs module settings as constants
-     */
-    public function getSettingsAsConstants()
-    {
-        $settings = $this->getSettings();
-        foreach ($settings as $key => $value) {
-            define('CONFIG_' . strtoupper($key), $value);
-        }
-    }
-
-    /**
      * Setzt den Cache für die Einstellungen eines Moduls
      *
      * @return boolean
@@ -110,6 +86,31 @@ class Config
         }
 
         return $this->cache->save('settings', $data);
+    }
+
+    /**
+     * Outputs module settings as constants
+     */
+    public function getSettingsAsConstants()
+    {
+        $settings = $this->getSettings();
+        foreach ($settings as $key => $value) {
+            define('CONFIG_' . strtoupper($key), $value);
+        }
+    }
+
+    /**
+     * Gibt den Inhalt der Konfigurationsdateien der Module aus
+     *
+     * @return array
+     */
+    public function getSettings()
+    {
+        if ($this->cache->contains('settings') === false) {
+            $this->setCache();
+        }
+
+        return $this->cache->fetch('settings');
     }
 
 }

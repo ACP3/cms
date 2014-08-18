@@ -39,8 +39,8 @@ class TableOfContents
     protected $view;
 
     public function __construct(
-        Core\Breadcrumb $breadcrumb, 
-        Core\Lang $lang, 
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
         Core\SEO $seo,
         Core\Request $request,
         Core\Router $router,
@@ -58,12 +58,65 @@ class TableOfContents
     }
 
     /**
+     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
+     *
+     * @param string $text
+     *    Der zu parsende Text
+     * @param string $path
+     *    Der ACP3-interne URI-Pfad, um die Links zu generieren
+     *
+     * @return string|array
+     */
+    public function splitTextIntoPages($text, $path)
+    {
+        // Falls keine Seitenumbrüche vorhanden sein sollten, Text nicht unnötig bearbeiten
+        if (strpos($text, 'class="page-break"') === false) {
+            return $text;
+        } else {
+            $regex = '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
+
+            $pages = preg_split($regex, $text, -1, PREG_SPLIT_NO_EMPTY);
+            $c_pages = count($pages);
+
+            // Falls zwar Seitenumbruch gesetzt ist, aber danach
+            // kein weiterer Text kommt, den unbearbeiteten Text ausgeben
+            if ($c_pages == 1) {
+                return $text;
+            } else {
+                $matches = array();
+                preg_match_all($regex, $text, $matches);
+
+                $currentPage = $this->validate->isNumber($this->request->page) === true && $this->request->page <= $c_pages ? $this->request->page : 1;
+                $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
+                $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
+
+                if (!empty($nextPage)) {
+                    $this->seo->setNextPage($nextPage);
+                }
+                if (!empty($previousPage)) {
+                    $this->seo->setPreviousPage($previousPage);
+                }
+
+                $page = array(
+                    'toc' => $this->generateTOC($matches[0], $path),
+                    'text' => $pages[$currentPage - 1],
+                    'next' => $nextPage,
+                    'previous' => $previousPage,
+                );
+
+                return $page;
+            }
+        }
+    }
+
+    /**
      * Generiert ein Inhaltsverzeichnis
      *
-     * @param array $pages
-     * @param string $path
+     * @param array   $pages
+     * @param string  $path
      * @param boolean $titlesFromDb
      * @param boolean $customUris
+     *
      * @return string
      */
     public function generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
@@ -111,6 +164,7 @@ class TableOfContents
      * liefert diese als assoziatives Array zurück
      *
      * @param string $string
+     *
      * @return array
      */
     protected function _getHtmlAttributes($string)
@@ -127,57 +181,6 @@ class TableOfContents
         }
 
         return $return;
-    }
-
-    /**
-     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
-     *
-     * @param string $text
-     *    Der zu parsende Text
-     * @param string $path
-     *    Der ACP3-interne URI-Pfad, um die Links zu generieren
-     * @return string|array
-     */
-    public function splitTextIntoPages($text, $path)
-    {
-        // Falls keine Seitenumbrüche vorhanden sein sollten, Text nicht unnötig bearbeiten
-        if (strpos($text, 'class="page-break"') === false) {
-            return $text;
-        } else {
-            $regex = '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
-
-            $pages = preg_split($regex, $text, -1, PREG_SPLIT_NO_EMPTY);
-            $c_pages = count($pages);
-
-            // Falls zwar Seitenumbruch gesetzt ist, aber danach
-            // kein weiterer Text kommt, den unbearbeiteten Text ausgeben
-            if ($c_pages == 1) {
-                return $text;
-            } else {
-                $matches = array();
-                preg_match_all($regex, $text, $matches);
-
-                $currentPage = $this->validate->isNumber($this->request->page) === true && $this->request->page <= $c_pages ? $this->request->page : 1;
-                $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-                $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
-
-                if (!empty($nextPage)) {
-                    $this->seo->setNextPage($nextPage);
-                }
-                if (!empty($previousPage)) {
-                    $this->seo->setPreviousPage($previousPage);
-                }
-
-                $page = array(
-                    'toc' => $this->generateTOC($matches[0], $path),
-                    'text' => $pages[$currentPage - 1],
-                    'next' => $nextPage,
-                    'previous' => $previousPage,
-                );
-
-                return $page;
-            }
-        }
     }
 
 } 

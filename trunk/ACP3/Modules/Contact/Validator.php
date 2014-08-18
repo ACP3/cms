@@ -40,6 +40,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)
@@ -57,7 +58,8 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($this->modules->hasPermission('frontend/captcha/index/image') === true &&
-            $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
+            $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false
+        ) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -68,6 +70,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)

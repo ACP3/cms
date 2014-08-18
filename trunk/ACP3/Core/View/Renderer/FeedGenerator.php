@@ -33,7 +33,26 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
     }
 
     /**
-     * @param $name
+     * Generates the channel element for a feed
+     */
+    protected function generateChannel()
+    {
+        $link = $this->config['feed_link'];
+        $this->renderer->setTitle($this->config['feed_title']);
+        $this->renderer->setLink($link);
+        if ($this->config['feed_type'] !== 'ATOM') {
+            $this->renderer->setDescription($this->container->get('core.lang')->t($this->config['module'], $this->config['module']));
+        } else {
+            $this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
+            $this->renderer->setChannelElement('author', array('name' => $this->config['feed_title']));
+        }
+
+        if (!empty($this->config['feed_image']))
+            $this->renderer->setImage($this->config['feed_title'], $link, $this->config['feed_image']);
+    }
+
+    /**
+     * @param      $name
      * @param null $value
      */
     public function assign($name, $value = null)
@@ -54,34 +73,6 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
     }
 
     /**
-     * Generates the channel element for a feed
-     */
-    protected function generateChannel()
-    {
-        $link = $this->config['feed_link'];
-        $this->renderer->setTitle($this->config['feed_title']);
-        $this->renderer->setLink($link);
-        if ($this->config['feed_type'] !== 'ATOM') {
-            $this->renderer->setDescription($this->container->get('core.lang')->t($this->config['module'], $this->config['module']));
-        } else {
-            $this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
-            $this->renderer->setChannelElement('author', array('name' => $this->config['feed_title']));
-        }
-
-        if (!empty($this->config['feed_image']))
-            $this->renderer->setImage($this->config['feed_title'], $link, $this->config['feed_image']);
-    }
-
-    /**
-     * @param $type
-     * @return mixed
-     */
-    public function fetch($type)
-    {
-        return $this->renderer->generateFeed();
-    }
-
-    /**
      * @param $type
      */
     public function display($type)
@@ -90,7 +81,18 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
     }
 
     /**
+     * @param $type
+     *
+     * @return mixed
+     */
+    public function fetch($type)
+    {
+        return $this->renderer->generateFeed();
+    }
+
+    /**
      * @param $template
+     *
      * @return bool
      */
     public function templateExists($template)

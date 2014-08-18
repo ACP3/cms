@@ -3,8 +3,8 @@
 /**
  * Newsletter
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -72,9 +72,10 @@ class Helpers
     /**
      * Versendet einen Newsletter
      *
-     * @param $newsletterId
+     * @param      $newsletterId
      * @param null $recipients
      * @param bool $bcc
+     *
      * @return bool
      */
     public function sendNewsletter($newsletterId, $recipients, $bcc = false)
@@ -112,6 +113,7 @@ class Helpers
      *
      * @param string $emailAddress
      *    Die anzumeldende E-Mail-Adresse
+     *
      * @return boolean
      */
     public function subscribeToNewsletter($emailAddress)

@@ -27,8 +27,9 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param $file
+     * @param       $file
      * @param array $settings
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData, $file, array $settings)
@@ -54,8 +55,9 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param $file
+     * @param       $file
      * @param array $settings
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData, $file, array $settings)
@@ -79,6 +81,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)

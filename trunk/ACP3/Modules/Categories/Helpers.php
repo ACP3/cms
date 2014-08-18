@@ -3,8 +3,8 @@
 /**
  * Categories
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -54,6 +54,7 @@ class Helpers
      * Überprüft, ob eine Kategorie existiert
      *
      * @param integer $categoryId
+     *
      * @return boolean
      */
     public function categoryExists($categoryId)
@@ -62,23 +63,11 @@ class Helpers
     }
 
     /**
-     * Überprüft, ob bereits eine Kategorie mit dem selben Namen existiert
-     *
-     * @param string $title
-     * @param string $module
-     * @param int|string $categoryId
-     * @return boolean
-     */
-    public function categoryIsDuplicate($title, $module, $categoryId = '')
-    {
-        return $this->categoriesModel->resultIsDuplicate($title, $module, $categoryId);
-    }
-
-    /**
      * Erzeugt eine neue Kategorie und gibt ihre ID zurück
      *
      * @param string $title
      * @param string $module
+     *
      * @return integer
      */
     public function categoriesCreate($title, $module)
@@ -103,13 +92,28 @@ class Helpers
     }
 
     /**
+     * Überprüft, ob bereits eine Kategorie mit dem selben Namen existiert
+     *
+     * @param string     $title
+     * @param string     $module
+     * @param int|string $categoryId
+     *
+     * @return boolean
+     */
+    public function categoryIsDuplicate($title, $module, $categoryId = '')
+    {
+        return $this->categoriesModel->resultIsDuplicate($title, $module, $categoryId);
+    }
+
+    /**
      * Listet alle Kategorien eines Moduls auf
      *
-     * @param string $module
-     * @param string $categoryId
+     * @param string  $module
+     * @param string  $categoryId
      * @param boolean $categoryCreate
-     * @param string $formFieldName
-     * @param string $customText
+     * @param string  $formFieldName
+     * @param string  $customText
+     *
      * @return string
      */
     public function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '')

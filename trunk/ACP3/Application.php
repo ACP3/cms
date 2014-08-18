@@ -269,6 +269,7 @@ class Application
 
     /**
      * Renders an exception
+     *
      * @param $errorMessage
      */
     private function _renderApplicationException($errorMessage)

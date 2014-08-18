@@ -26,22 +26,11 @@ class Cache
     }
 
     /**
-     * Erstellt den Cache einer News anhand der angegebenen ID
-     *
-     * @param integer $id
-     *  Die ID der News
-     * @return boolean
-     */
-    public function setCache($id)
-    {
-        return $this->cache->save(self::CACHE_ID . $id, $this->newsModel->getOneById($id));
-    }
-
-    /**
      * Bindet die gecachete News ein
      *
      * @param integer $id
      *  Die ID der News
+     *
      * @return array
      */
     public function getCache($id)
@@ -51,6 +40,19 @@ class Cache
         }
 
         return $this->cache->fetch(self::CACHE_ID . $id);
+    }
+
+    /**
+     * Erstellt den Cache einer News anhand der angegebenen ID
+     *
+     * @param integer $id
+     *  Die ID der News
+     *
+     * @return boolean
+     */
+    public function setCache($id)
+    {
+        return $this->cache->save(self::CACHE_ID . $id, $this->newsModel->getOneById($id));
     }
 
 } 

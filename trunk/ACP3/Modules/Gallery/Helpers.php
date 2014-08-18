@@ -3,8 +3,8 @@
 /**
  * Gallery
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -46,6 +46,7 @@ class Helpers
      * Setzt einen einzelnen Alias für ein Bild einer Fotogalerie
      *
      * @param integer $pictureId
+     *
      * @return boolean
      */
     public function generatePictureAlias($pictureId)
@@ -70,6 +71,7 @@ class Helpers
      * Setzt alle Bild-Aliase einer Fotogalerie neu
      *
      * @param integer $galleryId
+     *
      * @return boolean
      */
     public function generatePictureAliases($galleryId)
@@ -101,6 +103,7 @@ class Helpers
      * auch alle Bild-Aliase gelöscht werden
      *
      * @param integer $galleryId
+     *
      * @return boolean
      */
     public function deletePictureAliases($galleryId)

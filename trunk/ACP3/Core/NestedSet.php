@@ -30,8 +30,8 @@ class NestedSet
     /**
      *
      * @param \Doctrine\DBAL\Connection $db
-     * @param string $tableName
-     * @param bool $enableBlocks
+     * @param string                    $tableName
+     * @param bool                      $enableBlocks
      */
     public function __construct(\Doctrine\DBAL\Connection $db, $tableName, $enableBlocks = false)
     {
@@ -45,6 +45,7 @@ class NestedSet
      *
      * @param integer $id
      *  Die ID des zu löschenden Datensatzes
+     *
      * @return boolean
      */
     public function deleteNode($id)
@@ -89,7 +90,8 @@ class NestedSet
      *
      * @param integer $parentId
      *    ID der übergeordneten Seite
-     * @param array $insert_values
+     * @param array   $insert_values
+     *
      * @return boolean
      */
     public function insertNode($parentId, array $insert_values)
@@ -159,7 +161,8 @@ class NestedSet
      *    ID des neuen Elternelements
      * @param integer $blockId
      *    ID des neuen Blocks
-     * @param array $updateValues
+     * @param array   $updateValues
+     *
      * @return boolean
      */
     public function editNode($id, $parent, $blockId, array $updateValues)
@@ -270,7 +273,8 @@ class NestedSet
      * Methode zum Umsortieren von Knoten
      *
      * @param integer $id
-     * @param string $mode
+     * @param string  $mode
+     *
      * @return boolean
      */
     public function order($id, $mode)

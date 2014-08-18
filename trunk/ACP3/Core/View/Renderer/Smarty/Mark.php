@@ -29,6 +29,7 @@ class Mark extends AbstractPlugin
 
     /**
      * @param $params
+     *
      * @throws \Exception
      * @return string
      */

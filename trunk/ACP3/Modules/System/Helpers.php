@@ -3,8 +3,8 @@
 /**
  * System
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -37,6 +37,7 @@ class Helpers
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
      *
      * @param string $module
+     *
      * @return array
      */
     public function checkInstallDependencies($module)
@@ -58,6 +59,7 @@ class Helpers
      * Überprüft die Modulabhängigkeiten vor dem Deinstallieren eines Moduls
      *
      * @param string $module
+     *
      * @return array
      */
     public function checkUninstallDependencies($module)

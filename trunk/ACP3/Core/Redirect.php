@@ -48,6 +48,7 @@ class Redirect
 
     /**
      * Outputs a JSON response with redirect url
+     *
      * @param $path
      */
     public function ajax($path)
@@ -67,6 +68,7 @@ class Redirect
 
     /**
      * Executes a temporary redirect
+     *
      * @param $path
      */
     public function temporary($path)
@@ -75,19 +77,10 @@ class Redirect
     }
 
     /**
-     * Executes a permanent redirect
-     * @param $path
-     */
-    public function permanent($path)
-    {
-        $this->_redirect($path, true);
-    }
-
-    /**
      * Umleitung auf andere URLs
      *
      * @param string $path
-     * @param bool $movedPermanently
+     * @param bool   $movedPermanently
      */
     private function _redirect($path, $movedPermanently)
     {
@@ -101,6 +94,16 @@ class Redirect
         $response = new RedirectResponse($url, $status);
         $response->send();
         exit;
+    }
+
+    /**
+     * Executes a permanent redirect
+     *
+     * @param $path
+     */
+    public function permanent($path)
+    {
+        $this->_redirect($path, true);
     }
 
 } 

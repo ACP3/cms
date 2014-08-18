@@ -82,10 +82,10 @@ class Image
             $this->cachePrefix .= '_';
         }
         if (isset($options['max_width'])) {
-            $this->maxWidth = (int) $options['max_width'];
+            $this->maxWidth = (int)$options['max_width'];
         }
         if (isset($options['max_height'])) {
-            $this->maxHeight = (int) $options['max_height'];
+            $this->maxHeight = (int)$options['max_height'];
         }
         if (isset($options['prefer_width']) && is_bool($options['prefer_width']) === true) {
             $this->preferWidth = $options['prefer_width'];
@@ -94,7 +94,7 @@ class Image
             $this->preferHeight = $options['prefer_height'];
         }
         if (isset($options['jpg_quality'])) {
-            $this->jpgQuality = (int) $options['jpg_quality'];
+            $this->jpgQuality = (int)$options['jpg_quality'];
         }
         if (isset($options['force_resample']) && is_bool($options['force_resample']) === true) {
             $this->forceResample = $options['force_resample'];
@@ -111,92 +111,6 @@ class Image
         if (is_resource($this->image) === true) {
             imagedestroy($this->image);
         }
-    }
-
-    /**
-     * Berechnet die neue Breite/Höhe eines Bildes
-     *
-     * @param integer $width
-     *  Ausgangsbreite des Bildes
-     * @param integer $height
-     *  Ausgangshöhe des Bildes
-     * @return array
-     */
-    protected function calcNewDimensions($width, $height)
-    {
-        if (($width >= $height || $this->preferWidth === true) && $this->preferHeight === false) {
-            $newWidth = $this->maxWidth;
-            $newHeight = intval($height * $newWidth / $width);
-        } else {
-            $newHeight = $this->maxHeight;
-            $newWidth = intval($width * $newHeight / $height);
-        }
-
-        return array('width' => $newWidth, 'height' => $newHeight);
-    }
-
-    /**
-     * Generiert den Namen des zu cachenden Bildes
-     *
-     * @return string
-     */
-    protected function setCacheName()
-    {
-        return $this->cachePrefix . substr($this->file, strrpos($this->file, '/') + 1);
-    }
-
-    /**
-     * Führt die Größenanpassung des Bildes durch
-     *
-     * @param integer $newWidth
-     * @param integer $newHeight
-     * @param integer $width
-     * @param integer $height
-     * @param integer $type
-     * @param null $cacheFile
-     */
-    protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile = null)
-    {
-        $this->image = imagecreatetruecolor($newWidth, $newHeight);
-        switch ($type) {
-            case 1:
-                $oldPic = imagecreatefromgif($this->file);
-                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-                imagegif($this->image, $cacheFile);
-                break;
-            case 2:
-                $oldPic = imagecreatefromjpeg($this->file);
-                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-                imagejpeg($this->image, $cacheFile, $this->jpgQuality);
-                break;
-            case 3:
-                imagealphablending($this->image, false);
-                $oldPic = imagecreatefrompng($this->file);
-                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-                imagesavealpha($this->image, true);
-                imagepng($this->image, $cacheFile, 9);
-                break;
-        }
-    }
-
-    /**
-     * Gibt ein Bild direkt aus, ohne dieses in der Größe zu bearbeiten
-     *
-     * @return string
-     */
-    protected function readFromFile()
-    {
-        return readfile($this->file);
-    }
-
-    /**
-     * Get the name of a possibly cached picture
-     *
-     * @return string
-     */
-    protected function getCacheFileName()
-    {
-        return CACHE_DIR . $this->cacheDir . $this->setCacheName();
     }
 
     /**
@@ -230,6 +144,93 @@ class Image
             } else {
                 $this->readFromFile(); // Bild direkt ausgeben
             }
+        }
+    }
+
+    /**
+     * Get the name of a possibly cached picture
+     *
+     * @return string
+     */
+    protected function getCacheFileName()
+    {
+        return CACHE_DIR . $this->cacheDir . $this->setCacheName();
+    }
+
+    /**
+     * Generiert den Namen des zu cachenden Bildes
+     *
+     * @return string
+     */
+    protected function setCacheName()
+    {
+        return $this->cachePrefix . substr($this->file, strrpos($this->file, '/') + 1);
+    }
+
+    /**
+     * Gibt ein Bild direkt aus, ohne dieses in der Größe zu bearbeiten
+     *
+     * @return string
+     */
+    protected function readFromFile()
+    {
+        return readfile($this->file);
+    }
+
+    /**
+     * Berechnet die neue Breite/Höhe eines Bildes
+     *
+     * @param integer $width
+     *  Ausgangsbreite des Bildes
+     * @param integer $height
+     *  Ausgangshöhe des Bildes
+     *
+     * @return array
+     */
+    protected function calcNewDimensions($width, $height)
+    {
+        if (($width >= $height || $this->preferWidth === true) && $this->preferHeight === false) {
+            $newWidth = $this->maxWidth;
+            $newHeight = intval($height * $newWidth / $width);
+        } else {
+            $newHeight = $this->maxHeight;
+            $newWidth = intval($width * $newHeight / $height);
+        }
+
+        return array('width' => $newWidth, 'height' => $newHeight);
+    }
+
+    /**
+     * Führt die Größenanpassung des Bildes durch
+     *
+     * @param integer $newWidth
+     * @param integer $newHeight
+     * @param integer $width
+     * @param integer $height
+     * @param integer $type
+     * @param null    $cacheFile
+     */
+    protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile = null)
+    {
+        $this->image = imagecreatetruecolor($newWidth, $newHeight);
+        switch ($type) {
+            case 1:
+                $oldPic = imagecreatefromgif($this->file);
+                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                imagegif($this->image, $cacheFile);
+                break;
+            case 2:
+                $oldPic = imagecreatefromjpeg($this->file);
+                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                imagejpeg($this->image, $cacheFile, $this->jpgQuality);
+                break;
+            case 3:
+                imagealphablending($this->image, false);
+                $oldPic = imagecreatefrompng($this->file);
+                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                imagesavealpha($this->image, true);
+                imagepng($this->image, $cacheFile, 9);
+                break;
         }
     }
 }

@@ -36,10 +36,11 @@ class Alerts
     /**
      * Displays a confirm box
      *
-     * @param string $text
+     * @param string           $text
      * @param int|string|array $forward
-     * @param int|string $backward
-     * @param integer $overlay
+     * @param int|string       $backward
+     * @param integer          $overlay
+     *
      * @return string
      */
     public function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
@@ -64,10 +65,11 @@ class Alerts
     /**
      * Displays a confirm box, where the forward button triggers a form submit using POST
      *
-     * @param $text
+     * @param       $text
      * @param array $data
-     * @param $forward
-     * @param int $backward
+     * @param       $forward
+     * @param int   $backward
+     *
      * @return string
      */
     public function confirmBoxPost($text, array $data, $forward, $backward = 0)
@@ -93,6 +95,7 @@ class Alerts
      * Gibt eine Box mit den aufgetretenen Fehlern aus
      *
      * @param string|array $errors
+     *
      * @return string
      */
     public function errorBox($errors)

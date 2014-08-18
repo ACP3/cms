@@ -32,28 +32,9 @@ class FrontController
     }
 
     /**
-     * Überprüft die URI auf einen möglichen URI-Alias und
-     * macht im Erfolgsfall einen Redirect darauf
-     *
-     * @return void
-     */
-    private function _checkForUriAlias()
-    {
-        // Nur ausführen, falls URI-Aliase aktiviert sind
-        if ($this->request->area !== 'admin') {
-            // Falls für Query ein Alias existiert, zu diesem weiterleiten
-            if ($this->routerAliases->uriAliasExists($this->request->query) === true &&
-                $this->request->originalQuery !== $this->routerAliases->getUriAlias($this->request->query) . '/') {
-                $this->redirect->permanent($this->request->query); // URI-Alias wird von Router::route() erzeugt
-            }
-        }
-
-        return;
-    }
-
-    /**
      * @param $serviceId
      * @param $action
+     *
      * @throws Exceptions\ControllerActionNotFound
      */
     public function dispatch($serviceId = '', $action = '')
@@ -85,6 +66,27 @@ class FrontController
         } else {
             throw new Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
         }
+    }
+
+    /**
+     * Überprüft die URI auf einen möglichen URI-Alias und
+     * macht im Erfolgsfall einen Redirect darauf
+     *
+     * @return void
+     */
+    private function _checkForUriAlias()
+    {
+        // Nur ausführen, falls URI-Aliase aktiviert sind
+        if ($this->request->area !== 'admin') {
+            // Falls für Query ein Alias existiert, zu diesem weiterleiten
+            if ($this->routerAliases->uriAliasExists($this->request->query) === true &&
+                $this->request->originalQuery !== $this->routerAliases->getUriAlias($this->request->query) . '/'
+            ) {
+                $this->redirect->permanent($this->request->query); // URI-Alias wird von Router::route() erzeugt
+            }
+        }
+
+        return;
     }
 
 } 

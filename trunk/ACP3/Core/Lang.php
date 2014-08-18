@@ -41,116 +41,10 @@ class Lang
     }
 
     /**
-     * Gibt die aktuell eingestellte Sprache zurück
-     *
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->lang;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLanguage2Characters()
-    {
-        return $this->lang2Characters;
-    }
-
-    /**
-     * Verändert die aktuell eingestellte Sprache
-     *
-     * @param string $lang
-     * @return $this
-     */
-    public function setLanguage($lang)
-    {
-        if ($this->languagePackExists($lang) === true) {
-            $this->lang = $lang;
-            $this->buffer = array();
-        }
-
-        return $this;
-    }
-
-    /**
-     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
-     */
-    public function setLanguageCache()
-    {
-        $data = array();
-
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
-
-        foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';
-            if (is_file($path) === true) {
-                $xml = simplexml_load_file($path);
-                if (isset($data['info']['direction']) === false) {
-                    $data['info']['direction'] = (string)$xml->info->direction;
-                }
-
-                // Über die einzelnen Sprachstrings iterieren
-                foreach ($xml->keys->item as $item) {
-                    $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
-                }
-            }
-        }
-
-        $this->buffer = array();
-
-        return $this->cache->save($this->lang, $data);
-    }
-
-    /**
-     * Gets the writing direction of the language
-     *
-     * @return string
-     */
-    public function getDirection()
-    {
-        if (empty($this->buffer)) {
-            $this->buffer = $this->getLanguageCache();
-        }
-
-        return isset($this->buffer['info']['direction']) ? $this->buffer['info']['direction'] : 'ltr';
-    }
-
-    /**
-     * Gibt die gecacheten Sprachstrings aus
-     *
-     * @return array
-     */
-    protected function getLanguageCache()
-    {
-        if ($this->cache->contains($this->lang) === false) {
-            $this->setLanguageCache();
-        }
-
-        return $this->cache->fetch($this->lang);
-    }
-
-    /**
-     * Gibt den angeforderten Sprachstring aus
-     *
-     * @param string $module
-     * @param string $key
-     * @return string
-     */
-    public function t($module, $key)
-    {
-        if (empty($this->buffer)) {
-            $this->buffer = $this->getLanguageCache();
-        }
-
-        return isset($this->buffer['keys'][$module][$key]) ? $this->buffer['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
-    }
-
-    /**
      * Überprüft, ob das angegebene Sprachpaket existiert
      *
      * @param string $lang
+     *
      * @return boolean
      */
     public static function languagePackExists($lang)
@@ -414,78 +308,6 @@ class Lang
     }
 
     /**
-     * Gets all currently available languages
-     *
-     * @param string $currentLanguage
-     * @return array
-     */
-    public function getLanguages($currentLanguage = '')
-    {
-        if (empty($currentLanguage)) {
-            $currentLanguage = $this->lang;
-        }
-
-        if (empty($this->languages)) {
-            $this->languages = $this->_getLanguagesCache();
-        }
-
-        $languages = $this->languages;
-
-        foreach ($languages as $key => $value) {
-            $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLanguage;
-        }
-
-        return $languages;
-    }
-
-    /**
-     * Sets the cache for all registered languages
-     *
-     * @return bool
-     */
-    protected function _setLanguagesCache()
-    {
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
-        $languages = array();
-
-        foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/Languages/';
-            if (is_dir($path) === true) {
-                $moduleLanguages = array_diff(scandir($path), array('.', '..'));
-
-                foreach ($moduleLanguages as $language) {
-                    if (is_file($path . $language) === true) {
-                        $xml = simplexml_load_file($path . $language);
-                        $languageIso = substr($language, 0, -4);
-                        if (!empty($xml) && isset($languages[$languageIso]) === false) {
-                            $languages[$languageIso] = array(
-                                'iso' => $languageIso,
-                                'name' => (string)$xml->info->name
-                            );
-                        }
-                    }
-                }
-            }
-        }
-
-        return $this->cache->save('languages', $languages);
-    }
-
-    /**
-     * Gets the cache for all registered languages
-     *
-     * @return mixed
-     */
-    protected function _getLanguagesCache()
-    {
-        if ($this->cache->contains('languages') === false) {
-            $this->_setLanguagesCache();
-        }
-
-        return $this->cache->fetch('languages');
-    }
-
-    /**
      * Parst den ACCEPT-LANGUAGE Header des Browsers
      * und selektiert die präferierte Sprache
      *
@@ -521,5 +343,187 @@ class Lang
             }
         }
         return 'en_US';
+    }
+
+    /**
+     * Gibt die aktuell eingestellte Sprache zurück
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage2Characters()
+    {
+        return $this->lang2Characters;
+    }
+
+    /**
+     * Verändert die aktuell eingestellte Sprache
+     *
+     * @param string $lang
+     *
+     * @return $this
+     */
+    public function setLanguage($lang)
+    {
+        if ($this->languagePackExists($lang) === true) {
+            $this->lang = $lang;
+            $this->buffer = array();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets the writing direction of the language
+     *
+     * @return string
+     */
+    public function getDirection()
+    {
+        if (empty($this->buffer)) {
+            $this->buffer = $this->getLanguageCache();
+        }
+
+        return isset($this->buffer['info']['direction']) ? $this->buffer['info']['direction'] : 'ltr';
+    }
+
+    /**
+     * Gibt die gecacheten Sprachstrings aus
+     *
+     * @return array
+     */
+    protected function getLanguageCache()
+    {
+        if ($this->cache->contains($this->lang) === false) {
+            $this->setLanguageCache();
+        }
+
+        return $this->cache->fetch($this->lang);
+    }
+
+    /**
+     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
+     */
+    public function setLanguageCache()
+    {
+        $data = array();
+
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';
+            if (is_file($path) === true) {
+                $xml = simplexml_load_file($path);
+                if (isset($data['info']['direction']) === false) {
+                    $data['info']['direction'] = (string)$xml->info->direction;
+                }
+
+                // Über die einzelnen Sprachstrings iterieren
+                foreach ($xml->keys->item as $item) {
+                    $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
+                }
+            }
+        }
+
+        $this->buffer = array();
+
+        return $this->cache->save($this->lang, $data);
+    }
+
+    /**
+     * Gibt den angeforderten Sprachstring aus
+     *
+     * @param string $module
+     * @param string $key
+     *
+     * @return string
+     */
+    public function t($module, $key)
+    {
+        if (empty($this->buffer)) {
+            $this->buffer = $this->getLanguageCache();
+        }
+
+        return isset($this->buffer['keys'][$module][$key]) ? $this->buffer['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
+    }
+
+    /**
+     * Gets all currently available languages
+     *
+     * @param string $currentLanguage
+     *
+     * @return array
+     */
+    public function getLanguages($currentLanguage = '')
+    {
+        if (empty($currentLanguage)) {
+            $currentLanguage = $this->lang;
+        }
+
+        if (empty($this->languages)) {
+            $this->languages = $this->_getLanguagesCache();
+        }
+
+        $languages = $this->languages;
+
+        foreach ($languages as $key => $value) {
+            $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLanguage;
+        }
+
+        return $languages;
+    }
+
+    /**
+     * Gets the cache for all registered languages
+     *
+     * @return mixed
+     */
+    protected function _getLanguagesCache()
+    {
+        if ($this->cache->contains('languages') === false) {
+            $this->_setLanguagesCache();
+        }
+
+        return $this->cache->fetch('languages');
+    }
+
+    /**
+     * Sets the cache for all registered languages
+     *
+     * @return bool
+     */
+    protected function _setLanguagesCache()
+    {
+        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $languages = array();
+
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module . '/Languages/';
+            if (is_dir($path) === true) {
+                $moduleLanguages = array_diff(scandir($path), array('.', '..'));
+
+                foreach ($moduleLanguages as $language) {
+                    if (is_file($path . $language) === true) {
+                        $xml = simplexml_load_file($path . $language);
+                        $languageIso = substr($language, 0, -4);
+                        if (!empty($xml) && isset($languages[$languageIso]) === false) {
+                            $languages[$languageIso] = array(
+                                'iso' => $languageIso,
+                                'name' => (string)$xml->info->name
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->cache->save('languages', $languages);
     }
 }

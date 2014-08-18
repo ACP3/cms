@@ -40,54 +40,9 @@ class Cache
     }
 
     /**
-     * @param $id
-     * @return bool|mixed|string
-     */
-    public function fetch($id)
-    {
-        return $this->driver->fetch($id);
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function contains($id)
-    {
-        return $this->driver->contains($id);
-    }
-
-    /**
-     * @param $id
-     * @param $data
-     * @param int $lifetime
-     * @return bool
-     */
-    public function save($id, $data, $lifetime = 0)
-    {
-        return $this->driver->save($id, $data, $lifetime);
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function delete($id)
-    {
-        return $this->driver->delete($id);
-    }
-
-    /**
-     * @return CacheProvider
-     */
-    public function getDriver()
-    {
-        return $this->driver;
-    }
-
-    /**
      * @param string $dir
      * @param string $cacheId
+     *
      * @return bool
      */
     public static function purge($dir, $cacheId = '')
@@ -96,7 +51,7 @@ class Cache
         foreach ($files as $file) {
             $path = "$dir/$file";
 
-            if (is_dir($path) ) {
+            if (is_dir($path)) {
                 static::purge($path, $cacheId);
                 if (empty($cacheId)) {
                     @rmdir($path);
@@ -115,5 +70,55 @@ class Cache
         }
 
         return true;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return bool|mixed|string
+     */
+    public function fetch($id)
+    {
+        return $this->driver->fetch($id);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return bool
+     */
+    public function contains($id)
+    {
+        return $this->driver->contains($id);
+    }
+
+    /**
+     * @param     $id
+     * @param     $data
+     * @param int $lifetime
+     *
+     * @return bool
+     */
+    public function save($id, $data, $lifetime = 0)
+    {
+        return $this->driver->save($id, $data, $lifetime);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return bool
+     */
+    public function delete($id)
+    {
+        return $this->driver->delete($id);
+    }
+
+    /**
+     * @return CacheProvider
+     */
+    public function getDriver()
+    {
+        return $this->driver;
     }
 } 

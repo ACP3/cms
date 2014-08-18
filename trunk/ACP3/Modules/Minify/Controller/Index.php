@@ -20,7 +20,7 @@ class Index extends Core\Modules\Controller
         Core\Context $context,
         Minify\Helpers $minifyHelpers)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->minifyHelpers = $minifyHelpers;
     }

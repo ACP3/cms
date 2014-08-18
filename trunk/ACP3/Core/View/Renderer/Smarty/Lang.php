@@ -25,6 +25,7 @@ class Lang extends AbstractPlugin
 
     /**
      * @param $params
+     *
      * @return string
      */
     public function process($params)

@@ -35,7 +35,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         Gallery\Model $galleryModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
@@ -45,8 +45,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->galleryModel->pictureExists((int) $this->request->id, $this->date->getCurrentDateTime()) === true) {
-            $picture = $this->galleryModel->getPictureById((int) $this->request->id);
+        if ($this->galleryModel->pictureExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
+            $picture = $this->galleryModel->getPictureById((int)$this->request->id);
 
             $config = new Core\Config($this->db, 'gallery');
             $settings = $config->getSettings();
@@ -158,7 +158,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionPics()
     {
-        if ($this->galleryModel->galleryExists((int) $this->request->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->galleryModel->galleryExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
             // Cache der Galerie holen
             $cache = new Gallery\Cache($this->db, $this->galleryModel);
             $pictures = $cache->getCache($this->request->id);

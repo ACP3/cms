@@ -43,6 +43,13 @@ class Model extends Core\Model
         return $this->getAll($status);
     }
 
+    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
+    {
+        $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
+        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        return $this->db->fetchAll('SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->prefix . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->prefix . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt, array('time' => $time));
+    }
+
     public function getVotesByUserId($pollId, $userId, $ipAddress)
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME_VOTES . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)', array($pollId, $userId, $ipAddress));
@@ -62,13 +69,6 @@ class Model extends Core\Model
     {
         $period = 'p.start = p.end AND p.start <= :time OR p.start != p.end AND :time BETWEEN p.start AND p.end';
         return $this->db->fetchAssoc('SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->prefix . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->prefix . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1', array('time' => $time));
-    }
-
-    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
-    {
-        $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->prefix . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->prefix . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt, array('time' => $time));
     }
 
     public function getAllInAcp()

@@ -26,6 +26,7 @@ class WYSIWYG extends AbstractPlugin
 
     /**
      * @param $params
+     *
      * @throws \InvalidArgumentException
      * @return string
      */

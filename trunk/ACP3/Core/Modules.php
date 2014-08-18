@@ -10,14 +10,6 @@ use ACP3\Modules\System;
 class Modules
 {
     /**
-     * @var array
-     */
-    private $parseModules = array();
-    /**
-     * @var array
-     */
-    private $allModules = array();
-    /**
      * @var ACL
      */
     protected $acl;
@@ -37,6 +29,14 @@ class Modules
      * @var System\Model
      */
     protected $systemModel;
+    /**
+     * @var array
+     */
+    private $parseModules = array();
+    /**
+     * @var array
+     */
+    private $allModules = array();
 
     public function __construct(
         \Doctrine\DBAL\Connection $db,
@@ -75,6 +75,7 @@ class Modules
      * Überprüft, ob eine Modulaktion überhaupt existiert
      *
      * @param string $path
+     *
      * @return boolean
      */
     public function actionExists($path)
@@ -103,6 +104,7 @@ class Modules
      * Gibt zurück, ob ein Modul aktiv ist oder nicht
      *
      * @param string $module
+     *
      * @return boolean
      */
     public function isActive($module)
@@ -112,70 +114,11 @@ class Modules
     }
 
     /**
-     * Überprüft, ob ein Modul in der modules DB-Tabelle
-     * eingetragen und somit installiert ist
-     *
-     * @param string $moduleName
-     * @return boolean
-     */
-    public function isInstalled($moduleName)
-    {
-        return $this->systemModel->moduleExists($moduleName);
-    }
-
-    /**
-     * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
-     * Modulen des ACP3 mitsamt Modulinformationen aus
-     *
-     * @return mixed
-     */
-    public function getAllModules()
-    {
-        if (empty($this->allModules)) {
-            $dir = array_diff(scandir(MODULES_DIR), array('.', '..'));
-            foreach ($dir as $module) {
-                $info = $this->getModuleInfo($module);
-                if (!empty($info)) {
-                    $this->allModules[$info['name']] = $info;
-                }
-            }
-            ksort($this->allModules);
-        }
-
-        return $this->allModules;
-    }
-
-    /**
-     * Gibt alle derzeit aktiven Module in einem Array zurück
-     *
-     * @return array
-     */
-    public function getActiveModules()
-    {
-        $activeModules = $this->getAllModules();
-
-        foreach ($this->allModules as $key => $values) {
-            if ($values['active'] === true) {
-                $activeModules[$key] = $values;
-            }
-        }
-
-        return $activeModules;
-    }
-
-    /**
-     * @return string
-     */
-    protected function _getCacheKey()
-    {
-        return 'infos_' . $this->lang->getLanguage();
-    }
-
-    /**
      * Durchläuft für das angeforderte Modul den <info> Abschnitt in der
      * module.xml und gibt die gefundenen Informationen als Array zurück
      *
      * @param string $module
+     *
      * @return array
      */
     public function getModuleInfo($module)
@@ -189,6 +132,14 @@ class Modules
             $this->parseModules = $this->cache->fetch($filename);
         }
         return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : array();
+    }
+
+    /**
+     * @return string
+     */
+    protected function _getCacheKey()
+    {
+        return 'infos_' . $this->lang->getLanguage();
     }
 
     /**
@@ -224,6 +175,59 @@ class Modules
         }
 
         $this->cache->save($this->_getCacheKey(), $infos);
+    }
+
+    /**
+     * Überprüft, ob ein Modul in der modules DB-Tabelle
+     * eingetragen und somit installiert ist
+     *
+     * @param string $moduleName
+     *
+     * @return boolean
+     */
+    public function isInstalled($moduleName)
+    {
+        return $this->systemModel->moduleExists($moduleName);
+    }
+
+    /**
+     * Gibt alle derzeit aktiven Module in einem Array zurück
+     *
+     * @return array
+     */
+    public function getActiveModules()
+    {
+        $activeModules = $this->getAllModules();
+
+        foreach ($this->allModules as $key => $values) {
+            if ($values['active'] === true) {
+                $activeModules[$key] = $values;
+            }
+        }
+
+        return $activeModules;
+    }
+
+    /**
+     * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
+     * Modulen des ACP3 mitsamt Modulinformationen aus
+     *
+     * @return mixed
+     */
+    public function getAllModules()
+    {
+        if (empty($this->allModules)) {
+            $dir = array_diff(scandir(MODULES_DIR), array('.', '..'));
+            foreach ($dir as $module) {
+                $info = $this->getModuleInfo($module);
+                if (!empty($info)) {
+                    $this->allModules[$info['name']] = $info;
+                }
+            }
+            ksort($this->allModules);
+        }
+
+        return $this->allModules;
     }
 
 }

@@ -44,7 +44,7 @@ class ACL
     /**
      * Konstruktor - erzeugt die ACL für den jeweiligen User
      *
-     * @param Auth $auth
+     * @param Auth                      $auth
      * @param \Doctrine\DBAL\Connection $db
      */
     public function __construct(Auth $auth, \Doctrine\DBAL\Connection $db)
@@ -58,23 +58,14 @@ class ACL
     }
 
     /**
-     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
-     *
-     * @return array
-     */
-    public function getResources()
-    {
-        return $this->cache->getResourcesCache();
-    }
-
-    /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
      *
      * @param integer $userId
      *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
      * @param integer $mode
-     *  1 = IDs der Rollen ausgeben
-     *  2 = Namen der Rollen ausgeben
+     *    1 = IDs der Rollen ausgeben
+     *    2 = Namen der Rollen ausgeben
+     *
      * @return array
      */
     public function getUserRoles($userId, $mode = 1)
@@ -89,6 +80,28 @@ class ACL
             $roles[] = $userRoles[$i][$key];
         }
         return $roles;
+    }
+
+    /**
+     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
+     *
+     * @return array
+     */
+    public function getResources()
+    {
+        return $this->cache->getResourcesCache();
+    }
+
+    /**
+     * Returns the role permissions
+     *
+     * @param array $roleIds
+     *
+     * @return boolean
+     */
+    public function getRules(array $roleIds)
+    {
+        return $this->cache->getRulesCache($roleIds);
     }
 
     /**
@@ -112,21 +125,11 @@ class ACL
     }
 
     /**
-     * Returns the role permissions
-     *
-     * @param array $roleIds
-     * @return boolean
-     */
-    public function getRules(array $roleIds)
-    {
-        return $this->cache->getRulesCache($roleIds);
-    }
-
-    /**
      * Gibt zurück ob dem Benutzer die jeweilige Rolle zugeordnet ist
      *
      * @param integer $roleId
      *    ID der zu überprüfenden Rolle
+     *
      * @return boolean
      */
     public function userHasRole($roleId)
@@ -135,27 +138,11 @@ class ACL
     }
 
     /**
-     * Gibt zurück, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
-     *
-     * @param $module
-     * @param string $key
-     *    The key of the privilege
-     * @return boolean
-     */
-    public function userHasPrivilege($module, $key)
-    {
-        $key = strtolower($key);
-        if (isset($this->privileges[$module][$key])) {
-            return $this->privileges[$module][$key]['access'];
-        }
-        return false;
-    }
-
-    /**
      * Gibt zurück, ob ein Benutzer berichtigt ist, eine Ressource zu betreten
      *
      * @param string $resource
      *    The path of a resource in the format of an internal ACP3 url
+     *
      * @return boolean
      */
     public function canAccessResource($resource)
@@ -176,6 +163,24 @@ class ACL
             $module = $resourceArray[1];
             $key = $this->resources[$area][$resource]['key'];
             return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
+        }
+        return false;
+    }
+
+    /**
+     * Gibt zurück, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
+     *
+     * @param        $module
+     * @param string $key
+     *    The key of the privilege
+     *
+     * @return boolean
+     */
+    public function userHasPrivilege($module, $key)
+    {
+        $key = strtolower($key);
+        if (isset($this->privileges[$module][$key])) {
+            return $this->privileges[$module][$key]['access'];
         }
         return false;
     }

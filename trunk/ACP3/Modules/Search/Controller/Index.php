@@ -21,7 +21,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Helpers\Secure $secureHelper)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
     }

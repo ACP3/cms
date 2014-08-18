@@ -44,7 +44,7 @@ class Smarty extends AbstractRenderer
     }
 
     /**
-     * @param $name
+     * @param      $name
      * @param null $value
      */
     public function assign($name, $value = null)
@@ -57,11 +57,12 @@ class Smarty extends AbstractRenderer
     }
 
     /**
-     * @param $template
+     * @param      $template
      * @param null $cache_id
      * @param null $compile_id
      * @param null $parent
      * @param bool $display
+     *
      * @return bool|mixed|string
      */
     public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
@@ -76,6 +77,7 @@ class Smarty extends AbstractRenderer
 
     /**
      * @param $template
+     *
      * @return bool
      */
     public function templateExists($template)

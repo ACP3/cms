@@ -12,6 +12,7 @@ class Router
      * die Kleinbuchstaben von a-z, Zahlen, der Bindestrich und das Slash eingegeben werden
      *
      * @param string $var
+     *
      * @return boolean
      */
     public function isUriSafe($var)
@@ -23,6 +24,7 @@ class Router
      * Überprüft, ob die übergebene URI dem Format des ACP3 entspricht
      *
      * @param mixed $var
+     *
      * @return boolean
      */
     public function isInternalURI($var)

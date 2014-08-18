@@ -46,11 +46,22 @@ abstract class Admin extends Core\Modules\Controller\Frontend
         return parent::preDispatch();
     }
 
+    public function display()
+    {
+        // Content-Template automatisch setzen
+        if ($this->getContentTemplate() === '') {
+            $this->setContentTemplate($this->request->mod . '/Admin/' . $this->request->controller . '.' . $this->request->file . '.tpl');
+        }
+
+        parent::display();
+    }
+
     /**
      * Little helper function for deleting an result set
      *
      * @param string $moduleConfirmUrl
      * @param string $moduleIndexUrl
+     *
      * @return array
      */
     protected function _deleteItem($moduleConfirmUrl = '', $moduleIndexUrl = '')
@@ -75,16 +86,6 @@ abstract class Admin extends Core\Modules\Controller\Frontend
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
         }
-    }
-
-    public function display()
-    {
-        // Content-Template automatisch setzen
-        if ($this->getContentTemplate() === '') {
-            $this->setContentTemplate($this->request->mod . '/Admin/' . $this->request->controller . '.' . $this->request->file . '.tpl');
-        }
-
-        parent::display();
     }
 
 }

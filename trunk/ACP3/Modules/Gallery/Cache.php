@@ -30,10 +30,28 @@ class Cache
     }
 
     /**
+     * Bindet die gecachete Galerie anhand ihrer ID ein
+     *
+     * @param integer $id
+     *  Die ID der Galerie
+     *
+     * @return array
+     */
+    public function getCache($id)
+    {
+        if ($this->cache->contains(self::CACHE_ID . $id) === false) {
+            $this->setCache($id);
+        }
+
+        return $this->cache->fetch(self::CACHE_ID . $id);
+    }
+
+    /**
      * Erstellt den Galerie-Cache anhand der angegebenen ID
      *
      * @param integer $id
      *  Die ID der zu cachenden Galerie
+     *
      * @return boolean
      */
     public function setCache($id)
@@ -60,21 +78,5 @@ class Cache
         }
 
         return $this->cache->save(self::CACHE_ID . $id, $pictures);
-    }
-
-    /**
-     * Bindet die gecachete Galerie anhand ihrer ID ein
-     *
-     * @param integer $id
-     *  Die ID der Galerie
-     * @return array
-     */
-    public function getCache($id)
-    {
-        if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->setCache($id);
-        }
-
-        return $this->cache->fetch(self::CACHE_ID . $id);
     }
 } 

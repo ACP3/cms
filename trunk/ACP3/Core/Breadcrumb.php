@@ -92,48 +92,13 @@ class Breadcrumb
     }
 
     /**
-     *
-     * @param string $value
-     * @return $this
-     */
-    public function setTitleSeparator($value)
-    {
-        $this->title['separator'] = $value;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param string $value
-     * @return $this
-     */
-    public function setTitlePrefix($value)
-    {
-        $this->title['prefix'] = $value;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param string $value
-     * @return $this
-     */
-    public function setTitlePostfix($value)
-    {
-        $this->title['postfix'] = $value;
-
-        return $this;
-    }
-
-    /**
      * Zuweisung einer neuen Stufe zur Brotkrümelspur
      *
      * @param string $title
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
+     *
      * @return $this
      */
     protected function _appendFromDB($title, $path = '')
@@ -147,40 +112,28 @@ class Breadcrumb
     }
 
     /**
-     * Zuweisung einer neuen Stufe zur Brotkrümelspur
      *
-     * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
-     * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
+     * @param string $value
+     *
      * @return $this
      */
-    public function append($title, $path = '')
+    public function setTitleSeparator($value)
     {
-        $this->stepsFromModules[] = array(
-            'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
-        );
+        $this->title['separator'] = $value;
 
         return $this;
     }
 
     /**
-     * Fügt Brotkrumen an den Anfang an
      *
-     * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
-     * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
+     * @param string $value
+     *
      * @return $this
      */
-    protected function prepend($title, $path)
+    public function setTitlePrefix($value)
     {
-        $step = array(
-            'title' => $title,
-            'uri' => $this->router->route($path)
-        );
-        array_unshift($this->stepsFromModules, $step);
+        $this->title['prefix'] = $value;
+
         return $this;
     }
 
@@ -191,7 +144,8 @@ class Breadcrumb
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @param bool $dbSteps
+     * @param bool   $dbSteps
+     *
      * @return $this
      */
     public function replaceAnchestor($title, $path = '', $dbSteps = false)
@@ -207,6 +161,43 @@ class Breadcrumb
         }
 
         return $this;
+    }
+
+    /**
+     * Gibt je nach Modus entweder die Brotkrümelspur oder den Seitentitel aus
+     *
+     * @param int $mode
+     *  1 = Brotkrümelspur ausgeben
+     *  2 = Nur Seitentitel ausgeben
+     *  3 = Seitentitel mit eventuellen Prefixes und Postfixes ausgeben
+     *
+     * @return string
+     */
+    public function output($mode = 1)
+    {
+        if (empty($this->breadcrumbCache)) {
+            $this->_setBreadcrumbCache();
+        }
+
+        // Just return the breadcrumb
+        if ($mode === 1) {
+            $this->view->assign('breadcrumb', $this->breadcrumbCache);
+            return $this->view->fetchTemplate('system/breadcrumb.tpl');
+        } else { // Just return the title
+            // The last index of the breadcrumb is the page title
+            $title = $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
+            if ($mode === 3) {
+                $separator = ' ' . $this->title['separator'] . ' ';
+                if (!empty($this->title['prefix'])) {
+                    $title = $this->title['prefix'] . $separator . $title;
+                }
+                if (!empty($this->title['postfix'])) {
+                    $title .= $separator . $this->title['postfix'];
+                }
+                $title .= ' | ' . CONFIG_SEO_TITLE;
+            }
+            return $title;
+        }
     }
 
     /**
@@ -267,6 +258,59 @@ class Breadcrumb
     }
 
     /**
+     *
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setTitlePostfix($value)
+    {
+        $this->title['postfix'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Zuweisung einer neuen Stufe zur Brotkrümelspur
+     *
+     * @param string $title
+     *    Bezeichnung der jeweiligen Stufe der Brotkrume
+     * @param string $path
+     *    Die zum $title zugehörige ACP3-interne URI
+     *
+     * @return $this
+     */
+    public function append($title, $path = '')
+    {
+        $this->stepsFromModules[] = array(
+            'title' => $title,
+            'uri' => !empty($path) ? $this->router->route($path) : ''
+        );
+
+        return $this;
+    }
+
+    /**
+     * Fügt Brotkrumen an den Anfang an
+     *
+     * @param string $title
+     *    Bezeichnung der jeweiligen Stufe der Brotkrume
+     * @param string $path
+     *    Die zum $title zugehörige ACP3-interne URI
+     *
+     * @return $this
+     */
+    protected function prepend($title, $path)
+    {
+        $step = array(
+            'title' => $title,
+            'uri' => $this->router->route($path)
+        );
+        array_unshift($this->stepsFromModules, $step);
+        return $this;
+    }
+
+    /**
      * Sets the breadcrumb steps cache for frontend action requests
      */
     private function _setBreadcrumbCacheForFrontend()
@@ -303,42 +347,6 @@ class Breadcrumb
                     $this->breadcrumbCache[] = $this->stepsFromModules[$i];
                 }
             }
-        }
-    }
-
-    /**
-     * Gibt je nach Modus entweder die Brotkrümelspur oder den Seitentitel aus
-     *
-     * @param int $mode
-     *  1 = Brotkrümelspur ausgeben
-     *  2 = Nur Seitentitel ausgeben
-     *  3 = Seitentitel mit eventuellen Prefixes und Postfixes ausgeben
-     * @return string
-     */
-    public function output($mode = 1)
-    {
-        if (empty($this->breadcrumbCache)) {
-            $this->_setBreadcrumbCache();
-        }
-
-        // Just return the breadcrumb
-        if ($mode === 1) {
-            $this->view->assign('breadcrumb', $this->breadcrumbCache);
-            return $this->view->fetchTemplate('system/breadcrumb.tpl');
-        } else { // Just return the title
-            // The last index of the breadcrumb is the page title
-            $title = $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
-            if ($mode === 3) {
-                $separator = ' ' . $this->title['separator'] . ' ';
-                if (!empty($this->title['prefix'])) {
-                    $title = $this->title['prefix'] . $separator . $title;
-                }
-                if (!empty($this->title['postfix'])) {
-                    $title .= $separator . $this->title['postfix'];
-                }
-                $title .= ' | ' . CONFIG_SEO_TITLE;
-            }
-            return $title;
         }
     }
 

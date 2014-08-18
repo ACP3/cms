@@ -21,22 +21,11 @@ class Cache
     }
 
     /**
-     * Erstellt den Cache für die Kategorien eines Moduls
-     *
-     * @param string $moduleName
-     *  Das Modul, für welches der Kategorien-Cache erstellt werden soll
-     * @return boolean
-     */
-    public function setCache($moduleName)
-    {
-        return $this->cache->save($moduleName, $this->categoriesModel->getAllByModuleName($moduleName));
-    }
-
-    /**
      * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück
      *
      * @param string $moduleName
      *  Das jeweilige Modul, für welches die Kategorien geholt werden sollen
+     *
      * @return array
      */
     public function getCache($moduleName)
@@ -46,6 +35,19 @@ class Cache
         }
 
         return $this->cache->fetch($moduleName);
+    }
+
+    /**
+     * Erstellt den Cache für die Kategorien eines Moduls
+     *
+     * @param string $moduleName
+     *  Das Modul, für welches der Kategorien-Cache erstellt werden soll
+     *
+     * @return boolean
+     */
+    public function setCache($moduleName)
+    {
+        return $this->cache->save($moduleName, $this->categoriesModel->getAllByModuleName($moduleName));
     }
 
 }

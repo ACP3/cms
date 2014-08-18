@@ -11,17 +11,17 @@ abstract class AbstractRenderer extends ContainerAware implements RendererInterf
 {
 
     /**
-     * Possible configuration options for the current renderer
-     *
-     * @var array
-     */
-    protected $config = array();
-    /**
      * The assigned layout renderer
      *
      * @var
      */
     public $renderer;
+    /**
+     * Possible configuration options for the current renderer
+     *
+     * @var array
+     */
+    protected $config = array();
 
     /**
      * @param array $params

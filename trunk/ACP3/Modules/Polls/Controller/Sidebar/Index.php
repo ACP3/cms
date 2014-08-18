@@ -26,7 +26,7 @@ class Index extends Core\Modules\Controller
         Core\Date $date,
         Polls\Model $pollsModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->pollsModel = $pollsModel;

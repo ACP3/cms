@@ -17,10 +17,23 @@ class Lang extends \ACP3\Core\Lang
     }
 
     /**
+     * Überprüft, ob das angegebene Sprachpaket existiert
+     *
+     * @param string $lang
+     *
+     * @return boolean
+     */
+    public static function languagePackExists($lang)
+    {
+        return !preg_match('=/=', $lang) && is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $lang . '.xml') === true;
+    }
+
+    /**
      * Gibt den angeforderten Sprachstring aus
      *
      * @param string $module
      * @param string $key
+     *
      * @return string
      */
     public function t($module, $key)
@@ -33,14 +46,17 @@ class Lang extends \ACP3\Core\Lang
     }
 
     /**
-     * Überprüft, ob das angegebene Sprachpaket existiert
+     * Gibt die gecacheten Sprachstrings aus
      *
-     * @param string $lang
-     * @return boolean
+     * @return array
      */
-    public static function languagePackExists($lang)
+    protected function getLanguageCache()
     {
-        return !preg_match('=/=', $lang) && is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $lang . '.xml') === true;
+        if (empty($this->buffer) === true) {
+            $this->buffer = $this->setLanguageCache();
+        }
+
+        return $this->buffer;
     }
 
     /**
@@ -68,20 +84,6 @@ class Lang extends \ACP3\Core\Lang
         }
 
         return $data;
-    }
-
-    /**
-     * Gibt die gecacheten Sprachstrings aus
-     *
-     * @return array
-     */
-    protected function getLanguageCache()
-    {
-        if (empty($this->buffer) === true) {
-            $this->buffer = $this->setLanguageCache();
-        }
-
-        return $this->buffer;
     }
 
 }

@@ -29,6 +29,7 @@ class FrontController extends \ACP3\Core\FrontController
     /**
      * @param $serviceId
      * @param $action
+     *
      * @throws Exceptions\ControllerActionNotFound
      */
     public function dispatch($serviceId = '', $action = '')

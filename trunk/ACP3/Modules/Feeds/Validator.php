@@ -13,6 +13,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)

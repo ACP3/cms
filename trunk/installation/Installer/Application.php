@@ -32,40 +32,6 @@ class Application
     }
 
     /**
-     * run() method of the database updater
-     */
-    public function runUpdater()
-    {
-        $this->defineDirConstants();
-        $this->startupChecks();
-        $this->includeAutoLoader();
-        $this->initializeUpdaterClasses();
-        $this->outputPage();
-    }
-
-    /**
-     * Überprüft, ob die config.php existiert
-     */
-    public function startupChecks()
-    {
-        // Standardzeitzone festlegen
-        date_default_timezone_set('UTC');
-
-        error_reporting(E_ALL);
-
-        if (defined('IN_UPDATER') === true) {
-            // DB-Config des ACP3 laden
-            $path = ACP3_DIR . 'config/config.php';
-            if (is_file($path) === false || filesize($path) === 0) {
-                exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
-                // Wenn alles okay ist, config.php einbinden und error_reporting setzen
-            } else {
-                require_once $path;
-            }
-        }
-    }
-
-    /**
      * Einige Pfadkonstanten definieren
      */
     public function defineDirConstants()
@@ -132,6 +98,60 @@ class Application
     }
 
     /**
+     * Gibt die Seite aus
+     */
+    public function outputPage()
+    {
+        $request = $this->container->get('core.request');
+
+        $frontController = new FrontController($this->container);
+        $errorsServiceId = 'errors.controller.install.index';
+
+        try {
+            $serviceId = $request->mod . '.controller.install.' . $request->controller;
+            $frontController->dispatch($serviceId, $request->file);
+        } catch (Core\Exceptions\ControllerActionNotFound $e) {
+            $frontController->dispatch($errorsServiceId, '404');
+        } catch (\Exception $e) {
+            $frontController->dispatch($errorsServiceId, '404');
+        }
+    }
+
+    /**
+     * run() method of the database updater
+     */
+    public function runUpdater()
+    {
+        $this->defineDirConstants();
+        $this->startupChecks();
+        $this->includeAutoLoader();
+        $this->initializeUpdaterClasses();
+        $this->outputPage();
+    }
+
+    /**
+     * Überprüft, ob die config.php existiert
+     */
+    public function startupChecks()
+    {
+        // Standardzeitzone festlegen
+        date_default_timezone_set('UTC');
+
+        error_reporting(E_ALL);
+
+        if (defined('IN_UPDATER') === true) {
+            // DB-Config des ACP3 laden
+            $path = ACP3_DIR . 'config/config.php';
+            if (is_file($path) === false || filesize($path) === 0) {
+                exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
+                // Wenn alles okay ist, config.php einbinden und error_reporting setzen
+            } else {
+                require_once $path;
+            }
+        }
+    }
+
+    /**
      * Initialisieren der Klassen für den Updater
      */
     public function initializeUpdaterClasses()
@@ -189,26 +209,6 @@ class Application
         $this->container->get('core.view')->setRenderer('smarty', $params);
 
         $this->container->compile();
-    }
-
-    /**
-     * Gibt die Seite aus
-     */
-    public function outputPage()
-    {
-        $request = $this->container->get('core.request');
-
-        $frontController = new FrontController($this->container);
-        $errorsServiceId = 'errors.controller.install.index';
-
-        try {
-            $serviceId = $request->mod . '.controller.install.' . $request->controller;
-            $frontController->dispatch($serviceId, $request->file);
-        } catch (Core\Exceptions\ControllerActionNotFound $e) {
-            $frontController->dispatch($errorsServiceId, '404');
-        } catch (\Exception $e) {
-            $frontController->dispatch($errorsServiceId, '404');
-        }
     }
 
     /**

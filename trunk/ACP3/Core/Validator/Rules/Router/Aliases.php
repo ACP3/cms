@@ -32,6 +32,7 @@ class Aliases
      *
      * @param string $alias
      * @param string $path
+     *
      * @return boolean
      */
     public function uriAliasExists($alias, $path = '')

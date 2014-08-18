@@ -22,6 +22,34 @@ class CKEditor extends AbstractWYSIWYG
         $this->config['height'] = $params['height'] . 'px';
     }
 
+    /**
+     * @return string
+     */
+    public function display()
+    {
+        $this->_configure();
+
+        require_once LIBRARIES_DIR . 'ckeditor/ckeditor.php';
+
+        $ckeditor = new \CKEditor(ROOT_DIR . 'libraries/ckeditor/');
+        $ckeditor->returnOutput = true;
+
+        $wysiwyg = array(
+            'id' => $this->id,
+            'editor' => $ckeditor->editor($this->name, $this->id, $this->value, $this->config),
+            'advanced' => $this->advanced,
+        );
+
+        if ($wysiwyg['advanced'] === true) {
+            $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
+        }
+
+        $view = $this->container->get('core.view');
+
+        $view->assign('wysiwyg', $wysiwyg);
+        return $view->fetchTemplate('system/wysiwyg.tpl');
+    }
+
     private function _configure()
     {
         $filebrowserUri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
@@ -74,34 +102,6 @@ class CKEditor extends AbstractWYSIWYG
         if (isset($this->config['toolbar']) && $this->config['toolbar'] == 'Basic') {
             $this->config['toolbar_Basic'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function display()
-    {
-        $this->_configure();
-
-        require_once LIBRARIES_DIR . 'ckeditor/ckeditor.php';
-
-        $ckeditor = new \CKEditor(ROOT_DIR . 'libraries/ckeditor/');
-        $ckeditor->returnOutput = true;
-
-        $wysiwyg = array(
-            'id' => $this->id,
-            'editor' => $ckeditor->editor($this->name, $this->id, $this->value, $this->config),
-            'advanced' => $this->advanced,
-        );
-
-        if ($wysiwyg['advanced'] === true) {
-            $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
-        }
-
-        $view = $this->container->get('core.view');
-
-        $view->assign('wysiwyg', $wysiwyg);
-        return $view->fetchTemplate('system/wysiwyg.tpl');
     }
 
 }

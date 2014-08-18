@@ -25,7 +25,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Helpers\Secure $secureHelper,
         Core\Config $contactConfig)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
         $this->contactConfig = $contactConfig;

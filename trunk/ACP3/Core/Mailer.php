@@ -90,6 +90,7 @@ class Mailer
 
     /**
      * @param string|array $from
+     *
      * @return $this
      */
     public function setFrom($from)
@@ -101,6 +102,7 @@ class Mailer
 
     /**
      * @param string $mailSignature
+     *
      * @return $this
      */
     public function setMailSignature($mailSignature)
@@ -112,6 +114,7 @@ class Mailer
 
     /**
      * @param string $htmlText
+     *
      * @return $this
      */
     public function setHtmlBody($htmlText)
@@ -123,6 +126,7 @@ class Mailer
 
     /**
      * @param string $urlWeb
+     *
      * @return $this
      */
     public function setUrlWeb($urlWeb)
@@ -134,6 +138,7 @@ class Mailer
 
     /**
      * @param string $subject
+     *
      * @return $this
      */
     public function setSubject($subject)
@@ -145,6 +150,7 @@ class Mailer
 
     /**
      * @param string $body
+     *
      * @return $this
      */
     public function setBody($body)
@@ -156,6 +162,7 @@ class Mailer
 
     /**
      * @param array|string $to
+     *
      * @return $this
      */
     public function setRecipients($to)
@@ -167,6 +174,7 @@ class Mailer
 
     /**
      * @param string $attachment
+     *
      * @return $this
      */
     public function setAttachments($attachment)
@@ -178,129 +186,12 @@ class Mailer
 
     /**
      * @param string $template
+     *
      * @return $this
      */
     public function setTemplate($template)
     {
         $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * Adds multiple recipients to the to be send email
-     *
-     * @param $recipients
-     * @param bool $bcc
-     * @return $this
-     */
-    private function _addRecipients($recipients, $bcc = false)
-    {
-        if (is_array($recipients) === true) {
-            if (empty($recipients['email']) === false && empty($recipients['name']) === false) {
-                $this->_addRecipient($recipients['email'], $recipients['name'], $bcc);
-            } else {
-                foreach ($recipients as $recipient) {
-                    if (is_array($recipient) === true) {
-                        $this->_addRecipient($recipient['email'], $recipient['name'], '', $bcc);
-                    } else {
-                        $this->_addRecipient($recipient, '', $bcc);
-                    }
-                }
-            }
-        } else {
-            $this->_addRecipient($recipients, '', $bcc);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Adds a single recipient to the to be send email
-     *
-     * @param $email
-     * @param string $name
-     * @param bool $bcc
-     * @return $this
-     */
-    private function _addRecipient($email, $name = '', $bcc = false)
-    {
-        if ($bcc === true) {
-            $this->mailer->addBCC($email, $name);
-        } else {
-            $this->mailer->addAddress($email, $name);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    private function _getHtmlSignature()
-    {
-        if (!empty($this->mailSignature)) {
-            if ($this->mailSignature === strip_tags($this->mailSignature)) {
-                $formatter = new StringFormatter();
-                return $formatter->nl2p($this->mailSignature);
-            }
-            return $this->mailSignature;
-        }
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    private function _getTextSignature()
-    {
-        if (!empty($this->mailSignature)) {
-            return "\n-- \n" . $this->mailer->html2text($this->mailSignature, true);
-        }
-        return '';
-    }
-
-    /**
-     *
-     * @param $data
-     * @return string
-     */
-    private function _decodeHtmlEntities($data)
-    {
-        return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
-    }
-
-    /**
-     * Generates the E-mail body
-     *
-     * @return $this
-     */
-    private function _generateBody()
-    {
-        if (!empty($this->htmlBody) && !empty($this->template)) {
-            $mail = array(
-                'charset' => 'UTF-8',
-                'title' => $this->subject,
-                'body' => $this->htmlBody,
-                'signature' => $this->_getHtmlSignature(),
-                'url_web_view' => $this->urlWeb
-            );
-            $this->view->assign('mail', $mail);
-
-            $htmlDocument = new InlineStyle($this->view->fetchTemplate($this->template));
-            $htmlDocument->applyStylesheet($htmlDocument->extractStylesheets());
-
-            $this->mailer->msgHTML($htmlDocument->getHTML());
-
-            // Fallback for E-mail clients which don't support HTML E-mails
-            if (!empty($this->body)) {
-                $this->mailer->AltBody = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
-            } else {
-                $this->mailer->AltBody = $this->mailer->html2text($this->htmlBody . $this->_getHtmlSignature(), true);
-            }
-        } else {
-            $this->mailer->Body = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
-        }
 
         return $this;
     }
@@ -347,6 +238,78 @@ class Mailer
     }
 
     /**
+     * Generates the E-mail body
+     *
+     * @return $this
+     */
+    private function _generateBody()
+    {
+        if (!empty($this->htmlBody) && !empty($this->template)) {
+            $mail = array(
+                'charset' => 'UTF-8',
+                'title' => $this->subject,
+                'body' => $this->htmlBody,
+                'signature' => $this->_getHtmlSignature(),
+                'url_web_view' => $this->urlWeb
+            );
+            $this->view->assign('mail', $mail);
+
+            $htmlDocument = new InlineStyle($this->view->fetchTemplate($this->template));
+            $htmlDocument->applyStylesheet($htmlDocument->extractStylesheets());
+
+            $this->mailer->msgHTML($htmlDocument->getHTML());
+
+            // Fallback for E-mail clients which don't support HTML E-mails
+            if (!empty($this->body)) {
+                $this->mailer->AltBody = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
+            } else {
+                $this->mailer->AltBody = $this->mailer->html2text($this->htmlBody . $this->_getHtmlSignature(), true);
+            }
+        } else {
+            $this->mailer->Body = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    private function _getHtmlSignature()
+    {
+        if (!empty($this->mailSignature)) {
+            if ($this->mailSignature === strip_tags($this->mailSignature)) {
+                $formatter = new StringFormatter();
+                return $formatter->nl2p($this->mailSignature);
+            }
+            return $this->mailSignature;
+        }
+        return '';
+    }
+
+    /**
+     *
+     * @param $data
+     *
+     * @return string
+     */
+    private function _decodeHtmlEntities($data)
+    {
+        return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * @return string
+     */
+    private function _getTextSignature()
+    {
+        if (!empty($this->mailSignature)) {
+            return "\n-- \n" . $this->mailer->html2text($this->mailSignature, true);
+        }
+        return '';
+    }
+
+    /**
      * Special sending logic for bcc only E-mails
      *
      * @return bool
@@ -364,6 +327,55 @@ class Mailer
         }
 
         return $this->mailer->send();
+    }
+
+    /**
+     * Adds multiple recipients to the to be send email
+     *
+     * @param      $recipients
+     * @param bool $bcc
+     *
+     * @return $this
+     */
+    private function _addRecipients($recipients, $bcc = false)
+    {
+        if (is_array($recipients) === true) {
+            if (empty($recipients['email']) === false && empty($recipients['name']) === false) {
+                $this->_addRecipient($recipients['email'], $recipients['name'], $bcc);
+            } else {
+                foreach ($recipients as $recipient) {
+                    if (is_array($recipient) === true) {
+                        $this->_addRecipient($recipient['email'], $recipient['name'], '', $bcc);
+                    } else {
+                        $this->_addRecipient($recipient, '', $bcc);
+                    }
+                }
+            }
+        } else {
+            $this->_addRecipient($recipients, '', $bcc);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds a single recipient to the to be send email
+     *
+     * @param        $email
+     * @param string $name
+     * @param bool   $bcc
+     *
+     * @return $this
+     */
+    private function _addRecipient($email, $name = '', $bcc = false)
+    {
+        if ($bcc === true) {
+            $this->mailer->addBCC($email, $name);
+        } else {
+            $this->mailer->addAddress($email, $name);
+        }
+
+        return $this;
     }
 
     /**

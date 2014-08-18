@@ -58,7 +58,8 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param $newsletterAccess
+     * @param       $newsletterAccess
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData, $newsletterAccess)
@@ -103,6 +104,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      * @param array $settings
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData, array $settings)
@@ -127,6 +129,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)

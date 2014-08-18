@@ -164,7 +164,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $role = $this->permissionsModel->getRoleById((int) $this->request->id);
+        $role = $this->permissionsModel->getRoleById((int)$this->request->id);
 
         if (!empty($role)) {
             if (empty($_POST) === false) {

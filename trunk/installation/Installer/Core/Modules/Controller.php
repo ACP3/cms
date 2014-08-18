@@ -107,11 +107,31 @@ class Controller
         $this->view->assign('LANG', $this->lang->getLanguage2Characters());
     }
 
+    /**
+     * @return Redirect
+     */
+    public function redirect()
+    {
+        return $this->get('core.redirect');
+    }
+
+    /**
+     * Gets a class from the service container
+     *
+     * @param $serviceId
+     *
+     * @return mixed
+     */
+    public function get($serviceId)
+    {
+        return $this->container->get($serviceId);
+    }
 
     /**
      * Generiert das Dropdown-Menü mit der zur Verfügung stehenden Installersprachen
      *
      * @param string $selectedLanguage
+     *
      * @return array
      */
     private function _languagesDropdown($selectedLanguage)
@@ -133,20 +153,9 @@ class Controller
         return $languages;
     }
 
-
-    /**
-     * Gets a class from the service container
-     *
-     * @param $serviceId
-     * @return mixed
-     */
-    public function get($serviceId)
-    {
-        return $this->container->get($serviceId);
-    }
-
     /**
      * @param $container
+     *
      * @return $this
      */
     public function setContainer($container)
@@ -157,115 +166,10 @@ class Controller
     }
 
     /**
-     * Setter Methode für die $this->no_output Variable
-     *
-     * @param boolean $value
-     * @return $this
-     */
-    public function setNoOutput($value)
-    {
-        $this->noOutput = (bool)$value;
-
-        return $this;
-    }
-
-    /**
-     * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
-     * erfolgen soll oder die Datei dies selber handelt
-     *
-     * @return string
-     */
-    public function getNoOutput()
-    {
-        return $this->noOutput;
-    }
-
-    /**
-     * Weist der aktuell auszugebenden Seite den Content-Type zu
-     *
-     * @param string $data
-     * @return $this
-     */
-    public function setContentType($data)
-    {
-        $this->contentType = $data;
-
-        return $this;
-    }
-
-    /**
-     * Gibt den Content-Type der anzuzeigenden Seiten zurück
-     *
-     * @return string
-     */
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-
-    /**
-     * Weist der aktuell auszugebenden Seite ein Layout zu
-     *
-     * @param string $file
-     * @return $this
-     */
-    public function setLayout($file)
-    {
-        $this->layout = $file;
-
-        return $this;
-    }
-
-    /**
-     * Gibt das aktuell zugewiesene Layout zurück
-     *
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Setzt das Template für den Contentbereich der Seite
-     *
-     * @param string $file
-     * @return $this
-     */
-    public function setContentTemplate($file)
-    {
-        $this->contentTemplate = $file;
-
-        return $this;
-    }
-
-    /**
-     * Gibt das aktuell zugewiesene Template für den Contentbereich zurück
-     *
-     * @return string
-     */
-    public function getContentTemplate()
-    {
-        return $this->contentTemplate;
-    }
-
-    /**
-     * Weist dem Template den auszugebenden Inhalt zu
-     *
-     * @param string $data
-     * @return $this
-     */
-    public function setContent($data)
-    {
-        $this->content = $data;
-
-        return $this;
-    }
-
-    /**
      * Fügt weitere Daten an den Seiteninhalt an
      *
      * @param string $data
+     *
      * @return $this
      */
     public function appendContent($data)
@@ -273,26 +177,6 @@ class Controller
         $this->contentAppend .= $data;
 
         return $this;
-    }
-
-    /**
-     * Gibt den auszugebenden Seiteninhalt zurück
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Gibt die anzuhängenden Inhalte an den Seiteninhalt zurück
-     *
-     * @return string
-     */
-    public function getContentAppend()
-    {
-        return $this->contentAppend;
     }
 
     public function display()
@@ -323,10 +207,133 @@ class Controller
     }
 
     /**
-     * @return Redirect
+     * Gibt das aktuell zugewiesene Template für den Contentbereich zurück
+     *
+     * @return string
      */
-    public function redirect()
+    public function getContentTemplate()
     {
-        return $this->get('core.redirect');
+        return $this->contentTemplate;
+    }
+
+    /**
+     * Setzt das Template für den Contentbereich der Seite
+     *
+     * @param string $file
+     *
+     * @return $this
+     */
+    public function setContentTemplate($file)
+    {
+        $this->contentTemplate = $file;
+
+        return $this;
+    }
+
+    /**
+     * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
+     * erfolgen soll oder die Datei dies selber handelt
+     *
+     * @return string
+     */
+    public function getNoOutput()
+    {
+        return $this->noOutput;
+    }
+
+    /**
+     * Setter Methode für die $this->no_output Variable
+     *
+     * @param boolean $value
+     *
+     * @return $this
+     */
+    public function setNoOutput($value)
+    {
+        $this->noOutput = (bool)$value;
+
+        return $this;
+    }
+
+    /**
+     * Gibt den auszugebenden Seiteninhalt zurück
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Weist dem Template den auszugebenden Inhalt zu
+     *
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function setContent($data)
+    {
+        $this->content = $data;
+
+        return $this;
+    }
+
+    /**
+     * Gibt den Content-Type der anzuzeigenden Seiten zurück
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+    /**
+     * Weist der aktuell auszugebenden Seite den Content-Type zu
+     *
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function setContentType($data)
+    {
+        $this->contentType = $data;
+
+        return $this;
+    }
+
+    /**
+     * Gibt das aktuell zugewiesene Layout zurück
+     *
+     * @return string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * Weist der aktuell auszugebenden Seite ein Layout zu
+     *
+     * @param string $file
+     *
+     * @return $this
+     */
+    public function setLayout($file)
+    {
+        $this->layout = $file;
+
+        return $this;
+    }
+
+    /**
+     * Gibt die anzuhängenden Inhalte an den Seiteninhalt zurück
+     *
+     * @return string
+     */
+    public function getContentAppend()
+    {
+        return $this->contentAppend;
     }
 }

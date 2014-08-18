@@ -39,19 +39,18 @@ class Aliases
     }
 
     /**
-     * Gibt einen URI-Alias zurück
+     * Gibt den Cache der URI-Aliase zurück
      *
-     * @param string $path
-     * @param bool $emptyIsNoResult
-     * @return string
+     * @return array
      */
-    public function getUriAlias($path, $emptyIsNoResult = false)
+    public function getCache()
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+        if ($this->cache->contains('aliases') === false) {
+            $this->setCache();
+        }
 
-        return !empty($this->aliases[$path]['alias']) ? $this->aliases[$path]['alias'] : ($emptyIsNoResult === true ? '' : $path);
+        return $this->cache->fetch('aliases');
     }
-
 
     /**
      * Setzt den Cache für die URI-Aliase
@@ -74,23 +73,25 @@ class Aliases
     }
 
     /**
-     * Gibt den Cache der URI-Aliase zurück
+     * Gibt einen URI-Alias zurück
      *
-     * @return array
+     * @param string $path
+     * @param bool   $emptyIsNoResult
+     *
+     * @return string
      */
-    public function getCache()
+    public function getUriAlias($path, $emptyIsNoResult = false)
     {
-        if ($this->cache->contains('aliases') === false) {
-            $this->setCache();
-        }
+        $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return $this->cache->fetch('aliases');
+        return !empty($this->aliases[$path]['alias']) ? $this->aliases[$path]['alias'] : ($emptyIsNoResult === true ? '' : $path);
     }
 
     /**
      * Löscht einen URI-Alias
      *
      * @param string $path
+     *
      * @return boolean
      */
     public function deleteUriAlias($path)
@@ -108,7 +109,8 @@ class Aliases
      * @param string $alias
      * @param string $keywords
      * @param string $description
-     * @param int $robots
+     * @param int    $robots
+     *
      * @return boolean
      */
     public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
@@ -138,6 +140,7 @@ class Aliases
      * Überprüft, ob ein URI-Alias existiert
      *
      * @param string $path
+     *
      * @return boolean
      */
     public function uriAliasExists($path)

@@ -18,6 +18,17 @@ class Logger
     private static $channels = array();
 
     /**
+     * Debug log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function debug($channel, $message)
+    {
+        self::_log($channel, 'debug', $message);
+    }
+
+    /**
      * Wrapper method for logging notices, warnings, errors, etc.
      *
      * @param $channel
@@ -67,17 +78,6 @@ class Logger
                 $logger->emergency($message);
                 break;
         }
-    }
-
-    /**
-     * Debug log
-     *
-     * @param $channel
-     * @param $message
-     */
-    public static function debug($channel, $message)
-    {
-        self::_log($channel, 'debug', $message);
     }
 
     /**

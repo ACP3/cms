@@ -28,6 +28,7 @@ class Secure
      *    Das Passwort in Klartextform, welches verschlüsselt werden soll
      * @param string $algorithm
      *    Der zu verwendende Hash-Algorithmus
+     *
      * @return string
      */
     public function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
@@ -40,6 +41,7 @@ class Secure
      *
      * @param integer $strLength
      *  Länge des zufälligen Strings
+     *
      * @return string
      */
     public function salt($strLength)
@@ -61,8 +63,9 @@ class Secure
      * Enkodiert alle HTML-Entitäten eines Strings
      * zur Vermeidung von XSS
      *
-     * @param string $var
+     * @param string  $var
      * @param boolean $scriptTagOnly
+     *
      * @return string
      */
     public function strEncode($var, $scriptTagOnly = false)
@@ -95,6 +98,9 @@ class Secure
 
     /**
      * Entfernt das Securitytoken aus der Session
+     *
+     * @param string $path
+     * @param string $token
      */
     public function unsetFormToken($path, $token = '')
     {
