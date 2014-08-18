@@ -25,6 +25,7 @@ class Router extends AbstractPlugin
 
     /**
      * @param $params
+     *
      * @return string
      */
     public function process($params)

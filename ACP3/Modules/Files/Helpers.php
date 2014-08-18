@@ -2,8 +2,8 @@
 /**
  * Files
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 

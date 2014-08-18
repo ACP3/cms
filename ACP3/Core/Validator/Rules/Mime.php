@@ -27,6 +27,7 @@ class Mime
      * @param string $width
      * @param string $height
      * @param string $filesize
+     *
      * @return boolean
      */
     public function isPicture($file, $width = '', $height = '', $filesize = '')
@@ -58,6 +59,7 @@ class Mime
      *  Die zu überprüfende Datei
      * @param string $mimetype
      *  Der zu vergleichende MIMETYPE
+     *
      * @return mixed
      */
     public function mimeType($file, $mimetype = '')

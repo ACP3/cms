@@ -109,7 +109,7 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $resource = $this->permissionsModel->getResourceById((int) $this->request->id);
+        $resource = $this->permissionsModel->getResourceById((int)$this->request->id);
         if (!empty($resource)) {
             if (empty($_POST) === false) {
                 try {

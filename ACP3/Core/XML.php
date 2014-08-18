@@ -23,6 +23,7 @@ class XML
      *
      * @param string $path
      * @param string $xpath
+     *
      * @return mixed
      */
     public static function parseXmlFile($path, $xpath)
@@ -67,7 +68,8 @@ class XML
      *
      * @param string $path
      * @param string $xpath
-     * @param array $data
+     * @param array  $data
+     *
      * @return boolean
      */
     public static function writeToXml($path, $xpath, $data)

@@ -139,6 +139,14 @@ class Extensions extends Core\Modules\Controller\Admin
         $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
+    protected function _renewCaches()
+    {
+        $this->lang->setLanguageCache();
+        $this->modules->setModulesCache();
+
+        $this->permissionsCache->setResourcesCache();
+    }
+
     protected function _disableModule()
     {
         $bool = false;
@@ -226,14 +234,6 @@ class Extensions extends Core\Modules\Controller\Admin
         }
 
         $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
-    }
-
-    protected function _renewCaches()
-    {
-        $this->lang->setLanguageCache();
-        $this->modules->setModulesCache();
-
-        $this->permissionsCache->setResourcesCache();
     }
 
 }

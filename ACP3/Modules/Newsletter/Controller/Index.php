@@ -31,7 +31,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Helpers\Secure $secureHelper,
         Newsletter\Model $newsModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->db = $db;
         $this->secureHelper = $secureHelper;

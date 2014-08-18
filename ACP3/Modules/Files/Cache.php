@@ -28,15 +28,7 @@ class Cache
 
     /**
      * @param integer $id
-     * @return boolean
-     */
-    public function setCache($id)
-    {
-        return $this->cache->save(self::CACHE_ID . $id, $this->filesModel->getOneById($id));
-    }
-
-    /**
-     * @param integer $id
+     *
      * @return array
      */
     public function getCache($id)
@@ -46,6 +38,16 @@ class Cache
         }
 
         return $this->cache->fetch(self::CACHE_ID . $id);
+    }
+
+    /**
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    public function setCache($id)
+    {
+        return $this->cache->save(self::CACHE_ID . $id, $this->filesModel->getOneById($id));
     }
 
 } 

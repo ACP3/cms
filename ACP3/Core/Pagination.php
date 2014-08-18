@@ -140,6 +140,7 @@ class Pagination
 
     /**
      * @param string $tplVariable
+     *
      * @return string
      */
     public function display($tplVariable = 'pagination')
@@ -178,23 +179,6 @@ class Pagination
             $output = $this->view->fetchTemplate('system/pagination.tpl');
         }
         $this->view->assign($tplVariable, $output);
-    }
-
-    /**
-     * @param $selected
-     * @param $pageNumber
-     * @param $uri
-     * @param string $title
-     * @return array
-     */
-    private function buildPageNumber($selected, $pageNumber, $uri, $title = '')
-    {
-        return array(
-            'selected' => (bool)$selected,
-            'page' => $pageNumber,
-            'uri' => $uri,
-            'title' => $title
-        );
     }
 
     /**
@@ -267,6 +251,24 @@ class Pagination
                 $this->lang->t('system', 'first_page')
             );
         }
+    }
+
+    /**
+     * @param        $selected
+     * @param        $pageNumber
+     * @param        $uri
+     * @param string $title
+     *
+     * @return array
+     */
+    private function buildPageNumber($selected, $pageNumber, $uri, $title = '')
+    {
+        return array(
+            'selected' => (bool)$selected,
+            'page' => $pageNumber,
+            'uri' => $uri,
+            'title' => $title
+        );
     }
 
     /**

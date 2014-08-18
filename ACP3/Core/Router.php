@@ -28,6 +28,7 @@ class Router
      * Generiert die ACP3 internen Hyperlinks
      *
      * @param $path
+     *
      * @return string
      */
     public function route($path)

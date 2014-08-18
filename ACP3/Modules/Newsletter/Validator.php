@@ -45,6 +45,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)
@@ -66,6 +67,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSubscribe(array $formData)
@@ -90,6 +92,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateUnsubscribe(array $formData)
@@ -114,6 +117,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
@@ -133,6 +137,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param $mail
      * @param $hash
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateActivate($mail, $hash)

@@ -37,7 +37,7 @@ class Index extends Core\Modules\Controller\Frontend
         Files\Model $filesModel,
         Categories\Model $categoriesModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;
@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->filesModel->resultExists((int) $this->request->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->filesModel->resultExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
             $cache = new Files\Cache($this->filesModel);
             $file = $cache->getCache($this->request->id);
 

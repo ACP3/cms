@@ -23,22 +23,11 @@ class Cache
     }
 
     /**
-     * Erstellt den Cache eines Artikels anhand der angegebenen ID
-     *
-     * @param integer $id
-     *  Die ID der statischen Seite
-     * @return boolean
-     */
-    public function setCache($id)
-    {
-        return $this->cache->save(self::CACHE_ID . $id, $this->articlesModel->getOneById($id));
-    }
-
-    /**
      * Bindet den gecacheten Artikel ein
      *
      * @param integer $id
      *  Die ID der statischen Seite
+     *
      * @return array
      */
     public function getCache($id)
@@ -48,6 +37,19 @@ class Cache
         }
 
         return $this->cache->fetch(self::CACHE_ID . $id);
+    }
+
+    /**
+     * Erstellt den Cache eines Artikels anhand der angegebenen ID
+     *
+     * @param integer $id
+     *  Die ID der statischen Seite
+     *
+     * @return boolean
+     */
+    public function setCache($id)
+    {
+        return $this->cache->save(self::CACHE_ID . $id, $this->articlesModel->getOneById($id));
     }
 
 } 

@@ -27,7 +27,8 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param $configFilePath
+     * @param       $configFilePath
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateConfiguration(array $formData, $configFilePath)

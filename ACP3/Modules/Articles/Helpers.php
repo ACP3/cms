@@ -3,8 +3,8 @@
 /**
  * Articles
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -30,6 +30,7 @@ class Helpers
      * Gibt alle angelegten Artikel zurück
      *
      * @param integer $id
+     *
      * @return array
      */
     public function articlesList($id = 0)

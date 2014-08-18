@@ -125,6 +125,7 @@ class Session
      * Liest eine Session aus der Datenbank
      *
      * @param integer $session_id
+     *
      * @return string
      */
     public function session_read($session_id)
@@ -139,7 +140,7 @@ class Session
      * Session in Datenbank schreiben
      *
      * @param integer $session_id
-     * @param array $data Enthält die Session-Daten
+     * @param array   $data Enthält die Session-Daten
      *
      * @return bool
      */
@@ -173,6 +174,7 @@ class Session
      * Session Garbage Collector
      *
      * @param integer $session_lifetime Angaben in Sekunden
+     *
      * @return boolean
      */
     public function session_gc($session_lifetime = 1800)

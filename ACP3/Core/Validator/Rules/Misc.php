@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3\Core\Validator\Rules;
+
 use ACP3\Core\Request;
 
 /**
@@ -24,8 +25,10 @@ class Misc
      *
      * @copyright HTML/QuickForm/Rule/Email.php
      *    Suchmuster von PEAR entnommen
+     *
      * @param string $var
      *  Zu überprüfende E-Mail-Adresse
+     *
      * @return boolean
      */
     public function email($var)
@@ -55,6 +58,7 @@ class Misc
      * Überprüft, ob ein gültiger MD5-Hash übergeben wurde
      *
      * @param string $string
+     *
      * @return boolean
      */
     public function isMD5($string)
@@ -66,6 +70,7 @@ class Misc
      * Überprüft eine Variable, ob diese nur aus Ziffern besteht
      *
      * @param mixed $var
+     *
      * @return boolean
      */
     public function isNumber($var)

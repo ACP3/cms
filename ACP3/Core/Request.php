@@ -10,7 +10,16 @@ use ACP3\Core\Router\Aliases;
 class Request
 {
     const ADMIN_PANEL_PATTERN = '=^acp/=';
-
+    /**
+     * Die komplette übergebene URL
+     *
+     * @var string
+     */
+    public $query = '';
+    /**
+     * @var string
+     */
+    public $originalQuery = '';
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -26,16 +35,6 @@ class Request
      * @access protected
      */
     protected $params = array();
-    /**
-     * Die komplette übergebene URL
-     *
-     * @var string
-     */
-    public $query = '';
-    /**
-     * @var string
-     */
-    public $originalQuery = '';
 
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
@@ -43,7 +42,7 @@ class Request
     public function __construct(\Doctrine\DBAL\Connection $db, Modules $modules)
     {
         $this->db = $db;
-        $this->modules  = $modules;
+        $this->modules = $modules;
 
         $this->preprocessUriQuery();
 
@@ -54,42 +53,6 @@ class Request
 
         $this->checkForUriAlias();
         $this->setUriParameters();
-    }
-
-    /**
-     * Gibt einen URI Parameter aus
-     *
-     * @param string $key
-     * @return string|integer|null
-     */
-    public function __get($key)
-    {
-        return isset($this->params[$key]) === true ? $this->params[$key] : null;
-    }
-
-    /**
-     * Setzt einen neuen URI Parameter
-     *
-     * @param string $key
-     * @param string|integer $value
-     */
-    public function __set($key, $value)
-    {
-        // Make it impossible to overwrite already set parameters
-        if (isset($this->params[$key]) === false) {
-            $this->params[$key] = $value;
-        }
-    }
-
-    /**
-     * Überprüft, ob ein URI-Parameter existiert
-     *
-     * @param string $key
-     * @return boolean
-     */
-    public function __isset($key)
-    {
-        return isset($this->params[$key]);
     }
 
     /**
@@ -148,20 +111,6 @@ class Request
     }
 
     /**
-     * @return bool
-     */
-    public function getIsAjax()
-    {
-        if (isset($this->isAjax) === false) {
-            if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-                $this->isAjax = true;
-            }
-        }
-
-        return $this->isAjax;
-    }
-
-    /**
      * Setzt alle in URI::query enthaltenen Parameter
      *
      * @return void
@@ -213,6 +162,58 @@ class Request
         }
 
         return;
+    }
+
+    /**
+     * Gibt einen URI Parameter aus
+     *
+     * @param string $key
+     *
+     * @return string|integer|null
+     */
+    public function __get($key)
+    {
+        return isset($this->params[$key]) === true ? $this->params[$key] : null;
+    }
+
+    /**
+     * Setzt einen neuen URI Parameter
+     *
+     * @param string         $key
+     * @param string|integer $value
+     */
+    public function __set($key, $value)
+    {
+        // Make it impossible to overwrite already set parameters
+        if (isset($this->params[$key]) === false) {
+            $this->params[$key] = $value;
+        }
+    }
+
+    /**
+     * Überprüft, ob ein URI-Parameter existiert
+     *
+     * @param string $key
+     *
+     * @return boolean
+     */
+    public function __isset($key)
+    {
+        return isset($this->params[$key]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsAjax()
+    {
+        if (isset($this->isAjax) === false) {
+            if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                $this->isAjax = true;
+            }
+        }
+
+        return $this->isAjax;
     }
 
     /**

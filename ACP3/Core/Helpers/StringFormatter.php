@@ -40,6 +40,7 @@ class StringFormatter
      *
      * @param string $var
      *    Die unzuwandelnde Variable
+     *
      * @return string
      */
     public static function makeStringUrlSafe($var)
@@ -70,9 +71,10 @@ class StringFormatter
     /**
      * Konvertiert Zeilenumbrüche zu neuen Absätzen
      *
-     * @param string $data
+     * @param string  $data
      * @param boolean $isXhtml
      * @param boolean $lineBreaks
+     *
      * @return string
      */
     public function nl2p($data, $isXhtml = true, $lineBreaks = false)
@@ -89,6 +91,7 @@ class StringFormatter
      * Ersetzt interne ACP3 interne URIs in Texten mit ihren jeweiligen Aliasen
      *
      * @param string $text
+     *
      * @return string
      */
     public function rewriteInternalUri($text)
@@ -102,6 +105,7 @@ class StringFormatter
      * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
      *
      * @param string $matches
+     *
      * @return string
      */
     public function rewriteInternalUriCallback($matches)
@@ -130,14 +134,15 @@ class StringFormatter
      * Kürzt einen String, welcher im UTF-8-Charset vorliegt
      * auf eine bestimmte Länge
      *
-     * @param string $data
+     * @param string  $data
      *    Der zu kürzende String
      * @param integer $chars
      *    Die anzuzeigenden Zeichen
      * @param integer $diff
      *    Anzahl der Zeichen, welche nach strlen($data) - $chars noch kommen müssen
-     * @param string $append
+     * @param string  $append
      *    Kann bspw. dazu genutzt werden, um an den gekürzten Text noch einen Weiterlesen-Link anzuhängen
+     *
      * @return string
      */
     public function shortenEntry($data, $chars = 300, $diff = 50, $append = '')

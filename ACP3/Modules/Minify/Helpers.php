@@ -3,8 +3,8 @@
 /**
  * Minify
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -28,6 +28,7 @@ class Helpers
      *
      * @param string $libraries
      * @param string $layout
+     *
      * @return array
      */
     public function includeCssFiles($libraries, $layout)
@@ -100,9 +101,29 @@ class Helpers
     }
 
     /**
+     * @param $systemPath
+     * @param $designPath
+     * @param $dir
+     * @param $file
+     *
+     * @return string
+     */
+    protected function _getStaticAssetPath($systemPath, $designPath, $dir, $file)
+    {
+        $dir = !empty($dir) ? $dir . '/' : '';
+        if (is_file($designPath . $dir . $file) === true) {
+            return $designPath . $dir . $file;
+        } elseif (is_file($systemPath . $dir . $file) === true) {
+            return $systemPath . $dir . $file;
+        }
+        return '';
+    }
+
+    /**
      *
      * @param string $libraries
      * @param string $layout
+     *
      * @return array
      */
     public function includeJsFiles($libraries, $layout)
@@ -160,23 +181,5 @@ class Helpers
         }
 
         return $scripts;
-    }
-
-    /**
-     * @param $systemPath
-     * @param $designPath
-     * @param $dir
-     * @param $file
-     * @return string
-     */
-    protected function _getStaticAssetPath($systemPath, $designPath, $dir, $file)
-    {
-        $dir = !empty($dir) ? $dir . '/' : '';
-        if (is_file($designPath . $dir . $file) === true) {
-            return $designPath . $dir . $file;
-        } elseif (is_file($systemPath . $dir . $file) === true) {
-            return $systemPath . $dir . $file;
-        }
-        return '';
     }
 }

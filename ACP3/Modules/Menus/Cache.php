@@ -29,6 +29,20 @@ class Cache
     }
 
     /**
+     * Bindet die gecacheten Menüpunkte ein
+     *
+     * @return array
+     */
+    public function getMenuItemsCache()
+    {
+        if ($this->cache->contains(self::CACHE_ID) === false) {
+            $this->setMenuItemsCache();
+        }
+
+        return $this->cache->fetch(self::CACHE_ID);
+    }
+
+    /**
      * Erstellt den Cache für die Menüpunkte
      *
      * @return boolean
@@ -92,23 +106,10 @@ class Cache
     }
 
     /**
-     * Bindet die gecacheten Menüpunkte ein
-     *
-     * @return array
-     */
-    public function getMenuItemsCache()
-    {
-        if ($this->cache->contains(self::CACHE_ID) === false) {
-            $this->setMenuItemsCache();
-        }
-
-        return $this->cache->fetch(self::CACHE_ID);
-    }
-
-    /**
      * Erstellt den Cache für die Menüpunkte
      *
      * @param $block
+     *
      * @return boolean
      */
     public function setVisibleMenuItemsCache($block)
@@ -121,6 +122,7 @@ class Cache
      * Bindet die gecacheten Menüpunkte ein
      *
      * @param $block
+     *
      * @return array
      */
     public function getVisibleMenuItems($block)

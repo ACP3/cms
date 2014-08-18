@@ -47,10 +47,10 @@ class Date
     /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
      *
-     * @param Auth $auth
-     * @param Lang $lang
+     * @param Auth                 $auth
+     * @param Lang                 $lang
      * @param Validator\Rules\Date $dateValidator
-     * @param View $view
+     * @param View                 $view
      */
     function __construct(
         Auth $auth,
@@ -76,11 +76,46 @@ class Date
     }
 
     /**
+     * Liefert ein Array mit allen Zeitzonen dieser Welt aus
+     *
+     * @param string $currentValue
+     *
+     * @return array
+     */
+    public static function getTimeZones($currentValue = '')
+    {
+        $timeZones = array(
+            'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
+            'America' => \DateTimeZone::listIdentifiers(\DateTimeZone::AMERICA),
+            'Antarctica' => \DateTimeZone::listIdentifiers(\DateTimeZone::ANTARCTICA),
+            'Arctic' => \DateTimeZone::listIdentifiers(\DateTimeZone::ARCTIC),
+            'Asia' => \DateTimeZone::listIdentifiers(\DateTimeZone::ASIA),
+            'Atlantic' => \DateTimeZone::listIdentifiers(\DateTimeZone::ATLANTIC),
+            'Australia' => \DateTimeZone::listIdentifiers(\DateTimeZone::AUSTRALIA),
+            'Europe' => \DateTimeZone::listIdentifiers(\DateTimeZone::EUROPE),
+            'Indian' => \DateTimeZone::listIdentifiers(\DateTimeZone::INDIAN),
+            'Pacitic' => \DateTimeZone::listIdentifiers(\DateTimeZone::PACIFIC),
+            'UTC' => \DateTimeZone::listIdentifiers(\DateTimeZone::UTC),
+        );
+
+        foreach ($timeZones as $key => $values) {
+            $i = 0;
+            foreach ($values as $row) {
+                unset($timeZones[$key][$i]);
+                $timeZones[$key][$row]['selected'] = Functions::selectEntry('date_time_zone', $row, $currentValue);
+                ++$i;
+            }
+        }
+        return $timeZones;
+    }
+
+    /**
      * Gibts ein Array mit den möglichen Datumsformaten aus,
      * um diese als Dropdownmenü darstellen zu können
      *
      * @param string $format
      *    Optionaler Parameter für das aktuelle Datumsformat
+     *
      * @return array
      */
     public function dateFormatDropdown($format = '')
@@ -95,19 +130,20 @@ class Date
     /**
      * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
      *
-     * @param mixed $name
+     * @param mixed    $name
      *    Name des jeweiligen Inputfeldes
-     * @param mixed $value
+     * @param mixed    $value
      *    Der Zeitstempel des jeweiligen Eintrages
-     * @param string $format
+     * @param string   $format
      *    Das anzuzeigende Format im Textfeld
-     * @param array $params
+     * @param array    $params
      *    Dient dem Festlegen von weiteren Parametern
-     * @param integer $range
+     * @param integer  $range
      *    1 = Start- und Enddatum anzeigen
      *    2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
      * @param bool|int $withTime
-     * @param bool $inputFieldOnly
+     * @param bool     $inputFieldOnly
+     *
      * @return string
      */
     public function datepicker(
@@ -191,8 +227,9 @@ class Date
      *
      * @param string $time
      * @param string $format
-     * @param bool $toLocalTimeZone
-     * @param bool $isLocalTimeZone
+     * @param bool   $toLocalTimeZone
+     * @param bool   $isLocalTimeZone
+     *
      * @return string
      */
     public function format($time = 'now', $format = 'long', $toLocalTimeZone = true, $isLocalTimeZone = true)
@@ -272,27 +309,6 @@ class Date
     /**
      * @return array
      */
-    protected function localizeMonths()
-    {
-        return array(
-            'January' => $this->lang->t('system', 'date_january'),
-            'February' => $this->lang->t('system', 'date_february'),
-            'March' => $this->lang->t('system', 'date_march'),
-            'April' => $this->lang->t('system', 'date_april'),
-            'May' => $this->lang->t('system', 'date_may_full'),
-            'June' => $this->lang->t('system', 'date_june'),
-            'July' => $this->lang->t('system', 'date_july'),
-            'August' => $this->lang->t('system', 'date_august'),
-            'September' => $this->lang->t('system', 'date_september'),
-            'October' => $this->lang->t('system', 'date_october'),
-            'November' => $this->lang->t('system', 'date_november'),
-            'December' => $this->lang->t('system', 'date_december')
-        );
-    }
-
-    /**
-     * @return array
-     */
     protected function localizeMonthsAbbr()
     {
         return array(
@@ -312,36 +328,24 @@ class Date
     }
 
     /**
-     * Liefert ein Array mit allen Zeitzonen dieser Welt aus
-     *
-     * @param string $currentValue
      * @return array
      */
-    public static function getTimeZones($currentValue = '')
+    protected function localizeMonths()
     {
-        $timeZones = array(
-            'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
-            'America' => \DateTimeZone::listIdentifiers(\DateTimeZone::AMERICA),
-            'Antarctica' => \DateTimeZone::listIdentifiers(\DateTimeZone::ANTARCTICA),
-            'Arctic' => \DateTimeZone::listIdentifiers(\DateTimeZone::ARCTIC),
-            'Asia' => \DateTimeZone::listIdentifiers(\DateTimeZone::ASIA),
-            'Atlantic' => \DateTimeZone::listIdentifiers(\DateTimeZone::ATLANTIC),
-            'Australia' => \DateTimeZone::listIdentifiers(\DateTimeZone::AUSTRALIA),
-            'Europe' => \DateTimeZone::listIdentifiers(\DateTimeZone::EUROPE),
-            'Indian' => \DateTimeZone::listIdentifiers(\DateTimeZone::INDIAN),
-            'Pacitic' => \DateTimeZone::listIdentifiers(\DateTimeZone::PACIFIC),
-            'UTC' => \DateTimeZone::listIdentifiers(\DateTimeZone::UTC),
+        return array(
+            'January' => $this->lang->t('system', 'date_january'),
+            'February' => $this->lang->t('system', 'date_february'),
+            'March' => $this->lang->t('system', 'date_march'),
+            'April' => $this->lang->t('system', 'date_april'),
+            'May' => $this->lang->t('system', 'date_may_full'),
+            'June' => $this->lang->t('system', 'date_june'),
+            'July' => $this->lang->t('system', 'date_july'),
+            'August' => $this->lang->t('system', 'date_august'),
+            'September' => $this->lang->t('system', 'date_september'),
+            'October' => $this->lang->t('system', 'date_october'),
+            'November' => $this->lang->t('system', 'date_november'),
+            'December' => $this->lang->t('system', 'date_december')
         );
-
-        foreach ($timeZones as $key => $values) {
-            $i = 0;
-            foreach ($values as $row) {
-                unset($timeZones[$key][$i]);
-                $timeZones[$key][$row]['selected'] = Functions::selectEntry('date_time_zone', $row, $currentValue);
-                ++$i;
-            }
-        }
-        return $timeZones;
     }
 
     /**
@@ -350,6 +354,7 @@ class Date
      * @param string $start
      * @param string $end
      * @param string $format
+     *
      * @return string
      */
     public function formatTimeRange($start, $end = '', $format = 'long')
@@ -368,7 +373,8 @@ class Date
      * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
      *
      * @param string $value
-     * @param bool $islocalTime
+     * @param bool   $islocalTime
+     *
      * @return integer
      */
     public function timestamp($value = 'now', $islocalTime = false)
@@ -380,6 +386,7 @@ class Date
      * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück
      *
      * @param bool $isLocalTime
+     *
      * @return string
      */
     public function getCurrentDateTime($isLocalTime = false)
@@ -391,6 +398,7 @@ class Date
      * Gibt einen an UTC ausgerichteten Zeitstempelim MySQL DateTime Format zurück
      *
      * @param string $value
+     *
      * @return string
      */
     public function toSQL($value = '')
@@ -401,8 +409,9 @@ class Date
     /**
      * Konvertiert einen Unixstamp in das MySQL-Datetime Format
      *
-     * @param $value
+     * @param      $value
      * @param bool $isLocalTime
+     *
      * @return string
      */
     public function timestampToDateTime($value, $isLocalTime = false)

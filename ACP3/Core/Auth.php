@@ -16,6 +16,18 @@ class Auth
      */
     const COOKIE_NAME = 'ACP3_AUTH';
     /**
+     * Anzuzeigende Datensätze  pro Seite
+     *
+     * @var integer
+     */
+    public $entries = CONFIG_ENTRIES;
+    /**
+     * Standardsprache des Benutzers
+     *
+     * @var string
+     */
+    public $language = CONFIG_LANG;
+    /**
      * Eingeloggter Benutzer oder nicht
      *
      * @var boolean
@@ -33,18 +45,6 @@ class Auth
      * @var boolean
      */
     protected $superUser = false;
-    /**
-     * Anzuzeigende Datensätze  pro Seite
-     *
-     * @var integer
-     */
-    public $entries = CONFIG_ENTRIES;
-    /**
-     * Standardsprache des Benutzers
-     *
-     * @var string
-     */
-    public $language = CONFIG_LANG;
     /**
      * @var array
      */
@@ -116,12 +116,34 @@ class Auth
     }
 
     /**
-     * Gibt die UserId des eingeloggten Benutzers zurück
-     * @return integer
+     * Loggt einen User aus
+     *
+     * @return boolean
      */
-    public function getUserId()
+    public function logout()
     {
-        return $this->userId;
+        $this->session->session_destroy(session_id());
+        return $this->setCookie('', '', -50400);
+    }
+
+    /**
+     * Setzt den internen Authentifizierungscookie
+     *
+     * @param string  $nickname
+     *  Der Loginname des Users
+     * @param string  $password
+     *  Die Hashsumme des Passwortes
+     * @param integer $expiry
+     *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
+     *
+     * @return bool
+     */
+    public function setCookie($nickname, $password, $expiry)
+    {
+        $value = base64_encode($nickname . '|' . $password);
+        $expiry = time() + $expiry;
+        $domain = strpos($_SERVER['HTTP_HOST'], '.') !== false ? $_SERVER['HTTP_HOST'] : '';
+        return setcookie(self::COOKIE_NAME, $value, $expiry, ROOT_DIR, $domain);
     }
 
     /**
@@ -153,16 +175,6 @@ class Auth
     }
 
     /**
-     * Gibt die eingestellte Standardsprache des Benutzers aus
-     *
-     * @return string
-     */
-    public function getUserLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
      * Gibt den Status von $isUser zurück
      *
      * @return boolean
@@ -170,6 +182,25 @@ class Auth
     public function isUser()
     {
         return $this->isUser === true && $this->getUserId() !== 0;
+    }
+
+    /**
+     * Gibt die UserId des eingeloggten Benutzers zurück
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Gibt die eingestellte Standardsprache des Benutzers aus
+     *
+     * @return string
+     */
+    public function getUserLanguage()
+    {
+        return $this->language;
     }
 
     /**
@@ -237,36 +268,5 @@ class Auth
             }
         }
         return 0;
-    }
-
-    /**
-     * Loggt einen User aus
-     *
-     * @return boolean
-     */
-    public function logout()
-    {
-        $this->session->session_destroy(session_id());
-        return $this->setCookie('', '', -50400);
-    }
-
-    /**
-     * Setzt den internen Authentifizierungscookie
-     *
-     * @param string  $nickname
-     *  Der Loginname des Users
-     * @param string  $password
-     *  Die Hashsumme des Passwortes
-     * @param integer $expiry
-     *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
-     *
-     * @return bool
-     */
-    public function setCookie($nickname, $password, $expiry)
-    {
-        $value = base64_encode($nickname . '|' . $password);
-        $expiry = time() + $expiry;
-        $domain = strpos($_SERVER['HTTP_HOST'], '.') !== false ? $_SERVER['HTTP_HOST'] : '';
-        return setcookie(self::COOKIE_NAME, $value, $expiry, ROOT_DIR, $domain);
     }
 }

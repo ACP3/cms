@@ -75,26 +75,23 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Setzt die ID eines Moduls
-     */
-    public function setModuleId()
-    {
-        $moduleId = $this->systemModel->getModuleId(static::MODULE_NAME);
-        $this->moduleId = !empty($moduleId) ? (int)$moduleId : 0;
-    }
-
-    /**
-     * Gibt die ID eines Moduls zurück
+     * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
      *
-     * @return integer
+     * @param string $module
+     *
+     * @return array
      */
-    public function getModuleId()
+    public static function getDependencies($module)
     {
-        if (is_null($this->moduleId)) {
-            $this->setModuleId();
+        if ((bool)preg_match('=/=', $module) === false) {
+            $path = MODULES_DIR . $module . '/module.xml';
+            if (is_file($path)) {
+                $deps = Core\XML::parseXmlFile($path, '/module/info/dependencies');
+                return array_values($deps);
+            }
         }
 
-        return (int)$this->moduleId;
+        return array();
     }
 
     /**
@@ -108,21 +105,6 @@ abstract class AbstractInstaller implements InstallerInterface
         $bool2 = $this->addToModulesTable();
         $bool3 = $this->installSettings($this->settings());
         $bool4 = $this->addResources();
-
-        return $bool1 && $bool2 && $bool3 && $bool4;
-    }
-
-    /**
-     * Methode zum Deinstallieren des Moduls
-     *
-     * @return boolean
-     */
-    public function uninstall()
-    {
-        $bool1 = $this->executeSqlQueries($this->removeTables());
-        $bool2 = $this->removeFromModulesTable();
-        $bool3 = $this->removeSettings();
-        $bool4 = $this->removeResources();
 
         return $bool1 && $bool2 && $bool3 && $bool4;
     }
@@ -159,23 +141,78 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
+     * Fügt ein Modul zur modules DB-Tabelle hinzu
      *
-     * @param string $module
-     *
-     * @return array
+     * @return boolean
      */
-    public static function getDependencies($module)
+    protected function addToModulesTable()
     {
-        if ((bool)preg_match('=/=', $module) === false) {
-            $path = MODULES_DIR . $module . '/module.xml';
-            if (is_file($path)) {
-                $deps = Core\XML::parseXmlFile($path, '/module/info/dependencies');
-                return array_values($deps);
+        // Modul in die Modules-SQL-Tabelle eintragen
+        $insertValues = array(
+            'id' => '',
+            'name' => static::MODULE_NAME,
+            'version' => static::SCHEMA_VERSION,
+            'active' => 1
+        );
+        $lastId = $this->systemModel->insert($insertValues);
+        $this->moduleId = $lastId;
+
+        return $lastId !== false;
+    }
+
+    /**
+     * Installiert die zu einem Module zugehörigen Einstellungen
+     *
+     * @param array $settings
+     *
+     * @return boolean
+     */
+    protected function installSettings(array $settings)
+    {
+        if (count($settings) > 0) {
+            $this->db->beginTransaction();
+            try {
+                foreach ($settings as $key => $value) {
+                    $insertValues = array(
+                        'id' => '',
+                        'module_id' => $this->getModuleId(),
+                        'name' => $key,
+                        'value' => $value
+                    );
+                    $this->systemModel->insert($insertValues, System\Model::TABLE_NAME_SETTINGS);
+                }
+                $this->db->commit();
+            } catch (\Exception $e) {
+                $this->db->rollback();
+
+                Core\Logger::warning('installer', $e);
+                return false;
             }
         }
+        return true;
+    }
 
-        return array();
+    /**
+     * Gibt die ID eines Moduls zurück
+     *
+     * @return integer
+     */
+    public function getModuleId()
+    {
+        if (is_null($this->moduleId)) {
+            $this->setModuleId();
+        }
+
+        return (int)$this->moduleId;
+    }
+
+    /**
+     * Setzt die ID eines Moduls
+     */
+    public function setModuleId()
+    {
+        $moduleId = $this->systemModel->getModuleId(static::MODULE_NAME);
+        $this->moduleId = !empty($moduleId) ? (int)$moduleId : 0;
     }
 
     /**
@@ -217,41 +254,6 @@ abstract class AbstractInstaller implements InstallerInterface
         $cache->getDriver()->deleteAll();
 
         return true;
-    }
-
-    /**
-     * Inserts
-     */
-    protected function _insertAclRules()
-    {
-        $roles = $this->permissionsModel->getAllRoles();
-        $privileges = $this->permissionsModel->getAllResourceIds();
-        foreach ($roles as $role) {
-            foreach ($privileges as $privilege) {
-                $permission = 0;
-                if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2)) {
-                    $permission = 1;
-                }
-                if ($role['id'] > 1 && $role['id'] < 4) {
-                    $permission = 2;
-                }
-                if ($role['id'] == 3 && $privilege['id'] == 3) {
-                    $permission = 1;
-                }
-                if ($role['id'] == 4) {
-                    $permission = 1;
-                }
-
-                $insertValues = array(
-                    'id' => '',
-                    'role_id' => $role['id'],
-                    'module_id' => $this->getModuleId(),
-                    'privilege_id' => $privilege['id'],
-                    'permission' => $permission
-                );
-                $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RULES);
-            }
-        }
     }
 
     /**
@@ -316,51 +318,62 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Löscht die zu einem Modul zugehörigen Ressourcen
-     *
-     * @return boolean
+     * Inserts
      */
-    protected function removeResources()
+    protected function _insertAclRules()
     {
-        $bool = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
-        $bool2 = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RULES);
+        $roles = $this->permissionsModel->getAllRoles();
+        $privileges = $this->permissionsModel->getAllResourceIds();
+        foreach ($roles as $role) {
+            foreach ($privileges as $privilege) {
+                $permission = 0;
+                if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2)) {
+                    $permission = 1;
+                }
+                if ($role['id'] > 1 && $role['id'] < 4) {
+                    $permission = 2;
+                }
+                if ($role['id'] == 3 && $privilege['id'] == 3) {
+                    $permission = 1;
+                }
+                if ($role['id'] == 4) {
+                    $permission = 1;
+                }
 
-        $cache = new Core\Cache('acl');
-        $cache->getDriver()->deleteAll();
-
-        return $bool !== false && $bool2 !== false;
+                $insertValues = array(
+                    'id' => '',
+                    'role_id' => $role['id'],
+                    'module_id' => $this->getModuleId(),
+                    'privilege_id' => $privilege['id'],
+                    'permission' => $permission
+                );
+                $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RULES);
+            }
+        }
     }
 
     /**
-     * Installiert die zu einem Module zugehörigen Einstellungen
-     *
-     * @param array $settings
+     * Methode zum Deinstallieren des Moduls
      *
      * @return boolean
      */
-    protected function installSettings(array $settings)
+    public function uninstall()
     {
-        if (count($settings) > 0) {
-            $this->db->beginTransaction();
-            try {
-                foreach ($settings as $key => $value) {
-                    $insertValues = array(
-                        'id' => '',
-                        'module_id' => $this->getModuleId(),
-                        'name' => $key,
-                        'value' => $value
-                    );
-                    $this->systemModel->insert($insertValues, System\Model::TABLE_NAME_SETTINGS);
-                }
-                $this->db->commit();
-            } catch (\Exception $e) {
-                $this->db->rollback();
+        $bool1 = $this->executeSqlQueries($this->removeTables());
+        $bool2 = $this->removeFromModulesTable();
+        $bool3 = $this->removeSettings();
+        $bool4 = $this->removeResources();
 
-                Core\Logger::warning('installer', $e);
-                return false;
-            }
-        }
-        return true;
+        return $bool1 && $bool2 && $bool3 && $bool4;
+    }
+
+    /**
+     * Löscht ein Modul aus der modules DB-Tabelle
+     * @return boolean
+     */
+    protected function removeFromModulesTable()
+    {
+        return $this->systemModel->delete((int)$this->getModuleId()) !== false;
     }
 
     /**
@@ -374,32 +387,19 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Fügt ein Modul zur modules DB-Tabelle hinzu
+     * Löscht die zu einem Modul zugehörigen Ressourcen
      *
      * @return boolean
      */
-    protected function addToModulesTable()
+    protected function removeResources()
     {
-        // Modul in die Modules-SQL-Tabelle eintragen
-        $insertValues = array(
-            'id' => '',
-            'name' => static::MODULE_NAME,
-            'version' => static::SCHEMA_VERSION,
-            'active' => 1
-        );
-        $lastId = $this->systemModel->insert($insertValues);
-        $this->moduleId = $lastId;
+        $bool = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
+        $bool2 = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RULES);
 
-        return $lastId !== false;
-    }
+        $cache = new Core\Cache('acl');
+        $cache->getDriver()->deleteAll();
 
-    /**
-     * Löscht ein Modul aus der modules DB-Tabelle
-     * @return boolean
-     */
-    protected function removeFromModulesTable()
-    {
-        return $this->systemModel->delete((int)$this->getModuleId()) !== false;
+        return $bool !== false && $bool2 !== false;
     }
 
     /**
@@ -430,6 +430,16 @@ abstract class AbstractInstaller implements InstallerInterface
             $result = $this->interateOverSchemaUpdates($queries, $installedSchemaVersion);
         }
         return $result;
+    }
+
+    /**
+     * Methodenstub zum Umbenennen eines Moduls
+     *
+     * @return array
+     */
+    public function renameModule()
+    {
+        return array();
     }
 
     /**
@@ -476,16 +486,6 @@ abstract class AbstractInstaller implements InstallerInterface
     {
         $updateValues = array('version' => (int)$newVersion);
         return $this->systemModel->update($updateValues, array('name' => static::MODULE_NAME)) !== false;
-    }
-
-    /**
-     * Methodenstub zum Umbenennen eines Moduls
-     *
-     * @return array
-     */
-    public function renameModule()
-    {
-        return array();
     }
 
     /**

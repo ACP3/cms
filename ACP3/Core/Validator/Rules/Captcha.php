@@ -32,6 +32,7 @@ class Captcha
      *
      * @param string $input
      * @param string $path
+     *
      * @return boolean
      */
     public function captcha($input, $path = '')

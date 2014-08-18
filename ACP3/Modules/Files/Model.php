@@ -15,8 +15,9 @@ class Model extends Core\Model
     const TABLE_NAME = 'files';
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $time
+     *
      * @return bool
      */
     public function resultExists($id, $time = '')
@@ -27,6 +28,7 @@ class Model extends Core\Model
 
     /**
      * @param int $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -36,6 +38,7 @@ class Model extends Core\Model
 
     /**
      * @param int $id
+     *
      * @return mixed
      */
     public function getFileById($id)
@@ -44,8 +47,9 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $time
+     * @param        $time
      * @param string $categoryId
+     *
      * @return int
      */
     public function countAll($time = '', $categoryId = '')
@@ -60,23 +64,11 @@ class Model extends Core\Model
     }
 
     /**
+     * @param        $categoryId
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
-     * @return array
-     */
-    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
-    {
-        $where = empty($time) === false ? ' WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
-    }
-
-    /**
-     * @param $categoryId
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
@@ -84,6 +76,20 @@ class Model extends Core\Model
         $where = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time, 'categoryId' => $categoryId));
+    }
+
+    /**
+     * @param string $time
+     * @param string $limitStart
+     * @param string $resultsPerPage
+     *
+     * @return array
+     */
+    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
+    {
+        $where = empty($time) === false ? ' WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
+        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
     }
 
     public function getAllInAcp()

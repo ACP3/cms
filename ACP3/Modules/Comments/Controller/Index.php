@@ -49,7 +49,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Config $commentsConfig,
         Core\Helpers\Secure $secureHelper)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->pagination = $pagination;
@@ -60,6 +60,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     /**
      * @param $module
+     *
      * @return $this
      */
     public function setModule($module)
@@ -71,6 +72,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     /**
      * @param $entryId
+     *
      * @return $this
      */
     public function setEntryId($entryId)
@@ -78,6 +80,50 @@ class Index extends Core\Modules\Controller\Frontend
         $this->entryId = $entryId;
 
         return $this;
+    }
+
+    public function actionIndex()
+    {
+        $this->redirectMessages()->getMessage();
+
+        $settings = $this->commentsConfig->getSettings();
+
+        // Auflistung der Kommentare
+        $comments = $this->commentsModel->getAllByModule($this->module, $this->entryId, POS, $this->auth->entries);
+        $c_comments = count($comments);
+
+        if ($c_comments > 0) {
+            // Falls in den Moduleinstellungen aktiviert und Emoticons überhaupt aktiv sind, diese einbinden
+            $emoticonsActive = false;
+            if ($settings['emoticons'] == 1) {
+                $emoticonsActive = $this->modules->isActive('emoticons');
+            }
+
+            $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->module, $this->entryId));
+            $this->pagination->display();
+
+            $formatter = $this->get('core.helpers.string.formatter');
+            for ($i = 0; $i < $c_comments; ++$i) {
+                if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
+                    $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
+                    $comments[$i]['user_id'] = 0;
+                }
+                $comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
+                $comments[$i]['date_formatted'] = $this->date->format($comments[$i]['date'], $settings['dateformat']);
+                $comments[$i]['date_iso'] = $this->date->format($comments[$i]['date'], 'c');
+                $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
+                if ($emoticonsActive === true) {
+                    $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
+                }
+            }
+            $this->view->assign('comments', $comments);
+        }
+
+        if ($this->modules->hasPermission('frontend/comments/index/create') === true) {
+            $this->view->assign('comments_create_form', $this->actionCreate());
+        }
+
+        return $this->view->fetchTemplate('comments/index.index.tpl');
     }
 
     public function actionCreate()
@@ -146,50 +192,6 @@ class Index extends Core\Modules\Controller\Frontend
         $this->secureHelper->generateFormToken($this->request->query);
 
         return $this->view->fetchTemplate('comments/index.create.tpl');
-    }
-
-    public function actionIndex()
-    {
-        $this->redirectMessages()->getMessage();
-
-        $settings = $this->commentsConfig->getSettings();
-
-        // Auflistung der Kommentare
-        $comments = $this->commentsModel->getAllByModule($this->module, $this->entryId, POS, $this->auth->entries);
-        $c_comments = count($comments);
-
-        if ($c_comments > 0) {
-            // Falls in den Moduleinstellungen aktiviert und Emoticons überhaupt aktiv sind, diese einbinden
-            $emoticonsActive = false;
-            if ($settings['emoticons'] == 1) {
-                $emoticonsActive = $this->modules->isActive('emoticons');
-            }
-
-            $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->module, $this->entryId));
-            $this->pagination->display();
-
-            $formatter = $this->get('core.helpers.string.formatter');
-            for ($i = 0; $i < $c_comments; ++$i) {
-                if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
-                    $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
-                    $comments[$i]['user_id'] = 0;
-                }
-                $comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
-                $comments[$i]['date_formatted'] = $this->date->format($comments[$i]['date'], $settings['dateformat']);
-                $comments[$i]['date_iso'] = $this->date->format($comments[$i]['date'], 'c');
-                $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
-                if ($emoticonsActive === true) {
-                    $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
-                }
-            }
-            $this->view->assign('comments', $comments);
-        }
-
-        if ($this->modules->hasPermission('frontend/comments/index/create') === true) {
-            $this->view->assign('comments_create_form', $this->actionCreate());
-        }
-
-        return $this->view->fetchTemplate('comments/index.index.tpl');
     }
 
 }

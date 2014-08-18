@@ -76,29 +76,6 @@ abstract class Frontend extends Core\Modules\Controller
     }
 
     /**
-     * Weist der aktuell auszugebenden Seite den Content-Type zu
-     *
-     * @param string $data
-     * @return $this
-     */
-    public function setContentType($data)
-    {
-        $this->contentType = $data;
-
-        return $this;
-    }
-
-    /**
-     * Gibt den Content-Type der anzuzeigenden Seiten zurück
-     *
-     * @return string
-     */
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-
-    /**
      * Outputs the requested module controller action
      */
     public function display()
@@ -141,6 +118,30 @@ abstract class Frontend extends Core\Modules\Controller
                 echo $this->getContent();
             }
         }
+    }
+
+    /**
+     * Gibt den Content-Type der anzuzeigenden Seiten zurück
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+    /**
+     * Weist der aktuell auszugebenden Seite den Content-Type zu
+     *
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function setContentType($data)
+    {
+        $this->contentType = $data;
+
+        return $this;
     }
 
     /**

@@ -27,6 +27,7 @@ class Registry
      * Get an object from the registry
      *
      * @param $class
+     *
      * @return mixed
      */
     public static function get($class)

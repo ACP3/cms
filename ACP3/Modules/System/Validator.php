@@ -39,6 +39,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
@@ -115,7 +116,52 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
+     * Überprüft, ob die zusätzlich zu ladenden Stylesheets überhaupt existieren
+     *
+     * @param string $var
+     *
+     * @return boolean
+     */
+    private function _extraCSS($var)
+    {
+        if ((bool)preg_match('=/=', $var) === false) {
+            $var_ary = explode(',', $var);
+            foreach ($var_ary as $stylesheet) {
+                $stylesheet = trim($stylesheet);
+                if (is_file(DESIGN_PATH_INTERNAL . 'css/' . $stylesheet) === false) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Überprüft, ob die zusätzlich zu ladenden JavaScript Dateien überhaupt existieren
+     *
+     * @param string $var
+     *
+     * @return boolean
+     */
+    private function _extraJS($var)
+    {
+        if ((bool)preg_match('=/=', $var) === false) {
+            $var_ary = explode(',', $var);
+            foreach ($var_ary as $js) {
+                $js = trim($js);
+                if (is_file(DESIGN_PATH_INTERNAL . 'js/' . $js) === false) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSqlExport(array $formData)
@@ -141,6 +187,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      * @param array $file
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSqlImport(array $formData, array $file)
@@ -161,48 +208,6 @@ class Validator extends Core\Validator\AbstractValidator
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed($errors);
         }
-    }
-
-    /**
-     * Überprüft, ob die zusätzlich zu ladenden Stylesheets überhaupt existieren
-     *
-     * @param string $var
-     * @return boolean
-     */
-    private function _extraCSS($var)
-    {
-        if ((bool)preg_match('=/=', $var) === false) {
-            $var_ary = explode(',', $var);
-            foreach ($var_ary as $stylesheet) {
-                $stylesheet = trim($stylesheet);
-                if (is_file(DESIGN_PATH_INTERNAL . 'css/' . $stylesheet) === false) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Überprüft, ob die zusätzlich zu ladenden JavaScript Dateien überhaupt existieren
-     *
-     * @param string $var
-     * @return boolean
-     */
-    private function _extraJS($var)
-    {
-        if ((bool)preg_match('=/=', $var) === false) {
-            $var_ary = explode(',', $var);
-            foreach ($var_ary as $js) {
-                $js = trim($js);
-                if (is_file(DESIGN_PATH_INTERNAL . 'js/' . $js) === false) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
     }
 
 } 

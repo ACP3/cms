@@ -2,8 +2,8 @@
 /**
  * Emoticons
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -40,6 +40,7 @@ class Helpers
      *
      * @param string $formFieldId
      *    Die ID des Eingabefeldes, in welches die Emoticons eingefügt werden sollen
+     *
      * @return string
      */
     public function emoticonsList($formFieldId = '')
@@ -54,6 +55,7 @@ class Helpers
      *
      * @param string $string
      *  Zu durchsuchender Text nach Zeichen
+     *
      * @return string
      */
     public function emoticonsReplace($string)

@@ -3,8 +3,8 @@
 /**
  * Captcha
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -59,9 +59,10 @@ class Helpers
      *
      * @param integer $captchaLength
      *  Anzahl der Zeichen, welche das Captcha haben soll
-     * @param string $id
-     * @param bool $inputOnly
-     * @param string $path
+     * @param string  $id
+     * @param bool    $inputOnly
+     * @param string  $path
+     *
      * @return string
      */
     public function captcha($captchaLength = 5, $id = 'captcha', $inputOnly = false, $path = '')

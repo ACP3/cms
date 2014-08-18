@@ -51,6 +51,7 @@ class CheckAccess extends AbstractPlugin
 
     /**
      * @param $params
+     *
      * @throws \Exception
      * @return string
      */

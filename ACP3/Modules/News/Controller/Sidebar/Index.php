@@ -31,7 +31,7 @@ class Index extends Core\Modules\Controller
         \Doctrine\DBAL\Connection $db,
         News\Model $newsModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;

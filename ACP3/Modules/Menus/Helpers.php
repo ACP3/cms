@@ -3,8 +3,8 @@
 /**
  * Menu bars
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -61,6 +61,7 @@ class Helpers
      *  ID des Elternknotens
      * @param integer $leftId
      * @param integer $rightId
+     *
      * @return array
      */
     public function menuItemsList($parentId = 0, $leftId = 0, $rightId = 0)
@@ -92,6 +93,7 @@ class Helpers
      * Gibt alle Menüleisten zur Benutzung in einem Dropdown-Menü aus
      *
      * @param integer $selected
+     *
      * @return array
      */
     public function menusDropdown($selected = 0)
@@ -109,16 +111,17 @@ class Helpers
      * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
      * falls diese sich ebenfalls in der Navigationsleiste befindet
      *
-     * @param string $menu
+     * @param string  $menu
      *    Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
      * @param boolean $useBootstrap
-     * @param string $class
-     * @param string $dropdownItemClass
-     * @param string $tag
-     * @param string $itemTag
-     * @param string $dropdownWrapperTag
-     * @param string $linkCss
-     * @param string $inlineStyles
+     * @param string  $class
+     * @param string  $dropdownItemClass
+     * @param string  $tag
+     * @param string  $itemTag
+     * @param string  $dropdownWrapperTag
+     * @param string  $linkCss
+     * @param string  $inlineStyles
+     *
      * @return string
      */
     public function processNavbar(

@@ -63,6 +63,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
@@ -90,6 +91,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData)
@@ -158,7 +160,36 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
+     * Bestimmung des Geschlechts
+     *  1 = Keine Angabe
+     *  2 = Weiblich
+     *  3 = Männlich
+     *
+     * @param string , integer $var
+     *               Die zu überprüfende Variable
+     *
+     * @return boolean
+     */
+    private function _gender($var)
+    {
+        return $var == 1 || $var == 2 || $var == 3;
+    }
+
+    /**
+     * Überprüft, ob eine gültige ICQ-Nummer eingegeben wurde
+     *
+     * @param integer $var
+     *
+     * @return boolean
+     */
+    private function _icq($var)
+    {
+        return (bool)preg_match('/^(\d{6,9})$/', $var);
+    }
+
+    /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData)
@@ -228,6 +259,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateEditProfile(array $formData)
@@ -268,6 +300,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      * @param array $settings
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateUserSettings(array $formData, array $settings)
@@ -307,6 +340,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateForgotPassword(array $formData)
@@ -332,6 +366,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateRegistration(array $formData)
@@ -361,32 +396,6 @@ class Validator extends Core\Validator\AbstractValidator
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed($errors);
         }
-    }
-
-    /**
-     * Bestimmung des Geschlechts
-     *  1 = Keine Angabe
-     *  2 = Weiblich
-     *  3 = Männlich
-     *
-     * @param string , integer $var
-     *  Die zu überprüfende Variable
-     * @return boolean
-     */
-    private function _gender($var)
-    {
-        return $var == 1 || $var == 2 || $var == 3;
-    }
-
-    /**
-     * Überprüft, ob eine gültige ICQ-Nummer eingegeben wurde
-     *
-     * @param integer $var
-     * @return boolean
-     */
-    private function _icq($var)
-    {
-        return (bool)preg_match('/^(\d{6,9})$/', $var);
     }
 
 }

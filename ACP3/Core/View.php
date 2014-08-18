@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3\Core;
+
 use ACP3\Core\View\AbstractRenderer;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
@@ -53,9 +54,29 @@ class View extends ContainerAware
     }
 
     /**
+     * Set the desired renderer with an optional config array
+     *
+     * @param string $renderer
+     * @param array  $params
+     *
+     * @throws \Exception
+     */
+    public function setRenderer($renderer = 'smarty', array $params = array())
+    {
+        $serviceId = 'core.view.renderer.' . $renderer;
+        if ($this->container->has($serviceId) === true) {
+            $this->renderer = $this->container->get($serviceId);
+            $this->renderer->configure($params);
+        } else {
+            throw new \Exception('Renderer ' . $renderer . ' not found!');
+        }
+    }
+
+    /**
      * Aktiviert einzelne JavaScript Bibliotheken
      *
      * @param array $libraries
+     *
      * @return $this
      */
     public function enableJsLibraries(array $libraries)
@@ -73,28 +94,11 @@ class View extends ContainerAware
     }
 
     /**
-     * Set the desired renderer with an optional config array
-     *
-     * @param string $renderer
-     * @param array $params
-     * @throws \Exception
-     */
-    public function setRenderer($renderer = 'smarty', array $params = array())
-    {
-        $serviceId = 'core.view.renderer.' . $renderer;
-        if ($this->container->has($serviceId) === true) {
-            $this->renderer = $this->container->get($serviceId);
-            $this->renderer->configure($params);
-        } else {
-            throw new \Exception('Renderer ' . $renderer . ' not found!');
-        }
-    }
-
-    /**
      * Erstellt den Link zum Minifier mitsamt allen zu ladenden JavaScript Bibliotheken
      *
-     * @param $group
+     * @param        $group
      * @param string $layout
+     *
      * @return string
      */
     public function buildMinifyLink($group, $layout = '')
@@ -134,9 +138,10 @@ class View extends ContainerAware
      * Gibt ein Template direkt aus
      *
      * @param string $template
-     * @param mixed $cacheId
-     * @param null $compileId
-     * @param null $parent
+     * @param mixed  $cacheId
+     * @param null   $compileId
+     * @param null   $parent
+     *
      * @internal param int $cache_lifetime
      */
     public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
@@ -147,11 +152,12 @@ class View extends ContainerAware
     /**
      * Gibt ein Template aus
      *
-     * @param string $template
-     * @param mixed $cacheId
-     * @param mixed $compileId
-     * @param object $parent
+     * @param string  $template
+     * @param mixed   $cacheId
+     * @param mixed   $compileId
+     * @param object  $parent
      * @param boolean $display
+     *
      * @throws \Exception
      * @return string
      */
@@ -185,6 +191,7 @@ class View extends ContainerAware
      * Checks, whether a templates exists or not
      *
      * @param string $template
+     *
      * @return boolean
      */
     public function templateExists($template)
@@ -196,7 +203,8 @@ class View extends ContainerAware
      * Weist dem View-Object eine Template-Variable zu
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return boolean
      */
     public function assign($name, $value = null)

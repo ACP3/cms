@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+
 use ACP3\Core\Router\Aliases;
 
 /**
@@ -75,6 +76,20 @@ class SEO
     }
 
     /**
+     * Gibt den Cache der URI-Aliase zurück
+     *
+     * @return array
+     */
+    public function getCache()
+    {
+        if ($this->cache->contains('meta') === false) {
+            $this->setCache();
+        }
+
+        return $this->cache->fetch('meta');
+    }
+
+    /**
      * Setzt den Cache für die URI-Aliase
      *
      * @return boolean
@@ -94,20 +109,6 @@ class SEO
         }
 
         return $this->cache->save('meta', $data);
-    }
-
-    /**
-     * Gibt den Cache der URI-Aliase zurück
-     *
-     * @return array
-     */
-    public function getCache()
-    {
-        if ($this->cache->contains('meta') === false) {
-            $this->setCache();
-        }
-
-        return $this->cache->fetch('meta');
     }
 
     /**
@@ -151,6 +152,20 @@ class SEO
     }
 
     /**
+     * Gibt die Beschreibung der Seite zurück
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getDescription($path)
+    {
+        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+
+        return !empty($this->aliasCache[$path]['description']) ? $this->aliasCache[$path]['description'] : '';
+    }
+
+    /**
      * Gibt die Keywords der aktuell angezeigten Seite oder der
      * Elternseite zurück
      *
@@ -167,6 +182,20 @@ class SEO
         }
 
         return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
+    }
+
+    /**
+     * Gibt die Schlüsselwörter der Seite zurück
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getKeywords($path)
+    {
+        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+
+        return !empty($this->aliasCache[$path]['keywords']) ? $this->aliasCache[$path]['keywords'] : '';
     }
 
     /**
@@ -189,44 +218,10 @@ class SEO
     }
 
     /**
-     * Gibt die Beschreibung der Seite zurück
-     *
-     * @param string $path
-     * @return string
-     */
-    public function getDescription($path)
-    {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return !empty($this->aliasCache[$path]['description']) ? $this->aliasCache[$path]['description'] : '';
-    }
-
-    /**
-     *
-     * @param string $string
-     */
-    public function setDescriptionPostfix($string)
-    {
-        $this->metaDescriptionPostfix = $string;
-    }
-
-    /**
-     * Gibt die Schlüsselwörter der Seite zurück
-     *
-     * @param string $path
-     * @return string
-     */
-    public function getKeywords($path)
-    {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return !empty($this->aliasCache[$path]['keywords']) ? $this->aliasCache[$path]['keywords'] : '';
-    }
-
-    /**
      * Gibt die jeweilige Einstellung für den Robots-Metatag zurück
      *
      * @param string $path
+     *
      * @return string
      */
     public function getRobotsSetting($path = '')
@@ -246,6 +241,15 @@ class SEO
             $robot = isset($this->aliasCache[$path]) === false || $this->aliasCache[$path]['robots'] == 0 ? CONFIG_SEO_ROBOTS : $this->aliasCache[$path]['robots'];
             return strtr($robot, $replace);
         }
+    }
+
+    /**
+     *
+     * @param string $string
+     */
+    public function setDescriptionPostfix($string)
+    {
+        $this->metaDescriptionPostfix = $string;
     }
 
     /**
@@ -282,6 +286,7 @@ class SEO
      * Gibt die Formularfelder für die Suchmaschinenoptimierung aus
      *
      * @param string $path
+     *
      * @return string
      */
     public function formFields($path = '')

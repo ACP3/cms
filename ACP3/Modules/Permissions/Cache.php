@@ -29,6 +29,19 @@ class Cache
     }
 
     /**
+     * @return bool|mixed|string
+     */
+    public function getResourcesCache()
+    {
+        if ($this->cache->contains(static::CACHE_ID_RESOURCES) === false) {
+            $this->setResourcesCache();
+        }
+
+        return $this->cache->fetch(static::CACHE_ID_RESOURCES);
+
+    }
+
+    /**
      * Erstellt den Cache für alle existierenden Ressourcen
      *
      * @return boolean
@@ -58,13 +71,13 @@ class Cache
     /**
      * @return bool|mixed|string
      */
-    public function getResourcesCache()
+    public function getRolesCache()
     {
-        if ($this->cache->contains(static::CACHE_ID_RESOURCES) === false) {
-            $this->setResourcesCache();
+        if ($this->cache->contains(static::CACHE_ID_ROLES) === false) {
+            $this->setRolesCache();
         }
 
-        return $this->cache->fetch(static::CACHE_ID_RESOURCES);
+        return $this->cache->fetch(static::CACHE_ID_ROLES);
 
     }
 
@@ -105,16 +118,18 @@ class Cache
     }
 
     /**
+     * @param array $roles
+     *
      * @return bool|mixed|string
      */
-    public function getRolesCache()
+    public function getRulesCache(array $roles)
     {
-        if ($this->cache->contains(static::CACHE_ID_ROLES) === false) {
-            $this->setRolesCache();
+        $filename = static::CACHE_ID_RULES . implode(',', $roles);
+        if ($this->cache->contains($filename) === false) {
+            $this->setRulesCache($roles);
         }
 
-        return $this->cache->fetch(static::CACHE_ID_ROLES);
-
+        return $this->cache->fetch($filename);
     }
 
     /**
@@ -122,6 +137,7 @@ class Cache
      *
      * @param array $roles
      *    Array mit den IDs der zu cachenden Rollen
+     *
      * @return boolean
      */
     public function setRulesCache(array $roles)
@@ -146,29 +162,16 @@ class Cache
     /**
      * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle
      *
-     * @param string $key
+     * @param string  $key
      *    Schlüssel der Privilegie
      * @param integer $roleId
      *    ID der Rolle, dessen übergeordnete Rolle sucht werden soll
+     *
      * @return integer
      */
     protected function _getPermissionValue($key, $roleId)
     {
         $value = $this->permissionsModel->getPermissionByKeyAndRoleId($key, $roleId);
         return isset($value['permission']) ? $value['permission'] : 0;
-    }
-
-    /**
-     * @param array $roles
-     * @return bool|mixed|string
-     */
-    public function getRulesCache(array $roles)
-    {
-        $filename = static::CACHE_ID_RULES . implode(',', $roles);
-        if ($this->cache->contains($filename) === false) {
-            $this->setRulesCache($roles);
-        }
-
-        return $this->cache->fetch($filename);
     }
 } 

@@ -11,6 +11,10 @@ class Model
 {
 
     /**
+     * The name of the default sql table
+     */
+    const TABLE_NAME = '';
+    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
@@ -20,11 +24,6 @@ class Model
      * @var string
      */
     protected $prefix = DB_PRE;
-
-    /**
-     * The name of the default sql table
-     */
-    const TABLE_NAME = '';
 
     /**
      * Injects the dependencies
@@ -37,28 +36,11 @@ class Model
     }
 
     /**
-     * Build the SQL limit
-     *
-     * @param $limitStart
-     * @param $resultsPerPage
-     * @return string
-     */
-    protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '')
-    {
-        if ($limitStart !== '' && $resultsPerPage !== '') {
-            return ' LIMIT ' . ((int)$limitStart) . ',' . ((int)$resultsPerPage);
-        } elseif ($limitStart !== '') {
-            return ' LIMIT ' . ((int)$limitStart);
-        }
-
-        return '';
-    }
-
-    /**
      * Executes the SQL insert statement
      *
-     * @param array $params
+     * @param array  $params
      * @param string $tableName
+     *
      * @return int
      */
     public function insert(array $params, $tableName = '')
@@ -81,8 +63,9 @@ class Model
      * Executes thr SQL delete statement
      *
      * @param int|array $id
-     * @param string $field
-     * @param string $tableName
+     * @param string    $field
+     * @param string    $tableName
+     *
      * @return int
      */
     public function delete($id, $field = '', $tableName = '')
@@ -104,9 +87,10 @@ class Model
     /**
      * Executes the SQL update statement
      *
-     * @param array $params
+     * @param array     $params
      * @param int|array $id
-     * @param string $tableName
+     * @param string    $tableName
+     *
      * @return int
      */
     public function update(array $params, $id, $tableName = '')
@@ -123,6 +107,25 @@ class Model
             Logger::error('database', $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * Build the SQL limit
+     *
+     * @param $limitStart
+     * @param $resultsPerPage
+     *
+     * @return string
+     */
+    protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '')
+    {
+        if ($limitStart !== '' && $resultsPerPage !== '') {
+            return ' LIMIT ' . ((int)$limitStart) . ',' . ((int)$resultsPerPage);
+        } elseif ($limitStart !== '') {
+            return ' LIMIT ' . ((int)$limitStart);
+        }
+
+        return '';
     }
 
 }

@@ -22,6 +22,7 @@ abstract class AbstractPlugin
 
     /**
      * @param $params
+     *
      * @return mixed
      */
     abstract public function process($params);

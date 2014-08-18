@@ -13,6 +13,7 @@ class Alerts extends \ACP3\Core\Helpers\Alerts
      * Gibt eine Box mit den aufgetretenen Fehlern aus
      *
      * @param string|array $errors
+     *
      * @return string
      */
     public function errorBox($errors)

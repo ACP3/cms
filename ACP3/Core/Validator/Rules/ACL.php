@@ -25,6 +25,7 @@ class ACL
      *
      * @param array $privileges
      *    Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
+     *
      * @return boolean
      */
     public function aclPrivilegesExist(array $privileges)
@@ -51,6 +52,7 @@ class ACL
      *
      * @param array $roles
      *    Die zu überprüfenden Rollen
+     *
      * @return boolean
      */
     public function aclRolesExist(array $roles)

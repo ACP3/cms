@@ -3,8 +3,8 @@
 /**
  * Comments
  *
- * @author Tino Goratsch
- * @package ACP3
+ * @author     Tino Goratsch
+ * @package    ACP3
  * @subpackage Modules
  */
 
@@ -32,10 +32,11 @@ class Helpers
     /**
      * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen
      *
-     * @param string $moduleId
+     * @param string  $moduleId
      *    Das jeweilige Modul
      * @param integer $resultId
      *    Die ID des jeweiligen Eintrages
+     *
      * @return integer
      */
     public function commentsCount($moduleId, $resultId)
@@ -46,6 +47,7 @@ class Helpers
     /**
      * @param $moduleName
      * @param $resultId
+     *
      * @return int
      */
     public function deleteCommentsByModuleAndResult($moduleName, $resultId)

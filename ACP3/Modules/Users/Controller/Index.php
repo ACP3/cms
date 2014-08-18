@@ -40,7 +40,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel)
     {
-       parent::__construct($context);
+        parent::__construct($context);
 
         $this->date = $date;
         $this->db = $db;

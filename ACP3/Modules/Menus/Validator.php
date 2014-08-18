@@ -56,6 +56,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param \ACP3\Modules\Articles\Helpers $articlesHelpers
+     *
      * @return $this
      */
     public function setArticlesHelpers(Articles\Helpers $articlesHelpers)
@@ -67,6 +68,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData)
@@ -91,6 +93,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateItem(array $formData)
@@ -139,6 +142,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData)

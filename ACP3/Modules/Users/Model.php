@@ -25,12 +25,13 @@ class Model extends Core\Model
      * @param string $nickname
      *  Der zu überprüfende Nickname
      * @param string $id
+     *
      * @return boolean
      */
     public function resultExistsByUserName($nickname, $id = '')
     {
         if (!empty($id)) {
-            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array((int) $id, $nickname)) == 1 ? true : false;
+            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array((int)$id, $nickname)) == 1 ? true : false;
         } else {
             return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname)) == 1 ? true : false;
         }
@@ -42,12 +43,13 @@ class Model extends Core\Model
      * @param string $mail
      *  Die zu überprüfende E-Mail-Adresse
      * @param string $id
+     *
      * @return boolean
      */
     public function resultExistsByEmail($mail, $id = '')
     {
         if (!empty($id)) {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array((int) $id, $mail)) > 0 ? true : false;
+            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array((int)$id, $mail)) > 0 ? true : false;
         } else {
             return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE mail = ?', array($mail)) > 0 ? true : false;
         }

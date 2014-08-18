@@ -26,6 +26,20 @@ class Cache
     }
 
     /**
+     * Bindet die gecacheten Emoticons ein
+     *
+     * @return array
+     */
+    public function getCache()
+    {
+        if ($this->cache->contains(static::CACHE_ID) === false) {
+            $this->setCache();
+        }
+
+        return $this->cache->fetch(static::CACHE_ID);
+    }
+
+    /**
      * Cache die Emoticons
      *
      * @return boolean
@@ -44,20 +58,6 @@ class Cache
         }
 
         return $this->cache->save(static::CACHE_ID, $data);
-    }
-
-    /**
-     * Bindet die gecacheten Emoticons ein
-     *
-     * @return array
-     */
-    public function getCache()
-    {
-        if ($this->cache->contains(static::CACHE_ID) === false) {
-            $this->setCache();
-        }
-
-        return $this->cache->fetch(static::CACHE_ID);
     }
 
 

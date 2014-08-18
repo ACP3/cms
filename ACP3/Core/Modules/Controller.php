@@ -92,66 +92,6 @@ abstract class Controller
     }
 
     /**
-     * Setter Methode für die $this->no_output Variable
-     *
-     * @param boolean $value
-     * @return $this
-     */
-    public function setNoOutput($value)
-    {
-        $this->noOutput = (bool)$value;
-
-        return $this;
-    }
-
-    /**
-     * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
-     * erfolgen soll oder die Datei dies selber handelt
-     *
-     * @return string
-     */
-    public function getNoOutput()
-    {
-        return $this->noOutput;
-    }
-
-    /**
-     * Weist der aktuell auszugebenden Seite ein Layout zu
-     *
-     * @param string $file
-     * @return $this
-     */
-    public function setLayout($file)
-    {
-        $this->layout = $file;
-
-        return $this;
-    }
-
-    /**
-     * Gibt das aktuell zugewiesene Layout zurück
-     *
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Setzt das Template für den Contentbereich der Seite
-     *
-     * @param string $file
-     * @return $this
-     */
-    public function setContentTemplate($file)
-    {
-        $this->contentTemplate = $file;
-
-        return $this;
-    }
-
-    /**
      * Gibt das aktuell zugewiesene Template für den Contentbereich zurück
      *
      * @return string
@@ -162,14 +102,15 @@ abstract class Controller
     }
 
     /**
-     * Weist dem Template den auszugebenden Inhalt zu
+     * Setzt das Template für den Contentbereich der Seite
      *
-     * @param string $data
+     * @param string $file
+     *
      * @return $this
      */
-    public function setContent($data)
+    public function setContentTemplate($file)
     {
-        $this->content = $data;
+        $this->contentTemplate = $file;
 
         return $this;
     }
@@ -178,6 +119,7 @@ abstract class Controller
      * Fügt weitere Daten an den Seiteninhalt an
      *
      * @param string $data
+     *
      * @return $this
      */
     public function appendContent($data)
@@ -198,6 +140,20 @@ abstract class Controller
     }
 
     /**
+     * Weist dem Template den auszugebenden Inhalt zu
+     *
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function setContent($data)
+    {
+        $this->content = $data;
+
+        return $this;
+    }
+
+    /**
      * Gibt die anzuhängenden Inhalte an den Seiteninhalt zurück
      *
      * @return string
@@ -207,11 +163,11 @@ abstract class Controller
         return $this->contentAppend;
     }
 
-
     /**
      * Gets a class from the service container
      *
      * @param $serviceId
+     *
      * @return mixed
      */
     public function get($serviceId)
@@ -221,6 +177,7 @@ abstract class Controller
 
     /**
      * @param $container
+     *
      * @return $this
      */
     public function setContainer($container)
@@ -235,6 +192,55 @@ abstract class Controller
         if ($this->getNoOutput() === false && $this->getLayout() !== '') {
             $this->view->displayTemplate($this->getLayout());
         }
+    }
+
+    /**
+     * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
+     * erfolgen soll oder die Datei dies selber handelt
+     *
+     * @return string
+     */
+    public function getNoOutput()
+    {
+        return $this->noOutput;
+    }
+
+    /**
+     * Setter Methode für die $this->no_output Variable
+     *
+     * @param boolean $value
+     *
+     * @return $this
+     */
+    public function setNoOutput($value)
+    {
+        $this->noOutput = (bool)$value;
+
+        return $this;
+    }
+
+    /**
+     * Gibt das aktuell zugewiesene Layout zurück
+     *
+     * @return string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * Weist der aktuell auszugebenden Seite ein Layout zu
+     *
+     * @param string $file
+     *
+     * @return $this
+     */
+    public function setLayout($file)
+    {
+        $this->layout = $file;
+
+        return $this;
     }
 
 }
