@@ -17,10 +17,6 @@ class Archive extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Core\Pagination
      */
     protected $pagination;
@@ -32,14 +28,12 @@ class Archive extends Core\Modules\Controller\Frontend
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Pagination $pagination,
         Newsletter\Model $newsletterModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->pagination = $pagination;
         $this->newsletterModel = $newsletterModel;
     }

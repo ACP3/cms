@@ -11,11 +11,6 @@ use ACP3\Modules\Newsletter;
  */
 class Index extends Core\Modules\Controller\Frontend
 {
-
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
     /**
      * @var Core\Helpers\Secure
      */
@@ -27,13 +22,11 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function __construct(
         Core\Context\Frontend $context,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
         Newsletter\Model $newsModel)
     {
         parent::__construct($context);
 
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->newsletterModel = $newsModel;
     }
@@ -47,6 +40,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $hash = $this->request->hash;
             }
 
+            /** @var \ACP3\Modules\Newsletter\Validator $validator */
             $validator = $this->get('newsletter.validator');
             $validator->validateActivate($mail, $hash);
 
@@ -54,7 +48,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+            $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 
@@ -69,7 +63,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                         $bool = $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
 
-                        $this->secureHelper->unsetFormToken();
+                        $this->secureHelper->unsetFormToken($this->request->query);
 
                         $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                         return;
@@ -78,7 +72,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                         $bool = $this->newsletterModel->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-                        $this->secureHelper->unsetFormToken();
+                        $this->secureHelper->unsetFormToken($this->request->query);
 
                         $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                         return;
