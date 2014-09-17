@@ -25,6 +25,7 @@
         <item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
         <item key="create_success">The newsletter has been successfully sent.</item>
         <item key="frontend_archive_index">Archive</item>
+        <item key="frontend_index_activate">Activate newsletter account</item>
         <item key="index">Newsletter</item>
         <item key="mailsig">E-mail signature</item>
         <item key="missed_out_newsletter">Missed out a newsletter edition?</item>

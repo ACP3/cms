@@ -9,11 +9,11 @@ services:
 
   newsletter.controller.frontend.archive:
     class: ACP3\Modules\Newsletter\Controller\Archive
-    arguments: ['@core.context.frontend', '@core.date', '@core.db', '@core.pagination', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@newsletter.model']
 
   newsletter.controller.frontend.index:
     class: ACP3\Modules\Newsletter\Controller\Index
-    arguments: ['@core.context.frontend', '@core.db', '@core.helpers.secure', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.helpers.secure', '@newsletter.model']
 
   newsletter.controller.sidebar.index:
     class: ACP3\Modules\Newsletter\Controller\Sidebar\Index
