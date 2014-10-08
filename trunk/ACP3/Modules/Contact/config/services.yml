@@ -1,7 +1,7 @@
 services:
   contact.controller.admin.index:
     class: ACP3\Modules\Contact\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@contact.config']
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@contact.config']
 
   contact.controller.frontend.index:
     class: ACP3\Modules\Contact\Controller\Index

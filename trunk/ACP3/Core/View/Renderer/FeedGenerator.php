@@ -4,11 +4,12 @@ namespace ACP3\Core\View\Renderer;
 
 /**
  * Renderer for the output of RSS and ATOM newsfeeds
+ * @package ACP3\Core\View\Renderer
  */
 class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
 {
     /**
-     * @var \FeedWriter\Feed renderer
+     * @var \FeedWriter\Feed
      */
     public $renderer;
 
@@ -17,7 +18,7 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
      */
     public function configure(array $params = array())
     {
-        switch ($this->config['feed_type']) {
+        switch ($params['feed_type']) {
             case 'ATOM':
                 $feedType = 'ATOM';
                 break;
@@ -29,6 +30,9 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
         }
         $className = '\\FeedWriter\\' . $feedType;
         $this->renderer = new $className;
+
+        $this->config = $params;
+
         $this->generateChannel();
     }
 
