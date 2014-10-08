@@ -102,15 +102,16 @@ class Index extends Core\Modules\Controller\Admin
 
         // WYSIWYG-Editoren
         $editors = array_diff(scandir(CLASSES_DIR . 'WYSIWYG'), array('.', '..', 'AbstractWYSIWYG.php'));
-        $c_editors = count($editors);
         $wysiwyg = array();
 
-        for ($i = 0; $i < $c_editors; ++$i) {
-            $editors[$i] = substr($editors[$i], 0, strrpos($editors[$i], '.php'));
-            if (!empty($editors[$i])) {
-                $wysiwyg[$i]['value'] = $editors[$i];
-                $wysiwyg[$i]['selected'] = Core\Functions::selectEntry('wysiwyg', $editors[$i], CONFIG_WYSIWYG);
-                $wysiwyg[$i]['lang'] = $editors[$i];
+        foreach ($editors as $editor) {
+            $editor = substr($editor, 0, strrpos($editor, '.php'));
+            if (!empty($editor)) {
+                $wysiwyg[] = array(
+                    'value' => $editor,
+                    'selected' => Core\Functions::selectEntry('wysiwyg', $editor, CONFIG_WYSIWYG),
+                    'lang' => $editor
+                );
             }
         }
         $this->view->assign('wysiwyg', $wysiwyg);
