@@ -19,7 +19,7 @@ class CKEditor extends AbstractWYSIWYG
         $this->advanced = isset($params['advanced']) ? (bool)$params['advanced'] : false;
 
         $this->config['toolbar'] = isset($params['toolbar']) && $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
-        $this->config['height'] = $params['height'] . 'px';
+        $this->config['height'] = (isset($params['height']) ? $params['height'] : 250) . 'px';
     }
 
     /**

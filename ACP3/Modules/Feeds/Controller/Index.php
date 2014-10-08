@@ -47,7 +47,7 @@ class Index extends Core\Modules\Controller\Frontend
                 'module' => $module,
             );
 
-            $this->view->setRenderer('FeedGenerator', $config);
+            $this->view->setRenderer('feedgenerator', $config);
 
             $feed->$action();
 
