@@ -90,11 +90,11 @@ class NestedSet
      *
      * @param integer $parentId
      *    ID der übergeordneten Seite
-     * @param array   $insert_values
+     * @param array   $insertValues
      *
      * @return boolean
      */
-    public function insertNode($parentId, array $insert_values)
+    public function insertNode($parentId, array $insertValues)
     {
         $parentId = (int)$parentId;
         // Keine übergeordnete Seite zugewiesen
@@ -105,20 +105,20 @@ class NestedSet
             try {
                 // Letzten Eintrag selektieren
                 if ($this->enableBlocks === true)
-                    $node = $this->db->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->tableName . ' WHERE block_id = ?', array($insert_values['block_id']));
+                    $node = $this->db->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->tableName . ' WHERE block_id = ?', array($insertValues['block_id']));
                 if ($this->enableBlocks === false || empty($node['right_id'])) {
                     $node = $this->db->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->tableName);
                 }
 
                 // left_id und right_id Werte für das Anhängen entsprechend erhöhen
-                $insert_values['left_id'] = !empty($node['right_id']) ? $node['right_id'] + 1 : 1;
-                $insert_values['right_id'] = !empty($node['right_id']) ? $node['right_id'] + 2 : 2;
+                $insertValues['left_id'] = !empty($node['right_id']) ? $node['right_id'] + 1 : 1;
+                $insertValues['right_id'] = !empty($node['right_id']) ? $node['right_id'] + 2 : 2;
 
-                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id >= ?', array($insert_values['left_id']));
+                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id >= ?', array($insertValues['left_id']));
 
-                $this->db->insert($this->tableName, $insert_values);
-                $root_id = $this->db->lastInsertId();
-                $this->db->update($this->tableName, array('root_id' => $root_id), array('id' => $root_id));
+                $this->db->insert($this->tableName, $insertValues);
+                $rootId = $this->db->lastInsertId();
+                $this->db->update($this->tableName, array('root_id' => $rootId), array('id' => $rootId));
 
                 $this->db->commit();
                 return true;
@@ -137,11 +137,11 @@ class NestedSet
                 // Übergeordnete Menüpunkte anpassen
                 $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id + 2 WHERE root_id = ? AND left_id <= ? AND right_id >= ?', array($parent['root_id'], $parent['left_id'], $parent['right_id']));
 
-                $insert_values['root_id'] = $parent['root_id'];
-                $insert_values['left_id'] = $parent['right_id'];
-                $insert_values['right_id'] = $parent['right_id'] + 1;
+                $insertValues['root_id'] = $parent['root_id'];
+                $insertValues['left_id'] = $parent['right_id'];
+                $insertValues['right_id'] = $parent['right_id'] + 1;
 
-                $this->db->insert($this->tableName, $insert_values);
+                $this->db->insert($this->tableName, $insertValues);
 
                 $this->db->commit();
                 return true;

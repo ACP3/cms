@@ -4,6 +4,7 @@ namespace ACP3\Modules\Users\Controller;
 
 use ACP3\Core;
 use ACP3\Modules\Users;
+use ACP3\Modules\Permissions;
 
 /**
  * Class Index
@@ -16,10 +17,6 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Core\Pagination
      */
     protected $pagination;
@@ -31,22 +28,32 @@ class Index extends Core\Modules\Controller\Frontend
      * @var Users\Model
      */
     protected $usersModel;
+    /**
+     * @var Core\Config
+     */
+    protected $usersConfig;
+    /**
+     * @var Permissions\Model
+     */
+    protected $permissionsModel;
 
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
-        Users\Model $usersModel)
+        Users\Model $usersModel,
+        Core\Config $usersConfig,
+        Permissions\Model $permissionsModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->pagination = $pagination;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
+        $this->usersConfig = $usersConfig;
+        $this->permissionsModel = $permissionsModel;
     }
 
     public function actionForgotPwd()
@@ -76,8 +83,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $replace = array($user['nickname'], $user['mail'], $newPassword, CONFIG_SEO_TITLE, $host);
                     $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
-                    $config = new Core\Config($this->db, 'users');
-                    $settings = $config->getSettings();
+                    $settings = $this->usersConfig->getSettings();
                     $mailIsSent = $this->get('core.functions')->generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
                     // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
@@ -167,8 +173,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionRegister()
     {
-        $config = new Core\Config($this->db, 'users');
-        $settings = $config->getSettings();
+        $settings = $this->usersConfig->getSettings();
 
         if ($this->auth->isUser() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
@@ -200,15 +205,8 @@ class Index extends Core\Modules\Controller\Frontend
                         'registration_date' => $this->date->getCurrentDateTime(),
                     );
 
-                    $this->db->beginTransaction();
-                    try {
-                        $lastId = $this->usersModel->insert($insertValues);
-                        $bool2 = $this->db->insert(DB_PRE . 'acl_user_roles', array('user_id' => $lastId, 'role_id' => 2));
-                        $this->db->commit();
-                    } catch (\Exception $e) {
-                        $this->db->rollback();
-                        $lastId = $bool2 = false;
-                    }
+                    $lastId = $this->usersModel->insert($insertValues);
+                    $bool2 = $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => 2), Permissions\Model::TABLE_NAME_USER_ROLES);
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 

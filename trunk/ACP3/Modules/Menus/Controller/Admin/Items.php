@@ -24,18 +24,24 @@ class Items extends Core\Modules\Controller\Admin
      * @var Menus\Model
      */
     protected $menusModel;
+    /**
+     * @var Menus\Cache
+     */
+    protected $menusCache;
 
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Menus\Model $menusModel)
+        Menus\Model $menusModel,
+        Menus\Cache $menusCache)
     {
         parent::__construct($context);
 
         $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->menusModel = $menusModel;
+        $this->menusCache = $menusCache;
     }
 
     public function actionCreate()
@@ -65,7 +71,7 @@ class Items extends Core\Modules\Controller\Admin
                 // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
                 if ($_POST['mode'] != 3) {
                     $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                    if ($this->request->uriAliasExists($_POST['uri'])) {
+                    if ($this->aliases->uriAliasExists($_POST['uri'])) {
                         $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->aliases->getUriAlias($_POST['uri']);
                         $keywords = $this->seo->getKeywords($_POST['uri']);
                         $description = $this->seo->getDescription($_POST['uri']);
@@ -84,8 +90,7 @@ class Items extends Core\Modules\Controller\Admin
                     $this->seo->setCache();
                 }
 
-                $cache = new Menus\Cache($this->lang, $this->menusModel);
-                $cache->setMenuItemsCache();
+                $this->menusCache->setMenuItemsCache();
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -162,8 +167,7 @@ class Items extends Core\Modules\Controller\Admin
                 $this->aliases->deleteUriAlias($itemUri);
             }
 
-            $cache = new Menus\Cache($this->lang, $this->menusModel);
-            $cache->setMenuItemsCache();
+            $this->menusCache->setMenuItemsCache();
 
             $this->seo->setCache();
 
@@ -223,8 +227,7 @@ class Items extends Core\Modules\Controller\Admin
                         $this->seo->setCache();
                     }
 
-                    $cache = new Menus\Cache($this->lang, $this->menusModel);
-                    $cache->setMenuItemsCache();
+                    $this->menusCache->setMenuItemsCache();
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -293,8 +296,7 @@ class Items extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             $nestedSet->order($this->request->id, $this->request->action);
 
-            $cache = new Menus\Cache($this->lang, $this->menusModel);
-            $cache->setMenuItemsCache();
+            $this->menusCache->setMenuItemsCache();
 
             $this->redirect()->temporary('acp/menus');
         } else {

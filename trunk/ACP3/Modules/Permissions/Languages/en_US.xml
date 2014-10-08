@@ -12,15 +12,16 @@
         <item key="admin_resources_edit">Edit resource</item>
         <item key="admin_resources_index">Manage resources</item>
         <item key="allow_access">Allow</item>
+        <item key="area">Area</item>
         <item key="assigned_privilege">Assigned privilege</item>
+        <item key="controller">Controller</item>
         <item key="filename">Filename</item>
         <item key="deny_access">Deny</item>
         <item key="inherit_access">Inherit</item>
         <item key="invalid_privileges">The submitted permissions contain unallowed values.</item>
         <item key="mod_description">With this module you can set permissions for the users.</item>
         <item key="module_name">Module name</item>
-        <item key="no_privilege_selected">Please set the permissions for each action that a user is allowed to perform.
-        </item>
+        <item key="no_privilege_selected">Please set the permissions for each action that a user is allowed to perform.</item>
         <item key="permissions">Permissions</item>
         <item key="privilege_does_not_exist">The selected privilege doesn't exist.</item>
         <item key="resource_name">Resource name</item>
@@ -31,5 +32,7 @@
         <item key="select_module">Please select a module for which the resource is to be created.</item>
         <item key="select_privilege">Please select a privilege for the selected resource.</item>
         <item key="type_in_resource">Please type in the name of resource.</item>
+        <item key="type_in_controller">Please type in the name of the controller.</item>
+        <item key="type_in_resource">Please type in the name of the resource.</item>
     </keys>
 </language>

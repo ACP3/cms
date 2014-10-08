@@ -16,10 +16,6 @@ class Account extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -27,20 +23,24 @@ class Account extends Core\Modules\Controller\Frontend
      * @var Users\Model
      */
     protected $usersModel;
+    /**
+     * @var Core\Config
+     */
+    protected $usersConfig;
 
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Users\Model $usersModel)
+        Users\Model $usersModel,
+        Core\Config $usersConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
+        $this->usersConfig = $usersConfig;
     }
 
     public function preDispatch()
@@ -151,8 +151,7 @@ class Account extends Core\Modules\Controller\Frontend
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'users');
-        $settings = $config->getSettings();
+        $settings = $this->usersConfig->getSettings();
 
         if (empty($_POST) === false) {
             try {

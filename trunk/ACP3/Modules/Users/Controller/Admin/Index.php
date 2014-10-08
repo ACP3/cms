@@ -21,10 +21,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -41,18 +37,18 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\ACL $acl,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
+        Core\Config $usersConfig,
         Permissions\Model $permissionsModel)
     {
         parent::__construct($context);
 
         $this->acl = $acl;
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
+        $this->usersConfig = $usersConfig;
         $this->permissionsModel = $permissionsModel;
     }
 
@@ -96,16 +92,9 @@ class Index extends Core\Modules\Controller\Admin
                     'registration_date' => $this->date->getCurrentDateTime(),
                 );
 
-                $this->db->beginTransaction();
-                try {
-                    $lastId = $this->usersModel->insert($insertValues);
-                    foreach ($_POST['roles'] as $row) {
-                        $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
-                    }
-                    $this->db->commit();
-                } catch (\Exception $e) {
-                    $this->db->rollback();
-                    $lastId = false;
+                $lastId = $this->usersModel->insert($insertValues);
+                foreach ($_POST['roles'] as $row) {
+                    $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
                 }
 
                 $this->secureHelper->unsetFormToken($this->request->query);
@@ -289,16 +278,9 @@ class Index extends Core\Modules\Controller\Admin
                         'entries' => (int)$_POST['entries'],
                     );
 
-                    // Rollen aktualisieren
-                    $this->db->beginTransaction();
-                    try {
-                        $this->permissionsModel->delete(array('user_id' => $this->request->id), Permissions\Model::TABLE_NAME_USER_ROLES);
-                        foreach ($_POST['roles'] as $row) {
-                            $this->permissionsModel->insert(array('user_id' => $this->request->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
-                        }
-                        $this->db->commit();
-                    } catch (\Exception $e) {
-                        $this->db->rollback();
+                    $this->permissionsModel->delete(array('user_id' => $this->request->id), Permissions\Model::TABLE_NAME_USER_ROLES);
+                    foreach ($_POST['roles'] as $row) {
+                        $this->permissionsModel->insert(array('user_id' => $this->request->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
                     }
 
                     // Neues Passwort
@@ -417,8 +399,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'users');
-
         if (empty($_POST) === false) {
             try {
                 $validator = $this->get('users.validator');
@@ -430,7 +410,7 @@ class Index extends Core\Modules\Controller\Admin
                     'language_override' => $_POST['language_override'],
                     'mail' => $_POST['mail']
                 );
-                $bool = $config->setSettings($data);
+                $bool = $this->usersConfig->setSettings($data);
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -442,7 +422,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = $config->getSettings();
+        $settings = $this->usersConfig->getSettings();
 
         $lang_languages = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('languages', Core\Functions::selectGenerator('language_override', array(1, 0), $lang_languages, $settings['language_override'], 'checked'));

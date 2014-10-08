@@ -26,6 +26,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $newsModel;
     /**
+     * @var News\Cache
+     */
+    protected $newsCache;
+    /**
      * @var Core\Config
      */
     protected $newsConfig;
@@ -35,6 +39,7 @@ class Index extends Core\Modules\Controller\Admin
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         News\Model $newsModel,
+        News\Cache $newsCache,
         Core\Config $newsConfig)
     {
         parent::__construct($context);
@@ -42,6 +47,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->newsModel = $newsModel;
+        $this->newsCache = $newsCache;
         $this->newsConfig = $newsConfig;
     }
 
@@ -190,8 +196,7 @@ class Index extends Core\Modules\Controller\Admin
                     );
                     $this->seo->setCache();
 
-                    $cache = new News\Cache($this->newsModel);
-                    $cache->setCache($this->request->id);
+                    $this->newsCache->setCache($this->request->id);
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 

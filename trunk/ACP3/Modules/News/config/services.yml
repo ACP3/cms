@@ -1,15 +1,19 @@
 services:
   news.controller.admin.index:
     class: ACP3\Modules\News\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@news.model', '@news.config']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@news.model', '@news.cache', '@news.config']
 
   news.controller.frontend.index:
     class: ACP3\Modules\News\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@news.model', '@news.config']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@news.model', '@news.cache', '@news.config', '@categories.model']
 
   news.controller.sidebar.index:
     class: ACP3\Modules\News\Controller\Sidebar\Index
     arguments: ['@core.context', '@core.date', '@news.model', '@news.config']
+
+  news.cache:
+    class: ACP3\Modules\News\Cache
+    arguments: ['@news.model']
 
   news.config:
     class: ACP3\Core\Config
