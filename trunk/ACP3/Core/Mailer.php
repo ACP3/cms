@@ -62,6 +62,8 @@ class Mailer
 
     /**
      * Initializes PHPMailer and sets the basic configuration parameters
+     * @param View $view
+     * @param bool $bcc
      */
     public function __construct(View $view = null, $bcc = false)
     {

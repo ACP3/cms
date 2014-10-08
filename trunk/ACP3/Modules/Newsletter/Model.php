@@ -39,6 +39,16 @@ class Model extends Core\Model
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . $where, array('status' => $status));
     }
 
+    public function countAllAccounts()
+    {
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME_ACCOUNTS);
+    }
+
+    public function countAllActiveAccounts()
+    {
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME_ACCOUNTS . ' WHERE hash = ""');
+    }
+
     public function getAll($status = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';

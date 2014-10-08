@@ -24,25 +24,28 @@ class Index extends Core\Modules\Controller
      * @var News\Model
      */
     protected $newsModel;
+    /**
+     * @var Core\Config
+     */
+    protected $newsConfig;
 
     public function __construct(
         Core\Context $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        News\Model $newsModel)
+        News\Model $newsModel,
+        Core\Config $newsConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->newsModel = $newsModel;
+        $this->newsConfig = $newsConfig;
     }
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.string.formatter');
-        $config = new Core\Config($this->db, 'news');
-        $settings = $config->getSettings();
+        $formatter = $this->get('core.helpers.stringFormatter');
+        $settings = $this->newsConfig->getSettings();
 
         $news = $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_news = count($news);

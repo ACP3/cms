@@ -18,32 +18,31 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Files\Model
      */
     protected $filesModel;
+    /**
+     * @var Core\Config
+     */
+    protected $filesConfig;
 
     public function __construct(
         Core\Context $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Files\Model $filesModel)
+        Files\Model $filesModel,
+        Core\Config $filesConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->filesModel = $filesModel;
+        $this->filesConfig = $filesConfig;
     }
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.string.formatter');
-        $config = new Core\Config($this->db, 'files');
-        $settings = $config->getSettings();
+        $formatter = $this->get('core.helpers.stringFormatter');
+        $settings = $this->filesConfig->getSettings();
 
         $files = $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_files = count($files);

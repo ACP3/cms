@@ -17,7 +17,7 @@ services:
 
   feeds.extensions:
     class: ACP3\Modules\Feeds\Extensions
-    arguments: ['@core.date', '@core.db', '@core.router', '@core.view', '@core.helpers.string.formatter']
+    arguments: ['@core.date', '@core.db', '@core.router', '@core.view', '@core.helpers.stringFormatter']
 
   feeds.installer:
     class: ACP3\Modules\Feeds\Installer

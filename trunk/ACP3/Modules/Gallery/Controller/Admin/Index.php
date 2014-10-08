@@ -17,10 +17,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -28,20 +24,24 @@ class Index extends Core\Modules\Controller\Admin
      * @var Gallery\Model
      */
     protected $galleryModel;
+    /**
+     * @var Core\Config
+     */
+    protected $galleryConfig;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Gallery\Model $galleryModel)
+        Gallery\Model $galleryModel,
+        Core\Config $galleryConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->galleryModel = $galleryModel;
+        $this->galleryConfig = $galleryConfig;
     }
 
     public function actionCreate()
@@ -240,8 +240,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'gallery');
-        $settings = $config->getSettings();
+        $settings = $this->galleryConfig->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -264,7 +263,7 @@ class Index extends Core\Modules\Controller\Admin
                     $data['comments'] = (int)$_POST['comments'];
                 }
 
-                $bool = $config->setSettings($data);
+                $bool = $this->galleryConfig->setSettings($data);
 
                 // Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
                 if ($_POST['thumbwidth'] !== $settings['thumbwidth'] || $_POST['thumbheight'] !== $settings['thumbheight'] ||

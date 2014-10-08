@@ -11,31 +11,6 @@ class StringFormatter
 {
 
     /**
-     * @var Core\Modules
-     */
-    protected $modules;
-
-    /**
-     * @var Core\Router
-     */
-    protected $router;
-    /**
-     * @var Core\Validator\Rules\Router\Aliases
-     */
-    protected $aliasesValidator;
-
-    public function __construct(
-        Core\Modules $modules,
-        Core\Router $router,
-        Core\Validator\Rules\Router\Aliases $aliasValidator
-    )
-    {
-        $this->modules = $modules;
-        $this->router = $router;
-        $this->aliasesValidator = $aliasValidator;
-    }
-
-    /**
      * Macht einen String URL sicher
      *
      * @param string $var
@@ -84,49 +59,6 @@ class StringFormatter
             return '<p>' . preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br' . ($isXhtml == true ? ' /' : '') . '>'), $data) . '</p>';
         } else {
             return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
-        }
-    }
-
-    /**
-     * Ersetzt interne ACP3 interne URIs in Texten mit ihren jeweiligen Aliasen
-     *
-     * @param string $text
-     *
-     * @return string
-     */
-    public function rewriteInternalUri($text)
-    {
-        $rootDir = str_replace('/', '\/', ROOT_DIR);
-        $host = $_SERVER['HTTP_HOST'];
-        return preg_replace_callback('/<a href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/', array($this, "rewriteInternalUriCallback"), $text);
-    }
-
-    /**
-     * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
-     *
-     * @param string $matches
-     *
-     * @return string
-     */
-    public function rewriteInternalUriCallback($matches)
-    {
-        if ($this->aliasesValidator->uriAliasExists($matches[6]) === true) {
-            return $matches[0];
-        } else {
-            $uriArray = explode('/', $matches[6]);
-            $path = 'frontend/' . $uriArray[0];
-            if (!empty($uriArray[1])) {
-                $path .= '/' . $uriArray[1];
-            }
-            if (!empty($uriArray[2])) {
-                $path .= '/' . $uriArray[2];
-            }
-
-            if ($this->modules->actionExists($path)) {
-                return '<a href="' . $this->router->route($matches[6]) . '"';
-            } else {
-                return $matches[0];
-            }
         }
     }
 

@@ -16,10 +16,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -27,20 +23,24 @@ class Index extends Core\Modules\Controller\Admin
      * @var Guestbook\Model
      */
     protected $guestbookModel;
+    /**
+     * @var Core\Config
+     */
+    protected $guestbookConfig;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Guestbook\Model $guestbookModel)
+        Guestbook\Model $guestbookModel,
+        Core\Config $guestbookConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
+        $this->guestbookConfig = $guestbookConfig;
     }
 
     public function actionDelete()
@@ -63,8 +63,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $guestbook = $this->guestbookModel->getOneById($this->request->id);
         if (empty($guestbook) === false) {
-            $config = new Core\Config($this->db, 'guestbook');
-            $settings = $config->getSettings();
+            $settings = $this->guestbookConfig->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -124,8 +123,7 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
-            $config = new Core\Config($this->db, 'guestbook');
-            $settings = $config->getSettings();
+            $settings = $this->guestbookConfig->getSettings();
             // Emoticons einbinden
             $emoticons_active = false;
             if ($settings['emoticons'] == 1) {
@@ -134,7 +132,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $formatter = $this->get('core.helpers.string.formatter');
+            $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['date_formatted'] = $this->date->formatTimeRange($guestbook[$i]['date']);
                 $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
@@ -149,8 +147,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'guestbook');
-
         if (empty($_POST) === false) {
             try {
                 $validator = $this->get('guestbook.validator');
@@ -164,7 +160,7 @@ class Index extends Core\Modules\Controller\Admin
                     'emoticons' => $_POST['emoticons'],
                     'newsletter_integration' => $_POST['newsletter_integration'],
                 );
-                $bool = $config->setSettings($data);
+                $bool = $this->guestbookConfig->setSettings($data);
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -176,7 +172,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = $config->getSettings();
+        $settings = $this->guestbookConfig->getSettings();
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 

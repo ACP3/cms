@@ -98,8 +98,11 @@ services:
     class: ACP3\Core\Helpers\Secure
     arguments: ['@core.view']
 
-  core.helpers.string.formatter:
+  core.helpers.stringFormatter:
     class: ACP3\Core\Helpers\StringFormatter
+
+  core.helpers.formatter.rewriteInternalUri:
+    class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
     arguments: ['@core.modules', '@core.router', '@core.validator.rules.router.aliases']
 
   core.helpers.toc:

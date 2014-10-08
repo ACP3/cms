@@ -16,14 +16,13 @@ class Helpers
 {
     const URL_KEY_PATTERN = 'articles/index/details/id_%s/';
     /**
-     *
      * @var Model
      */
-    protected $model;
+    protected $articlesModel;
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(Model $articlesModel)
     {
-        $this->model = new Model($db);
+        $this->articlesModel = $articlesModel;
     }
 
     /**
@@ -35,7 +34,7 @@ class Helpers
      */
     public function articlesList($id = 0)
     {
-        $articles = $this->model->getAll();
+        $articles = $this->articlesModel->getAll();
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
@@ -48,7 +47,7 @@ class Helpers
 
     public function articleExists($id)
     {
-        return $this->model->resultExists($id);
+        return $this->articlesModel->resultExists($id);
     }
 
 }

@@ -23,18 +23,24 @@ class Index extends Core\Modules\Controller\Frontend
      * @var Articles\Model
      */
     protected $articlesModel;
+    /**
+     * @var Articles\Cache
+     */
+    protected $articlesCache;
 
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Articles\Model $articlesModel)
+        Articles\Model $articlesModel,
+        Articles\Cache $articlesCache)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->pagination = $pagination;
         $this->articlesModel = $articlesModel;
+        $this->articlesCache = $articlesCache;
     }
 
     public function actionIndex()
@@ -59,14 +65,14 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->articlesModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) === true) {
-            $cache = new Articles\Cache($this->articlesModel);
-            $article = $cache->getCache($this->request->id);
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
+            $this->articlesModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) === true) {
+            $article = $this->articlesCache->getCache($this->request->id);
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 
             $toc = $this->get('core.helpers.toc');
-            $formatter = $this->get('core.helpers.string.formatter');
+            $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
             $this->view->assign('page', $toc->splitTextIntoPages($formatter->rewriteInternalUri($article['text']), $this->request->getUriWithoutPages()));
         } else {
             throw new Core\Exceptions\ResultNotExists();
