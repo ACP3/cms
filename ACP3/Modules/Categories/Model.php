@@ -28,6 +28,11 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
     }
 
+    public function getTitleById($id)
+    {
+        return $this->db->fetchColumn('SELECT title FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
+    }
+
     public function getAllByModuleName($moduleName)
     {
         return $this->db->fetchAll('SELECT c.* FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC', array($moduleName));

@@ -3,6 +3,7 @@
 namespace ACP3\Modules\News\Controller;
 
 use ACP3\Core;
+use ACP3\Modules\Categories;
 use ACP3\Modules\News;
 
 /**
@@ -29,25 +30,35 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $newsModel;
     /**
+     * @var News\Cache
+     */
+    protected $newsCache;
+    /**
      * @var Core\Config
      */
     protected $newsConfig;
+    /**
+     * @var Categories\Model
+     */
+    protected $categoriesModel;
 
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Pagination $pagination,
         News\Model $newsModel,
-        Core\Config $newsConfig)
+        News\Cache $newsCache,
+        Core\Config $newsConfig,
+        Categories\Model $categoriesModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->pagination = $pagination;
         $this->newsModel = $newsModel;
+        $this->newsCache = $newsCache;
         $this->newsConfig = $newsConfig;
+        $this->categoriesModel = $categoriesModel;
     }
 
     public function actionDetails()
@@ -58,8 +69,7 @@ class Index extends Core\Modules\Controller\Frontend
             $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
             $settings = $this->newsConfig->getSettings();
 
-            $cache = new News\Cache($this->newsModel);
-            $news = $cache->getCache($this->request->id);
+            $news = $this->newsCache->getCache($this->request->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
 
@@ -111,7 +121,7 @@ class Index extends Core\Modules\Controller\Frontend
         if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->router->route('news'));
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
-            $category = $this->db->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
+            $category = $this->categoriesModel->getTitleById($cat);
             if (!empty($category)) {
                 $this->breadcrumb->append($category);
             }
@@ -136,11 +146,12 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->setTotalResults($this->newsModel->countAll($time, $cat));
             $this->pagination->display();
 
-            $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
+            $rewriteUri = $this->get('core.helpers.formatter.rewriteInternalUri');
+            $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
                 $news[$i]['date_iso'] = $this->date->format($news[$i]['start'], 'c');
-                $news[$i]['text'] = $formatter->rewriteInternalUri($news[$i]['text']);
+                $news[$i]['text'] = $rewriteUri->rewriteInternalUri($news[$i]['text']);
                 if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $commentsCheck === true) {
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
                 }

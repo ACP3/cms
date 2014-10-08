@@ -17,14 +17,12 @@ class Extensions
      * @var string
      */
     protected $area;
-
     /**
-     * Whther to sort the results ascending/descending
+     * Whether to sort the results ascending/descending
      *
      * @var string
      */
     protected $sort;
-
     /**
      * The search term
      *

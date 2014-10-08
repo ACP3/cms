@@ -14,13 +14,13 @@ class Extensions extends Core\Modules\Controller\Admin
 {
 
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var System\Model
      */
     protected $systemModel;
+    /**
+     * @var Core\Config
+     */
+    protected $systemConfig;
     /**
      * @var \ACP3\Modules\Permissions\Cache
      */
@@ -30,12 +30,13 @@ class Extensions extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
         System\Model $systemModel,
+        Core\Config $systemConfig,
         Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
 
-        $this->db = $db;
         $this->systemModel = $systemModel;
+        $this->systemConfig = $systemConfig;
         $this->permissionsCache = $permissionsCache;
     }
 
@@ -49,8 +50,7 @@ class Extensions extends Core\Modules\Controller\Admin
             if ((bool)preg_match('=/=', $this->request->dir) === false &&
                 is_file(ACP3_ROOT_DIR . 'designs/' . $this->request->dir . '/info.xml') === true
             ) {
-                $config = new Core\Config($this->db, 'system');
-                $bool = $config->setSettings(array('design' => $this->request->dir));
+                $bool = $this->systemConfig->setSettings(array('design' => $this->request->dir));
 
                 // Template Cache leeren
                 Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');

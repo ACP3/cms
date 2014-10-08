@@ -37,7 +37,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
-                $this->displaySearchResults($_POST['mods'], Core\Functions::strEncode($_POST['search_term']), $_POST['area'], strtoupper($_POST['sort']));
+                $this->_displaySearchResults($_POST['mods'], Core\Functions::strEncode($_POST['search_term']), $_POST['area'], strtoupper($_POST['sort']));
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $redirect->setMessage(false, $e->getMessage(), 'search');
@@ -67,7 +67,13 @@ class Index extends Core\Modules\Controller\Frontend
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
-    protected function displaySearchResults($modules, $searchTerm, $area, $sort)
+    /**
+     * @param $modules
+     * @param $searchTerm
+     * @param $area
+     * @param $sort
+     */
+    protected function _displaySearchResults($modules, $searchTerm, $area, $sort)
     {
         $this->breadcrumb
             ->append($this->lang->t('search', 'search'), 'search')

@@ -1,11 +1,11 @@
 services:
   menus.controller.admin.index:
     class: ACP3\Modules\Menus\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.model']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.model', '@menus.cache']
 
   menus.controller.admin.items:
     class: ACP3\Modules\Menus\Controller\Admin\Items
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.model']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.model', '@menus.cache']
 
   menus.cache:
     class: ACP3\Modules\Menus\Cache
@@ -13,7 +13,7 @@ services:
 
   menus.helpers:
     class: ACP3\Modules\Menus\Helpers
-    arguments: ['@core.lang', '@core.request', '@core.router', '@menus.model']
+    arguments: ['@core.request', '@core.router', '@menus.model', '@menus.cache']
 
   menus.model:
     class: ACP3\Modules\Menus\Model

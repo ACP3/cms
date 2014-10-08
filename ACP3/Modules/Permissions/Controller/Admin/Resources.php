@@ -23,18 +23,24 @@ class Resources extends Core\Modules\Controller\Admin
      * @var Permissions\Model
      */
     protected $permissionsModel;
+    /**
+     * @var Permissions\Cache
+     */
+    protected $permissionsCache;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\ACL $acl,
         Core\Helpers\Secure $secureHelper,
-        Permissions\Model $permissionsModel)
+        Permissions\Model $permissionsModel,
+        Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
 
         $this->acl = $acl;
         $this->secureHelper = $secureHelper;
         $this->permissionsModel = $permissionsModel;
+        $this->permissionsCache = $permissionsCache;
     }
 
     public function actionCreate()
@@ -56,8 +62,7 @@ class Resources extends Core\Modules\Controller\Admin
                 );
                 $bool = $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                $cache = new Permissions\Cache($this->permissionsModel);
-                $cache->setResourcesCache();
+                $this->permissionsCache->setResourcesCache();
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -98,8 +103,7 @@ class Resources extends Core\Modules\Controller\Admin
                 $bool = $this->permissionsModel->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
             }
 
-            $cache = new Permissions\Cache($this->permissionsModel);
-            $cache->setResourcesCache();
+            $this->permissionsCache->setResourcesCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/resources');
         } elseif (is_string($items)) {
@@ -124,8 +128,7 @@ class Resources extends Core\Modules\Controller\Admin
                     );
                     $bool = $this->permissionsModel->update($updateValues, $this->request->id, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                    $cache = new Permissions\Cache($this->permissionsModel);
-                    $cache->setResourcesCache();
+                    $this->permissionsCache->setResourcesCache();
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 

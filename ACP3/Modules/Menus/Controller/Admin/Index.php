@@ -23,18 +23,24 @@ class Index extends Core\Modules\Controller\Admin
      * @var Menus\Model
      */
     protected $menusModel;
+    /**
+     * @var Menus\Cache
+     */
+    protected $menusCache;
 
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Menus\Model $menusModel)
+        Menus\Model $menusModel,
+        Menus\Cache $menusCache)
     {
         parent::__construct($context);
 
         $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->menusModel = $menusModel;
+        $this->menusCache = $menusCache;
     }
 
     public function actionCreate()
@@ -90,8 +96,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $menusCache = new Menus\Cache($this->lang, $this->menusModel);
-            $menusCache->setMenuItemsCache();
+            $this->menusCache->setMenuItemsCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
@@ -116,8 +121,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->menusModel->update($updateValues, $this->request->id);
 
-                    $cache = new Menus\Cache($this->lang, $this->menusModel);
-                    $cache->setMenuItemsCache();
+                    $this->menusCache->setMenuItemsCache();
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 

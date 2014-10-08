@@ -27,13 +27,18 @@ class Index extends Core\Modules\Controller\Admin
      * @var Permissions\Model
      */
     protected $permissionsModel;
+    /**
+     * @var Permissions\Cache
+     */
+    protected $permissionsCache;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\ACL $acl,
         \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Permissions\Model $permissionsModel)
+        Permissions\Model $permissionsModel,
+        Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
 
@@ -41,6 +46,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->permissionsModel = $permissionsModel;
+        $this->permissionsCache = $permissionsCache;
     }
 
     public function actionCreate()
@@ -58,7 +64,7 @@ class Index extends Core\Modules\Controller\Admin
                     'parent_id' => $_POST['parent'],
                 );
 
-                $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
+                $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
                 $bool = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
                 $roleId = $this->db->lastInsertId();
 
@@ -77,8 +83,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->db->commit();
 
-                $cache = new Permissions\Cache($this->permissionsModel);
-                $cache->setRolesCache();
+                $this->permissionsCache->setRolesCache();
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -136,7 +141,7 @@ class Index extends Core\Modules\Controller\Admin
             $bool = $bool2 = $bool3 = false;
             $levelUndeletable = false;
 
-            $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
+            $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             foreach ($items as $item) {
                 if (in_array($item, array(1, 2, 4)) === true) {
                     $levelUndeletable = true;
@@ -176,15 +181,21 @@ class Index extends Core\Modules\Controller\Admin
                         'name' => Core\Functions::strEncode($_POST['name']),
                         'parent_id' => $this->request->id == 1 ? 0 : $_POST['parent'],
                     );
-                    $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
-                    $bool = $nestedSet->EditNode($this->request->id, $this->request->id == 1 ? '' : (int)$_POST['parent'], 0, $updateValues);
+                    $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
+                    $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$_POST['parent'], 0, $updateValues);
 
                     $this->db->beginTransaction();
                     // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
                     $this->permissionsModel->delete($this->request->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
                     foreach ($_POST['privileges'] as $moduleId => $privileges) {
                         foreach ($privileges as $id => $permission) {
-                            $ruleInsertValues = array('id' => '', 'role_id' => $this->request->id, 'module_id' => $moduleId, 'privilege_id' => $id, 'permission' => $permission);
+                            $ruleInsertValues = array(
+                                'id' => '',
+                                'role_id' => $this->request->id,
+                                'module_id' => $moduleId,
+                                'privilege_id' => $id,
+                                'permission' => $permission
+                            );
                             $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                         }
                     }

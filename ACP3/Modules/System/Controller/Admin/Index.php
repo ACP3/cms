@@ -12,10 +12,6 @@ use ACP3\Modules\System;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -23,24 +19,26 @@ class Index extends Core\Modules\Controller\Admin
      * @var System\Model
      */
     protected $systemModel;
+    /**
+     * @var Core\Config
+     */
+    protected $systemConfig;
 
     public function __construct(
         Core\Context\Admin $context,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        System\Model $systemModel)
+        System\Model $systemModel,
+        Core\Config $systemConfig)
     {
         parent::__construct($context);
 
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->systemModel = $systemModel;
+        $this->systemConfig = $systemConfig;
     }
 
     public function actionConfiguration()
     {
-        $config = new Core\Config($this->db, 'system');
-
         $redirect = $this->redirectMessages();
 
         if (empty($_POST) === false) {
@@ -79,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
                     'wysiwyg' => $_POST['wysiwyg']
                 );
 
-                $bool = $config->setSettings($data);
+                $bool = $this->systemConfig->setSettings($data);
 
                 // Gecachete Stylesheets und JavaScript Dateien löschen
                 if (CONFIG_EXTRA_CSS !== $_POST['extra_css'] ||
@@ -159,7 +157,7 @@ class Index extends Core\Modules\Controller\Admin
         );
         $this->view->assign('mailer_smtp_security', Core\Functions::selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, CONFIG_MAILER_SMTP_SECURITY));
 
-        $settings = $config->getSettings();
+        $settings = $this->systemConfig->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 

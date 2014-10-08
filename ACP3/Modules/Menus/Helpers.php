@@ -35,23 +35,23 @@ class Helpers
     /**
      * @var Model
      */
-    protected $menuModel;
+    protected $menusModel;
     /**
      * @var Cache
      */
-    protected $cache;
+    protected $menusCache;
 
     public function __construct(
-        Core\Lang $lang,
         Core\Request $request,
         Core\Router $router,
-        Model $menuModel
+        Model $menusModel,
+        Cache $menusCache
     )
     {
         $this->request = $request;
         $this->router = $router;
-        $this->menuModel = $menuModel;
-        $this->cache = new Cache($lang, $menuModel);
+        $this->menusModel = $menusModel;
+        $this->menusCache = $menusCache;
     }
 
     /**
@@ -68,7 +68,7 @@ class Helpers
     {
         // Menüpunkte einbinden
         if (empty($this->menuItems)) {
-            $this->menuItems = $this->cache->getMenuItemsCache();
+            $this->menuItems = $this->menusCache->getMenuItemsCache();
         }
 
         $output = array();
@@ -98,7 +98,7 @@ class Helpers
      */
     public function menusDropdown($selected = 0)
     {
-        $menus = $this->menuModel->getAllMenus();
+        $menus = $this->menusModel->getAllMenus();
         $c_menus = count($menus);
         for ($i = 0; $i < $c_menus; ++$i) {
             $menus[$i]['selected'] = Core\Functions::selectEntry('block_id', (int)$menus[$i]['id'], (int)$selected);
@@ -141,7 +141,7 @@ class Helpers
         } else { // ...ansonsten Verarbeitung starten
             $request = $this->request;
 
-            $items = $this->cache->getVisibleMenuItems($menu);
+            $items = $this->menusCache->getVisibleMenuItems($menu);
             $c_items = count($items);
 
             if ($c_items > 0) {
@@ -154,7 +154,7 @@ class Helpers
                         $request->mod . '/' . $request->controller . '/',
                         $request->mod
                     );
-                    $selected = $this->menuModel->getLeftIdByUris($menu, $in);
+                    $selected = $this->menusModel->getLeftIdByUris($menu, $in);
                 }
 
                 $this->navbar[$menu] = '';
