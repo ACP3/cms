@@ -28,13 +28,18 @@ class Index extends Core\Modules\Controller\Frontend
      * @var News\Model
      */
     protected $newsModel;
+    /**
+     * @var Core\Config
+     */
+    protected $newsConfig;
 
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Core\Pagination $pagination,
-        News\Model $newsModel)
+        News\Model $newsModel,
+        Core\Config $newsConfig)
     {
         parent::__construct($context);
 
@@ -42,15 +47,16 @@ class Index extends Core\Modules\Controller\Frontend
         $this->db = $db;
         $this->pagination = $pagination;
         $this->newsModel = $newsModel;
+        $this->newsConfig = $newsConfig;
     }
 
     public function actionDetails()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1) {
-            $config = new Core\Config($this->db, 'news');
-            /** @var Core\Helpers\StringFormatter $formatter */
-            $formatter = $this->get('core.helpers.string.formatter');
-            $settings = $config->getSettings();
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
+            $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1) {
+            /** @var Core\Helpers\Formatter\RewriteInternalUri $formatter */
+            $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
+            $settings = $this->newsConfig->getSettings();
 
             $cache = new News\Cache($this->newsModel);
             $news = $cache->getCache($this->request->id);
@@ -73,19 +79,12 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('news', $news);
 
             if ($settings['comments'] == 1 && $news['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
-                $comments = new \ACP3\Modules\Comments\Controller\Index(
-                    $this->auth,
-                    $this->breadcrumb,
-                    $this->date,
-                    $this->db,
-                    $this->lang,
-                    $this->session,
-                    $this->request,
-                    $this->view,
-                    $this->seo,
-                    'news',
-                    $this->request->id
-                );
+                /** @var \ACP3\Modules\Comments\Controller\Index $comments */
+                $comments = $this->get('comments.controller.frontend.index');
+                $comments
+                    ->setModule('news')
+                    ->setEntryId($this->request->id);
+
                 $this->view->assign('comments', $comments->actionIndex());
             }
         } else {
@@ -107,8 +106,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $cat));
         }
 
-        $config = new Core\Config($this->db, 'news');
-        $settings = $config->getSettings();
+        $settings = $this->newsConfig->getSettings();
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->router->route('news'));
@@ -138,7 +136,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->setTotalResults($this->newsModel->countAll($time, $cat));
             $this->pagination->display();
 
-            $formatter = $this->get('core.helpers.string.formatter');
+            $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
                 $news[$i]['date_iso'] = $this->date->format($news[$i]['start'], 'c');

@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 
 /**
@@ -44,7 +45,10 @@ class Logger
 
             $fileName = UPLOADS_DIR . 'logs/' . $channelName . '.log';
             $logLevelConst = constant('\Monolog\Logger::' . strtoupper($level));
-            $logger->pushHandler(new StreamHandler($fileName, $logLevelConst));
+            $stream = new StreamHandler($fileName, $logLevelConst);
+            $stream->setFormatter(new LineFormatter(null, null, true));
+
+            $logger->pushHandler($stream);
 
             self::$channels[$channelName] = $logger;
         }

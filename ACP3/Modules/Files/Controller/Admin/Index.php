@@ -17,10 +17,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -28,26 +24,35 @@ class Index extends Core\Modules\Controller\Admin
      * @var Files\Model
      */
     protected $filesModel;
+    /**
+     * @var Files\Cache
+     */
+    protected $filesCache;
+    /**
+     * @var Core\Config
+     */
+    protected $filesConfig;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Files\Model $filesModel)
+        Files\Model $filesModel,
+        Files\Cache $filesCache,
+        Core\Config $filesConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->filesModel = $filesModel;
+        $this->filesCache = $filesCache;
+        $this->filesConfig = $filesConfig;
     }
 
     public function actionCreate()
     {
-        $config = new Core\Config($this->db, 'files');
-        $settings = $config->getSettings();
+        $settings = $this->filesConfig->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -181,8 +186,7 @@ class Index extends Core\Modules\Controller\Admin
         $dl = $this->filesModel->getOneById((int)$this->request->id);
 
         if (empty($dl) === false) {
-            $config = new Core\Config($this->db, 'files');
-            $settings = $config->getSettings();
+            $settings = $this->filesConfig->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -244,8 +248,7 @@ class Index extends Core\Modules\Controller\Admin
                     );
                     $this->seo->setCache();
 
-                    $cache = new Files\Cache($this->filesModel);
-                    $cache->setCache($this->request->id);
+                    $this->filesCache->setCache($this->request->id);
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -315,8 +318,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'files');
-
         if (empty($_POST) === false) {
             try {
                 $validator = $this->get('files.validator');
@@ -327,7 +328,7 @@ class Index extends Core\Modules\Controller\Admin
                     'sidebar' => (int)$_POST['sidebar'],
                     'comments' => $_POST['comments']
                 );
-                $bool = $config->setSettings($data);
+                $bool = $this->filesConfig->setSettings($data);
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -339,7 +340,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = $config->getSettings();
+        $settings = $this->filesConfig->getSettings();
 
         if ($this->modules->isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));

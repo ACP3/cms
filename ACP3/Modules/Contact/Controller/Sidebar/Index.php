@@ -27,7 +27,7 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.string.formatter');
+        $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
 
         $settings = $this->contactConfig->getSettings();
         $settings['address'] = $formatter->rewriteInternalUri($settings['address']);

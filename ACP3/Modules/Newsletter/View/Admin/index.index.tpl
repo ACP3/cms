@@ -21,6 +21,8 @@
         {$redirect_message}
     {/if}
     {if isset($newsletter)}
+        {assign "statusSearch" array('0', '1')}
+        {assign "statusReplace" array({lang t="newsletter|not_yet_sent"}, {lang t="newsletter|already_sent"})}
         <table id="acp-table" class="table table-striped table-hover">
             <thead>
             <tr>
@@ -30,7 +32,7 @@
                 <th style="width:22%">{lang t="system|date"}</th>
                 <th>{lang t="newsletter|subject"}</th>
                 <th>{lang t="newsletter|status"}</th>
-                {if $can_send}
+                {if $can_send && $has_active_newsletter_accounts}
                     <th>{lang t="system|options"}</th>
                 {/if}
                 <th style="width:5%">{lang t="system|id"}</th>
@@ -44,8 +46,8 @@
                     {/if}
                     <td>{$row.date_formatted}</td>
                     <td>{check_access mode="link" path="acp/newsletter/index/edit/id_`$row.id`" title=$row.title}</td>
-                    <td>{$row.status}</td>
-                    {if $can_send}
+                    <td>{$row.status|replace:$statusSearch:$statusReplace}</td>
+                    {if $can_send && $has_active_newsletter_accounts}
                         <td>
                             <a href="{uri args="acp/newsletter/index/send/id_`$row.id`"}" title="{lang t="newsletter|send"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                 {icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}

@@ -147,7 +147,7 @@ class Details extends Core\Modules\Controller\Admin
                     }
                 }
 
-                $formatter = $this->get('core.helpers.string.formatter');
+                $formatter = $this->get('core.helpers.stringFormatter');
                 for ($i = 0; $i < $c_comments; ++$i) {
                     if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
                         $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');

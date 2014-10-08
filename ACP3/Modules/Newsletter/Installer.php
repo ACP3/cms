@@ -10,7 +10,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'newsletter';
-    const SCHEMA_VERSION = 42;
+    const SCHEMA_VERSION = 43;
 
     /**
      * @var array
@@ -31,6 +31,11 @@ class Installer extends Modules\AbstractInstaller
                 `mail` VARCHAR(120) NOT NULL,
                 `hash` VARCHAR(32) NOT NULL,
                 PRIMARY KEY (`id`)
+            ) {engine} {charset};",
+            "CREATE TABLE `{pre}newsletter_queue` (
+                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                `newsletter_id` INT(10) UNSIGNED NOT NULL,
+                INDEX (`newsletter_account_id`), INDEX (`newsletter_id`)
             ) {engine} {charset};",
             "CREATE TABLE `{pre}newsletters` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -110,6 +115,13 @@ class Installer extends Modules\AbstractInstaller
             42 => array(
                 'UPDATE `{pre}acl_resources` SET area = "frontend", controller = "archive", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "list_archive";',
                 'UPDATE `{pre}acl_resources` SET area = "frontend" WHERE `module_id` = ' . $this->getModuleId() . ' AND controller="archive" AND page = "details";',
+            ),
+            43 => array(
+                'CREATE TABLE `{pre}newsletter_queue` (
+                    `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                    `newsletter_id` INT(10) UNSIGNED NOT NULL,
+                    INDEX (`newsletter_account_id`), INDEX (`newsletter_id`)
+                ) {engine} {charset};'
             )
         );
     }

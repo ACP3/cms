@@ -102,7 +102,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->module, $this->entryId));
             $this->pagination->display();
 
-            $formatter = $this->get('core.helpers.string.formatter');
+            $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_comments; ++$i) {
                 if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
                     $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');

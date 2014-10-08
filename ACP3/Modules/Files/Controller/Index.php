@@ -18,13 +18,17 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Files\Model
      */
     protected $filesModel;
+    /**
+     * @var Files\Cache
+     */
+    protected $filesCache;
+    /**
+     * @var Core\Config
+     */
+    protected $filesConfig;
     /**
      * @var \ACP3\Modules\Categories\Model
      */
@@ -33,23 +37,24 @@ class Index extends Core\Modules\Controller\Frontend
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Files\Model $filesModel,
+        Files\Cache $filesCache,
+        Core\Config $filesConfig,
         Categories\Model $categoriesModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->filesModel = $filesModel;
+        $this->filesCache = $filesCache;
+        $this->filesConfig = $filesConfig;
         $this->categoriesModel = $categoriesModel;
     }
 
     public function actionIndex()
     {
         if ($this->modules->isActive('categories') === true) {
-            $categoriesCache = new Categories\Cache($this->categoriesModel);
-            $categories = $categoriesCache->getCache('files');
+            $categories = $this->get('categories.cache')->getCache('files');
             if (count($categories) > 0) {
                 $this->view->assign('categories', $categories);
             }
@@ -59,13 +64,12 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionDetails()
     {
         if ($this->filesModel->resultExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
-            $cache = new Files\Cache($this->filesModel);
-            $file = $cache->getCache($this->request->id);
+            $file = $this->filesCache->getCache($this->request->id);
 
             if ($this->request->action === 'download') {
                 $path = UPLOADS_DIR . 'files/';
                 if (is_file($path . $file['file'])) {
-                    $formatter = $this->get('core.helpers.string.formatter');
+                    $formatter = $this->get('core.helpers.stringFormatter');
                     // Schönen Dateinamen generieren
                     $ext = strrchr($file['file'], '.');
                     $filename = $formatter->makeStringUrlSafe($file['title']) . $ext;
@@ -88,8 +92,7 @@ class Index extends Core\Modules\Controller\Frontend
                     ->append($file['category_title'], 'files/files/cat_' . $file['category_id'])
                     ->append($file['title']);
 
-                $config = new Core\Config($this->db, 'files');
-                $settings = $config->getSettings();
+                $settings = $this->filesConfig->getSettings();
 
                 $file['size'] = !empty($file['size']) ? $file['size'] : $this->lang->t('files', 'unknown_filesize');
                 $file['date_formatted'] = $this->date->format($file['start'], $settings['dateformat']);
@@ -122,8 +125,7 @@ class Index extends Core\Modules\Controller\Frontend
             $c_files = count($files);
 
             if ($c_files > 0) {
-                $config = new Core\Config($this->db, 'files');
-                $settings = $config->getSettings();
+                $settings = $this->filesConfig->getSettings();
 
                 for ($i = 0; $i < $c_files; ++$i) {
                     $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');

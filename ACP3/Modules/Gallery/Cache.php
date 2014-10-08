@@ -14,19 +14,19 @@ class Cache
      */
     protected $cache;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Model
      */
     protected $galleryModel;
+    /**
+     * @var Core\Config
+     */
+    protected $galleryConfig;
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Model $galleryModel)
+    public function __construct(Model $galleryModel, Core\Config $galleryConfig)
     {
         $this->cache = new Core\Cache('gallery');
-        $this->db = $db;
         $this->galleryModel = $galleryModel;
+        $this->galleryConfig = $galleryConfig;
     }
 
     /**
@@ -59,8 +59,7 @@ class Cache
         $pictures = $this->galleryModel->getPicturesByGalleryId($id);
         $c_pictures = count($pictures);
 
-        $cache = new Core\Config($this->db, 'gallery');
-        $settings = $cache->getSettings();
+        $settings = $this->galleryConfig->getSettings();
 
         for ($i = 0; $i < $c_pictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];

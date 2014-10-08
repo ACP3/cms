@@ -8,6 +8,7 @@ use ACP3\Core\Modules\Controller;
 use ACP3\Core\Registry;
 use Doctrine\DBAL;
 use Monolog\ErrorHandler;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Symfony\Component\DependencyInjection\Container;
@@ -108,7 +109,10 @@ class Application
             E_USER_DEPRECATED => Logger::WARNING,
         );
 
-        $logger = new Logger('system', array(new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE)));
+        $stream = new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE);
+        $stream->setFormatter(new LineFormatter(null, null, true));
+
+        $logger = new Logger('system', array($stream));
         ErrorHandler::register($logger, $errorLevelMap);
     }
 

@@ -25,9 +25,17 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $articlesModel;
     /**
+     * @var Articles\Cache
+     */
+    protected $articlesCache;
+    /**
      * @var \ACP3\Modules\Menus\Model
      */
     protected $menusModel;
+    /**
+     * @var Menus\Cache
+     */
+    protected $menusCache;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -38,7 +46,9 @@ class Index extends Core\Modules\Controller\Admin
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Articles\Model $articlesModel,
+        Articles\Cache $articlesCache,
         Menus\Model $menusModel,
+        Menus\Cache $menusCache,
         Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
@@ -46,7 +56,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->date = $date;
         $this->db = $db;
         $this->articlesModel = $articlesModel;
+        $this->articlesCache = $articlesCache;
         $this->menusModel = $menusModel;
+        $this->menusCache = $menusCache;
         $this->secureHelper = $secureHelper;
     }
 
@@ -155,8 +167,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->aliases->deleteUriAlias($uri);
             }
 
-            $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
-            $cacheMenu->setMenuItemsCache();
+            $this->menusCache->setMenuItemsCache();
 
             $this->seo->setCache();
 
@@ -195,12 +206,10 @@ class Index extends Core\Modules\Controller\Admin
                     );
                     $this->seo->setCache();
 
-                    $cache = new Articles\Cache($this->articlesModel);
-                    $cache->setCache($this->request->id);
+                    $this->articlesCache->setCache($this->request->id);
 
                     // Aliase in der Navigation aktualisieren
-                    $cacheMenu = new Menus\Cache($this->lang, $this->menusModel);
-                    $cacheMenu->setMenuItemsCache();
+                    $this->menusCache->setMenuItemsCache();
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 

@@ -18,11 +18,6 @@ class Helpers
     const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
 
     /**
-     *
-     * @var Model
-     */
-    protected $galleryModel;
-    /**
      * @var Core\Router\Aliases
      */
     protected $aliases;
@@ -30,6 +25,10 @@ class Helpers
      * @var Core\SEO
      */
     protected $seo;
+    /**
+     * @var Model
+     */
+    protected $galleryModel;
 
     public function __construct(
         Core\Router\Aliases $aliases,

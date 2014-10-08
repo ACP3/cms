@@ -1,40 +1,20 @@
 <?php
 
-/**
- * Newsletter
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Newsletter;
 
 use ACP3\Core;
 
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Newsletter
+ */
 class Helpers
 {
 
     /**
-     * @var Core\Date
-     */
-    protected $date;
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Core\Lang
      */
     protected $lang;
-    /**
-     * @var Model
-     */
-    protected $model;
-    /**
-     * @var Core\Modules
-     */
-    protected $modules;
     /**
      * @var Core\Router
      */
@@ -47,26 +27,30 @@ class Helpers
      * @var Core\Helpers\StringFormatter
      */
     protected $stringFormatter;
+    /**
+     * @var Model
+     */
+    protected $newsletterModel;
+    /**
+     * @var Core\Config
+     */
+    protected $newsletterConfig;
 
-    protected function __construct(
-        \Doctrine\DBAL\Connection $db,
-        Core\Date $date,
+    public function __construct(
         Core\Lang $lang,
-        Core\Modules $modules,
         Core\Router $router,
         Core\View $view,
-        Core\Helpers\StringFormatter $stringFormatter
+        Core\Helpers\StringFormatter $stringFormatter,
+        Core\Config $newsletterConfig,
+        Model $newsletterModel
     )
     {
-        $this->db = $db;
-        $this->date = $date;
         $this->lang = $lang;
-        $this->modules = $modules;
         $this->router = $router;
         $this->view = $view;
         $this->stringFormatter = $stringFormatter;
-
-        $this->model = new Model($db);
+        $this->newsletterConfig = $newsletterConfig;
+        $this->newsletterModel = $newsletterModel;
     }
 
     /**
@@ -80,10 +64,9 @@ class Helpers
      */
     public function sendNewsletter($newsletterId, $recipients, $bcc = false)
     {
-        $config = new Core\Config($this->db, 'newsletter');
-        $settings = $config->getSettings();
+        $settings = $this->newsletterConfig->getSettings();
 
-        $newsletter = $this->model->getOneById($newsletterId);
+        $newsletter = $this->newsletterModel->getOneById($newsletterId);
         $from = array(
             'email' => $settings['mail'],
             'name' => CONFIG_SEO_TITLE
@@ -122,8 +105,7 @@ class Helpers
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
         $url = 'http://' . $host . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
-        $config = new Core\Config($this->db, 'newsletter');
-        $settings = $config->getSettings();
+        $settings = $this->newsletterConfig->getSettings();
 
         $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
         $body = str_replace('{host}', $host, $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
@@ -161,7 +143,7 @@ class Helpers
                 'mail' => $emailAddress,
                 'hash' => $hash
             );
-            $bool = $this->model->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
+            $bool = $this->newsletterModel->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
         }
 
         return $mailSent === true && $bool !== false;

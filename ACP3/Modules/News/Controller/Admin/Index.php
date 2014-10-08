@@ -18,10 +18,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -29,26 +25,29 @@ class Index extends Core\Modules\Controller\Admin
      * @var News\Model
      */
     protected $newsModel;
+    /**
+     * @var Core\Config
+     */
+    protected $newsConfig;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        News\Model $newsModel)
+        News\Model $newsModel,
+        Core\Config $newsConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->newsModel = $newsModel;
+        $this->newsConfig = $newsConfig;
     }
 
     public function actionCreate()
     {
-        $config = new Core\Config($this->db, 'news');
-        $settings = $config->getSettings();
+        $settings = $this->newsConfig->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -159,8 +158,7 @@ class Index extends Core\Modules\Controller\Admin
         $news = $this->newsModel->getOneById((int)$this->request->id);
 
         if (empty($news) === false) {
-            $config = new Core\Config($this->db, 'news');
-            $settings = $config->getSettings();
+            $settings = $this->newsConfig->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -270,8 +268,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'news');
-
         if (empty($_POST) === false) {
             try {
                 $validator = $this->get('news.validator');
@@ -285,7 +281,7 @@ class Index extends Core\Modules\Controller\Admin
                     'category_in_breadcrumb' => $_POST['category_in_breadcrumb'],
                     'comments' => $_POST['comments'],
                 );
-                $bool = $config->setSettings($data);
+                $bool = $this->newsConfig->setSettings($data);
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -297,7 +293,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = $config->getSettings();
+        $settings = $this->newsConfig->getSettings();
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 

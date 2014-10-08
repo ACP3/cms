@@ -16,10 +16,6 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Core\Pagination
      */
     protected $pagination;
@@ -31,28 +27,31 @@ class Index extends Core\Modules\Controller\Frontend
      * @var Guestbook\Model
      */
     protected $guestbookModel;
+    /**
+     * @var Core\Config
+     */
+    protected $guestbookConfig;
 
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
-        Guestbook\Model $guestbookModel)
+        Guestbook\Model $guestbookModel,
+        Core\Config $guestbookConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->pagination = $pagination;
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
+        $this->guestbookConfig = $guestbookConfig;
     }
 
     public function actionCreate()
     {
-        $config = new Core\Config($this->db, 'guestbook');
-        $settings = $config->getSettings();
+        $settings = $this->guestbookConfig->getSettings();
         $hasNewsletterAccess = $this->modules->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
@@ -84,7 +83,7 @@ class Index extends Core\Modules\Controller\Frontend
                 // E-Mail-Adresse zusenden
                 if ($settings['notify'] == 1 || $settings['notify'] == 2) {
                     $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-                    $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $this->db->lastInsertId();
+                    $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $lastId;
                     $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
                     $this->get('core.functions')->generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
                 }
@@ -150,8 +149,7 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->redirectMessages()->getMessage();
 
-        $config = new Core\Config($this->db, 'guestbook');
-        $settings = $config->getSettings();
+        $settings = $this->guestbookConfig->getSettings();
         $this->view->assign('overlay', $settings['overlay']);
 
         $guestbook = $this->guestbookModel->getAll($settings['notify'], POS, $this->auth->entries);
@@ -167,7 +165,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $emoticons_active = $this->modules->isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
             }
 
-            $formatter = $this->get('core.helpers.string.formatter');
+            $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
                 $guestbook[$i]['date_formatted'] = $this->date->format($guestbook[$i]['date'], $settings['dateformat']);

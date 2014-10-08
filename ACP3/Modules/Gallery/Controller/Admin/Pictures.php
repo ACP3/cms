@@ -28,13 +28,23 @@ class Pictures extends Core\Modules\Controller\Admin
      * @var Gallery\Model
      */
     protected $galleryModel;
+    /**
+     * @var Gallery\Cache
+     */
+    protected $galleryCache;
+    /**
+     * @var Core\Config
+     */
+    protected $galleryConfig;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Gallery\Model $guestbookModel)
+        Gallery\Model $guestbookModel,
+        Gallery\Cache $galleryCache,
+        Core\Config $galleryConfig)
     {
         parent::__construct($context);
 
@@ -42,6 +52,8 @@ class Pictures extends Core\Modules\Controller\Admin
         $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->galleryModel = $guestbookModel;
+        $this->galleryCache = $galleryCache;
+        $this->galleryConfig = $galleryConfig;
     }
 
     public function actionCreate()
@@ -53,8 +65,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 ->append($gallery, 'acp/gallery/index/edit/id_' . $this->request->id)
                 ->append($this->lang->t('gallery', 'admin_pictures_create'));
 
-            $config = new Core\Config($this->db, 'gallery');
-            $settings = $config->getSettings();
+            $settings = $this->galleryConfig->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -82,8 +93,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
                     $bool2 = $this->get('gallery.helpers')->generatePictureAlias($lastId);
 
-                    $cache = new Gallery\Cache($this->db, $this->galleryModel);
-                    $cache->setCache($this->request->id);
+                    $this->galleryCache->setCache($this->request->id);
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -125,8 +135,6 @@ class Pictures extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/gallery/pictures/delete', 'acp/gallery/index/edit/id_' . $this->request->id);
 
         if ($this->request->action === 'confirmed') {
-            $cache = new Gallery\Cache($this->db, $this->galleryModel);
-
             $bool = false;
             foreach ($items as $item) {
                 if (!empty($item) && $this->galleryModel->pictureExists($item) === true) {
@@ -138,7 +146,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
                     $this->aliases->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
 
-                    $cache->setCache($picture['gallery_id']);
+                    $this->galleryCache->setCache($picture['gallery_id']);
                 }
             }
 
@@ -159,8 +167,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
                 ->append($this->lang->t('gallery', 'admin_pictures_edit'));
 
-            $config = new Core\Config($this->db, 'gallery');
-            $settings = $config->getSettings();
+            $settings = $this->galleryConfig->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -191,8 +198,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
                     $bool = $this->galleryModel->update($updateValues, $this->request->id, Gallery\Model::TABLE_NAME_PICTURES);
 
-                    $cache = new Gallery\Cache($this->db, $this->galleryModel);
-                    $cache->setCache($picture['gallery_id']);
+                    $this->galleryCache->setCache($picture['gallery_id']);
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -229,8 +235,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
                 $galleryId = $this->galleryModel->getGalleryIdFromPictureId($this->request->id);
 
-                $cache = new Gallery\Cache($this->db, $this->galleryModel);
-                $cache->setCache($galleryId);
+                $this->galleryCache->setCache($galleryId);
 
                 $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
             }

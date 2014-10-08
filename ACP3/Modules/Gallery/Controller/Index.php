@@ -16,10 +16,6 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Core\Pagination
      */
     protected $pagination;
@@ -27,20 +23,30 @@ class Index extends Core\Modules\Controller\Frontend
      * @var Gallery\Model
      */
     protected $galleryModel;
+    /**
+     * @var Gallery\Cache
+     */
+    protected $galleryCache;
+    /**
+     * @var Core\Config
+     */
+    protected $galleryConfig;
 
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Pagination $pagination,
-        Gallery\Model $galleryModel)
+        Gallery\Model $galleryModel,
+        Gallery\Cache $galleryCache,
+        Core\Config $galleryConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->pagination = $pagination;
         $this->galleryModel = $galleryModel;
+        $this->galleryCache = $galleryCache;
+        $this->galleryConfig = $galleryConfig;
     }
 
     public function actionDetails()
@@ -48,8 +54,7 @@ class Index extends Core\Modules\Controller\Frontend
         if ($this->galleryModel->pictureExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
             $picture = $this->galleryModel->getPictureById((int)$this->request->id);
 
-            $config = new Core\Config($this->db, 'gallery');
-            $settings = $config->getSettings();
+            $settings = $this->galleryConfig->getSettings();
 
             // Brotkrümelspur
             $this->breadcrumb
@@ -116,8 +121,7 @@ class Index extends Core\Modules\Controller\Frontend
             $picture = $this->galleryModel->getFileById($this->request->id);
             $action = $this->request->action === 'thumb' ? 'thumb' : '';
 
-            $config = new Core\Config($this->db, 'gallery');
-            $settings = $config->getSettings();
+            $settings = $this->galleryConfig->getSettings();
             $options = array(
                 'enable_cache' => CONFIG_CACHE_IMAGES == 1 ? true : false,
                 'cache_prefix' => 'gallery_' . $action,
@@ -143,9 +147,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->setTotalResults($this->galleryModel->countAll($time));
             $this->pagination->display();
 
-
-            $config = new Core\Config($this->db, 'gallery');
-            $settings = $config->getSettings();
+            $settings = $this->galleryConfig->getSettings();
 
             for ($i = 0; $i < $c_galleries; ++$i) {
                 $galleries[$i]['date_formatted'] = $this->date->format($galleries[$i]['start'], $settings['dateformat']);
@@ -160,8 +162,7 @@ class Index extends Core\Modules\Controller\Frontend
     {
         if ($this->galleryModel->galleryExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
             // Cache der Galerie holen
-            $cache = new Gallery\Cache($this->db, $this->galleryModel);
-            $pictures = $cache->getCache($this->request->id);
+            $pictures = $this->galleryCache->getCache($this->request->id);
             $c_pictures = count($pictures);
 
             $galleryTitle = $this->galleryModel->getGalleryTitle($this->request->id);
@@ -172,11 +173,10 @@ class Index extends Core\Modules\Controller\Frontend
                 ->append($galleryTitle);
 
             if ($c_pictures > 0) {
-                $config = new Core\Config($this->db, 'gallery');
-                $settings = $config->getSettings();
+                $settings = $this->galleryConfig->getSettings();
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
-                    $pictures[$i]['uri'] = $this->request->route($settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
+                    $pictures[$i]['uri'] = $this->router->route($settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
                     $pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
                 }
 

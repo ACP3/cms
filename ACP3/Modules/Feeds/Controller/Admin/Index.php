@@ -33,8 +33,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $config = $this->feedsConfig;
-
         $redirect = $this->redirectMessages();
 
         if (empty($_POST) === false) {
@@ -47,7 +45,7 @@ class Index extends Core\Modules\Controller\Admin
                     'feed_type' => $_POST['feed_type']
                 );
 
-                $bool = $config->setSettings($data);
+                $bool = $this->feedsConfig->setSettings($data);
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -61,7 +59,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $redirect->getMessage();
 
-        $settings = $config->getSettings();
+        $settings = $this->feedsConfig->getSettings();
 
         $feedType = array(
             'RSS 1.0',

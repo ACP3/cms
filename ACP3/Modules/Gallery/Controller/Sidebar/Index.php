@@ -23,25 +23,28 @@ class Index extends Core\Modules\Controller
      * @var Gallery\Model
      */
     protected $galleryModel;
+    /**
+     * @var Core\Config
+     */
+    protected $galleryConfig;
 
     public function __construct(
         Core\Context $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Gallery\Model $galleryModel)
+        Gallery\Model $galleryModel,
+        Core\Config $galleryConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->galleryModel = $galleryModel;
+        $this->galleryConfig = $galleryConfig;
     }
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.string.formatter');
-        $config = new Core\Config($this->db, 'gallery');
-        $settings = $config->getSettings();
+        $formatter = $this->get('core.helpers.stringFormatter');
+        $settings = $this->galleryConfig->getSettings();
 
         $galleries = $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_galleries = count($galleries);

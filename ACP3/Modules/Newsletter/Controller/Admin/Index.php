@@ -28,26 +28,35 @@ class Index extends Core\Modules\Controller\Admin
      * @var Newsletter\Model
      */
     protected $newsletterModel;
+    /**
+     * @var Core\Config
+     */
+    protected $newsletterConfig;
+    /**
+     * @var Newsletter\Helpers
+     */
+    protected $newsletterHelpers;
 
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
-        Newsletter\Model $newsletterModel)
+        Newsletter\Model $newsletterModel,
+        Core\Config $newsletterConfig,
+        Newsletter\Helpers $newsletterHelpers)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->newsletterModel = $newsletterModel;
+        $this->newsletterConfig = $newsletterConfig;
+        $this->newsletterHelpers = $newsletterHelpers;
     }
 
     public function actionCreate()
     {
-        $config = new Core\Config($this->db, 'newsletter');
-        $settings = $config->getSettings();
+        $settings = $this->newsletterConfig->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -68,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 // Test-Newsletter
                 if ($_POST['test'] == 1) {
-                    $bool2 = $this->get('newsletter.helpers')->sendNewsletter($lastId, $settings['mail']);
+                    $bool2 = $this->newsletterHelpers->sendNewsletter($lastId, $settings['mail']);
 
                     $lang = $this->lang->t('newsletter', 'create_success');
                     $result = $lastId !== false && $bool2 !== false;
@@ -124,8 +133,7 @@ class Index extends Core\Modules\Controller\Admin
         $newsletter = $this->newsletterModel->getOneById($this->request->id);
 
         if (empty($newsletter) === false) {
-            $config = new Core\Config($this->db, 'newsletter');
-            $settings = $config->getSettings();
+            $settings = $this->newsletterConfig->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -143,7 +151,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Test-Newsletter
                     if ($_POST['test'] == 1) {
-                        $bool2 = $this->get('newsletter.helpers')->sendNewsletter($this->request->id, $settings['mail']);
+                        $bool2 = $this->newsletterHelpers->sendNewsletter($this->request->id, $settings['mail']);
 
                         $lang = $this->lang->t('newsletter', 'create_success');
                         $result = $bool !== false && $bool2;
@@ -199,21 +207,21 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
-            $search = array('0', '1');
-            $replace = array($this->lang->t('newsletter', 'not_yet_sent'), $this->lang->t('newsletter', 'already_sent'));
             for ($i = 0; $i < $c_newsletter; ++$i) {
                 $newsletter[$i]['date_formatted'] = $this->date->formatTimeRange($newsletter[$i]['date']);
-                $newsletter[$i]['status'] = str_replace($search, $replace, $newsletter[$i]['status']);
             }
+
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
             $this->view->assign('can_send', $this->modules->hasPermission('admin/newsletter/index/send'));
+            $this->view->assign('has_active_newsletter_accounts', $this->newsletterModel->countAllActiveAccounts() > 0);
         }
     }
 
     public function actionSend()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->newsletterModel->newsletterExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
+            $this->newsletterModel->newsletterExists($this->request->id) === true) {
             $accounts = $this->newsletterModel->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = array();
@@ -222,7 +230,7 @@ class Index extends Core\Modules\Controller\Admin
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool = $this->get('newsletter.helpers')->sendNewsletter($this->request->id, $recipients);
+            $bool = $this->newsletterHelpers->sendNewsletter($this->request->id, $recipients);
             $bool2 = false;
             if ($bool === true) {
                 $bool2 = $this->newsletterModel->update(array('status' => '1'), $this->request->id);
@@ -236,8 +244,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = new Core\Config($this->db, 'newsletter');
-
         if (empty($_POST) === false) {
             try {
                 $validator = $this->get('newsletter.validator');
@@ -249,7 +255,7 @@ class Index extends Core\Modules\Controller\Admin
                     'html' => (int)$_POST['html']
                 );
 
-                $bool = $config->setSettings($data);
+                $bool = $this->newsletterConfig->setSettings($data);
 
                 $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -261,7 +267,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = $config->getSettings();
+        $settings = $this->newsletterConfig->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
