@@ -52,17 +52,24 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
 
 /**
  *
- * @param checkboxName
- * @param confirmationText
- * @param noEntriesSelectText
+ * @param options
  */
-jQuery.fn.deleteMarkedResults = function (checkboxName, confirmationText, noEntriesSelectText) {
-    var $this = $(this);
+jQuery.fn.deleteMarkedResults = function (options) {
+    var defaults = {
+            checkBoxName: '',
+            language: {
+                confirmationTextSingle: '',
+                confirmationTextMultiple: '',
+                noEntriesSelectedText: ''
+            }
+        },
+        $this = $(this),
+        settings = $.extend(defaults, options);
 
-    $this.on('click', function(e) {
+    $this.on('click', function (e) {
         e.preventDefault();
 
-        var $entries = $('form .table input[name="' + checkboxName + '[]"]:checked');
+        var $entries = $('form .table input[name="' + settings.checkBoxName + '[]"]:checked');
 
         if ($entries.length > 0) {
             var data = {
@@ -70,9 +77,11 @@ jQuery.fn.deleteMarkedResults = function (checkboxName, confirmationText, noEntr
                 entries: []
             };
 
-            $entries.each(function() {
+            $entries.each(function () {
                 data.entries.push($(this).val());
             });
+
+            var confirmationText = $entries.length == 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
 
             bootbox.confirm(confirmationText, function (result) {
                 if (result) {
@@ -83,7 +92,7 @@ jQuery.fn.deleteMarkedResults = function (checkboxName, confirmationText, noEntr
                 }
             });
         } else {
-            bootbox.alert(noEntriesSelectText);
+            bootbox.alert(settings.language.noEntriesSelectedText);
         }
     });
 };

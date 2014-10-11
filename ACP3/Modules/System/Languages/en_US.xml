@@ -32,6 +32,8 @@
         <item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
         <item key="config_edit_success">The ACP3 configuration has been successfully edited.</item>
         <item key="confirm_delete">Do you really want to delete the marked entries?</item>
+        <item key="confirm_delete_multiple">Do you really want to delete the {items} selected entries?</item>
+        <item key="confirm_delete_single">Do you really want to delete the selected entry?</item>
         <item key="close_window">Close window</item>
         <item key="create_error">While creating the entry an error has occured.</item>
         <item key="create_success">The entry has been successfully created.</item>
