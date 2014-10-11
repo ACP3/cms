@@ -81,7 +81,10 @@ abstract class Admin extends Core\Modules\Controller\Frontend
                 'action' => 'confirmed',
                 'entries' => $entries
             );
-            $confirmBox = $alerts->confirmBoxPost($this->lang->t('system', 'confirm_delete'), $data, $this->router->route($moduleConfirmUrl), $this->router->route($moduleIndexUrl));
+
+            $confirmationText = count($entries) == 1 ? $this->lang->t('system', 'confirm_delete_single') : str_replace('{items}', count($entries), $this->lang->t('system', 'confirm_delete_multiple'));
+
+            $confirmBox = $alerts->confirmBoxPost($confirmationText, $data, $this->router->route($moduleConfirmUrl), $this->router->route($moduleIndexUrl));
             $this->setContent($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);

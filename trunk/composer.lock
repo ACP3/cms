@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0610c0b40ceebfd772c20cf900b3f5f9",
+    "hash": "6b7cdd505eff599991e67cd665eb2a7b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -800,15 +800,15 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "3.1.19",
+            "version": "3.1.20",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn/",
-                "reference": "tags/Smarty_3_1_19/distribution/"
+                "reference": "tags/Smarty_3_1_20/distribution/"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://www.smarty.net/files/Smarty-3.1.19.zip",
+                "url": "http://www.smarty.net/files/Smarty-3.1.20.zip",
                 "reference": null,
                 "shasum": null
             },

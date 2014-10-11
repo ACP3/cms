@@ -37,6 +37,8 @@
         <item key="config_edit_error">Beim Bearbeiten der Konfiguration ist ein Fehler aufgetreten.</item>
         <item key="config_edit_success">Die Konfiguration wurde erfolgreich bearbeitet.</item>
         <item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>
+        <item key="confirm_delete_multiple">Sollen die {items} ausgewählten Einträge wirklich gelöscht werden?</item>
+        <item key="confirm_delete_single">Soll der ausgewählte Eintrag wirklich gelöscht werden?</item>
         <item key="create_error">Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</item>
         <item key="create_success">Der Eintrag wurde erfolgreich erstellt.</item>
         <item key="critical_error_occurred_see_log">Es ist ein schwerwiegender Fehler aufgetreten. Für Details schauen Sie bitte in den Log-Dateien nach.</item>

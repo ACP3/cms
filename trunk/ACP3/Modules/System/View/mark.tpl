@@ -7,7 +7,16 @@
         }).highlightTableRow('{$checkbox_name}');
 
         {if $is_initialized === false}
-        $('form #adm-list input[type="image"]').deleteMarkedResults('{$checkbox_name}', '{lang t="system|confirm_delete"}', '{lang t="system|no_entries_selected"}');
+            var options = {
+                checkBoxName: '{$checkbox_name}',
+                language: {
+                    confirmationTextSingle: '{lang t="system|confirm_delete_single"}',
+                    confirmationTextMultiple: '{lang t="system|confirm_delete_multiple"}',
+                    noEntriesSelectedText: '{lang t="system|no_entries_selected"}'
+                }
+            };
+
+            $('form #adm-list input[type="image"]').deleteMarkedResults(options);
         {/if}
     });
 </script>

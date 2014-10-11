@@ -65,56 +65,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('articles.validator');
-                $validator->validateCreate($_POST);
-
-                $insertValues = array(
-                    'id' => '',
-                    'start' => $this->date->toSQL($_POST['start']),
-                    'end' => $this->date->toSQL($_POST['end']),
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'text' => Core\Functions::strEncode($_POST['text'], true),
-                    'user_id' => $this->auth->getUserId(),
-                );
-
-                $lastId = $this->articlesModel->insert($insertValues);
-
-                $this->aliases->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
-                    $_POST['alias'],
-                    $_POST['seo_keywords'],
-                    $_POST['seo_description'],
-                    (int)$_POST['seo_robots']
-                );
-                $this->seo->setCache();
-
-                if (isset($_POST['create']) === true && $this->modules->hasPermission('admin/menus/index/create_item') === true) {
-                    $insertValues = array(
-                        'id' => '',
-                        'mode' => 4,
-                        'block_id' => $_POST['block_id'],
-                        'parent_id' => (int)$_POST['parent'],
-                        'display' => $_POST['display'],
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
-                        'target' => 1,
-                    );
-
-                    $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-                    $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
-
-                    $cacheMenu = $this->get('menus.cache');
-                    $cacheMenu->setMenuItemsCache();
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/articles');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         if ($this->modules->hasPermission('admin/menus/index/create_item') === true) {
@@ -145,6 +96,60 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $validator = $this->get('articles.validator');
+            $validator->validateCreate($formData);
+
+            $insertValues = array(
+                'id' => '',
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $lastId = $this->articlesModel->insert($insertValues);
+
+            $this->aliases->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+            $this->seo->setCache();
+
+            if (isset($formData['create']) === true && $this->modules->hasPermission('admin/menus/index/create_item') === true) {
+                $insertValues = array(
+                    'id' => '',
+                    'mode' => 4,
+                    'block_id' => $formData['block_id'],
+                    'parent_id' => (int)$formData['parent'],
+                    'display' => $formData['display'],
+                    'title' => Core\Functions::strEncode($formData['title']),
+                    'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+                    'target' => 1,
+                );
+
+                $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
+                $lastId = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
+
+                $cacheMenu = $this->get('menus.cache');
+                $cacheMenu->setMenuItemsCache();
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/articles');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
     public function actionDelete()
@@ -183,42 +188,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($article) === false) {
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('articles.validator');
-                    $validator->validateEdit($_POST);
-
-                    $updateValues = array(
-                        'start' => $this->date->toSQL($_POST['start']),
-                        'end' => $this->date->toSQL($_POST['end']),
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'text' => Core\Functions::strEncode($_POST['text'], true),
-                        'user_id' => $this->auth->getUserId(),
-                    );
-
-                    $bool = $this->articlesModel->update($updateValues, $this->request->id);
-
-                    $this->aliases->insertUriAlias(
-                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->seo->setCache();
-
-                    $this->articlesCache->setCache($this->request->id);
-
-                    // Aliase in der Navigation aktualisieren
-                    $this->menusCache->setMenuItemsCache();
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/articles');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST);
             }
 
             // Datumsauswahl
@@ -231,6 +201,47 @@ class Index extends Core\Modules\Controller\Admin
             $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+
+    private function _editPost($formData)
+    {
+        try {
+            $validator = $this->get('articles.validator');
+            $validator->validateEdit($formData);
+
+            $updateValues = array(
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $bool = $this->articlesModel->update($updateValues, $this->request->id);
+
+            $this->aliases->insertUriAlias(
+                sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+            $this->seo->setCache();
+
+            $this->articlesCache->setCache($this->request->id);
+
+            // Aliase in der Navigation aktualisieren
+            $this->menusCache->setMenuItemsCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/articles');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/articles');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 
