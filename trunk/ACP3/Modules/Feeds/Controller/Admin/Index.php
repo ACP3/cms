@@ -33,31 +33,11 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = $this->redirectMessages();
-
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('feeds.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'feed_image' => Core\Functions::strEncode($_POST['feed_image']),
-                    'feed_type' => $_POST['feed_type']
-                );
-
-                $bool = $this->feedsConfig->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/feeds');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect->setMessage(false, $e->getMessage(), 'acp/feeds');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_indexPost($_POST);
         }
 
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
         $settings = $this->feedsConfig->getSettings();
 
@@ -71,6 +51,29 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _indexPost(array $formData)
+    {
+        try {
+            $validator = $this->get('feeds.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'feed_image' => Core\Functions::strEncode($formData['feed_image']),
+                'feed_type' => $formData['feed_type']
+            );
+
+            $bool = $this->feedsConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/feeds');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/feeds');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

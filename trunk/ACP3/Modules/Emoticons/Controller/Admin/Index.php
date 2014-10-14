@@ -46,44 +46,49 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $file = array();
-                if (!empty($_FILES['picture']['tmp_name'])) {
-                    $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                    $file['name'] = $_FILES['picture']['name'];
-                    $file['size'] = $_FILES['picture']['size'];
-                }
-
-                $validator = $this->get('emoticons.validator');
-                $validator->validateCreate($_POST, $file, $this->emoticonsConfig->getSettings());
-
-                $upload = new Core\Helpers\Upload('emoticons');
-                $result = $upload->moveFile($file['tmp_name'], $file['name']);
-
-                $insertValues = array(
-                    'id' => '',
-                    'code' => Core\Functions::strEncode($_POST['code']),
-                    'description' => Core\Functions::strEncode($_POST['description']),
-                    'img' => $result['name'],
-                );
-
-                $bool = $this->emoticonsModel->insert($insertValues);
-
-                $this->emoticonsCache->setCache();
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         $this->view->assign('form', array_merge(array('code' => '', 'description' => ''), $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $file = array();
+            if (!empty($_FILES['picture']['tmp_name'])) {
+                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
+                $file['name'] = $_FILES['picture']['name'];
+                $file['size'] = $_FILES['picture']['size'];
+            }
+
+            $validator = $this->get('emoticons.validator');
+            $validator->validateCreate($formData, $file, $this->emoticonsConfig->getSettings());
+
+            $upload = new Core\Helpers\Upload('emoticons');
+            $result = $upload->moveFile($file['tmp_name'], $file['name']);
+
+            $insertValues = array(
+                'id' => '',
+                'code' => Core\Functions::strEncode($formData['code']),
+                'description' => Core\Functions::strEncode($formData['description']),
+                'img' => $result['name'],
+            );
+
+            $bool = $this->emoticonsModel->insert($insertValues);
+
+            $this->emoticonsCache->setCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
     public function actionDelete()
@@ -117,41 +122,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($emoticon) === false) {
             if (empty($_POST) === false) {
-                try {
-                    $file = array();
-                    if (!empty($_FILES['picture']['name'])) {
-                        $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                        $file['name'] = $_FILES['picture']['name'];
-                        $file['size'] = $_FILES['picture']['size'];
-                    }
-
-                    $validator = $this->get('emoticons.validator');
-                    $validator->validateEdit($_POST, $file, $this->emoticonsConfig->getSettings());
-
-                    $updateValues = array(
-                        'code' => Core\Functions::strEncode($_POST['code']),
-                        'description' => Core\Functions::strEncode($_POST['description']),
-                    );
-
-                    if (empty($file) === false) {
-                        $upload = new Core\Helpers\Upload('emoticons');
-                        $upload->removeUploadedFile($emoticon['img']);
-                        $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                        $updateValues['img'] = $result['name'];
-                    }
-
-                    $bool = $this->emoticonsModel->update($updateValues, $this->request->id);
-
-                    $this->emoticonsCache->setCache();
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $emoticon);
             }
 
             $this->view->assign('form', array_merge($emoticon, $_POST));
@@ -159,6 +130,45 @@ class Index extends Core\Modules\Controller\Admin
             $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+    private function _editPost(array $formData, array $emoticon)
+    {
+        try {
+            $file = array();
+            if (!empty($_FILES['picture']['name'])) {
+                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
+                $file['name'] = $_FILES['picture']['name'];
+                $file['size'] = $_FILES['picture']['size'];
+            }
+
+            $validator = $this->get('emoticons.validator');
+            $validator->validateEdit($formData, $file, $this->emoticonsConfig->getSettings());
+
+            $updateValues = array(
+                'code' => Core\Functions::strEncode($formData['code']),
+                'description' => Core\Functions::strEncode($formData['description']),
+            );
+
+            if (empty($file) === false) {
+                $upload = new Core\Helpers\Upload('emoticons');
+                $upload->removeUploadedFile($emoticon['img']);
+                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $updateValues['img'] = $result['name'];
+            }
+
+            $bool = $this->emoticonsModel->update($updateValues, $this->request->id);
+
+            $this->emoticonsCache->setCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 
@@ -185,33 +195,36 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = $this->emoticonsConfig;
-
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('emoticons.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'width' => (int)$_POST['width'],
-                    'height' => (int)$_POST['height'],
-                    'filesize' => (int)$_POST['filesize'],
-                );
-                $bool = $config->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/emoticons');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST);
         }
 
-        $this->view->assign('form', array_merge($config->getSettings(), $_POST));
+        $this->view->assign('form', array_merge($this->emoticonsConfig->getSettings(), $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('emoticons.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'width' => (int)$formData['width'],
+                'height' => (int)$formData['height'],
+                'filesize' => (int)$formData['filesize'],
+            );
+            $bool = $this->emoticonsConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/emoticons');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

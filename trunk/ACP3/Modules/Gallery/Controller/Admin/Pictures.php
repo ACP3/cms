@@ -17,10 +17,6 @@ class Pictures extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -40,7 +36,6 @@ class Pictures extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
         Gallery\Model $guestbookModel,
         Gallery\Cache $galleryCache,
@@ -49,7 +44,6 @@ class Pictures extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->galleryModel = $guestbookModel;
         $this->galleryCache = $galleryCache;
@@ -68,41 +62,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $settings = $this->galleryConfig->getSettings();
 
             if (empty($_POST) === false) {
-                try {
-                    $file = array();
-                    $file['tmp_name'] = $_FILES['file']['tmp_name'];
-                    $file['name'] = $_FILES['file']['name'];
-                    $file['size'] = $_FILES['file']['size'];
-
-                    $validator = $this->get('gallery.validator');
-                    $validator->validateCreatePicture($file, $settings);
-
-                    $upload = new Core\Helpers\Upload('gallery');
-                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                    $picNum = $this->galleryModel->getLastPictureByGalleryId($this->request->id);
-
-                    $insertValues = array(
-                        'id' => '',
-                        'pic' => !is_null($picNum) ? $picNum + 1 : 1,
-                        'gallery_id' => $this->request->id,
-                        'file' => $result['name'],
-                        'description' => Core\Functions::strEncode($_POST['description'], true),
-                        'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
-                    );
-
-                    $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
-                    $bool2 = $this->get('gallery.helpers')->generatePictureAlias($lastId);
-
-                    $this->galleryCache->setCache($this->request->id);
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $this->request->id);
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_createPost($_POST, $settings);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -170,44 +130,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $settings = $this->galleryConfig->getSettings();
 
             if (empty($_POST) === false) {
-                try {
-                    $file = array();
-                    if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
-                        $file['tmp_name'] = $_FILES['file']['tmp_name'];
-                        $file['name'] = $_FILES['file']['name'];
-                        $file['size'] = $_FILES['file']['size'];
-                    }
-
-                    $validator = $this->get('gallery.validator');
-                    $validator->validateEditPicture($file, $settings);
-
-                    $updateValues = array(
-                        'description' => Core\Functions::strEncode($_POST['description'], true),
-                        'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
-                    );
-
-                    if (!empty($file)) {
-                        $upload = new Core\Helpers\Upload('gallery');
-                        $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                        $oldFile = $this->galleryModel->getFileById($this->request->id);
-
-                        $this->get('gallery.helpers')->removePicture($oldFile);
-
-                        $updateValues = array_merge($updateValues, array('file' => $result['name']));
-                    }
-
-                    $bool = $this->galleryModel->update($updateValues, $this->request->id, Gallery\Model::TABLE_NAME_PICTURES);
-
-                    $this->galleryCache->setCache($picture['gallery_id']);
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $settings, $picture);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -242,5 +165,86 @@ class Pictures extends Core\Modules\Controller\Admin
         }
 
         throw new Core\Exceptions\ResultNotExists();
+    }
+
+    private function _createPost(array $formData, array $settings)
+    {
+        try {
+            $file = array();
+            $file['tmp_name'] = $_FILES['file']['tmp_name'];
+            $file['name'] = $_FILES['file']['name'];
+            $file['size'] = $_FILES['file']['size'];
+
+            $validator = $this->get('gallery.validator');
+            $validator->validateCreatePicture($file, $settings);
+
+            $upload = new Core\Helpers\Upload('gallery');
+            $result = $upload->moveFile($file['tmp_name'], $file['name']);
+            $picNum = $this->galleryModel->getLastPictureByGalleryId($this->request->id);
+
+            $insertValues = array(
+                'id' => '',
+                'pic' => !is_null($picNum) ? $picNum + 1 : 1,
+                'gallery_id' => $this->request->id,
+                'file' => $result['name'],
+                'description' => Core\Functions::strEncode($formData['description'], true),
+                'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
+            );
+
+            $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
+            $bool2 = $this->get('gallery.helpers')->generatePictureAlias($lastId);
+
+            $this->galleryCache->setCache($this->request->id);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $this->request->id);
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData, array $settings, array $picture)
+    {
+        try {
+            $file = array();
+            if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
+                $file['tmp_name'] = $_FILES['file']['tmp_name'];
+                $file['name'] = $_FILES['file']['name'];
+                $file['size'] = $_FILES['file']['size'];
+            }
+
+            $validator = $this->get('gallery.validator');
+            $validator->validateEditPicture($file, $settings);
+
+            $updateValues = array(
+                'description' => Core\Functions::strEncode($formData['description'], true),
+                'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
+            );
+
+            if (!empty($file)) {
+                $upload = new Core\Helpers\Upload('gallery');
+                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $oldFile = $this->galleryModel->getFileById($this->request->id);
+
+                $this->get('gallery.helpers')->removePicture($oldFile);
+
+                $updateValues = array_merge($updateValues, array('file' => $result['name']));
+            }
+
+            $bool = $this->galleryModel->update($updateValues, $this->request->id, Gallery\Model::TABLE_NAME_PICTURES);
+
+            $this->galleryCache->setCache($picture['gallery_id']);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 }

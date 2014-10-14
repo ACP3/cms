@@ -61,46 +61,7 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('guestbook.validator');
-                $validator->validateCreate($_POST, $hasNewsletterAccess);
-
-                $insertValues = array(
-                    'id' => '',
-                    'date' => $this->date->toSQL(),
-                    'ip' => $_SERVER['REMOTE_ADDR'],
-                    'name' => Core\Functions::strEncode($_POST['name']),
-                    'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
-                    'message' => Core\Functions::strEncode($_POST['message']),
-                    'website' => Core\Functions::strEncode($_POST['website']),
-                    'mail' => $_POST['mail'],
-                    'active' => $settings['notify'] == 2 ? 0 : 1,
-                );
-
-                $lastId = $this->guestbookModel->insert($insertValues);
-
-                // E-Mail-Benachrichtigung bei neuem Eintrag der hinterlegten
-                // E-Mail-Adresse zusenden
-                if ($settings['notify'] == 1 || $settings['notify'] == 2) {
-                    $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-                    $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $lastId;
-                    $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
-                    $this->get('core.functions')->generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
-                }
-
-                // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-                if ($hasNewsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
-                    $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'guestbook');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST, $settings, $overlayIsActive, $hasNewsletterAccess);
         }
 
         // Emoticons einbinden
@@ -182,6 +143,51 @@ class Index extends Core\Modules\Controller\Frontend
             }
             $this->view->assign('guestbook', $guestbook);
         }
+    }
+
+    private function _createPost(array $formData, array $settings, $overlayIsActive, $hasNewsletterAccess)
+    {
+        try {
+            $validator = $this->get('guestbook.validator');
+            $validator->validateCreate($formData, $hasNewsletterAccess);
+
+            $insertValues = array(
+                'id' => '',
+                'date' => $this->date->toSQL(),
+                'ip' => $_SERVER['REMOTE_ADDR'],
+                'name' => Core\Functions::strEncode($formData['name']),
+                'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
+                'message' => Core\Functions::strEncode($formData['message']),
+                'website' => Core\Functions::strEncode($formData['website']),
+                'mail' => $formData['mail'],
+                'active' => $settings['notify'] == 2 ? 0 : 1,
+            );
+
+            $lastId = $this->guestbookModel->insert($insertValues);
+
+            // E-Mail-Benachrichtigung bei neuem Eintrag der hinterlegten
+            // E-Mail-Adresse zusenden
+            if ($settings['notify'] == 1 || $settings['notify'] == 2) {
+                $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
+                $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $lastId;
+                $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
+                $this->get('core.functions')->generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
+            }
+
+            // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
+            if ($hasNewsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
+                $this->get('newsletter.helpers')->subscribeToNewsletter($formData['mail']);
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'guestbook');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+
     }
 
 }
