@@ -34,33 +34,7 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionIndex()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('contact.validator');
-                $validator->validate($_POST);
-
-                $settings = $this->contactConfig->getSettings();
-                $_POST['message'] = Core\Functions::strEncode($_POST['message'], true);
-
-                $subject = sprintf($this->lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
-                $body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $this->lang->t('contact', 'contact_body'));
-                $bool = $this->get('core.functions')->generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
-
-                // Nachrichtenkopie an Absender senden
-                if (isset($_POST['copy'])) {
-                    $subjectCopy = sprintf($this->lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
-                    $bodyCopy = sprintf($this->lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
-                    $this->get('core.functions')->generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->setContent($this->get('core.helpers.alerts')->confirmBox($bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'), $this->router->route('contact')));
-                return;
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'contact');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_indexPost($_POST);
         }
 
         $this->redirectMessages()->getMessage();
@@ -91,6 +65,37 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _indexPost(array $formData)
+    {
+        try {
+            $validator = $this->get('contact.validator');
+            $validator->validate($formData);
+
+            $settings = $this->contactConfig->getSettings();
+            $formData['message'] = Core\Functions::strEncode($formData['message'], true);
+
+            $subject = sprintf($this->lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
+            $body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($formData['name'], $formData['mail'], $formData['message'], "\n"), $this->lang->t('contact', 'contact_body'));
+            $bool = $this->get('core.functions')->generateEmail('', $settings['mail'], $formData['mail'], $subject, $body);
+
+            // Nachrichtenkopie an Absender senden
+            if (isset($formData['copy'])) {
+                $subjectCopy = sprintf($this->lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
+                $bodyCopy = sprintf($this->lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $formData['message']);
+                $this->get('core.functions')->generateEmail($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->setContent($this->get('core.helpers.alerts')->confirmBox($bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'), $this->router->route('contact')));
+            return;
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'contact');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
     public function actionImprint()

@@ -55,62 +55,7 @@ class Index extends Core\Modules\Controller\Admin
         $settings = $this->filesConfig->getSettings();
 
         if (empty($_POST) === false) {
-            try {
-                if (isset($_POST['external'])) {
-                    $file = $_POST['file_external'];
-                } else {
-                    $file = array();
-                    $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
-                    $file['name'] = $_FILES['file_internal']['name'];
-                    $file['size'] = $_FILES['file_internal']['size'];
-                }
-
-                $validator = $this->get('files.validator');
-                $validator->validateCreate($_POST, $file);
-
-                if (is_array($file) === true) {
-                    $upload = new Core\Helpers\Upload('files');
-                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                    $newFile = $result['name'];
-                    $filesize = $result['size'];
-                } else {
-                    $_POST['filesize'] = (float)$_POST['filesize'];
-                    $newFile = $file;
-                    $filesize = $_POST['filesize'] . ' ' . $_POST['unit'];
-                }
-
-                $insertValues = array(
-                    'id' => '',
-                    'start' => $this->date->toSQL($_POST['start']),
-                    'end' => $this->date->toSQL($_POST['end']),
-                    'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
-                    'file' => $newFile,
-                    'size' => $filesize,
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'text' => Core\Functions::strEncode($_POST['text'], true),
-                    'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-                    'user_id' => $this->auth->getUserId(),
-                );
-
-
-                $lastId = $this->filesModel->insert($insertValues);
-
-                $this->aliases->insertUriAlias(
-                    sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
-                    $_POST['alias'],
-                    $_POST['seo_keywords'],
-                    $_POST['seo_description'],
-                    (int)$_POST['seo_robots']);
-                $this->seo->setCache();
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/files');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST, $settings);
         }
 
         // Datumsauswahl
@@ -189,75 +134,7 @@ class Index extends Core\Modules\Controller\Admin
             $settings = $this->filesConfig->getSettings();
 
             if (empty($_POST) === false) {
-                try {
-                    $file = array();
-                    if (isset($_POST['external'])) {
-                        $file = $_POST['file_external'];
-                    } elseif (!empty($_FILES['file_internal']['name'])) {
-                        $file = array();
-                        $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
-                        $file['name'] = $_FILES['file_internal']['name'];
-                        $file['size'] = $_FILES['file_internal']['size'];
-                    }
-
-                    $validator = $this->get('files.validator');
-                    $validator->validateEdit($_POST, $file);
-
-                    $updateValues = array(
-                        'start' => $this->date->toSQL($_POST['start']),
-                        'end' => $this->date->toSQL($_POST['end']),
-                        'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'text' => Core\Functions::strEncode($_POST['text'], true),
-                        'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-                        'user_id' => $this->auth->getUserId(),
-                    );
-
-                    // Falls eine neue Datei angegeben wurde, Änderungen durchführen
-                    if (isset($file)) {
-                        $upload = new Core\Helpers\Upload('files');
-
-                        if (is_array($file) === true) {
-                            $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                            $newFile = $result['name'];
-                            $filesize = $result['size'];
-                        } else {
-                            $_POST['filesize'] = (float)$_POST['filesize'];
-                            $newFile = $file;
-                            $filesize = $_POST['filesize'] . ' ' . $_POST['unit'];
-                        }
-                        // SQL Query für die Änderungen
-                        $newFileSql = array(
-                            'file' => $newFile,
-                            'size' => $filesize,
-                        );
-
-                        $upload->removeUploadedFile($dl['file']);
-
-                        $updateValues = array_merge($updateValues, $newFileSql);
-                    }
-
-                    $bool = $this->filesModel->update($updateValues, $this->request->id);
-
-                    $this->aliases->insertUriAlias(
-                        sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->seo->setCache();
-
-                    $this->filesCache->setCache($this->request->id);
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/files');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $settings, $dl);
             }
 
             // Datumsauswahl
@@ -319,25 +196,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSettings()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('files.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
-                    'sidebar' => (int)$_POST['sidebar'],
-                    'comments' => $_POST['comments']
-                );
-                $bool = $this->filesConfig->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/files');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST);
         }
 
         $settings = $this->filesConfig->getSettings();
@@ -352,6 +211,162 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _createPost(array $formData, array $settings)
+    {
+        try {
+            if (isset($formData['external'])) {
+                $file = $formData['file_external'];
+            } else {
+                $file = array();
+                $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
+                $file['name'] = $_FILES['file_internal']['name'];
+                $file['size'] = $_FILES['file_internal']['size'];
+            }
+
+            $validator = $this->get('files.validator');
+            $validator->validateCreate($formData, $file);
+
+            if (is_array($file) === true) {
+                $upload = new Core\Helpers\Upload('files');
+                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $newFile = $result['name'];
+                $filesize = $result['size'];
+            } else {
+                $formData['filesize'] = (float)$formData['filesize'];
+                $newFile = $file;
+                $filesize = $formData['filesize'] . ' ' . $formData['unit'];
+            }
+
+            $insertValues = array(
+                'id' => '',
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
+                'file' => $newFile,
+                'size' => $filesize,
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
+                'user_id' => $this->auth->getUserId(),
+            );
+
+
+            $lastId = $this->filesModel->insert($insertValues);
+
+            $this->aliases->insertUriAlias(
+                sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']);
+            $this->seo->setCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/files');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData, array $settings, array $dl)
+    {
+        try {
+            $file = array();
+            if (isset($formData['external'])) {
+                $file = $formData['file_external'];
+            } elseif (!empty($_FILES['file_internal']['name'])) {
+                $file = array();
+                $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
+                $file['name'] = $_FILES['file_internal']['name'];
+                $file['size'] = $_FILES['file_internal']['size'];
+            }
+
+            $validator = $this->get('files.validator');
+            $validator->validateEdit($formData, $file);
+
+            $updateValues = array(
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            // Falls eine neue Datei angegeben wurde, Änderungen durchführen
+            if (isset($file)) {
+                $upload = new Core\Helpers\Upload('files');
+
+                if (is_array($file) === true) {
+                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                    $newFile = $result['name'];
+                    $filesize = $result['size'];
+                } else {
+                    $formData['filesize'] = (float)$formData['filesize'];
+                    $newFile = $file;
+                    $filesize = $formData['filesize'] . ' ' . $formData['unit'];
+                }
+                // SQL Query für die Änderungen
+                $newFileSql = array(
+                    'file' => $newFile,
+                    'size' => $filesize,
+                );
+
+                $upload->removeUploadedFile($dl['file']);
+
+                $updateValues = array_merge($updateValues, $newFileSql);
+            }
+
+            $bool = $this->filesModel->update($updateValues, $this->request->id);
+
+            $this->aliases->insertUriAlias(
+                sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+            $this->seo->setCache();
+
+            $this->filesCache->setCache($this->request->id);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/files');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('files.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'dateformat' => Core\Functions::strEncode($formData['dateformat']),
+                'sidebar' => (int)$formData['sidebar'],
+                'comments' => $formData['comments']
+            );
+            $bool = $this->filesConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/files');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/files');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

@@ -66,26 +66,7 @@ class Index extends Core\Modules\Controller\Admin
             $settings = $this->guestbookConfig->getSettings();
 
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('guestbook.validator');
-                    $validator->validateEdit($_POST, $settings);
-
-                    $updateValues = array(
-                        'name' => Core\Functions::strEncode($_POST['name']),
-                        'message' => Core\Functions::strEncode($_POST['message']),
-                        'active' => $settings['notify'] == 2 ? $_POST['active'] : 1,
-                    );
-
-                    $bool = $this->guestbookModel->update($updateValues, $this->request->id);
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/guestbook');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $settings);
             }
 
             if ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true) {
@@ -148,28 +129,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSettings()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('guestbook.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
-                    'notify' => $_POST['notify'],
-                    'notify_email' => $_POST['notify_email'],
-                    'overlay' => $_POST['overlay'],
-                    'emoticons' => $_POST['emoticons'],
-                    'newsletter_integration' => $_POST['newsletter_integration'],
-                );
-                $bool = $this->guestbookConfig->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/guestbook');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST);
         }
 
         $settings = $this->guestbookConfig->getSettings();
@@ -201,6 +161,56 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('form', array_merge(array('notify_email' => $settings['notify_email']), $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _editPost(array $formData, array $settings)
+    {
+        try {
+            $validator = $this->get('guestbook.validator');
+            $validator->validateEdit($formData, $settings);
+
+            $updateValues = array(
+                'name' => Core\Functions::strEncode($formData['name']),
+                'message' => Core\Functions::strEncode($formData['message']),
+                'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
+            );
+
+            $bool = $this->guestbookModel->update($updateValues, $this->request->id);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/guestbook');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('guestbook.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'dateformat' => Core\Functions::strEncode($formData['dateformat']),
+                'notify' => $formData['notify'],
+                'notify_email' => $formData['notify_email'],
+                'overlay' => $formData['overlay'],
+                'emoticons' => $formData['emoticons'],
+                'newsletter_integration' => $formData['newsletter_integration'],
+            );
+            $bool = $this->guestbookConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/guestbook');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

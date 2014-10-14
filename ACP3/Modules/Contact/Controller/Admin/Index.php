@@ -29,40 +29,43 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $config = $this->contactConfig;
-
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('contact.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'address' => Core\Functions::strEncode($_POST['address'], true),
-                    'mail' => $_POST['mail'],
-                    'telephone' => Core\Functions::strEncode($_POST['telephone']),
-                    'fax' => Core\Functions::strEncode($_POST['fax']),
-                    'disclaimer' => Core\Functions::strEncode($_POST['disclaimer'], true),
-                );
-
-                $bool = $config->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/contact');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_indexPost($_POST);
         }
 
         $this->redirectMessages()->getMessage();
 
-        $settings = $config->getSettings();
+        $settings = $this->contactConfig->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _indexPost(array $formData)
+    {
+        try {
+            $validator = $this->get('contact.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'address' => Core\Functions::strEncode($formData['address'], true),
+                'mail' => $formData['mail'],
+                'telephone' => Core\Functions::strEncode($formData['telephone']),
+                'fax' => Core\Functions::strEncode($formData['fax']),
+                'disclaimer' => Core\Functions::strEncode($formData['disclaimer'], true),
+            );
+
+            $bool = $this->contactConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/contact');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

@@ -47,37 +47,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('gallery.validator');
-                $validator->validateCreate($_POST);
-
-                $insertValues = array(
-                    'id' => '',
-                    'start' => $this->date->toSQL($_POST['start']),
-                    'end' => $this->date->toSQL($_POST['end']),
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'user_id' => $this->auth->getUserId(),
-                );
-
-                $lastId = $this->galleryModel->insert($insertValues);
-
-                $this->aliases->insertUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
-                    $_POST['alias'],
-                    $_POST['seo_keywords'],
-                    $_POST['seo_description'],
-                    (int)$_POST['seo_robots']
-                );
-                $this->seo->setCache();
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/gallery');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         // Datumsauswahl
@@ -141,44 +111,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->breadcrumb->append($gallery['title']);
 
-            $redirect = $this->redirectMessages();
-
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('gallery.validator');
-                    $validator->validateEdit($_POST);
-
-                    $updateValues = array(
-                        'start' => $this->date->toSQL($_POST['start']),
-                        'end' => $this->date->toSQL($_POST['end']),
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'user_id' => $this->auth->getUserId(),
-                    );
-
-                    $bool = $this->galleryModel->update($updateValues, $this->request->id);
-
-                    $this->aliases->insertUriAlias(
-                        sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->get('gallery.helpers')->generatePictureAliases($this->request->id);
-
-                    $this->seo->setCache();
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/gallery');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST);
             }
 
-            $redirect->getMessage();
+            $this->redirectMessages()->getMessage();
 
             $this->view->assign('gallery_id', $this->request->id);
 
@@ -243,46 +180,7 @@ class Index extends Core\Modules\Controller\Admin
         $settings = $this->galleryConfig->getSettings();
 
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('gallery.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'width' => (int)$_POST['width'],
-                    'height' => (int)$_POST['height'],
-                    'thumbwidth' => (int)$_POST['thumbwidth'],
-                    'thumbheight' => (int)$_POST['thumbheight'],
-                    'maxwidth' => (int)$_POST['maxwidth'],
-                    'maxheight' => (int)$_POST['maxheight'],
-                    'filesize' => (int)$_POST['filesize'],
-                    'overlay' => $_POST['overlay'],
-                    'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
-                    'sidebar' => (int)$_POST['sidebar'],
-                );
-                if ($this->modules->isActive('comments') === true) {
-                    $data['comments'] = (int)$_POST['comments'];
-                }
-
-                $bool = $this->galleryConfig->setSettings($data);
-
-                // Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
-                if ($_POST['thumbwidth'] !== $settings['thumbwidth'] || $_POST['thumbheight'] !== $settings['thumbheight'] ||
-                    $_POST['width'] !== $settings['width'] || $_POST['height'] !== $settings['height']
-                ) {
-                    Core\Cache::purge(UPLOADS_DIR . 'cache/images', 'gallery');
-
-                    $cache = new Core\Cache('gallery');
-                    $cache->getDriver()->deleteAll();
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/gallery');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST, $settings);
         }
 
         if ($this->modules->isActive('comments') === true) {
@@ -300,6 +198,121 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $validator = $this->get('gallery.validator');
+            $validator->validateCreate($formData);
+
+            $insertValues = array(
+                'id' => '',
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $lastId = $this->galleryModel->insert($insertValues);
+
+            $this->aliases->insertUriAlias(
+                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+            $this->seo->setCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/gallery');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData)
+    {
+        try {
+            $validator = $this->get('gallery.validator');
+            $validator->validateEdit($formData);
+
+            $updateValues = array(
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $bool = $this->galleryModel->update($updateValues, $this->request->id);
+
+            $this->aliases->insertUriAlias(
+                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+            $this->get('gallery.helpers')->generatePictureAliases($this->request->id);
+
+            $this->seo->setCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _settingsPost(array $formData, array $settings)
+    {
+        try {
+            $validator = $this->get('gallery.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'width' => (int)$formData['width'],
+                'height' => (int)$formData['height'],
+                'thumbwidth' => (int)$formData['thumbwidth'],
+                'thumbheight' => (int)$formData['thumbheight'],
+                'maxwidth' => (int)$formData['maxwidth'],
+                'maxheight' => (int)$formData['maxheight'],
+                'filesize' => (int)$formData['filesize'],
+                'overlay' => $formData['overlay'],
+                'dateformat' => Core\Functions::strEncode($formData['dateformat']),
+                'sidebar' => (int)$formData['sidebar'],
+            );
+            if ($this->modules->isActive('comments') === true) {
+                $data['comments'] = (int)$formData['comments'];
+            }
+
+            $bool = $this->galleryConfig->setSettings($data);
+
+            // Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
+            if ($formData['thumbwidth'] !== $settings['thumbwidth'] || $formData['thumbheight'] !== $settings['thumbheight'] ||
+                $formData['width'] !== $settings['width'] || $formData['height'] !== $settings['height']
+            ) {
+                Core\Cache::purge(UPLOADS_DIR . 'cache/images', 'gallery');
+
+                $cache = new Core\Cache('gallery');
+                $cache->getDriver()->deleteAll();
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/gallery');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }
