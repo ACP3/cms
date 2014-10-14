@@ -205,7 +205,7 @@ class Index extends Core\Modules\Controller\Admin
     }
 
 
-    private function _editPost($formData)
+    private function _editPost(array $formData)
     {
         try {
             $validator = $this->get('articles.validator');

@@ -85,30 +85,11 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = $this->commentsConfig;
-
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('comments.validator');
-                $validator->validateSettings($_POST);
+            $this->_settingsPost($_POST);
+       }
 
-                $data = array(
-                    'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
-                    'emoticons' => $_POST['emoticons'],
-                );
-                $bool = $config->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
-        }
-
-        $settings = $config->getSettings();
+        $settings = $this->commentsConfig->getSettings();
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
@@ -119,6 +100,29 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('comments.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'dateformat' => Core\Functions::strEncode($formData['dateformat']),
+                'emoticons' => $formData['emoticons'],
+            );
+            $bool = $this->commentsConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+
     }
 
 }

@@ -130,34 +130,7 @@ class Index extends Core\Modules\Controller\Frontend
     {
         // Formular für das Eintragen von Kommentaren
         if (empty($_POST) === false) {
-            try {
-                $ip = $_SERVER['REMOTE_ADDR'];
-
-                $validator = $this->get('comments.validator');
-                $validator->validateCreate($_POST, $ip);
-
-                $moduleInfo = $this->modules->getModuleInfo($this->module);
-                $insertValues = array(
-                    'id' => '',
-                    'date' => $this->date->toSQL(),
-                    'ip' => $ip,
-                    'name' => Core\Functions::strEncode($_POST['name']),
-                    'user_id' => $this->auth->isUser() === true && $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
-                    'message' => Core\Functions::strEncode($_POST['message']),
-                    'module_id' => $moduleInfo['id'],
-                    'entry_id' => $this->entryId,
-                );
-
-                $bool = $this->commentsModel->insert($insertValues);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->query);
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->request->query);
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         $settings = $this->commentsConfig->getSettings();
@@ -192,6 +165,39 @@ class Index extends Core\Modules\Controller\Frontend
         $this->secureHelper->generateFormToken($this->request->query);
 
         return $this->view->fetchTemplate('comments/index.create.tpl');
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $ip = $_SERVER['REMOTE_ADDR'];
+
+            $validator = $this->get('comments.validator');
+            $validator->validateCreate($formData, $ip);
+
+            $moduleInfo = $this->modules->getModuleInfo($this->module);
+            $insertValues = array(
+                'id' => '',
+                'date' => $this->date->toSQL(),
+                'ip' => $ip,
+                'name' => Core\Functions::strEncode($formData['name']),
+                'user_id' => $this->auth->isUser() === true && $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
+                'message' => Core\Functions::strEncode($formData['message']),
+                'module_id' => $moduleInfo['id'],
+                'entry_id' => $this->entryId,
+            );
+
+            $bool = $this->commentsModel->insert($insertValues);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->query);
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->request->query);
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+
     }
 
 }
