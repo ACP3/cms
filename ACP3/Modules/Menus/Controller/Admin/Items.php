@@ -47,59 +47,7 @@ class Items extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('menus.validator');
-                if ($this->modules->isActive('articles') === true) {
-                    $validator->setArticlesHelpers($this->get('articles.helpers'));
-                }
-                $validator->validateItem($_POST);
-
-                $insertValues = array(
-                    'id' => '',
-                    'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $_POST['uri']) ? '4' : $_POST['mode'],
-                    'block_id' => (int)$_POST['block_id'],
-                    'parent_id' => (int)$_POST['parent'],
-                    'display' => $_POST['display'],
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $_POST['articles']) : $_POST['uri']),
-                    'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
-                );
-
-                $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-                $bool = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
-
-                // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
-                if ($_POST['mode'] != 3) {
-                    $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                    if ($this->aliases->uriAliasExists($_POST['uri'])) {
-                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->aliases->getUriAlias($_POST['uri']);
-                        $keywords = $this->seo->getKeywords($_POST['uri']);
-                        $description = $this->seo->getDescription($_POST['uri']);
-                    } else {
-                        $alias = $_POST['alias'];
-                        $keywords = $_POST['seo_keywords'];
-                        $description = $_POST['seo_description'];
-                    }
-                    $this->aliases->insertUriAlias(
-                        $path,
-                        $_POST['mode'] == 1 ? '' : $alias,
-                        $keywords,
-                        $description,
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->seo->setCache();
-                }
-
-                $this->menusCache->setMenuItemsCache();
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         // Seitentyp
@@ -187,56 +135,7 @@ class Items extends Core\Modules\Controller\Admin
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('menus.validator');
-                    if ($this->modules->isActive('articles') === true) {
-                        $validator->setArticlesHelpers($this->get('articles.helpers'));
-                    }
-                    $validator->validateItem($_POST);
-
-                    // Vorgenommene Änderungen am Datensatz anwenden
-                    $mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $_POST['uri']) ? '4' : $_POST['mode'];
-                    $uriType = $_POST['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $_POST['articles']) : $_POST['uri'];
-
-                    $updateValues = array(
-                        'mode' => $mode,
-                        'block_id' => $_POST['block_id'],
-                        'parent_id' => $_POST['parent'],
-                        'display' => $_POST['display'],
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'uri' => $_POST['mode'] == 1 ? $_POST['module'] : $uriType,
-                        'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
-                    );
-
-                    $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-                    $bool = $nestedSet->editNode($this->request->id, (int)$_POST['parent'], (int)$_POST['block_id'], $updateValues);
-
-                    // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
-                    if ($_POST['mode'] != 3) {
-                        $alias = $_POST['alias'] === $menuItem['alias'] ? $menuItem['alias'] : $_POST['alias'];
-                        $keywords = $_POST['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $_POST['seo_keywords'];
-                        $description = $_POST['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $_POST['seo_description'];
-                        $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                        $this->aliases->insertUriAlias(
-                            $path,
-                            $_POST['mode'] == 1 ? '' : $alias,
-                            $keywords,
-                            $description,
-                            (int)$_POST['seo_robots']
-                        );
-                        $this->seo->setCache();
-                    }
-
-                    $this->menusCache->setMenuItemsCache();
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $menuItem);
             }
 
             // Seitentyp
@@ -301,6 +200,117 @@ class Items extends Core\Modules\Controller\Admin
             $this->redirect()->temporary('acp/menus');
         } else {
             throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $validator = $this->get('menus.validator');
+            if ($this->modules->isActive('articles') === true) {
+                $validator->setArticlesHelpers($this->get('articles.helpers'));
+            }
+            $validator->validateItem($formData);
+
+            $insertValues = array(
+                'id' => '',
+                'mode' => ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'],
+                'block_id' => (int)$formData['block_id'],
+                'parent_id' => (int)$formData['parent'],
+                'display' => $formData['display'],
+                'title' => Core\Functions::strEncode($formData['title']),
+                'uri' => $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']),
+                'target' => $formData['display'] == 0 ? 1 : $formData['target'],
+            );
+
+            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
+            $bool = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
+
+            // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
+            if ($formData['mode'] != 3) {
+                $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
+                if ($this->aliases->uriAliasExists($formData['uri'])) {
+                    $alias = !empty($formData['alias']) ? $formData['alias'] : $this->aliases->getUriAlias($formData['uri']);
+                    $keywords = $this->seo->getKeywords($formData['uri']);
+                    $description = $this->seo->getDescription($formData['uri']);
+                } else {
+                    $alias = $formData['alias'];
+                    $keywords = $formData['seo_keywords'];
+                    $description = $formData['seo_description'];
+                }
+                $this->aliases->insertUriAlias(
+                    $path,
+                    $formData['mode'] == 1 ? '' : $alias,
+                    $keywords,
+                    $description,
+                    (int)$formData['seo_robots']
+                );
+                $this->seo->setCache();
+            }
+
+            $this->menusCache->setMenuItemsCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData, array $menuItem)
+    {
+        try {
+            $validator = $this->get('menus.validator');
+            if ($this->modules->isActive('articles') === true) {
+                $validator->setArticlesHelpers($this->get('articles.helpers'));
+            }
+            $validator->validateItem($formData);
+
+            // Vorgenommene Änderungen am Datensatz anwenden
+            $mode = ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
+            $uriType = $formData['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri'];
+
+            $updateValues = array(
+                'mode' => $mode,
+                'block_id' => $formData['block_id'],
+                'parent_id' => $formData['parent'],
+                'display' => $formData['display'],
+                'title' => Core\Functions::strEncode($formData['title']),
+                'uri' => $formData['mode'] == 1 ? $formData['module'] : $uriType,
+                'target' => $formData['display'] == 0 ? 1 : $formData['target'],
+            );
+
+            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
+            $bool = $nestedSet->editNode($this->request->id, (int)$formData['parent'], (int)$formData['block_id'], $updateValues);
+
+            // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
+            if ($formData['mode'] != 3) {
+                $alias = $formData['alias'] === $menuItem['alias'] ? $menuItem['alias'] : $formData['alias'];
+                $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
+                $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
+                $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
+                $this->aliases->insertUriAlias(
+                    $path,
+                    $formData['mode'] == 1 ? '' : $alias,
+                    $keywords,
+                    $description,
+                    (int)$formData['seo_robots']
+                );
+                $this->seo->setCache();
+            }
+
+            $this->menusCache->setMenuItemsCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 

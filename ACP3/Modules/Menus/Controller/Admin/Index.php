@@ -46,26 +46,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('menus.validator');
-                $validator->validateCreate($_POST);
-
-                $insertValues = array(
-                    'id' => '',
-                    'index_name' => $_POST['index_name'],
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                );
-
-                $lastId = $this->menusModel->insert($insertValues);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/menus');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         $this->view->assign('form', array_merge(array('index_name' => '', 'title' => ''), $_POST));
@@ -110,27 +91,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($menu) === false) {
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('menus.validator');
-                    $validator->validateEdit($_POST);
-
-                    $updateValues = array(
-                        'index_name' => $_POST['index_name'],
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                    );
-
-                    $bool = $this->menusModel->update($updateValues, $this->request->id);
-
-                    $this->menusCache->setMenuItemsCache();
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST);
             }
 
             $this->view->assign('form', array_merge($menu, $_POST));
@@ -166,6 +127,55 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
             $this->view->assign('pages_list', $pagesList);
+        }
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $validator = $this->get('menus.validator');
+            $validator->validateCreate($formData);
+
+            $insertValues = array(
+                'id' => '',
+                'index_name' => $formData['index_name'],
+                'title' => Core\Functions::strEncode($formData['title']),
+            );
+
+            $lastId = $this->menusModel->insert($insertValues);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/menus');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData)
+    {
+        try {
+            $validator = $this->get('menus.validator');
+            $validator->validateEdit($formData);
+
+            $updateValues = array(
+                'index_name' => $formData['index_name'],
+                'title' => Core\Functions::strEncode($formData['title']),
+            );
+
+            $bool = $this->menusModel->update($updateValues, $this->request->id);
+
+            $this->menusCache->setMenuItemsCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 
