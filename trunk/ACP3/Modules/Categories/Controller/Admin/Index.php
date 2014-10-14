@@ -46,44 +46,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $file = array();
-                if (!empty($_FILES['picture']['name'])) {
-                    $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                    $file['name'] = $_FILES['picture']['name'];
-                    $file['size'] = $_FILES['picture']['size'];
-                }
-
-                $settings = $this->categoriesConfig->getSettings();
-
-                $validator = $this->get('categories.validator');
-                $validator->validate($_POST, $file, $settings);
-
-                $moduleInfo = $this->modules->getModuleInfo($_POST['module']);
-                $insertValues = array(
-                    'id' => '',
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'description' => Core\Functions::strEncode($_POST['description']),
-                    'module_id' => $moduleInfo['id'],
-                );
-                if (!empty($file)) {
-                    $upload = new Core\Helpers\Upload('categories');
-                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                    $insertValues['picture'] = $result['name'];
-                }
-
-                $bool = $this->categoriesModel->insert($insertValues);
-
-                $this->categoriesCache->setCache($_POST['module']);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/categories');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         $this->view->assign('form', array_merge(array('title' => '', 'description' => ''), $_POST));
@@ -99,6 +62,48 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('mod_list', $modules);
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+    
+    private function _createPost(array $formData)
+    {
+        try {
+            $file = array();
+            if (!empty($_FILES['picture']['name'])) {
+                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
+                $file['name'] = $_FILES['picture']['name'];
+                $file['size'] = $_FILES['picture']['size'];
+            }
+
+            $settings = $this->categoriesConfig->getSettings();
+
+            $validator = $this->get('categories.validator');
+            $validator->validate($formData, $file, $settings);
+
+            $moduleInfo = $this->modules->getModuleInfo($formData['module']);
+            $insertValues = array(
+                'id' => '',
+                'title' => Core\Functions::strEncode($formData['title']),
+                'description' => Core\Functions::strEncode($formData['description']),
+                'module_id' => $moduleInfo['id'],
+            );
+            if (!empty($file)) {
+                $upload = new Core\Helpers\Upload('categories');
+                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $insertValues['picture'] = $result['name'];
+            }
+
+            $bool = $this->categoriesModel->insert($insertValues);
+
+            $this->categoriesCache->setCache($formData['module']);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/categories');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
     public function actionDelete()
@@ -150,42 +155,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($category) === false) {
             if (empty($_POST) === false) {
-                try {
-                    $file = array();
-                    if (!empty($_FILES['picture']['name'])) {
-                        $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                        $file['name'] = $_FILES['picture']['name'];
-                        $file['size'] = $_FILES['picture']['size'];
-                    }
-                    $settings = $this->categoriesConfig->getSettings();
-
-                    $validator = $this->get('categories.validator');
-                    $validator->validate($_POST, $file, $settings, $this->request->id);
-
-                    $updateValues = array(
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'description' => Core\Functions::strEncode($_POST['description']),
-                    );
-
-                    if (empty($file) === false) {
-                        $upload = new Core\Helpers\Upload('categories');
-                        $upload->removeUploadedFile($category['picture']);
-                        $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                        $updateValues['picture'] = $result['name'];
-                    }
-
-                    $bool = $this->categoriesModel->update($updateValues, $this->request->id);
-
-                    $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->request->id));
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/categories');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $category);
             }
 
             $this->view->assign('form', array_merge($category, $_POST));
@@ -193,6 +163,46 @@ class Index extends Core\Modules\Controller\Admin
             $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+    private function _editPost(array $formData, array $category)
+    {
+        try {
+            $file = array();
+            if (!empty($_FILES['picture']['name'])) {
+                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
+                $file['name'] = $_FILES['picture']['name'];
+                $file['size'] = $_FILES['picture']['size'];
+            }
+            $settings = $this->categoriesConfig->getSettings();
+
+            $validator = $this->get('categories.validator');
+            $validator->validate($formData, $file, $settings, $this->request->id);
+
+            $updateValues = array(
+                'title' => Core\Functions::strEncode($formData['title']),
+                'description' => Core\Functions::strEncode($formData['description']),
+            );
+
+            if (empty($file) === false) {
+                $upload = new Core\Helpers\Upload('categories');
+                $upload->removeUploadedFile($category['picture']);
+                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $updateValues['picture'] = $result['name'];
+            }
+
+            $bool = $this->categoriesModel->update($updateValues, $this->request->id);
+
+            $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->request->id));
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/categories');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 
@@ -222,35 +232,39 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $config = $this->categoriesConfig;
-
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('categories.validator');
-                $validator->validateSettings($_POST, $this->lang);
-
-                $data = array(
-                    'width' => (int)$_POST['width'],
-                    'height' => (int)$_POST['height'],
-                    'filesize' => (int)$_POST['filesize'],
-                );
-                $bool = $config->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/categories');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST);
         }
 
-        $settings = $config->getSettings();
+        $settings = $this->categoriesConfig->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('categories.validator');
+            $validator->validateSettings($formData, $this->lang);
+
+            $data = array(
+                'width' => (int)$formData['width'],
+                'height' => (int)$formData['height'],
+                'filesize' => (int)$formData['filesize'],
+            );
+            $bool = $this->categoriesConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/categories');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+
     }
 
 }

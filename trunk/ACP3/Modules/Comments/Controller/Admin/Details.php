@@ -77,26 +77,7 @@ class Details extends Core\Modules\Controller\Admin
                 ->append($this->lang->t('comments', 'admin_details_edit'));
 
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('comments.validator');
-                    $validator->validateEdit($_POST);
-
-                    $updateValues = array();
-                    $updateValues['message'] = Core\Functions::strEncode($_POST['message']);
-                    if ((empty($comment['user_id']) || $this->get('core.validator.rules.misc')->isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
-                        $updateValues['name'] = Core\Functions::strEncode($_POST['name']);
-                    }
-
-                    $bool = $this->commentsModel->update($updateValues, $this->request->id);
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $comment);
             }
 
             if ($this->modules->isActive('emoticons') === true) {
@@ -140,10 +121,10 @@ class Details extends Core\Modules\Controller\Admin
                 $settings = $this->commentsConfig->getSettings();
 
                 // Emoticons einbinden
-                $emoticons_active = false;
+                $emoticonsActive = false;
                 if ($settings['emoticons'] == 1) {
                     if ($this->modules->isActive('emoticons') === true) {
-                        $emoticons_active = true;
+                        $emoticonsActive = true;
                     }
                 }
 
@@ -154,7 +135,7 @@ class Details extends Core\Modules\Controller\Admin
                     }
                     $comments[$i]['date_formatted'] = $this->date->formatTimeRange($comments[$i]['date']);
                     $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
-                    if ($emoticons_active === true) {
+                    if ($emoticonsActive === true) {
                         $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
                     }
                 }
@@ -162,6 +143,31 @@ class Details extends Core\Modules\Controller\Admin
                 $this->view->assign('can_delete', $canDelete);
             }
         }
+    }
+
+    private function _editPost(array $formData, array $comment)
+    {
+        try {
+            $validator = $this->get('comments.validator');
+            $validator->validateEdit($formData);
+
+            $updateValues = array();
+            $updateValues['message'] = Core\Functions::strEncode($formData['message']);
+            if ((empty($comment['user_id']) || $this->get('core.validator.rules.misc')->isNumber($comment['user_id']) === false) && !empty($formData['name'])) {
+                $updateValues['name'] = Core\Functions::strEncode($formData['name']);
+            }
+
+            $bool = $this->commentsModel->update($updateValues, $this->request->id);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+
     }
 
 }
