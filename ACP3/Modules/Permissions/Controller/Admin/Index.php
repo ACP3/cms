@@ -52,47 +52,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('permissions.validator');
-                $validator->validateCreate($_POST);
-
-                $this->db->beginTransaction();
-
-                $insertValues = array(
-                    'id' => '',
-                    'name' => Core\Functions::strEncode($_POST['name']),
-                    'parent_id' => $_POST['parent'],
-                );
-
-                $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-                $bool = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
-                $roleId = $this->db->lastInsertId();
-
-                foreach ($_POST['privileges'] as $moduleId => $privileges) {
-                    foreach ($privileges as $id => $permission) {
-                        $ruleInsertValues = array(
-                            'id' => '',
-                            'role_id' => $roleId,
-                            'module_id' => $moduleId,
-                            'privilege_id' => $id,
-                            'permission' => $permission
-                        );
-                        $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
-                    }
-                }
-
-                $this->db->commit();
-
-                $this->permissionsCache->setRolesCache();
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         $this->view->assign('form', array_merge(array('name' => ''), $_POST));
@@ -173,45 +133,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (!empty($role)) {
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('permissions.validator');
-                    $validator->validateEdit($_POST);
-
-                    $updateValues = array(
-                        'name' => Core\Functions::strEncode($_POST['name']),
-                        'parent_id' => $this->request->id == 1 ? 0 : $_POST['parent'],
-                    );
-                    $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-                    $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$_POST['parent'], 0, $updateValues);
-
-                    $this->db->beginTransaction();
-                    // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
-                    $this->permissionsModel->delete($this->request->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
-                    foreach ($_POST['privileges'] as $moduleId => $privileges) {
-                        foreach ($privileges as $id => $permission) {
-                            $ruleInsertValues = array(
-                                'id' => '',
-                                'role_id' => $this->request->id,
-                                'module_id' => $moduleId,
-                                'privilege_id' => $id,
-                                'permission' => $permission
-                            );
-                            $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
-                        }
-                    }
-                    $this->db->commit();
-
-                    $cache = new Core\Cache('acl');
-                    $cache->getDriver()->deleteAll();
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST);
             }
 
             if ($this->request->id != 1) {
@@ -295,6 +217,94 @@ class Index extends Core\Modules\Controller\Admin
             $this->redirect()->temporary('acp/permissions');
         } else {
             throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $validator = $this->get('permissions.validator');
+            $validator->validateCreate($formData);
+
+            $this->db->beginTransaction();
+
+            $insertValues = array(
+                'id' => '',
+                'name' => Core\Functions::strEncode($formData['name']),
+                'parent_id' => $formData['parent'],
+            );
+
+            $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
+            $bool = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
+            $roleId = $this->db->lastInsertId();
+
+            foreach ($formData['privileges'] as $moduleId => $privileges) {
+                foreach ($privileges as $id => $permission) {
+                    $ruleInsertValues = array(
+                        'id' => '',
+                        'role_id' => $roleId,
+                        'module_id' => $moduleId,
+                        'privilege_id' => $id,
+                        'permission' => $permission
+                    );
+                    $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
+                }
+            }
+
+            $this->db->commit();
+
+            $this->permissionsCache->setRolesCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData)
+    {
+        try {
+            $validator = $this->get('permissions.validator');
+            $validator->validateEdit($formData);
+
+            $updateValues = array(
+                'name' => Core\Functions::strEncode($formData['name']),
+                'parent_id' => $this->request->id == 1 ? 0 : $formData['parent'],
+            );
+            $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
+            $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$formData['parent'], 0, $updateValues);
+
+            $this->db->beginTransaction();
+            // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
+            $this->permissionsModel->delete($this->request->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
+            foreach ($formData['privileges'] as $moduleId => $privileges) {
+                foreach ($privileges as $id => $permission) {
+                    $ruleInsertValues = array(
+                        'id' => '',
+                        'role_id' => $this->request->id,
+                        'module_id' => $moduleId,
+                        'privilege_id' => $id,
+                        'permission' => $permission
+                    );
+                    $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
+                }
+            }
+            $this->db->commit();
+
+            $cache = new Core\Cache('acl');
+            $cache->getDriver()->deleteAll();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 }

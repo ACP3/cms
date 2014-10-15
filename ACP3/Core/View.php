@@ -14,7 +14,6 @@ class View extends ContainerAware
 {
     /**
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
-     *
      * @var array
      */
     protected $jsLibraries = array(

@@ -45,24 +45,7 @@ class Install extends AbstractController
     public function actionIndex()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('install.validator');
-                $validator->validateConfiguration($_POST, $this->configFilePath);
-
-                $this->_initDatabase($_POST);
-                $this->_setContainer();
-                $bool = $this->_installModules();
-
-                // Admin-User, Menüpunkte, News, etc. in die DB schreiben
-                if ($bool === true) {
-                    $this->_installSampleData($_POST);
-                }
-
-                $this->setContentTemplate('install/install.result.tpl');
-                return;
-            } catch (ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_indexPost($_POST);
         }
 
         // Zeitzonen
@@ -81,6 +64,31 @@ class Install extends AbstractController
         );
 
         $this->view->assign('form', array_merge($defaults, $_POST));
+    }
+
+    /**
+     * @param array $formData
+     */
+    private function _indexPost(array $formData)
+    {
+        try {
+            $validator = $this->get('install.validator');
+            $validator->validateConfiguration($formData, $this->configFilePath);
+
+            $this->_initDatabase($formData);
+            $this->_setContainer();
+            $bool = $this->_installModules();
+
+            // Admin-User, Menüpunkte, News, etc. in die DB schreiben
+            if ($bool === true) {
+                $this->_installSampleData($formData);
+            }
+
+            $this->setContentTemplate('install/install.result.tpl');
+            return;
+        } catch (ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
     /**
@@ -264,7 +272,6 @@ class Install extends AbstractController
 
         $configNewsletter = new Config($this->db, 'newsletter');
         $configNewsletter->setSettings(array('mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')));
-
     }
 
 }

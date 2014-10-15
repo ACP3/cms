@@ -55,35 +55,7 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionIndex()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('newsletter.validator');
-                switch ($this->request->action) {
-                    case 'subscribe':
-                        $validator->validateSubscribe($_POST);
-
-                        $bool = $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
-
-                        $this->secureHelper->unsetFormToken($this->request->query);
-
-                        $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
-                        return;
-                    case 'unsubscribe':
-                        $validator->validateUnsubscribe($_POST);
-
-                        $bool = $this->newsletterModel->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
-
-                        $this->secureHelper->unsetFormToken($this->request->query);
-
-                        $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
-                        return;
-                    default:
-                        throw new Core\Exceptions\ResultNotExists();
-                }
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_indexPost($_POST);
         }
 
         $this->view->assign('form', array_merge(array('mail' => ''), $_POST));
@@ -101,6 +73,39 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _indexPost(array $formData)
+    {
+        try {
+            $validator = $this->get('newsletter.validator');
+            switch ($this->request->action) {
+                case 'subscribe':
+                    $validator->validateSubscribe($formData);
+
+                    $bool = $this->get('newsletter.helpers')->subscribeToNewsletter($formData['mail']);
+
+                    $this->secureHelper->unsetFormToken($this->request->query);
+
+                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+                    return;
+                case 'unsubscribe':
+                    $validator->validateUnsubscribe($formData);
+
+                    $bool = $this->newsletterModel->delete($formData['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
+
+                    $this->secureHelper->unsetFormToken($this->request->query);
+
+                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+                    return;
+                default:
+                    throw new Core\Exceptions\ResultNotExists();
+            }
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

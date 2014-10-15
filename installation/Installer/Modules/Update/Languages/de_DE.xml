@@ -23,6 +23,7 @@
         <item key="index_index">Datenbankaktualisierung</item>
         <item key="legacy_db_update_description">
             <![CDATA[Sie verwenden derzeit eine sehr alte Version des ACP3, weshalb die Aktualisierung der Datenbank aus 2 Schritten besteht.<br />Bitte klicken Sie zunächst auf &quot;Datenbank aktualisieren&quot;, um die Datenbank an die neue Modulstruktur anzupassen und anschließend auf &quot;Weiter&quot;, damit die Module letztendlich aktualisiert werden.]]></item>
+        <item key="legacy_index">Datenbankaktualisierung</item>
         <item key="update_db_version_to">Aktualisierung der Datenbank auf Version &quot;%d&quot;:</item>
     </keys>
 </language>

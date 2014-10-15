@@ -55,56 +55,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('users.validator');
-                $validator->validateCreate($_POST);
-
-                $securityHelper = $this->get('core.helpers.secure');
-                $salt = $securityHelper->salt(12);
-
-                $insertValues = array(
-                    'id' => '',
-                    'super_user' => (int)$_POST['super_user'],
-                    'nickname' => Core\Functions::strEncode($_POST['nickname']),
-                    'pwd' => $securityHelper->generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
-                    'realname' => Core\Functions::strEncode($_POST['realname']),
-                    'gender' => (int)$_POST['gender'],
-                    'birthday' => $_POST['birthday'],
-                    'birthday_display' => (int)$_POST['birthday_display'],
-                    'mail' => $_POST['mail'],
-                    'mail_display' => isset($_POST['mail_display']) ? 1 : 0,
-                    'website' => Core\Functions::strEncode($_POST['website']),
-                    'icq' => $_POST['icq'],
-                    'skype' => Core\Functions::strEncode($_POST['skype']),
-                    'street' => Core\Functions::strEncode($_POST['street']),
-                    'house_number' => Core\Functions::strEncode($_POST['house_number']),
-                    'zip' => Core\Functions::strEncode($_POST['zip']),
-                    'city' => Core\Functions::strEncode($_POST['city']),
-                    'address_display' => isset($_POST['address_display']) ? 1 : 0,
-                    'country' => Core\Functions::strEncode($_POST['country']),
-                    'country_display' => isset($_POST['country_display']) ? 1 : 0,
-                    'date_format_long' => Core\Functions::strEncode($_POST['date_format_long']),
-                    'date_format_short' => Core\Functions::strEncode($_POST['date_format_short']),
-                    'time_zone' => $_POST['date_time_zone'],
-                    'language' => $_POST['language'],
-                    'entries' => (int)$_POST['entries'],
-                    'draft' => '',
-                    'registration_date' => $this->date->getCurrentDateTime(),
-                );
-
-                $lastId = $this->usersModel->insert($insertValues);
-                foreach ($_POST['roles'] as $row) {
-                    $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/users');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         // Zugriffslevel holen
@@ -248,65 +199,9 @@ class Index extends Core\Modules\Controller\Admin
             $user = $this->auth->getUserInfo($this->request->id);
 
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('users.validator');
-                    $validator->validateEdit($_POST);
-
-                    $updateValues = array(
-                        'super_user' => (int)$_POST['super_user'],
-                        'nickname' => Core\Functions::strEncode($_POST['nickname']),
-                        'realname' => Core\Functions::strEncode($_POST['realname']),
-                        'gender' => (int)$_POST['gender'],
-                        'birthday' => $_POST['birthday'],
-                        'birthday_display' => (int)$_POST['birthday_display'],
-                        'mail' => $_POST['mail'],
-                        'mail_display' => (int)$_POST['mail_display'],
-                        'website' => Core\Functions::strEncode($_POST['website']),
-                        'icq' => $_POST['icq'],
-                        'skype' => Core\Functions::strEncode($_POST['skype']),
-                        'street' => Core\Functions::strEncode($_POST['street']),
-                        'house_number' => Core\Functions::strEncode($_POST['house_number']),
-                        'zip' => Core\Functions::strEncode($_POST['zip']),
-                        'city' => Core\Functions::strEncode($_POST['city']),
-                        'address_display' => (int)$_POST['address_display'],
-                        'country' => Core\Functions::strEncode($_POST['country']),
-                        'country_display' => (int)$_POST['country_display'],
-                        'date_format_long' => Core\Functions::strEncode($_POST['date_format_long']),
-                        'date_format_short' => Core\Functions::strEncode($_POST['date_format_short']),
-                        'time_zone' => $_POST['date_time_zone'],
-                        'language' => $_POST['language'],
-                        'entries' => (int)$_POST['entries'],
-                    );
-
-                    $this->permissionsModel->delete(array('user_id' => $this->request->id), Permissions\Model::TABLE_NAME_USER_ROLES);
-                    foreach ($_POST['roles'] as $row) {
-                        $this->permissionsModel->insert(array('user_id' => $this->request->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
-                    }
-
-                    // Neues Passwort
-                    if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-                        $salt = $this->secureHelper->salt(12);
-                        $newPassword = $this->secureHelper->generateSaltedPassword($salt, $_POST['new_pwd']);
-                        $updateValues['pwd'] = $newPassword . ':' . $salt;
-                    }
-
-                    $bool = $this->usersModel->update($updateValues, $this->request->id);
-
-                    // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-                    if ($this->request->id == $this->auth->getUserId()) {
-                        $cookieArray = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
-                        $this->auth->setCookie($_POST['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
-                    }
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/users');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST);
             }
+
             // Zugriffslevel holen
             $roles = $this->acl->getAllRoles();
             $c_roles = count($roles);
@@ -400,26 +295,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSettings()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('users.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'enable_registration' => $_POST['enable_registration'],
-                    'entries_override' => $_POST['entries_override'],
-                    'language_override' => $_POST['language_override'],
-                    'mail' => $_POST['mail']
-                );
-                $bool = $this->usersConfig->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/users');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST);
         }
 
         $settings = $this->usersConfig->getSettings();
@@ -451,7 +327,8 @@ class Index extends Core\Modules\Controller\Admin
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'asc',
-                'hide_col_sort' => $canDelete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : '',
+                'records_per_page' => $this->auth->entries
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
@@ -460,6 +337,146 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->view->assign('users', $users);
             $this->view->assign('can_delete', $canDelete);
+        }
+    }
+
+    private function _createPost($formData)
+    {
+        try {
+            $validator = $this->get('users.validator');
+            $validator->validateCreate($formData);
+
+            $securityHelper = $this->get('core.helpers.secure');
+            $salt = $securityHelper->salt(12);
+
+            $insertValues = array(
+                'id' => '',
+                'super_user' => (int)$formData['super_user'],
+                'nickname' => Core\Functions::strEncode($formData['nickname']),
+                'pwd' => $securityHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
+                'realname' => Core\Functions::strEncode($formData['realname']),
+                'gender' => (int)$formData['gender'],
+                'birthday' => $formData['birthday'],
+                'birthday_display' => (int)$formData['birthday_display'],
+                'mail' => $formData['mail'],
+                'mail_display' => isset($formData['mail_display']) ? 1 : 0,
+                'website' => Core\Functions::strEncode($formData['website']),
+                'icq' => $formData['icq'],
+                'skype' => Core\Functions::strEncode($formData['skype']),
+                'street' => Core\Functions::strEncode($formData['street']),
+                'house_number' => Core\Functions::strEncode($formData['house_number']),
+                'zip' => Core\Functions::strEncode($formData['zip']),
+                'city' => Core\Functions::strEncode($formData['city']),
+                'address_display' => isset($formData['address_display']) ? 1 : 0,
+                'country' => Core\Functions::strEncode($formData['country']),
+                'country_display' => isset($formData['country_display']) ? 1 : 0,
+                'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
+                'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                'time_zone' => $formData['date_time_zone'],
+                'language' => $formData['language'],
+                'entries' => (int)$formData['entries'],
+                'draft' => '',
+                'registration_date' => $this->date->getCurrentDateTime(),
+            );
+
+            $lastId = $this->usersModel->insert($insertValues);
+            foreach ($formData['roles'] as $row) {
+                $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/users');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData)
+    {
+        try {
+            $validator = $this->get('users.validator');
+            $validator->validateEdit($formData);
+
+            $updateValues = array(
+                'super_user' => (int)$formData['super_user'],
+                'nickname' => Core\Functions::strEncode($formData['nickname']),
+                'realname' => Core\Functions::strEncode($formData['realname']),
+                'gender' => (int)$formData['gender'],
+                'birthday' => $formData['birthday'],
+                'birthday_display' => (int)$formData['birthday_display'],
+                'mail' => $formData['mail'],
+                'mail_display' => (int)$formData['mail_display'],
+                'website' => Core\Functions::strEncode($formData['website']),
+                'icq' => $formData['icq'],
+                'skype' => Core\Functions::strEncode($formData['skype']),
+                'street' => Core\Functions::strEncode($formData['street']),
+                'house_number' => Core\Functions::strEncode($formData['house_number']),
+                'zip' => Core\Functions::strEncode($formData['zip']),
+                'city' => Core\Functions::strEncode($formData['city']),
+                'address_display' => (int)$formData['address_display'],
+                'country' => Core\Functions::strEncode($formData['country']),
+                'country_display' => (int)$formData['country_display'],
+                'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
+                'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                'time_zone' => $formData['date_time_zone'],
+                'language' => $formData['language'],
+                'entries' => (int)$formData['entries'],
+            );
+
+            $this->permissionsModel->delete(array('user_id' => $this->request->id), Permissions\Model::TABLE_NAME_USER_ROLES);
+            foreach ($formData['roles'] as $row) {
+                $this->permissionsModel->insert(array('user_id' => $this->request->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
+            }
+
+            // Neues Passwort
+            if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
+                $salt = $this->secureHelper->salt(12);
+                $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd']);
+                $updateValues['pwd'] = $newPassword . ':' . $salt;
+            }
+
+            $bool = $this->usersModel->update($updateValues, $this->request->id);
+
+            // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
+            if ($this->request->id == $this->auth->getUserId()) {
+                $cookieArray = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
+                $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/users');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('users.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'enable_registration' => $formData['enable_registration'],
+                'entries_override' => $formData['entries_override'],
+                'language_override' => $formData['language_override'],
+                'mail' => $formData['mail']
+            );
+            $bool = $this->usersConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/users');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 

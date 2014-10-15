@@ -46,32 +46,7 @@ class Resources extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('permissions.validator');
-                $validator->validateCreateResource($_POST);
-
-                $moduleInfo = $this->modules->getModuleInfo($_POST['modules']);
-                $insertValues = array(
-                    'id' => '',
-                    'module_id' => $moduleInfo['id'],
-                    'area' => $_POST['area'],
-                    'controller' => $_POST['controller'],
-                    'page' => $_POST['resource'],
-                    'params' => '',
-                    'privilege_id' => $_POST['privileges'],
-                );
-                $bool = $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
-
-                $this->permissionsCache->setResourcesCache();
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/resources');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         $modules = $this->modules->getActiveModules();
@@ -116,28 +91,7 @@ class Resources extends Core\Modules\Controller\Admin
         $resource = $this->permissionsModel->getResourceById((int)$this->request->id);
         if (!empty($resource)) {
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('permissions.validator');
-                    $validator->validateEditResource($_POST);
-
-                    $updateValues = array(
-                        'controller' => $_POST['controller'],
-                        'area' => $_POST['area'],
-                        'page' => $_POST['resource'],
-                        'privilege_id' => $_POST['privileges'],
-                    );
-                    $bool = $this->permissionsModel->update($updateValues, $this->request->id, Permissions\Model::TABLE_NAME_RESOURCES);
-
-                    $this->permissionsCache->setResourcesCache();
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/resources');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST);
             }
 
             $privileges = $this->acl->getAllPrivileges();
@@ -177,5 +131,61 @@ class Resources extends Core\Modules\Controller\Admin
         ksort($output);
         $this->view->assign('resources', $output);
         $this->view->assign('can_delete_resource', $this->modules->hasPermission('admin/permissions/resources/delete'));
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $validator = $this->get('permissions.validator');
+            $validator->validateCreateResource($formData);
+
+            $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
+            $insertValues = array(
+                'id' => '',
+                'module_id' => $moduleInfo['id'],
+                'area' => $formData['area'],
+                'controller' => $formData['controller'],
+                'page' => $formData['resource'],
+                'params' => '',
+                'privilege_id' => $formData['privileges'],
+            );
+            $bool = $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
+
+            $this->permissionsCache->setResourcesCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/resources');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData)
+    {
+        try {
+            $validator = $this->get('permissions.validator');
+            $validator->validateEditResource($formData);
+
+            $updateValues = array(
+                'controller' => $formData['controller'],
+                'area' => $formData['area'],
+                'page' => $formData['resource'],
+                'privilege_id' => $formData['privileges'],
+            );
+            $bool = $this->permissionsModel->update($updateValues, $this->request->id, Permissions\Model::TABLE_NAME_RESOURCES);
+
+            $this->permissionsCache->setResourcesCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/resources');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 }

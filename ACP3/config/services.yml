@@ -81,7 +81,7 @@ services:
 
   core.functions:
     class: ACP3\Core\Functions
-    arguments: ['@core.auth', '@core.db', '@core.view']
+    arguments: ['@core.db', '@core.view']
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts

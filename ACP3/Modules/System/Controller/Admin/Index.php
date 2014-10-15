@@ -39,64 +39,11 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionConfiguration()
     {
-        $redirect = $this->redirectMessages();
-
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('system.validator');
-                $validator->validateSettings($_POST);
-
-                // Config aktualisieren
-                $data = array(
-                    'cache_images' => (int)$_POST['cache_images'],
-                    'cache_minify' => (int)$_POST['cache_minify'],
-                    'date_format_long' => Core\Functions::strEncode($_POST['date_format_long']),
-                    'date_format_short' => Core\Functions::strEncode($_POST['date_format_short']),
-                    'date_time_zone' => $_POST['date_time_zone'],
-                    'entries' => (int)$_POST['entries'],
-                    'extra_css' => $_POST['extra_css'],
-                    'extra_js' => $_POST['extra_js'],
-                    'flood' => (int)$_POST['flood'],
-                    'homepage' => $_POST['homepage'],
-                    'icons_path' => $_POST['icons_path'],
-                    'language' => $_POST['language'],
-                    'mailer_smtp_auth' => (int)$_POST['mailer_smtp_auth'],
-                    'mailer_smtp_host' => $_POST['mailer_smtp_host'],
-                    'mailer_smtp_password' => $_POST['mailer_smtp_password'],
-                    'mailer_smtp_port' => (int)$_POST['mailer_smtp_port'],
-                    'mailer_smtp_security' => $_POST['mailer_smtp_security'],
-                    'mailer_smtp_user' => $_POST['mailer_smtp_user'],
-                    'mailer_type' => $_POST['mailer_type'],
-                    'maintenance_message' => $_POST['maintenance_message'],
-                    'maintenance_mode' => (int)$_POST['maintenance_mode'],
-                    'seo_meta_description' => Core\Functions::strEncode($_POST['seo_meta_description']),
-                    'seo_meta_keywords' => Core\Functions::strEncode($_POST['seo_meta_keywords']),
-                    'seo_mod_rewrite' => (int)$_POST['seo_mod_rewrite'],
-                    'seo_robots' => (int)$_POST['seo_robots'],
-                    'seo_title' => Core\Functions::strEncode($_POST['seo_title']),
-                    'wysiwyg' => $_POST['wysiwyg']
-                );
-
-                $bool = $this->systemConfig->setSettings($data);
-
-                // Gecachete Stylesheets und JavaScript Dateien löschen
-                if (CONFIG_EXTRA_CSS !== $_POST['extra_css'] ||
-                    CONFIG_EXTRA_JS !== $_POST['extra_js']
-                ) {
-                    Core\Cache::purge(UPLOADS_DIR . 'cache/minify');
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect->setMessage(false, $e->getMessage(), 'acp/system/index/configuration');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_configurationPost($_POST);
         }
 
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
         $this->view->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
 
@@ -168,5 +115,61 @@ class Index extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         return;
+    }
+
+    private function _configurationPost(array $formData)
+    {
+        try {
+            $validator = $this->get('system.validator');
+            $validator->validateSettings($formData);
+
+            // Config aktualisieren
+            $data = array(
+                'cache_images' => (int)$formData['cache_images'],
+                'cache_minify' => (int)$formData['cache_minify'],
+                'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
+                'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                'date_time_zone' => $formData['date_time_zone'],
+                'entries' => (int)$formData['entries'],
+                'extra_css' => $formData['extra_css'],
+                'extra_js' => $formData['extra_js'],
+                'flood' => (int)$formData['flood'],
+                'homepage' => $formData['homepage'],
+                'icons_path' => $formData['icons_path'],
+                'language' => $formData['language'],
+                'mailer_smtp_auth' => (int)$formData['mailer_smtp_auth'],
+                'mailer_smtp_host' => $formData['mailer_smtp_host'],
+                'mailer_smtp_password' => $formData['mailer_smtp_password'],
+                'mailer_smtp_port' => (int)$formData['mailer_smtp_port'],
+                'mailer_smtp_security' => $formData['mailer_smtp_security'],
+                'mailer_smtp_user' => $formData['mailer_smtp_user'],
+                'mailer_type' => $formData['mailer_type'],
+                'maintenance_message' => $formData['maintenance_message'],
+                'maintenance_mode' => (int)$formData['maintenance_mode'],
+                'seo_meta_description' => Core\Functions::strEncode($formData['seo_meta_description']),
+                'seo_meta_keywords' => Core\Functions::strEncode($formData['seo_meta_keywords']),
+                'seo_mod_rewrite' => (int)$formData['seo_mod_rewrite'],
+                'seo_robots' => (int)$formData['seo_robots'],
+                'seo_title' => Core\Functions::strEncode($formData['seo_title']),
+                'wysiwyg' => $formData['wysiwyg']
+            );
+
+            $bool = $this->systemConfig->setSettings($data);
+
+            // Gecachete Stylesheets und JavaScript Dateien löschen
+            if (CONFIG_EXTRA_CSS !== $formData['extra_css'] ||
+                CONFIG_EXTRA_JS !== $formData['extra_js']
+            ) {
+                Core\Cache::purge(UPLOADS_DIR . 'cache/minify');
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/index/configuration');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 }

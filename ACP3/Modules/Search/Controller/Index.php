@@ -28,25 +28,11 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        $redirect = $this->redirectMessages();
-
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('search.validator');
-                $validator->validate($_POST);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->_displaySearchResults($_POST['mods'], Core\Functions::strEncode($_POST['search_term']), $_POST['area'], strtoupper($_POST['sort']));
-                return;
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect->setMessage(false, $e->getMessage(), 'search');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_indexPost($_POST);
         }
 
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
         $this->view->assign('form', array_merge(array('search_term' => ''), $_POST));
 
@@ -101,6 +87,23 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         $this->setContentTemplate('search/index.results.tpl');
+    }
+
+    private function _indexPost(array $formData)
+    {
+        try {
+            $validator = $this->get('search.validator');
+            $validator->validate($formData);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->_displaySearchResults($formData['mods'], Core\Functions::strEncode($formData['search_term']), $formData['area'], strtoupper($formData['sort']));
+            return;
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'search');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

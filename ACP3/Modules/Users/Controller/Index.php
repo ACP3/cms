@@ -62,49 +62,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->redirect()->toNewPage(ROOT_DIR);
         } else {
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('users.validator');
-                    $validator->validateForgotPassword($_POST);
-
-                    // Neues Passwort und neuen Zufallsschlüssel erstellen
-                    $newPassword = $this->secureHelper->salt(8);
-                    $host = htmlentities($_SERVER['HTTP_HOST']);
-
-                    // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                    if ($this->get('core.validator.rules.misc')->email($_POST['nick_mail']) === true && $this->usersModel->resultExistsByEmail($_POST['nick_mail']) === true) {
-                        $user = $this->usersModel->getOneByEmail($_POST['nick_mail']);
-                    } else {
-                        $user = $this->usersModel->getOneByNickname($_POST['nick_mail']);
-                    }
-
-                    // E-Mail mit dem neuen Passwort versenden
-                    $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'forgot_pwd_mail_subject'));
-                    $search = array('{name}', '{mail}', '{password}', '{title}', '{host}');
-                    $replace = array($user['nickname'], $user['mail'], $newPassword, CONFIG_SEO_TITLE, $host);
-                    $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
-
-                    $settings = $this->usersConfig->getSettings();
-                    $mailIsSent = $this->get('core.functions')->generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
-
-                    // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
-                    if ($mailIsSent === true) {
-                        $salt = $this->secureHelper->salt(12);
-                        $updateValues = array(
-                            'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
-                            'login_errors' => 0
-                        );
-                        $bool = $this->usersModel->update($updateValues, $user['id']);
-                    }
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
-                    return;
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/forgot_pwd');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_forgotPasswordPost($_POST);
             }
 
             $this->view->assign('form', array_merge(array('nick_mail' => ''), $_POST));
@@ -181,42 +139,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('users.validator');
-                    $validator->validateRegistration($_POST);
-
-                    // E-Mail mit den Accountdaten zusenden
-                    $host = htmlentities($_SERVER['HTTP_HOST']);
-                    $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_subject'));
-                    $body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_message'));
-                    $mailIsSent = $this->get('core.functions')->generateEmail('', $_POST['mail'], $settings['mail'], $subject, $body);
-
-                    $salt = $this->secureHelper->salt(12);
-                    $insertValues = array(
-                        'id' => '',
-                        'nickname' => Core\Functions::strEncode($_POST['nickname']),
-                        'pwd' => $this->secureHelper->generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
-                        'mail' => $_POST['mail'],
-                        'date_format_long' => CONFIG_DATE_FORMAT_LONG,
-                        'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
-                        'time_zone' => CONFIG_DATE_TIME_ZONE,
-                        'language' => CONFIG_LANG,
-                        'entries' => CONFIG_ENTRIES,
-                        'registration_date' => $this->date->getCurrentDateTime(),
-                    );
-
-                    $lastId = $this->usersModel->insert($insertValues);
-                    $bool2 = $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => 2), Permissions\Model::TABLE_NAME_USER_ROLES);
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
-                    return;
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/register');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_registerPost($_POST);
             }
 
             $defaults = array(
@@ -247,6 +170,93 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('user', $user);
         } else {
             throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+    private function _forgotPasswordPost(array $formData)
+    {
+        try {
+            $validator = $this->get('users.validator');
+            $validator->validateForgotPassword($formData);
+
+            // Neues Passwort und neuen Zufallsschlüssel erstellen
+            $newPassword = $this->secureHelper->salt(8);
+            $host = htmlentities($_SERVER['HTTP_HOST']);
+
+            // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
+            if ($this->get('core.validator.rules.misc')->email($formData['nick_mail']) === true && $this->usersModel->resultExistsByEmail($formData['nick_mail']) === true) {
+                $user = $this->usersModel->getOneByEmail($formData['nick_mail']);
+            } else {
+                $user = $this->usersModel->getOneByNickname($formData['nick_mail']);
+            }
+
+            // E-Mail mit dem neuen Passwort versenden
+            $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'forgot_pwd_mail_subject'));
+            $search = array('{name}', '{mail}', '{password}', '{title}', '{host}');
+            $replace = array($user['nickname'], $user['mail'], $newPassword, CONFIG_SEO_TITLE, $host);
+            $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
+
+            $settings = $this->usersConfig->getSettings();
+            $mailIsSent = $this->get('core.functions')->generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
+
+            // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
+            if ($mailIsSent === true) {
+                $salt = $this->secureHelper->salt(12);
+                $updateValues = array(
+                    'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
+                    'login_errors' => 0
+                );
+                $bool = $this->usersModel->update($updateValues, $user['id']);
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
+            return;
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/forgot_pwd');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _registerPost(array $formData)
+    {
+        try {
+            $validator = $this->get('users.validator');
+            $validator->validateRegistration($formData);
+
+            // E-Mail mit den Accountdaten zusenden
+            $host = htmlentities($_SERVER['HTTP_HOST']);
+            $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_subject'));
+            $body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($formData['nickname'], $formData['mail'], $formData['pwd'], CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_message'));
+            $mailIsSent = $this->get('core.functions')->generateEmail('', $formData['mail'], $settings['mail'], $subject, $body);
+
+            $salt = $this->secureHelper->salt(12);
+            $insertValues = array(
+                'id' => '',
+                'nickname' => Core\Functions::strEncode($formData['nickname']),
+                'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
+                'mail' => $formData['mail'],
+                'date_format_long' => CONFIG_DATE_FORMAT_LONG,
+                'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
+                'time_zone' => CONFIG_DATE_TIME_ZONE,
+                'language' => CONFIG_LANG,
+                'entries' => CONFIG_ENTRIES,
+                'registration_date' => $this->date->getCurrentDateTime(),
+            );
+
+            $lastId = $this->usersModel->insert($insertValues);
+            $bool2 = $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => 2), Permissions\Model::TABLE_NAME_USER_ROLES);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
+            return;
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/register');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 

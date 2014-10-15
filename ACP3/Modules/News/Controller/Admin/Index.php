@@ -56,44 +56,7 @@ class Index extends Core\Modules\Controller\Admin
         $settings = $this->newsConfig->getSettings();
 
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('news.validator');
-                $validator->validateCreate($_POST);
-
-                $insertValues = array(
-                    'id' => '',
-                    'start' => $this->date->toSQL($_POST['start']),
-                    'end' => $this->date->toSQL($_POST['end']),
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'text' => Core\Functions::strEncode($_POST['text'], true),
-                    'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
-                    'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-                    'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
-                    'uri' => Core\Functions::strEncode($_POST['uri'], true),
-                    'target' => (int)$_POST['target'],
-                    'link_title' => Core\Functions::strEncode($_POST['link_title']),
-                    'user_id' => $this->auth->getUserId(),
-                );
-
-                $lastId = $this->newsModel->insert($insertValues);
-
-                $this->aliases->insertUriAlias(
-                    sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
-                    $_POST['alias'],
-                    $_POST['seo_keywords'],
-                    $_POST['seo_description'],
-                    (int)$_POST['seo_robots']
-                );
-                $this->seo->setCache();
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/news');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST, $settings);
         }
 
         // Datumsauswahl
@@ -167,45 +130,7 @@ class Index extends Core\Modules\Controller\Admin
             $settings = $this->newsConfig->getSettings();
 
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('news.validator');
-                    $validator->validateEdit($_POST);
-
-                    $updateValues = array(
-                        'start' => $this->date->toSQL($_POST['start']),
-                        'end' => $this->date->toSQL($_POST['end']),
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'text' => Core\Functions::strEncode($_POST['text'], true),
-                        'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
-                        'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-                        'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
-                        'uri' => Core\Functions::strEncode($_POST['uri'], true),
-                        'target' => (int)$_POST['target'],
-                        'link_title' => Core\Functions::strEncode($_POST['link_title']),
-                        'user_id' => $this->auth->getUserId(),
-                    );
-
-                    $bool = $this->newsModel->update($updateValues, $this->request->id);
-
-                    $this->aliases->insertUriAlias(
-                        sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->seo->setCache();
-
-                    $this->newsCache->setCache($this->request->id);
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/news');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $settings);
             }
 
             // Datumsauswahl
@@ -259,7 +184,8 @@ class Index extends Core\Modules\Controller\Admin
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : '',
+                'records_per_page' => $this->auth->entries
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
@@ -274,28 +200,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSettings()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('news.validator');
-                $validator->validateSettings($_POST, $this->lang);
-
-                $data = array(
-                    'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
-                    'sidebar' => (int)$_POST['sidebar'],
-                    'readmore' => $_POST['readmore'],
-                    'readmore_chars' => (int)$_POST['readmore_chars'],
-                    'category_in_breadcrumb' => $_POST['category_in_breadcrumb'],
-                    'comments' => $_POST['comments'],
-                );
-                $bool = $this->newsConfig->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/news');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST);
         }
 
         $settings = $this->newsConfig->getSettings();
@@ -318,6 +223,117 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('category_in_breadcrumb', Core\Functions::selectGenerator('category_in_breadcrumb', array(1, 0), $lang_category_in_breadcrumb, $settings['category_in_breadcrumb'], 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _createPost(array $formData, array $settings)
+    {
+        try {
+            $validator = $this->get('news.validator');
+            $validator->validateCreate($formData);
+
+            $insertValues = array(
+                'id' => '',
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'readmore' => $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0,
+                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
+                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
+                'uri' => Core\Functions::strEncode($formData['uri'], true),
+                'target' => (int)$formData['target'],
+                'link_title' => Core\Functions::strEncode($formData['link_title']),
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $lastId = $this->newsModel->insert($insertValues);
+
+            $this->aliases->insertUriAlias(
+                sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+            $this->seo->setCache();
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/news');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData, array $settings)
+    {
+        try {
+            $validator = $this->get('news.validator');
+            $validator->validateEdit($formData);
+
+            $updateValues = array(
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'readmore' => $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0,
+                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
+                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
+                'uri' => Core\Functions::strEncode($formData['uri'], true),
+                'target' => (int)$formData['target'],
+                'link_title' => Core\Functions::strEncode($formData['link_title']),
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $bool = $this->newsModel->update($updateValues, $this->request->id);
+
+            $this->aliases->insertUriAlias(
+                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+            $this->seo->setCache();
+
+            $this->newsCache->setCache($this->request->id);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/news');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('news.validator');
+            $validator->validateSettings($formData, $this->lang);
+
+            $data = array(
+                'dateformat' => Core\Functions::strEncode($formData['dateformat']),
+                'sidebar' => (int)$formData['sidebar'],
+                'readmore' => $formData['readmore'],
+                'readmore_chars' => (int)$formData['readmore_chars'],
+                'category_in_breadcrumb' => $formData['category_in_breadcrumb'],
+                'comments' => $formData['comments'],
+            );
+            $bool = $this->newsConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/news');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }
