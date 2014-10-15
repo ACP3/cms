@@ -41,43 +41,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (isset($_POST['submit']) === true) {
-            try {
-                $validator = $this->get('polls.validator');
-                $validator->validateCreate($_POST);
-
-                $insertValues = array(
-                    'id' => '',
-                    'start' => $this->date->toSQL($_POST['start']),
-                    'end' => $this->date->toSQL($_POST['end']),
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'multiple' => isset($_POST['multiple']) ? '1' : '0',
-                    'user_id' => $this->auth->getUserId(),
-                );
-
-                $pollId = $this->pollsModel->insert($insertValues);
-                $bool2 = false;
-
-                if ($pollId !== false) {
-                    foreach ($_POST['answers'] as $row) {
-                        if (!empty($row)) {
-                            $insertAnswer = array(
-                                'id' => '',
-                                'text' => Core\Functions::strEncode($row),
-                                'poll_id' => $pollId,
-                            );
-                            $bool2 = $this->pollsModel->insert($insertAnswer, Polls\Model::TABLE_NAME_ANSWERS);
-                        }
-                    }
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST);
         }
 
         $answers = array();
@@ -134,51 +98,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($poll) === false) {
             if (isset($_POST['submit']) === true) {
-                try {
-                    $validator = $this->get('polls.validator');
-                    $validator->validateEdit($_POST);
-
-                    // Frage aktualisieren
-                    $updateValues = array(
-                        'start' => $this->date->toSQL($_POST['start']),
-                        'end' => $this->date->toSQL($_POST['end']),
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'multiple' => isset($_POST['multiple']) ? '1' : '0',
-                        'user_id' => $this->auth->getUserId(),
-                    );
-
-                    $bool = $this->pollsModel->update($updateValues, $this->request->id);
-
-                    // Stimmen zurücksetzen
-                    if (!empty($_POST['reset'])) {
-                        $this->pollsModel->delete($this->request->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
-                    }
-
-                    // Antworten
-                    foreach ($_POST['answers'] as $row) {
-                        // Neue Antwort hinzufügen
-                        if (empty($row['id'])) {
-                            // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
-                            if (!empty($row['value']) && !isset($row['delete']))
-                                $this->pollsModel->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id), Polls\Model::TABLE_NAME_ANSWERS);
-                            // Antwort mitsamt Stimmen löschen
-                        } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
-                            $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
-                            $this->pollsModel->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
-                            // Antwort aktualisieren
-                        } elseif (!empty($row['value']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
-                            $bool = $this->pollsModel->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
-                        }
-                    }
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST);
             }
 
             $answers = array();
@@ -241,7 +161,8 @@ class Index extends Core\Modules\Controller\Admin
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : '',
+                'records_per_page' => $this->auth->entries
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
@@ -250,6 +171,96 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->view->assign('polls', $polls);
             $this->view->assign('can_delete', $canDelete);
+        }
+    }
+
+    private function _createPost(array $formData)
+    {
+        try {
+            $validator = $this->get('polls.validator');
+            $validator->validateCreate($formData);
+
+            $insertValues = array(
+                'id' => '',
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'multiple' => isset($formData['multiple']) ? '1' : '0',
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $pollId = $this->pollsModel->insert($insertValues);
+            $bool2 = false;
+
+            if ($pollId !== false) {
+                foreach ($formData['answers'] as $row) {
+                    if (!empty($row)) {
+                        $insertAnswer = array(
+                            'id' => '',
+                            'text' => Core\Functions::strEncode($row),
+                            'poll_id' => $pollId,
+                        );
+                        $bool2 = $this->pollsModel->insert($insertAnswer, Polls\Model::TABLE_NAME_ANSWERS);
+                    }
+                }
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData)
+    {
+        try {
+            $validator = $this->get('polls.validator');
+            $validator->validateEdit($formData);
+
+            // Frage aktualisieren
+            $updateValues = array(
+                'start' => $this->date->toSQL($formData['start']),
+                'end' => $this->date->toSQL($formData['end']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'multiple' => isset($formData['multiple']) ? '1' : '0',
+                'user_id' => $this->auth->getUserId(),
+            );
+
+            $bool = $this->pollsModel->update($updateValues, $this->request->id);
+
+            // Stimmen zurücksetzen
+            if (!empty($formData['reset'])) {
+                $this->pollsModel->delete($this->request->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+            }
+
+            // Antworten
+            foreach ($formData['answers'] as $row) {
+                // Neue Antwort hinzufügen
+                if (empty($row['id'])) {
+                    // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
+                    if (!empty($row['value']) && !isset($row['delete']))
+                        $this->pollsModel->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id), Polls\Model::TABLE_NAME_ANSWERS);
+                    // Antwort mitsamt Stimmen löschen
+                } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
+                    $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
+                    $this->pollsModel->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
+                    // Antwort aktualisieren
+                } elseif (!empty($row['value']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
+                    $bool = $this->pollsModel->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
+                }
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/polls');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 

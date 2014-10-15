@@ -10,10 +10,6 @@ namespace ACP3\Core;
 class Functions
 {
     /**
-     * @var Auth
-     */
-    protected $auth;
-    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
@@ -27,9 +23,8 @@ class Functions
     /**
      * Set the class attributes
      */
-    public function __construct(Auth $auth, \Doctrine\DBAL\Connection $db, View $view)
+    public function __construct(\Doctrine\DBAL\Connection $db, View $view)
     {
-        $this->auth = $auth;
         $this->db = $db;
         $this->view = $view;
     }
@@ -158,10 +153,6 @@ class Functions
     public function dataTable(array $config)
     {
         $this->view->enableJsLibraries(array('datatables'));
-
-        if (isset($config['records_per_page']) === false) {
-            $config['records_per_page'] = $this->auth->entries;
-        }
 
         $config['initialized'] = $this->dataTableInitialized;
 

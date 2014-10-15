@@ -185,7 +185,8 @@ class Index extends Core\Modules\Controller\Admin
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 4 : 3,
                 'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : '',
+                'records_per_page' => $this->auth->entries
             );
             $this->view->assign('emoticons', $emoticons);
             $this->view->assign('can_delete', $canDelete);

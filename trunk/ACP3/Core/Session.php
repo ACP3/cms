@@ -26,14 +26,14 @@ class Session
      *
      * @var integer
      */
-    public $expire_time = 1800;
+    public $expireTime = 1800;
 
     /**
      * Wahrscheinlichkeit, dass Session Garbage Collector anspringt
      *
      * @var integer
      */
-    public $gc_probability = 10;
+    public $gcProbability = 10;
 
     /**
      * @var \Doctrine\DBAL\Connection
@@ -52,8 +52,8 @@ class Session
         ini_set('session.cookie_httponly', 1);
 
         // Session GC
-        ini_set('session.gc_maxlifetime', $this->expire_time);
-        ini_set('session.gc_probability', $this->gc_probability);
+        ini_set('session.gc_maxlifetime', $this->expireTime);
+        ini_set('session.gc_probability', $this->gcProbability);
         ini_set('session.gc_divisor', 100);
 
         // Eigene Session Handling Methoden setzen
@@ -124,13 +124,13 @@ class Session
     /**
      * Liest eine Session aus der Datenbank
      *
-     * @param integer $session_id
+     * @param integer $sessionId
      *
      * @return string
      */
-    public function session_read($session_id)
+    public function session_read($sessionId)
     {
-        $session = $this->db->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($session_id));
+        $session = $this->db->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($sessionId));
 
         // Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
         return !empty($session) ? $session['session_data'] : '';
@@ -139,14 +139,14 @@ class Session
     /**
      * Session in Datenbank schreiben
      *
-     * @param integer $session_id
+     * @param integer $sessionId
      * @param array   $data Enthält die Session-Daten
      *
      * @return bool
      */
-    public function session_write($session_id, $data)
+    public function session_write($sessionId, $data)
     {
-        $this->db->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($session_id, time(), $data, $data));
+        $this->db->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($sessionId, time(), $data, $data));
 
         return true;
     }
@@ -154,9 +154,9 @@ class Session
     /**
      * Aktuelle Session löschen
      *
-     * @param integer $session_id
+     * @param integer $sessionId
      */
-    public function session_destroy($session_id)
+    public function session_destroy($sessionId)
     {
         // Alle gesetzten Session Variablen zurücksetzen
         $_SESSION = array();
@@ -167,23 +167,23 @@ class Session
         }
 
         // Session aus Datenbank löschen
-        $this->db->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
+        $this->db->delete(DB_PRE . 'sessions', array('session_id' => $sessionId));
     }
 
     /**
      * Session Garbage Collector
      *
-     * @param integer $session_lifetime Angaben in Sekunden
+     * @param integer $sessionLifetime Angaben in Sekunden
      *
      * @return boolean
      */
-    public function session_gc($session_lifetime = 1800)
+    public function session_gc($sessionLifetime = 1800)
     {
-        if ($session_lifetime == 0) {
+        if ($sessionLifetime == 0) {
             return false;
         }
 
-        $this->db->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
+        $this->db->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($sessionLifetime, time()));
 
         return true;
     }

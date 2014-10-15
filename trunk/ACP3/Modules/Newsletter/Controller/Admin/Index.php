@@ -17,10 +17,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -59,44 +55,7 @@ class Index extends Core\Modules\Controller\Admin
         $settings = $this->newsletterConfig->getSettings();
 
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('newsletter.validator');
-                $validator->validate($_POST);
-
-                // Newsletter archivieren
-                $insertValues = array(
-                    'id' => '',
-                    'date' => $this->date->toSQL($_POST['date']),
-                    'title' => Core\Functions::strEncode($_POST['title']),
-                    'text' => Core\Functions::strEncode($_POST['text'], true),
-                    'html' => $settings['html'],
-                    'status' => 0,
-                    'user_id' => $this->auth->getUserId(),
-                );
-                $lastId = $this->newsletterModel->insert($insertValues);
-
-                // Test-Newsletter
-                if ($_POST['test'] == 1) {
-                    $bool2 = $this->newsletterHelpers->sendNewsletter($lastId, $settings['mail']);
-
-                    $lang = $this->lang->t('newsletter', 'create_success');
-                    $result = $lastId !== false && $bool2 !== false;
-                } else {
-                    $lang = $this->lang->t('newsletter', 'save_success');
-                    $result = $lastId !== false;
-                }
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                if ($result === false) {
-                    $lang = $this->lang->t('newsletter', 'create_save_error');
-                }
-                $this->redirectMessages()->setMessage($result, $lang, 'acp/newsletter');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_createPost($_POST, $settings);
         }
 
         $this->view->assign('date', $this->date->datepicker('date'));
@@ -136,42 +95,7 @@ class Index extends Core\Modules\Controller\Admin
             $settings = $this->newsletterConfig->getSettings();
 
             if (empty($_POST) === false) {
-                try {
-                    $validator = $this->get('newsletter.validator');
-                    $validator->validate($_POST);
-
-                    // Newsletter archivieren
-                    $updateValues = array(
-                        'date' => $this->date->toSQL($_POST['date']),
-                        'title' => Core\Functions::strEncode($_POST['title']),
-                        'text' => Core\Functions::strEncode($_POST['text'], true),
-                        'user_id' => $this->auth->getUserId(),
-                    );
-                    $bool = $this->newsletterModel->update($updateValues, $this->request->id);
-
-                    // Test-Newsletter
-                    if ($_POST['test'] == 1) {
-                        $bool2 = $this->newsletterHelpers->sendNewsletter($this->request->id, $settings['mail']);
-
-                        $lang = $this->lang->t('newsletter', 'create_success');
-                        $result = $bool !== false && $bool2;
-                    } else {
-                        $lang = $this->lang->t('newsletter', 'save_success');
-                        $result = $bool !== false;
-                    }
-
-                    $this->secureHelper->unsetFormToken($this->request->query);
-
-                    if ($result === false) {
-                        $lang = $this->lang->t('newsletter', 'create_save_error');
-                    }
-
-                    $this->redirectMessages()->setMessage($result, $lang, 'acp/newsletter');
-                } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
-                } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-                }
+                $this->_editPost($_POST, $settings);
             }
 
             $this->view->assign('date', $this->date->datepicker('date', $newsletter['date']));
@@ -203,7 +127,8 @@ class Index extends Core\Modules\Controller\Admin
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : '',
+                'records_per_page' => $this->auth->entries
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
@@ -245,26 +170,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSettings()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('newsletter.validator');
-                $validator->validateSettings($_POST);
-
-                $data = array(
-                    'mail' => $_POST['mail'],
-                    'mailsig' => Core\Functions::strEncode($_POST['mailsig'], true),
-                    'html' => (int)$_POST['html']
-                );
-
-                $bool = $this->newsletterConfig->setSettings($data);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/newsletter');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST);
         }
 
         $settings = $this->newsletterConfig->getSettings();
@@ -278,6 +184,112 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('html', Core\Functions::selectGenerator('html', array(1, 0), $langHtml, $settings['html'], 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    private function _createPost(array $formData, array $settings)
+    {
+        try {
+            $validator = $this->get('newsletter.validator');
+            $validator->validate($formData);
+
+            // Newsletter archivieren
+            $insertValues = array(
+                'id' => '',
+                'date' => $this->date->toSQL($formData['date']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'html' => $settings['html'],
+                'status' => 0,
+                'user_id' => $this->auth->getUserId(),
+            );
+            $lastId = $this->newsletterModel->insert($insertValues);
+
+            // Test-Newsletter
+            if ($formData['test'] == 1) {
+                $bool2 = $this->newsletterHelpers->sendNewsletter($lastId, $settings['mail']);
+
+                $lang = $this->lang->t('newsletter', 'create_success');
+                $result = $lastId !== false && $bool2 !== false;
+            } else {
+                $lang = $this->lang->t('newsletter', 'save_success');
+                $result = $lastId !== false;
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            if ($result === false) {
+                $lang = $this->lang->t('newsletter', 'create_save_error');
+            }
+            $this->redirectMessages()->setMessage($result, $lang, 'acp/newsletter');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _editPost(array $formData, array $settings)
+    {
+        try {
+            $validator = $this->get('newsletter.validator');
+            $validator->validate($formData);
+
+            // Newsletter archivieren
+            $updateValues = array(
+                'date' => $this->date->toSQL($formData['date']),
+                'title' => Core\Functions::strEncode($formData['title']),
+                'text' => Core\Functions::strEncode($formData['text'], true),
+                'user_id' => $this->auth->getUserId(),
+            );
+            $bool = $this->newsletterModel->update($updateValues, $this->request->id);
+
+            // Test-Newsletter
+            if ($formData['test'] == 1) {
+                $bool2 = $this->newsletterHelpers->sendNewsletter($this->request->id, $settings['mail']);
+
+                $lang = $this->lang->t('newsletter', 'create_success');
+                $result = $bool !== false && $bool2;
+            } else {
+                $lang = $this->lang->t('newsletter', 'save_success');
+                $result = $bool !== false;
+            }
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            if ($result === false) {
+                $lang = $this->lang->t('newsletter', 'create_save_error');
+            }
+
+            $this->redirectMessages()->setMessage($result, $lang, 'acp/newsletter');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $validator = $this->get('newsletter.validator');
+            $validator->validateSettings($formData);
+
+            $data = array(
+                'mail' => $formData['mail'],
+                'mailsig' => Core\Functions::strEncode($formData['mailsig'], true),
+                'html' => (int)$formData['html']
+            );
+
+            $bool = $this->newsletterConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/newsletter');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }

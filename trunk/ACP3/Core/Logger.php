@@ -21,8 +21,8 @@ class Logger
     /**
      * Debug log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed $message
      */
     public static function debug($channel, $message)
     {
@@ -32,9 +32,9 @@ class Logger
     /**
      * Wrapper method for logging notices, warnings, errors, etc.
      *
-     * @param $channel
-     * @param $level
-     * @param $message
+     * @param string $channel
+     * @param string $level
+     * @param mixed $message
      */
     private static function _log($channel, $level, $message)
     {

@@ -114,7 +114,8 @@ class Details extends Core\Modules\Controller\Admin
                     'element' => '#acp-table',
                     'sort_col' => $canDelete === true ? 5 : 4,
                     'sort_dir' => 'asc',
-                    'hide_col_sort' => $canDelete === true ? 0 : ''
+                    'hide_col_sort' => $canDelete === true ? 0 : '',
+                    'records_per_page' => $this->auth->entries
                 );
                 $this->appendContent($this->get('core.functions')->dataTable($config));
 

@@ -87,45 +87,9 @@ class Index extends Core\Modules\Controller\Frontend
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
             $this->pollsModel->pollExists($this->request->id, $time, !empty($_POST['answer']) && is_array($_POST['answer'])) === true
         ) {
-
             // Wenn abgestimmt wurde
             if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || $this->get('core.validator.rules.misc')->isNumber($_POST['answer']) === true)) {
-                $ip = $_SERVER['REMOTE_ADDR'];
-                $answers = $_POST['answer'];
-
-                if ($this->auth->isUser() === true) {
-                    $query = $this->pollsModel->getVotesByUserId($this->request->id, $this->auth->getUserId(), $ip); // Check, whether the logged user has already voted
-                } else {
-                    $query = $this->pollsModel->getVotesByIpAddress($this->request->id, $ip); // For guest users check against the ip address
-                }
-
-                $bool = false;
-                if ($query == 0) {
-                    $userId = $this->auth->isUser() ? $this->auth->getUserId() : 0;
-
-                    // Multiple Answers
-                    if (is_array($answers) === false) {
-                        $answers = array($answers);
-                    }
-
-                    foreach ($answers as $answer) {
-                        if ($this->get('core.validator.rules.misc')->isNumber($answer) === true) {
-                            $insertValues = array(
-                                'poll_id' => $this->request->id,
-                                'answer_id' => $answer,
-                                'user_id' => $userId,
-                                'ip' => $ip,
-                                'time' => $time,
-                            );
-                            $bool = $this->pollsModel->insert($insertValues, Polls\Model::TABLE_NAME_VOTES);
-                        }
-                    }
-                    $text = $bool !== false ? $this->lang->t('polls', 'poll_success') : $this->lang->t('polls', 'poll_error');
-                } else {
-                    $text = $this->lang->t('polls', 'already_voted');
-                }
-
-                $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $this->request->id);
+                $this->_votePost($_POST, $time);
             } else {
                 $poll = $this->pollsModel->getOneById($this->request->id);
 
@@ -136,6 +100,46 @@ class Index extends Core\Modules\Controller\Frontend
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
+    }
+
+    private function _votePost(array $formData, $time)
+    {
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $answers = $formData['answer'];
+
+        if ($this->auth->isUser() === true) {
+            $query = $this->pollsModel->getVotesByUserId($this->request->id, $this->auth->getUserId(), $ip); // Check, whether the logged user has already voted
+        } else {
+            $query = $this->pollsModel->getVotesByIpAddress($this->request->id, $ip); // For guest users check against the ip address
+        }
+
+        $bool = false;
+        if ($query == 0) {
+            $userId = $this->auth->isUser() ? $this->auth->getUserId() : 0;
+
+            // Multiple Answers
+            if (is_array($answers) === false) {
+                $answers = array($answers);
+            }
+
+            foreach ($answers as $answer) {
+                if ($this->get('core.validator.rules.misc')->isNumber($answer) === true) {
+                    $insertValues = array(
+                        'poll_id' => $this->request->id,
+                        'answer_id' => $answer,
+                        'user_id' => $userId,
+                        'ip' => $ip,
+                        'time' => $time,
+                    );
+                    $bool = $this->pollsModel->insert($insertValues, Polls\Model::TABLE_NAME_VOTES);
+                }
+            }
+            $text = $bool !== false ? $this->lang->t('polls', 'poll_success') : $this->lang->t('polls', 'poll_error');
+        } else {
+            $text = $this->lang->t('polls', 'already_voted');
+        }
+
+        $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $this->request->id);
     }
 
 }

@@ -55,48 +55,7 @@ class Account extends Core\Modules\Controller\Frontend
     public function actionEdit()
     {
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('users.validator');
-                $validator->validateEditProfile($_POST);
-
-                $updateValues = array(
-                    'nickname' => Core\Functions::strEncode($_POST['nickname']),
-                    'realname' => Core\Functions::strEncode($_POST['realname']),
-                    'gender' => (int)$_POST['gender'],
-                    'birthday' => $_POST['birthday'],
-                    'mail' => $_POST['mail'],
-                    'website' => Core\Functions::strEncode($_POST['website']),
-                    'icq' => $_POST['icq'],
-                    'skype' => Core\Functions::strEncode($_POST['skype']),
-                    'street' => Core\Functions::strEncode($_POST['street']),
-                    'house_number' => Core\Functions::strEncode($_POST['house_number']),
-                    'zip' => Core\Functions::strEncode($_POST['zip']),
-                    'city' => Core\Functions::strEncode($_POST['city']),
-                    'country' => Core\Functions::strEncode($_POST['country']),
-                );
-
-                // Neues Passwort
-                if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-                    $securityHelper = $this->get('core.helpers.secure');
-
-                    $salt = $securityHelper->salt(12);
-                    $newPassword = $securityHelper->generateSaltedPassword($salt, $_POST['new_pwd']);
-                    $updateValues['pwd'] = $newPassword . ':' . $salt;
-                }
-
-                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
-
-                $cookieArr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
-                $this->auth->setCookie($_POST['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_editPost($_POST);
         }
 
         $user = $this->auth->getUserInfo();
@@ -154,36 +113,7 @@ class Account extends Core\Modules\Controller\Frontend
         $settings = $this->usersConfig->getSettings();
 
         if (empty($_POST) === false) {
-            try {
-                $validator = $this->get('users.validator');
-                $validator->validateUserSettings($_POST, $settings);
-
-                $updateValues = array(
-                    'mail_display' => (int)$_POST['mail_display'],
-                    'birthday_display' => (int)$_POST['birthday_display'],
-                    'address_display' => (int)$_POST['address_display'],
-                    'country_display' => (int)$_POST['country_display'],
-                    'date_format_long' => Core\Functions::strEncode($_POST['date_format_long']),
-                    'date_format_short' => Core\Functions::strEncode($_POST['date_format_short']),
-                    'time_zone' => $_POST['date_time_zone'],
-                );
-                if ($settings['language_override'] == 1) {
-                    $updateValues['language'] = $_POST['language'];
-                }
-                if ($settings['entries_override'] == 1) {
-                    $updateValues['entries'] = (int)$_POST['entries'];
-                }
-
-                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
-
-                $this->secureHelper->unsetFormToken($this->request->query);
-
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
-            } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
-            } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-            }
+            $this->_settingsPost($_POST, $settings);
         }
 
         $user = $this->usersModel->getOneById($this->auth->getUserId());
@@ -237,6 +167,86 @@ class Account extends Core\Modules\Controller\Frontend
         $user = $this->usersModel->getOneById($this->auth->getUserId());
 
         $this->view->assign('draft', $user['draft']);
+    }
+
+    private function _editPost(array $formData)
+    {
+        try {
+            $validator = $this->get('users.validator');
+            $validator->validateEditProfile($formData);
+
+            $updateValues = array(
+                'nickname' => Core\Functions::strEncode($formData['nickname']),
+                'realname' => Core\Functions::strEncode($formData['realname']),
+                'gender' => (int)$formData['gender'],
+                'birthday' => $formData['birthday'],
+                'mail' => $formData['mail'],
+                'website' => Core\Functions::strEncode($formData['website']),
+                'icq' => $formData['icq'],
+                'skype' => Core\Functions::strEncode($formData['skype']),
+                'street' => Core\Functions::strEncode($formData['street']),
+                'house_number' => Core\Functions::strEncode($formData['house_number']),
+                'zip' => Core\Functions::strEncode($formData['zip']),
+                'city' => Core\Functions::strEncode($formData['city']),
+                'country' => Core\Functions::strEncode($formData['country']),
+            );
+
+            // Neues Passwort
+            if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
+                $securityHelper = $this->get('core.helpers.secure');
+
+                $salt = $securityHelper->salt(12);
+                $newPassword = $securityHelper->generateSaltedPassword($salt, $formData['new_pwd']);
+                $updateValues['pwd'] = $newPassword . ':' . $salt;
+            }
+
+            $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
+
+            $cookieArr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
+            $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    private function _settingsPost(array $formData, array $settings)
+    {
+        try {
+            $validator = $this->get('users.validator');
+            $validator->validateUserSettings($formData, $settings);
+
+            $updateValues = array(
+                'mail_display' => (int)$formData['mail_display'],
+                'birthday_display' => (int)$formData['birthday_display'],
+                'address_display' => (int)$formData['address_display'],
+                'country_display' => (int)$formData['country_display'],
+                'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
+                'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                'time_zone' => $formData['date_time_zone'],
+            );
+            if ($settings['language_override'] == 1) {
+                $updateValues['language'] = $formData['language'];
+            }
+            if ($settings['entries_override'] == 1) {
+                $updateValues['entries'] = (int)$formData['entries'];
+            }
+
+            $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
     }
 
 }
