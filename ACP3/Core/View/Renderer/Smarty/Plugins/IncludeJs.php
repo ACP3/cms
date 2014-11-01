@@ -52,10 +52,10 @@ class IncludeJs extends AbstractPlugin
                 $module = ucfirst($params['module']);
                 $file = $params['file'];
 
-                if (is_file(DESIGN_PATH_INTERNAL . $module . '/assets/' . $file . '.js') === true) {
-                    return sprintf($script, DESIGN_PATH . $module . '/assets/' . $file . '.js');
-                } elseif (is_file(MODULES_DIR . $module . '/View/assets/' . $file . '.js') === true) {
-                    return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/View/assets/' . $file . '.js');
+                if (is_file(DESIGN_PATH_INTERNAL . $module . '/js/' . $file . '.js') === true) {
+                    return sprintf($script, DESIGN_PATH . $module . '/jsj/' . $file . '.js');
+                } elseif (is_file(MODULES_DIR . $module . '/Resources/Assets/js/' . $file . '.js') === true) {
+                    return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/Resources/Assets/js/' . $file . '.js');
                 }
             }
             return '';

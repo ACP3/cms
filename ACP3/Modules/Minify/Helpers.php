@@ -12,6 +12,10 @@ namespace ACP3\Modules\Minify;
 
 use ACP3\Core;
 
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Minify
+ */
 class Helpers
 {
     /**
@@ -66,7 +70,7 @@ class Helpers
         }
 
         // Stylesheet für das Layout-Tenplate
-        $css[] = self::_getStaticAssetPath(MODULES_DIR . 'System/View/', DESIGN_PATH_INTERNAL . 'System/', 'assets', 'style.css');
+        $css[] = self::_getStaticAssetPath(MODULES_DIR . 'System/Resources/Assets/', DESIGN_PATH_INTERNAL . 'System/', 'css', 'style.css');
         $css[] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
 
         // Zusätzliche Stylesheets einbinden
@@ -83,9 +87,9 @@ class Helpers
         // Stylesheets der Module
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $module) {
-            $systemPath = MODULES_DIR . $module['dir'] . '/View/';
+            $modulePath = MODULES_DIR . $module['dir'] . '/Resources/Assets/';
             $designPath = DESIGN_PATH_INTERNAL . $module['dir'] . '/';
-            if (true == ($stylesheet = $this->_getStaticAssetPath($systemPath, $designPath, 'assets', 'style.css')) &&
+            if (true == ($stylesheet = $this->_getStaticAssetPath($modulePath, $designPath, 'css', 'style.css')) &&
                 $module['dir'] !== 'System'
             ) {
                 $css[] = $stylesheet;

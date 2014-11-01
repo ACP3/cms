@@ -173,9 +173,9 @@ class View extends ContainerAware
             $fragments = explode('/', $template);
 
             if (count($fragments) === 3) {
-                $path = $fragments[0] . '/View/' . $fragments[1] . '/' . $fragments[2];
+                $path = $fragments[0] . '/Resources/View/' . $fragments[1] . '/' . $fragments[2];
             } else {
-                $path = $fragments[0] . '/View/' . $fragments[1];
+                $path = $fragments[0] . '/Resources/View/' . $fragments[1];
             }
 
             if (count($fragments) > 1 && $this->templateExists($path)) {
