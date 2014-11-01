@@ -116,7 +116,6 @@ class Index extends Core\Modules\Controller\Admin
 
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
-                $guestbook[$i]['date_formatted'] = $this->date->formatTimeRange($guestbook[$i]['date']);
                 $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
                 if ($emoticons_active === true) {
                     $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);

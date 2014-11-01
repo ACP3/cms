@@ -166,9 +166,6 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
-            for ($i = 0; $i < $c_polls; ++$i) {
-                $polls[$i]['period'] = $this->date->formatTimeRange($polls[$i]['start'], $polls[$i]['end']);
-            }
             $this->view->assign('polls', $polls);
             $this->view->assign('can_delete', $canDelete);
         }

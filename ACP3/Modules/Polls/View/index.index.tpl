@@ -12,7 +12,13 @@
             <tr>
                 <td><a href="{uri args="polls/index/`$row.link`/id_`$row.id`"}">{$row.title}</a></td>
                 <td>{$row.votes}</td>
-                <td>{$row.date}</td>
+                <td>
+                    {if $row.start == $row.end}
+                        -
+                    {else}
+                        {date_format date=$row.end}
+                    {/if}
+                </td>
             </tr>
         {/foreach}
         </tbody>

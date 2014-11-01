@@ -52,7 +52,6 @@ class Index extends Core\Modules\Controller\Frontend
                 } else {
                     $polls[$i]['link'] = 'vote';
                 }
-                $polls[$i]['date'] = ($polls[$i]['start'] === $polls[$i]['end']) ? '-' : $this->date->format($polls[$i]['end']);
             }
             $this->view->assign('polls', $polls);
         }

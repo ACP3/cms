@@ -5,7 +5,7 @@
                 <h2 class="navbar-brand">{$newsletter.title}</h2>
             </div>
             <small class="navbar-text pull-right">
-                <time datetime="{$newsletter.date_iso}">{$newsletter.date_formatted}</time>
+                <time datetime="{date_format date=$newsletter.date format="c"}">{date_format date=$newsletter.date format="short"}</time>
             </small>
         </header>
         <div class="content">

@@ -44,7 +44,7 @@
                     {if $can_delete === true}
                         <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                     {/if}
-                    <td>{$row.date_formatted}</td>
+                    <td>{date_range start=$row.date}</td>
                     <td>{check_access mode="link" path="acp/newsletter/index/edit/id_`$row.id`" title=$row.title}</td>
                     <td>{$row.status|replace:$statusSearch:$statusReplace}</td>
                     {if $can_send && $has_active_newsletter_accounts}

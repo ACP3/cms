@@ -121,18 +121,16 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->display();
 
             // Emoticons einbinden
-            $emoticons_active = false;
+            $emoticonsActive = false;
             if ($settings['emoticons'] == 1) {
-                $emoticons_active = $this->modules->isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
+                $emoticonsActive = $this->modules->isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
             }
 
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
-                $guestbook[$i]['date_formatted'] = $this->date->format($guestbook[$i]['date'], $settings['dateformat']);
-                $guestbook[$i]['date_iso'] = $this->date->format($guestbook[$i]['date'], 'c');
                 $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
-                if ($emoticons_active === true) {
+                if ($emoticonsActive === true) {
                     $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
                 }
                 $guestbook[$i]['website'] = strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'];
@@ -142,6 +140,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $guestbook[$i]['mail'] = !empty($guestbook[$i]['user_mail']) ? substr($guestbook[$i]['user_mail'], 0, -2) : $guestbook[$i]['mail'];
             }
             $this->view->assign('guestbook', $guestbook);
+            $this->view->assign('dateformat', $settings['dateformat']);
         }
     }
 

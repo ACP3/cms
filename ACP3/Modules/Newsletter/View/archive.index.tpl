@@ -8,7 +8,7 @@
                         <a href="{uri args="newsletter/archive/details/id_`$row.id`"}">{$row.title}</a></h2>
                 </div>
                 <small class="navbar-text pull-right">
-                    <time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+                    <time datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format="short"}</time>
                 </small>
             </div>
         </div>

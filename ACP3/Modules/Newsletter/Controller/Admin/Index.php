@@ -132,10 +132,6 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
-            for ($i = 0; $i < $c_newsletter; ++$i) {
-                $newsletter[$i]['date_formatted'] = $this->date->formatTimeRange($newsletter[$i]['date']);
-            }
-
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
             $this->view->assign('can_send', $this->modules->hasPermission('admin/newsletter/index/send'));
