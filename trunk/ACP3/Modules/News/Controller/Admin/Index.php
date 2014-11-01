@@ -189,9 +189,6 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
 
-            for ($i = 0; $i < $c_news; ++$i) {
-                $news[$i]['period'] = $this->date->formatTimeRange($news[$i]['start'], $news[$i]['end']);
-            }
             $this->view->assign('news', $news);
             $this->view->assign('can_delete', $canDelete);
         }

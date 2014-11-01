@@ -3,6 +3,14 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\CheckAccess
     arguments: ['@core.lang', '@core.modules', '@core.router', '@core.validator.rules.misc', '@core.view']
 
+  smarty.plugin.date_format:
+    class: ACP3\Core\View\Renderer\Smarty\DateFormat
+    arguments: ['@core.date']
+
+  smarty.plugin.date_ramge:
+    class: ACP3\Core\View\Renderer\Smarty\DateRange
+    arguments: ['@core.date']
+
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\HasPermission
     arguments: ['@core.modules']

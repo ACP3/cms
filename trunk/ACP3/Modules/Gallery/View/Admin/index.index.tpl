@@ -38,7 +38,7 @@
                     {if $can_delete === true}
                         <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                     {/if}
-                    <td>{$row.period}</td>
+                    <td>{date_range start=$row.start end=$row.end}</td>
                     <td>{check_access mode="link" path="acp/gallery/index/edit/id_`$row.id`" title=$row.title}</td>
                     <td>{$row.pictures}</td>
                     <td>{$row.id}</td>

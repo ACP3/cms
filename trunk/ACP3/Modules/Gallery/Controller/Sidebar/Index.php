@@ -43,19 +43,9 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.stringFormatter');
         $settings = $this->galleryConfig->getSettings();
 
-        $galleries = $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
-        $c_galleries = count($galleries);
-
-        if ($c_galleries > 0) {
-            for ($i = 0; $i < $c_galleries; ++$i) {
-                $galleries[$i]['start'] = $this->date->format($galleries[$i]['start']);
-                $galleries[$i]['title_short'] = $formatter->shortenEntry($galleries[$i]['title'], 30, 5, '...');
-            }
-            $this->view->assign('sidebar_galleries', $galleries);
-        }
+        $this->view->assign('sidebar_galleries', $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
 
         $this->setLayout('Gallery/Sidebar/index.index.tpl');
     }

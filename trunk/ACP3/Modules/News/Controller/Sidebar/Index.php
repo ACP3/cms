@@ -44,19 +44,10 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.stringFormatter');
         $settings = $this->newsConfig->getSettings();
 
-        $news = $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
-        $c_news = count($news);
-
-        if ($c_news > 0) {
-            for ($i = 0; $i < $c_news; ++$i) {
-                $news[$i]['start'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
-                $news[$i]['title_short'] = $formatter->shortenEntry($news[$i]['title'], 30, 5, '...');
-            }
-            $this->view->assign('sidebar_news', $news);
-        }
+        $this->view->assign('sidebar_news', $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
+        $this->view->assign('dateformat', $settings['dateformat']);
 
         $this->setLayout('News/Sidebar/index.index.tpl');
     }

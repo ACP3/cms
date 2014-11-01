@@ -5,7 +5,7 @@
                 <h2 class="navbar-brand">{$news.title}</h2>
             </div>
             <small class="navbar-text pull-right">
-                <time datetime="{$news.date_iso}">{$news.date_formatted}</time>
+                <time datetime="{date_format date=$news.start format="c"}">{date_format date=$news.start format=$dateformat}</time>
             </small>
         </header>
         <div class="content">

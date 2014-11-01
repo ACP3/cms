@@ -94,10 +94,8 @@ class Index extends Core\Modules\Controller\Frontend
 
                 $settings = $this->filesConfig->getSettings();
 
-                $file['size'] = !empty($file['size']) ? $file['size'] : $this->lang->t('files', 'unknown_filesize');
-                $file['date_formatted'] = $this->date->format($file['start'], $settings['dateformat']);
-                $file['date_iso'] = $this->date->format($file['start'], 'c');
                 $this->view->assign('file', $file);
+                $this->view->assign('dateformat', $settings['dateformat']);
 
                 if ($settings['comments'] == 1 && $file['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
                     $comments = $this->get('comments.controller.frontend.index');
@@ -121,19 +119,10 @@ class Index extends Core\Modules\Controller\Frontend
                 ->append($this->lang->t('files', 'files'), 'files')
                 ->append($category['title']);
 
-            $files = $this->filesModel->getAllByCategoryId($this->request->cat, $this->date->getCurrentDateTime());
-            $c_files = count($files);
+            $settings = $this->filesConfig->getSettings();
 
-            if ($c_files > 0) {
-                $settings = $this->filesConfig->getSettings();
-
-                for ($i = 0; $i < $c_files; ++$i) {
-                    $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');
-                    $files[$i]['date_formatted'] = $this->date->format($files[$i]['start'], $settings['dateformat']);
-                    $files[$i]['date_iso'] = $this->date->format($files[$i]['start'], 'c');
-                }
-                $this->view->assign('files', $files);
-            }
+            $this->view->assign('dateformat', $settings['dateformat']);
+            $this->view->assign('files', $this->filesModel->getAllByCategoryId($this->request->cat, $this->date->getCurrentDateTime()));
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

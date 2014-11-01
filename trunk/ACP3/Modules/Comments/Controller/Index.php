@@ -109,14 +109,13 @@ class Index extends Core\Modules\Controller\Frontend
                     $comments[$i]['user_id'] = 0;
                 }
                 $comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
-                $comments[$i]['date_formatted'] = $this->date->format($comments[$i]['date'], $settings['dateformat']);
-                $comments[$i]['date_iso'] = $this->date->format($comments[$i]['date'], 'c');
                 $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
                 if ($emoticonsActive === true) {
                     $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
                 }
             }
             $this->view->assign('comments', $comments);
+            $this->view->assign('dateformat', $settings['dateformat']);
         }
 
         if ($this->modules->hasPermission('frontend/comments/index/create') === true) {

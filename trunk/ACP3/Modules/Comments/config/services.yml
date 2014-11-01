@@ -1,7 +1,7 @@
 services:
   comments.controller.admin.details:
     class: ACP3\Modules\Comments\Controller\Admin\Details
-    arguments: ['@core.context.admin', '@core.date', '@comments.model', '@comments.config', '@system.model', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@comments.model', '@comments.config', '@system.model', '@core.helpers.secure']
 
   comments.controller.admin.index:
     class: ACP3\Modules\Comments\Controller\Admin\Index
@@ -10,6 +10,8 @@ services:
   comments.controller.frontend.index:
     class: ACP3\Modules\Comments\Controller\Index
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.config', '@core.helpers.secure']
+    calls:
+      - ['setContainer', ['@service_container']]
 
   comments.config:
     class: ACP3\Core\Config

@@ -5,7 +5,7 @@
                 <h2 class="navbar-brand">{$file.title}</h2>
             </div>
             <small class="navbar-text pull-right">
-                <time datetime="{$file.date_iso}">{$file.date_formatted}</time>
+                <time datetime="{date_format date=$file.start format="c"}">{date_format date=$file.start format=$dateformat}</time>
             </small>
         </header>
         <div class="content">
@@ -14,7 +14,13 @@
         <footer class="hyperlink">
             <a href="{uri args="files/index/details/id_`$file.id`/action_download"}" class="download-file">
                 <i class="glyphicon glyphicon-download-alt"></i>
-                {lang t="files|download_file"} ({$file.size}) </a>
+                {lang t="files|download_file"}
+                {if !empty($file.size)}
+                    ({$file.size})
+                {else}
+                    ({lang t="files|unknown_filesize"})
+                {/if}
+            </a>
         </footer>
     </section>
     {if isset($comments)}
