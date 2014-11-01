@@ -34,7 +34,7 @@
         </div>
     </nav>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-sm-3 col-md-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{lang t="system|navigation"}</h3>
@@ -44,14 +44,14 @@
             {load_module module="sidebar/users/index/user_menu"}
             {load_module module="sidebar/users/index/login"}
         </div>
-        <main role="main" id="content" class="col-md-8">
+        <main role="main" id="content" class="col-sm-9 col-md-8">
             <div id="breadcrumb">
                 {$BREADCRUMB}
             </div>
             <h2>{$TITLE}</h2>
             {$CONTENT}
         </main>
-        <div class="col-md-2">
+        <div class="col-md-2 hidden-sm">
             {load_module module="sidebar/news"}
             {load_module module="sidebar/newsletter"}
             {load_module module="sidebar/files"}
