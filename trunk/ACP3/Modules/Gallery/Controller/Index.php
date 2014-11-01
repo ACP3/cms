@@ -158,26 +158,13 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionPics()
     {
         if ($this->galleryModel->galleryExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
-            // Cache der Galerie holen
-            $pictures = $this->galleryCache->getCache($this->request->id);
-            $c_pictures = count($pictures);
-
-            $galleryTitle = $this->galleryModel->getGalleryTitle($this->request->id);
-
             // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->lang->t('gallery', 'gallery'), 'gallery')
-                ->append($galleryTitle);
+                ->append($this->galleryModel->getGalleryTitle($this->request->id));
 
-            if ($c_pictures > 0) {
-                for ($i = 0; $i < $c_pictures; ++$i) {
-                    $pictures[$i]['uri'] = $this->router->route($this->settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
-                    $pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
-                }
-
-                $this->view->assign('pictures', $pictures);
-                $this->view->assign('overlay', (int)$this->settings['overlay']);
-            }
+            $this->view->assign('pictures', $this->galleryCache->getCache($this->request->id));
+            $this->view->assign('overlay', (int)$this->settings['overlay']);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

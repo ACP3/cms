@@ -1,54 +1,54 @@
 services:
   smarty.plugin.check_access:
-    class: ACP3\Core\View\Renderer\Smarty\CheckAccess
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\CheckAccess
     arguments: ['@core.lang', '@core.modules', '@core.router', '@core.validator.rules.misc', '@core.view']
 
   smarty.plugin.date_format:
-    class: ACP3\Core\View\Renderer\Smarty\DateFormat
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\DateFormat
     arguments: ['@core.date']
 
   smarty.plugin.date_ramge:
-    class: ACP3\Core\View\Renderer\Smarty\DateRange
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\DateRange
     arguments: ['@core.date']
 
   smarty.plugin.has_permission:
-    class: ACP3\Core\View\Renderer\Smarty\HasPermission
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\HasPermission
     arguments: ['@core.modules']
 
   smarty.plugin.icon:
-    class: ACP3\Core\View\Renderer\Smarty\Icon
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\Icon
     arguments: ['@core.validator.rules.misc']
 
   smarty.plugin.include_js:
-    class: ACP3\Core\View\Renderer\Smarty\IncludeJs
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\IncludeJs
     arguments: ['@core.view']
 
   smarty.plugin.js_libraries:
-    class: ACP3\Core\View\Renderer\Smarty\JsLibraries
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\JsLibraries
     arguments: ['@core.view']
 
   smarty.plugin.lang:
-    class: ACP3\Core\View\Renderer\Smarty\Lang
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\Lang
     arguments: ['@core.lang']
 
   smarty.plugin.load_module:
-    class: ACP3\Core\View\Renderer\Smarty\LoadModule
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\LoadModule
     arguments: ['@core.modules']
     calls:
       - ['setContainer', ['@service_container']]
 
   smarty.plugin.mark:
-    class: ACP3\Core\View\Renderer\Smarty\Mark
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\Mark
     arguments: ['@core.view']
 
   smarty.plugin.navbar:
-    class: ACP3\Core\View\Renderer\Smarty\Navbar
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\Navbar
     arguments: ['@core.modules', '@menus.helpers']
 
   smarty.plugin.router:
-    class: ACP3\Core\View\Renderer\Smarty\Router
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\Router
     arguments: ['@core.router']
 
   smarty.plugin.wysiwyg:
-    class: ACP3\Core\View\Renderer\Smarty\WYSIWYG
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\WYSIWYG
     arguments: ['@service_container']

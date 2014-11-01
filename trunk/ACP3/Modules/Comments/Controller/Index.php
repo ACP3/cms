@@ -102,14 +102,12 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->module, $this->entryId));
             $this->pagination->display();
 
-            $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_comments; ++$i) {
                 if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
                     $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
                     $comments[$i]['user_id'] = 0;
                 }
                 $comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
-                $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
                 if ($emoticonsActive === true) {
                     $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
                 }

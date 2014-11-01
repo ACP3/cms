@@ -129,7 +129,6 @@ class Index extends Core\Modules\Controller\Frontend
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
-                $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
                 if ($emoticonsActive === true) {
                     $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
                 }

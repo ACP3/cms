@@ -44,8 +44,6 @@ class Archive extends Core\Modules\Controller\Frontend
 
             $formatter = $this->get('core.helpers.stringFormatter');
 
-            $newsletter['text'] = $formatter->nl2p($newsletter['text']);
-
             $this->view->assign('newsletter', $newsletter);
         } else {
             throw new Core\Exceptions\ResultNotExists();

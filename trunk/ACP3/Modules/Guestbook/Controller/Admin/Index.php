@@ -107,17 +107,16 @@ class Index extends Core\Modules\Controller\Admin
 
             $settings = $this->guestbookConfig->getSettings();
             // Emoticons einbinden
-            $emoticons_active = false;
+            $emoticonsActive = false;
             if ($settings['emoticons'] == 1) {
                 if ($this->modules->isActive('emoticons') === true) {
-                    $emoticons_active = true;
+                    $emoticonsActive = true;
                 }
             }
 
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
-                $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
-                if ($emoticons_active === true) {
+                if ($emoticonsActive === true) {
                     $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
                 }
             }

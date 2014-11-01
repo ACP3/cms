@@ -1,5 +1,5 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty;
+namespace ACP3\Core\View\Renderer\Smarty\Plugins;
 
 use ACP3\Core;
 use Symfony\Component\DependencyInjection\Container;
