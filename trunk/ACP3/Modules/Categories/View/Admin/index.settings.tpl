@@ -3,34 +3,34 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
-        <label for="width" class="col-lg-2 control-label">{lang t="categories|image_width"}</label>
+        <label for="width" class="col-sm-2 control-label">{lang t="categories|image_width"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <input class="form-control" type="number" name="width" id="width" value="{$form.width}">
 
             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
         </div>
     </div>
     <div class="form-group">
-        <label for="height" class="col-lg-2 control-label">{lang t="categories|image_height"}</label>
+        <label for="height" class="col-sm-2 control-label">{lang t="categories|image_height"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <input class="form-control" type="number" name="height" id="height" value="{$form.height}">
 
             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
         </div>
     </div>
     <div class="form-group">
-        <label for="filesize" class="col-lg-2 control-label">{lang t="categories|image_filesize"}</label>
+        <label for="filesize" class="col-sm-2 control-label">{lang t="categories|image_filesize"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}">
 
             <p class="help-block">{lang t="system|statements_in_byte"}</p>
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/categories"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}

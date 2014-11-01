@@ -14,16 +14,16 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="title" class="col-lg-2 control-label">{lang t="articles|title"}</label>
+                    <label for="title" class="col-sm-2 control-label">{lang t="articles|title"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="text" class="col-lg-2 control-label">{lang t="articles|text"}</label>
+                    <label for="text" class="col-sm-2 control-label">{lang t="articles|text"}</label>
 
-                    <div class="col-lg-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
+                    <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
                 </div>
             </div>
             <div id="tab-3" class="tab-pane fade">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/articles"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}

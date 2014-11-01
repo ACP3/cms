@@ -11,9 +11,9 @@
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
                 <div class="form-group">
-                    <label for="mode" class="col-lg-2 control-label">{lang t="menus|page_type"}</label>
+                    <label for="mode" class="col-sm-2 control-label">{lang t="menus|page_type"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <select class="form-control" name="mode" id="mode">
                             {foreach $mode as $row}
                                 <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -22,16 +22,16 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="title" class="col-lg-2 control-label">{lang t="menus|title"}</label>
+                    <label for="title" class="col-sm-2 control-label">{lang t="menus|title"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="block-id" class="col-lg-2 control-label">{lang t="menus|menu_bar"}</label>
+                    <label for="block-id" class="col-sm-2 control-label">{lang t="menus|menu_bar"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <select class="form-control" name="block_id" id="block-id">
                             {foreach $blocks as $row}
                                 <option value="{$row.id}"{$row.selected}>{$row.title}</option>
@@ -40,9 +40,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="parent" class="col-lg-2 control-label">{lang t="menus|superior_page"}</label>
+                    <label for="parent" class="col-sm-2 control-label">{lang t="menus|superior_page"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <select class="form-control" name="parent" id="parent">
                             <option value="">{lang t="menus|no_superior_page"}</option>
                             {foreach $pages_list as $blocks}
@@ -56,9 +56,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="{$display.0.id}" class="col-lg-2 control-label">{lang t="menus|display_item"}</label>
+                    <label for="{$display.0.id}" class="col-sm-2 control-label">{lang t="menus|display_item"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <div class="btn-group" data-toggle="buttons">
                             {foreach $display as $row}
                                 <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
@@ -72,9 +72,9 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div id="module-container" class="form-group">
-                    <label for="module" class="col-lg-2 control-label">{lang t="menus|module"}</label>
+                    <label for="module" class="col-sm-2 control-label">{lang t="menus|module"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <select class="form-control" name="module" id="module">
                             <option value="">{lang t="system|pls_select"}</option>
                             {foreach $modules as $row}
@@ -84,9 +84,9 @@
                     </div>
                 </div>
                 <div id="link-container" class="form-group">
-                    <label for="uri" class="col-lg-2 control-label">{lang t="menus|uri"}</label>
+                    <label for="uri" class="col-sm-2 control-label">{lang t="menus|uri"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="uri" id="uri" value="{$form.uri}" maxlength="120">
 
                         <p id="link-hints" class="help-block">{lang t="menus|dynamic_page_hints"}</p>
@@ -94,9 +94,9 @@
                 </div>
                 {if isset($articles)}
                     <div id="articles-container" class="form-group">
-                        <label for="articles" class="col-lg-2 control-label">{lang t="articles|articles"}</label>
+                        <label for="articles" class="col-sm-2 control-label">{lang t="articles|articles"}</label>
 
-                        <div class="col-lg-10">
+                        <div class="col-sm-10">
                             <select class="form-control" name="articles" id="articles">
                                 <option value="">{lang t="system|pls_select"}</option>
                                 {foreach $articles as $row}
@@ -107,9 +107,9 @@
                     </div>
                 {/if}
                 <div id="target-container" class="form-group">
-                    <label for="target" class="col-lg-2 control-label">{lang t="menus|target_page"}</label>
+                    <label for="target" class="col-sm-2 control-label">{lang t="menus|target_page"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <select class="form-control" name="target" id="target">
                             {foreach $target as $row}
                                 <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -124,7 +124,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/menus"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}

@@ -14,22 +14,22 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="title" class="col-lg-2 control-label">{lang t="articles|title"}</label>
+                    <label for="title" class="col-sm-2 control-label">{lang t="articles|title"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="text" class="col-lg-2 control-label">{lang t="articles|text"}</label>
+                    <label for="text" class="col-sm-2 control-label">{lang t="articles|text"}</label>
 
-                    <div class="col-lg-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
+                    <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
                 </div>
                 {if isset($options)}
                     <div class="form-group">
-                        <label for="{$options.0.id}" class="col-lg-2 control-label">{lang t="system|options"}</label>
+                        <label for="{$options.0.id}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 
-                        <div class="col-lg-10">
+                        <div class="col-sm-10">
                             {foreach $options as $row}
                                 <div class="checkbox">
                                     <label for="{$row.id}">
@@ -42,9 +42,9 @@
                     </div>
                     <div id="create-item-container">
                         <div class="form-group">
-                            <label for="block-id" class="col-lg-2 control-label">{lang t="menus|menu_bar"}</label>
+                            <label for="block-id" class="col-sm-2 control-label">{lang t="menus|menu_bar"}</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-sm-10">
                                 <select class="form-control" name="block_id" id="block-id">
                                     {foreach $blocks as $row}
                                         <option value="{$row.id}"{$row.selected}>{$row.title}</option>
@@ -53,9 +53,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="parent" class="col-lg-2 control-label">{lang t="menus|superior_page"}</label>
+                            <label for="parent" class="col-sm-2 control-label">{lang t="menus|superior_page"}</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-sm-10">
                                 <select class="form-control" name="parent" id="parent">
                                     <option value="">{lang t="menus|no_superior_page"}</option>
                                     {foreach $pages_list as $blocks}
@@ -69,9 +69,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="{$display.0.id}" class="col-lg-2 control-label">{lang t="menus|display_item"}</label>
+                            <label for="{$display.0.id}" class="col-sm-2 control-label">{lang t="menus|display_item"}</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-sm-10">
                                 <div class="btn-group" data-toggle="buttons">
                                     {foreach $display as $row}
                                         <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/articles"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}

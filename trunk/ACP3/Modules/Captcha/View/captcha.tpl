@@ -7,9 +7,9 @@
     </div>
 {else}
     <div class="form-group">
-        <label for="{$captcha.id}" class="col-lg-2 control-label">{lang t="captcha|captcha"}</label>
+        <label for="{$captcha.id}" class="col-sm-2 control-label">{lang t="captcha|captcha"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <div class="input-group input-group-lg">
                 <span class="input-group-addon" style="padding-top: 5px; padding-bottom: 5px">
                     <img src="{uri args="captcha/index/image/path_`$captcha.path`"}" width="{$captcha.width}" height="{$captcha.height}" alt="">

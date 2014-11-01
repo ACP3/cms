@@ -15,29 +15,29 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="title" class="col-lg-2 control-label">{lang t="news|title"}</label>
+                    <label for="title" class="col-sm-2 control-label">{lang t="news|title"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="text" class="col-lg-2 control-label">{lang t="news|text"}</label>
+                    <label for="text" class="col-sm-2 control-label">{lang t="news|text"}</label>
 
-                    <div class="col-lg-10">{wysiwyg name="text" value="`$form.text`" height="250"}</div>
+                    <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250"}</div>
                 </div>
                 <div class="form-group">
-                    <label for="cat" class="col-lg-2 control-label">{lang t="categories|category"}</label>
+                    <label for="cat" class="col-sm-2 control-label">{lang t="categories|category"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         {$categories}
                     </div>
                 </div>
                 {if isset($options)}
                     <div class="form-group">
-                        <label for="{$options.0.name}" class="col-lg-2 control-label">{lang t="system|options"}</label>
+                        <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 
-                        <div class="col-lg-10">
+                        <div class="col-sm-10">
                             {foreach $options as $row}
                                 <div class="checkbox">
                                     <label for="{$row.name}">
@@ -52,23 +52,23 @@
             </div>
             <div id="tab-3" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="link-title" class="col-lg-2 control-label">{lang t="news|link_title"}</label>
+                    <label for="link-title" class="col-sm-2 control-label">{lang t="news|link_title"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="link_title" id="link-title" value="{$form.link_title}" maxlength="120">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="uri" class="col-lg-2 control-label">{lang t="news|uri"}</label>
+                    <label for="uri" class="col-sm-2 control-label">{lang t="news|uri"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="url" name="uri" id="uri" value="{$form.uri}" maxlength="120">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="target" class="col-lg-2 control-label">{lang t="news|target_page"}</label>
+                    <label for="target" class="col-sm-2 control-label">{lang t="news|target_page"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <select class="form-control" name="target" id="target">
                             {foreach $target as $row}
                                 <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -83,7 +83,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/news"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}

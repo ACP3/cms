@@ -12,31 +12,31 @@
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
                 <div class="form-group">
-                    <label for="nickname" class="col-lg-2 control-label">{lang t="users|nickname"}</label>
+                    <label for="nickname" class="col-sm-2 control-label">{lang t="users|nickname"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="mail" class="col-lg-2 control-label">{lang t="system|email_address"}</label>
+                    <label for="mail" class="col-sm-2 control-label">{lang t="system|email_address"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120" required>
                     </div>
                 </div>
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="pwd" class="col-lg-2 control-label">{lang t="users|pwd"}</label>
+                    <label for="pwd" class="col-sm-2 control-label">{lang t="users|pwd"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="password" name="pwd" id="pwd" value="" required></div>
                 </div>
                 <div class="form-group">
-                    <label for="pwd-repeat" class="col-lg-2 control-label">{lang t="users|pwd_repeat"}</label>
+                    <label for="pwd-repeat" class="col-sm-2 control-label">{lang t="users|pwd_repeat"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="password" name="pwd_repeat" id="pwd-repeat" value="" required>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
         {$captcha}
     {/if}
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             {$form_token}
         </div>

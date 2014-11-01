@@ -10,17 +10,17 @@
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
                 <div class="form-group">
-                    <label for="name" class="col-lg-2 control-label">{lang t="system|name"}</label>
+                    <label for="name" class="col-sm-2 control-label">{lang t="system|name"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="name" id="name" value="{$form.name}" maxlength="120" required>
                     </div>
                 </div>
                 {if isset($parent)}
                     <div class="form-group">
-                        <label for="parent" class="col-lg-2 control-label">{lang t="permissions|superior_role"}</label>
+                        <label for="parent" class="col-sm-2 control-label">{lang t="permissions|superior_role"}</label>
 
-                        <div class="col-lg-10">
+                        <div class="col-sm-10">
                             <select class="form-control" name="parent" id="parent">
                                 {foreach $parent as $row}
                                     <option value="{$row.id}"{$row.selected}>{$row.name}</option>
@@ -36,13 +36,13 @@
                     {if $i % 2 !== 0}
                         <div class="row">
                     {/if}
-                    <fieldset class="col-lg-6">
+                    <fieldset class="col-sm-6">
                         <legend>{$module}</legend>
                         {foreach $values.privileges as $privilege}
                             <div class="form-group">
-                                <label class="col-lg-2 control-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>
+                                <label class="col-sm-2 control-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>
 
-                                <div class="col-lg-10">
+                                <div class="col-sm-10">
                                     <div class="btn-group" data-toggle="buttons">
                                         {foreach $privilege.select as $row}
                                             <label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn btn-default{if !empty($row.selected)} active{/if}">
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/permissions"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}
