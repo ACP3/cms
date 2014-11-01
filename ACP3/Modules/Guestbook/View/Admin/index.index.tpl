@@ -40,7 +40,7 @@
                     {/if}
                     <td>{date_format date=$row.date}</td>
                     <td>{check_access mode="link" path="acp/guestbook/index/edit/id_`$row.id`" title=$row.name}</td>
-                    <td>{$row.message}</td>
+                    <td>{$row.message|nl2p}</td>
                     <td>{$row.ip}</td>
                     <td>{$row.id}</td>
                 </tr>

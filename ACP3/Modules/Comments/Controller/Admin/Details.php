@@ -123,12 +123,10 @@ class Details extends Core\Modules\Controller\Admin
                     }
                 }
 
-                $formatter = $this->get('core.helpers.stringFormatter');
                 for ($i = 0; $i < $c_comments; ++$i) {
                     if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
                         $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
                     }
-                    $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
                     if ($emoticonsActive === true) {
                         $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
                     }

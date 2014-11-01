@@ -3,6 +3,8 @@
 namespace ACP3\Core\View\Renderer;
 
 use ACP3\Core\View\AbstractRenderer;
+use ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier;
+use ACP3\Core\View\Renderer\Smarty\Plugins\AbstractPlugin;
 
 /**
  * Renderer for the Smarty template engine
@@ -17,6 +19,10 @@ class Smarty extends AbstractRenderer
      */
     public $renderer;
 
+    /**
+     * @param array $params
+     * @throws \SmartyException
+     */
     public function configure(array $params = array())
     {
         $this->renderer = new \Smarty();
@@ -34,9 +40,16 @@ class Smarty extends AbstractRenderer
         }
 
         $services = $this->container->getServiceIds();
-        foreach ($services as $service) {
-            if (strpos($service, 'smarty.plugin.') === 0) {
-                $this->container->get($service)->registerPlugin($this->renderer);
+        foreach ($services as $serviceName) {
+            if (strpos($serviceName, 'smarty.plugin.') === 0) {
+                /** @var AbstractPlugin $plugin */
+                $plugin = $this->container->get($serviceName);
+                $plugin->registerPlugin($this->renderer);
+            }
+            if (strpos($serviceName, 'smarty.modifier.') === 0) {
+                /** @var AbstractModifier $modifier */
+                $modifier = $this->container->get($serviceName);
+                $modifier->registerModifier($this->renderer);
             }
         }
 

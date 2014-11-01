@@ -9,7 +9,7 @@
             </small>
         </header>
         <div class="content">
-            {$newsletter.text}
+            {$newsletter.text|nl2p}
         </div>
     </article>
 {else}

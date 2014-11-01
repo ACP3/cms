@@ -1,9 +1,9 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty;
+namespace ACP3\Core\View\Renderer\Smarty\Plugins;
 
 /**
  * Class AbstractPlugin
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Plugins
  */
 abstract class AbstractPlugin
 {

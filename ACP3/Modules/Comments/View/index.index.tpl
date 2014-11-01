@@ -24,7 +24,7 @@
                     </small>
                 </header>
                 <div class="content">
-                    {$row.message}
+                    {$row.message|nl2p}
                 </div>
             </article>
         {/foreach}

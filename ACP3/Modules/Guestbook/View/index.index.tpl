@@ -46,7 +46,7 @@
                         {mailto address=$row.mail encode="javascript" text="{icon path="16/mail" width="16" height="16" alt="`$row.mail`"}"}
                     {/if}
                 </div>
-                {$row.message}
+                {$row.message|nl2p}
             </div>
         </article>
     {/foreach}
