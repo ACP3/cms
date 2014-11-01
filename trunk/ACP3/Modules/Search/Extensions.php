@@ -133,9 +133,9 @@ class Extensions
             $name = $this->lang->t('articles', 'articles');
             $searchResults[$name]['dir'] = 'articles';
             for ($i = 0; $i < $c_results; ++$i) {
+                $searchResults[$name]['results'][$i] = $results[$i];
+
                 $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('articles/index/details/id_' . $results[$i]['id']);
-                $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
         return $searchResults;
@@ -163,9 +163,9 @@ class Extensions
             $name = $this->lang->t('files', 'files');
             $searchResults[$name]['dir'] = 'files';
             for ($i = 0; $i < $c_results; ++$i) {
+                $searchResults[$name]['results'][$i] = $results[$i];
+
                 $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('files/index/details/id_' . $results[$i]['id']);
-                $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
         return $searchResults;
@@ -193,9 +193,9 @@ class Extensions
             $name = $this->lang->t('news', 'news');
             $searchResults[$name]['dir'] = 'news';
             for ($i = 0; $i < $c_results; ++$i) {
+                $searchResults[$name]['results'][$i] = $results[$i];
+
                 $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('news/index/details/id_' . $results[$i]['id']);
-                $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
         return $searchResults;

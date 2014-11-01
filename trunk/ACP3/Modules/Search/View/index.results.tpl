@@ -20,7 +20,7 @@
                             </header>
                             {if !empty($row.text)}
                                 <div class="content">
-                                    {$row.text}
+                                    {$row.text|truncate:200}
                                 </div>
                             {/if}
                         </div>

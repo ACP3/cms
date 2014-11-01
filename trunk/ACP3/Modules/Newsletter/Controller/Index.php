@@ -23,12 +23,12 @@ class Index extends Core\Modules\Controller\Frontend
     public function __construct(
         Core\Context\Frontend $context,
         Core\Helpers\Secure $secureHelper,
-        Newsletter\Model $newsModel)
+        Newsletter\Model $newsletterModel)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
-        $this->newsletterModel = $newsModel;
+        $this->newsletterModel = $newsletterModel;
     }
 
     public function actionActivate()
