@@ -78,8 +78,6 @@ class Index extends Core\Modules\Controller\Frontend
             }
             $this->breadcrumb->append($news['title']);
 
-            $news['date_formatted'] = $this->date->format($news['start'], $settings['dateformat']);
-            $news['date_iso'] = $this->date->format($news['start'], 'c');
             $news['text'] = $formatter->rewriteInternalUri($news['text']);
             if (!empty($news['uri']) && (bool)preg_match('=^http(s)?://=', $news['uri']) === false) {
                 $news['uri'] = 'http://' . $news['uri'];
@@ -87,6 +85,7 @@ class Index extends Core\Modules\Controller\Frontend
             $news['target'] = $news['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 
             $this->view->assign('news', $news);
+            $this->view->assign('dateformat', $settings['dateformat']);
 
             if ($settings['comments'] == 1 && $news['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
                 /** @var \ACP3\Modules\Comments\Controller\Index $comments */
@@ -149,8 +148,6 @@ class Index extends Core\Modules\Controller\Frontend
             $rewriteUri = $this->get('core.helpers.formatter.rewriteInternalUri');
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_news; ++$i) {
-                $news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
-                $news[$i]['date_iso'] = $this->date->format($news[$i]['start'], 'c');
                 $news[$i]['text'] = $rewriteUri->rewriteInternalUri($news[$i]['text']);
                 if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $commentsCheck === true) {
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
@@ -160,6 +157,7 @@ class Index extends Core\Modules\Controller\Frontend
                 }
             }
             $this->view->assign('news', $news);
+            $this->view->assign('dateformat', $settings['dateformat']);
         }
     }
 

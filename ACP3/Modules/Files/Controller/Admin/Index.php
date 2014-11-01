@@ -185,10 +185,7 @@ class Index extends Core\Modules\Controller\Admin
                 'records_per_page' => $this->auth->entries
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
-            for ($i = 0; $i < $c_files; ++$i) {
-                $files[$i]['period'] = $this->date->formatTimeRange($files[$i]['start'], $files[$i]['end']);
-                $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');
-            }
+
             $this->view->assign('files', $files);
             $this->view->assign('can_delete', $canDelete);
         }

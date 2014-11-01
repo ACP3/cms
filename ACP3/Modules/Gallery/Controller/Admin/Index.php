@@ -169,9 +169,7 @@ class Index extends Core\Modules\Controller\Admin
                 'records_per_page' => $this->auth->entries
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
-            for ($i = 0; $i < $c_galleries; ++$i) {
-                $galleries[$i]['period'] = $this->date->formatTimeRange($galleries[$i]['start'], $galleries[$i]['end']);
-            }
+
             $this->view->assign('galleries', $galleries);
             $this->view->assign('can_delete', $canDelete);
         }

@@ -236,6 +236,7 @@ class Date
     {
         // Datum in gewünschter Formatierung ausgeben
         switch ($format) {
+            case '':
             case 'long':
                 $format = $this->dateFormatLong;
                 break;
@@ -359,13 +360,13 @@ class Date
      */
     public function formatTimeRange($start, $end = '', $format = 'long')
     {
-        $datetime_format = 'Y-m-d H:i';
+        $datetimeFormat = 'Y-m-d H:i';
         if ($end === '' || $start >= $end) {
             $title = $end === '' ? $this->format($start, $format) : sprintf($this->lang->t('system', 'date_published_since'), $this->format($start, $format));
-            return '<time datetime="' . $start . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '</time>';
+            return '<time datetime="' . $start . '" title="' . $title . '">' . $this->format($start, $datetimeFormat) . '</time>';
         } else {
             $title = sprintf($this->lang->t('system', 'date_time_range'), $this->format($start, $format), $this->format($end, $format));
-            return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '&ndash;' . $this->format($end, $datetime_format) . '</time>';
+            return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->format($start, $datetimeFormat) . '&ndash;' . $this->format($end, $datetimeFormat) . '</time>';
         }
     }
 

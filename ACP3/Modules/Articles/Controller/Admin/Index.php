@@ -68,7 +68,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        if ($this->modules->hasPermission('admin/menus/index/create_item') === true) {
+        if ($this->modules->hasPermission('admin/menus/items/create') === true) {
             $lang_options = array($this->lang->t('articles', 'create_menu_item'));
             $this->view->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->seo->setCache();
 
-            if (isset($formData['create']) === true && $this->modules->hasPermission('admin/menus/index/create_item') === true) {
+            if (isset($formData['create']) === true && $this->modules->hasPermission('admin/menus/items/create') === true) {
                 $insertValues = array(
                     'id' => '',
                     'mode' => 4,
@@ -262,9 +262,7 @@ class Index extends Core\Modules\Controller\Admin
                 'records_per_page' => $this->auth->entries
             );
             $this->appendContent($this->get('core.functions')->dataTable($config));
-            for ($i = 0; $i < $c_articles; ++$i) {
-                $articles[$i]['period'] = $this->date->formatTimeRange($articles[$i]['start'], $articles[$i]['end']);
-            }
+
             $this->view->assign('articles', $articles);
             $this->view->assign('can_delete', $canDelete);
         }

@@ -1,14 +1,22 @@
-{if isset($galleries)}
+{if !empty($galleries)}
     {$pagination}
     {foreach $galleries as $row}
         <div class="dataset-box">
             <div class="navbar navbar-default">
                 <div class="navbar-header">
                     <h2 class="navbar-brand">
-                        <a href="{uri args="gallery/index/pics/id_`$row.id`"}">{$row.title} ({$row.pics_lang})</a></h2>
+                        <a href="{uri args="gallery/index/pics/id_`$row.id`"}">
+                            {$row.title}
+                            {if $row.pics == 1}
+                                ({$row.pics} {lang t="gallery|picture"})
+                            {else}
+                                ({$row.pics} {lang t="gallery|picture"})
+                            {/if}
+                        </a>
+                    </h2>
                 </div>
                 <small class="navbar-text pull-right">
-                    <time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+                    <time datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
                 </small>
             </div>
         </div>

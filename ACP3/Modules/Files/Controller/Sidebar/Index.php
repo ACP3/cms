@@ -41,19 +41,9 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.stringFormatter');
         $settings = $this->filesConfig->getSettings();
 
-        $files = $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
-        $c_files = count($files);
-
-        if ($c_files > 0) {
-            for ($i = 0; $i < $c_files; ++$i) {
-                $files[$i]['start'] = $this->date->format($files[$i]['start']);
-                $files[$i]['title_short'] = $formatter->shortenEntry($files[$i]['title'], 30, 5, '...');
-            }
-            $this->view->assign('sidebar_files', $files);
-        }
+        $this->view->assign('sidebar_files', $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
 
         $this->setLayout('Files/Sidebar/index.index.tpl');
     }

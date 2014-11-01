@@ -54,11 +54,6 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->setTotalResults($this->articlesModel->countAll($time));
             $this->pagination->display();
 
-            for ($i = 0; $i < $c_articles; ++$i) {
-                $articles[$i]['date_formatted'] = $this->date->format($articles[$i]['start']);
-                $articles[$i]['date_iso'] = $this->date->format($articles[$i]['start'], 'c');
-            }
-
             $this->view->assign('articles', $articles);
         }
     }

@@ -14,10 +14,6 @@ class Details extends Core\Modules\Controller\Admin
 {
 
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var Comments\Model
      */
     protected $commentsModel;
@@ -36,7 +32,6 @@ class Details extends Core\Modules\Controller\Admin
 
     public function __construct(
         Core\Context\Admin $context,
-        Core\Date $date,
         Comments\Model $commentsModel,
         Core\Config $commentsConfig,
         System\Model $systemModel,
@@ -44,7 +39,6 @@ class Details extends Core\Modules\Controller\Admin
     {
         parent::__construct($context);
 
-        $this->date = $date;
         $this->commentsModel = $commentsModel;
         $this->commentsConfig = $commentsConfig;
         $this->systemModel = $systemModel;
@@ -134,7 +128,6 @@ class Details extends Core\Modules\Controller\Admin
                     if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
                         $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
                     }
-                    $comments[$i]['date_formatted'] = $this->date->formatTimeRange($comments[$i]['date']);
                     $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
                     if ($emoticonsActive === true) {
                         $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);

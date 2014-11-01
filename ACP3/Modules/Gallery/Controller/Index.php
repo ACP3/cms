@@ -31,6 +31,10 @@ class Index extends Core\Modules\Controller\Frontend
      * @var Core\Config
      */
     protected $galleryConfig;
+    /**
+     * @var array
+     */
+    protected $settings;
 
     public function __construct(
         Core\Context\Frontend $context,
@@ -49,12 +53,17 @@ class Index extends Core\Modules\Controller\Frontend
         $this->galleryConfig = $galleryConfig;
     }
 
+    public function preDispatch()
+    {
+        parent::preDispatch();
+        
+        $this->settings = $this->galleryConfig->getSettings();
+    }
+
     public function actionDetails()
     {
         if ($this->galleryModel->pictureExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
             $picture = $this->galleryModel->getPictureById((int)$this->request->id);
-
-            $settings = $this->galleryConfig->getSettings();
 
             // Brotkrümelspur
             $this->breadcrumb
@@ -65,16 +74,16 @@ class Index extends Core\Modules\Controller\Frontend
                 ->setTitlePostfix(sprintf($this->lang->t('gallery', 'picture_x'), $picture['pic']));
 
             // Bildabmessungen berechnen
-            $picture['width'] = $settings['width'];
-            $picture['height'] = $settings['height'];
+            $picture['width'] = $this->settings['width'];
+            $picture['height'] = $this->settings['height'];
             $picInfos = @getimagesize(UPLOADS_DIR . 'gallery/' . $picture['file']);
             if ($picInfos !== false) {
-                if ($picInfos[0] > $settings['width'] || $picInfos[1] > $settings['height']) {
+                if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
                     if ($picInfos[0] > $picInfos[1]) {
-                        $newWidth = $settings['width'];
+                        $newWidth = $this->settings['width'];
                         $newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
                     } else {
-                        $newHeight = $settings['height'];
+                        $newHeight = $this->settings['height'];
                         $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
                     }
                 }
@@ -86,20 +95,20 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('picture', $picture);
 
             // Vorheriges Bild
-            $picture_back = $this->galleryModel->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
-            if (!empty($picture_back)) {
-                $this->seo->setPreviousPage($this->router->route('gallery/index/details/id_' . $picture_back));
-                $this->view->assign('picture_back', $picture_back);
+            $previousPicture = $this->galleryModel->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
+            if (!empty($previousPicture)) {
+                $this->seo->setPreviousPage($this->router->route('gallery/index/details/id_' . $previousPicture));
+                $this->view->assign('picture_back', $previousPicture);
             }
 
             // Nächstes Bild
-            $picture_next = $this->galleryModel->getNextPictureId($picture['pic'], $picture['gallery_id']);
-            if (!empty($picture_next)) {
-                $this->seo->setNextPage($this->router->route('gallery/index/details/id_' . $picture_next));
-                $this->view->assign('picture_next', $picture_next);
+            $nextPicture = $this->galleryModel->getNextPictureId($picture['pic'], $picture['gallery_id']);
+            if (!empty($nextPicture)) {
+                $this->seo->setNextPage($this->router->route('gallery/index/details/id_' . $nextPicture));
+                $this->view->assign('picture_next', $nextPicture);
             }
 
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
+            if ($this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
                     ->setModule('gallery')
@@ -121,12 +130,11 @@ class Index extends Core\Modules\Controller\Frontend
             $picture = $this->galleryModel->getFileById($this->request->id);
             $action = $this->request->action === 'thumb' ? 'thumb' : '';
 
-            $settings = $this->galleryConfig->getSettings();
             $options = array(
                 'enable_cache' => CONFIG_CACHE_IMAGES == 1 ? true : false,
                 'cache_prefix' => 'gallery_' . $action,
-                'max_width' => $settings[$action . 'width'],
-                'max_height' => $settings[$action . 'height'],
+                'max_width' => $this->settings[$action . 'width'],
+                'max_height' => $this->settings[$action . 'height'],
                 'file' => UPLOADS_DIR . 'gallery/' . $picture,
                 'prefer_height' => $action === 'thumb' ? true : false
             );
@@ -140,22 +148,11 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $time = $this->date->getCurrentDateTime();
 
-        $galleries = $this->galleryModel->getAll($time, POS, $this->auth->entries);
-        $c_galleries = count($galleries);
+        $this->pagination->setTotalResults($this->galleryModel->countAll($time));
+        $this->pagination->display();
 
-        if ($c_galleries > 0) {
-            $this->pagination->setTotalResults($this->galleryModel->countAll($time));
-            $this->pagination->display();
-
-            $settings = $this->galleryConfig->getSettings();
-
-            for ($i = 0; $i < $c_galleries; ++$i) {
-                $galleries[$i]['date_formatted'] = $this->date->format($galleries[$i]['start'], $settings['dateformat']);
-                $galleries[$i]['date_iso'] = $this->date->format($galleries[$i]['start'], 'c');
-                $galleries[$i]['pics_lang'] = $galleries[$i]['pics'] . ' ' . $this->lang->t('gallery', $galleries[$i]['pics'] == 1 ? 'picture' : 'pictures');
-            }
-            $this->view->assign('galleries', $galleries);
-        }
+        $this->view->assign('galleries', $this->galleryModel->getAll($time, POS, $this->auth->entries));
+        $this->view->assign('dateformat', $this->settings['dateformat']);
     }
 
     public function actionPics()
@@ -173,15 +170,13 @@ class Index extends Core\Modules\Controller\Frontend
                 ->append($galleryTitle);
 
             if ($c_pictures > 0) {
-                $settings = $this->galleryConfig->getSettings();
-
                 for ($i = 0; $i < $c_pictures; ++$i) {
-                    $pictures[$i]['uri'] = $this->router->route($settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
+                    $pictures[$i]['uri'] = $this->router->route($this->settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
                     $pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
                 }
 
                 $this->view->assign('pictures', $pictures);
-                $this->view->assign('overlay', (int)$settings['overlay']);
+                $this->view->assign('overlay', (int)$this->settings['overlay']);
             }
         } else {
             throw new Core\Exceptions\ResultNotExists();

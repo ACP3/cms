@@ -54,6 +54,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return array(
             "DROP TABLE `{pre}newsletter_accounts`;",
+            "DROP TABLE `{pre}newsletter_queue`;",
             "DROP TABLE `{pre}newsletters`;"
         );
     }

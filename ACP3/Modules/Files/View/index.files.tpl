@@ -4,10 +4,18 @@
             <div class="navbar navbar-default">
                 <div class="navbar-header">
                     <h2 class="navbar-brand">
-                        <a href="{uri args="files/index/details/id_`$row.id`"}">{$row.title} ({$row.size})</a></h2>
+                        <a href="{uri args="files/index/details/id_`$row.id`"}">
+                            {$row.title}
+                            {if !empty($row.size)}
+                                ({$row.size})
+                            {else}
+                                ({lang t="files|unknown_filesize")}
+                            {/if}
+                        </a>
+                    </h2>
                 </div>
                 <small class="navbar-text pull-right">
-                    <time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+                    <time datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
                 </small>
             </div>
         </div>
