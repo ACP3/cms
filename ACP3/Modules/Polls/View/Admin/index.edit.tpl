@@ -13,17 +13,17 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
-                    <label for="title" class="col-lg-2 control-label">{lang t="polls|question"}</label>
+                    <label for="title" class="col-sm-2 control-label">{lang t="polls|question"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         <input class="form-control" type="text" name="title" id="title" value="{$title}" maxlength="120">
                     </div>
                 </div>
                 {foreach $answers as $row}
                     <div class="form-group">
-                        <label for="answer-{$row.number}" class="col-lg-2 control-label">{lang t="polls|answer"} {$row.number+1}</label>
+                        <label for="answer-{$row.number}" class="col-sm-2 control-label">{lang t="polls|answer"} {$row.number+1}</label>
 
-                        <div class="col-lg-10">
+                        <div class="col-sm-10">
                             <div class="input-group">
                                 <input class="form-control" type="text" name="answers[{$row.number}][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
                                 <div class="input-group-addon">
@@ -35,9 +35,9 @@
                     </div>
                 {/foreach}
                 <div class="form-group">
-                    <label for="{$options.0.name}" class="col-lg-2 control-label">{lang t="system|options"}</label>
+                    <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 
-                    <div class="col-lg-10">
+                    <div class="col-sm-10">
                         {foreach $options as $row}
                             <div class="checkbox">
                                 <label for="{$row.name}">
@@ -52,7 +52,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="add_answer" class="btn btn-primary">{lang t="polls|add_answer"}</button>
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/polls"}" class="btn btn-default">{lang t="system|cancel"}</a>

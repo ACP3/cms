@@ -10,18 +10,18 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="text" class="col-lg-2 control-label">{lang t="system|text"}</label>
+            <label for="text" class="col-sm-2 control-label">{lang t="system|text"}</label>
 
-            <div class="col-lg-10">
+            <div class="col-sm-10">
                 <textarea class="form-control" name="text" id="text" cols="50" rows="6">{$form.text}</textarea></div>
         </div>
         <div class="form-group">
-            <label for="file" class="col-lg-2 control-label">{lang t="system|file"}</label>
+            <label for="file" class="col-sm-2 control-label">{lang t="system|file"}</label>
 
-            <div class="col-lg-10"><input type="file" name="file" id="file"></div>
+            <div class="col-sm-10"><input type="file" name="file" id="file"></div>
         </div>
         <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
+            <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
                 {$form_token}
             </div>

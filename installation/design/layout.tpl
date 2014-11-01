@@ -14,16 +14,16 @@
 
 <body>
 <div class="container">
-    <h1 id="logo" class="visible-lg">{$PAGE_TITLE}</h1>
+    <h1 id="logo" class="hidden-xs">{$PAGE_TITLE}</h1>
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">{lang t="install|toggle_navigation"}</span> <span class="icon-bar"></span>
                 <span class="icon-bar"></span> <span class="icon-bar"></span>
             </button>
             <a href="{$ROOT_DIR}" class="navbar-brand hidden-lg">{$PAGE_TITLE}</a>
         </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div id="navbar-collapse" class="collapse navbar-collapse">
             {if isset($navbar)}
                 <ul class="nav navbar-nav">
                     {foreach $navbar as $key => $value}
@@ -49,20 +49,20 @@
     </main>
 </div>
 <script type="text/javascript">
-    $(document).ready(function ($) {
-        if ($('#config-form').length > 0) {
-            $('#config-form').data('changed', false);
-            $('#config-form input, #config-form select').change(function () {
-                $('#config-form').data('changed', true);
+    jQuery(document).ready(function ($) {
+        var $configForm = $('#config-form')
+        if ($configForm.length > 0) {
+            $configForm.data('changed', false);
+            $configForm.find('input, select').change(function () {
+                $configForm.data('changed', true);
             });
         }
 
         // Sprachdropdown
-        $('#languages :submit').hide();
+        $('#languages').find(':submit').hide();
         $('#lang').change(function () {
             var reload = true;
-            if ($('#config-form').length > 0 &&
-                    $('#config-form').data('changed') == true) {
+            if ($configForm.length > 0 && $configForm.data('changed') == true) {
                 reload = confirm('{lang t="install|form_change_warning"}');
             }
 

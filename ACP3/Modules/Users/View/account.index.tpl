@@ -18,14 +18,14 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
-        <label for="draft" class="col-lg-2 control-label">{lang t="users|drafts"}</label>
+        <label for="draft" class="col-sm-2 control-label">{lang t="users|drafts"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             {wysiwyg name="draft" value="$draft" height="250" toolbar="simple"}
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
         </div>
     </div>

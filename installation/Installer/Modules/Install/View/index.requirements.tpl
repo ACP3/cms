@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-7">
+    <div class="col-sm-7">
         <fieldset>
             <legend>{lang t="install|step_3_legend_1"}</legend>
             <p>
@@ -7,7 +7,7 @@
             </p>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-sm-6">
                     <table class="table table-condensed">
                         <thead>
                         <tr>
@@ -29,7 +29,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-sm-6">
                     <ul class="unstyled">
                         {foreach $files_dirs as $row}
                             <li>
@@ -43,7 +43,7 @@
             </div>
         </fieldset>
     </div>
-    <div class="col-lg-5">
+    <div class="col-sm-5">
         <fieldset>
             <legend>{lang t="install|step_3_legend_2"}</legend>
             <p>

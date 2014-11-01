@@ -6,7 +6,7 @@
             {if $i % 4 === 0}
                 <div class="row">
             {/if}
-                <div class="col-lg-3">
+                <div class="col-sm-3">
                     <a href="{$row.uri}" class="thumbnail" data-fancybox-group="gallery"{if !empty($row.description)} title="{$row.description}"{/if}>
                         <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
                     </a>
@@ -21,7 +21,7 @@
             {if $i % 4 === 0}
                 <div class="row">
             {/if}
-            <div class="col-lg-3">
+            <div class="col-sm-3">
                 <a href="{$row.uri}" class="thumbnail">
                     <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
                 </a>

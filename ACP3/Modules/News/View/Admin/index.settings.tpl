@@ -3,9 +3,9 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
-        <label for="date-format" class="col-lg-2 control-label">{lang t="system|date_format"}</label>
+        <label for="date-format" class="col-sm-2 control-label">{lang t="system|date_format"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <select class="form-control" name="dateformat" id="date-format">
                 <option value="">{lang t="system|pls_select"}</option>
                 {foreach $dateformat as $row}
@@ -15,9 +15,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="sidebar-entries" class="col-lg-2 control-label">{lang t="system|sidebar_entries_to_display"}</label>
+        <label for="sidebar-entries" class="col-sm-2 control-label">{lang t="system|sidebar_entries_to_display"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <select class="form-control" name="sidebar" id="sidebar-entries">
                 <option>{lang t="system|pls_select"}</option>
                 {foreach $sidebar_entries as $row}
@@ -27,9 +27,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="{$readmore.0.id}" class="col-lg-2 control-label">{lang t="news|activate_readmore"}</label>
+        <label for="{$readmore.0.id}" class="col-sm-2 control-label">{lang t="news|activate_readmore"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <div class="btn-group" data-toggle="buttons">
                 {foreach $readmore as $row}
                     <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
@@ -41,16 +41,16 @@
         </div>
     </div>
     <div id="readmore-container" class="form-group">
-        <label for="readmore-chars" class="col-lg-2 control-label">{lang t="news|readmore_chars"}</label>
+        <label for="readmore-chars" class="col-sm-2 control-label">{lang t="news|readmore_chars"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <input class="form-control" type="number" name="readmore_chars" id="readmore-chars" value="{$readmore_chars}">
         </div>
     </div>
     <div class="form-group">
-        <label for="{$category_in_breadcrumb.0.id}" class="col-lg-2 control-label">{lang t="news|display_category_in_breadcrumb"}</label>
+        <label for="{$category_in_breadcrumb.0.id}" class="col-sm-2 control-label">{lang t="news|display_category_in_breadcrumb"}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             <div class="btn-group" data-toggle="buttons">
                 {foreach $category_in_breadcrumb as $row}
                     <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
@@ -63,9 +63,9 @@
     </div>
     {if isset($allow_comments)}
         <div class="form-group">
-            <label for="{$allow_comments.0.id}" class="col-lg-2 control-label">{lang t="system|allow_comments"}</label>
+            <label for="{$allow_comments.0.id}" class="col-sm-2 control-label">{lang t="system|allow_comments"}</label>
 
-            <div class="col-lg-10">
+            <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
                     {foreach $allow_comments as $row}
                         <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
@@ -78,7 +78,7 @@
         </div>
     {/if}
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/news"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}

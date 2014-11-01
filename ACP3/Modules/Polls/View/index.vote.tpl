@@ -1,8 +1,8 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
-        <label for="answer-{$answers.0.id}" class="col-lg-2 control-label">{$question}</label>
+        <label for="answer-{$answers.0.id}" class="col-sm-2 control-label">{$question}</label>
 
-        <div class="col-lg-10">
+        <div class="col-sm-10">
             {foreach $answers as $row}
                 {if $multiple == '1'}
                     <div class="checkbox">
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
         </div>
     </div>
