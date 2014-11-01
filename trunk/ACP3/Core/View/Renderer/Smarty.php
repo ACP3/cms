@@ -85,7 +85,7 @@ class Smarty extends AbstractRenderer
 
     public function display($template, $cache_id = null, $compile_id = null, $parent = null)
     {
-        echo $this->renderer->display($template, $cache_id, $compile_id, $parent);
+        $this->renderer->display($template, $cache_id, $compile_id, $parent);
     }
 
     /**
