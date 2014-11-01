@@ -51,7 +51,7 @@
             <h2>{$TITLE}</h2>
             {$CONTENT}
         </main>
-        <div class="col-md-2 hidden-sm">
+        <div class="col-md-2 hidden-xs hidden-sm">
             {load_module module="sidebar/news"}
             {load_module module="sidebar/newsletter"}
             {load_module module="sidebar/files"}
