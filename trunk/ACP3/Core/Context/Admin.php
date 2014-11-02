@@ -36,7 +36,6 @@ class Admin extends Frontend
     {
         parent::__construct(
             $frontendContext,
-            $frontendContext->getAcl(),
             $frontendContext->getAssets(),
             $frontendContext->getBreadcrumb(),
             $frontendContext->getSeo()
