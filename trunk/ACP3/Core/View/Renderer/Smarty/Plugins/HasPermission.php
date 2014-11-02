@@ -10,17 +10,17 @@ use ACP3\Core;
 class HasPermission extends AbstractPlugin
 {
     /**
-     * @var Core\Modules
+     * @var Core\ACL
      */
-    protected $modules;
+    protected $acl;
     /**
      * @var string
      */
     protected $pluginName = 'has_permission';
 
-    public function __construct(Core\Modules $modules)
+    public function __construct(Core\ACL $acl)
     {
-        $this->modules = $modules;
+        $this->acl = $acl;
     }
 
     /**
@@ -31,7 +31,7 @@ class HasPermission extends AbstractPlugin
     public function process($params)
     {
         if (isset($params['path']) === true) {
-            return $this->modules->hasPermission($params['path']);
+            return $this->acl->hasPermission($params['path']);
         } else {
             return false;
         }

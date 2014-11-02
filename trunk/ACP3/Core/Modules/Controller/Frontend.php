@@ -39,6 +39,9 @@ abstract class Frontend extends Core\Modules\Controller
      */
     protected $layout = 'layout.tpl';
 
+    /**
+     * @param Core\Context\Frontend $frontendContext
+     */
     public function __construct(Core\Context\Frontend $frontendContext)
     {
         parent::__construct($frontendContext);
@@ -60,7 +63,7 @@ abstract class Frontend extends Core\Modules\Controller
 
         $path = $this->request->area . '/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
 
-        if ($this->modules->hasPermission($path) === false) {
+        if ($this->acl->hasPermission($path) === false) {
             throw new Core\Exceptions\UnauthorizedAccess();
         }
 

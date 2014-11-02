@@ -12,10 +12,6 @@ use ACP3\Modules\Permissions;
 class Resources extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\ACL
-     */
-    protected $acl;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -30,14 +26,12 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function __construct(
         Core\Context\Admin $context,
-        Core\ACL $acl,
         Core\Helpers\Secure $secureHelper,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
 
-        $this->acl = $acl;
         $this->secureHelper = $secureHelper;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
@@ -130,7 +124,7 @@ class Resources extends Core\Modules\Controller\Admin
         }
         ksort($output);
         $this->view->assign('resources', $output);
-        $this->view->assign('can_delete_resource', $this->modules->hasPermission('admin/permissions/resources/delete'));
+        $this->view->assign('can_delete_resource', $this->acl->hasPermission('admin/permissions/resources/delete'));
     }
 
     private function _createPost(array $formData)

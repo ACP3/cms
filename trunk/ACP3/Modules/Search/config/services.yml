@@ -9,7 +9,7 @@ services:
 
   search.helpers:
     class: ACP3\Modules\Search\Helpers
-    arguments: ['@core.modules']
+    arguments: ['@core.acl', '@core.modules']
 
   search.validator:
     class: ACP3\Modules\Search\Validator

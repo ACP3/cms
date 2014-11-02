@@ -180,7 +180,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_emoticons = count($emoticons);
 
         if ($c_emoticons > 0) {
-            $canDelete = $this->modules->hasPermission('admin/emoticons/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/emoticons/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 4 : 3,

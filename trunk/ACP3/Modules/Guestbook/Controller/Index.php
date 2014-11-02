@@ -52,7 +52,7 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionCreate()
     {
         $settings = $this->guestbookConfig->getSettings();
-        $hasNewsletterAccess = $this->modules->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
+        $hasNewsletterAccess = $this->acl->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
         if ($this->request->getIsAjax() === true) {
@@ -99,7 +99,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 

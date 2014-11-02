@@ -10,13 +10,13 @@ use ACP3\Core;
 class CheckAccess extends AbstractPlugin
 {
     /**
+     * @var Core\ACL
+     */
+    protected $acl;
+    /**
      * @var Core\Lang
      */
     protected $lang;
-    /**
-     * @var Core\Modules
-     */
-    protected $modules;
     /**
      * @var Core\Router
      */
@@ -35,15 +35,15 @@ class CheckAccess extends AbstractPlugin
     protected $pluginName = 'check_access';
 
     public function __construct(
+        Core\ACL $acl,
         Core\Lang $lang,
-        Core\Modules $modules,
         Core\Router $router,
         Core\Validator\Rules\Misc $validate,
         Core\View $view
     )
     {
         $this->lang = $lang;
-        $this->modules = $modules;
+        $this->acl = $acl;
         $this->router = $router;
         $this->validate = $validate;
         $this->view = $view;
@@ -77,7 +77,7 @@ class CheckAccess extends AbstractPlugin
 
             $permissionPath = $area . '/' . $action[0] . '/' . $action[1] . '/' . $action[2];
 
-            if ($this->modules->hasPermission($permissionPath) === true) {
+            if ($this->acl->hasPermission($permissionPath) === true) {
                 $accessCheck = array();
                 $accessCheck['uri'] = $this->router->route($params['path']);
 

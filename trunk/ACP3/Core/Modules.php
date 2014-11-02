@@ -10,10 +10,6 @@ use ACP3\Modules\System;
 class Modules
 {
     /**
-     * @var ACL
-     */
-    protected $acl;
-    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
@@ -40,35 +36,13 @@ class Modules
 
     public function __construct(
         \Doctrine\DBAL\Connection $db,
-        ACL $acl,
         Lang $lang
     )
     {
         $this->db = $db;
-        $this->acl = $acl;
         $this->lang = $lang;
         $this->cache = new Cache('modules');
         $this->systemModel = new System\Model($db);
-    }
-
-    /**
-     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
-     *
-     * @param string $path
-     *    Zu überprüfendes Modul
-     *
-     * @return integer
-     */
-    public function hasPermission($path)
-    {
-        if ($this->actionExists($path) === true) {
-            $pathArray = explode('/', $path);
-
-            if ($this->isActive($pathArray[1]) === true) {
-                return $this->acl->canAccessResource($path);
-            }
-        }
-        return 0;
     }
 
     /**

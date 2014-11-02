@@ -13,10 +13,6 @@ use ACP3\Modules\Users;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
      * @var Core\Date
      */
     protected $date;
@@ -35,7 +31,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function __construct(
         Core\Context\Admin $context,
-        Core\ACL $acl,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
@@ -44,7 +39,6 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::__construct($context);
 
-        $this->acl = $acl;
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
@@ -322,7 +316,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_users = count($users);
 
         if ($c_users > 0) {
-            $canDelete = $this->modules->hasPermission('admin/users/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/users/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

@@ -68,7 +68,7 @@ class Index extends Core\Modules\Controller\Frontend
         );
         $this->view->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubscribe'), $actions_Lang, $field_value, 'checked'));
 
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 

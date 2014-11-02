@@ -95,7 +95,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $canDelete = $this->modules->hasPermission('admin/guestbook/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/guestbook/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

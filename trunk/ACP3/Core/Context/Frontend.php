@@ -22,18 +22,28 @@ class Frontend extends Core\Context
      */
     protected $seo;
 
+    /**
+     * @param Core\Context $context
+     * @param Core\Assets $assets
+     * @param Core\Breadcrumb $breadcrumb
+     * @param Core\SEO $seo
+     */
     public function __construct(
+        Core\Context $context,
         Core\Assets $assets,
-        Core\Auth $auth,
-        Core\Lang $lang,
-        Core\Modules $modules,
-        Core\Request $request,
-        Core\Router $router,
-        Core\View $view,
         Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo)
+        Core\SEO $seo
+    )
     {
-        parent::__construct($auth, $lang, $modules, $request, $router, $view);
+        parent::__construct(
+            $context->getACL(),
+            $context->getAuth(),
+            $context->getLang(),
+            $context->getModules(),
+            $context->getRequest(),
+            $context->getRouter(),
+            $context->getView()
+        );
 
         $this->assets = $assets;
         $this->breadcrumb = $breadcrumb;

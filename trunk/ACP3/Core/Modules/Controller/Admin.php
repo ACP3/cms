@@ -23,6 +23,9 @@ abstract class Admin extends Core\Modules\Controller\Frontend
      */
     protected $aliases;
 
+    /**
+     * @param Core\Context\Admin $adminContext
+     */
     public function __construct(Core\Context\Admin $adminContext)
     {
         parent::__construct($adminContext);

@@ -1,7 +1,7 @@
 services:
   users.controller.admin.index:
     class: ACP3\Modules\Users\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.acl', '@core.date', '@core.helpers.secure', '@users.model', '@users.config', '@permissions.model']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@users.model', '@users.config', '@permissions.model']
 
   users.controller.frontend.account:
     class: ACP3\Modules\Users\Controller\Account

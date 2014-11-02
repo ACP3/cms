@@ -87,7 +87,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('news', $news);
             $this->view->assign('dateformat', $settings['dateformat']);
 
-            if ($settings['comments'] == 1 && $news['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
+            if ($settings['comments'] == 1 && $news['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true) {
                 /** @var \ACP3\Modules\Comments\Controller\Index $comments */
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments

@@ -156,7 +156,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_polls = count($polls);
 
         if ($c_polls > 0) {
-            $canDelete = $this->modules->hasPermission('admin/polls/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/polls/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

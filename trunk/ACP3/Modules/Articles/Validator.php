@@ -64,7 +64,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $errors['text'] = $this->lang->t('articles', 'text_to_short');
         }
-        if ($this->modules->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {
+        if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {
             if ($formData['create'] == 1) {
                 if ($this->validate->isNumber($formData['block_id']) === false) {
                     $errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');

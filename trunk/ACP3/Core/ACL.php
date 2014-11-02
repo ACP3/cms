@@ -15,9 +15,13 @@ class ACL
      */
     protected $auth;
     /**
+     * @var Modules
+     */
+    protected $modules;
+    /**
      * @var Permissions\Cache
      */
-    protected $cache;
+    protected $permissionsCache;
     /**
      * @var Permissions\Model
      */
@@ -47,11 +51,18 @@ class ACL
      * @param Auth                      $auth
      * @param \Doctrine\DBAL\Connection $db
      */
-    public function __construct(Auth $auth, \Doctrine\DBAL\Connection $db)
+    public function __construct(
+        Auth $auth,
+        Modules $modules,
+        Permissions\Model $permissionsModel,
+        Permissions\Cache $permissionsCache,
+        \Doctrine\DBAL\Connection $db
+    )
     {
         $this->auth = $auth;
-        $this->permissionsModel = new Permissions\Model($db);
-        $this->cache = new Permissions\Cache($this->permissionsModel);
+        $this->modules = $modules;
+        $this->permissionsModel = $permissionsModel;
+        $this->permissionsCache = $permissionsCache;
         $this->userRoles = $this->getUserRoles($auth->getUserId());
         $this->resources = $this->getResources();
         $this->privileges = $this->getRules($this->userRoles);
@@ -89,7 +100,7 @@ class ACL
      */
     public function getResources()
     {
-        return $this->cache->getResourcesCache();
+        return $this->permissionsCache->getResourcesCache();
     }
 
     /**
@@ -101,7 +112,7 @@ class ACL
      */
     public function getRules(array $roleIds)
     {
-        return $this->cache->getRulesCache($roleIds);
+        return $this->permissionsCache->getRulesCache($roleIds);
     }
 
     /**
@@ -111,7 +122,7 @@ class ACL
      */
     public function getAllRoles()
     {
-        return $this->cache->getRolesCache();
+        return $this->permissionsCache->getRolesCache();
     }
 
     /**
@@ -183,5 +194,25 @@ class ACL
             return $this->privileges[$module][$key]['access'];
         }
         return false;
+    }
+
+    /**
+     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
+     *
+     * @param string $path
+     *    Zu überprüfendes Modul
+     *
+     * @return integer
+     */
+    public function hasPermission($path)
+    {
+        if ($this->modules->actionExists($path) === true) {
+            $pathArray = explode('/', $path);
+
+            if ($this->modules->isActive($pathArray[1]) === true) {
+                return $this->canAccessResource($path);
+            }
+        }
+        return 0;
     }
 }

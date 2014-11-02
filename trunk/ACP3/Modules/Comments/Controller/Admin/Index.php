@@ -67,7 +67,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
-            $canDelete = $this->modules->hasPermission('admin/comments/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/comments/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

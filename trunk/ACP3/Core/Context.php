@@ -8,6 +8,10 @@ namespace ACP3\Core;
 class Context
 {
     /**
+     * @var ACL
+     */
+    protected $acl;
+    /**
      * @var Auth
      */
     protected $auth;
@@ -32,7 +36,17 @@ class Context
      */
     protected $view;
 
+    /**
+     * @param ACL $acl
+     * @param Auth $auth
+     * @param Lang $lang
+     * @param Modules $modules
+     * @param Request $request
+     * @param Router $router
+     * @param View $view
+     */
     public function __construct(
+        ACL $acl,
         Auth $auth,
         Lang $lang,
         Modules $modules,
@@ -40,12 +54,21 @@ class Context
         Router $router,
         View $view)
     {
+        $this->acl = $acl;
         $this->auth = $auth;
         $this->lang = $lang;
         $this->modules = $modules;
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
+    }
+
+    /**
+     * @return \ACP3\Core\ACL
+     */
+    public function getACL()
+    {
+        return $this->acl;
     }
 
     /**

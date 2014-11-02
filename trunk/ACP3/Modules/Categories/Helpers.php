@@ -132,7 +132,7 @@ class Helpers
         } else {
             $categories['categories'] = array();
         }
-        if ($categoryCreate === true && $this->modules->hasPermission('admin/categories/index/create') === true) {
+        if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
             $categories['create']['name'] = $formFieldName . '_create';
             $categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
         }

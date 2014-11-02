@@ -27,7 +27,7 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha(3, 'captcha', true, 'newsletter'));
         }
 

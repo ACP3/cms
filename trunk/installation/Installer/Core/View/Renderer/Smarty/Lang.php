@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Installer\Core\View\Renderer\Smarty;
 
-use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
+use ACP3\Core\View\Renderer\Smarty\Plugins\AbstractPlugin;
 
 /**
  * Class Lang
