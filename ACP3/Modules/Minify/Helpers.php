@@ -176,11 +176,8 @@ class Helpers
                 $assetPath = $systemAssetPath;
             }
 
-            // If an asset has been found, cache it
-            if (!empty($assetPath)) {
-                $this->cachedPaths[$systemAssetPath] = $assetPath;
-                $this->newAssetPathsAdded = true;
-            }
+            $this->cachedPaths[$systemAssetPath] = $assetPath;
+            $this->newAssetPathsAdded = true;
 
             return $assetPath;
         }
