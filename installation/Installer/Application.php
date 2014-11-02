@@ -76,7 +76,7 @@ class Application
         $loader->load(ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/overridden.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
-        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
         $modules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
@@ -177,7 +177,7 @@ class Application
         $loader->load(ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/update.yml');
-        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
         $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));

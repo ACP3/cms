@@ -108,7 +108,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('picture_next', $nextPicture);
             }
 
-            if ($this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
+            if ($this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true) {
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
                     ->setModule('gallery')

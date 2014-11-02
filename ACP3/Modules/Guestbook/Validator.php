@@ -84,7 +84,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['message']) < 3) {
             $errors['message'] = $this->lang->t('system', 'message_to_short');
         }
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {

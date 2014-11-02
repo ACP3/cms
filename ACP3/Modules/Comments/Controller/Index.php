@@ -116,7 +116,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('dateformat', $settings['dateformat']);
         }
 
-        if ($this->modules->hasPermission('frontend/comments/index/create') === true) {
+        if ($this->acl->hasPermission('frontend/comments/index/create') === true) {
             $this->view->assign('comments_create_form', $this->actionCreate());
         }
 
@@ -155,7 +155,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 

@@ -110,12 +110,12 @@ class Index extends Core\Modules\Controller\Admin
         $c_menus = count($menus);
 
         if ($c_menus > 0) {
-            $canDeleteItem = $this->modules->hasPermission('admin/menus/items/delete');
-            $canSortItem = $this->modules->hasPermission('admin/menus/items/order');
+            $canDeleteItem = $this->acl->hasPermission('admin/menus/items/delete');
+            $canSortItem = $this->acl->hasPermission('admin/menus/items/order');
             $this->view->assign('can_delete_item', $canDeleteItem);
             $this->view->assign('can_order_item', $canSortItem);
-            $this->view->assign('can_delete', $this->modules->hasPermission('admin/menus/index/delete'));
-            $this->view->assign('can_edit', $this->modules->hasPermission('admin/menus/index/edit'));
+            $this->view->assign('can_delete', $this->acl->hasPermission('admin/menus/index/delete'));
+            $this->view->assign('can_edit', $this->acl->hasPermission('admin/menus/index/edit'));
             $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
 
             $pagesList = $this->get('menus.helpers')->menuItemsList();

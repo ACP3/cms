@@ -22,21 +22,25 @@ class Admin extends Frontend
      */
     protected $aliases;
 
+    /**
+     * @param Frontend $frontendContext
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Session $session
+     * @param Core\Router\Aliases $aliases
+     */
     public function __construct(
-        Core\Assets $assets,
-        Core\Auth $auth,
-        Core\Lang $lang,
-        Core\Modules $modules,
-        Core\Request $request,
-        Core\Router $router,
-        Core\View $view,
-        Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
+        Core\Context\Frontend $frontendContext,
         Core\Validator\Rules\Misc $validate,
         Core\Session $session,
         Core\Router\Aliases $aliases)
     {
-        parent::__construct($assets, $auth, $lang, $modules, $request, $router, $view, $breadcrumb, $seo);
+        parent::__construct(
+            $frontendContext,
+            $frontendContext->getAcl(),
+            $frontendContext->getAssets(),
+            $frontendContext->getBreadcrumb(),
+            $frontendContext->getSeo()
+        );
 
         $this->validate = $validate;
         $this->session = $session;

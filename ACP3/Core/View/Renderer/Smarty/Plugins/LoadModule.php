@@ -2,7 +2,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Plugins;
 
 use ACP3\Core\FrontController;
-use ACP3\Core\Modules;
+use ACP3\Core\ACL;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -12,10 +12,6 @@ use Symfony\Component\DependencyInjection\Container;
 class LoadModule extends AbstractPlugin
 {
     /**
-     * @var Modules
-     */
-    protected $modules;
-    /**
      * @var Container
      */
     protected $container;
@@ -24,15 +20,10 @@ class LoadModule extends AbstractPlugin
      */
     protected $pluginName = 'load_module';
 
-    public function __construct(Modules $modules)
-    {
-        $this->modules = $modules;
-    }
-
     /**
      * @param Container $container
      */
-    public function setContainer(Container $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }
@@ -56,7 +47,7 @@ class LoadModule extends AbstractPlugin
 
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
 
-        if ($this->modules->hasPermission($path)) {
+        if ($this->container->get('core.acl')->hasPermission($path)) {
             $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2]);
 
             $frontController = new FrontController($this->container);

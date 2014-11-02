@@ -68,7 +68,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        if ($this->modules->hasPermission('admin/menus/items/create') === true) {
+        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
             $lang_options = array($this->lang->t('articles', 'create_menu_item'));
             $this->view->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->seo->setCache();
 
-            if (isset($formData['create']) === true && $this->modules->hasPermission('admin/menus/items/create') === true) {
+            if (isset($formData['create']) === true && $this->acl->hasPermission('admin/menus/items/create') === true) {
                 $insertValues = array(
                     'id' => '',
                     'mode' => 4,
@@ -253,7 +253,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
-            $canDelete = $this->modules->hasPermission('admin/articles/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/articles/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 2 : 1,

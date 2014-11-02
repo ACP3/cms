@@ -176,7 +176,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_files = count($files);
 
         if ($c_files > 0) {
-            $canDelete = $this->modules->hasPermission('admin/files/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/files/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

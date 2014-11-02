@@ -69,7 +69,7 @@ class Index extends Core\Modules\Controller\Frontend
         foreach ($modules as $module) {
             $action = $module . 'Search';
             if (method_exists($this->get('search.extensions'), $action) &&
-                $this->modules->hasPermission('frontend/' . $module) === true
+                $this->acl->hasPermission('frontend/' . $module) === true
             ) {
                 $results = $this->get('search.extensions');
                 $results

@@ -122,7 +122,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_newsletter = count($newsletter);
 
         if ($c_newsletter > 0) {
-            $canDelete = $this->modules->hasPermission('admin/newsletter/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/newsletter/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
@@ -134,7 +134,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
-            $this->view->assign('can_send', $this->modules->hasPermission('admin/newsletter/index/send'));
+            $this->view->assign('can_send', $this->acl->hasPermission('admin/newsletter/index/send'));
             $this->view->assign('has_active_newsletter_accounts', $this->newsletterModel->countAllActiveAccounts() > 0);
         }
     }

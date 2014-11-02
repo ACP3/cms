@@ -12,10 +12,6 @@ use ACP3\Modules\Permissions;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\ACL
-     */
-    protected $acl;
-    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
@@ -34,7 +30,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function __construct(
         Core\Context\Admin $context,
-        Core\ACL $acl,
         \Doctrine\DBAL\Connection $db,
         Core\Helpers\Secure $secureHelper,
         Permissions\Model $permissionsModel,
@@ -42,7 +37,6 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::__construct($context);
 
-        $this->acl = $acl;
         $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->permissionsModel = $permissionsModel;
@@ -200,8 +194,8 @@ class Index extends Core\Modules\Controller\Admin
                 $roles[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
             }
             $this->view->assign('roles', $roles);
-            $this->view->assign('can_delete', $this->modules->hasPermission('admin/permissions/index/delete'));
-            $this->view->assign('can_order', $this->modules->hasPermission('admin/permissions/index/order'));
+            $this->view->assign('can_delete', $this->acl->hasPermission('admin/permissions/index/delete'));
+            $this->view->assign('can_order', $this->acl->hasPermission('admin/permissions/index/order'));
         }
     }
 

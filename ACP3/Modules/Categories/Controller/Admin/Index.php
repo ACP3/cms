@@ -214,7 +214,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_categories = count($categories);
 
         if ($c_categories > 0) {
-            $canDelete = $this->modules->hasPermission('admin/categories/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/categories/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

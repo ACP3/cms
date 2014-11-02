@@ -355,7 +355,7 @@ class Validator extends Core\Validator\AbstractValidator
         } elseif ($this->validate->email($formData['nick_mail']) === true && $this->userModel->resultExistsByEmail($formData['nick_mail']) === false) {
             $errors['nick-mail'] = $this->lang->t('users', 'user_not_exists');
         }
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->captchaValidator->captcha($formData['captcha']) === false) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -389,7 +389,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['pwd']) || empty($formData['pwd_repeat']) || $formData['pwd'] != $formData['pwd_repeat']) {
             $errors[] = $this->lang->t('users', 'type_in_pwd');
         }
-        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->captchaValidator->captcha($formData['captcha']) === false) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 

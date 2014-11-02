@@ -60,7 +60,7 @@ class Accounts extends Core\Modules\Controller\Admin
         $c_accounts = count($accounts);
 
         if ($c_accounts > 0) {
-            $canDelete = $this->modules->hasPermission('admin/newsletter/accounts/delete');
+            $canDelete = $this->acl->hasPermission('admin/newsletter/accounts/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 3 : 2,

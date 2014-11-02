@@ -32,7 +32,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $feed = $this->get('feeds.extensions');
 
-        if ($this->modules->hasPermission('frontend/' . $module) === true &&
+        if ($this->acl->hasPermission('frontend/' . $module) === true &&
             method_exists($feed, $action) === true
         ) {
             $settings = $this->feedsConfig->getSettings();

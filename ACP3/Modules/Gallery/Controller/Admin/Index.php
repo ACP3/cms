@@ -128,7 +128,7 @@ class Index extends Core\Modules\Controller\Admin
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
-                $canDelete = $this->modules->hasPermission('admin/gallery/pictures/delete');
+                $canDelete = $this->acl->hasPermission('admin/gallery/pictures/delete');
                 $config = array(
                     'element' => '#acp-table',
                     'hide_col_sort' => $canDelete === true ? 0 : '',
@@ -142,8 +142,8 @@ class Index extends Core\Modules\Controller\Admin
                 }
                 $this->view->assign('pictures', $pictures);
                 $this->view->assign('can_delete', $canDelete);
-                $this->view->assign('can_order', $this->modules->hasPermission('admin/gallery/pictures/order'));
-                $this->view->assign('can_edit_picture', $this->modules->hasPermission('admin/gallery/pictures/edit'));
+                $this->view->assign('can_order', $this->acl->hasPermission('admin/gallery/pictures/order'));
+                $this->view->assign('can_edit_picture', $this->acl->hasPermission('admin/gallery/pictures/edit'));
             }
 
             $this->secureHelper->generateFormToken($this->request->query);
@@ -160,7 +160,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
-            $canDelete = $this->modules->hasPermission('admin/gallery/index/delete');
+            $canDelete = $this->acl->hasPermission('admin/gallery/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

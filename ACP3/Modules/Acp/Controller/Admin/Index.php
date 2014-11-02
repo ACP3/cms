@@ -18,7 +18,7 @@ class Index extends Core\Modules\Controller\Admin
 
         foreach ($modules as $name => $info) {
             $dir = strtolower($info['dir']);
-            if ($this->modules->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
+            if ($this->acl->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
                 $mods[$name]['name'] = $name;
                 $mods[$name]['dir'] = $dir;
             }

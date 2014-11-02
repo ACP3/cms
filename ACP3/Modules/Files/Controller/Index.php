@@ -97,7 +97,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('file', $file);
                 $this->view->assign('dateformat', $settings['dateformat']);
 
-                if ($settings['comments'] == 1 && $file['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
+                if ($settings['comments'] == 1 && $file['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true) {
                     $comments = $this->get('comments.controller.frontend.index');
                     $comments
                         ->setModule('files')

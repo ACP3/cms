@@ -11,6 +11,10 @@ use ACP3\Core;
 abstract class Controller
 {
     /**
+     * @var Core\ACL
+     */
+    protected $acl;
+    /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
@@ -71,8 +75,12 @@ abstract class Controller
      */
     protected $contentAppend = '';
 
+    /**
+     * @param Core\Context $context
+     */
     public function __construct(Core\Context $context)
     {
+        $this->acl = $context->getACL();
         $this->auth = $context->getAuth();
         $this->lang = $context->getLang();
         $this->request = $context->getRequest();

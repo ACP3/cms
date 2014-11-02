@@ -5,15 +5,15 @@ services:
 
   core.context:
     class : ACP3\Core\Context
-    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view']
+    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view']
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
-    arguments: ['@core.assets', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validator.rules.misc', '@core.session', '@core.router.aliases']
+    arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session', '@core.router.aliases']
 
   core.context.frontend:
     class : ACP3\Core\Context\Frontend
-    arguments: ['@core.assets', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo']
+    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
 
   core.view:
     class: ACP3\Core\View
@@ -57,7 +57,7 @@ services:
 
   core.acl:
     class: ACP3\Core\ACL
-    arguments: ['@core.auth', '@core.db']
+    arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache', '@core.db']
 
   core.lang:
     class: ACP3\Core\Lang
@@ -65,7 +65,7 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@core.db', '@core.acl', '@core.lang']
+    arguments: ['@core.db', '@core.lang']
 
   core.pagination:
     class: ACP3\Core\Pagination
