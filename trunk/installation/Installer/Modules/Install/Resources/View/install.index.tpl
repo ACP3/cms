@@ -123,4 +123,4 @@
         </div>
     </div>
 </form>
-{include_js module="system" file="forms"}
+<script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/js/forms.js"></script>

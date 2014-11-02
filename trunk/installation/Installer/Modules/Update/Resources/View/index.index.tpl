@@ -24,5 +24,5 @@
             <button type="submit" name="update" class="btn btn-primary">{lang t="update|do_db_update"}</button>
         </div>
     </form>
-    {include_js module="system" file="forms"}
+    <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/js/forms.js"></script>
 {/if}
