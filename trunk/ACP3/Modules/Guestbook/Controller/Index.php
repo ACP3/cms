@@ -126,7 +126,6 @@ class Index extends Core\Modules\Controller\Frontend
                 $emoticonsActive = $this->modules->isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
             }
 
-            $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
                 if ($emoticonsActive === true) {

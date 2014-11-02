@@ -17,7 +17,7 @@ services:
 
   search.extensions:
     class: ACP3\Modules\Search\Extensions
-    arguments: ['@core.db', '@core.date', '@core.lang', '@core.router', '@core.helpers.stringFormatter']
+    arguments: ['@core.db', '@core.date', '@core.lang', '@core.router']
 
   search.installer:
     class: ACP3\Modules\Search\Installer

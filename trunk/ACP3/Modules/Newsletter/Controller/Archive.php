@@ -42,8 +42,6 @@ class Archive extends Core\Modules\Controller\Frontend
                 ->append($this->lang->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
                 ->append($newsletter['title']);
 
-            $formatter = $this->get('core.helpers.stringFormatter');
-
             $this->view->assign('newsletter', $newsletter);
         } else {
             throw new Core\Exceptions\ResultNotExists();
