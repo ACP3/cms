@@ -106,7 +106,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                     $update['text'] = $this->lang->t('system', 'acp3_up_to_date');
                     $update['class'] = 'success';
                 } else {
-                    $update['text'] = sprintf($this->lang->t('system', 'acp3_not_up_to_date'), '<a href="' . $data[1] . '" onclick="window.open(this.href); return false">', '</a>');
+                    $update['text'] = sprintf($this->lang->t('system', 'acp3_not_up_to_date'), '<a href="' . $data[1] . '" target="_blank">', '</a>');
                     $update['class'] = 'error';
                 }
 

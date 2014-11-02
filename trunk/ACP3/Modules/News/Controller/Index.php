@@ -79,7 +79,7 @@ class Index extends Core\Modules\Controller\Frontend
             if (!empty($news['uri']) && (bool)preg_match('=^http(s)?://=', $news['uri']) === false) {
                 $news['uri'] = 'http://' . $news['uri'];
             }
-            $news['target'] = $news['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+            $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';
 
             $this->view->assign('news', $news);
             $this->view->assign('dateformat', $settings['dateformat']);

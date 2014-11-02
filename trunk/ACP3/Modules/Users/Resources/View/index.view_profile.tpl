@@ -34,7 +34,7 @@
             {if !empty($user.icq)}
                 <dt>{lang t="users|icq"}</dt>
                 <dd>
-                    <a href="http://www.icq.com/{$user.icq}" onclick="window.open(this.href); return false">
+                    <a href="http://www.icq.com/{$user.icq}" target="_blank">
                         <img src="http://web.icq.com/whitepages/online?icq={$user.icq}&amp;img=27" alt="">
                         {$user.icq}
                     </a>
@@ -43,7 +43,7 @@
             {if !empty($user.skype)}
                 <dt>{lang t="users|skype"}</dt>
                 <dd>
-                    <a href="skype:{$user.skype}?userinfo" onclick="window.open(this.href); return false">
+                    <a href="skype:{$user.skype}?userinfo" target="_blank">
                         <img src="http://mystatus.skype.com/smallicon/{$user.skype}" alt="">
                         {$user.skype}
                     </a>
@@ -52,7 +52,7 @@
             {if !empty($user.website)}
                 <dt>{lang t="system|website"}</dt>
                 <dd>
-                    <a href="{$user.website}" rel="nofollow" onclick="window.open(this.href); return false" title="{lang t="users|visit_website"}">{$user.website}</a>
+                    <a href="{$user.website}" rel="nofollow" target="_blank" title="{lang t="users|visit_website"}">{$user.website}</a>
                 </dd>
             {/if}
         </dl>

@@ -171,7 +171,7 @@ class Helpers
 
                     // Link zusammenbauen
                     $href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $this->router->route($items[$i]['uri']) : $items[$i]['uri'];
-                    $target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+                    $target = $items[$i]['target'] == 2 ? ' target="_blank"' : '';
                     $attributes = '';
                     $attributes .= !empty($linkCss) ? ' class="' . $linkCss . '"' : '';
 

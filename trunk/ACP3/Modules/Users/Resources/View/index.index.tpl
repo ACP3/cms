@@ -22,7 +22,7 @@
                 <td>{if $row.mail_display == 1}{mailto address=$row.mail encode="javascript"}{else}-{/if}</td>
                 <td>
                     {if !empty($row.website)}
-                        <a href="{$row.website}" rel="nofollow" onclick="window.open(this.href); return false" title="{lang t="users|visit_website"}">{$row.website}</a>
+                        <a href="{$row.website}" rel="nofollow" target="_blank" title="{lang t="users|visit_website"}">{$row.website}</a>
                     {else}
                         -
                     {/if}
