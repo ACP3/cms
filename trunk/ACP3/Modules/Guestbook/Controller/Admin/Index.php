@@ -89,8 +89,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $guestbook = $this->guestbookModel->getAllInAcp();
         $c_guestbook = count($guestbook);
 

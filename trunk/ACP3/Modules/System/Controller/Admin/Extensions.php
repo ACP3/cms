@@ -41,8 +41,6 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function actionDesigns()
     {
-        $redirect = $this->redirectMessages();
-
         if (isset($this->request->dir)) {
             $bool = false;
 
@@ -57,10 +55,8 @@ class Extensions extends Core\Modules\Controller\Admin
             }
             $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
-            $redirect->setMessage($bool, $text, 'acp/system/index/designs');
+            $this->redirectMessages()->setMessage($bool, $text, 'acp/system/index/designs');
         } else {
-            $redirect->getMessage();
-
             $designs = array();
             $path = ACP3_ROOT_DIR . 'designs/';
             $directories = scandir($path);
@@ -98,8 +94,6 @@ class Extensions extends Core\Modules\Controller\Admin
                 $this->_uninstallModule();
                 break;
             default:
-                $this->redirectMessages()->getMessage();
-
                 $this->_renewCaches();
 
                 $modules = $this->modules->getAllModules();

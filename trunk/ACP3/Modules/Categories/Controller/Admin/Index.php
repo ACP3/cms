@@ -208,8 +208,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $categories = $this->categoriesModel->getAllWithModuleName();
         $c_categories = count($categories);
 

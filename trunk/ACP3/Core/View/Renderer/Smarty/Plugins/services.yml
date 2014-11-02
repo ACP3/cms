@@ -11,6 +11,10 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\DateRange
     arguments: ['@core.date']
 
+  smarty.plugin.redirect_message:
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\RedirectMessage
+    arguments: ['@core.helpers.redirect']
+
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\HasPermission
     arguments: ['@core.acl']

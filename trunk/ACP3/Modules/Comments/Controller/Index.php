@@ -84,8 +84,6 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $settings = $this->commentsConfig->getSettings();
 
         // Auflistung der Kommentare

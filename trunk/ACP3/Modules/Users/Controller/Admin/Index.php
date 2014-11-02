@@ -310,8 +310,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $users = $this->usersModel->getAllInAcp();
         $c_users = count($users);
 

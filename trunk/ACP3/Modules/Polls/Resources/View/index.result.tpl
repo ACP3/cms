@@ -1,6 +1,5 @@
-{if isset($redirect_message)}
-    {$redirect_message}
-{/if}<h4 style="margin-bottom:10px">{$question}</h4>
+{redirect_message}
+<h4 style="margin-bottom:10px">{$question}</h4>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -24,6 +23,7 @@
         </tr>
     {/foreach}
     </tbody>
-</table><p style="text-align:center">
+</table>
+<p class="text-center">
     <a href="{uri args="polls"}">{lang t="polls|polls_archive"}</a>
 </p>

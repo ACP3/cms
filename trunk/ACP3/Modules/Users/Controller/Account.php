@@ -162,8 +162,6 @@ class Account extends Core\Modules\Controller\Frontend
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
         }
 
-        $this->redirectMessages()->getMessage();
-
         $user = $this->usersModel->getOneById($this->auth->getUserId());
 
         $this->view->assign('draft', $user['draft']);

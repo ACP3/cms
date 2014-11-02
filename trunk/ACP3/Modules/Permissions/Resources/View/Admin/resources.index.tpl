@@ -15,9 +15,7 @@
             </div>
         </div>
     </nav>
-    {if isset($redirect_message)}
-        {$redirect_message}
-    {/if}
+    {redirect_message}
     {if isset($resources)}
         {include_js module="permissions" file="acp"}
         <table id="resources-table" class="table table-hover">

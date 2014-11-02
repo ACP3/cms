@@ -32,8 +32,6 @@ class Index extends Core\Modules\Controller\Frontend
             $this->_indexPost($_POST);
         }
 
-        $this->redirectMessages()->getMessage();
-
         $this->view->assign('form', array_merge(array('search_term' => ''), $_POST));
 
         $this->view->assign('search_mods', $this->get('search.helpers')->getModules());

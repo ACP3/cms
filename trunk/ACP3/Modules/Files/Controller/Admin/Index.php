@@ -170,8 +170,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $files = $this->filesModel->getAllInAcp();
         $c_files = count($files);
 

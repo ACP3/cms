@@ -104,8 +104,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $menus = $this->menusModel->getAllMenus();
         $c_menus = count($menus);
 

@@ -150,8 +150,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $polls = $this->pollsModel->getAllInAcp();
         $c_polls = count($polls);
 

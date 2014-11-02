@@ -37,8 +37,6 @@ class Index extends Core\Modules\Controller\Frontend
             $this->_indexPost($_POST);
         }
 
-        $this->redirectMessages()->getMessage();
-
         $defaults = array(
             'name' => '',
             'name_disabled' => '',

@@ -61,8 +61,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $comments = $this->commentsModel->getCommentsGroupedByModule();
         $c_comments = count($comments);
 

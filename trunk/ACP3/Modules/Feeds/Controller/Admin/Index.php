@@ -37,8 +37,6 @@ class Index extends Core\Modules\Controller\Admin
             $this->_indexPost($_POST);
         }
 
-        $this->redirectMessages()->getMessage();
-
         $settings = $this->feedsConfig->getSettings();
 
         $feedType = array(

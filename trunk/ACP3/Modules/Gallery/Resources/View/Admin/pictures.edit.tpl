@@ -4,18 +4,15 @@
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
         <label for="file" class="col-sm-2 control-label">{lang t="gallery|select_new_picture"}</label>
-
         <div class="col-sm-10"><input type="file" name="file" id="file"></div>
     </div>
     <div class="form-group">
         <label for="description" class="col-sm-2 control-label">{lang t="system|description"}</label>
-
         <div class="col-sm-10">{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</div>
     </div>
     {if isset($options)}
         <div class="form-group">
             <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
-
             <div class="col-sm-10">
                 {foreach $options as $row}
                     <div class="checkbox">
