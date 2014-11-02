@@ -10,6 +10,10 @@ use ACP3\Core;
 class Frontend extends Core\Context
 {
     /**
+     * @var Core\Assets
+     */
+    protected $assets;
+    /**
      * @var \ACP3\Core\Breadcrumb
      */
     protected $breadcrumb;
@@ -19,6 +23,7 @@ class Frontend extends Core\Context
     protected $seo;
 
     public function __construct(
+        Core\Assets $assets,
         Core\Auth $auth,
         Core\Lang $lang,
         Core\Modules $modules,
@@ -30,8 +35,17 @@ class Frontend extends Core\Context
     {
         parent::__construct($auth, $lang, $modules, $request, $router, $view);
 
+        $this->assets = $assets;
         $this->breadcrumb = $breadcrumb;
         $this->seo = $seo;
+    }
+
+    /**
+     * @return Core\Assets
+     */
+    public function getAssets()
+    {
+        return $this->assets;
     }
 
     /**

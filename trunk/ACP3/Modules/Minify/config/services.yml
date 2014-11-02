@@ -1,14 +1,10 @@
 services:
   minify.controller.frontend.index:
     class: ACP3\Modules\Minify\Controller\Index
-    arguments: ['@core.context.frontend', '@minify.helpers']
+    arguments: ['@core.context.frontend']
 
   minify.cache:
     class: ACP3\Modules\Minify\Cache
-
-  minify.helpers:
-    class: ACP3\Modules\Minify\Helpers
-    arguments: ['@core.modules', '@minify.cache']
 
   minify.installer:
     class: ACP3\Modules\Minify\Installer

@@ -4,11 +4,14 @@ namespace ACP3\Core;
 
 /**
  * Manages the most used functions in the ACP3
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class Functions
 {
+    /**
+     * @var Assets
+     */
+    protected $assets;
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -21,10 +24,17 @@ class Functions
     private $dataTableInitialized = false;
 
     /**
-     * Set the class attributes
+     * @param Assets $assets
+     * @param \Doctrine\DBAL\Connection $db
+     * @param View $view
      */
-    public function __construct(\Doctrine\DBAL\Connection $db, View $view)
+    public function __construct(
+        Assets $assets,
+        \Doctrine\DBAL\Connection $db,
+        View $view
+    )
     {
+        $this->assets = $assets;
         $this->db = $db;
         $this->view = $view;
     }
@@ -152,7 +162,7 @@ class Functions
      */
     public function dataTable(array $config)
     {
-        $this->view->enableJsLibraries(array('datatables'));
+        $this->assets->enableJsLibraries(array('datatables'));
 
         $config['initialized'] = $this->dataTableInitialized;
 

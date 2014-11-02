@@ -23,6 +23,7 @@ class Admin extends Frontend
     protected $aliases;
 
     public function __construct(
+        Core\Assets $assets,
         Core\Auth $auth,
         Core\Lang $lang,
         Core\Modules $modules,
@@ -35,7 +36,7 @@ class Admin extends Frontend
         Core\Session $session,
         Core\Router\Aliases $aliases)
     {
-        parent::__construct($auth, $lang, $modules, $request, $router, $view, $breadcrumb, $seo);
+        parent::__construct($assets, $auth, $lang, $modules, $request, $router, $view, $breadcrumb, $seo);
 
         $this->validate = $validate;
         $this->session = $session;

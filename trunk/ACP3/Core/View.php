@@ -13,34 +13,9 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 class View extends ContainerAware
 {
     /**
-     * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
-     * @var array
-     */
-    protected $jsLibraries = array(
-        'bootbox' => false,
-        'fancybox' => false,
-        'jquery-ui' => false,
-        'timepicker' => false,
-        'datatables' => false
-    );
-    /**
-     * @var string
-     */
-    protected $jsLibrariesCache = '';
-
-    /**
-     * @var Router
-     */
-    protected $router;
-    /**
      * @var AbstractRenderer
      */
     protected $renderer;
-
-    public function __construct(Router $router)
-    {
-        $this->router = $router;
-    }
 
     /**
      * Gets the renderer
@@ -72,68 +47,6 @@ class View extends ContainerAware
     }
 
     /**
-     * Aktiviert einzelne JavaScript Bibliotheken
-     *
-     * @param array $libraries
-     *
-     * @return $this
-     */
-    public function enableJsLibraries(array $libraries)
-    {
-        foreach ($libraries as $library) {
-            if (array_key_exists($library, $this->jsLibraries) === true) {
-                $this->jsLibraries[$library] = true;
-                if ($library === 'timepicker') {
-                    $this->jsLibraries['jquery-ui'] = true;
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Erstellt den Link zum Minifier mitsamt allen zu ladenden JavaScript Bibliotheken
-     *
-     * @param        $group
-     * @param string $layout
-     *
-     * @return string
-     */
-    public function buildMinifyLink($group, $layout = '')
-    {
-        if (!empty($layout)) {
-            $layout = '/layout_' . $layout;
-        }
-
-        $libraries = $this->_getJsLibrariesCache();
-
-        if ($libraries !== '') {
-            $libraries = '/libraries_' . substr($libraries, 0, -1);
-        }
-
-        return $this->router->route('minify/index/index/group_' . $group . '/design_' . CONFIG_DESIGN . $layout . $libraries);
-    }
-
-    /**
-     * @return string
-     */
-    private function _getJsLibrariesCache()
-    {
-        if (empty($this->jsLibrariesCache)) {
-            ksort($this->jsLibraries);
-            foreach ($this->jsLibraries as $library => $enable) {
-                if ($enable === true) {
-                    $this->jsLibrariesCache .= $library . ',';
-                }
-            }
-        }
-
-        return $this->jsLibrariesCache;
-
-    }
-
-    /**
      * Gibt ein Template direkt aus
      *
      * @param string $template
@@ -162,6 +75,7 @@ class View extends ContainerAware
      */
     public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
     {
+        // If an template with directory is given, uppercase the first letter
         if (strpos($template, '/') !== false) {
             $template = ucfirst($template);
         }
