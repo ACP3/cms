@@ -28,7 +28,6 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function __construct(
         Core\Context\Admin $context,
-        \Doctrine\DBAL\Connection $db,
         System\Model $systemModel,
         Core\Config $systemConfig,
         Permissions\Cache $permissionsCache)
