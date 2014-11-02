@@ -22,7 +22,7 @@
                 <span class="sr-only">{lang t="install|toggle_navigation"}</span> <span class="icon-bar"></span>
                 <span class="icon-bar"></span> <span class="icon-bar"></span>
             </button>
-            <a href="{$ROOT_DIR}" class="navbar-brand hidden-lg">{$PAGE_TITLE}</a>
+            <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">{$PAGE_TITLE}</a>
         </div>
         <div id="navbar-collapse" class="collapse navbar-collapse">
             {if isset($navbar)}
