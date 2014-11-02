@@ -116,8 +116,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $newsletter = $this->newsletterModel->getAllInAcp();
         $c_newsletter = count($newsletter);
 

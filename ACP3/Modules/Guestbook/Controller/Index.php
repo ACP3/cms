@@ -108,8 +108,6 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $settings = $this->guestbookConfig->getSettings();
         $this->view->assign('overlay', $settings['overlay']);
 

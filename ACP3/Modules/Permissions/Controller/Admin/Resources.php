@@ -111,8 +111,6 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $resources = $this->permissionsModel->getAllResources();
         $c_resources = count($resources);
         $output = array();

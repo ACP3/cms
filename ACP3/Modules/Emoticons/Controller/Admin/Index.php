@@ -174,8 +174,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $emoticons = $this->emoticonsModel->getAll();
         $c_emoticons = count($emoticons);
 

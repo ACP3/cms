@@ -1,7 +1,7 @@
 {if isset($export)}
     <pre>
-		{$export}
-	</pre>
+        {$export}
+    </pre>
 {else}
     {if isset($error_msg)}
         {$error_msg}

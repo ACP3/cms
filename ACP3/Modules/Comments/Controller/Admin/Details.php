@@ -90,8 +90,6 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->request->id);
 
         if (empty($comments) === false) {

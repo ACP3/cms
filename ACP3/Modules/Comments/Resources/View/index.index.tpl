@@ -2,9 +2,7 @@
     <header>
         <h1 class="text-center">{lang t="comments|comments"}</h1>
     </header>
-    {if isset($redirect_message)}
-        {$redirect_message}
-    {/if}
+    {redirect_message}
     {if isset($comments)}
         {$pagination}
         {foreach $comments as $row}

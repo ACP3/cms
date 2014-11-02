@@ -33,8 +33,6 @@ class Index extends Core\Modules\Controller\Admin
             $this->_indexPost($_POST);
         }
 
-        $this->redirectMessages()->getMessage();
-
         $settings = $this->contactConfig->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));

@@ -115,8 +115,6 @@ class Index extends Core\Modules\Controller\Admin
                 $this->_editPost($_POST);
             }
 
-            $this->redirectMessages()->getMessage();
-
             $this->view->assign('gallery_id', $this->request->id);
 
             // Datumsauswahl
@@ -154,8 +152,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $galleries = $this->galleryModel->getAllInAcp();
         $c_galleries = count($galleries);
 

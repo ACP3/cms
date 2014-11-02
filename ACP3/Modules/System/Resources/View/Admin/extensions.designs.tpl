@@ -1,6 +1,4 @@
-{if isset($redirect_message)}
-    {$redirect_message}
-{/if}
+{redirect_message}
 <table class="table table-striped table-hover">
     <thead>
     <tr>

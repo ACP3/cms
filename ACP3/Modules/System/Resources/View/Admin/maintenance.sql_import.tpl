@@ -1,9 +1,9 @@
 {if isset($sql_queries)}
     <pre>
-{foreach $sql_queries as $row}
-    <span style="color:#{$row.color}">{$row.query}</span>
-{/foreach}
-</pre>
+    {foreach $sql_queries as $row}
+        <span style="color:#{$row.color}">{$row.query}</span>
+    {/foreach}
+    </pre>
 {else}
     {if isset($error_msg)}
         {$error_msg}

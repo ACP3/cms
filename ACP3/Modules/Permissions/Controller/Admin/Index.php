@@ -184,8 +184,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
 

@@ -17,9 +17,7 @@
             </div>
         </div>
     </nav>
-    {if isset($redirect_message)}
-        {$redirect_message}
-    {/if}
+    {redirect_message}
     {if isset($newsletter)}
         {assign "statusSearch" array('0', '1')}
         {assign "statusReplace" array({lang t="newsletter|not_yet_sent"}, {lang t="newsletter|already_sent"})}

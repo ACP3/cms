@@ -43,8 +43,6 @@ class Index extends Core\Modules\Controller\Admin
             $this->_configurationPost($_POST);
         }
 
-        $this->redirectMessages()->getMessage();
-
         $this->view->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
 
         // WYSIWYG-Editoren

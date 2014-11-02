@@ -13,9 +13,7 @@
         </div>
     </div>
 </nav>
-{if isset($redirect_message)}
-    {$redirect_message}
-{/if}
+{redirect_message}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
         <label for="draft" class="col-sm-2 control-label">{lang t="users|drafts"}</label>

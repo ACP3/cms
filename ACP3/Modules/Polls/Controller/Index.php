@@ -62,8 +62,6 @@ class Index extends Core\Modules\Controller\Frontend
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
             $this->pollsModel->pollExists($this->request->id, $this->date->getCurrentDateTime()) === true
         ) {
-            $this->redirectMessages()->getMessage();
-
             $question = $this->pollsModel->getOneByIdWithTotalVotes($this->request->id);
             $answers = $this->pollsModel->getAnswersByPollId($this->request->id);
             $c_answers = count($answers);

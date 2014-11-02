@@ -35,18 +35,25 @@ class RedirectMessages
 
     /**
      * Gets the generated redirect message from setMessage()
+     *
+     * @return string
+     * @throws \Exception
      */
     public function getMessage()
     {
         if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
             $this->view->assign('redirect', $_SESSION['redirect_message']);
-            $this->view->assign('redirect_message', $this->view->fetchTemplate('system/redirect_message.tpl'));
+
             unset($_SESSION['redirect_message']);
+
+            return $this->view->fetchTemplate('system/redirect_message.tpl');
         }
+
+        return '';
     }
 
     /**
-     * Setzt eine Redirect Nachricht
+     * Sets a redirect messages and redirects to the given internal path
      *
      * @param $success
      * @param $text

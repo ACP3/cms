@@ -247,8 +247,6 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $articles = $this->articlesModel->getAllInAcp();
         $c_articles = count($articles);
 

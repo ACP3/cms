@@ -13,9 +13,7 @@
         <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
     </p>
 {/if}
-{if isset($redirect_message)}
-    {$redirect_message}
-{/if}
+{redirect_message}
 {if isset($guestbook)}
     {$pagination}
     {foreach $guestbook as $row}

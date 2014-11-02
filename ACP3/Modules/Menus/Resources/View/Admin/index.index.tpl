@@ -16,9 +16,7 @@
             </div>
         </div>
     </nav>
-    {if isset($redirect_message)}
-        {$redirect_message}
-    {/if}
+    {redirect_message}
     {if isset($pages_list)}
         <table class="table table-striped table-hover">
             <thead>

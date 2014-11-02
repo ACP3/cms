@@ -54,8 +54,6 @@ class Accounts extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $this->redirectMessages()->getMessage();
-
         $accounts = $this->newsletterModel->getAllAccounts();
         $c_accounts = count($accounts);
 
