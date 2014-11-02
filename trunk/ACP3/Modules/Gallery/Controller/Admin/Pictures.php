@@ -73,14 +73,6 @@ class Pictures extends Core\Modules\Controller\Admin
                 $this->view->assign('options', $options);
             }
 
-            $galleries = $this->galleryModel->getAll();
-            $c_galleries = count($galleries);
-            for ($i = 0; $i < $c_galleries; ++$i) {
-                $galleries[$i]['selected'] = Core\Functions::selectEntry('gallery', $galleries[$i]['id'], $this->request->id);
-                $galleries[$i]['date'] = $this->date->format($galleries[$i]['start']);
-            }
-
-            $this->view->assign('galleries', $galleries);
             $this->view->assign('form', array_merge(array('description' => ''), $_POST));
             $this->view->assign('gallery_id', $this->request->id);
 

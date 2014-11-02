@@ -162,7 +162,6 @@ class Index extends Core\Modules\Controller\Frontend
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
             $user = $this->auth->getUserInfo($this->request->id);
             $user['gender'] = str_replace(array(1, 2, 3), array('', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')), $user['gender']);
-            $user['birthday'] = $this->date->format($user['birthday'], $user['birthday_display'] == 1 ? 'd.m.Y' : 'd.m.');
             if (!empty($user['website']) && (bool)preg_match('=^http(s)?://=', $user['website']) === false) {
                 $user['website'] = 'http://' . $user['website'];
             }
