@@ -34,11 +34,6 @@ class Smarty extends AbstractRenderer
             ->setCompileDir(CACHE_DIR . 'tpl_compiled/')
             ->setCacheDir(CACHE_DIR . 'tpl_cached/');
 
-
-        if (!empty($params['plugins_dir'])) {
-            $this->renderer->addPluginsDir($params['plugins_dir']);
-        }
-
         $services = $this->container->getServiceIds();
         foreach ($services as $serviceName) {
             if (strpos($serviceName, 'smarty.plugin.') === 0) {
