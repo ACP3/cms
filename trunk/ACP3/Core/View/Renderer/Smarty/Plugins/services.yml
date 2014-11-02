@@ -21,7 +21,7 @@ services:
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\IncludeJs
-    arguments: ['@core.view']
+    arguments: ['@core.view', '@minify.helpers']
 
   smarty.plugin.js_libraries:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\JsLibraries
