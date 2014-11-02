@@ -13,7 +13,13 @@
         {/if}
         {if !empty($user.birthday) && $user.birthday_display != 0}
             <dt>{lang t="users|birthday"}</dt>
-            <dd>{$user.birthday}</dd>
+            <dd>
+                {if $user.birthday_display == 1}
+                    {date_format date=$user.birthday format="d.m.Y"}
+                {else}
+                    {date_format date=$user.birthday format="d.m"}
+                {/if}
+            </dd>
         {/if}
     </dl>
 </fieldset>
