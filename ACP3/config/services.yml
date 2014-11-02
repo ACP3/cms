@@ -1,15 +1,19 @@
 services:
+  core.assets:
+    class: ACP3\Core\Assets
+    arguments: ['@core.modules', '@core.router', '@minify.cache']
+
   core.context:
     class : ACP3\Core\Context
     arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view']
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
-    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validator.rules.misc', '@core.session', '@core.router.aliases']
+    arguments: ['@core.assets', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo', '@core.validator.rules.misc', '@core.session', '@core.router.aliases']
 
   core.context.frontend:
     class : ACP3\Core\Context\Frontend
-    arguments: ['@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo']
+    arguments: ['@core.assets', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.breadcrumb', '@core.seo']
 
   core.view:
     class: ACP3\Core\View
@@ -81,7 +85,7 @@ services:
 
   core.functions:
     class: ACP3\Core\Functions
-    arguments: ['@core.db', '@core.view']
+    arguments: ['@core.assets', '@core.db', '@core.view']
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts

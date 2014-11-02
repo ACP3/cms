@@ -11,6 +11,10 @@ use ACP3\Core;
 abstract class Frontend extends Core\Modules\Controller
 {
     /**
+     * @var Core\Assets
+     */
+    protected $assets;
+    /**
      * @var \ACP3\Core\Breadcrumb
      */
     protected $breadcrumb;
@@ -39,6 +43,7 @@ abstract class Frontend extends Core\Modules\Controller
     {
         parent::__construct($frontendContext);
 
+        $this->assets = $frontendContext->getAssets();
         $this->breadcrumb = $frontendContext->getBreadcrumb();
         $this->seo = $frontendContext->getSeo();
     }
@@ -109,8 +114,8 @@ abstract class Frontend extends Core\Modules\Controller
                     }
                 } else {
                     $file = $this->layout;
-                    $this->view->assign('MIN_STYLESHEET', $this->view->buildMinifyLink('css', substr($file, 0, strpos($file, '.'))));
-                    $this->view->assign('MIN_JAVASCRIPT', $this->view->buildMinifyLink('js'));
+                    $this->view->assign('MIN_STYLESHEET', $this->assets->buildMinifyLink('css', substr($file, 0, strpos($file, '.'))));
+                    $this->view->assign('MIN_JAVASCRIPT', $this->assets->buildMinifyLink('js'));
                 }
 
                 $this->view->displayTemplate($file);

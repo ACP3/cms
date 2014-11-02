@@ -12,17 +12,15 @@ use ACP3\Modules\Minify;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var Minify\Helpers
+     * @var Core\Assets
      */
-    protected $minifyHelpers;
+    protected $assets;
 
-    public function __construct(
-        Core\Context $context,
-        Minify\Helpers $minifyHelpers)
+    public function __construct(Core\Context\Frontend $frontendContext)
     {
-        parent::__construct($context);
+        parent::__construct($frontendContext);
 
-        $this->minifyHelpers = $minifyHelpers;
+        $this->assets = $frontendContext->getAssets();
     }
 
     public function actionIndex()
@@ -36,10 +34,10 @@ class Index extends Core\Modules\Controller
             $options = array();
             switch ($this->request->group) {
                 case 'css':
-                    $files = $this->minifyHelpers->includeCssFiles($libraries, $layout);
+                    $files = $this->assets->includeCssFiles($libraries, $layout);
                     break;
                 case 'js':
-                    $files = $this->minifyHelpers->includeJsFiles($libraries, $layout);
+                    $files = $this->assets->includeJsFiles($libraries, $layout);
                     break;
                 default:
                     $files = array();
