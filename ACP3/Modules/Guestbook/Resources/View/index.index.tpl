@@ -35,7 +35,7 @@
             <div class="content">
                 <div class="pull-right">
                     {if $row.website != ''}
-                        <a href="{$row.website}" rel="nofollow" onclick="window.open(this.href); return false;" title="{lang t="guestbook|visit_website"}">
+                        <a href="{$row.website}" target="_blank" rel="nofollow" title="{lang t="guestbook|visit_website"}">
                             {icon path="16/gohome" width="16" height="16" alt="`$row.website`"}
                         </a>
                         <br>

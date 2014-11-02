@@ -232,7 +232,7 @@
         <item key="path_to_icons">Pfad zum Icons Ordner</item>
         <item key="performance">Leistung</item>
         <item key="php_date_function">
-            <![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP.]]></item>
+            <![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a>-Funktion von PHP.]]></item>
         <item key="pls_select">Bitte auswählen</item>
         <item key="previous">Zurück</item>
         <item key="previous_page">Vorherige Seite</item>

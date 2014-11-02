@@ -225,7 +225,7 @@
         <item key="path_to_icons">Path to the icons folder</item>
         <item key="performance">Performance</item>
         <item key="php_date_function">
-            <![CDATA[see <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a> function of PHP.]]></item>
+            <![CDATA[see <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a> function of PHP.]]></item>
         <item key="pls_select">Please select</item>
         <item key="previous">Previous</item>
         <item key="previous_page">Previous page</item>
