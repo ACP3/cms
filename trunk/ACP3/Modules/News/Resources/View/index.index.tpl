@@ -27,7 +27,7 @@
                 </small>
             </header>
             <div class="content">
-                {$row.text}
+                {$row.text|rewrite_uri}
             </div>
             {if isset($row.comments_count)}
                 <footer class="text-center">

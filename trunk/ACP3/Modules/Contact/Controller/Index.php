@@ -100,13 +100,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionImprint()
     {
-        $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
-
-        $settings = $this->contactConfig->getSettings();
-        $settings['address'] = $formatter->rewriteInternalUri($settings['address']);
-        $settings['disclaimer'] = $formatter->rewriteInternalUri($settings['disclaimer']);
-        $this->view->assign('imprint', $settings);
-
+        $this->view->assign('imprint', $this->contactConfig->getSettings());
         $this->view->assign('powered_by', sprintf($this->lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
     }
 

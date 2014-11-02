@@ -65,8 +65,6 @@ class Index extends Core\Modules\Controller\Frontend
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
             $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1) {
-            /** @var Core\Helpers\Formatter\RewriteInternalUri $formatter */
-            $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
             $settings = $this->newsConfig->getSettings();
 
             $news = $this->newsCache->getCache($this->request->id);
@@ -78,7 +76,6 @@ class Index extends Core\Modules\Controller\Frontend
             }
             $this->breadcrumb->append($news['title']);
 
-            $news['text'] = $formatter->rewriteInternalUri($news['text']);
             if (!empty($news['uri']) && (bool)preg_match('=^http(s)?://=', $news['uri']) === false) {
                 $news['uri'] = 'http://' . $news['uri'];
             }
@@ -145,10 +142,8 @@ class Index extends Core\Modules\Controller\Frontend
             $this->pagination->setTotalResults($this->newsModel->countAll($time, $cat));
             $this->pagination->display();
 
-            $rewriteUri = $this->get('core.helpers.formatter.rewriteInternalUri');
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_news; ++$i) {
-                $news[$i]['text'] = $rewriteUri->rewriteInternalUri($news[$i]['text']);
                 if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $commentsCheck === true) {
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
                 }

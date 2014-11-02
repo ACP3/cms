@@ -1,7 +1,7 @@
 <dl>
     {if !empty($imprint.address)}
         <dt>{lang t="contact|address"}</dt>
-        <dd>{$imprint.address}</dd>
+        <dd>{$imprint.address|rewrite_uri}</dd>
     {/if}
     {if !empty($imprint.mail)}
         <dt>{lang t="system|email_address"}</dt>
@@ -17,7 +17,7 @@
     {/if}
     {if !empty($imprint.disclaimer)}
         <dt>{lang t="contact|disclaimer"}</dt>
-        <dd>{$imprint.disclaimer}</dd>
+        <dd>{$imprint.disclaimer|rewrite_uri}</dd>
     {/if}
 </dl><p class="powered-by text-center">
     {$powered_by}
