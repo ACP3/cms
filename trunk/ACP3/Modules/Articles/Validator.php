@@ -19,9 +19,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $menuModel;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\ACL
      */
-    protected $modules;
+    protected $acl;
     /**
      * @var \ACP3\Core\Request
      */
@@ -32,7 +32,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Date $dateValidator,
-        Core\Modules $modules,
+        Core\ACL $acl,
         Core\Request $request,
         Menus\Model $menuModel)
     {
@@ -40,8 +40,8 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->aliasesValidator = $aliasesValidator;
         $this->dateValidator = $dateValidator;
+        $this->acl = $acl;
         $this->request = $request;
-        $this->modules = $modules;
         $this->menuModel = $menuModel;
     }
 

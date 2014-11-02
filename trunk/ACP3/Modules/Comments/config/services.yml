@@ -27,7 +27,7 @@ services:
 
   comments.validator:
     class: ACP3\Modules\Comments\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.auth', '@core.date', '@core.modules', '@comments.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@core.date', '@core.modules', '@comments.model']
 
   comments.installer:
     class: ACP3\Modules\Comments\Installer

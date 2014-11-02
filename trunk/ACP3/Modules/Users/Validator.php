@@ -22,13 +22,13 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $dateValidator;
     /**
+     * @var \ACP3\Core\ACL
+     */
+    protected $acl;
+    /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
     /**
      * @var \ACP3\Core\Request
      */
@@ -44,8 +44,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\ACL $aclValidator,
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\Validator\Rules\Date $dateValidator,
+        Core\ACL $acl,
         Core\Auth $auth,
-        Core\Modules $modules,
         Core\Request $uri,
         Model $userModel
     )
@@ -55,8 +55,8 @@ class Validator extends Core\Validator\AbstractValidator
         $this->aclValidator = $aclValidator;
         $this->captchaValidator = $captchaValidator;
         $this->dateValidator = $dateValidator;
+        $this->acl = $acl;
         $this->auth = $auth;
-        $this->modules = $modules;
         $this->uri = $uri;
         $this->userModel = $userModel;
     }

@@ -33,7 +33,7 @@ services:
 
   newsletter.validator:
     class: ACP3\Modules\Newsletter\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.auth', '@core.modules', '@newsletter.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@newsletter.model']
 
   newsletter.installer:
     class: ACP3\Modules\Newsletter\Installer

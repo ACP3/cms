@@ -46,7 +46,6 @@ class Install extends AbstractController
     {
         if (empty($_POST) === false) {
             $this->_indexPost($_POST);
-            return;
         }
 
         // Zeitzonen

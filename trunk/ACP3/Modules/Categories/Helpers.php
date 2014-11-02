@@ -15,6 +15,10 @@ use ACP3\Core;
 class Helpers
 {
     /**
+     * @var Core\ACL
+     */
+    protected $acl;
+    /**
      * @var Cache
      */
     protected $cache;
@@ -36,6 +40,7 @@ class Helpers
     protected $view;
 
     public function __construct(
+        Core\ACL $acl,
         Core\Lang $lang,
         Core\Modules $modules,
         Core\View $view,
@@ -43,6 +48,7 @@ class Helpers
         Model $categoriesModel
     )
     {
+        $this->acl = $acl;
         $this->lang = $lang;
         $this->modules = $modules;
         $this->view = $view;
