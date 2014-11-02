@@ -50,7 +50,8 @@ class Assets
     protected $systemAssetsDesignPath = '';
 
     /**
-     * @param \ACP3\Core\Modules $modules
+     * @param Modules $modules
+     * @param Router $router
      * @param Minify\Cache $minifyCache
      */
     public function __construct(

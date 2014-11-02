@@ -46,6 +46,7 @@ class Install extends AbstractController
     {
         if (empty($_POST) === false) {
             $this->_indexPost($_POST);
+            return;
         }
 
         // Zeitzonen
@@ -133,7 +134,7 @@ class Install extends AbstractController
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load(ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
-        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
         $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
