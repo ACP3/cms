@@ -10,8 +10,6 @@
 
 namespace ACP3\Modules\Minify;
 
-use ACP3\Core;
-
 /**
  * Class Helpers
  * @package ACP3\Modules\Minify
@@ -19,9 +17,21 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
+    /**
+     * @var
+     */
+    protected $minifyCache;
+    /**
+     * @var array
+     */
+    protected $cachedPaths = array();
+    /**
+     * @var bool
+     */
+    protected $newAssetPathsAdded = false;
     /**
      * @var string
      */
@@ -31,12 +41,29 @@ class Helpers
      */
     protected $systemAssetsDesignPath = '';
 
-    public function __construct(Core\Modules $modules)
+    /**
+     * @param \ACP3\Core\Modules $modules
+     * @param Cache $minifyCache
+     */
+    public function __construct(
+        \ACP3\Core\Modules $modules,
+        Cache $minifyCache
+    )
     {
         $this->modules = $modules;
+        $this->minifyCache = $minifyCache;
 
         $this->systemAssetsModulePath = MODULES_DIR . 'System/Resources/Assets/';
         $this->systemAssetsDesignPath = DESIGN_PATH_INTERNAL . 'System/';
+
+        $this->cachedPaths = $minifyCache->getCache();
+    }
+
+    public function __destruct()
+    {
+        if ($this->newAssetPathsAdded === true) {
+            $this->minifyCache->setCache($this->cachedPaths);
+        }
     }
 
     /**
@@ -125,13 +152,38 @@ class Helpers
      */
     public function getStaticAssetPath($systemPath, $designPath, $dir, $file)
     {
-        $dir = !empty($dir) ? $dir . '/' : '';
-        if (is_file($designPath . $dir . $file) === true) {
-            return $designPath . $dir . $file;
-        } elseif (is_file($systemPath . $dir . $file) === true) {
-            return $systemPath . $dir . $file;
+        if (!preg_match('=/$=', $systemPath)) {
+            $systemPath .= '/';
         }
-        return '';
+        if (!preg_match('=/$=', $designPath)) {
+            $designPath .= '/';
+        }
+        if (!empty($dir) && !preg_match('=/$=', $dir)) {
+            $dir .= '/';
+        }
+
+        $assetPath = '';
+        $systemAssetPath = $systemPath . $dir . $file;
+        $designAssetPath = $designPath . $dir . $file;
+
+        // Return early, if the path has already been cached
+        if (isset($this->cachedPaths[$systemAssetPath])) {
+            return $this->cachedPaths[$systemAssetPath];
+        } else {
+            if (is_file($designAssetPath) === true) {
+                $assetPath = $designAssetPath;
+            } elseif (is_file($systemAssetPath) === true) {
+                $assetPath = $systemAssetPath;
+            }
+
+            // If an asset has been found, cache it
+            if (!empty($assetPath)) {
+                $this->cachedPaths[$systemAssetPath] = $assetPath;
+                $this->newAssetPathsAdded = true;
+            }
+
+            return $assetPath;
+        }
     }
 
     /**

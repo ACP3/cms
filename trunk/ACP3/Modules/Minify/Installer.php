@@ -4,6 +4,10 @@ namespace ACP3\Modules\Minify;
 
 use ACP3\Core\Modules;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Minify
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
