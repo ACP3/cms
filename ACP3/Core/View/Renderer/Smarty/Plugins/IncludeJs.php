@@ -14,6 +14,10 @@ class IncludeJs extends AbstractPlugin
      */
     protected $view;
     /**
+     * @var \ACP3\Modules\Minify\Helpers
+     */
+    protected $minifyHelper;
+    /**
      * @var array
      */
     protected $alreadyIncluded = array();
@@ -22,9 +26,13 @@ class IncludeJs extends AbstractPlugin
      */
     protected $pluginName = 'include_js';
 
-    public function __construct(Core\View $view)
+    public function __construct(
+        Core\View $view,
+        \ACP3\Modules\Minify\Helpers $minifyHelper
+    )
     {
         $this->view = $view;
+        $this->minifyHelper = $minifyHelper;
     }
 
     /**
@@ -52,11 +60,8 @@ class IncludeJs extends AbstractPlugin
                 $module = ucfirst($params['module']);
                 $file = $params['file'];
 
-                if (is_file(DESIGN_PATH_INTERNAL . $module . '/js/' . $file . '.js') === true) {
-                    return sprintf($script, DESIGN_PATH . $module . '/jsj/' . $file . '.js');
-                } elseif (is_file(MODULES_DIR . $module . '/Resources/Assets/js/' . $file . '.js') === true) {
-                    return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/Resources/Assets/js/' . $file . '.js');
-                }
+                $path = $this->minifyHelper->getStaticAssetPath(MODULES_DIR . $module . '/Resources/Assets/', DESIGN_PATH_INTERNAL . $module . '/', 'js', $file . '.js');
+                return sprintf($script, ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules')));
             }
             return '';
         }
