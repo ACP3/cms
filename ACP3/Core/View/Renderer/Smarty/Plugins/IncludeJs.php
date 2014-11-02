@@ -37,7 +37,7 @@ class IncludeJs extends AbstractPlugin
     {
         if (isset($params['module'], $params['file']) === true &&
             (bool)preg_match('=/=', $params['module']) === false &&
-            (bool)preg_match('=/=', $params['file']) === false
+            (bool)preg_match('=\./=', $params['file']) === false
         ) {
             // Do not include the same file multiple times
             $key = $params['module'] . '/' . $params['file'];

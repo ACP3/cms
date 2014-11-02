@@ -9,7 +9,7 @@
     <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_news"}" title="{$PAGE_TITLE} - {lang t="news|news"}">
     <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_files"}" title="{$PAGE_TITLE} - {lang t="files|files"}">
     <!--[if lt IE 9]>
-    <script src="{$ROOT_DIR}libraries/js/html5shiv.js"></script>
+    {include_js module="system" file="libs/html5shiv"}
     <![endif]-->
 </head>
 
