@@ -44,10 +44,6 @@ class Extensions
      * @var \ACP3\Core\Router
      */
     protected $router;
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
-     */
-    protected $stringFormatter;
 
     /**
      * SQL Prepared Parameters
@@ -60,14 +56,12 @@ class Extensions
         \Doctrine\DBAL\Connection $db,
         Core\Date $date,
         Core\Lang $lang,
-        Core\Router $router,
-        Core\Helpers\StringFormatter $stringFormatter
+        Core\Router $router
     )
     {
         $this->db = $db;
         $this->lang = $lang;
         $this->router = $router;
-        $this->stringFormatter = $stringFormatter;
 
         $this->params = array(
             'searchterm' => $this->searchTerm,
