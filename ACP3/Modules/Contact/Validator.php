@@ -19,23 +19,23 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $auth;
     /**
-     * @var Core\Modules
+     * @var Core\ACL
      */
-    protected $modules;
+    protected $acl;
 
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
-        Core\Auth $auth,
-        Core\Modules $modules
+        Core\ACL $acl,
+        Core\Auth $auth
     )
     {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
+        $this->acl = $acl;
         $this->auth = $auth;
-        $this->modules;
     }
 
     /**

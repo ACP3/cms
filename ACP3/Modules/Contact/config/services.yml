@@ -17,7 +17,7 @@ services:
 
   contact.validator:
     class: ACP3\Modules\Contact\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.auth', '@core.modules']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth']
 
   contact.installer:
     class: ACP3\Modules\Contact\Installer

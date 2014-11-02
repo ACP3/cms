@@ -25,7 +25,7 @@ services:
 
   smarty.plugin.js_libraries:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\JsLibraries
-    arguments: ['@core.view']
+    arguments: ['@core.assets']
 
   smarty.plugin.lang:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\Lang

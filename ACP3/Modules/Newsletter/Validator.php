@@ -14,13 +14,13 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $captchaValidator;
     /**
+     * @var \ACP3\Core\ACL
+     */
+    protected $acl;
+    /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
     /**
      * @var Model
      */
@@ -30,16 +30,16 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
+        Core\Modules $acl,
         Core\Auth $auth,
-        Core\Modules $modules,
         Model $newsletterModel
     )
     {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
+        $this->acl = $acl;
         $this->auth = $auth;
-        $this->modules = $modules;
         $this->newsletterModel = $newsletterModel;
     }
 

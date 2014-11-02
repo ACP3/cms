@@ -15,6 +15,10 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $captchaValidator;
     /**
+     * @var Core\ACL
+     */
+    protected $acl;
+    /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
@@ -39,6 +43,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
+        Core\ACL $acl,
         Core\Auth $auth,
         Core\Date $date,
         Core\Modules $modules,
@@ -49,6 +54,7 @@ class Validator extends Core\Validator\AbstractValidator
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
+        $this->acl = $acl;
         $this->auth = $auth;
         $this->date = $date;
         $this->modules = $modules;

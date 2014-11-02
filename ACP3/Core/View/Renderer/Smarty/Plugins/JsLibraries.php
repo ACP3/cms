@@ -10,9 +10,9 @@ use ACP3\Core;
 class JsLibraries extends AbstractPlugin
 {
     /**
-     * @var Core\View
+     * @var Core\Assets
      */
-    protected $view;
+    protected $assets;
     /**
      * @var array
      */
@@ -22,9 +22,9 @@ class JsLibraries extends AbstractPlugin
      */
     protected $pluginName = 'js_libraries';
 
-    public function __construct(Core\View $view)
+    public function __construct(Core\Assets $assets)
     {
-        $this->view = $view;
+        $this->assets = $assets;
     }
 
     /**
@@ -35,6 +35,6 @@ class JsLibraries extends AbstractPlugin
      */
     public function process($params)
     {
-        $this->view->enableJsLibraries(explode(',', $params['enable']));
+        $this->assets->enableJsLibraries(explode(',', $params['enable']));
     }
 }

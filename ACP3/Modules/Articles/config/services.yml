@@ -21,7 +21,7 @@ services:
 
   articles.validator:
     class: ACP3\Modules\Articles\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@menus.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl', '@core.request', '@menus.model']
 
   articles.installer:
     class: ACP3\Modules\Articles\Installer
