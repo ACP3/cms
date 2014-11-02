@@ -27,12 +27,7 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $formatter = $this->get('core.helpers.formatter.rewriteInternalUri');
-
-        $settings = $this->contactConfig->getSettings();
-        $settings['address'] = $formatter->rewriteInternalUri($settings['address']);
-        $settings['disclaimer'] = $formatter->rewriteInternalUri($settings['disclaimer']);
-        $this->view->assign('sidebar_contact', $settings);
+        $this->view->assign('sidebar_contact', $this->contactConfig->getSettings());
 
         $this->setLayout('Contact/Sidebar/index.index.tpl');
     }

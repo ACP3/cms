@@ -1,7 +1,7 @@
 <ul class="nav nav-list">
     <li class="nav-header">{lang t="contact|contact"}</li>
     {if !empty($sidebar_contact.address)}
-        <li>{$sidebar_contact.address}</li>
+        <li>{$sidebar_contact.address|rewrite_uri}</li>
     {/if}
     {if !empty($sidebar_contact.mail)}
         <li>

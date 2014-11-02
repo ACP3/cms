@@ -9,7 +9,7 @@
             </small>
         </header>
         <div class="content">
-            {$news.text}
+            {$news.text|rewrite_uri}
         </div>
         {if $news.uri != '' && $news.link_title != ''}
             <footer>
