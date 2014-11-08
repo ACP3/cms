@@ -158,33 +158,34 @@ class Assets
     }
 
     /**
-     * @param $systemPath
+     * @param $modulePath
      * @param $designPath
      * @param $dir
      * @param $file
      *
      * @return string
      */
-    public function getStaticAssetPath($systemPath, $designPath, $dir, $file)
+    public function getStaticAssetPath($modulePath, $designPath, $dir = '', $file = '')
     {
-        if (!preg_match('=/$=', $systemPath)) {
-            $systemPath .= '/';
+        if (strpos($modulePath, '.') === false && !preg_match('=/$=', $modulePath)) {
+            $modulePath .= '/';
         }
-        if (!preg_match('=/$=', $designPath)) {
+        if (strpos($designPath, '.') === false && !preg_match('=/$=', $designPath)) {
             $designPath .= '/';
         }
         if (!empty($dir) && !preg_match('=/$=', $dir)) {
             $dir .= '/';
         }
 
-        $assetPath = '';
-        $systemAssetPath = $systemPath . $dir . $file;
-        $designAssetPath = $designPath . $dir . $file;
+        $systemAssetPath = $modulePath . $dir . $file;
 
         // Return early, if the path has already been cached
         if (isset($this->cachedPaths[$systemAssetPath])) {
             return $this->cachedPaths[$systemAssetPath];
         } else {
+            $assetPath = '';
+            $designAssetPath = $designPath . $dir . $file;
+
             if (is_file($designAssetPath) === true) {
                 $assetPath = $designAssetPath;
             } elseif (is_file($systemAssetPath) === true) {

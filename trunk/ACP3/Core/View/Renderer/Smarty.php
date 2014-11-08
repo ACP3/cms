@@ -30,7 +30,6 @@ class Smarty extends AbstractRenderer
         $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : CONFIG_DESIGN;
         $this->renderer->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
         $this->renderer
-            ->setTemplateDir(!empty($params['template_dir']) ? $params['template_dir'] : array(DESIGN_PATH_INTERNAL, MODULES_DIR))
             ->setCompileDir(CACHE_DIR . 'tpl_compiled/')
             ->setCacheDir(CACHE_DIR . 'tpl_cached/');
 

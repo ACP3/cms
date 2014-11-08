@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Installer\Core;
 
-use ACP3\Core\View;
-
 /**
  * Class Context
  * @package ACP3\Core
