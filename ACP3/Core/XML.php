@@ -5,8 +5,7 @@ use ACP3\Core\Validator\Rules\Misc;
 
 /**
  * Parst XML Dateien, z.B. die diversen info.xml bzw. module.xml Dateien
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class XML
 {

@@ -5,8 +5,7 @@ namespace ACP3\Core;
 /**
  * Sessionklasse
  * Diese ist zuständig für das Sessionhandling in der Datenbank
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class Session
 {

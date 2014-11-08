@@ -169,7 +169,7 @@ class Functions
         $this->view->assign('dt', $config);
         $this->dataTableInitialized = true;
 
-        return $this->view->fetchTemplate('system/data_table.tpl');
+        return $this->view->fetchTemplate('system/datatable.tpl');
     }
 
     /**

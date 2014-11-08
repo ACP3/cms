@@ -19,6 +19,9 @@ class Router
      */
     protected $aliases;
 
+    /**
+     * @param Aliases $aliases
+     */
     function __construct(Aliases $aliases)
     {
         $this->aliases = $aliases;

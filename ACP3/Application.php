@@ -5,7 +5,6 @@ namespace ACP3;
 use ACP3\Core\FrontController;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\Controller;
-use ACP3\Core\Registry;
 use Doctrine\DBAL;
 use Monolog\ErrorHandler;
 use Monolog\Formatter\LineFormatter;

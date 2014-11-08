@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Core\Router\Aliases;
-
 /**
  * Class Request
  * @package ACP3\Core
@@ -38,6 +36,9 @@ class Request
 
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
+     *
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Modules $modules
      */
     public function __construct(\Doctrine\DBAL\Connection $db, Modules $modules)
     {
