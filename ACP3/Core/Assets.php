@@ -3,6 +3,10 @@ namespace ACP3\Core;
 
 use ACP3\Modules\Minify;
 
+/**
+ * Class Assets
+ * @package ACP3\Core
+ */
 class Assets
 {
     /**
@@ -115,7 +119,7 @@ class Assets
             $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery.fancybox.css');
         }
         if (in_array('datatables', $libraries)) {
-            $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery-datatables.css');
+            $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'dataTables.bootstrap.css');
         }
 
         // Stylesheet für das Layout-Tenplate
