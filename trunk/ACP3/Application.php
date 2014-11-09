@@ -231,7 +231,10 @@ class Application
 
             $redirect->temporary('errors/index/404');
         } catch (Core\Exceptions\UnauthorizedAccess $e) {
-            $redirect->temporary('errors/index/401');
+            $redirectUri = base64_encode($request->originalQuery);
+            $redirect->temporary('users/index/login/redirect_' . $redirectUri);
+        } catch(Core\Exceptions\AccessForbidden $e) {
+            $redirect->temporary('errors/index/403');
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             Core\Logger::error('404', 'Request: ' . $request->query);
             Core\Logger::error('404', $e);

@@ -42,7 +42,11 @@ class Index extends Core\Modules\Controller
                 default:
                     $files = array();
             }
-            $options['files'] = $files;
+
+            $options['files'] = array_filter($files, function($var) {
+                return !empty($var);
+            });
+
             $options['maxAge'] = CONFIG_CACHE_MINIFY;
             $options['minifiers']['text/css'] = array('Minify_CSSmin', 'minify');
 

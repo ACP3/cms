@@ -3,9 +3,8 @@
 namespace ACP3\Core\Exceptions;
 
 /**
- * Description of ControllerActionNotFound
- *
- * @author Tino Goratsch
+ * Class ControllerActionNotFound
+ * @package ACP3\Core\Exceptions
  */
 class ControllerActionNotFound extends \Exception
 {

@@ -40,7 +40,10 @@ class Request
      * @param \Doctrine\DBAL\Connection $db
      * @param Modules $modules
      */
-    public function __construct(\Doctrine\DBAL\Connection $db, Modules $modules)
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Modules $modules
+    )
     {
         $this->db = $db;
         $this->modules = $modules;
@@ -180,7 +183,7 @@ class Request
     /**
      * Setzt einen neuen URI Parameter
      *
-     * @param string         $key
+     * @param string $key
      * @param string|integer $value
      */
     public function __set($key, $value)

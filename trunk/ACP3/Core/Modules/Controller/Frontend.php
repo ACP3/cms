@@ -64,7 +64,7 @@ abstract class Frontend extends Core\Modules\Controller
         $path = $this->request->area . '/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
 
         if ($this->acl->hasPermission($path) === false) {
-            throw new Core\Exceptions\UnauthorizedAccess();
+            throw new Core\Exceptions\AccessForbidden();
         }
 
         $this->view->assign('PHP_SELF', PHP_SELF);

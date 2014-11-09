@@ -10,7 +10,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'errors';
-    const SCHEMA_VERSION = 33;
+    const SCHEMA_VERSION = 34;
 
     /**
      * @var \ACP3\Core\Modules
@@ -72,6 +72,9 @@ class Installer extends Modules\AbstractInstaller
             33 => array(
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'frontend', 'index', '500', '', 1);",
                 "UPDATE `{pre}acl_resources` SET page = '401' WHERE module_id = " . $this->getModuleId() . " AND area = 'frontend' AND controller = 'index' AND page = '403';"
+            ),
+            34 => array(
+                "UPDATE `{pre}acl_resources` SET page = '403' WHERE module_id = " . $this->getModuleId() . " AND area = 'frontend' AND controller = 'index' AND page = '401';"
             )
         );
     }

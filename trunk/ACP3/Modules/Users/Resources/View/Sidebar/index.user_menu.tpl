@@ -9,7 +9,7 @@
         </a>
         {if isset($user_sidebar.modules)}
             <div class="list-group-item dropdown">
-                <a href="{uri args="acp"}" id="menu-administration" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                <a href="{uri args="acp/acp"}" id="menu-administration" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
                     <i class="glyphicon glyphicon-file"></i>
                     {lang t="users|administration"}
                     <b class="caret"></b>
