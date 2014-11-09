@@ -42,35 +42,41 @@ class Extensions extends Core\Modules\Controller\Admin
     public function actionDesigns()
     {
         if (isset($this->request->dir)) {
-            $bool = false;
-
-            if ((bool)preg_match('=/=', $this->request->dir) === false &&
-                is_file(ACP3_ROOT_DIR . 'designs/' . $this->request->dir . '/info.xml') === true
-            ) {
-                $bool = $this->systemConfig->setSettings(array('design' => $this->request->dir));
-
-                // Template Cache leeren
-                Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
-                Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_cached');
-            }
-            $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
-
-            $this->redirectMessages()->setMessage($bool, $text, 'acp/system/index/designs');
+            $this->_designsPost($this->request->dir);
         } else {
             $designs = array();
             $path = ACP3_ROOT_DIR . 'designs/';
             $directories = scandir($path);
             $count_dir = count($directories);
             for ($i = 0; $i < $count_dir; ++$i) {
-                $design_info = Core\XML::parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
-                if (!empty($design_info)) {
-                    $designs[$i] = $design_info;
+                $designInfo = Core\XML::parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
+                if (!empty($designInfo)) {
+                    $designs[$i] = $designInfo;
                     $designs[$i]['selected'] = CONFIG_DESIGN === $directories[$i] ? 1 : 0;
                     $designs[$i]['dir'] = $directories[$i];
                 }
             }
             $this->view->assign('designs', $designs);
         }
+    }
+
+    protected function _designsPost($design)
+    {
+        $bool = false;
+
+        if ((bool)preg_match('=/=', $design) === false &&
+            is_file(ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml') === true
+        ) {
+            $bool = $this->systemConfig->setSettings(array('design' => $design));
+
+            // Template Cache leeren
+            Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
+            Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_cached');
+        }
+
+        $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
+
+        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/designs');
     }
 
     public function actionIndex()

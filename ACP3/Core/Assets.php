@@ -106,7 +106,7 @@ class Assets
 
         // Stylesheet für das Layout-Tenplate
         $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'style.css');
-        $css[] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
+        $css[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.css');
 
         // Zusätzliche Stylesheets einbinden
         $extraCss = explode(',', CONFIG_EXTRA_CSS);
@@ -185,9 +185,7 @@ class Assets
         }
 
         // Include general js file of the layout
-        if (is_file(DESIGN_PATH_INTERNAL . $layout . '.js') === true) {
-            $scripts[] = DESIGN_PATH_INTERNAL . $layout . '.js';
-        }
+        $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
 
         // Include additional js files from the system config
         $extraJs = explode(',', CONFIG_EXTRA_JS);
