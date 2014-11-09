@@ -24,11 +24,10 @@ class HasPermission extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @return string
+     * @param array $params
+     * @return bool|int|mixed
      */
-    public function process($params)
+    public function process(array $params)
     {
         if (isset($params['path']) === true) {
             return $this->acl->hasPermission($params['path']);

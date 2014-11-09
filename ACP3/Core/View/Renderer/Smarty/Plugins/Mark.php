@@ -28,12 +28,10 @@ class Mark extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @throws \Exception
-     * @return string
+     * @param array $params
+     * @return mixed|string
      */
-    public function process($params)
+    public function process(array $params)
     {
         $this->view->assign('checkbox_name', $params['name']);
         $this->view->assign('mark_all_id', !empty($params['mark_all_id']) ? $params['mark_all_id'] : 'mark-all');

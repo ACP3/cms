@@ -22,13 +22,13 @@ class CheckAccess extends AbstractPlugin
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validator\Rules\Misc
-     */
-    protected $validate;
-    /**
      * @var Core\View
      */
     protected $view;
+    /**
+     * @var Icon
+     */
+    protected $icon;
     /**
      * @var string
      */
@@ -38,24 +38,22 @@ class CheckAccess extends AbstractPlugin
         Core\ACL $acl,
         Core\Lang $lang,
         Core\Router $router,
-        Core\Validator\Rules\Misc $validate,
-        Core\View $view
+        Core\View $view,
+        Icon $icon
     )
     {
         $this->lang = $lang;
         $this->acl = $acl;
         $this->router = $router;
-        $this->validate = $validate;
         $this->view = $view;
+        $this->icon = $icon;
     }
 
     /**
-     * @param $params
-     *
-     * @throws \Exception
-     * @return string
+     * @param array $params
+     * @return mixed|string
      */
-    public function process($params)
+    public function process(array $params)
     {
         if (isset($params['mode']) && isset($params['path'])) {
             $action = array();
@@ -81,35 +79,28 @@ class CheckAccess extends AbstractPlugin
                 $accessCheck = array();
                 $accessCheck['uri'] = $this->router->route($params['path']);
 
-                $path = '';
                 if (isset($params['icon'])) {
-                    $path = ROOT_DIR . CONFIG_ICONS_PATH . $params['icon'] . '.png';
-                    $accessCheck['icon'] = $path;
+                    $iconParams = $this->icon->getImageDimensions(
+                        $params['icon'],
+                        isset($params['width']) ? $params['width'] : '',
+                        isset($params['height']) ? $params['height'] : ''
+                    );
+
+                    $accessCheck['icon'] = $iconParams['path'];
+
+                    if ($params['mode'] === 'link') {
+                        $accessCheck['width'] = $iconParams['width'];
+                        $accessCheck['height'] = $iconParams['height'];
+                    }
                 }
                 if (isset($params['title'])) {
                     $accessCheck['title'] = $params['title'];
                 }
                 if (isset($params['lang'])) {
-                    $lang_ary = explode('|', $params['lang']);
-                    $accessCheck['lang'] = $this->lang->t($lang_ary[0], $lang_ary[1]);
+                    $langArray = explode('|', $params['lang']);
+                    $accessCheck['lang'] = $this->lang->t($langArray[0], $langArray[1]);
                 } else {
                     $accessCheck['lang'] = $this->lang->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
-                }
-
-                // Dimensionen der Grafik bestimmen
-                if ($params['mode'] === 'link' && isset($params['icon'])) {
-                    $accessCheck['width'] = $accessCheck['height'] = '';
-
-                    if (!empty($params['width']) && !empty($params['height']) &&
-                        $this->validate->isNumber($params['width']) === true && $this->validate->isNumber($params['height']) === true
-                    ) {
-                        $accessCheck['width'] = ' width="' . $params['width'] . '"';
-                        $accessCheck['height'] = ' height="' . $params['height'] . '"';
-                    } elseif (is_file(ACP3_ROOT_DIR . $path) === true) {
-                        $picInfos = getimagesize(ACP3_ROOT_DIR . $path);
-                        $accessCheck['width'] = ' width="' . $picInfos[0] . '"';
-                        $accessCheck['height'] = ' height="' . $picInfos[1] . '"';
-                    }
                 }
 
                 $accessCheck['mode'] = $params['mode'];

@@ -14,6 +14,10 @@ class IncludeJs extends AbstractPlugin
      */
     protected $assets;
     /**
+     * @var Core\Assets\ThemeResolver
+     */
+    protected $themeResolver;
+    /**
      * @var array
      */
     protected $alreadyIncluded = array();
@@ -22,18 +26,21 @@ class IncludeJs extends AbstractPlugin
      */
     protected $pluginName = 'include_js';
 
-    public function __construct(Core\Assets $assets)
+    public function __construct(
+        Core\Assets $assets,
+        Core\Assets\ThemeResolver $themeResolver
+    )
     {
         $this->assets = $assets;
+        $this->themeResolver = $themeResolver;
     }
 
     /**
-     * @param $params
-     *
+     * @param array $params
+     * @return mixed|void
      * @throws \Exception
-     * @return string
      */
-    public function process($params)
+    public function process(array $params)
     {
         if (isset($params['module'], $params['file']) === true &&
             (bool)preg_match('=/=', $params['module']) === false &&
@@ -52,8 +59,8 @@ class IncludeJs extends AbstractPlugin
                 $module = ucfirst($params['module']);
                 $file = $params['file'];
 
-                $path = $this->assets->getStaticAssetPath(MODULES_DIR . $module . '/Resources/Assets/', DESIGN_PATH_INTERNAL . $module . '/', 'js', $file . '.js');
-                return sprintf($script, ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules')));
+                $path = $this->themeResolver->getStaticAssetPath(MODULES_DIR . $module . '/Resources/Assets/', DESIGN_PATH_INTERNAL . $module . '/', 'js', $file . '.js');
+                return sprintf($script, ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1));
             }
             return '';
         }

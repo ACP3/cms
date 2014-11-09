@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core;
-
-use ACP3\Modules\Minify;
+use ACP3\Core\Assets\ThemeResolver;
 
 /**
  * Class Assets
@@ -18,9 +17,10 @@ class Assets
      */
     protected $router;
     /**
-     * @var Minify\Cache
+     * @var ThemeResolver
      */
-    protected $minifyCache;
+    protected $themeResolver;
+
     /**
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
      * @var array
@@ -37,14 +37,6 @@ class Assets
      */
     protected $jsLibrariesCache = '';
     /**
-     * @var array
-     */
-    protected $cachedPaths = array();
-    /**
-     * @var bool
-     */
-    protected $newAssetPathsAdded = false;
-    /**
      * @var string
      */
     protected $systemAssetsModulesPath = '';
@@ -56,29 +48,19 @@ class Assets
     /**
      * @param Modules $modules
      * @param Router $router
-     * @param Minify\Cache $minifyCache
      */
     public function __construct(
         Modules $modules,
         Router $router,
-        Minify\Cache $minifyCache
+        ThemeResolver $themeResolver
     )
     {
         $this->modules = $modules;
         $this->router = $router;
-        $this->minifyCache = $minifyCache;
+        $this->themeResolver = $themeResolver;
 
-        $this->systemAssetsModulePath = MODULES_DIR . 'System/Resources/Assets/';
-        $this->systemAssetsDesignPath = DESIGN_PATH_INTERNAL . 'System/';
-
-        $this->cachedPaths = $minifyCache->getCache();
-    }
-
-    public function __destruct()
-    {
-        if ($this->newAssetPathsAdded === true) {
-            $this->minifyCache->setCache($this->cachedPaths);
-        }
+        $this->systemAssetsModulePath = 'System/Resources/Assets/';
+        $this->systemAssetsDesignPath = 'System/';
     }
 
     /**
@@ -95,7 +77,7 @@ class Assets
         $css = array();
 
         if (isset($xml->use_bootstrap) && (string)$xml->use_bootstrap === 'true') {
-            $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'bootstrap.min.css');
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'bootstrap.min.css');
         }
 
         if (isset($xml->css)) {
@@ -110,20 +92,20 @@ class Assets
         // Stylesheets der Bibliotheken zuerst laden,
         // damit deren Styles überschrieben werden können
         if (in_array('jquery-ui', $libraries)) {
-            $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery-ui.css');
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery-ui.css');
         }
         if (in_array('timepicker', $libraries)) {
-            $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery-timepicker.css');
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery-timepicker.css');
         }
         if (in_array('fancybox', $libraries)) {
-            $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery.fancybox.css');
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery.fancybox.css');
         }
         if (in_array('datatables', $libraries)) {
-            $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'dataTables.bootstrap.css');
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'dataTables.bootstrap.css');
         }
 
         // Stylesheet für das Layout-Tenplate
-        $css[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'style.css');
+        $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'style.css');
         $css[] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
 
         // Zusätzliche Stylesheets einbinden
@@ -142,7 +124,7 @@ class Assets
         foreach ($modules as $module) {
             $modulePath = MODULES_DIR . $module['dir'] . '/Resources/Assets/';
             $designPath = DESIGN_PATH_INTERNAL . $module['dir'] . '/';
-            if (true == ($stylesheet = $this->getStaticAssetPath($modulePath, $designPath, 'css', 'style.css')) &&
+            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'css', 'style.css')) &&
                 $module['dir'] !== 'System'
             ) {
                 $css[] = $stylesheet;
@@ -158,48 +140,6 @@ class Assets
     }
 
     /**
-     * @param $modulePath
-     * @param $designPath
-     * @param $dir
-     * @param $file
-     *
-     * @return string
-     */
-    public function getStaticAssetPath($modulePath, $designPath, $dir = '', $file = '')
-    {
-        if (strpos($modulePath, '.') === false && !preg_match('=/$=', $modulePath)) {
-            $modulePath .= '/';
-        }
-        if (strpos($designPath, '.') === false && !preg_match('=/$=', $designPath)) {
-            $designPath .= '/';
-        }
-        if (!empty($dir) && !preg_match('=/$=', $dir)) {
-            $dir .= '/';
-        }
-
-        $systemAssetPath = $modulePath . $dir . $file;
-
-        // Return early, if the path has already been cached
-        if (isset($this->cachedPaths[$systemAssetPath])) {
-            return $this->cachedPaths[$systemAssetPath];
-        } else {
-            $assetPath = '';
-            $designAssetPath = $designPath . $dir . $file;
-
-            if (is_file($designAssetPath) === true) {
-                $assetPath = $designAssetPath;
-            } elseif (is_file($systemAssetPath) === true) {
-                $assetPath = $systemAssetPath;
-            }
-
-            $this->cachedPaths[$systemAssetPath] = $assetPath;
-            $this->newAssetPathsAdded = true;
-
-            return $assetPath;
-        }
-    }
-
-    /**
      *
      * @param string $libraries
      * @param string $layout
@@ -211,10 +151,10 @@ class Assets
         $xml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
 
         $scripts = array();
-        $scripts[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.min.js');
+        $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.min.js');
 
         if (isset($xml->use_bootstrap) && (string)$xml->use_bootstrap === 'true') {
-            $scripts[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootstrap.min.js');
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootstrap.min.js');
         }
 
         // Include js files from the design
@@ -229,19 +169,19 @@ class Assets
 
         // JS-Libraries to include
         if (in_array('bootbox', $libraries)) {
-            $scripts[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootbox.min.js');
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootbox.min.js');
         }
         if (in_array('jquery-ui', $libraries)) {
-            $scripts[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery-ui.min.js');
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery-ui.min.js');
         }
         if (in_array('timepicker', $libraries)) {
-            $scripts[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.timepicker.js');
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.timepicker.js');
         }
         if (in_array('fancybox', $libraries)) {
-            $scripts[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.fancybox.min.js');
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.fancybox.min.js');
         }
         if (in_array('datatables', $libraries)) {
-            $scripts[] = $this->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.datatables.min.js');
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.datatables.min.js');
         }
 
         // Include general js file of the layout
@@ -323,4 +263,4 @@ class Assets
         return $this->jsLibrariesCache;
 
     }
-} 
+}

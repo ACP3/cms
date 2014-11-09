@@ -27,10 +27,10 @@ class RedirectMessage extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     * @return string
+     * @param array $params
+     * @return mixed|string
      */
-    public function process($params)
+    public function process(array $params)
     {
         return $this->redirectMessages->getMessage();
     }

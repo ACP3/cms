@@ -1,7 +1,11 @@
 services:
   core.assets:
     class: ACP3\Core\Assets
-    arguments: ['@core.modules', '@core.router', '@minify.cache']
+    arguments: ['@core.modules', '@core.router', '@core.assets.themeResolver']
+
+  core.assets.themeResolver:
+    class: ACP3\Core\Assets\ThemeResolver
+    arguments: ['@minify.cache']
 
   core.context:
     class : ACP3\Core\Context

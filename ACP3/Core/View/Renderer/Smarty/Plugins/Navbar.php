@@ -30,11 +30,10 @@ class Navbar extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @return string
+     * @param array $params
+     * @return mixed|string
      */
-    public function process($params)
+    public function process(array $params)
     {
         if ($this->modules->isActive('menus') === true) {
             return $this->menuHelpers->processNavbar(

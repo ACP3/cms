@@ -28,12 +28,10 @@ class JsLibraries extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @throws \Exception
-     * @return string
+     * @param array $params
+     * @return mixed|void
      */
-    public function process($params)
+    public function process(array $params)
     {
         $this->assets->enableJsLibraries(explode(',', $params['enable']));
     }

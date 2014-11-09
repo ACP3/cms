@@ -28,11 +28,10 @@ class DateRange extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @return string
+     * @param array $params
+     * @return mixed|string
      */
-    public function process($params)
+    public function process(array $params)
     {
         $format = isset($params['format']) ? $params['format'] : 'long';
 
