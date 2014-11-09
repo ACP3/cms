@@ -133,7 +133,6 @@ class Index extends Core\Modules\Controller\Admin
                 'extra_js' => $formData['extra_js'],
                 'flood' => (int)$formData['flood'],
                 'homepage' => $formData['homepage'],
-                'icons_path' => $formData['icons_path'],
                 'language' => $formData['language'],
                 'mailer_smtp_auth' => (int)$formData['mailer_smtp_auth'],
                 'mailer_smtp_host' => $formData['mailer_smtp_host'],

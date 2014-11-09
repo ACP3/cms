@@ -44,12 +44,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="icons-path" class="col-sm-2 control-label">{lang t="system|path_to_icons"}</label>
-
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" name="icons_path" id="icons-path" value="{$form.icons_path}"></div>
-                </div>
-                <div class="form-group">
                     <label for="wysiwyg" class="col-sm-2 control-label">{lang t="system|editor"}</label>
 
                     <div class="col-sm-10">

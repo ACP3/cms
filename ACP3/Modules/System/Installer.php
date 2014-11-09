@@ -5,11 +5,15 @@ namespace ACP3\Modules\System;
 use ACP3\Core\Modules;
 use ACP3\Modules\Permissions;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\System
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 45;
+    const SCHEMA_VERSION = 46;
 
     /**
      * @var array
@@ -146,7 +150,6 @@ class Installer extends Modules\AbstractInstaller
             'extra_js' => '',
             'flood' => '',
             'homepage' => 'news/index/index/',
-            'icons_path' => 'libraries/crystal_project/',
             'lang' => '',
             'mailer_smtp_auth' => false,
             'mailer_smtp_host' => '',
@@ -238,6 +241,9 @@ class Installer extends Modules\AbstractInstaller
             ),
             45 => array(
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"seo_aliases\";",
+            ),
+            46 => array(
+                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"icons_path\";",
             )
         );
     }
