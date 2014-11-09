@@ -149,7 +149,6 @@
         <item key="id">ID</item>
         <item key="incorrect_homepage">Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.
         </item>
-        <item key="incorrect_path_to_icons">Der Pfad zum Ordner mit den Icons muss mit einem Slash enden.</item>
         <item key="insert_page_break">Seitenumbruch einfügen</item>
         <item key="install">Installieren</item>
         <item key="install_module">Modul installieren</item>
@@ -229,7 +228,6 @@
         <item key="overview">Übersicht</item>
         <item key="page_x">Seite %d</item>
         <item key="pagination">Seitenauswahl</item>
-        <item key="path_to_icons">Pfad zum Icons Ordner</item>
         <item key="performance">Leistung</item>
         <item key="php_date_function">
             <![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a>-Funktion von PHP.]]></item>

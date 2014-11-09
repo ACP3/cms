@@ -56,9 +56,6 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->validate->isNumber($formData['flood']) === false) {
             $errors['flood'] = $this->lang->t('system', 'type_in_flood_barrier');
         }
-        if ((bool)preg_match('/\/$/', $formData['icons_path']) === false) {
-            $errors['icons-path'] = $this->lang->t('system', 'incorrect_path_to_icons');
-        }
         if (preg_match('=/=', $formData['wysiwyg']) || is_file(CLASSES_DIR . 'WYSIWYG/' . $formData['wysiwyg'] . '.php') === false) {
             $errors['wysiwyg'] = $this->lang->t('system', 'select_editor');
         }
