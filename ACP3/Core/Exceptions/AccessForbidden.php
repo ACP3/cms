@@ -1,12 +1,10 @@
 <?php
-
 namespace ACP3\Core\Exceptions;
 
 /**
- * Class ResultNotExists
+ * Class AccessForbidden
  * @package ACP3\Core\Exceptions
  */
-class ResultNotExists extends \Exception
-{
+class AccessForbidden extends \Exception {
 
-}
+} 

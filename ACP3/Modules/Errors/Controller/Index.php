@@ -10,9 +10,9 @@ use ACP3\Core;
  */
 class Index extends Core\Modules\Controller\Frontend
 {
-    public function action401()
+    public function action403()
     {
-        header('HTTP/1.0 401 Unauthorized');
+        header('HTTP/1.0 403 Access Forbidden');
     }
 
     public function action404()

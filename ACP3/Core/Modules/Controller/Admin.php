@@ -42,8 +42,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     public function preDispatch()
     {
         if ($this->auth->isUser() === false) {
-            $redirectUri = base64_encode('acp/' . $this->request->query);
-            $this->redirect()->temporary('users/index/login/redirect_' . $redirectUri);
+            throw new Core\Exceptions\UnauthorizedAccess();
         }
 
         return parent::preDispatch();

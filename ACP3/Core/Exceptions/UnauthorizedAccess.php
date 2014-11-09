@@ -3,9 +3,8 @@
 namespace ACP3\Core\Exceptions;
 
 /**
- * Description of AccessForbidden
- *
- * @author Tino Goratsch
+ * Class UnauthorizedAccess
+ * @package ACP3\Core\Exceptions
  */
 class UnauthorizedAccess extends \Exception
 {

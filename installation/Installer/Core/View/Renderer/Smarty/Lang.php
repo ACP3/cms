@@ -24,11 +24,10 @@ class Lang extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @return string
+     * @param array $params
+     * @return mixed|string
      */
-    public function process($params)
+    public function process(array $params)
     {
         $values = explode('|', $params['t']);
         return $this->lang->t($values[0], $values[1]);
