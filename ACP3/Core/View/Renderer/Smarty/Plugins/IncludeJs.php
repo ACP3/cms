@@ -59,7 +59,7 @@ class IncludeJs extends AbstractPlugin
                 $module = ucfirst($params['module']);
                 $file = $params['file'];
 
-                $path = $this->themeResolver->getStaticAssetPath(MODULES_DIR . $module . '/Resources/Assets/', DESIGN_PATH_INTERNAL . $module . '/', 'js', $file . '.js');
+                $path = $this->themeResolver->getStaticAssetPath($module . '/Resources/Assets/', $module . '/', 'js', $file . '.js');
                 return sprintf($script, ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1));
             }
             return '';
