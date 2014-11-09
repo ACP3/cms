@@ -21,9 +21,8 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
+     * @param array $params
      * @return mixed
      */
-    abstract public function process($params);
+    abstract public function process(array $params);
 } 

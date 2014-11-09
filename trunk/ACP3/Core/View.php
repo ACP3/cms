@@ -74,8 +74,7 @@ class View extends ContainerAware
      */
     public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
     {
-        $designsPath = DESIGN_PATH_INTERNAL;
-        $modulesPath = MODULES_DIR;
+        $modulesPath = '';
 
         // If an template with directory is given, uppercase the first letter
         if (strpos($template, '/') !== false) {
@@ -89,11 +88,11 @@ class View extends ContainerAware
                 $modulesPath .= '/' . $fragments[2];
             }
 
-            $asset = $this->container->get('core.assets')->getStaticAssetPath($modulesPath, $designsPath . $template);
+            $asset = $this->container->get('core.assets.themeResolver')->getStaticAssetPath($modulesPath, $template);
 
             return $this->renderer->fetch($asset, $cacheId, $compileId, $parent, $display);
         } else {
-            $asset = $this->container->get('core.assets')->getStaticAssetPath($modulesPath, $designsPath, '', $template);
+            $asset = $this->container->get('core.assets.themeResolver')->getStaticAssetPath($modulesPath, '', '', $template);
 
             return $this->renderer->fetch($asset, $cacheId, $compileId, $parent, $display);
         }

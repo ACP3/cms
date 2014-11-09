@@ -10,6 +10,10 @@ use ACP3\Core;
 class Icon extends AbstractPlugin
 {
     /**
+     * @var Core\Assets\ThemeResolver
+     */
+    protected $themeResolver;
+    /**
      * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
@@ -18,35 +22,63 @@ class Icon extends AbstractPlugin
      */
     protected $pluginName = 'icon';
 
-    public function __construct(Core\Validator\Rules\Misc $validate)
+    public function __construct(
+        Core\Assets\ThemeResolver $themeResolver,
+        Core\Validator\Rules\Misc $validate
+    )
     {
+        $this->themeResolver = $themeResolver;
         $this->validate = $validate;
     }
 
     /**
-     * @param $params
-     *
-     * @return string
+     * @param $imageName
+     * @param $width
+     * @param $height
+     * @return array
      */
-    public function process($params)
+    public function getImageDimensions($imageName, $width, $height)
     {
-        $path = ROOT_DIR . CONFIG_ICONS_PATH . $params['path'] . '.png';
-        $width = $height = '';
+        $path = $this->themeResolver->getStaticAssetPath(
+            'System/Resources/Assets/',
+            'System/',
+            'images/crystal_project',
+            $imageName . '.png'
+        );
 
-        if (!empty($params['width']) && !empty($params['height']) &&
-            $this->validate->isNumber($params['width']) === true && $this->validate->isNumber($params['height']) === true
-        ) {
-            $width = ' width="' . $params['width'] . '"';
-            $height = ' height="' . $params['height'] . '"';
-        } elseif (is_file(ACP3_ROOT_DIR . $path) === true) {
-            $picInfos = getimagesize(ACP3_ROOT_DIR . $path);
+        if ($this->validate->isNumber($width) === true && $this->validate->isNumber($height) === true) {
+            $width = ' width="' . $width . '"';
+            $height = ' height="' . $height . '"';
+        } elseif (empty($path) === false) {
+            $picInfos = getimagesize($path);
             $width = ' width="' . $picInfos[0] . '"';
             $height = ' height="' . $picInfos[1] . '"';
+        } else {
+            $width = $height = '';
         }
+
+        return array(
+            'path' => ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1),
+            'width' => $width,
+            'height' => $height
+        );
+    }
+
+    /**
+     * @param array $params
+     * @return mixed|string
+     */
+    public function process(array $params)
+    {
+        $imageInfo = $this->getImageDimensions(
+            $params['path'],
+            isset($params['width']) ? $params['width'] : '',
+            isset($params['height']) ? $params['height'] : ''
+        );
 
         $alt = ' alt="' . (!empty($params['alt']) ? $params['alt'] : '') . '"';
         $title = !empty($params['title']) ? ' title="' . $params['title'] . '"' : '';
 
-        return '<img src="' . $path . '"' . $width . $height . $alt . $title . ' />';
+        return '<img src="' . $imageInfo['path'] . '"' . $imageInfo['width'] . $imageInfo['height'] . $alt . $title . ' />';
     }
 }

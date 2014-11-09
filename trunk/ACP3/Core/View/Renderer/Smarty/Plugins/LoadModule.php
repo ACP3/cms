@@ -29,12 +29,11 @@ class LoadModule extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @throws \Exception
-     * @return string
+     * @param array $params
+     * @return mixed|void
+     * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
      */
-    public function process($params)
+    public function process(array $params)
     {
         $pathArray = explode('/', strtolower($params['module']));
 

@@ -25,12 +25,10 @@ class WYSIWYG extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @throws \InvalidArgumentException
-     * @return string
+     * @param array $params
+     * @return mixed|void
      */
-    public function process($params)
+    public function process(array $params)
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
@@ -43,7 +41,7 @@ class WYSIWYG extends AbstractPlugin
             $wysiwyg->setParameters($params);
             return $wysiwyg->display();
         } else {
-            throw new \InvalidArgumentException('Can not find wysiwyg service ' . $serviceId);
+            throw new \InvalidArgumentException('Can not find wysiwyg service ' . $className);
         }
     }
 }

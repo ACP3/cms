@@ -24,11 +24,10 @@ class Router extends AbstractPlugin
     }
 
     /**
-     * @param $params
-     *
-     * @return string
+     * @param array $params
+     * @return mixed|string
      */
-    public function process($params)
+    public function process(array $params)
     {
         return $this->router->route(!empty($params['args']) ? $params['args'] : '');
     }
