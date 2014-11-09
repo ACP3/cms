@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core\Assets;
 
+use ACP3\Core;
 use ACP3\Modules\Minify;
 
 /**
@@ -75,20 +76,40 @@ class ThemeResolver
         if (isset($this->cachedPaths[$systemAssetPath])) {
             return $this->cachedPaths[$systemAssetPath];
         } else {
-            $assetPath = '';
-            $designAssetPath = $this->designAssetsPath . $designPath . $dir . $file;
-
-            if (is_file($designAssetPath) === true) {
-                $assetPath = $designAssetPath;
-            } elseif (is_file($systemAssetPath) === true) {
-                $assetPath = $systemAssetPath;
-            }
-
-            $this->cachedPaths[$systemAssetPath] = $assetPath;
-            $this->newAssetPathsAdded = true;
-
-            return $assetPath;
+            return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
         }
     }
 
-} 
+    /**
+     * @param $modulePath
+     * @param $designPath
+     * @param $dir
+     * @param $file
+     * @return string
+     */
+    private function _resolveAssetPath($modulePath, $designPath, $dir, $file)
+    {
+        $assetPath = '';
+        $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
+        $designAssetPath = $this->designAssetsPath . $designPath . $dir . $file;
+
+        if (is_file($designAssetPath) === true) {
+            $assetPath = $designAssetPath;
+        } else {
+            $designInfo = Core\XML::parseXmlFile($this->designAssetsPath . '/info.xml', '/design');
+
+            if (!empty($designInfo['parent'])) {
+                $this->designAssetsPath = ACP3_ROOT_DIR . 'designs/' . $designInfo['parent'];
+                $assetPath = $this->getStaticAssetPath($modulePath, $designPath, $dir, $file);
+                $this->designAssetsPath = DESIGN_PATH_INTERNAL;
+            } elseif (is_file($systemAssetPath) === true) {
+                $assetPath = $systemAssetPath;
+            }
+        }
+
+        $this->cachedPaths[$systemAssetPath] = $assetPath;
+        $this->newAssetPathsAdded = true;
+
+        return $assetPath;
+    }
+}

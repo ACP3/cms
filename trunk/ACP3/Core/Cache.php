@@ -24,6 +24,11 @@ class Cache
 
         $driverName = defined('CONFIG_CACHE_DRIVER') ? CONFIG_CACHE_DRIVER : 'Array';
 
+        // If debug mode is enabled, override the cache driver configuration
+        if (defined('DEBUG') && DEBUG === true) {
+            $driverName = 'Array';
+        }
+
         $driverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
         if (class_exists($driverPath)) {
             if ($driverName === 'PhpFile') {
