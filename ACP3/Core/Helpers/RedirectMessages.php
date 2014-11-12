@@ -67,11 +67,7 @@ class RedirectMessages
                 'text' => $text
             );
 
-            if ($this->request->getIsAjax()) {
-                $this->redirect->ajax($path);
-            } else {
-                $this->redirect->temporary($path);
-            }
+            $this->redirect->temporary($path);
         }
     }
 } 
