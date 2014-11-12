@@ -26,6 +26,12 @@ class Extensions extends Core\Modules\Controller\Admin
      */
     protected $permissionsCache;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param System\Model $systemModel
+     * @param Core\Config $systemConfig
+     * @param Permissions\Cache $permissionsCache
+     */
     public function __construct(
         Core\Context\Admin $context,
         System\Model $systemModel,
@@ -60,6 +66,9 @@ class Extensions extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param $design
+     */
     protected function _designsPost($design)
     {
         $bool = false;

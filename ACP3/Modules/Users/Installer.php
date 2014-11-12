@@ -6,17 +6,27 @@ use ACP3\Core\Modules;
 use ACP3\Modules\System;
 use ACP3\Modules\Permissions;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Users
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'users';
     const SCHEMA_VERSION = 39;
 
+    /**
+     * @inheritdoc
+     */
     public function removeResources()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -54,11 +64,17 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array(
@@ -69,16 +85,25 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeSettings()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeFromModulesTable()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

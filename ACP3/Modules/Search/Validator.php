@@ -3,7 +3,10 @@ namespace ACP3\Modules\Search;
 
 use ACP3\Core;
 
-
+/**
+ * Class Validator
+ * @package ACP3\Modules\Search
+ */
 class Validator extends Core\Validator\AbstractValidator
 {
 

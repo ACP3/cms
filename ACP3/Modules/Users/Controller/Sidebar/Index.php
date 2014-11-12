@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller
      */
     protected $usersConfig;
 
+    /**
+     * @param Core\Context $context
+     * @param Core\Config $usersConfig
+     */
     public function __construct(
         Core\Context $context,
         Core\Config $usersConfig)

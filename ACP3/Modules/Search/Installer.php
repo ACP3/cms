@@ -3,35 +3,52 @@
 namespace ACP3\Modules\Search;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\System;
-use ACP3\Modules\Permissions;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Search
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'search';
     const SCHEMA_VERSION = 32;
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeSettings()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

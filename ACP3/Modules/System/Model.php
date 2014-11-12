@@ -15,46 +15,80 @@ class Model extends Core\Model
     const TABLE_NAME_SETTINGS = 'settings';
     const TABLE_NAME_SEO = 'seo';
 
+    /**
+     * @return array
+     */
     public function getSchemaTables()
     {
         return $this->db->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', CONFIG_DB_NAME));
     }
 
+    /**
+     * @param $moduleName
+     * @return mixed
+     */
     public function getModuleId($moduleName)
     {
         return $this->db->fetchColumn('SELECT id FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
+    /**
+     * @param $moduleName
+     * @return array
+     */
     public function getSettingsByModuleName($moduleName)
     {
         return $this->db->fetchAll('SELECT s.name, s.value FROM ' . $this->prefix . static::TABLE_NAME_SETTINGS . ' AS s JOIN ' . $this->prefix . static::TABLE_NAME . ' AS m ON(m.id = s.module_id) WHERE m.name = ?', array($moduleName));
     }
 
+    /**
+     * @param $moduleName
+     * @return mixed
+     */
     public function getModuleSchemaVersion($moduleName)
     {
         return $this->db->fetchColumn('SELECT version FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
+    /**
+     * @param $path
+     * @return bool
+     */
     public function uriAliasExists($path)
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE uri = ?', array($path)) > 0;
     }
 
+    /**
+     * @param $moduleName
+     * @return bool
+     */
     public function moduleExists($moduleName)
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName)) > 0;
     }
 
+    /**
+     * @return array
+     */
     public function getAllUriAliases()
     {
         return $this->db->fetchAll('SELECT uri, alias FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE alias != ""');
     }
 
+    /**
+     * @param $moduleName
+     * @return array
+     */
     public function getInfoByModuleName($moduleName)
     {
         return $this->db->fetchAssoc('SELECT id, version, active FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
+    /**
+     * @param $moduleId
+     * @return mixed
+     */
     public function getModuleNameById($moduleId)
     {
         return $this->db->fetchColumn('SELECT name FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($moduleId));

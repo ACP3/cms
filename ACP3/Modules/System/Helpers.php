@@ -27,6 +27,10 @@ class Helpers
      */
     protected $modules;
 
+    /**
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\Modules $modules
+     */
     public function __construct(\Doctrine\DBAL\Connection $db, Core\Modules $modules)
     {
         $this->db = $db;
@@ -79,6 +83,12 @@ class Helpers
         return $modulesToUninstall;
     }
 
+    /**
+     * @param array $tables
+     * @param $exportType
+     * @param $withDropTables
+     * @return string
+     */
     public function exportDatabase(array $tables, $exportType, $withDropTables)
     {
         $structure = $data = '';

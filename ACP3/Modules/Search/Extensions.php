@@ -5,9 +5,8 @@ namespace ACP3\Modules\Search;
 use ACP3\Core;
 
 /**
- * Description of Extensions
- *
- * @author Tino Goratsch
+ * Class Extensions
+ * @package ACP3\Modules\Search
  */
 class Extensions
 {
@@ -52,6 +51,12 @@ class Extensions
      */
     protected $params = array();
 
+    /**
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\Date $date
+     * @param Core\Lang $lang
+     * @param Core\Router $router
+     */
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Core\Date $date,
@@ -105,6 +110,9 @@ class Extensions
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function articlesSearch()
     {
         switch ($this->area) {
@@ -135,6 +143,9 @@ class Extensions
         return $searchResults;
     }
 
+    /**
+     * @return array
+     */
     public function filesSearch()
     {
         switch ($this->area) {
@@ -165,6 +176,9 @@ class Extensions
         return $searchResults;
     }
 
+    /**
+     * @return array
+     */
     public function newsSearch()
     {
         switch ($this->area) {

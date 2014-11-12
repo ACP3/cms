@@ -25,6 +25,12 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $pollsModel;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Date $date
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Polls\Model $pollsModel
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
@@ -169,6 +175,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -210,6 +219,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _editPost(array $formData)
     {
         try {

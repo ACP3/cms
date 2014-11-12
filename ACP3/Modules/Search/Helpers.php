@@ -19,6 +19,10 @@ class Helpers
      */
     protected $modules;
 
+    /**
+     * @param Core\ACL $acl
+     * @param Core\Modules $modules
+     */
     public function __construct(
         Core\ACL $acl,
         Core\Modules $modules
