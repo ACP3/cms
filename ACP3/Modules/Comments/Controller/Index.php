@@ -126,7 +126,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('comments_create_form', $this->actionCreate());
         }
 
-        return $this->view->fetchTemplate('comments/index.index.tpl');
+        return $this->view->fetchTemplate('Comments/Frontend/index.index.tpl');
     }
 
     public function actionCreate()
@@ -167,7 +167,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->secureHelper->generateFormToken($this->request->query);
 
-        return $this->view->fetchTemplate('comments/index.create.tpl');
+        return $this->view->fetchTemplate('Comments/Frontend/index.create.tpl');
     }
 
     /**

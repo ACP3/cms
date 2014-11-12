@@ -4,8 +4,7 @@ namespace ACP3\Core;
 
 /**
  * Stellt Funktionen zur Datumsformatierung und Ausrichtung an den Zeitzonen bereit
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class Date
 {
@@ -40,30 +39,30 @@ class Date
      */
     protected $dateValidator;
     /**
-     * @var \ACP3\Core\View
+     * @var \ACP3\Core\Assets
      */
-    protected $view;
+    protected $assets;
 
     /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
      *
-     * @param Auth                 $auth
-     * @param Lang                 $lang
+     * @param Auth $auth
+     * @param Lang $lang
      * @param Validator\Rules\Date $dateValidator
-     * @param View                 $view
+     * @param View $assets
      */
     function __construct(
         Auth $auth,
         Lang $lang,
         \ACP3\Core\Validator\Rules\Date $dateValidator,
-        View $view
+        Assets $assets
     )
     {
         $info = $auth->getUserInfo();
 
         $this->lang = $lang;
         $this->dateValidator = $dateValidator;
-        $this->view = $view;
+        $this->assets = $assets;
 
         if (!empty($info)) {
             $this->dateFormatLong = $info['date_format_long'];
@@ -130,21 +129,21 @@ class Date
     /**
      * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
      *
-     * @param mixed    $name
+     * @param mixed $name
      *    Name des jeweiligen Inputfeldes
-     * @param mixed    $value
+     * @param mixed $value
      *    Der Zeitstempel des jeweiligen Eintrages
-     * @param string   $format
+     * @param string $format
      *    Das anzuzeigende Format im Textfeld
-     * @param array    $params
+     * @param array $params
      *    Dient dem Festlegen von weiteren Parametern
-     * @param integer  $range
+     * @param integer $range
      *    1 = Start- und Enddatum anzeigen
      *    2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
      * @param bool|int $withTime
-     * @param bool     $inputFieldOnly
+     * @param bool $inputFieldOnly
      *
-     * @return string
+     * @return array
      */
     public function datepicker(
         $name,
@@ -217,9 +216,9 @@ class Date
             $datepicker['value'] = $value;
         }
 
-        $this->view->assign('datepicker', $datepicker);
+        $this->assets->enableJsLibraries(array($withTime === true ? 'timepicker' : 'jquery-ui'));
 
-        return $this->view->fetchTemplate('system/date.tpl');
+        return $datepicker;
     }
 
     /**
@@ -227,8 +226,8 @@ class Date
      *
      * @param string $time
      * @param string $format
-     * @param bool   $toLocalTimeZone
-     * @param bool   $isLocalTimeZone
+     * @param bool $toLocalTimeZone
+     * @param bool $isLocalTimeZone
      *
      * @return string
      */
@@ -374,7 +373,7 @@ class Date
      * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
      *
      * @param string $value
-     * @param bool   $islocalTime
+     * @param bool $islocalTime
      *
      * @return integer
      */

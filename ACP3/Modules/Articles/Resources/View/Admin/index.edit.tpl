@@ -13,7 +13,7 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    {$publication_period}
+                    {include file="asset:system/date.tpl" datepicker=$publication_period}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    {$SEO_FORM_FIELDS}
+                    {include file="asset:system/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>

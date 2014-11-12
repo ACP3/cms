@@ -5,7 +5,9 @@
     <html lang="{$LANG}" dir="{$LANG_DIRECTION}">
     <head>
         <title>{$HEAD_TITLE}</title>
-        {$META}
+        {block META}
+            {include file="asset:system/meta.tpl" meta=$META}
+        {/block}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_news"}" title="{$PAGE_TITLE} - {lang t="news|news"}">
         <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_files"}" title="{$PAGE_TITLE} - {lang t="files|files"}">
@@ -49,7 +51,9 @@
             </div>
             <main role="main" id="content" class="col-sm-9 col-md-8">
                 <div id="breadcrumb">
-                    {$BREADCRUMB}
+                    {block BREADCRUMB}
+                        {include file="asset:system/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
+                    {/block}
                 </div>
                 <h2>{$TITLE}</h2>
                 {block CONTENT}

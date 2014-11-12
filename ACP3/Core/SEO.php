@@ -29,10 +29,7 @@ class SEO
      * @var Request
      */
     protected $request;
-    /**
-     * @var View
-     */
-    protected $view;
+
     /**
      * Gibt die nächste Seite an
      *
@@ -55,22 +52,29 @@ class SEO
      * @var array
      */
     protected $aliasCache = array();
-
+    /**
+     * @var string
+     */
     protected $metaDescriptionPostfix = '';
 
+    /**
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Lang $lang
+     * @param Request $request
+     * @param Aliases $aliases
+     */
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Lang $lang,
         Request $request,
-        Aliases $aliases,
-        View $view)
+        Aliases $aliases
+    )
     {
         $this->cache = new Cache('seo');
         $this->db = $db;
         $this->lang = $lang;
         $this->request = $request;
         $this->aliases = $aliases;
-        $this->view = $view;
 
         $this->aliasCache = $this->getCache();
     }
@@ -118,7 +122,7 @@ class SEO
      */
     public function getMetaTags()
     {
-        $meta = array(
+        return array(
             'description' => $this->request->area === 'admin' ? '' : $this->getPageDescription(),
             'keywords' => $this->request->area === 'admin' ? '' : $this->getPageKeywords(),
             'robots' => $this->request->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
@@ -126,9 +130,6 @@ class SEO
             'next_page' => $this->nextPage,
             'canonical' => $this->canonical,
         );
-        $this->view->assign('meta', $meta);
-
-        return $this->view->fetchTemplate('system/meta.tpl');
     }
 
     /**
@@ -155,7 +156,6 @@ class SEO
      * Gibt die Beschreibung der Seite zurück
      *
      * @param string $path
-     *
      * @return string
      */
     public function getDescription($path)
@@ -188,7 +188,6 @@ class SEO
      * Gibt die Schlüsselwörter der Seite zurück
      *
      * @param string $path
-     *
      * @return string
      */
     public function getKeywords($path)
@@ -219,9 +218,7 @@ class SEO
 
     /**
      * Gibt die jeweilige Einstellung für den Robots-Metatag zurück
-     *
      * @param string $path
-     *
      * @return string
      */
     public function getRobotsSetting($path = '')
@@ -244,42 +241,50 @@ class SEO
     }
 
     /**
-     *
-     * @param string $string
+     * @param $string
+     * @return $this
      */
     public function setDescriptionPostfix($string)
     {
         $this->metaDescriptionPostfix = $string;
+
+        return $this;
     }
 
     /**
      * Setzt die kanonische URI
-     *
-     * @param string $path
+     * @param $path
+     * @return $this
      */
     public function setCanonicalUri($path)
     {
         $this->canonical = $path;
+
+        return $this;
     }
 
     /**
      * Setzt die nächste Seite
-     *
-     * @param string $path
+     * @param $path
+     * @return $this
      */
     public function setNextPage($path)
     {
         $this->nextPage = $path;
+
+        return $this;
     }
 
     /**
      * Setzt die vorherige Seite
-     *
-     * @param string $path
+     * @param $path
+     * @return $this
      */
     public function setPreviousPage($path)
     {
         $this->previousPage = $path;
+
+        return $this;
     }
 
     /**
@@ -287,7 +292,7 @@ class SEO
      *
      * @param string $path
      *
-     * @return string
+     * @return array
      */
     public function formFields($path = '')
     {
@@ -310,15 +315,13 @@ class SEO
             $this->lang->t('system', 'seo_robots_noindex_follow'),
             $this->lang->t('system', 'seo_robots_noindex_nofollow')
         );
-        $seo = array(
+
+        return array(
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
             'robots' => Functions::selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $langRobots, $robots)
         );
-
-        $this->view->assign('seo', $seo);
-        return $this->view->fetchTemplate('system/seo_fields.tpl');
     }
 
 }

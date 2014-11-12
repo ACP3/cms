@@ -77,15 +77,15 @@ services:
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.view']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases']
 
   core.date:
     class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', '@core.validator.rules.date', '@core.view']
+    arguments: ['@core.auth', '@core.lang', '@core.validator.rules.date', '@core.assets']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@core.view']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router']
 
   core.functions:
     class: ACP3\Core\Functions
