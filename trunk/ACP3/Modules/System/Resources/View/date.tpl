@@ -1,4 +1,3 @@
-{js_libraries enable="jquery-ui{if $datepicker.with_time == 1},timepicker{/if}"}
 <script type="text/javascript">
     {if $datepicker.with_time == 1}
         {assign var="picker" value="datetimepicker"}

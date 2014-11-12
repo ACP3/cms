@@ -54,23 +54,17 @@ class Breadcrumb
      * @var Router
      */
     protected $router;
-    /**
-     * @var View
-     */
-    protected $view;
 
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Lang $lang,
         Request $request,
-        Router $router,
-        View $view
+        Router $router
     )
     {
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
-        $this->view = $view;
 
         // Frontendbereich
         if ($request->area !== 'admin') {
@@ -181,8 +175,7 @@ class Breadcrumb
 
         // Just return the breadcrumb
         if ($mode === 1) {
-            $this->view->assign('breadcrumb', $this->breadcrumbCache);
-            return $this->view->fetchTemplate('system/breadcrumb.tpl');
+            return $this->breadcrumbCache;
         } else { // Just return the title
             // The last index of the breadcrumb is the page title
             $title = $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];

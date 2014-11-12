@@ -10,7 +10,9 @@
         <item key="file_not_found"><![CDATA[The requested module or the requested file is either missing or has not been activated.<br />Please contact the administrator of this site, if the error should occur repeatedly.]]></item>
         <item key="frontend_index_403">Access denied</item>
         <item key="frontend_index_404">File not found</item>
+        <item key="frontend_index_500">Internal server error</item>
         <item key="mod_description">This module returns useful error messages.</item>
+        <item key="server_unavailable">Currently the server is not able to respond to your request. This may because of to much load or there is an active maintenance window. Please try it in a few minutes again.</item>
         <item key="tpl_not_found">The desired template %s was not found.</item>
     </keys>
 </language>

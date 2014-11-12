@@ -2,6 +2,6 @@
 
 {block CONTENT prepend}
     <div class="alert alert-warning text-center">
-        {lang t="errors|file_not_found"}
+        {lang t="errors|server_unavailable"}
     </div>
 {/block}
