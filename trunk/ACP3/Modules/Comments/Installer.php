@@ -4,12 +4,19 @@ namespace ACP3\Modules\Comments;
 
 use ACP3\Core\Modules;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Comments
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'comments';
     const SCHEMA_VERSION = 33;
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -27,11 +34,17 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array("DROP TABLE `{pre}comments`;");
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array(
@@ -40,6 +53,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

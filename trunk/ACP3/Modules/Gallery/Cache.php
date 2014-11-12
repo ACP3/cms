@@ -3,6 +3,10 @@ namespace ACP3\Modules\Gallery;
 
 use ACP3\Core;
 
+/**
+ * Class Cache
+ * @package ACP3\Modules\Gallery
+ */
 class Cache
 {
     /**
@@ -22,6 +26,10 @@ class Cache
      */
     protected $galleryConfig;
 
+    /**
+     * @param Model $galleryModel
+     * @param Core\Config $galleryConfig
+     */
     public function __construct(Model $galleryModel, Core\Config $galleryConfig)
     {
         $this->cache = new Core\Cache('gallery');

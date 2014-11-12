@@ -4,12 +4,19 @@ namespace ACP3\Modules\Emoticons;
 
 use ACP3\Core\Modules;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Emoticons
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'emoticons';
     const SCHEMA_VERSION = 31;
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -46,11 +53,17 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array("DROP TABLE `{pre}emoticons`;");
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array(
@@ -60,6 +73,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

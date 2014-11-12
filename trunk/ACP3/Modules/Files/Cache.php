@@ -20,6 +20,9 @@ class Cache
      */
     protected $filesModel;
 
+    /**
+     * @param Model $filesModel
+     */
     public function __construct(Model $filesModel)
     {
         $this->filesModel = $filesModel;

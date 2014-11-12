@@ -159,6 +159,10 @@ class Pictures extends Core\Modules\Controller\Admin
         throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     */
     private function _createPost(array $formData, array $settings)
     {
         try {
@@ -198,6 +202,11 @@ class Pictures extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     * @param array $picture
+     */
     private function _editPost(array $formData, array $settings, array $picture)
     {
         try {

@@ -5,9 +5,8 @@ namespace ACP3\Modules\Files;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author Tino Goratsch
+ * Class Model
+ * @package ACP3\Modules\Files
  */
 class Model extends Core\Model
 {
@@ -23,7 +22,7 @@ class Model extends Core\Model
     public function resultExists($id, $time = '')
     {
         $period = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0 ? true : false;
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0);
     }
 
     /**

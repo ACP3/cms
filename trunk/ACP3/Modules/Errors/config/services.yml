@@ -5,4 +5,4 @@ services:
 
   errors.installer:
     class: ACP3\Modules\Errors\Installer
-    arguments: ['@core.db', '@system.model', '@permissions.model', '@core.modules']
+    parent: core.modules.abstract.installer

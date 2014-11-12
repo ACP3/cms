@@ -3,15 +3,20 @@
 namespace ACP3\Modules\Articles;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\System;
-use ACP3\Modules\Permissions;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Articles
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'articles';
     const SCHEMA_VERSION = 35;
 
+    /**
+     * @inheritdoc
+     */
     public function renameModule()
     {
         return array(
@@ -19,6 +24,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -34,16 +42,25 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array("DROP TABLE `{pre}articles`;");
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

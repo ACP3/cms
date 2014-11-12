@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $feedsConfig;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Config $feedsConfig
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Config $feedsConfig)

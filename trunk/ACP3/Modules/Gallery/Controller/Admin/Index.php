@@ -29,6 +29,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $galleryConfig;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Date $date
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Gallery\Model $galleryModel
+     * @param Core\Config $galleryConfig
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
@@ -196,6 +203,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -231,6 +241,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _editPost(array $formData)
     {
         try {
@@ -267,6 +280,10 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     */
     private function _settingsPost(array $formData, array $settings)
     {
         try {

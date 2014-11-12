@@ -41,6 +41,16 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Date $date
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Articles\Model $articlesModel
+     * @param Articles\Cache $articlesCache
+     * @param Menus\Model $menusModel
+     * @param Menus\Cache $menusCache
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
@@ -98,6 +108,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -204,7 +217,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
-
+    /**
+     * @param array $formData
+     */
     private function _editPost(array $formData)
     {
         try {

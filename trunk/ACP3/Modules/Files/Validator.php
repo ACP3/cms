@@ -31,6 +31,15 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $categoriesHelpers;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
+     * @param Core\Validator\Rules\Date $dateValidator
+     * @param Core\Modules $modules
+     * @param Core\Request $request
+     * @param Categories\Helpers $categoriesHelpers
+     */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,

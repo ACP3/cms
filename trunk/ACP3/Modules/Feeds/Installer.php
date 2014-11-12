@@ -4,6 +4,10 @@ namespace ACP3\Modules\Feeds;
 
 use ACP3\Core\Modules;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Feeds
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
@@ -21,16 +25,25 @@ class Installer extends Modules\AbstractInstaller
         )
     );
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array(
@@ -39,11 +52,17 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeSettings()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

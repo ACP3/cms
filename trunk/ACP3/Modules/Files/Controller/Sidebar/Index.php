@@ -26,6 +26,12 @@ class Index extends Core\Modules\Controller
      */
     protected $filesConfig;
 
+    /**
+     * @param Core\Context $context
+     * @param Core\Date $date
+     * @param Files\Model $filesModel
+     * @param Core\Config $filesConfig
+     */
     public function __construct(
         Core\Context $context,
         Core\Date $date,

@@ -3,6 +3,10 @@ namespace ACP3\Modules\Articles;
 
 use ACP3\Core;
 
+/**
+ * Class Cache
+ * @package ACP3\Modules\Articles
+ */
 class Cache
 {
     const CACHE_ID = 'list_id_';
@@ -16,6 +20,9 @@ class Cache
      */
     protected $cache;
 
+    /**
+     * @param Model $articlesModel
+     */
     public function __construct(Model $articlesModel)
     {
         $this->articlesModel = $articlesModel;

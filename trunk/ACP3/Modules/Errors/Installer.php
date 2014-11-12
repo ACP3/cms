@@ -3,9 +3,11 @@
 namespace ACP3\Modules\Errors;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\System;
-use ACP3\Modules\Permissions;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Errors
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
@@ -13,52 +15,56 @@ class Installer extends Modules\AbstractInstaller
     const SCHEMA_VERSION = 34;
 
     /**
-     * @var \ACP3\Core\Modules
+     * @inheritdoc
      */
-    protected $modules;
-
-    public function __construct(
-        \Doctrine\DBAL\Connection $db,
-        System\Model $systemModel,
-        Permissions\Model $permissionsModel,
-        Modules $modules
-    )
-    {
-        parent::__construct($db, $systemModel, $permissionsModel);
-
-        $this->modules = $modules;
-    }
-
     public function removeResources()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeSettings()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeFromModulesTable()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(
