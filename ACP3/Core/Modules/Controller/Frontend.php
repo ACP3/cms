@@ -88,40 +88,31 @@ abstract class Frontend extends Core\Modules\Controller
      */
     public function display()
     {
+        // Output content through the controller
         if ($this->getNoOutput() === false) {
-            // Content-Template automatisch setzen
-            if ($this->getContentTemplate() === '') {
-                $this->setContentTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
-            }
-
-            if ($this->getContent() === '') {
-                $this->setContent($this->view->fetchTemplate($this->getContentTemplate()));
-            }
-
             // Evtl. gesetzten Content-Type des Servers überschreiben
             header($this->getContentType());
 
-            if ($this->getLayout() !== '') {
+            if ($this->getContent() == '') {
+                // Set the template automatically
+                if ($this->getTemplate() === '') {
+                    $this->setTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
+                }
+
                 $this->view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
                 $this->view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
                 $this->view->assign('TITLE', $this->breadcrumb->output(2));
                 $this->view->assign('BREADCRUMB', $this->breadcrumb->output());
                 $this->view->assign('META', $this->seo->getMetaTags());
-                $this->view->assign('CONTENT', $this->getContent() . $this->getContentAppend());
+                $this->view->assign('CONTENT', $this->getContentAppend());
+                $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 
-                if ($this->request->getIsAjax() === true) {
-                    if ($this->layout !== 'layout.tpl') {
-                        $file = $this->layout;
-                    } else {
-                        $file = 'system/ajax.tpl';
-                    }
-                } else {
-                    $file = $this->layout;
-                    $this->view->assign('MIN_STYLESHEET', $this->assets->buildMinifyLink('css', substr($file, 0, strpos($file, '.'))));
+                if ($this->request->getIsAjax() !== true) {
+                    $this->view->assign('MIN_STYLESHEET', $this->assets->buildMinifyLink('css'));
                     $this->view->assign('MIN_JAVASCRIPT', $this->assets->buildMinifyLink('js'));
                 }
 
-                $this->view->displayTemplate($file);
+                $this->view->displayTemplate($this->getTemplate());
             } else {
                 echo $this->getContent();
             }

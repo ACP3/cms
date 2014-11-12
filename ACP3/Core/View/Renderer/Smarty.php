@@ -5,6 +5,7 @@ namespace ACP3\Core\View\Renderer;
 use ACP3\Core\View\AbstractRenderer;
 use ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier;
 use ACP3\Core\View\Renderer\Smarty\Plugins\AbstractPlugin;
+use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 
 /**
  * Renderer for the Smarty template engine
@@ -39,11 +40,14 @@ class Smarty extends AbstractRenderer
                 /** @var AbstractPlugin $plugin */
                 $plugin = $this->container->get($serviceName);
                 $plugin->registerPlugin($this->renderer);
-            }
-            if (strpos($serviceName, 'smarty.modifier.') === 0) {
+            } elseif (strpos($serviceName, 'smarty.modifier.') === 0) {
                 /** @var AbstractModifier $modifier */
                 $modifier = $this->container->get($serviceName);
                 $modifier->registerModifier($this->renderer);
+            } elseif (strpos($serviceName, 'smarty.resource.') === 0) {
+                /** @var AbstractResource $resource */
+                $resource = $this->container->get($serviceName);
+                $resource->registerResource($this->renderer);
             }
         }
 

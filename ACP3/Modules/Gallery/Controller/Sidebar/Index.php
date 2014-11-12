@@ -47,7 +47,7 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('sidebar_galleries', $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
 
-        $this->setLayout('Gallery/Sidebar/index.index.tpl');
+        $this->setTemplate('Gallery/Sidebar/index.index.tpl');
     }
 
 }

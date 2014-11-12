@@ -56,8 +56,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $overlayIsActive = false;
         if ($this->request->getIsAjax() === true) {
-            $this->setContentTemplate('Guestbook/index.create_ajax.tpl');
-            $this->setLayout('Guestbook/ajax.tpl');
+            $this->setTemplate('Guestbook/index.create_ajax.tpl');
         }
 
         if (empty($_POST) === false) {

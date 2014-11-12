@@ -49,7 +49,7 @@ class Index extends Core\Modules\Controller
         $this->view->assign('sidebar_news', $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
         $this->view->assign('dateformat', $settings['dateformat']);
 
-        $this->setLayout('News/Sidebar/index.index.tpl');
+        $this->setTemplate('News/Sidebar/index.index.tpl');
     }
 
 }

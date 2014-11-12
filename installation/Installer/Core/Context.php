@@ -20,7 +20,7 @@ class Context
      */
     protected $router;
     /**
-     * @var View
+     * @var \ACP3\Core\View
      */
     protected $view;
 
@@ -28,7 +28,7 @@ class Context
         Lang $lang,
         Request $request,
         Router $router,
-        View $view)
+        \ACP3\Core\View $view)
     {
         $this->lang = $lang;
         $this->request = $request;

@@ -74,28 +74,7 @@ class View extends ContainerAware
      */
     public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
     {
-        $modulesPath = '';
-
-        // If an template with directory is given, uppercase the first letter
-        if (strpos($template, '/') !== false) {
-            $template = ucfirst($template);
-
-            // Pfad zerlegen
-            $fragments = explode('/', $template);
-
-            $modulesPath .= $fragments[0] . '/Resources/View/' . $fragments[1];
-            if (isset($fragments[2])) {
-                $modulesPath .= '/' . $fragments[2];
-            }
-
-            $asset = $this->container->get('core.assets.themeResolver')->getStaticAssetPath($modulesPath, $template);
-
-            return $this->renderer->fetch($asset, $cacheId, $compileId, $parent, $display);
-        } else {
-            $asset = $this->container->get('core.assets.themeResolver')->getStaticAssetPath($modulesPath, '', '', $template);
-
-            return $this->renderer->fetch($asset, $cacheId, $compileId, $parent, $display);
-        }
+        return $this->renderer->fetch('asset:' . $template, $cacheId, $compileId, $parent, $display);
     }
 
     /**

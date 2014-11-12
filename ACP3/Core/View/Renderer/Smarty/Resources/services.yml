@@ -1,0 +1,4 @@
+services:
+  smarty.resource.asset:
+    class: ACP3\Core\View\Renderer\Smarty\Resources\Asset
+    arguments: ['@core.assets.themeResolver']
