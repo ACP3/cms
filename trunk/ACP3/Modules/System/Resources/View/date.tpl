@@ -58,7 +58,8 @@
         });
     {/if}
     });
-</script>{if $datepicker.range == 1}
+</script>
+{if $datepicker.range == 1}
     {if $datepicker.input_only}
         <div class="row">
             <div class="col-sm-6">
