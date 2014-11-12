@@ -72,6 +72,6 @@
                 </div>
             </div>
         </form>
-        {include_js module="system" file="acp_sql_export"}
+        {include_js module="system" file="admin/maintenance.sql_export"}
     {/if}
 {/block}

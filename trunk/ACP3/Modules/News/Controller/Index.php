@@ -124,7 +124,7 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         $time = $this->date->getCurrentDateTime();
-        // Falls Kategorie angegeben, News nur aus eben jener selektieren
+        // Falls Kategorie angegeben, News nur aus eben dieser selektieren
         if (!empty($cat)) {
             $news = $this->newsModel->getAllByCategoryId($cat, $time, POS, $this->auth->entries);
         } else {
@@ -133,11 +133,8 @@ class Index extends Core\Modules\Controller\Frontend
         $c_news = count($news);
 
         if ($c_news > 0) {
-            $commentsCheck = false;
             // Überprüfen, ob das Kommentare Modul aktiv ist
-            if ($this->modules->isActive('comments') === true) {
-                $commentsCheck = true;
-            }
+            $commentsCheck = $this->modules->isActive('comments');
 
             $this->pagination->setTotalResults($this->newsModel->countAll($time, $cat));
             $this->pagination->display();
