@@ -36,6 +36,14 @@ class Helpers
      */
     protected $newsletterConfig;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Core\Router $router
+     * @param Core\View $view
+     * @param Core\Helpers\StringFormatter $stringFormatter
+     * @param Core\Config $newsletterConfig
+     * @param Model $newsletterModel
+     */
     public function __construct(
         Core\Lang $lang,
         Core\Router $router,

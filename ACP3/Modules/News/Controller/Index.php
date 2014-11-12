@@ -42,6 +42,15 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $categoriesModel;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Core\Pagination $pagination
+     * @param News\Model $newsModel
+     * @param News\Cache $newsCache
+     * @param Core\Config $newsConfig
+     * @param Categories\Model $categoriesModel
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,

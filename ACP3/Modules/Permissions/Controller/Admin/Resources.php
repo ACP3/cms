@@ -24,6 +24,12 @@ class Resources extends Core\Modules\Controller\Admin
      */
     protected $permissionsCache;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Permissions\Model $permissionsModel
+     * @param Permissions\Cache $permissionsCache
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
@@ -125,6 +131,9 @@ class Resources extends Core\Modules\Controller\Admin
         $this->view->assign('can_delete_resource', $this->acl->hasPermission('admin/permissions/resources/delete'));
     }
 
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -155,6 +164,9 @@ class Resources extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _editPost(array $formData)
     {
         try {

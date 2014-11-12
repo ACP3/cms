@@ -4,12 +4,19 @@ namespace ACP3\Modules\Menus;
 
 use ACP3\Core\Modules;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Menus
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'menus';
     const SCHEMA_VERSION = 33;
 
+    /**
+     * @inheritdoc
+     */
     public function renameModule()
     {
         return array(
@@ -17,6 +24,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -43,6 +53,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array(
@@ -51,16 +64,25 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeSettings()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

@@ -22,6 +22,9 @@ class Cache
      */
     protected $permissionsModel;
 
+    /**
+     * @param Model $permissionsModel
+     */
     public function __construct(Model $permissionsModel)
     {
         $this->permissionsModel = $permissionsModel;

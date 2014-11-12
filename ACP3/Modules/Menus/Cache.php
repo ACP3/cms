@@ -3,6 +3,10 @@ namespace ACP3\Modules\Menus;
 
 use ACP3\Core;
 
+/**
+ * Class Cache
+ * @package ACP3\Modules\Menus
+ */
 class Cache
 {
     const CACHE_ID = 'items';
@@ -21,6 +25,10 @@ class Cache
      */
     protected $menuModel;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Model $menuModel
+     */
     public function __construct(Core\Lang $lang, Model $menuModel)
     {
         $this->cache = new Core\Cache('menus');

@@ -28,6 +28,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $permissionsCache;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Permissions\Model $permissionsModel
+     * @param Permissions\Cache $permissionsCache
+     */
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
@@ -212,6 +219,10 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -257,6 +268,10 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
     private function _editPost(array $formData)
     {
         try {
