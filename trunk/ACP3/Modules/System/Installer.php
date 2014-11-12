@@ -3,7 +3,6 @@
 namespace ACP3\Modules\System;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\Permissions;
 
 /**
  * Class Installer

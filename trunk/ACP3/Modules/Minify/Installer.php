@@ -14,21 +14,33 @@ class Installer extends Modules\AbstractInstaller
     const MODULE_NAME = 'minify';
     const SCHEMA_VERSION = 1;
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array();

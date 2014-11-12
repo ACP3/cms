@@ -1,17 +1,12 @@
 <?php
-
-/**
- * Menu bars
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Menus;
 
 use ACP3\Core;
 
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Menus
+ */
 class Helpers
 {
     const ARTICLES_URL_KEY_REGEX = '/^(articles\/index\/details\/id_([0-9]+)\/)$/';
@@ -41,6 +36,12 @@ class Helpers
      */
     protected $menusCache;
 
+    /**
+     * @param Core\Request $request
+     * @param Core\Router $router
+     * @param Model $menusModel
+     * @param Cache $menusCache
+     */
     public function __construct(
         Core\Request $request,
         Core\Router $router,

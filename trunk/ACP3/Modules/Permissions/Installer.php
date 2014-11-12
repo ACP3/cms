@@ -4,6 +4,10 @@ namespace ACP3\Modules\Permissions;
 
 use ACP3\Core\Modules;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Permissions
+ */
 class Installer extends Modules\AbstractInstaller
 {
 

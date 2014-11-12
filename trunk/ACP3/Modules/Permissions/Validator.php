@@ -37,6 +37,15 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $permissionsModel;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Validator\Rules\ACL $aclValidator
+     * @param Core\Validator\Rules\Router $routerValidator
+     * @param Core\Modules $modules
+     * @param Core\Request $request
+     * @param Model $permissionsModel
+     */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,

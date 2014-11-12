@@ -16,6 +16,9 @@ class Index extends Core\Modules\Controller
      */
     protected $assets;
 
+    /**
+     * @param Core\Context\Frontend $frontendContext
+     */
     public function __construct(Core\Context\Frontend $frontendContext)
     {
         parent::__construct($frontendContext);

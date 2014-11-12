@@ -15,6 +15,9 @@ class Cache
      */
     protected $cache;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->cache = new Core\Cache('minify');

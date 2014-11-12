@@ -17,6 +17,10 @@ class Accounts extends Core\Modules\Controller\Admin
      */
     protected $newsletterModel;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Newsletter\Model $newsletterModel
+     */
     public function __construct(
         Core\Context\Admin $context,
         Newsletter\Model $newsletterModel)

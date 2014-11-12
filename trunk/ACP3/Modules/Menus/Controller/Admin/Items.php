@@ -29,6 +29,13 @@ class Items extends Core\Modules\Controller\Admin
      */
     protected $menusCache;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Menus\Model $menusModel
+     * @param Menus\Cache $menusCache
+     */
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,
@@ -203,6 +210,9 @@ class Items extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -260,6 +270,10 @@ class Items extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $menuItem
+     */
     private function _editPost(array $formData, array $menuItem)
     {
         try {

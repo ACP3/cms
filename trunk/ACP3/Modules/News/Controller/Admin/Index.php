@@ -34,6 +34,14 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $newsConfig;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Date $date
+     * @param Core\Helpers\Secure $secureHelper
+     * @param News\Model $newsModel
+     * @param News\Cache $newsCache
+     * @param Core\Config $newsConfig
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
@@ -220,6 +228,10 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     */
     private function _createPost(array $formData, array $settings)
     {
         try {
@@ -262,6 +274,10 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     */
     private function _editPost(array $formData, array $settings)
     {
         try {
@@ -305,6 +321,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _settingsPost(array $formData)
     {
         try {

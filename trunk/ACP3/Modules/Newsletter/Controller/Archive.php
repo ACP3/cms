@@ -21,6 +21,11 @@ class Archive extends Core\Modules\Controller\Frontend
      */
     protected $newsletterModel;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Pagination $pagination
+     * @param Newsletter\Model $newsletterModel
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Pagination $pagination,

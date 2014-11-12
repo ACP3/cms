@@ -19,6 +19,9 @@ class Cache
      */
     protected $newsModel;
 
+    /**
+     * @param Model $newsModel
+     */
     public function __construct(Model $newsModel)
     {
         $this->newsModel = $newsModel;

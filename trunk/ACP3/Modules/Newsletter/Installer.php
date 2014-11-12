@@ -3,9 +3,11 @@
 namespace ACP3\Modules\Newsletter;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\System;
-use ACP3\Modules\Permissions;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Newsletter
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
@@ -23,6 +25,9 @@ class Installer extends Modules\AbstractInstaller
         )
     );
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -50,6 +55,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array(
@@ -59,6 +67,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array(
@@ -68,6 +79,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(
