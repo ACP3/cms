@@ -24,6 +24,12 @@ class Maintenance extends Core\Modules\Controller\Admin
      */
     protected $systemModel;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\Helpers\Secure $secureHelper
+     * @param System\Model $systemModel
+     */
     public function __construct(
         Core\Context\Admin $context,
         \Doctrine\DBAL\Connection $db,

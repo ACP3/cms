@@ -29,6 +29,14 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $permissionsModel;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Date $date
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Users\Model $usersModel
+     * @param Core\Config $usersConfig
+     * @param Permissions\Model $permissionsModel
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
@@ -332,6 +340,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param $formData
+     */
     private function _createPost($formData)
     {
         try {
@@ -386,6 +397,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _editPost(array $formData)
     {
         try {
@@ -448,6 +462,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _settingsPost(array $formData)
     {
         try {

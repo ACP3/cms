@@ -52,6 +52,11 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected $specialResources = array();
 
+    /**
+     * @param \Doctrine\DBAL\Connection $db
+     * @param System\Model $systemModel
+     * @param Permissions\Model $permissionsModel
+     */
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         System\Model $systemModel,
@@ -65,7 +70,6 @@ abstract class AbstractInstaller implements InstallerInterface
 
     /**
      * @param $module
-     *
      * @return string
      */
     public static function buildClassName($module)
@@ -318,7 +322,7 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Inserts
+     * Insert new acl user rules
      */
     protected function _insertAclRules()
     {
@@ -353,7 +357,7 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Methode zum Deinstallieren des Moduls
+     * Metod for uninstalling a module
      *
      * @return boolean
      */

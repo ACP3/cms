@@ -21,6 +21,11 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $pollsModel;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Polls\Model $pollsModel
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
@@ -99,6 +104,10 @@ class Index extends Core\Modules\Controller\Frontend
         }
     }
 
+    /**
+     * @param array $formData
+     * @param $time
+     */
     private function _votePost(array $formData, $time)
     {
         $ip = $_SERVER['REMOTE_ADDR'];

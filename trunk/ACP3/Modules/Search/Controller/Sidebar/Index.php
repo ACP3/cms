@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller
      */
     protected $secureHelper;
 
+    /**
+     * @param Core\Context $context
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Context $context,
         Core\Helpers\Secure $secureHelper)

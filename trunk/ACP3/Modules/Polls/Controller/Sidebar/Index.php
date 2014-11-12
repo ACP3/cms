@@ -21,6 +21,11 @@ class Index extends Core\Modules\Controller
      */
     protected $pollsModel;
 
+    /**
+     * @param Core\Context $context
+     * @param Core\Date $date
+     * @param Polls\Model $pollsModel
+     */
     public function __construct(
         Core\Context $context,
         Core\Date $date,

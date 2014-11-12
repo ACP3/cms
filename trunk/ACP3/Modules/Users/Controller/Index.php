@@ -37,6 +37,15 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $permissionsModel;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Core\Pagination $pagination
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Users\Model $usersModel
+     * @param Core\Config $usersConfig
+     * @param Permissions\Model $permissionsModel
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,

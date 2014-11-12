@@ -91,6 +91,9 @@ class Index extends Core\Modules\Controller\Frontend
         $this->setTemplate('Search/Frontend/index.results.tpl');
     }
 
+    /**
+     * @param array $formData
+     */
     private function _indexPost(array $formData)
     {
         try {

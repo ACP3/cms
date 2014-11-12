@@ -6,12 +6,19 @@ use ACP3\Core\Modules;
 use ACP3\Modules\System;
 use ACP3\Modules\Permissions;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Polls
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'polls';
     const SCHEMA_VERSION = 33;
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -41,6 +48,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array(
@@ -50,16 +60,25 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeSettings()
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

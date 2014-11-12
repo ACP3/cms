@@ -5,18 +5,20 @@ namespace ACP3\Modules\Users;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author Tino Goratsch
+ * Class Model
+ * @package ACP3\Modules\Users
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'users';
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function resultExists($id)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0 ? true : false;
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0);
     }
 
     /**
@@ -55,37 +57,64 @@ class Model extends Core\Model
         }
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public function getOneById($id)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
     }
 
+    /**
+     * @param $nickname
+     * @return array
+     */
     public function getOneByNickname($nickname)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname));
     }
 
+    /**
+     * @param $nickname
+     * @return array
+     */
     public function getOneActiveUserByNickname($nickname)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ? AND login_errors < 3', array($nickname));
     }
 
+    /**
+     * @param $email
+     * @return array
+     */
     public function getOneByEmail($email)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE mail = ?', array($email));
     }
 
+    /**
+     * @return int
+     */
     public function countAll()
     {
         return count($this->getAll());
     }
 
+    /**
+     * @param string $limitStart
+     * @param string $resultsPerPage
+     * @return array
+     */
     public function getAll($limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY nickname ASC, id ASC' . $limitStmt);
     }
 
+    /**
+     * @return array
+     */
     public function getAllInAcp()
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY nickname ASC');

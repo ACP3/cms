@@ -28,6 +28,13 @@ class Account extends Core\Modules\Controller\Frontend
      */
     protected $usersConfig;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Users\Model $usersModel
+     * @param Core\Config $usersConfig
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,

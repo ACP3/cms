@@ -24,6 +24,12 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $systemConfig;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Helpers\Secure $secureHelper
+     * @param System\Model $systemModel
+     * @param Core\Config $systemConfig
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
