@@ -1,6 +1,4 @@
-{if $dt.initialized === false}
-    {include_js module="system" file="dataTables.bootstrap"}
-{/if}
+{include_js module="system" file="dataTables.bootstrap"}
 <script type="text/javascript">
     $(document).ready(function () {
         $('{$dt.element}').dataTable({

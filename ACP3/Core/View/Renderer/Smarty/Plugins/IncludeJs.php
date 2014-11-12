@@ -48,7 +48,7 @@ class IncludeJs extends AbstractPlugin
         ) {
             // Do not include the same file multiple times
             $key = $params['module'] . '/' . $params['file'];
-            if (isset($alreadyIncluded[$key]) === false) {
+            if (isset($this->alreadyIncluded[$key]) === false) {
                 if (!empty($params['depends'])) {
                     $this->assets->enableJsLibraries(explode(',', $params['depends']));
                 }
