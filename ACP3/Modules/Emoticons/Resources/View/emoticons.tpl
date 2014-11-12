@@ -3,7 +3,7 @@
         <a href="#" title="{$key}">{$value}</a>
     {/foreach}
 </div>
-{include_js module="emoticons" file="list"}
+{include_js module="emoticons" file="emoticons"}
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $('.icons a').insertEmoticon('#{$emoticons_field_id}');

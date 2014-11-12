@@ -17,6 +17,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $secureHelper;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Helpers\Secure $secureHelper)
@@ -84,7 +88,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('no_search_results', sprintf($this->lang->t('search', 'no_search_results'), $searchTerm));
         }
 
-        $this->setTemplate('search/index.results.tpl');
+        $this->setTemplate('Search/Frontend/index.results.tpl');
     }
 
     private function _indexPost(array $formData)

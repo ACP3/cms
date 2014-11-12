@@ -88,6 +88,6 @@
             </div>
         </div>
     </form>
-    {include_js module="news" file="acp_settings"}
+    {include_js module="news" file="admin/index.settings"}
     {include_js module="system" file="forms"}
 {/block}

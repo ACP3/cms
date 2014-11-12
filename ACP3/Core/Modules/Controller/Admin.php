@@ -48,16 +48,6 @@ abstract class Admin extends Core\Modules\Controller\Frontend
         return parent::preDispatch();
     }
 
-    public function display()
-    {
-        // Content-Template automatisch setzen
-        if ($this->getTemplate() === '') {
-            $this->setTemplate($this->request->mod . '/Admin/' . $this->request->controller . '.' . $this->request->file . '.tpl');
-        }
-
-        parent::display();
-    }
-
     /**
      * Little helper function for deleting an result set
      *

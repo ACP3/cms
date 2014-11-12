@@ -96,7 +96,7 @@ abstract class Frontend extends Core\Modules\Controller
             if ($this->getContent() == '') {
                 // Set the template automatically
                 if ($this->getTemplate() === '') {
-                    $this->setTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
+                    $this->setTemplate($this->request->mod . '/' . ucfirst($this->request->area) . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
                 }
 
                 $this->view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);

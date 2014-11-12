@@ -101,6 +101,6 @@
             </div>
         </div>
     </form>
-    {include_js module="files" file="acp"}
+    {include_js module="files" file="admin/acp"}
     {include_js module="system" file="forms"}
 {/block}

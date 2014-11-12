@@ -55,9 +55,6 @@ class Index extends Core\Modules\Controller\Frontend
         $hasNewsletterAccess = $this->acl->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
-        if ($this->request->getIsAjax() === true) {
-            $this->setTemplate('Guestbook/index.create_ajax.tpl');
-        }
 
         if (empty($_POST) === false) {
             $this->_createPost($_POST, $settings, $overlayIsActive, $hasNewsletterAccess);

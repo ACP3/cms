@@ -299,6 +299,6 @@
             </div>
         </div>
     </form>
-    {include_js module="system" file="acp_configuration"}
+    {include_js module="system" file="admin/index.configuration"}
     {include_js module="system" file="forms"}
 {/block}

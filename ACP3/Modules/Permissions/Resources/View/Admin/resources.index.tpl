@@ -20,7 +20,7 @@
         </nav>
         {redirect_message}
         {if isset($resources)}
-            {include_js module="permissions" file="acp"}
+            {include_js module="permissions" file="admin/resources.index"}
             <table id="resources-table" class="table table-hover">
                 <thead>
                 <tr>
