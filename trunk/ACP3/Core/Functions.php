@@ -21,8 +21,6 @@ class Functions
      */
     protected $view;
 
-    private $dataTableInitialized = false;
-
     /**
      * @param Assets $assets
      * @param \Doctrine\DBAL\Connection $db
@@ -164,10 +162,7 @@ class Functions
     {
         $this->assets->enableJsLibraries(array('datatables'));
 
-        $config['initialized'] = $this->dataTableInitialized;
-
         $this->view->assign('dt', $config);
-        $this->dataTableInitialized = true;
 
         return $this->view->fetchTemplate('system/datatable.tpl');
     }
