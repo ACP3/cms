@@ -84,7 +84,7 @@ class Install extends AbstractController
                 $this->_installSampleData($formData);
             }
 
-            $this->setContentTemplate('install/install.result.tpl');
+            $this->setTemplate('install/install.result.tpl');
             return;
         } catch (ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));

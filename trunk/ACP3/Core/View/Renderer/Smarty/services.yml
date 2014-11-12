@@ -1,3 +1,4 @@
 imports:
   - { resource: ./Modifiers/services.yml }
   - { resource: ./Plugins/services.yml }
+  - { resource: ./Resources/services.yml }

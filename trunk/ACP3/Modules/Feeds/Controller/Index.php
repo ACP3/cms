@@ -52,8 +52,7 @@ class Index extends Core\Modules\Controller\Frontend
             $feed->$action();
 
             $this->setContentType('text/xml');
-            $this->setContentTemplate($settings['feed_type']);
-            $this->setLayout('');
+            $this->setTemplate($settings['feed_type']);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

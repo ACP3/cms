@@ -2,4 +2,6 @@
     {$BREADCRUMB}
 </div>
 <h2>{$TITLE}</h2>
-{$CONTENT}
+{block CONTENT}
+    {$CONTENT}
+{/block}

@@ -1,4 +1,5 @@
-<br/>{if isset($error_msg)}
+<br/>
+{if isset($error_msg)}
     {$error_msg}
 {/if}
 <form action="{$REQUEST_URI}#comments" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">

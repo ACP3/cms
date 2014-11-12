@@ -58,13 +58,13 @@ class Index extends Core\Modules\Controller
                 }
 
                 $this->view->assign('sidebar_poll_answers', $answers);
-                $this->setLayout('Polls/Sidebar/index.result.tpl');
+                $this->setTemplate('Polls/Sidebar/index.result.tpl');
+                return;
             } else {
                 $this->view->assign('sidebar_poll_answers', $answers);
-                $this->setLayout('Polls/Sidebar/index.vote.tpl');
             }
-        } else {
-            $this->setLayout('Polls/Sidebar/index.vote.tpl');
         }
+
+        $this->setTemplate('Polls/Sidebar/index.vote.tpl');
     }
 }

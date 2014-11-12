@@ -51,6 +51,10 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\Router
     arguments: ['@core.router']
 
+  smarty.plugin.template_path:
+    class: ACP3\Core\View\Renderer\Smarty\Plugins\TemplatePath
+    arguments: ['@core.assets.themeResolver']
+
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\WYSIWYG
     arguments: ['@service_container']

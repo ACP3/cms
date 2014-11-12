@@ -29,7 +29,7 @@ class Index extends Core\Modules\Controller
     {
         $this->view->assign('sidebar_contact', $this->contactConfig->getSettings());
 
-        $this->setLayout('Contact/Sidebar/index.index.tpl');
+        $this->setTemplate('Contact/Sidebar/index.index.tpl');
     }
 
 }

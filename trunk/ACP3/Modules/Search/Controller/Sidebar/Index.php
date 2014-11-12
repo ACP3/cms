@@ -31,7 +31,7 @@ class Index extends Core\Modules\Controller
 
         $this->secureHelper->generateFormToken('search/index/index');
 
-        $this->setLayout('Search/Sidebar/index.index.tpl');
+        $this->setTemplate('Search/Sidebar/index.index.tpl');
     }
 
 }

@@ -53,17 +53,11 @@ abstract class Controller
      */
     protected $contentType = 'Content-Type: text/html; charset=UTF-8';
     /**
-     * Das zuverwendende Seitenlayout
+     * Das zu verwendende Template
      *
      * @var string
      */
-    protected $layout = 'layout.tpl';
-    /**
-     * Das zuverwendende Template für den Contentbereich
-     *
-     * @var string
-     */
-    protected $contentTemplate = '';
+    protected $template = '';
     /**
      * Der auszugebende Seiteninhalt
      *
@@ -100,25 +94,25 @@ abstract class Controller
     }
 
     /**
-     * Gibt das aktuell zugewiesene Template für den Contentbereich zurück
+     * Gibt das aktuell zugewiesene Template zurück
      *
      * @return string
      */
-    public function getContentTemplate()
+    public function getTemplate()
     {
-        return $this->contentTemplate;
+        return $this->template;
     }
 
     /**
-     * Setzt das Template für den Contentbereich der Seite
+     * Setzt das Template der Seite
      *
      * @param string $file
      *
      * @return $this
      */
-    public function setContentTemplate($file)
+    public function setTemplate($file)
     {
-        $this->contentTemplate = $file;
+        $this->template = $file;
 
         return $this;
     }
@@ -197,8 +191,8 @@ abstract class Controller
 
     public function display()
     {
-        if ($this->getNoOutput() === false && $this->getLayout() !== '') {
-            $this->view->displayTemplate($this->getLayout());
+        if ($this->getNoOutput() === false && $this->getTemplate() !== '') {
+            $this->view->displayTemplate($this->getTemplate());
         }
     }
 
@@ -223,30 +217,6 @@ abstract class Controller
     public function setNoOutput($value)
     {
         $this->noOutput = (bool)$value;
-
-        return $this;
-    }
-
-    /**
-     * Gibt das aktuell zugewiesene Layout zurück
-     *
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Weist der aktuell auszugebenden Seite ein Layout zu
-     *
-     * @param string $file
-     *
-     * @return $this
-     */
-    public function setLayout($file)
-    {
-        $this->layout = $file;
 
         return $this;
     }

@@ -38,7 +38,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('enable_registration', $settings['enable_registration']);
             $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
 
-            $this->setLayout('Users/Sidebar/index.login.tpl');
+            $this->setTemplate('Users/Sidebar/index.login.tpl');
         } else {
             $this->setNoOutput(true);
         }
@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('user_sidebar', $userSidebar);
 
-            $this->setLayout('Users/Sidebar/index.user_menu.tpl');
+            $this->setTemplate('Users/Sidebar/index.user_menu.tpl');
         } else {
             $this->setNoOutput(true);
         }

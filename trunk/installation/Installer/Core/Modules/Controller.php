@@ -46,17 +46,11 @@ class Controller
      */
     protected $contentType = 'Content-Type: text/html; charset=UTF-8';
     /**
-     * Das zuverwendende Seitenlayout
+     * Das zuverwendende Template
      *
      * @var string
      */
-    protected $layout = 'layout.tpl';
-    /**
-     * Das zuverwendende Template für den Contentbereich
-     *
-     * @var string
-     */
-    protected $contentTemplate = '';
+    protected $template = '';
     /**
      * Der auszugebende Seiteninhalt
      *
@@ -181,35 +175,22 @@ class Controller
 
     public function display()
     {
-        // Content-Template automatisch setzen
-        if ($this->getContentTemplate() === '') {
-            $this->setContentTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
-        }
-
         if ($this->getNoOutput() === false) {
-            if ($this->getContent() === '') {
-                $this->setContent($this->view->fetchTemplate($this->getContentTemplate()));
-            }
-
             // Evtl. gesetzten Content-Type des Servers überschreiben
             header($this->getContentType());
 
-            if ($this->getLayout() !== '') {
-                $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));
-                $this->view->assign('TITLE', $this->lang->t($this->request->mod, $this->request->controller . '_' . $this->request->file));
-                $this->view->assign('CONTENT', $this->getContent() . $this->getContentAppend());
-
-                if ($this->request->getIsAjax() === true) {
-                    if ($this->layout !== 'layout.tpl') {
-                        $file = $this->layout;
-                    } else {
-                        $file = 'ajax.tpl';
-                    }
-                } else {
-                    $file = $this->getLayout();
+            if ($this->getContent() == '') {
+                // Template automatisch setzen
+                if ($this->getTemplate() === '') {
+                    $this->setTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
                 }
 
-                    $this->view->displayTemplate($file);
+                $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));
+                $this->view->assign('TITLE', $this->lang->t($this->request->mod, $this->request->controller . '_' . $this->request->file));
+                $this->view->assign('CONTENT', $this->getContentAppend());
+                $this->view->assign('IS_AJAX', $this->request->getIsAjax());
+
+                $this->view->displayTemplate($this->getTemplate());
             } else {
                 echo $this->getContent();
             }
@@ -217,25 +198,25 @@ class Controller
     }
 
     /**
-     * Gibt das aktuell zugewiesene Template für den Contentbereich zurück
+     * Gibt das aktuell zugewiesene Template zurück
      *
      * @return string
      */
-    public function getContentTemplate()
+    public function getTemplate()
     {
-        return $this->contentTemplate;
+        return $this->template;
     }
 
     /**
-     * Setzt das Template für den Contentbereich der Seite
+     * Setzt das Template der Seite
      *
      * @param string $file
      *
      * @return $this
      */
-    public function setContentTemplate($file)
+    public function setTemplate($file)
     {
-        $this->contentTemplate = $file;
+        $this->template = $file;
 
         return $this;
     }
@@ -309,30 +290,6 @@ class Controller
     public function setContentType($data)
     {
         $this->contentType = $data;
-
-        return $this;
-    }
-
-    /**
-     * Gibt das aktuell zugewiesene Layout zurück
-     *
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Weist der aktuell auszugebenden Seite ein Layout zu
-     *
-     * @param string $file
-     *
-     * @return $this
-     */
-    public function setLayout($file)
-    {
-        $this->layout = $file;
 
         return $this;
     }

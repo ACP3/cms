@@ -45,7 +45,7 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('sidebar_files', $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
 
-        $this->setLayout('Files/Sidebar/index.index.tpl');
+        $this->setTemplate('Files/Sidebar/index.index.tpl');
     }
 
 }
