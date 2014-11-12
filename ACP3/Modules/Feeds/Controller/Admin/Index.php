@@ -20,6 +20,11 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $feedsConfig;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Core\Config $feedsConfig
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
@@ -51,6 +56,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _indexPost(array $formData)
     {
         try {

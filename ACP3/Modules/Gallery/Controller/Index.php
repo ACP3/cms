@@ -36,6 +36,14 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $settings;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Core\Pagination $pagination
+     * @param Gallery\Model $galleryModel
+     * @param Gallery\Cache $galleryCache
+     * @param Core\Config $galleryConfig
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,

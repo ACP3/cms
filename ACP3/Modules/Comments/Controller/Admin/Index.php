@@ -28,6 +28,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Date $date
+     * @param Comments\Model $commentsModel
+     * @param Core\Config $commentsConfig
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
@@ -101,6 +108,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _settingsPost(array $formData)
     {
         try {

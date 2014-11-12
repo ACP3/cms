@@ -19,6 +19,9 @@ class Cache
      */
     protected $emoticonsModel;
 
+    /**
+     * @param Model $emoticonsModel
+     */
     public function __construct(Model $emoticonsModel)
     {
         $this->cache = new Core\Cache('emoticons');
@@ -40,7 +43,7 @@ class Cache
     }
 
     /**
-     * Cache die Emoticons
+     * Caches the emoticons
      *
      * @return boolean
      */

@@ -14,6 +14,11 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $mimeValidator;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Validator\Rules\Mime $mimeValidator
+     */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,

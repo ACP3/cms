@@ -34,6 +34,14 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $categoriesModel;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Files\Model $filesModel
+     * @param Files\Cache $filesCache
+     * @param Core\Config $filesConfig
+     * @param Categories\Model $categoriesModel
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,

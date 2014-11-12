@@ -28,6 +28,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $emoticonsCache;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Emoticons\Model $emoticonsModel
+     * @param Core\Config $emoticonsConfig
+     * @param Emoticons\Cache $emoticonsCache
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
@@ -54,6 +61,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -133,6 +143,10 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $emoticon
+     */
     private function _editPost(array $formData, array $emoticon)
     {
         try {
@@ -203,6 +217,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _settingsPost(array $formData)
     {
         try {

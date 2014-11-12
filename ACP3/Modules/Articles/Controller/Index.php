@@ -28,6 +28,13 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $articlesCache;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Core\Pagination $pagination
+     * @param Articles\Model $articlesModel
+     * @param Articles\Cache $articlesCache
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,

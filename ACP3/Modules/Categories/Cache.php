@@ -3,6 +3,10 @@ namespace ACP3\Modules\Categories;
 
 use ACP3\Core;
 
+/**
+ * Class Cache
+ * @package ACP3\Modules\Categories
+ */
 class Cache
 {
     /**
@@ -14,6 +18,9 @@ class Cache
      */
     protected $cache;
 
+    /**
+     * @param Model $categoriesModel
+     */
     public function __construct(Model $categoriesModel)
     {
         $this->categoriesModel = $categoriesModel;

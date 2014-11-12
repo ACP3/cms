@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller
      */
     protected $contactConfig;
 
+    /**
+     * @param Core\Context $context
+     * @param Core\Config $contactConfig
+     */
     public function __construct(
         Core\Context $context,
         Core\Config $contactConfig)

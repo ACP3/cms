@@ -1,13 +1,4 @@
 <?php
-
-/**
- * Comments
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Comments;
 
 use ACP3\Core;
@@ -22,11 +13,14 @@ class Helpers
     /**
      * @var Model
      */
-    protected $model;
+    protected $comentsModel;
 
-    public function __construct(Model $model)
+    /**
+     * @param Model $commentsModel
+     */
+    public function __construct(Model $commentsModel)
     {
-        $this->model = $model;
+        $this->comentsModel = $commentsModel;
     }
 
     /**
@@ -41,7 +35,7 @@ class Helpers
      */
     public function commentsCount($moduleId, $resultId)
     {
-        return $this->model->countAllByModule($moduleId, $resultId);
+        return $this->comentsModel->countAllByModule($moduleId, $resultId);
     }
 
     /**
@@ -52,7 +46,7 @@ class Helpers
      */
     public function deleteCommentsByModuleAndResult($moduleName, $resultId)
     {
-        return $this->model->delete(array('module_id' => $moduleName, 'entry_id' => $resultId));
+        return $this->comentsModel->delete(array('module_id' => $moduleName, 'entry_id' => $resultId));
     }
 
 }

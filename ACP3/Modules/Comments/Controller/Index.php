@@ -41,6 +41,14 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $commentsConfig;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Core\Pagination $pagination
+     * @param Comments\Model $commentsModel
+     * @param Core\Config $commentsConfig
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
@@ -162,6 +170,9 @@ class Index extends Core\Modules\Controller\Frontend
         return $this->view->fetchTemplate('comments/index.create.tpl');
     }
 
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {

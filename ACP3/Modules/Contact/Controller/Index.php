@@ -20,6 +20,11 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $contactConfig;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Core\Config $contactConfig
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Helpers\Secure $secureHelper,
@@ -65,6 +70,9 @@ class Index extends Core\Modules\Controller\Frontend
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _indexPost(array $formData)
     {
         try {

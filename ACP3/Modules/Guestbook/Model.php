@@ -5,30 +5,47 @@ namespace ACP3\Modules\Guestbook;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author Tino Goratsch
+ * Class Model
+ * @package ACP3\Modules\Guestbook
  */
 class Model extends Core\Model
 {
 
     const TABLE_NAME = 'guestbook';
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function resultExists($id)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0 ? true : false;
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0);
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public function getOneById($id)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
     }
 
+    /**
+     * @param string $notify
+     * @return int
+     */
     public function countAll($notify = '')
     {
         return count($this->getAll($notify));
     }
 
+    /**
+     * @param string $notify
+     * @param string $limitStart
+     * @param string $resultsPerPage
+     * @return array
+     */
     public function getAll($notify = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = ($notify == 2) ? 'WHERE active = 1' : '';
@@ -36,11 +53,18 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT u.id AS user_id_real, u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.* FROM ' . $this->prefix . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->prefix . \ACP3\Modules\Users\Model::TABLE_NAME . ' AS u ON(u.id = g.user_id) ' . $where . ' ORDER BY date DESC' . $limitStmt);
     }
 
+    /**
+     * @param $ipAddress
+     * @return mixed
+     */
     public function getLastDateFromIp($ipAddress)
     {
         return $this->db->fetchColumn('SELECT MAX(date) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE ip = ?', array($ipAddress));
     }
 
+    /**
+     * @return array
+     */
     public function getAllInAcp()
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY date DESC, id DESC');

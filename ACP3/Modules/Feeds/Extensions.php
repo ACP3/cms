@@ -5,9 +5,8 @@ namespace ACP3\Modules\Feeds;
 use ACP3\Core;
 
 /**
- * Description of FeedsExtensions
- *
- * @author Tino Goratsch
+ * Class Extensions
+ * @package ACP3\Modules\Feeds
  */
 class Extensions
 {
@@ -32,6 +31,13 @@ class Extensions
      */
     protected $formatter;
 
+    /**
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\Date $date
+     * @param Core\Router $router
+     * @param Core\View $view
+     * @param Core\Helpers\StringFormatter $stringFormatter
+     */
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Core\Date $date,

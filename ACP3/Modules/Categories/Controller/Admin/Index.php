@@ -28,6 +28,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Categories\Model $categoriesModel
+     * @param Core\Config $categoriesConfig
+     * @param Categories\Cache $categoriesCache
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Context\Admin $context,
         Categories\Model $categoriesModel,
@@ -63,7 +70,10 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
-    
+
+    /**
+     * @param array $formData
+     */
     private function _createPost(array $formData)
     {
         try {
@@ -166,6 +176,10 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $category
+     */
     private function _editPost(array $formData, array $category)
     {
         try {
@@ -242,6 +256,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     */
     private function _settingsPost(array $formData)
     {
         try {

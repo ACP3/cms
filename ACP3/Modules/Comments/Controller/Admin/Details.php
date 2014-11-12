@@ -30,6 +30,13 @@ class Details extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Comments\Model $commentsModel
+     * @param Core\Config $commentsConfig
+     * @param System\Model $systemModel
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Context\Admin $context,
         Comments\Model $commentsModel,
@@ -135,6 +142,10 @@ class Details extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $comment
+     */
     private function _editPost(array $formData, array $comment)
     {
         try {

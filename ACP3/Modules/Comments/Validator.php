@@ -34,6 +34,16 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $commentsModel;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Validator\Rules\Captcha $captchaValidator
+     * @param Core\ACL $acl
+     * @param Core\Auth $auth
+     * @param Core\Date $date
+     * @param Core\Modules $modules
+     * @param Model $commentsModel
+     */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,

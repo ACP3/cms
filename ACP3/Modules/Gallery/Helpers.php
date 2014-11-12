@@ -1,17 +1,13 @@
 <?php
 
-/**
- * Gallery
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Gallery;
 
 use ACP3\Core;
 
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Gallery
+ */
 class Helpers
 {
     const URL_KEY_PATTERN_GALLERY = 'gallery/index/pics/id_%s/';
@@ -30,6 +26,11 @@ class Helpers
      */
     protected $galleryModel;
 
+    /**
+     * @param Core\Router\Aliases $aliases
+     * @param Core\SEO $seo
+     * @param Model $galleryModel
+     */
     public function __construct(
         Core\Router\Aliases $aliases,
         Core\SEO $seo,

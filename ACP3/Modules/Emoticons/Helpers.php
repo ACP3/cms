@@ -27,6 +27,10 @@ class Helpers
      */
     protected $view;
 
+    /**
+     * @param Core\View $view
+     * @param Cache $emoticonsCache
+     */
     public function __construct(Core\View $view, Cache $emoticonsCache)
     {
         $this->view = $view;

@@ -33,6 +33,14 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $filesConfig;
 
+    /**
+     * @param Core\Context\Admin $context
+     * @param Core\Date $date
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Files\Model $filesModel
+     * @param Files\Cache $filesCache
+     * @param Core\Config $filesConfig
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
@@ -209,6 +217,10 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper->generateFormToken($this->request->query);
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     */
     private function _createPost(array $formData, array $settings)
     {
         try {
@@ -269,6 +281,11 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     * @param array $dl
+     */
     private function _editPost(array $formData, array $settings, array $dl)
     {
         try {
@@ -342,6 +359,9 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _settingsPost(array $formData)
     {
         try {

@@ -4,12 +4,19 @@ namespace ACP3\Modules\Categories;
 
 use ACP3\Core\Modules;
 
+/**
+ * Class Installer
+ * @package ACP3\Modules\Categories
+ */
 class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'categories';
     const SCHEMA_VERSION = 32;
 
+    /**
+     * @inheritdoc
+     */
     public function createTables()
     {
         return array(
@@ -24,11 +31,17 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removeTables()
     {
         return array("DROP TABLE `{pre}categories`;");
     }
 
+    /**
+     * @inheritdoc
+     */
     public function settings()
     {
         return array(
@@ -38,6 +51,9 @@ class Installer extends Modules\AbstractInstaller
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function schemaUpdates()
     {
         return array(

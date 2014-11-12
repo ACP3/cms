@@ -28,6 +28,12 @@ class Index extends Core\Modules\Controller
      */
     protected $galleryConfig;
 
+    /**
+     * @param Core\Context $context
+     * @param Core\Date $date
+     * @param Gallery\Model $galleryModel
+     * @param Core\Config $galleryConfig
+     */
     public function __construct(
         Core\Context $context,
         Core\Date $date,

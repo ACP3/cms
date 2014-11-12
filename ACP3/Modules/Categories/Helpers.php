@@ -12,6 +12,10 @@ namespace ACP3\Modules\Categories;
 
 use ACP3\Core;
 
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Categories
+ */
 class Helpers
 {
     /**
@@ -39,6 +43,14 @@ class Helpers
      */
     protected $view;
 
+    /**
+     * @param Core\ACL $acl
+     * @param Core\Lang $lang
+     * @param Core\Modules $modules
+     * @param Core\View $view
+     * @param Cache $cache
+     * @param Model $categoriesModel
+     */
     public function __construct(
         Core\ACL $acl,
         Core\Lang $lang,

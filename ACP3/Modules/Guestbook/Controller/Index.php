@@ -32,6 +32,14 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $guestbookConfig;
 
+    /**
+     * @param Core\Context\Frontend $context
+     * @param Core\Date $date
+     * @param Core\Pagination $pagination
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Guestbook\Model $guestbookModel
+     * @param Core\Config $guestbookConfig
+     */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
@@ -136,6 +144,12 @@ class Index extends Core\Modules\Controller\Frontend
         }
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     * @param $overlayIsActive
+     * @param $hasNewsletterAccess
+     */
     private function _createPost(array $formData, array $settings, $overlayIsActive, $hasNewsletterAccess)
     {
         try {

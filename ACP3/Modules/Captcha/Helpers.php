@@ -1,13 +1,4 @@
 <?php
-
-/**
- * Captcha
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Captcha;
 
 use ACP3\Core;
@@ -25,7 +16,7 @@ class Helpers
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $securityHelper;
+    protected $secureHelper;
     /**
      * @var Core\Request
      */
@@ -39,19 +30,26 @@ class Helpers
      */
     protected $view;
 
+    /**
+     * @param Core\Auth $auth
+     * @param Core\Request $request
+     * @param Core\Router $router
+     * @param Core\View $view
+     * @param Core\Helpers\Secure $secureHelper
+     */
     public function __construct(
         Core\Auth $auth,
         Core\Request $request,
         Core\Router $router,
         Core\View $view,
-        Core\Helpers\Secure $securityHelper
+        Core\Helpers\Secure $secureHelper
     )
     {
         $this->auth = $auth;
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
-        $this->securityHelper = $securityHelper;
+        $this->secureHelper = $secureHelper;
     }
 
     /**
@@ -71,7 +69,7 @@ class Helpers
         if ($this->auth->isUser() === false) {
             $path = sha1($this->router->route(empty($path) === true ? $this->request->query : $path));
 
-            $_SESSION['captcha_' . $path] = $this->securityHelper->salt($captchaLength);
+            $_SESSION['captcha_' . $path] = $this->secureHelper->salt($captchaLength);
 
             $captcha = array();
             $captcha['width'] = $captchaLength * 25;

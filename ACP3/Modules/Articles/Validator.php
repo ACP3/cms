@@ -27,6 +27,15 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $request;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
+     * @param Core\Validator\Rules\Date $dateValidator
+     * @param Core\ACL $acl
+     * @param Core\Request $request
+     * @param Menus\Model $menuModel
+     */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
