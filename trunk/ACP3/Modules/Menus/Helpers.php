@@ -112,16 +112,16 @@ class Helpers
      * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
      * falls diese sich ebenfalls in der Navigationsleiste befindet
      *
-     * @param string  $menu
+     * @param string $menu
      *    Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
      * @param boolean $useBootstrap
-     * @param string  $class
-     * @param string  $dropdownItemClass
-     * @param string  $tag
-     * @param string  $itemTag
-     * @param string  $dropdownWrapperTag
-     * @param string  $linkCss
-     * @param string  $inlineStyles
+     * @param string $class
+     * @param string $dropdownItemClass
+     * @param string $tag
+     * @param string $itemTag
+     * @param string $dropdownWrapperTag
+     * @param string $linkCss
+     * @param string $inlineStyles
      *
      * @return string
      */
@@ -140,23 +140,11 @@ class Helpers
         if (isset($this->navbar[$menu])) {
             return $this->navbar[$menu];
         } else { // ...ansonsten Verarbeitung starten
-            $request = $this->request;
-
             $items = $this->menusCache->getVisibleMenuItems($menu);
             $c_items = count($items);
 
             if ($c_items > 0) {
-                // Selektion nur vornehmen, wenn man sich im Frontend befindet
-                if ($request->area !== 'admin') {
-                    $in = array(
-                        $request->query,
-                        $request->getUriWithoutPages(),
-                        $request->mod . '/' . $request->controller . '/' . $request->file . '/',
-                        $request->mod . '/' . $request->controller . '/',
-                        $request->mod
-                    );
-                    $selected = $this->menusModel->getLeftIdByUris($menu, $in);
-                }
+                $selected = $this->_selectMenuItem($menu);
 
                 $this->navbar[$menu] = '';
 
@@ -181,9 +169,11 @@ class Helpers
                         $caret = $subNavbarCss = '';
                         // Special styling for bootstrap enabled navbars
                         if ($useBootstrap === true) {
+                            $dropDownItemClassName = 'navigation-' . $menu . '-subnav-' . $items[$i]['id'] . '-dropdown';
                             $css .= !empty($dropdownItemClass) ? ' ' . $dropdownItemClass : ' dropdown';
+                            $css .= $dropDownItemClassName;
                             $caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
-                            $attributes .= $items[$i]['level'] == 0 ? '  data-target="#"' : '';
+                            $attributes .= $items[$i]['level'] == 0 ? '  data-target=".' . $dropDownItemClassName . '"' : '';
                             $attributes .= ' class="dropdown-toggle" data-toggle="dropdown"';
                             $subNavbarCss = 'dropdown-menu ';
                         }
@@ -211,6 +201,27 @@ class Helpers
             }
             return '';
         }
+    }
+
+    /**
+     * @param $menu
+     * @return int
+     */
+    private function _selectMenuItem($menu)
+    {
+        // Selektion nur vornehmen, wenn man sich im Frontend befindet
+        if ($this->request->area !== 'admin') {
+            $in = array(
+                $this->request->query,
+                $this->request->getUriWithoutPages(),
+                $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
+                $this->request->mod . '/' . $this->request->controller . '/',
+                $this->request->mod
+            );
+            return (int) $this->menusModel->getLeftIdByUris($menu, $in);
+        }
+
+        return 0;
     }
 
 }

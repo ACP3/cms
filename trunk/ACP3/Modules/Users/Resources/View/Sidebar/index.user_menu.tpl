@@ -8,13 +8,13 @@
             {lang t="users|home"}
         </a>
         {if isset($user_sidebar.modules)}
-            <div class="list-group-item dropdown">
-                <a href="{uri args="acp/acp"}" id="menu-administration" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+            <div id="menu-administration" class="list-group-item dropdown">
+                <a href="{uri args="acp/acp"}" id="menu-admin-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-administration">
                     <i class="glyphicon glyphicon-file"></i>
                     {lang t="users|administration"}
                     <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu-administration">
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu-admin-label">
                     {foreach $user_sidebar.modules as $row}
                         <li{$row.active}><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
                     {/foreach}
@@ -22,13 +22,13 @@
             </div>
         {/if}
         {if isset($user_sidebar.system)}
-            <div class="list-group-item dropdown">
-                <a href="{uri args="acp/system"}" id="menu-system" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+            <div id="menu-system" class="list-group-item dropdown">
+                <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-system">
                     <i class="glyphicon glyphicon-wrench"></i>
                     {lang t="system|system"}
                     <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system">
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system-label">
                     {foreach $user_sidebar.system as $row}
                         <li{$row.active}><a href="{uri args="acp/`$row.path`"}">{$row.name}</a></li>
                     {/foreach}
