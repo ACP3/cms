@@ -29,4 +29,4 @@ services:
 
   files.installer:
     class: ACP3\Modules\Files\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

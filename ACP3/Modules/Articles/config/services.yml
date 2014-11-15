@@ -25,4 +25,4 @@ services:
 
   articles.installer:
     class: ACP3\Modules\Articles\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

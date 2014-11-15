@@ -8,4 +8,4 @@ services:
 
   minify.installer:
     class: ACP3\Modules\Minify\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

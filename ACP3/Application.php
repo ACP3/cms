@@ -162,7 +162,7 @@ class Application
 
             // Systemeinstellungen laden
             $this->container
-                ->get('system.config')
+                ->get('core.config.system')
                 ->getSettingsAsConstants();
 
             // Pfade zum Theme setzen
@@ -181,7 +181,7 @@ class Application
 
             // Systemeinstellungen laden
             $this->container
-                ->get('system.config')
+                ->get('core.config.system')
                 ->getSettingsAsConstants();
 
             // Pfade zum Theme setzen

@@ -31,4 +31,4 @@ services:
 
   comments.installer:
     class: ACP3\Modules\Comments\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

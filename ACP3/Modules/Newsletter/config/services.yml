@@ -37,4 +37,4 @@ services:
 
   newsletter.installer:
     class: ACP3\Modules\Newsletter\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller
