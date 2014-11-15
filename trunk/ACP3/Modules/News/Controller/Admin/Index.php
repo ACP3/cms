@@ -79,13 +79,13 @@ class Index extends Core\Modules\Controller\Admin
             $options = [];
             if ($settings['readmore'] == 1) {
                 $options[$i]['name'] = 'readmore';
-                $options[$i]['checked'] = Core\Functions::selectEntry('readmore', '1', '0', 'checked');
+                $options[$i]['checked'] = $this->get('core.helpers.forms')->selectEntry('readmore', '1', '0', 'checked');
                 $options[$i]['lang'] = $this->lang->t('news', 'activate_readmore');
                 $i++;
             }
             if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options[$i]['name'] = 'comments';
-                $options[$i]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
+                $options[$i]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked');
                 $options[$i]['lang'] = $this->lang->t('system', 'allow_comments');
             }
             $this->view->assign('options', $options);
@@ -93,7 +93,7 @@ class Index extends Core\Modules\Controller\Admin
 
         // Linkziel
         $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
-        $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target));
+        $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', array(1, 2), $lang_target));
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
@@ -153,13 +153,13 @@ class Index extends Core\Modules\Controller\Admin
                 $options = [];
                 if ($settings['readmore'] == 1) {
                     $options[$i]['name'] = 'readmore';
-                    $options[$i]['checked'] = Core\Functions::selectEntry('readmore', '1', $news['readmore'], 'checked');
+                    $options[$i]['checked'] = $this->get('core.helpers.forms')->selectEntry('readmore', '1', $news['readmore'], 'checked');
                     $options[$i]['lang'] = $this->lang->t('news', 'activate_readmore');
                     $i++;
                 }
                 if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                     $options[$i]['name'] = 'comments';
-                    $options[$i]['checked'] = Core\Functions::selectEntry('comments', '1', $news['comments'], 'checked');
+                    $options[$i]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $news['comments'], 'checked');
                     $options[$i]['lang'] = $this->lang->t('system', 'allow_comments');
                 }
                 $this->view->assign('options', $options);
@@ -167,7 +167,7 @@ class Index extends Core\Modules\Controller\Admin
 
             // Linkziel
             $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
-            $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $news['target']));
+            $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', array(1, 2), $lang_target, $news['target']));
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id)));
 
@@ -209,19 +209,19 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
         $lang_readmore = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('readmore', Core\Functions::selectGenerator('readmore', array(1, 0), $lang_readmore, $settings['readmore'], 'checked'));
+        $this->view->assign('readmore', $this->get('core.helpers.forms')->selectGenerator('readmore', array(1, 0), $lang_readmore, $settings['readmore'], 'checked'));
 
         $this->view->assign('readmore_chars', empty($_POST) === false ? $_POST['readmore_chars'] : $settings['readmore_chars']);
 
         if ($this->modules->isActive('comments') === true) {
             $lang_allow_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('allow_comments', Core\Functions::selectGenerator('comments', array(1, 0), $lang_allow_comments, $settings['comments'], 'checked'));
+            $this->view->assign('allow_comments', $this->get('core.helpers.forms')->selectGenerator('comments', array(1, 0), $lang_allow_comments, $settings['comments'], 'checked'));
         }
 
-        $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
+        $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 
         $lang_category_in_breadcrumb = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('category_in_breadcrumb', Core\Functions::selectGenerator('category_in_breadcrumb', array(1, 0), $lang_category_in_breadcrumb, $settings['category_in_breadcrumb'], 'checked'));
+        $this->view->assign('category_in_breadcrumb', $this->get('core.helpers.forms')->selectGenerator('category_in_breadcrumb', array(1, 0), $lang_category_in_breadcrumb, $settings['category_in_breadcrumb'], 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }

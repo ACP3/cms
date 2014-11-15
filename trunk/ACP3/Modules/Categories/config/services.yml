@@ -17,7 +17,7 @@ services:
 
   categories.helpers:
     class: ACP3\Modules\Categories\Helpers
-    arguments: ['@core.acl', '@core.lang', '@core.modules', '@core.view', '@categories.cache', '@categories.model']
+    arguments: ['@core.acl', '@core.lang', '@core.modules', '@core.view', '@core.helpers.forms', '@categories.cache', '@categories.model']
 
   categories.validator:
     class: ACP3\Modules\Categories\Validator

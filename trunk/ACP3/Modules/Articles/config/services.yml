@@ -13,7 +13,7 @@ services:
 
   articles.helpers:
     class: ACP3\Modules\Articles\Helpers
-    arguments: ['@articles.model']
+    arguments: ['@core.helpers.forms', '@articles.model']
 
   articles.model:
     class: ACP3\Modules\Articles\Model

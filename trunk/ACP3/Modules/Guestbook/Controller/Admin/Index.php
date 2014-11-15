@@ -83,7 +83,7 @@ class Index extends Core\Modules\Controller\Admin
 
             if ($settings['notify'] == 2) {
                 $langActivate = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-                $this->view->assign('activate', Core\Functions::selectGenerator('active', array(1, 0), $langActivate, $guestbook['active'], 'checked'));
+                $this->view->assign('activate', $this->get('core.helpers.forms')->selectGenerator('active', array(1, 0), $langActivate, $guestbook['active'], 'checked'));
             }
 
             $this->view->assign('form', array_merge($guestbook, $_POST));
@@ -140,21 +140,21 @@ class Index extends Core\Modules\Controller\Admin
             $this->lang->t('guestbook', 'notify_on_new_entry'),
             $this->lang->t('guestbook', 'notify_and_enable')
         );
-        $this->view->assign('notify', Core\Functions::selectGenerator('notify', array(0, 1, 2), $lang_notify, $settings['notify']));
+        $this->view->assign('notify', $this->get('core.helpers.forms')->selectGenerator('notify', array(0, 1, 2), $lang_notify, $settings['notify']));
 
         $lang_overlay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('overlay', Core\Functions::selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
+        $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
             $lang_allow_emoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
+            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
         }
 
         // In Newsletter integrieren
         if ($this->modules->isActive('newsletter') === true) {
             $lang_newsletter_integration = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('newsletter_integration', Core\Functions::selectGenerator('newsletter_integration', array(1, 0), $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
+            $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->selectGenerator('newsletter_integration', array(1, 0), $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
         }
 
         $this->view->assign('form', array_merge(array('notify_email' => $settings['notify_email']), $_POST));

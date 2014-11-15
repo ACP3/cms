@@ -75,7 +75,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
         $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
         $this->view->assign('answers', $answers);
-        $this->view->assign('multiple', Core\Functions::selectEntry('multiple', '1', '0', 'checked'));
+        $this->view->assign('multiple', $this->get('core.helpers.forms')->selectEntry('multiple', '1', '0', 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -137,10 +137,10 @@ class Index extends Core\Modules\Controller\Admin
 
             $options = [];
             $options[0]['name'] = 'reset';
-            $options[0]['checked'] = Core\Functions::selectEntry('reset', '1', '0', 'checked');
+            $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('reset', '1', '0', 'checked');
             $options[0]['lang'] = $this->lang->t('polls', 'reset_votes');
             $options[1]['name'] = 'multiple';
-            $options[1]['checked'] = Core\Functions::selectEntry('multiple', '1', $poll['multiple'], 'checked');
+            $options[1]['checked'] = $this->get('core.helpers.forms')->selectEntry('multiple', '1', $poll['multiple'], 'checked');
             $options[1]['lang'] = $this->lang->t('polls', 'multiple_choice');
             $this->view->assign('options', $options);
 

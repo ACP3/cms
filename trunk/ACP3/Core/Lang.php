@@ -2,9 +2,8 @@
 namespace ACP3\Core;
 
 /**
- * Stellt Funktionen bereit, um das ACP3 in verschiedene Sprachen zu übersetzen
- *
- * @author Tino Goratsch
+ * Class Lang
+ * @package ACP3\Core
  */
 class Lang
 {
@@ -31,6 +30,9 @@ class Lang
      */
     protected $buffer = [];
 
+    /**
+     * @param Auth $auth
+     */
     function __construct(Auth $auth)
     {
         $lang = $auth->getUserLanguage();

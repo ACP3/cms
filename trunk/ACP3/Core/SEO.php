@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Router\Aliases;
 
 /**
@@ -29,6 +30,10 @@ class SEO
      * @var Request
      */
     protected $request;
+    /**
+     * @var Forms
+     */
+    protected $formsHelper;
 
     /**
      * Gibt die nächste Seite an
@@ -62,12 +67,14 @@ class SEO
      * @param Lang $lang
      * @param Request $request
      * @param Aliases $aliases
+     * @param Forms $formsHelper
      */
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Lang $lang,
         Request $request,
-        Aliases $aliases
+        Aliases $aliases,
+        Forms $formsHelper
     )
     {
         $this->cache = new Cache('seo');
@@ -75,6 +82,7 @@ class SEO
         $this->lang = $lang;
         $this->request = $request;
         $this->aliases = $aliases;
+        $this->formsHelper = $formsHelper;
 
         $this->aliasCache = $this->getCache();
     }
@@ -320,7 +328,7 @@ class SEO
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
-            'robots' => Functions::selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $langRobots, $robots)
+            'robots' => $this->formsHelper->selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $langRobots, $robots)
         );
     }
 

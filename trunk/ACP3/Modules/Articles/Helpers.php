@@ -11,15 +11,24 @@ class Helpers
 {
     const URL_KEY_PATTERN = 'articles/index/details/id_%s/';
     /**
+     * @var Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
      * @var Model
      */
     protected $articlesModel;
 
     /**
+     * @param Core\Helpers\Forms $formsHelper
      * @param Model $articlesModel
      */
-    public function __construct(Model $articlesModel)
+    public function __construct(
+        Core\Helpers\Forms $formsHelper,
+        Model $articlesModel
+    )
     {
+        $this->formsHelper = $formsHelper;
         $this->articlesModel = $articlesModel;
     }
 
@@ -36,7 +45,7 @@ class Helpers
 
         if ($c_articles > 0) {
             for ($i = 0; $i < $c_articles; ++$i) {
-                $articles[$i]['selected'] = Core\Functions::selectEntry('articles', $articles[$i]['id'], $id);
+                $articles[$i]['selected'] = $this->formsHelper->selectEntry('articles', $articles[$i]['id'], $id);
             }
         }
         return $articles;

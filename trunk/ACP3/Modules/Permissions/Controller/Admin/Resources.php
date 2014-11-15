@@ -51,14 +51,14 @@ class Resources extends Core\Modules\Controller\Admin
 
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $row) {
-            $modules[$row['name']]['selected'] = Core\Functions::selectEntry('modules', $row['name']);
+            $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry('modules', $row['name']);
         }
         $this->view->assign('modules', $modules);
 
         $privileges = $this->acl->getAllPrivileges();
         $c_privileges = count($privileges);
         for ($i = 0; $i < $c_privileges; ++$i) {
-            $privileges[$i]['selected'] = Core\Functions::selectEntry('privileges', $privileges[$i]['id']);
+            $privileges[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('privileges', $privileges[$i]['id']);
         }
         $this->view->assign('privileges', $privileges);
 
@@ -97,7 +97,7 @@ class Resources extends Core\Modules\Controller\Admin
             $privileges = $this->acl->getAllPrivileges();
             $c_privileges = count($privileges);
             for ($i = 0; $i < $c_privileges; ++$i) {
-                $privileges[$i]['selected'] = Core\Functions::selectEntry('privileges', $privileges[$i]['id'], $resource['privilege_id']);
+                $privileges[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('privileges', $privileges[$i]['id'], $resource['privilege_id']);
             }
             $this->view->assign('privileges', $privileges);
 

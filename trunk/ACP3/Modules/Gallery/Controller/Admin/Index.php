@@ -186,15 +186,15 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->modules->isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('comments', Core\Functions::selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
+            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
         }
 
         $lang_overlay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('overlay', Core\Functions::selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
+        $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
-        $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
+        $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 
         $this->view->assign('form', array_merge($settings, $_POST));
 

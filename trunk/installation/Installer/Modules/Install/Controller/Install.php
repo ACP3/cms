@@ -3,6 +3,7 @@
 namespace ACP3\Installer\Modules\Install\Controller;
 
 use ACP3\Core\Config;
+use ACP3\Installer\Core\Date;
 use ACP3\Core\Exceptions\ValidationFailed;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Installer\Core;
@@ -22,6 +23,11 @@ class Install extends AbstractController
      * @var string
      */
     protected $configFilePath = '';
+
+    /**
+     * @var Date
+     */
+    protected $date;
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -31,13 +37,20 @@ class Install extends AbstractController
      */
     protected $installHelper;
 
+    /**
+     * @param Core\Context $context
+     * @param Date $date
+     * @param Helpers $installHelper
+     */
     public function __construct(
         Core\Context $context,
+        Date $date,
         Helpers $installHelper
     )
     {
         parent::__construct($context);
 
+        $this->date = $date;
         $this->installHelper = $installHelper;
         $this->configFilePath = ACP3_DIR . 'config/config.php';
     }
@@ -49,7 +62,7 @@ class Install extends AbstractController
         }
 
         // Zeitzonen
-        $this->view->assign('time_zones', \ACP3\Core\Date::getTimeZones(date_default_timezone_get()));
+        $this->view->assign('time_zones', $this->date->getTimeZones(date_default_timezone_get()));
 
         $defaults = array(
             'db_host' => 'localhost',
@@ -58,8 +71,8 @@ class Install extends AbstractController
             'db_name' => '',
             'user_name' => 'admin',
             'mail' => '',
-            'date_format_long' => 'd.m.y, H:i',
-            'date_format_short' => 'd.m.y',
+            'date_format_long' => $this->date->getDateFormatLong(),
+            'date_format_short' => $this->date->getDateFormatShort(),
             'seo_title' => 'ACP3',
         );
 

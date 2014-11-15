@@ -60,7 +60,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             $table = $row['TABLE_NAME'];
             if (strpos($table, CONFIG_DB_PRE) === 0) {
                 $tables[$table]['name'] = $table;
-                $tables[$table]['selected'] = Core\Functions::selectEntry('tables', $table);
+                $tables[$table]['selected'] = $this->get('core.helpers.forms')->selectEntry('tables', $table);
             }
         }
         ksort($tables);
@@ -68,7 +68,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
         // Ausgabe
         $lang_output = array($this->lang->t('system', 'output_as_file'), $this->lang->t('system', 'output_as_text'));
-        $this->view->assign('output', Core\Functions::selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
+        $this->view->assign('output', $this->get('core.helpers.forms')->selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
 
         // Exportart
         $lang_export_type = array(
@@ -76,10 +76,10 @@ class Maintenance extends Core\Modules\Controller\Admin
             $this->lang->t('system', 'export_structure'),
             $this->lang->t('system', 'export_data')
         );
-        $this->view->assign('export_type', Core\Functions::selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
+        $this->view->assign('export_type', $this->get('core.helpers.forms')->selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
 
         $drop = [];
-        $drop['checked'] = Core\Functions::selectEntry('drop', '1', '', 'checked');
+        $drop['checked'] = $this->get('core.helpers.forms')->selectEntry('drop', '1', '', 'checked');
         $drop['lang'] = $this->lang->t('system', 'drop_tables');
         $this->view->assign('drop', $drop);
 

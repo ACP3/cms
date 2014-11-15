@@ -61,7 +61,7 @@ class Index extends Core\Modules\Controller\Admin
         $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
         for ($i = 0; $i < $c_roles; ++$i) {
-            $roles[$i]['selected'] = Core\Functions::selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
+            $roles[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
             $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
         }
         $this->view->assign('parent', $roles);
@@ -144,7 +144,7 @@ class Index extends Core\Modules\Controller\Admin
                     if ($roles[$i]['left_id'] >= $role['left_id'] && $roles[$i]['right_id'] <= $role['right_id']) {
                         unset($roles[$i]);
                     } else {
-                        $roles[$i]['selected'] = Core\Functions::selectEntry('roles', $roles[$i]['id'], $role['parent_id']);
+                        $roles[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('roles', $roles[$i]['id'], $role['parent_id']);
                         $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
                     }
                 }

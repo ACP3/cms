@@ -71,10 +71,10 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('form', array_merge(array('title' => '', 'text' => ''), $_POST));
 
         $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
+        $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
 
         $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
-        $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
+        $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -111,10 +111,10 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge($newsletter, $_POST));
 
             $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
+            $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
 
             $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
-            $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
+            $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
 
             $this->secureHelper->generateFormToken($this->request->query);
         } else {
@@ -181,7 +181,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->lang->t('system', 'yes'),
             $this->lang->t('system', 'no')
         );
-        $this->view->assign('html', Core\Functions::selectGenerator('html', array(1, 0), $langHtml, $settings['html'], 'checked'));
+        $this->view->assign('html', $this->get('core.helpers.forms')->selectGenerator('html', array(1, 0), $langHtml, $settings['html'], 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
