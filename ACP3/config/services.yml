@@ -81,7 +81,7 @@ services:
 
   core.date:
     class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', '@core.validator.rules.date', '@core.assets']
+    arguments: ['@core.auth', '@core.lang', '@core.validator.rules.date']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb

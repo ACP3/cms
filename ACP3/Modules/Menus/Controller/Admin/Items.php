@@ -177,7 +177,7 @@ class Items extends Core\Modules\Controller\Admin
             $this->view->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, $menuItem['display'], 'checked'));
 
             if ($this->modules->isActive('articles') === true) {
-                $matches = array();
+                $matches = [];
                 if (!empty($_POST) === false && $menuItem['mode'] == 4) {
                     preg_match_all(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }

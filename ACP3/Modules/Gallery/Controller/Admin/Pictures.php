@@ -66,7 +66,7 @@ class Pictures extends Core\Modules\Controller\Admin
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options = array();
+                $options = [];
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
                 $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
@@ -126,7 +126,7 @@ class Pictures extends Core\Modules\Controller\Admin
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options = array();
+                $options = [];
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $picture['comments'], 'checked');
                 $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
@@ -166,7 +166,7 @@ class Pictures extends Core\Modules\Controller\Admin
     private function _createPost(array $formData, array $settings)
     {
         try {
-            $file = array();
+            $file = [];
             $file['tmp_name'] = $_FILES['file']['tmp_name'];
             $file['name'] = $_FILES['file']['name'];
             $file['size'] = $_FILES['file']['size'];
@@ -210,7 +210,7 @@ class Pictures extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $settings, array $picture)
     {
         try {
-            $file = array();
+            $file = [];
             if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
                 $file['tmp_name'] = $_FILES['file']['tmp_name'];
                 $file['name'] = $_FILES['file']['name'];

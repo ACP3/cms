@@ -67,7 +67,7 @@ class Index extends Core\Modules\Controller\Frontend
             ->append($this->lang->t('search', 'search'), 'search')
             ->append($this->lang->t('search', 'search_results'));
 
-        $searchResults = array();
+        $searchResults = [];
         foreach ($modules as $module) {
             $action = $module . 'Search';
             if (method_exists($this->get('search.extensions'), $action) &&

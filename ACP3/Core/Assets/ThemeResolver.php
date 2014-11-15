@@ -17,7 +17,7 @@ class ThemeResolver
     /**
      * @var array
      */
-    protected $cachedPaths = array();
+    protected $cachedPaths = [];
     /**
      * @var bool
      */

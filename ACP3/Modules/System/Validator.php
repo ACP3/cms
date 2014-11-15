@@ -53,7 +53,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->routerValidator->isInternalURI($formData['homepage']) === false) {
             $errors['homepage'] = $this->lang->t('system', 'incorrect_homepage');
         }
@@ -95,12 +95,6 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if ($this->validate->isNumber($formData['cache_minify']) === false) {
             $errors['cache-minify'] = $this->lang->t('system', 'type_in_minify_cache_lifetime');
-        }
-        if (!empty($formData['extra_css']) && $this->_extraCSS($formData['extra_css']) === false) {
-            $errors['extra-css'] = $this->lang->t('system', 'type_in_additional_stylesheets');
-        }
-        if (!empty($formData['extra_js']) && $this->_extraJS($formData['extra_js']) === false) {
-            $errors['extra-js'] = $this->lang->t('system', 'type_in_additional_javascript_files');
         }
         if ($formData['mailer_type'] === 'smtp') {
             if (empty($formData['mailer_smtp_host'])) {
@@ -172,7 +166,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['tables']) || is_array($formData['tables']) === false) {
             $errors['tables'] = $this->lang->t('system', 'select_sql_tables');
         }
@@ -198,7 +192,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['text']) && empty($file['size'])) {
             $errors['text'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
         }

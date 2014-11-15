@@ -58,7 +58,7 @@ class ACL
     public function aclRolesExist(array $roles)
     {
         $allRoles = $this->acl->getAllRoles();
-        $good = array();
+        $good = [];
         foreach ($allRoles as $row) {
             $good[] = $row['id'];
         }

@@ -50,7 +50,7 @@ abstract class AbstractInstaller implements InstallerInterface
      *
      * @var array
      */
-    protected $specialResources = array();
+    protected $specialResources = [];
 
     /**
      * @param \Doctrine\DBAL\Connection $db
@@ -95,7 +95,7 @@ abstract class AbstractInstaller implements InstallerInterface
             }
         }
 
-        return array();
+        return [];
     }
 
     /**

@@ -12,7 +12,7 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    {include file="asset:system/date.tpl" datepicker=$publication_period}
+                    {include file="asset:system/datepicker.tpl" datepicker=$publication_period}
                     <div class="form-group">
                         <label for="title" class="col-sm-2 control-label">{lang t="gallery|title"}</label>
 
@@ -57,7 +57,7 @@
                 <thead>
                 <tr>
                     {if $can_delete === true}
-                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
+                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
                     {/if}
                     <th>{lang t="gallery|picture"}</th>
                     <th>{lang t="system|description"}</th>
@@ -100,14 +100,21 @@
                 {/foreach}
                 </tbody>
             </table>
-            {if $can_delete === true}
-                {mark name="entries"}
-            {/if}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {include_js module="system" file="datepicker" depends="datetimepicker"}
     {include_js module="system" file="forms"}
+    {if isset($pictures)}
+        {if $can_delete === true}
+            {include file="asset:system/mark.tpl"}
+        {/if}
+        {include file="asset:system/datatable.tpl" dt=$datatable_config}
+    {/if}
 {/block}

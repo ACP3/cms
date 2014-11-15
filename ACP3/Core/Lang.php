@@ -25,11 +25,11 @@ class Lang
     /**
      * @var array
      */
-    protected $languages = array();
+    protected $languages = [];
     /**
      * @var array
      */
-    protected $buffer = array();
+    protected $buffer = [];
 
     function __construct(Auth $auth)
     {
@@ -315,10 +315,10 @@ class Lang
      */
     final public static function parseAcceptLanguage()
     {
-        $langs = array();
+        $langs = [];
 
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $matches = array();
+            $matches = [];
             preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
 
             if (!empty($matches[1])) {
@@ -374,7 +374,7 @@ class Lang
     {
         if ($this->languagePackExists($lang) === true) {
             $this->lang = $lang;
-            $this->buffer = array();
+            $this->buffer = [];
         }
 
         return $this;
@@ -413,7 +413,7 @@ class Lang
      */
     public function setLanguageCache()
     {
-        $data = array();
+        $data = [];
 
         $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
 
@@ -432,7 +432,7 @@ class Lang
             }
         }
 
-        $this->buffer = array();
+        $this->buffer = [];
 
         return $this->cache->save($this->lang, $data);
     }
@@ -502,7 +502,7 @@ class Lang
     protected function _setLanguagesCache()
     {
         $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
-        $languages = array();
+        $languages = [];
 
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/Languages/';

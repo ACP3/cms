@@ -15,7 +15,7 @@ class XML
      *
      * @var array
      */
-    protected static $info = array();
+    protected static $info = [];
 
     /**
      * Parst die angeforderte XML Datei
@@ -48,7 +48,7 @@ class XML
                             self::$info[$path][$xpath][(string)$key][] = (string)$value;
                         } elseif (isset(self::$info[$path][$xpath][(string)$key])) {
                             $tmp = self::$info[$path][$xpath][(string)$key];
-                            self::$info[$path][$xpath][(string)$key] = array();
+                            self::$info[$path][$xpath][(string)$key] = [];
                             self::$info[$path][$xpath][(string)$key][] = $tmp;
                             self::$info[$path][$xpath][(string)$key][] = (string)$value;
                         } else {
@@ -59,7 +59,7 @@ class XML
                 return self::$info[$path][$xpath];
             }
         }
-        return array();
+        return [];
     }
 
     /**

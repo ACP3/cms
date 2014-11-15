@@ -84,7 +84,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
             $errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
         }
@@ -109,7 +109,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->validate->isNumber($formData['mode']) === false) {
             $errors['mode'] = $this->lang->t('menus', 'select_page_type');
         }
@@ -158,7 +158,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
             $errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
         }

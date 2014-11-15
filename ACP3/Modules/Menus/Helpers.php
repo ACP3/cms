@@ -14,11 +14,11 @@ class Helpers
     /**
      * @var array
      */
-    protected $menuItems = array();
+    protected $menuItems = [];
     /**
      * @var array
      */
-    protected $navbar = array();
+    protected $navbar = [];
     /**
      * @var Core\Request
      */
@@ -72,7 +72,7 @@ class Helpers
             $this->menuItems = $this->menusCache->getMenuItemsCache();
         }
 
-        $output = array();
+        $output = [];
 
         if (count($this->menuItems) > 0) {
             foreach ($this->menuItems as $row) {

@@ -22,10 +22,6 @@ class CheckAccess extends AbstractPlugin
      */
     protected $router;
     /**
-     * @var Core\View
-     */
-    protected $view;
-    /**
      * @var Icon
      */
     protected $icon;
@@ -34,29 +30,33 @@ class CheckAccess extends AbstractPlugin
      */
     protected $pluginName = 'check_access';
 
+    /**
+     * @param Core\ACL $acl
+     * @param Core\Lang $lang
+     * @param Core\Router $router
+     * @param Core\View $view
+     * @param Icon $icon
+     */
     public function __construct(
         Core\ACL $acl,
         Core\Lang $lang,
         Core\Router $router,
-        Core\View $view,
         Icon $icon
     )
     {
         $this->lang = $lang;
         $this->acl = $acl;
         $this->router = $router;
-        $this->view = $view;
         $this->icon = $icon;
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['mode']) && isset($params['path'])) {
-            $action = array();
+            $action = [];
             $query = explode('/', strtolower($params['path']));
 
             if (isset($query[0]) && $query[0] === 'acp') {
@@ -76,7 +76,7 @@ class CheckAccess extends AbstractPlugin
             $permissionPath = $area . '/' . $action[0] . '/' . $action[1] . '/' . $action[2];
 
             if ($this->acl->hasPermission($permissionPath) === true) {
-                $accessCheck = array();
+                $accessCheck = [];
                 $accessCheck['uri'] = $this->router->route($params['path']);
 
                 if (isset($params['icon'])) {
@@ -104,8 +104,8 @@ class CheckAccess extends AbstractPlugin
                 }
 
                 $accessCheck['mode'] = $params['mode'];
-                $this->view->assign('access_check', $accessCheck);
-                return $this->view->fetchTemplate('system/access_check.tpl');
+                $smarty->assign('access_check', $accessCheck);
+                return $smarty->fetch('asset:system/access_check.tpl');
             } elseif ($params['mode'] === 'link' && isset($params['title'])) {
                 return $params['title'];
             }

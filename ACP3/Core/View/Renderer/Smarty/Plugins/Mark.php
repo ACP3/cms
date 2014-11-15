@@ -10,35 +10,39 @@ use ACP3\Core;
 class Mark extends AbstractPlugin
 {
     /**
-     * @var Core\View
+     * @var Core\Lang
      */
-    protected $view;
-    /**
-     * @var array
-     */
-    protected $initialized = false;
+    protected $lang;
     /**
      * @var string
      */
     protected $pluginName = 'mark';
 
-    public function __construct(Core\View $view)
+    /**
+     * @param Core\Lang $lang
+     */
+    public function __construct(Core\Lang $lang)
     {
-        $this->view = $view;
+        $this->lang = $lang;
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $this->view->assign('checkbox_name', $params['name']);
-        $this->view->assign('mark_all_id', !empty($params['mark_all_id']) ? $params['mark_all_id'] : 'mark-all');
-        $this->view->assign('is_initialized', $this->initialized);
+        $markAllId = !empty($params['mark_all_id']) ? $params['mark_all_id'] : 'mark-all';
+        $deleteOptions = json_encode(
+            [
+                'checkBoxName' => $params['name'],
+                'language' => [
+                    'confirmationTextSingle' => $this->lang->t('system', 'confirm_delete_single'),
+                    'confirmationTextMultiple' => $this->lang->t('system', 'confirm_delete_multiple'),
+                    'noEntriesSelectedText' => $this->lang->t('system', 'no_entries_selected')
+                ]
+            ]
+        );
 
-        $this->initialized = true;
-
-        return $this->view->fetchTemplate('system/mark.tpl');
+        return 'data-mark-all-id="' . $markAllId . '" data-checkbox-name="' . $params['name'] . '" data-delete-options=\'' . $deleteOptions . '\'';
     }
 }

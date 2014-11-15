@@ -201,24 +201,6 @@
                             <p class="help-block">{lang t="system|minify_cache_lifetime_description"}</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="extra-css" class="col-sm-2 control-label">{lang t="system|additional_stylesheets"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="extra_css" id="extra-css" value="{$form.extra_css}">
-
-                            <p class="help-block">{lang t="system|additional_stylesheets_description"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="extra-js" class="col-sm-2 control-label">{lang t="system|additional_javascript_files"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="extra_js" id="extra-js" value="{$form.extra_js}">
-
-                            <p class="help-block">{lang t="system|additional_javascript_files_description"}</p>
-                        </div>
-                    </div>
                 </div>
                 <div id="tab-6" class="tab-pane fade">
                     <div class="form-group">
@@ -299,6 +281,9 @@
             </div>
         </div>
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
     {include_js module="system" file="admin/index.configuration"}
     {include_js module="system" file="forms"}
 {/block}

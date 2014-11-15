@@ -32,7 +32,7 @@ class Request
      * @var array
      * @access protected
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile

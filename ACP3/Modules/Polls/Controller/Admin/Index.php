@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $answers = array();
+        $answers = [];
         if (isset($_POST['answers'])) {
             // Bisherige Antworten
             $i = 0;
@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->_editPost($_POST);
             }
 
-            $answers = array();
+            $answers = [];
             // Neue Antworten hinzufügen
             if (isset($_POST['answers'])) {
                 // Bisherige Antworten
@@ -135,7 +135,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->view->assign('answers', $answers);
 
-            $options = array();
+            $options = [];
             $options[0]['name'] = 'reset';
             $options[0]['checked'] = Core\Functions::selectEntry('reset', '1', '0', 'checked');
             $options[0]['lang'] = $this->lang->t('polls', 'reset_votes');
@@ -168,7 +168,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
+            $this->view->assign('datatable_config', $config);
 
             $this->view->assign('polls', $polls);
             $this->view->assign('can_delete', $canDelete);

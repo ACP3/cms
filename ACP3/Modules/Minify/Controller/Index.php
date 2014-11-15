@@ -31,10 +31,10 @@ class Index extends Core\Modules\Controller
         $this->setNoOutput(true);
 
         if (!empty($this->request->group)) {
-            $libraries = !empty($this->request->libraries) ? explode(',', $this->request->libraries) : array();
+            $libraries = !empty($this->request->libraries) ? explode(',', $this->request->libraries) : [];
             $layout = isset($this->request->layout) && !preg_match('=/=', $this->request->layout) ? $this->request->layout : 'layout';
 
-            $options = array();
+            $options = [];
             switch ($this->request->group) {
                 case 'css':
                     $files = $this->assets->includeCssFiles($libraries, $layout);
@@ -43,7 +43,7 @@ class Index extends Core\Modules\Controller
                     $files = $this->assets->includeJsFiles($libraries, $layout);
                     break;
                 default:
-                    $files = array();
+                    $files = [];
             }
 
             $options['files'] = array_filter($files, function($var) {

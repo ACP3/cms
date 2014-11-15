@@ -141,6 +141,9 @@
             </div>
         </div>
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
     {include_js module="gallery" file="admin/index.settings"}
     {include_js module="system" file="forms"}
 {/block}

@@ -80,7 +80,8 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
+            $this->view->assign('datatable_config', $config);
+
             for ($i = 0; $i < $c_comments; ++$i) {
                 $comments[$i]['name'] = $this->lang->t($comments[$i]['module'], $comments[$i]['module']);
             }

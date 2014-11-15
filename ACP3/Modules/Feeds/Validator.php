@@ -20,7 +20,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['feed_type']) || in_array($formData['feed_type'], array('RSS 1.0', 'RSS 2.0', 'ATOM')) === false) {
             $errors['mail'] = $this->lang->t('feeds', 'select_feed_type');
         }

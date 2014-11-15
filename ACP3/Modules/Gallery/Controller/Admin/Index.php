@@ -139,7 +139,7 @@ class Index extends Core\Modules\Controller\Admin
                     'hide_col_sort' => $canDelete === true ? 0 : '',
                     'records_per_page' => $this->auth->entries
                 );
-                $this->appendContent($this->get('core.functions')->dataTable($config));
+                $this->view->assign('datatable_config', $config);
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
                     $pictures[$i]['first'] = $i == 0;
@@ -160,9 +160,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         $galleries = $this->galleryModel->getAllInAcp();
-        $c_galleries = count($galleries);
 
-        if ($c_galleries > 0) {
+        if (count($galleries) > 0) {
             $canDelete = $this->acl->hasPermission('admin/gallery/index/delete');
             $config = array(
                 'element' => '#acp-table',
@@ -171,8 +170,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
-
+            $this->view->assign('datatable_config', $config);
             $this->view->assign('galleries', $galleries);
             $this->view->assign('can_delete', $canDelete);
         }

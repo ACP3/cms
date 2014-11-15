@@ -60,7 +60,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('newsletter', 'subject_to_short');
         }
@@ -82,7 +82,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
@@ -107,7 +107,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->validate->email($formData['mail']) === false) {
             $errors[] = $this->lang->t('system', 'wrong_email_format');
         }
@@ -132,7 +132,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
@@ -150,7 +150,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateActivate($mail, $hash)
     {
-        $errors = array();
+        $errors = [];
         if ($this->newsletterModel->accountExists($mail, $hash) === false) {
             $errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }

@@ -16,22 +16,24 @@ class JsLibraries extends AbstractPlugin
     /**
      * @var array
      */
-    protected $alreadyIncluded = array();
+    protected $alreadyIncluded = [];
     /**
      * @var string
      */
     protected $pluginName = 'js_libraries';
 
+    /**
+     * @param Core\Assets $assets
+     */
     public function __construct(Core\Assets $assets)
     {
         $this->assets = $assets;
     }
 
     /**
-     * @param array $params
-     * @return mixed|void
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $this->assets->enableJsLibraries(explode(',', $params['enable']));
     }

@@ -136,7 +136,7 @@ class Helpers
      */
     public function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '')
     {
-        $categories = array();
+        $categories = [];
         $data = $this->cache->getCache($module);
         $c_data = count($data);
 
@@ -148,7 +148,7 @@ class Helpers
             }
             $categories['categories'] = $data;
         } else {
-            $categories['categories'] = array();
+            $categories['categories'] = [];
         }
         if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
             $categories['create']['name'] = $formFieldName . '_create';

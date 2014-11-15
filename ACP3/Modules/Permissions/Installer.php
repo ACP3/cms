@@ -28,17 +28,17 @@ class Installer extends Modules\AbstractInstaller
 
     public function createTables()
     {
-        return array();
+        return [];
     }
 
     public function removeTables()
     {
-        return array();
+        return [];
     }
 
     public function settings()
     {
-        return array();
+        return [];
     }
 
     public function removeSettings()

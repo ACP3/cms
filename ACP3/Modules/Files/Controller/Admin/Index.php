@@ -76,7 +76,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('files', '', true));
 
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-            $options = array();
+            $options = [];
             $options[0]['name'] = 'comments';
             $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
             $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
@@ -157,7 +157,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('files', $dl['category_id'], true));
 
             if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options = array();
+                $options = [];
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $dl['comments'], 'checked');
                 $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
@@ -179,9 +179,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         $files = $this->filesModel->getAllInAcp();
-        $c_files = count($files);
 
-        if ($c_files > 0) {
+        if (count($files) > 0) {
             $canDelete = $this->acl->hasPermission('admin/files/index/delete');
             $config = array(
                 'element' => '#acp-table',
@@ -190,8 +189,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
-
+            $this->view->assign('datatable_config', $config);
             $this->view->assign('files', $files);
             $this->view->assign('can_delete', $canDelete);
         }
@@ -227,7 +225,7 @@ class Index extends Core\Modules\Controller\Admin
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {
-                $file = array();
+                $file = [];
                 $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
                 $file['name'] = $_FILES['file_internal']['name'];
                 $file['size'] = $_FILES['file_internal']['size'];
@@ -289,11 +287,11 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $settings, array $dl)
     {
         try {
-            $file = array();
+            $file = [];
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } elseif (!empty($_FILES['file_internal']['name'])) {
-                $file = array();
+                $file = [];
                 $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
                 $file['name'] = $_FILES['file_internal']['name'];
                 $file['size'] = $_FILES['file_internal']['size'];

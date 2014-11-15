@@ -50,7 +50,7 @@ class Extensions extends Core\Modules\Controller\Admin
         if (isset($this->request->dir)) {
             $this->_designsPost($this->request->dir);
         } else {
-            $designs = array();
+            $designs = [];
             $path = ACP3_ROOT_DIR . 'designs/';
             $directories = scandir($path);
             $count_dir = count($directories);
@@ -112,7 +112,7 @@ class Extensions extends Core\Modules\Controller\Admin
                 $this->_renewCaches();
 
                 $modules = $this->modules->getAllModules();
-                $installedModules = $newModules = array();
+                $installedModules = $newModules = [];
 
                 foreach ($modules as $key => $values) {
                     $values['dir'] = strtolower($values['dir']);

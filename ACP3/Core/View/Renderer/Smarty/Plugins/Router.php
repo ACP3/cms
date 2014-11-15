@@ -18,16 +18,18 @@ class Router extends AbstractPlugin
      */
     protected $pluginName = 'uri';
 
+    /**
+     * @param Core\Router $router
+     */
     public function __construct(Core\Router $router)
     {
         $this->router = $router;
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->router->route(!empty($params['args']) ? $params['args'] : '');
     }

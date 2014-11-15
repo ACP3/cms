@@ -43,7 +43,7 @@
                         <label for="birthday" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
-                            {include file="asset:system/date.tpl" datepicker=$birthday_datepicker}
+                            {include file="asset:system/datepicker.tpl" datepicker=$birthday_datepicker}
                         </div>
                     </div>
                 </div>
@@ -124,5 +124,9 @@
             </div>
         </div>
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {include_js module="system" file="datepicker" depends="datetimepicker"}
     {include_js module="system" file="forms"}
 {/block}

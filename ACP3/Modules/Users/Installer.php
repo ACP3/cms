@@ -67,7 +67,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array();
+        return [];
     }
 
     /**

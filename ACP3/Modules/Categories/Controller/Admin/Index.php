@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $file = array();
+            $file = [];
             if (!empty($_FILES['picture']['name'])) {
                 $file['tmp_name'] = $_FILES['picture']['tmp_name'];
                 $file['name'] = $_FILES['picture']['name'];
@@ -183,7 +183,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $category)
     {
         try {
-            $file = array();
+            $file = [];
             if (!empty($_FILES['picture']['name'])) {
                 $file['tmp_name'] = $_FILES['picture']['tmp_name'];
                 $file['name'] = $_FILES['picture']['name'];
@@ -234,7 +234,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
+            $this->view->assign('datatable_config', $config);
             for ($i = 0; $i < $c_categories; ++$i) {
                 $categories[$i]['module'] = $this->lang->t($categories[$i]['module'], $categories[$i]['module']);
             }

@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                     {if $can_delete === true}
-                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
+                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
                     {/if}
                     <th>{lang t="categories|title"}</th>
                     <th>{lang t="system|description"}</th>
@@ -47,13 +47,19 @@
                 {/foreach}
                 </tbody>
             </table>
-            {if $can_delete === true}
-                {mark name="entries"}
-            {/if}
         {else}
             <div class="alert alert-warning text-center">
                 <h5>{lang t="system|entries"}</h5>
             </div>
         {/if}
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {if isset($categories)}
+        {if $can_delete === true}
+            {include file="asset:system/mark.tpl"}
+        {/if}
+        {include file="asset:system/datatable.tpl" dt=$datatable_config}
+    {/if}
 {/block}

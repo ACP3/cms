@@ -108,16 +108,12 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
+            $this->view->assign('datatable_config', $config);
 
             $settings = $this->guestbookConfig->getSettings();
+
             // Emoticons einbinden
-            $emoticonsActive = false;
-            if ($settings['emoticons'] == 1) {
-                if ($this->modules->isActive('emoticons') === true) {
-                    $emoticonsActive = true;
-                }
-            }
+            $emoticonsActive = ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
 
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 if ($emoticonsActive === true) {

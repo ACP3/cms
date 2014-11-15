@@ -54,11 +54,11 @@ class Index extends Core\Modules\Controller
     public function actionUserMenu()
     {
         if ($this->auth->isUser() === true) {
-            $userSidebar = array();
+            $userSidebar = [];
             $userSidebar['page'] = base64_encode(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->query);
 
             $activeModules = $this->modules->getActiveModules();
-            $navMods = $navSystem = array();
+            $navMods = $navSystem = [];
             $hasAccessToSystem = false;
 
             foreach ($activeModules as $name => $info) {

@@ -33,7 +33,7 @@ abstract class AbstractWYSIWYG extends ContainerAware
      * Config-Array des WYSIWYG-Editors
      * @var array
      */
-    protected $config = array();
+    protected $config = [];
 
     abstract public function setParameters(array $params = array());
 

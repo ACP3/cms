@@ -70,7 +70,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (!empty($formData['mail']) && $this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
@@ -98,7 +98,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }
@@ -196,7 +196,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }
@@ -266,7 +266,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['nickname'])) {
             $errors['nnickname'] = $this->lang->t('system', 'name_to_short');
         }
@@ -307,7 +307,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($settings['language_override'] == 1 && $this->lang->languagePackExists($formData['language']) === false) {
             $errors['language'] = $this->lang->t('users', 'select_language');
         }
@@ -347,7 +347,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['nick_mail'])) {
             $errors['nick-mail'] = $this->lang->t('users', 'type_in_nickname_or_email');
         } elseif ($this->validate->email($formData['nick_mail']) === false && $this->userModel->resultExistsByUserName($formData['nick_mail']) === false) {
@@ -373,7 +373,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }

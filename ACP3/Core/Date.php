@@ -38,10 +38,6 @@ class Date
      * @var \ACP3\Core\Validator\Rules\Date
      */
     protected $dateValidator;
-    /**
-     * @var \ACP3\Core\Assets
-     */
-    protected $assets;
 
     /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
@@ -49,20 +45,17 @@ class Date
      * @param Auth $auth
      * @param Lang $lang
      * @param Validator\Rules\Date $dateValidator
-     * @param View $assets
      */
     function __construct(
         Auth $auth,
         Lang $lang,
-        \ACP3\Core\Validator\Rules\Date $dateValidator,
-        Assets $assets
+        \ACP3\Core\Validator\Rules\Date $dateValidator
     )
     {
         $info = $auth->getUserInfo();
 
         $this->lang = $lang;
         $this->dateValidator = $dateValidator;
-        $this->assets = $assets;
 
         if (!empty($info)) {
             $this->dateFormatLong = $info['date_format_long'];
@@ -155,21 +148,21 @@ class Date
         $inputFieldOnly = false
     )
     {
+        $range = (is_array($name) === true && $range === 1);
+
         $datepicker = array(
-            'range' => is_array($name) === true && $range === 1 ? 1 : 0,
+            'range' => $range,
             'with_time' => (bool)$withTime,
             'length' => $withTime === true ? 16 : 10,
             'input_only' => (bool)$inputFieldOnly,
             'params' => array(
-                'firstDay' => '\'1\'',
-                'dateFormat' => '\'yy-mm-dd\'',
-                'constrainInput' => 'true',
+                'format' => 'YYYY-MM-DD',
                 'changeMonth' => 'true',
                 'changeYear' => 'true',
             )
         );
         if ($withTime === true) {
-            $datepicker['params']['timeFormat'] = '\'HH:mm\'';
+            $datepicker['params']['format'].= ' HH:mm';
         }
 
         // Zusätzliche Datepicker-Parameter hinzufügen
@@ -178,7 +171,7 @@ class Date
         }
 
         // Veröffentlichungszeitraum
-        if (is_array($name) === true && $range === 1) {
+        if ($range === true) {
             if (!empty($_POST[$name[0]]) && !empty($_POST[$name[1]])) {
                 $valueStart = $_POST[$name[0]];
                 $valueEnd = $_POST[$name[1]];
@@ -202,8 +195,15 @@ class Date
             $datepicker['value_start_r'] = $valueStartR;
             $datepicker['value_end'] = $valueEnd;
             $datepicker['value_end_r'] = $valueEndR;
-            // Einfaches Inputfeld mit Datepicker
-        } else {
+            $datepicker['range_json'] = json_encode(
+                [
+                    'start' => '#' . $name[0],
+                    'startDefaultDate' => $valueStartR,
+                    'end' => '#' . $name[1],
+                    'endDefaultDate' => $valueEndR
+                ]
+            );
+        } else { // Einfaches Inputfeld mit Datepicker
             if (!empty($_POST[$name])) {
                 $value = $_POST[$name];
             } elseif ($this->dateValidator->date($value) === true) {
@@ -215,8 +215,6 @@ class Date
             $datepicker['name'] = $name;
             $datepicker['value'] = $value;
         }
-
-        $this->assets->enableJsLibraries(array($withTime === true ? 'timepicker' : 'jquery-ui'));
 
         return $datepicker;
     }
@@ -244,7 +242,7 @@ class Date
                 break;
         }
 
-        $replace = array();
+        $replace = [];
         // Wochentage lokalisieren
         if (strpos($format, 'D') !== false) {
             $replace = $this->localizeDaysAbbr();

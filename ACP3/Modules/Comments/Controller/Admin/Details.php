@@ -116,17 +116,12 @@ class Details extends Core\Modules\Controller\Admin
                     'hide_col_sort' => $canDelete === true ? 0 : '',
                     'records_per_page' => $this->auth->entries
                 );
-                $this->appendContent($this->get('core.functions')->dataTable($config));
+                $this->view->assign('datatable_config', $config);
 
                 $settings = $this->commentsConfig->getSettings();
 
                 // Emoticons einbinden
-                $emoticonsActive = false;
-                if ($settings['emoticons'] == 1) {
-                    if ($this->modules->isActive('emoticons') === true) {
-                        $emoticonsActive = true;
-                    }
-                }
+                $emoticonsActive = ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
 
                 for ($i = 0; $i < $c_comments; ++$i) {
                     if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
@@ -152,7 +147,7 @@ class Details extends Core\Modules\Controller\Admin
             $validator = $this->get('comments.validator');
             $validator->validateEdit($formData);
 
-            $updateValues = array();
+            $updateValues = [];
             $updateValues['message'] = Core\Functions::strEncode($formData['message']);
             if ((empty($comment['user_id']) || $this->get('core.validator.rules.misc')->isNumber($comment['user_id']) === false) && !empty($formData['name'])) {
                 $updateValues['name'] = Core\Functions::strEncode($formData['name']);

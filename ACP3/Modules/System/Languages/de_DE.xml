@@ -290,8 +290,6 @@
         <item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
         <item key="toc_page">Seite %d</item>
         <item key="toggle_navigation">Navigation einblenden/ausblenden</item>
-        <item key="type_in_additional_javascript_files">Einige der angegebenen JavaScript Dateien konnten nicht gefunden werden.</item>
-        <item key="type_in_additional_stylesheets">Einige der angegebenen Stylesheets konnten nicht gefunden werden.</item>
         <item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
         <item key="type_in_flood_barrier">Bitte geben Sie ein, für wie viele Sekunden ein Benutzer keine Beiträge abschicken kann.</item>
         <item key="type_in_mailer_smtp_host">Bitte geben Sie den Hostnamen des SMTP-Servers an.</item>

@@ -84,7 +84,7 @@ class Secure
     {
         $tokenName = Core\Session::XSRF_TOKEN_NAME;
         if (!isset($_SESSION[$tokenName]) || is_array($_SESSION[$tokenName]) === false) {
-            $_SESSION[$tokenName] = array();
+            $_SESSION[$tokenName] = [];
         }
 
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');

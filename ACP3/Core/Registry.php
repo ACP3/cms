@@ -8,7 +8,7 @@ namespace ACP3\Core;
  */
 class Registry
 {
-    protected static $registry = array();
+    protected static $registry = [];
 
     /**
      * Inject an object to the registry

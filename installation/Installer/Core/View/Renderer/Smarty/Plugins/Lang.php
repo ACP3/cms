@@ -18,16 +18,18 @@ class Lang extends AbstractPlugin
      */
     protected $pluginName = 'lang';
 
+    /**
+     * @param \ACP3\Installer\Core\Lang $lang
+     */
     public function __construct(\ACP3\Installer\Core\Lang $lang)
     {
         $this->lang = $lang;
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $values = explode('|', $params['t']);
         return $this->lang->t($values[0], $values[1]);

@@ -298,7 +298,7 @@ class NestedSet
 
             $c_elem = count($elem);
             $c_items = count($items);
-            $elemIds = $itemsIds = array();
+            $elemIds = $itemsIds = [];
 
             for ($i = 0; $i < $c_elem; ++$i) {
                 $elemIds[] = $elem[$i]['id'];

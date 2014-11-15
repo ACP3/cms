@@ -51,16 +51,16 @@ class Upload
 
         if (is_writable($path) === true) {
             if (!@move_uploaded_file($tmpFilename, $path . $newFilename)) {
-                return array();
+                return [];
             } else {
-                $return = array();
+                $return = [];
                 $return['name'] = $newFilename;
                 $return['size'] = $this->calcFilesize(filesize($path . $return['name']));
 
                 return $return;
             }
         }
-        return array();
+        return [];
     }
 
     /**

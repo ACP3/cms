@@ -54,7 +54,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['name'])) {
             $errors['name'] = $this->lang->t('system', 'name_to_short');
         }
@@ -84,7 +84,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (!empty($formData['mail']) && $this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }

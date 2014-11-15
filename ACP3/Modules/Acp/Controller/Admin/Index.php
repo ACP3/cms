@@ -13,17 +13,17 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $modules = $this->modules->getActiveModules();
-        $mods = array();
+        $activeModules = $this->modules->getActiveModules();
+        $allowedModules = [];
 
-        foreach ($modules as $name => $info) {
+        foreach ($activeModules as $name => $info) {
             $dir = strtolower($info['dir']);
             if ($this->acl->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
-                $mods[$name]['name'] = $name;
-                $mods[$name]['dir'] = $dir;
+                $allowedModules[$name]['name'] = $name;
+                $allowedModules[$name]['dir'] = $dir;
             }
         }
-        $this->view->assign('modules', $mods);
+        $this->view->assign('modules', $allowedModules);
     }
 
 }

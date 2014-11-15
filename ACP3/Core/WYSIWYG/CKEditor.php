@@ -55,7 +55,7 @@ class CKEditor extends AbstractWYSIWYG
         $filebrowserUri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
         $uploadUri = ROOT_DIR . 'libraries/kcfinder/upload.php?opener=ckeditor%s&cms=acp3';
 
-        $this->config = array();
+        $this->config = [];
         $this->config['filebrowserBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
         $this->config['filebrowserImageBrowseUrl'] = sprintf($filebrowserUri, '&type=gallery');
         $this->config['filebrowserFlashBrowseUrl'] = sprintf($filebrowserUri, '&type=files');

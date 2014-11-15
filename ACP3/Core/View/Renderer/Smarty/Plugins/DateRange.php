@@ -28,10 +28,9 @@ class DateRange extends AbstractPlugin
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $format = isset($params['format']) ? $params['format'] : 'long';
 

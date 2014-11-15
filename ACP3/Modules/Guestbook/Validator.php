@@ -88,7 +88,7 @@ class Validator extends Core\Validator\AbstractValidator
         $floodTime = !empty($flood) ? $this->date->timestamp($flood, true) + 30 : 0;
         $time = $this->date->timestamp('now', true);
 
-        $errors = array();
+        $errors = [];
         if ($floodTime > $time) {
             $errors[] = sprintf($this->lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
         }
@@ -128,7 +128,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['name'])) {
             $errors['name'] = $this->lang->t('system', 'name_to_short');
         }
@@ -153,7 +153,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
             $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }

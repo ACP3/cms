@@ -125,9 +125,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         $newsletter = $this->newsletterModel->getAllInAcp();
-        $c_newsletter = count($newsletter);
 
-        if ($c_newsletter > 0) {
+        if (count($newsletter) > 0) {
             $canDelete = $this->acl->hasPermission('admin/newsletter/index/delete');
             $config = array(
                 'element' => '#acp-table',
@@ -136,8 +135,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
-
+            $this->view->assign('datatable_config', $config);
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
             $this->view->assign('can_send', $this->acl->hasPermission('admin/newsletter/index/send'));
@@ -151,7 +149,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->newsletterModel->newsletterExists($this->request->id) === true) {
             $accounts = $this->newsletterModel->getAllActiveAccounts();
             $c_accounts = count($accounts);
-            $recipients = array();
+            $recipients = [];
 
             for ($i = 0; $i < $c_accounts; ++$i) {
                 $recipients[] = $accounts[$i]['mail'];

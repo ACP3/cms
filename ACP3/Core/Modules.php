@@ -28,11 +28,11 @@ class Modules
     /**
      * @var array
      */
-    private $parseModules = array();
+    private $parseModules = [];
     /**
      * @var array
      */
-    private $allModules = array();
+    private $allModules = [];
 
     public function __construct(
         \Doctrine\DBAL\Connection $db,
@@ -105,7 +105,7 @@ class Modules
             }
             $this->parseModules = $this->cache->fetch($filename);
         }
-        return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : array();
+        return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : [];
     }
 
     /**
@@ -121,7 +121,7 @@ class Modules
      */
     public function setModulesCache()
     {
-        $infos = array();
+        $infos = [];
         $dirs = array_diff(scandir(MODULES_DIR), array('.', '..'));
         foreach ($dirs as $dir) {
             $path = MODULES_DIR . '/' . $dir . '/config/module.xml';

@@ -30,6 +30,11 @@
                 </div>
             </div>
         </form>
+    {/if}
+{/block}
+
+{block JAVASCRIPTS append}
+    {if !isset($sql_queries)}
         {include_js module="system" file="forms"}
     {/if}
 {/block}

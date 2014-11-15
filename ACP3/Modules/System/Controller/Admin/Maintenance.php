@@ -55,7 +55,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         }
 
         $dbTables = $this->systemModel->getSchemaTables();
-        $tables = array();
+        $tables = [];
         foreach ($dbTables as $row) {
             $table = $row['TABLE_NAME'];
             if (strpos($table, CONFIG_DB_PRE) === 0) {
@@ -78,7 +78,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         );
         $this->view->assign('export_type', Core\Functions::selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
 
-        $drop = array();
+        $drop = [];
         $drop['checked'] = Core\Functions::selectEntry('drop', '1', '', 'checked');
         $drop['lang'] = $this->lang->t('system', 'drop_tables');
         $this->view->assign('drop', $drop);
@@ -152,7 +152,7 @@ class Maintenance extends Core\Modules\Controller\Admin
     private function _sqlImportPost(array $formData)
     {
         try {
-            $file = array();
+            $file = [];
             if (isset($_FILES['file'])) {
                 $file['tmp_name'] = $_FILES['file']['tmp_name'];
                 $file['name'] = $_FILES['file']['name'];
@@ -166,7 +166,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
             $data = isset($file) ? file_get_contents($file['tmp_name']) : $formData['text'];
             $importData = explode(";\n", str_replace(array("\r\n", "\r", "\n"), "\n", $data));
-            $sqlQueries = array();
+            $sqlQueries = [];
 
             $i = 0;
             foreach ($importData as $row) {
