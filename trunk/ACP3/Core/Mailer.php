@@ -42,7 +42,7 @@ class Mailer
     /**
      * @var bool
      */
-    private $bcc;
+    private $bcc = false;
     /**
      * @var array
      */
@@ -54,7 +54,7 @@ class Mailer
     /**
      * @var \PHPMailer
      */
-    private $mailer;
+    private $phpMailer;
     /**
      * @var View
      */
@@ -63,31 +63,28 @@ class Mailer
     /**
      * Initializes PHPMailer and sets the basic configuration parameters
      * @param View $view
-     * @param bool $bcc
      */
-    public function __construct(View $view = null, $bcc = false)
+    public function __construct(View $view = null)
     {
         $this->view = $view;
-        $this->mailer = new \PHPMailer(true);
+        $this->phpMailer = new \PHPMailer(true);
 
         if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
-            $this->mailer->set('Mailer', 'smtp');
-            $this->mailer->Host = CONFIG_MAILER_SMTP_HOST;
-            $this->mailer->Port = CONFIG_MAILER_SMTP_PORT;
-            $this->mailer->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
+            $this->phpMailer->set('Mailer', 'smtp');
+            $this->phpMailer->Host = CONFIG_MAILER_SMTP_HOST;
+            $this->phpMailer->Port = CONFIG_MAILER_SMTP_PORT;
+            $this->phpMailer->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
             if ((bool)CONFIG_MAILER_SMTP_AUTH === true) {
-                $this->mailer->SMTPAuth = true;
-                $this->mailer->Username = CONFIG_MAILER_SMTP_USER;
-                $this->mailer->Password = CONFIG_MAILER_SMTP_PASSWORD;
+                $this->phpMailer->SMTPAuth = true;
+                $this->phpMailer->Username = CONFIG_MAILER_SMTP_USER;
+                $this->phpMailer->Password = CONFIG_MAILER_SMTP_PASSWORD;
             }
         } else {
-            $this->mailer->set('Mailer', 'mail');
+            $this->phpMailer->set('Mailer', 'mail');
         }
-        $this->mailer->CharSet = 'UTF-8';
-        $this->mailer->Encoding = '8bit';
-        $this->mailer->WordWrap = 76;
-
-        $this->bcc = $bcc;
+        $this->phpMailer->CharSet = 'UTF-8';
+        $this->phpMailer->Encoding = '8bit';
+        $this->phpMailer->WordWrap = 76;
     }
 
     /**
@@ -134,6 +131,18 @@ class Mailer
     public function setUrlWeb($urlWeb)
     {
         $this->urlWeb = $urlWeb;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $bcc
+     *
+     * @return $this
+     */
+    public function setBcc($bcc)
+    {
+        $this->bcc = (bool)$bcc;
 
         return $this;
     }
@@ -206,12 +215,12 @@ class Mailer
     public function send()
     {
         try {
-            $this->mailer->Subject = $this->subject;
+            $this->phpMailer->Subject = $this->subject;
 
             if (is_array($this->from) === true) {
-                $this->mailer->SetFrom($this->from['email'], $this->from['name']);
+                $this->phpMailer->SetFrom($this->from['email'], $this->from['name']);
             } else {
-                $this->mailer->SetFrom($this->from);
+                $this->phpMailer->SetFrom($this->from);
             }
 
             $this->_generateBody();
@@ -220,7 +229,7 @@ class Mailer
             if (count($this->attachments) > 0) {
                 foreach ($this->attachments as $attachment) {
                     if (!empty($attachment) && is_file($attachment)) {
-                        $this->mailer->addAttachment($attachment);
+                        $this->phpMailer->addAttachment($attachment);
                     }
                 }
             }
@@ -259,16 +268,16 @@ class Mailer
             $htmlDocument = new InlineStyle($this->view->fetchTemplate($this->template));
             $htmlDocument->applyStylesheet($htmlDocument->extractStylesheets());
 
-            $this->mailer->msgHTML($htmlDocument->getHTML());
+            $this->phpMailer->msgHTML($htmlDocument->getHTML());
 
             // Fallback for E-mail clients which don't support HTML E-mails
             if (!empty($this->body)) {
-                $this->mailer->AltBody = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
+                $this->phpMailer->AltBody = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
             } else {
-                $this->mailer->AltBody = $this->mailer->html2text($this->htmlBody . $this->_getHtmlSignature(), true);
+                $this->phpMailer->AltBody = $this->phpMailer->html2text($this->htmlBody . $this->_getHtmlSignature(), true);
             }
         } else {
-            $this->mailer->Body = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
+            $this->phpMailer->Body = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
         }
 
         return $this;
@@ -306,7 +315,7 @@ class Mailer
     private function _getTextSignature()
     {
         if (!empty($this->mailSignature)) {
-            return "\n-- \n" . $this->mailer->html2text($this->mailSignature, true);
+            return "\n-- \n" . $this->phpMailer->html2text($this->mailSignature, true);
         }
         return '';
     }
@@ -328,7 +337,7 @@ class Mailer
             $this->_addRecipients($recipient, true);
         }
 
-        return $this->mailer->send();
+        return $this->phpMailer->send();
     }
 
     /**
@@ -365,16 +374,16 @@ class Mailer
      *
      * @param        $email
      * @param string $name
-     * @param bool   $bcc
+     * @param bool $bcc
      *
      * @return $this
      */
     private function _addRecipient($email, $name = '', $bcc = false)
     {
         if ($bcc === true) {
-            $this->mailer->addBCC($email, $name);
+            $this->phpMailer->addBCC($email, $name);
         } else {
-            $this->mailer->addAddress($email, $name);
+            $this->phpMailer->addAddress($email, $name);
         }
 
         return $this;
@@ -394,11 +403,34 @@ class Mailer
         foreach ($this->recipients as $recipient) {
             set_time_limit(20);
             $this->_addRecipients($recipient);
-            $this->mailer->send();
-            $this->mailer->clearAllRecipients();
+            $this->phpMailer->send();
+            $this->phpMailer->clearAllRecipients();
         }
 
         return true;
+    }
+
+    /**
+     * Resets the currently set mailer values back to there default values
+     * @return $this
+     */
+    public function reset()
+    {
+        $this->subject = '';
+        $this->body = '';
+        $this->htmlBody = '';
+        $this->urlWeb = '';
+        $this->mailSignature = '';
+        $this->from = '';
+        $this->recipients = null;
+        $this->bcc = false;
+        $this->attachments = [];
+        $this->template = '';
+
+        $this->phpMailer->clearAllRecipients();
+        $this->phpMailer->clearAttachments();
+
+        return $this;
     }
 
 }

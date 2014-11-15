@@ -16,13 +16,13 @@ class Helpers
      */
     protected $lang;
     /**
+     * @var Core\Mailer
+     */
+    protected $mailer;
+    /**
      * @var Core\Router
      */
     protected $router;
-    /**
-     * @var Core\View
-     */
-    protected $view;
     /**
      * @var Core\Helpers\StringFormatter
      */
@@ -38,24 +38,24 @@ class Helpers
 
     /**
      * @param Core\Lang $lang
+     * @param Core\Mailer $mailer
      * @param Core\Router $router
-     * @param Core\View $view
      * @param Core\Helpers\StringFormatter $stringFormatter
      * @param Core\Config $newsletterConfig
      * @param Model $newsletterModel
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Mailer $mailer,
         Core\Router $router,
-        Core\View $view,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Config $newsletterConfig,
         Model $newsletterModel
     )
     {
         $this->lang = $lang;
+        $this->mailer = $mailer;
         $this->router = $router;
-        $this->view = $view;
         $this->stringFormatter = $stringFormatter;
         $this->newsletterConfig = $newsletterConfig;
         $this->newsletterModel = $newsletterModel;
@@ -80,23 +80,24 @@ class Helpers
             'name' => CONFIG_SEO_TITLE
         );
 
-        $mailer = new Core\Mailer($this->view, $bcc);
-        $mailer
+        $this->mailer
+            ->reset()
+            ->setBcc($bcc)
             ->setFrom($from)
             ->setSubject($newsletter['title'])
             ->setUrlWeb(HOST_NAME . $this->router->route('newsletter/archive/details/id_' . $newsletterId))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
-            $mailer->setTemplate('newsletter/email.tpl');
-            $mailer->setHtmlBody($newsletter['text']);
+            $this->mailer->setTemplate('newsletter/email.tpl');
+            $this->mailer->setHtmlBody($newsletter['text']);
         } else {
-            $mailer->setBody($newsletter['text']);
+            $this->mailer->setBody($newsletter['text']);
         }
 
-        $mailer->setRecipients($recipients);
+        $this->mailer->setRecipients($recipients);
 
-        return $mailer->send();
+        return $this->mailer->send();
     }
 
     /**
@@ -123,25 +124,25 @@ class Helpers
             'name' => CONFIG_SEO_TITLE
         );
 
-        $mailer = new Core\Mailer($this->view);
-        $mailer
+        $this->mailer
+            ->reset()
             ->setFrom($from)
             ->setSubject($subject)
             ->setMailSignature($settings['mailsig']);
 
         if ($settings['html'] == 1) {
-            $mailer->setTemplate('newsletter/email.tpl');
+            $this->mailer->setTemplate('newsletter/email.tpl');
 
             $body .= '<a href="' . $url . '">' . $url . '<a>';
-            $mailer->setHtmlBody($this->stringFormatter->nl2p($body));
+            $this->mailer->setHtmlBody($this->stringFormatter->nl2p($body));
         } else {
             $body .= $url;
-            $mailer->setBody($body);
+            $this->mailer->setBody($body);
         }
 
-        $mailer->setRecipients($emailAddress);
+        $this->mailer->setRecipients($emailAddress);
 
-        $mailSent = $mailer->send();
+        $mailSent = $this->mailer->send();
         $bool = false;
 
         // Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte

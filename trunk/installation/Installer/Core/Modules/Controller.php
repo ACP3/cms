@@ -94,7 +94,7 @@ class Controller
         $this->view->assign('ROOT_DIR', ROOT_DIR);
         $this->view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
-        $this->view->assign('UA_IS_MOBILE', \ACP3\Core\Functions::isMobileBrowser());
+        $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
 
         $languageInfo = \ACP3\Core\XML::parseXmlFile(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->lang->getLanguage() . '.xml', '/language/info');
         $this->view->assign('LANG_DIRECTION', isset($languageInfo['direction']) ? $languageInfo['direction'] : 'ltr');

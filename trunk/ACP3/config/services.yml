@@ -89,11 +89,15 @@ services:
 
   core.functions:
     class: ACP3\Core\Functions
-    arguments: ['@core.assets', '@core.db', '@core.view']
+    arguments: ['@core.db']
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
     arguments: ['@core.request', '@core.view', '@core.helpers.output']
+
+  core.helpers.sendEmail:
+    class: ACP3\Core\Helpers\SendEmail
+    arguments: ['@core.mailer']
 
   core.helpers.output:
     class: ACP3\Core\Helpers\Output
@@ -120,6 +124,10 @@ services:
   system.config:
     class: ACP3\Core\Config
     arguments: ['@core.db', 'system']
+
+  core.mailer:
+    class: ACP3\Core\Mailer
+    arguments: ['@core.view']
 
   core.modules.controller:
     abstract: true

@@ -68,7 +68,7 @@ abstract class Frontend extends Core\Modules\Controller
         $this->view->assign('HOST_NAME', HOST_NAME);
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
-        $this->view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
+        $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
         $this->view->assign('IN_ADM', $this->request->area === 'admin');
 
         $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
