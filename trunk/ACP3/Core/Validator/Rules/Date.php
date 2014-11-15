@@ -18,7 +18,7 @@ class Date
     public function birthday($var)
     {
         $regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
-        $matches = array();
+        $matches = [];
         if (preg_match($regex, $var, $matches)) {
             if (checkdate($matches[2], $matches[3], $matches[1])) {
                 return true;
@@ -39,7 +39,7 @@ class Date
      */
     public function date($start, $end = null)
     {
-        $matchesStart = $matchesEnd = array();
+        $matchesStart = $matchesEnd = [];
         $regex = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3])(:([0-5][0-9])){1,2}){0,1}$/';
         if (preg_match($regex, $start, $matchesStart)) {
             // Wenn ein Enddatum festgelegt wurde, dieses ebenfalls mit überprüfen

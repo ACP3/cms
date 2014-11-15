@@ -20,12 +20,11 @@
         </nav>
         {redirect_message}
         {if isset($resources)}
-            {include_js module="permissions" file="admin/resources.index"}
             <table id="resources-table" class="table table-hover">
                 <thead>
                 <tr>
                     {if $can_delete_resource === true}
-                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
+                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
                     {/if}
                     <th>{lang t="permissions|area"}</th>
                     <th>{lang t="permissions|controller"}</th>
@@ -54,13 +53,19 @@
                 {/foreach}
                 </tbody>
             </table>
-            {if $can_delete_resource === true}
-                {mark name="entries"}
-            {/if}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {if isset($resources)}
+        {if $can_delete_resource === true}
+            {include file="asset:system/mark.tpl"}
+        {/if}
+        {include_js module="permissions" file="admin/resources.index"}
+    {/if}
 {/block}

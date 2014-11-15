@@ -13,7 +13,7 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    {include file="asset:system/date.tpl" datepicker=$publication_period}
+                    {include file="asset:system/datepicker.tpl" datepicker=$publication_period}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
@@ -95,6 +95,10 @@
             </div>
         </div>
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {include_js module="system" file="datepicker" depends="datetimepicker"}
     {include_js module="files" file="admin/acp"}
     {include_js module="system" file="forms"}
 {/block}

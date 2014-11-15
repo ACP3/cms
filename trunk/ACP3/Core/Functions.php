@@ -67,7 +67,7 @@ class Functions
      */
     public static function recordsPerPage($currentValue, $steps = 5, $maxValue = 50)
     {
-        $records = array();
+        $records = [];
         for ($i = 0, $j = $steps; $j <= $maxValue; $i++, $j += $steps) {
             $records[$i]['value'] = $j;
             $records[$i]['selected'] = self::selectEntry('entries', $j, $currentValue);
@@ -122,7 +122,7 @@ class Functions
      */
     public static function selectGenerator($name, array $values, array $lang, $currentValue = '', $selected = 'selected')
     {
-        $array = array();
+        $array = [];
         if (count($values) == count($lang)) {
             $c_array = count($values);
             $id = str_replace('_', '-', $name);

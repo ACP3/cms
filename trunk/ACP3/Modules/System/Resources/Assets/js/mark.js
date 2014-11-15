@@ -3,18 +3,20 @@ var cssClassName = 'active';
 /**
  * Marks all visible results
  *
- * @param id
+ * @param $markAllElem
  * @param name
  * @param action
  */
-function markEntries(id, name, action) {
-    var fields = $(id).parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
+function markEntries($markAllElem, name, action) {
+    var fields = $markAllElem.parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
 
     jQuery.each(fields, function () {
+        var $tableRows = $(this).prop('checked', (action === 'add')).parents('tr:first');
+
         if (action === 'add') {
-            $(this).prop('checked', true).parents('tr:first').addClass(cssClassName);
+            $tableRows.addClass(cssClassName);
         } else {
-            $(this).prop('checked', false).parents('tr:first').removeClass(cssClassName);
+            $tableRows.removeClass(cssClassName);
         }
     });
 }
@@ -22,13 +24,16 @@ function markEntries(id, name, action) {
 /**
  *
  * @param checkboxName
+ * @returns {*|jQuery|HTMLElement}
  */
 jQuery.fn.highlightTableRow = function (checkboxName) {
     var $this = $(this);
 
     $this.parents('thead')
         .next('tbody').find('tr:has(:checkbox)').click(function (e) {
-            var $tableRow = $(this);
+            var $tableRow = $(this),
+                $tbody = $tableRow.closest('tbody');
+
             if (e.target.type !== 'checkbox') {
                 if (e.target.nodeName === 'A') {
                     return;
@@ -41,18 +46,17 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
             $tableRow.toggleClass(cssClassName);
 
             // Alle Datensätze auf einer Seite wurden markiert
-            if ($tableRow.closest('tbody').find('input[name="' + checkboxName + '[]"]:visible').length === $tableRow.closest('tbody').find('tr.' + cssClassName + ':visible').length) {
-                $this.prop('checked', true);
-            } else {
-                $this.prop('checked', false);
-            }
+            $this.prop('checked', ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length));
         }
     );
+
+    return $this;
 };
 
 /**
  *
  * @param options
+ * @returns {*|jQuery|HTMLElement}
  */
 jQuery.fn.deleteMarkedResults = function (options) {
     var defaults = {
@@ -95,4 +99,22 @@ jQuery.fn.deleteMarkedResults = function (options) {
             bootbox.alert(settings.language.noEntriesSelectedText);
         }
     });
+
+    return $this;
 };
+
+jQuery(document).ready(function($) {
+    var $markAll = $('[data-mark-all-id]');
+
+    $markAll.each(function () {
+        var $this = $(this);
+
+        $this
+            .click(function () {
+                markEntries($this, $this.data('checkbox-name'), $this.is(':checked') ? 'add' : 'remove');
+            })
+            .highlightTableRow($this.data('checkbox-name'));
+    });
+
+    $('form #adm-list input[type="image"]').deleteMarkedResults($markAll.data('delete-options'));
+});

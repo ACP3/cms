@@ -48,7 +48,7 @@ class Helpers
     {
         $module = strtolower($module);
         $deps = Core\Modules\AbstractInstaller::getDependencies($module);
-        $modulesToEnable = array();
+        $modulesToEnable = [];
         if (!empty($deps)) {
             foreach ($deps as $dep) {
                 if ($this->modules->isActive($dep) === false) {
@@ -70,7 +70,7 @@ class Helpers
     {
         $module = strtolower($module);
         $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
-        $modulesToUninstall = array();
+        $modulesToUninstall = [];
         foreach ($modules as $row) {
             $row = strtolower($row);
             if ($row !== $module) {

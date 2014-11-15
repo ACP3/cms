@@ -95,7 +95,7 @@ class Session
         // Session Fixation verhindern
         if (isset($_SESSION['acp3_init']) === false || $force === true) {
             session_regenerate_id(true);
-            $_SESSION = array();
+            $_SESSION = [];
             $_SESSION['acp3_init'] = true;
         }
     }
@@ -158,7 +158,7 @@ class Session
     public function session_destroy($sessionId)
     {
         // Alle gesetzten Session Variablen zurücksetzen
-        $_SESSION = array();
+        $_SESSION = [];
 
         // Session-Cookie löschen
         if (isset($_COOKIE[self::SESSION_NAME])) {

@@ -67,7 +67,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $file = array();
+            $file = [];
             if (!empty($_FILES['picture']['tmp_name'])) {
                 $file['tmp_name'] = $_FILES['picture']['tmp_name'];
                 $file['name'] = $_FILES['picture']['name'];
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $emoticon)
     {
         try {
-            $file = array();
+            $file = [];
             if (!empty($_FILES['picture']['name'])) {
                 $file['tmp_name'] = $_FILES['picture']['tmp_name'];
                 $file['name'] = $_FILES['picture']['name'];
@@ -189,9 +189,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         $emoticons = $this->emoticonsModel->getAll();
-        $c_emoticons = count($emoticons);
 
-        if ($c_emoticons > 0) {
+        if (count($emoticons) > 0) {
             $canDelete = $this->acl->hasPermission('admin/emoticons/index/delete');
             $config = array(
                 'element' => '#acp-table',
@@ -200,9 +199,9 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
+            $this->view->assign('datatable_config', $config);
             $this->view->assign('emoticons', $emoticons);
             $this->view->assign('can_delete', $canDelete);
-            $this->appendContent($this->get('core.functions')->dataTable($config));
         }
     }
 

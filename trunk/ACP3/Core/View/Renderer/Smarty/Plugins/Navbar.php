@@ -23,17 +23,23 @@ class Navbar extends AbstractPlugin
      */
     protected $pluginName = 'navbar';
 
-    public function __construct(Core\Modules $modules, Menus\Helpers $menuHelpers)
+    /**
+     * @param Core\Modules $modules
+     * @param Menus\Helpers $menuHelpers
+     */
+    public function __construct(
+        Core\Modules $modules,
+        Menus\Helpers $menuHelpers
+    )
     {
         $this->modules = $modules;
         $this->menuHelpers = $menuHelpers;
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if ($this->modules->isActive('menus') === true) {
             return $this->menuHelpers->processNavbar(

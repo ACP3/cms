@@ -46,7 +46,7 @@ class Mailer
     /**
      * @var array
      */
-    private $attachments = array();
+    private $attachments = [];
     /**
      * @var string
      */

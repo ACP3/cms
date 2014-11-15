@@ -12,7 +12,7 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    {include file="asset:system/date.tpl" datepicker=$publication_period}
+                    {include file="asset:system/datepicker.tpl" datepicker=$publication_period}
                     <div class="form-group">
                         <label for="title" class="col-sm-2 control-label">{lang t="gallery|title"}</label>
 
@@ -34,5 +34,9 @@
             </div>
         </div>
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {include_js module="system" file="datepicker" depends="datetimepicker"}
     {include_js module="system" file="forms"}
 {/block}

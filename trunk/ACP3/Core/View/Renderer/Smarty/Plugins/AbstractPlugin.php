@@ -13,6 +13,7 @@ abstract class AbstractPlugin
     protected $pluginName = '';
 
     /**
+     * @param \Smarty $smarty
      * @throws \SmartyException
      */
     public function registerPlugin(\Smarty $smarty)
@@ -22,7 +23,8 @@ abstract class AbstractPlugin
 
     /**
      * @param array $params
+     * @param \Smarty_Internal_Template $smarty
      * @return mixed
      */
-    abstract public function process(array $params);
+    abstract public function process(array $params, \Smarty_Internal_Template $smarty);
 } 

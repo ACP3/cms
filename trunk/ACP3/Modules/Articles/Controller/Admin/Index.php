@@ -263,9 +263,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         $articles = $this->articlesModel->getAllInAcp();
-        $c_articles = count($articles);
 
-        if ($c_articles > 0) {
+        if (count($articles) > 0) {
             $canDelete = $this->acl->hasPermission('admin/articles/index/delete');
             $config = array(
                 'element' => '#acp-table',
@@ -274,8 +273,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
-
+            $this->view->assign('datatable_config', $config);
             $this->view->assign('articles', $articles);
             $this->view->assign('can_delete', $canDelete);
         }

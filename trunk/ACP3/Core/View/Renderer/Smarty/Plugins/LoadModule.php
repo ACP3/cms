@@ -29,11 +29,9 @@ class LoadModule extends AbstractPlugin
     }
 
     /**
-     * @param array $params
-     * @return mixed|void
-     * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $pathArray = explode('/', strtolower($params['module']));
 

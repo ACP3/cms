@@ -31,19 +31,19 @@ class ACL
      *
      * @var array
      */
-    protected $privileges = array();
+    protected $privileges = [];
     /**
      * Array mit den dem Benutzer zugewiesenen Rollen
      *
      * @var array
      */
-    protected $userRoles = array();
+    protected $userRoles = [];
     /**
      * Array mit allen registrierten Ressourcen
      *
      * @var array
      */
-    protected $resources = array();
+    protected $resources = [];
 
     /**
      * Konstruktor - erzeugt die ACL für den jeweiligen User
@@ -85,7 +85,7 @@ class ACL
         $key = substr($field, 2);
         $userRoles = $this->permissionsModel->getRolesByUserId($userId);
         $c_userRoles = count($userRoles);
-        $roles = array();
+        $roles = [];
 
         for ($i = 0; $i < $c_userRoles; ++$i) {
             $roles[] = $userRoles[$i][$key];

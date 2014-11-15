@@ -74,7 +74,7 @@ class Config
         $settings = $this->systemModel->getSettingsByModuleName($this->module);
         $c_settings = count($settings);
 
-        $data = array();
+        $data = [];
         for ($i = 0; $i < $c_settings; ++$i) {
             if (is_int($settings[$i]['value'])) {
                 $data[$settings[$i]['name']] = (int)$settings[$i]['value'];

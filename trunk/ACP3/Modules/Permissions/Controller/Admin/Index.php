@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller\Admin
         foreach ($modules as $module => $params) {
             for ($j = 0; $j < $c_privileges; ++$j) {
                 // Für jede Privilegie ein Input-Feld zuweisen
-                $select = array();
+                $select = [];
                 $select[0]['value'] = 0;
                 $select[0]['selected'] = empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
                 $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');
@@ -161,7 +161,7 @@ class Index extends Core\Modules\Controller\Admin
                 $moduleDir = strtolower($params['dir']);
                 for ($j = 0; $j < $c_privileges; ++$j) {
                     $privilegeValue = isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? $rules[$moduleDir][$privileges[$j]['key']]['permission'] : 0;
-                    $select = array();
+                    $select = [];
                     $select[0]['value'] = 0;
                     $select[0]['selected'] = !empty($_POST) === false && $privilegeValue == 0 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
                     $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');

@@ -20,7 +20,7 @@ class Helpers
     /**
      * @var array
      */
-    protected $emoticons = array();
+    protected $emoticons = [];
 
     /**
      * @var Core\View

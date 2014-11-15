@@ -59,9 +59,8 @@ class Accounts extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         $accounts = $this->newsletterModel->getAllAccounts();
-        $c_accounts = count($accounts);
 
-        if ($c_accounts > 0) {
+        if (count($accounts) > 0) {
             $canDelete = $this->acl->hasPermission('admin/newsletter/accounts/delete');
             $config = array(
                 'element' => '#acp-table',
@@ -70,8 +69,7 @@ class Accounts extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
-
+            $this->view->assign('datatable_config', $config);
             $this->view->assign('accounts', $accounts);
             $this->view->assign('can_delete', $canDelete);
         }

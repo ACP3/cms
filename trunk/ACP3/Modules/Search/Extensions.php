@@ -49,7 +49,7 @@ class Extensions
      *
      * @var array
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @param \Doctrine\DBAL\Connection $db
@@ -129,7 +129,7 @@ class Extensions
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
         $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'articles WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', title ' . $this->sort, $this->params);
         $c_results = count($results);
-        $searchResults = array();
+        $searchResults = [];
 
         if ($c_results > 0) {
             $name = $this->lang->t('articles', 'articles');
@@ -162,7 +162,7 @@ class Extensions
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
         $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'files WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
         $c_results = count($results);
-        $searchResults = array();
+        $searchResults = [];
 
         if ($c_results > 0) {
             $name = $this->lang->t('files', 'files');
@@ -195,7 +195,7 @@ class Extensions
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
         $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'news WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
         $c_results = count($results);
-        $searchResults = array();
+        $searchResults = [];
 
         if ($c_results > 0) {
             $name = $this->lang->t('news', 'news');

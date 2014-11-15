@@ -12,7 +12,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 46;
+    const SCHEMA_VERSION = 47;
 
     /**
      * @var array
@@ -140,7 +140,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -157,8 +157,6 @@ class Installer extends Modules\AbstractInstaller
             'date_time_zone' => '',
             'design' => 'acp3',
             'entries' => '',
-            'extra_css' => '',
-            'extra_js' => '',
             'flood' => '',
             'homepage' => 'news/index/index/',
             'lang' => '',
@@ -264,6 +262,10 @@ class Installer extends Modules\AbstractInstaller
             ),
             46 => array(
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"icons_path\";",
+            ),
+            47 => array(
+                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"extra_css\";",
+                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"extra_js\";",
             )
         );
     }

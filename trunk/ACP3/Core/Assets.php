@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+
 use ACP3\Core\Assets\ThemeResolver;
 
 /**
@@ -25,13 +26,35 @@ class Assets
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
      * @var array
      */
-    protected $jsLibraries = array(
-        'bootbox' => false,
-        'fancybox' => false,
-        'jquery-ui' => false,
-        'timepicker' => false,
-        'datatables' => false
-    );
+    protected $jsLibraries = [
+        'datatables' => [
+            'enabled' => false,
+            'dependencies' => ['jquery']
+        ],
+        'datetimepicker' => [
+            'enabled' => false,
+            'dependencies' => ['jquery', 'moment']
+        ],
+        'bootbox' => [
+            'enabled' => false,
+            'dependencies' => ['bootstrap']
+        ],
+        'bootstrap' => [
+            'enabled' => false,
+            'dependencies' => ['jquery']
+        ],
+        'fancybox' => [
+            'enabled' => false,
+            'dependencies' => ['jquery']
+        ],
+        'jquery' => [
+            'enabled' => true
+        ],
+        'moment' => [
+            'enabled' => false,
+            'dependencies' => []
+        ],
+    ];
     /**
      * @var string
      */
@@ -39,15 +62,18 @@ class Assets
     /**
      * @var string
      */
-    protected $systemAssetsModulesPath = '';
+    protected $systemAssetsModulePath = 'System/Resources/Assets/';
     /**
      * @var string
      */
-    protected $systemAssetsDesignPath = '';
+    protected $systemAssetsDesignPath = 'System/';
+
+    protected $designXml;
 
     /**
      * @param Modules $modules
      * @param Router $router
+     * @param ThemeResolver $themeResolver
      */
     public function __construct(
         Modules $modules,
@@ -59,8 +85,19 @@ class Assets
         $this->router = $router;
         $this->themeResolver = $themeResolver;
 
-        $this->systemAssetsModulePath = 'System/Resources/Assets/';
-        $this->systemAssetsDesignPath = 'System/';
+        $this->_checkBootstrap();
+    }
+
+    /**
+     * Checks, whether the current design should use bootstrap or not
+     */
+    private function _checkBootstrap()
+    {
+        $this->designXml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
+
+        if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
+            $this->enableJsLibraries(array('bootstrap'));
+        }
     }
 
     /**
@@ -72,30 +109,22 @@ class Assets
      */
     public function includeCssFiles($libraries, $layout)
     {
-        $xml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
+        $css = [];
 
-        $css = array();
-
-        if (isset($xml->use_bootstrap) && (string)$xml->use_bootstrap === 'true') {
+        if (in_array('bootstrap', $libraries)) {
             $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'bootstrap.min.css');
         }
 
-        if (isset($xml->css)) {
-            foreach ($xml->css->item as $file) {
-                $path = DESIGN_PATH_INTERNAL . 'css/' . $file;
-                if (is_file($path) === true) {
-                    $css[] = $path;
-                }
+        if (isset($this->designXml->css)) {
+            foreach ($this->designXml->css->item as $file) {
+                $css[] = $this->themeResolver->getStaticAssetPath('', '', 'css', trim($file));
             }
         }
 
         // Stylesheets der Bibliotheken zuerst laden,
         // damit deren Styles überschrieben werden können
-        if (in_array('jquery-ui', $libraries)) {
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery-ui.css');
-        }
-        if (in_array('timepicker', $libraries)) {
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery-timepicker.css');
+        if (in_array('datetimepicker', $libraries)) {
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'bootstrap-datetimepicker.css');
         }
         if (in_array('fancybox', $libraries)) {
             $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery.fancybox.css');
@@ -104,20 +133,10 @@ class Assets
             $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'dataTables.bootstrap.css');
         }
 
-        // Stylesheet für das Layout-Tenplate
+        // General system styles
         $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'style.css');
+        // Stylesheet of the current theme
         $css[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.css');
-
-        // Zusätzliche Stylesheets einbinden
-        $extraCss = explode(',', CONFIG_EXTRA_CSS);
-        if (count($extraCss) > 0) {
-            foreach ($extraCss as $file) {
-                $path = DESIGN_PATH_INTERNAL . 'css/' . trim($file);
-                if (is_file($path) && in_array($path, $css) === false) {
-                    $css[] = $path;
-                }
-            }
-        }
 
         // Stylesheets der Module
         $modules = $this->modules->getActiveModules();
@@ -148,34 +167,24 @@ class Assets
      */
     public function includeJsFiles($libraries, $layout)
     {
-        $xml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
-
-        $scripts = array();
-        $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.min.js');
-
-        if (isset($xml->use_bootstrap) && (string)$xml->use_bootstrap === 'true') {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootstrap.min.js');
+        $scripts = [];
+        if (in_array('jquery', $libraries)) {
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.min.js');
         }
 
-        // Include js files from the design
-        if (isset($xml->js)) {
-            foreach ($xml->js->item as $js) {
-                $path = DESIGN_PATH_INTERNAL . 'js/' . $js;
-                if (is_file($path) === true) {
-                    $scripts[] = $path;
-                }
-            }
+        if (in_array('bootstrap', $libraries)) {
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootstrap.min.js');
         }
 
         // JS-Libraries to include
         if (in_array('bootbox', $libraries)) {
             $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootbox.min.js');
         }
-        if (in_array('jquery-ui', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery-ui.min.js');
+        if (in_array('moment', $libraries)) {
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'moment.min.js');
         }
-        if (in_array('timepicker', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.timepicker.js');
+        if (in_array('datetimepicker', $libraries)) {
+            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootstrap-datetimepicker.min.js');
         }
         if (in_array('fancybox', $libraries)) {
             $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.fancybox.min.js');
@@ -184,19 +193,15 @@ class Assets
             $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.datatables.min.js');
         }
 
-        // Include general js file of the layout
-        $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
-
-        // Include additional js files from the system config
-        $extraJs = explode(',', CONFIG_EXTRA_JS);
-        if (count($extraJs) > 0) {
-            foreach ($extraJs as $file) {
-                $path = DESIGN_PATH_INTERNAL . 'js/' . trim($file);
-                if (is_file($path) && in_array($path, $scripts) === false) {
-                    $scripts[] = $path;
-                }
+        // Include additional js files from the design
+        if (isset($this->designXml->js)) {
+            foreach ($this->designXml->js->item as $js) {
+                $scripts[] = $this->themeResolver->getStaticAssetPath('', '', 'js', $js);
             }
         }
+
+        // Include general js file of the layout
+        $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
 
         return $scripts;
     }
@@ -211,10 +216,14 @@ class Assets
     {
         foreach ($libraries as $library) {
             if (array_key_exists($library, $this->jsLibraries) === true) {
-                $this->jsLibraries[$library] = true;
-                if ($library === 'timepicker') {
-                    $this->jsLibraries['jquery-ui'] = true;
+
+                // Resolve javascript library dependencies recursively
+                if (!empty($this->jsLibraries[$library]['dependencies'])) {
+                    $this->enableJsLibraries($this->jsLibraries[$library]['dependencies']);
                 }
+
+                // Enabled the javascript library
+                $this->jsLibraries[$library]['enabled'] = true;
             }
         }
 
@@ -251,8 +260,8 @@ class Assets
     {
         if (empty($this->jsLibrariesCache)) {
             ksort($this->jsLibraries);
-            foreach ($this->jsLibraries as $library => $enable) {
-                if ($enable === true) {
+            foreach ($this->jsLibraries as $library => $values) {
+                if ($values['enabled'] === true) {
                     $this->jsLibrariesCache .= $library . ',';
                 }
             }

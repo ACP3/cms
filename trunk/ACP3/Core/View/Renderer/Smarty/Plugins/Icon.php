@@ -22,6 +22,10 @@ class Icon extends AbstractPlugin
      */
     protected $pluginName = 'icon';
 
+    /**
+     * @param Core\Assets\ThemeResolver $themeResolver
+     * @param Core\Validator\Rules\Misc $validate
+     */
     public function __construct(
         Core\Assets\ThemeResolver $themeResolver,
         Core\Validator\Rules\Misc $validate
@@ -65,10 +69,9 @@ class Icon extends AbstractPlugin
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $imageInfo = $this->getImageDimensions(
             $params['path'],

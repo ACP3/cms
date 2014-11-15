@@ -53,12 +53,12 @@ class Cache
     {
         $resources = $this->permissionsModel->getAllResources();
         $c_resources = count($resources);
-        $data = array();
+        $data = [];
 
         for ($i = 0; $i < $c_resources; ++$i) {
             $area = $resources[$i]['area'];
             if (isset($data[$area]) === false) {
-                $data[$area] = array();
+                $data[$area] = [];
             }
             $path = $resources[$i]['module_name'] . '/' . $resources[$i]['controller'] . '/' . $resources[$i]['page'] . '/';
             $path .= !empty($resources[$i]['params']) ? $resources[$i]['params'] . '/' : '';
@@ -148,7 +148,7 @@ class Cache
         // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
         $rules = $this->permissionsModel->getAllRulesByRoleIds($roles);
         $c_rules = count($rules);
-        $privileges = array();
+        $privileges = [];
         for ($i = 0; $i < $c_rules; ++$i) {
             $key = strtolower($rules[$i]['key']);
             $privileges[$rules[$i]['module_name']][$key] = array(

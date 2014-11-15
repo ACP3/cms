@@ -128,7 +128,7 @@ class Index extends Core\Modules\Controller\Admin
                 if (isset($pagesList[$menus[$i]['index_name']]) === false) {
                     $pagesList[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
                     $pagesList[$menus[$i]['index_name']]['menu_id'] = $menus[$i]['id'];
-                    $pagesList[$menus[$i]['index_name']]['items'] = array();
+                    $pagesList[$menus[$i]['index_name']]['items'] = [];
                 }
             }
             $this->view->assign('pages_list', $pagesList);

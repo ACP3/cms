@@ -19,7 +19,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -27,7 +27,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -35,7 +35,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -43,7 +43,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array();
+        return [];
     }
 
 }

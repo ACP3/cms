@@ -18,16 +18,18 @@ class HasPermission extends AbstractPlugin
      */
     protected $pluginName = 'has_permission';
 
+    /**
+     * @param Core\ACL $acl
+     */
     public function __construct(Core\ACL $acl)
     {
         $this->acl = $acl;
     }
 
     /**
-     * @param array $params
-     * @return bool|int|mixed
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['path']) === true) {
             return $this->acl->hasPermission($params['path']);

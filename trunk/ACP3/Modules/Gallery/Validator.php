@@ -67,7 +67,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
@@ -93,7 +93,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($file['tmp_name'])) {
             $errors['file'] = $this->lang->t('gallery', 'no_picture_selected');
         }
@@ -118,7 +118,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
@@ -144,7 +144,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (!empty($file['tmp_name']) &&
             ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
@@ -166,7 +166,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
             $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }

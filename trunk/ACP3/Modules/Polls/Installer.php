@@ -63,7 +63,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array();
+        return [];
     }
 
     /**

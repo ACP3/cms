@@ -76,7 +76,7 @@ class Index extends Core\Modules\Controller\Admin
         // Weiterlesen & Kommentare
         if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
             $i = 0;
-            $options = array();
+            $options = [];
             if ($settings['readmore'] == 1) {
                 $options[$i]['name'] = 'readmore';
                 $options[$i]['checked'] = Core\Functions::selectEntry('readmore', '1', '0', 'checked');
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
             // Weiterlesen & Kommentare
             if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
                 $i = 0;
-                $options = array();
+                $options = [];
                 if ($settings['readmore'] == 1) {
                     $options[$i]['name'] = 'readmore';
                     $options[$i]['checked'] = Core\Functions::selectEntry('readmore', '1', $news['readmore'], 'checked');
@@ -182,9 +182,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionIndex()
     {
         $news = $this->newsModel->getAllInAcp();
-        $c_news = count($news);
 
-        if ($c_news > 0) {
+        if (count($news) > 0) {
             $canDelete = $this->acl->hasPermission('admin/news/index/delete');
             $config = array(
                 'element' => '#acp-table',
@@ -193,8 +192,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
-
+            $this->view->assign('datatable_config', $config);
             $this->view->assign('news', $news);
             $this->view->assign('can_delete', $canDelete);
         }

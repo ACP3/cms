@@ -41,7 +41,7 @@ class Helpers
     {
         $className = "\\ACP3\\Modules\\Search\\Extensions";
         $modules = get_class_methods($className);
-        $searchModules = array();
+        $searchModules = [];
 
         foreach ($modules as $module) {
             $module = substr($module, 0, strpos($module, 'Search'));

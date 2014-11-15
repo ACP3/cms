@@ -27,10 +27,9 @@ class RedirectMessage extends AbstractPlugin
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->redirectMessages->getMessage();
     }

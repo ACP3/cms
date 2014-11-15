@@ -56,7 +56,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('categories', 'title_to_short');
         }
@@ -92,7 +92,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->validate->isNumber($formData['width']) === false) {
             $errors['width'] = $this->lang->t('categories', 'invalid_image_width_entered');
         }

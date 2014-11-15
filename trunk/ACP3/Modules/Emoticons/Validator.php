@@ -93,7 +93,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $errors = array();
+        $errors = [];
         if ($this->validate->isNumber($formData['width']) === false) {
             $errors['width'] = $this->lang->t('emoticons', 'invalid_image_width_entered');
         }

@@ -16,7 +16,7 @@ class Breadcrumb
      * @var array
      * @access private
      */
-    protected $stepsFromDb = array();
+    protected $stepsFromDb = [];
     /**
      * Enthält alle Schritte der Brotkrümelspur,
      * welche von den Modulen festgelegt werden
@@ -24,7 +24,7 @@ class Breadcrumb
      * @var array
      * @access private
      */
-    protected $stepsFromModules = array();
+    protected $stepsFromModules = [];
 
     /**
      * @var array
@@ -40,7 +40,7 @@ class Breadcrumb
      *
      * @var array
      */
-    protected $breadcrumbCache = array();
+    protected $breadcrumbCache = [];
 
     /**
      * @var Lang

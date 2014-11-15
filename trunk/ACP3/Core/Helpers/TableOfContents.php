@@ -83,7 +83,7 @@ class TableOfContents
             if ($c_pages == 1) {
                 return $text;
             } else {
-                $matches = array();
+                $matches = [];
                 preg_match_all($regex, $text, $matches);
 
                 $currentPage = $this->validate->isNumber($this->request->page) === true && $this->request->page <= $c_pages ? $this->request->page : 1;
@@ -124,7 +124,7 @@ class TableOfContents
         if (!empty($pages)) {
             $request = $this->request;
             $path = empty($path) ? $request->getUriWithoutPages() : $path;
-            $toc = array();
+            $toc = [];
             $i = 0;
             foreach ($pages as $page) {
                 $pageNumber = $i + 1;
@@ -169,10 +169,10 @@ class TableOfContents
      */
     protected function _getHtmlAttributes($string)
     {
-        $matches = array();
+        $matches = [];
         preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
 
-        $return = array();
+        $return = [];
         if (!empty($matches)) {
             $c_matches = count($matches[1]);
             for ($i = 0; $i < $c_matches; ++$i) {

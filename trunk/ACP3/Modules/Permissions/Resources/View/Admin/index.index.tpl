@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                     {if $can_delete === true}
-                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
+                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
                     {/if}
                     <th>{lang t="system|name"}</th>
                     {if $can_order === true}
@@ -63,13 +63,16 @@
                 {/foreach}
                 </tbody>
             </table>
-            {if $can_delete === true}
-                {mark name="entries"}
-            {/if}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {if isset($roles) &&  $can_delete === true}
+        {include file="asset:system/mark.tpl"}
+    {/if}
 {/block}

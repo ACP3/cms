@@ -1,4 +1,4 @@
-{include_js module="system" file="dataTables.bootstrap"}
+{include_js module="system" file="dataTables.bootstrap" depends="datatables"}
 <script type="text/javascript">
     $(document).ready(function () {
         $('{$dt.element}').dataTable({

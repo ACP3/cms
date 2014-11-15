@@ -1,7 +1,7 @@
 services:
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\CheckAccess
-    arguments: ['@core.acl', '@core.lang', '@core.router', '@core.view', '@smarty.plugin.icon']
+    arguments: ['@core.acl', '@core.lang', '@core.router', '@smarty.plugin.icon']
 
   smarty.plugin.date_format:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\DateFormat
@@ -41,7 +41,7 @@ services:
 
   smarty.plugin.mark:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\Mark
-    arguments: ['@core.view']
+    arguments: ['@core.lang']
 
   smarty.plugin.navbar:
     class: ACP3\Core\View\Renderer\Smarty\Plugins\Navbar

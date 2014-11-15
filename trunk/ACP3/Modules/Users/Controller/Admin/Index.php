@@ -100,7 +100,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', '', 'Y-m-d', $datepickerParams, 0, false, true));
 
         // Kontaktangaben
-        $contact = array();
+        $contact = [];
         $contact[0]['name'] = 'mail';
         $contact[0]['lang'] = $this->lang->t('system', 'email_address');
         $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : '';
@@ -120,7 +120,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('contact', $contact);
 
         $countries = Core\Lang::worldCountries();
-        $countries_select = array();
+        $countries_select = [];
         foreach ($countries as $key => $value) {
             $countries_select[] = array(
                 'value' => $key,
@@ -240,7 +240,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
 
             // Kontaktangaben
-            $contact = array();
+            $contact = [];
             $contact[0]['name'] = 'mail';
             $contact[0]['lang'] = $this->lang->t('system', 'email_address');
             $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : $user['mail'];
@@ -260,7 +260,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('contact', $contact);
 
             $countries = Core\Lang::worldCountries();
-            $countries_select = array();
+            $countries_select = [];
             foreach ($countries as $key => $value) {
                 $countries_select[] = array(
                     'value' => $key,
@@ -330,7 +330,7 @@ class Index extends Core\Modules\Controller\Admin
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
             );
-            $this->appendContent($this->get('core.functions')->dataTable($config));
+            $this->view->assign('datatable_config', $config);
 
             for ($i = 0; $i < $c_users; ++$i) {
                 $users[$i]['roles'] = implode(', ', $this->acl->getUserRoles($users[$i]['id'], 2));

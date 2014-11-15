@@ -68,7 +68,7 @@ class Pagination
     /**
      * @var array
      */
-    private $pagination = array();
+    private $pagination = [];
 
     function __construct(
         Auth $auth,

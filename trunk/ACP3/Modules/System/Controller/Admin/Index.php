@@ -53,7 +53,7 @@ class Index extends Core\Modules\Controller\Admin
 
         // WYSIWYG-Editoren
         $editors = array_diff(scandir(CLASSES_DIR . 'WYSIWYG'), array('.', '..', 'AbstractWYSIWYG.php'));
-        $wysiwyg = array();
+        $wysiwyg = [];
 
         foreach ($editors as $editor) {
             $editor = substr($editor, 0, strrpos($editor, '.php'));
@@ -135,8 +135,6 @@ class Index extends Core\Modules\Controller\Admin
                 'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
                 'date_time_zone' => $formData['date_time_zone'],
                 'entries' => (int)$formData['entries'],
-                'extra_css' => $formData['extra_css'],
-                'extra_js' => $formData['extra_js'],
                 'flood' => (int)$formData['flood'],
                 'homepage' => $formData['homepage'],
                 'language' => $formData['language'],
@@ -158,13 +156,6 @@ class Index extends Core\Modules\Controller\Admin
             );
 
             $bool = $this->systemConfig->setSettings($data);
-
-            // Gecachete Stylesheets und JavaScript Dateien löschen
-            if (CONFIG_EXTRA_CSS !== $formData['extra_css'] ||
-                CONFIG_EXTRA_JS !== $formData['extra_js']
-            ) {
-                Core\Cache::purge(UPLOADS_DIR . 'cache/minify');
-            }
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

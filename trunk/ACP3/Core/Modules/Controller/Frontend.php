@@ -32,12 +32,6 @@ abstract class Frontend extends Core\Modules\Controller
      * @var string
      */
     protected $contentType = 'Content-Type: text/html; charset=UTF-8';
-    /**
-     * Das zuverwendende Seitenlayout
-     *
-     * @var string
-     */
-    protected $layout = 'layout.tpl';
 
     /**
      * @param Core\Context\Frontend $frontendContext
@@ -107,16 +101,26 @@ abstract class Frontend extends Core\Modules\Controller
                 $this->view->assign('CONTENT', $this->getContentAppend());
                 $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 
-                if ($this->request->getIsAjax() !== true) {
-                    $this->view->assign('MIN_STYLESHEET', $this->assets->buildMinifyLink('css'));
-                    $this->view->assign('MIN_JAVASCRIPT', $this->assets->buildMinifyLink('js'));
-                }
-
-                $this->view->displayTemplate($this->getTemplate());
+                echo $this->_addAssets();
             } else {
                 echo $this->getContent();
             }
         }
+    }
+
+    /**
+     * @return mixed|string
+     */
+    private function _addAssets()
+    {
+        $content = $this->view->fetchTemplate($this->getTemplate());
+
+        if ($this->request->getIsAjax() !== true) {
+            $content = str_replace('<!-- STYLESHEETS -->', '<link rel="stylesheet" type="text/css" href="' . $this->assets->buildMinifyLink('css') . '">', $content);
+            $content = str_replace('<!-- JAVASCRIPTS -->', '<script type="text/javascript" src="' . $this->assets->buildMinifyLink('js') . '"></script>', $content);
+        }
+
+        return $content;
     }
 
     /**

@@ -71,7 +71,7 @@ class Helpers
 
             $_SESSION['captcha_' . $path] = $this->secureHelper->salt($captchaLength);
 
-            $captcha = array();
+            $captcha = [];
             $captcha['width'] = $captchaLength * 25;
             $captcha['id'] = $id;
             $captcha['height'] = 30;

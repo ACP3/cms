@@ -13,7 +13,7 @@ class Aliases
     /**
      * @var array
      */
-    protected $aliases = array();
+    protected $aliases = [];
 
     /**
      * @var \ACP3\Core\Cache

@@ -18,16 +18,18 @@ class TemplatePath extends AbstractPlugin
      */
     protected $pluginName = 'template_path';
 
+    /**
+     * @param Core\Assets\ThemeResolver $themeResolver
+     */
     public function __construct(Core\Assets\ThemeResolver $themeResolver)
     {
         $this->themeResolver = $themeResolver;
     }
 
     /**
-     * @param array $params
-     * @return mixed|string
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->themeResolver->resolveTemplatePath($params['path']);
     }

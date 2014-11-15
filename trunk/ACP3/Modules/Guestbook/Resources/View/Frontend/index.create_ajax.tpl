@@ -56,5 +56,8 @@
             {$form_token}
         </div>
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
     {include_js module="system" file="forms"}
 {/block}

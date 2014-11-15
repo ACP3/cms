@@ -48,7 +48,7 @@ class Auth
     /**
      * @var array
      */
-    protected $userInfo = array();
+    protected $userInfo = [];
     /**
      * @var \Doctrine\DBAL\Connection
      */

@@ -45,6 +45,9 @@
             </div>
         </div>
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
     {include_js module="newsletter" file="admin/acp"}
     {include_js module="system" file="forms"}
 {/block}

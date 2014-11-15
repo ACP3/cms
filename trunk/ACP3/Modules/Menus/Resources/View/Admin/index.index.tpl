@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                     {if $can_delete_item === true}
-                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
+                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
                     {/if}
                     <th style="width:30%">{lang t="menus|title"}</th>
                     <th>{lang t="menus|page_type"}</th>
@@ -88,13 +88,16 @@
                 {/foreach}
                 </tbody>
             </table>
-            {if $can_delete === true}
-                {mark name="entries"}
-            {/if}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
+{/block}
+
+{block JAVASCRIPTS append}
+    {if isset($pages_list) && $can_delete === true}
+        {include file="asset:system/mark.tpl"}
+    {/if}
 {/block}

@@ -19,16 +19,18 @@ class WYSIWYG extends AbstractPlugin
      */
     protected $container;
 
+    /**
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
     }
 
     /**
-     * @param array $params
-     * @return mixed|void
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 

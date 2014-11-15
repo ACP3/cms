@@ -16,7 +16,7 @@ class Logger
      * Contains all already set log channels
      * @var array
      */
-    private static $channels = array();
+    private static $channels = [];
 
     /**
      * Debug log

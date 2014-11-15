@@ -52,7 +52,7 @@ class Cache
         $emoticons = $this->emoticonsModel->getAll();
         $c_emoticons = count($emoticons);
 
-        $data = array();
+        $data = [];
         for ($i = 0; $i < $c_emoticons; ++$i) {
             $picInfos = getimagesize(UPLOADS_DIR . 'emoticons/' . $emoticons[$i]['img']);
             $code = $emoticons[$i]['code'];

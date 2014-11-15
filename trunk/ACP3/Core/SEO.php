@@ -51,7 +51,7 @@ class SEO
     /**
      * @var array
      */
-    protected $aliasCache = array();
+    protected $aliasCache = [];
     /**
      * @var string
      */
@@ -102,7 +102,7 @@ class SEO
     {
         $aliases = $this->db->fetchAll('SELECT uri, keywords, description, robots FROM ' . DB_PRE . 'seo WHERE keywords != "" OR description != "" OR robots != 0');
         $c_aliases = count($aliases);
-        $data = array();
+        $data = [];
 
         for ($i = 0; $i < $c_aliases; ++$i) {
             $data[$aliases[$i]['uri']] = array(

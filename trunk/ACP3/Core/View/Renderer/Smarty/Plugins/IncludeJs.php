@@ -20,12 +20,16 @@ class IncludeJs extends AbstractPlugin
     /**
      * @var array
      */
-    protected $alreadyIncluded = array();
+    protected $alreadyIncluded = [];
     /**
      * @var string
      */
     protected $pluginName = 'include_js';
 
+    /**
+     * @param Core\Assets $assets
+     * @param Core\Assets\ThemeResolver $themeResolver
+     */
     public function __construct(
         Core\Assets $assets,
         Core\Assets\ThemeResolver $themeResolver
@@ -36,11 +40,9 @@ class IncludeJs extends AbstractPlugin
     }
 
     /**
-     * @param array $params
-     * @return mixed|void
-     * @throws \Exception
+     * @inheritdoc
      */
-    public function process(array $params)
+    public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['module'], $params['file']) === true &&
             (bool)preg_match('=/=', $params['module']) === false &&
