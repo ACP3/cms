@@ -173,7 +173,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
                 $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $lastId;
                 $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
-                $this->get('core.functions')->generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
+                $this->get('core.helpers.sendEmail')->execute('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
             }
 
             // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen

@@ -148,7 +148,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             if (empty($_POST) === false) {
-                $this->_registerPost($_POST);
+                $this->_registerPost($_POST, $settings);
             }
 
             $defaults = array(
@@ -205,7 +205,7 @@ class Index extends Core\Modules\Controller\Frontend
             $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
             $settings = $this->usersConfig->getSettings();
-            $mailIsSent = $this->get('core.functions')->generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
+            $mailIsSent = $this->get('core.helpers.sendEmail')->execute(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
             // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
             if ($mailIsSent === true) {
@@ -228,7 +228,7 @@ class Index extends Core\Modules\Controller\Frontend
         }
     }
 
-    private function _registerPost(array $formData)
+    private function _registerPost(array $formData, array $settings)
     {
         try {
             $validator = $this->get('users.validator');
@@ -238,7 +238,7 @@ class Index extends Core\Modules\Controller\Frontend
             $host = htmlentities($_SERVER['HTTP_HOST']);
             $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_subject'));
             $body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($formData['nickname'], $formData['mail'], $formData['pwd'], CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_message'));
-            $mailIsSent = $this->get('core.functions')->generateEmail('', $formData['mail'], $settings['mail'], $subject, $body);
+            $mailIsSent = $this->get('core.helpers.sendEmail')->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
             $salt = $this->secureHelper->salt(12);
             $insertValues = array(

@@ -84,13 +84,13 @@ class Index extends Core\Modules\Controller\Frontend
 
             $subject = sprintf($this->lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
             $body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($formData['name'], $formData['mail'], $formData['message'], "\n"), $this->lang->t('contact', 'contact_body'));
-            $bool = $this->get('core.functions')->generateEmail('', $settings['mail'], $formData['mail'], $subject, $body);
+            $bool = $this->get('core.helpers.sendEmail')->execute('', $settings['mail'], $formData['mail'], $subject, $body);
 
             // Nachrichtenkopie an Absender senden
             if (isset($formData['copy'])) {
                 $subjectCopy = sprintf($this->lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
                 $bodyCopy = sprintf($this->lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $formData['message']);
-                $this->get('core.functions')->generateEmail($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
+                $this->get('core.helpers.sendEmail')->execute($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
             }
 
             $this->secureHelper->unsetFormToken($this->request->query);
