@@ -5,9 +5,8 @@ use ACP3\Core\Helpers\Secure;
 use ACP3\Modules\Users;
 
 /**
- * Authenticates the user
- *
- * @author Tino Goratsch
+ * Class Auth
+ * @package ACP3\Core
  */
 class Auth
 {

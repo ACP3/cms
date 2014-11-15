@@ -70,7 +70,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
 
         $units = array('Byte', 'KiB', 'MiB', 'GiB', 'TiB');
-        $this->view->assign('units', Core\Functions::selectGenerator('units', $units, $units, ''));
+        $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''));
 
         // Formularelemente
         $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('files', '', true));
@@ -78,7 +78,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $options = [];
             $options[0]['name'] = 'comments';
-            $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
+            $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked');
             $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
             $this->view->assign('options', $options);
         }
@@ -149,7 +149,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($dl['start'], $dl['end'])));
 
             $units = array('Byte', 'KiB', 'MiB', 'GiB', 'TiB');
-            $this->view->assign('units', Core\Functions::selectGenerator('units', $units, $units, trim(strrchr($dl['size'], ' '))));
+            $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($dl['size'], ' '))));
 
             $dl['filesize'] = substr($dl['size'], 0, strpos($dl['size'], ' '));
 
@@ -159,7 +159,7 @@ class Index extends Core\Modules\Controller\Admin
             if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = [];
                 $options[0]['name'] = 'comments';
-                $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $dl['comments'], 'checked');
+                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $dl['comments'], 'checked');
                 $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }
@@ -205,12 +205,12 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->modules->isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('comments', Core\Functions::selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
+            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
         }
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
-        $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
+        $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }

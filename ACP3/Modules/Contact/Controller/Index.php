@@ -61,7 +61,7 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         $this->view->assign('form', array_merge($defaults, $_POST));
-        $this->view->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
+        $this->view->assign('copy_checked', $this->get('core.helpers.forms')->selectEntry('copy', 1, 0, 'checked'));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());

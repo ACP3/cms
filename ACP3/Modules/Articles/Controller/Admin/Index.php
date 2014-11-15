@@ -80,13 +80,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
             $lang_options = array($this->lang->t('articles', 'create_menu_item'));
-            $this->view->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
+            $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
             // Block
             $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown());
 
             $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
+            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
             $this->view->assign('pages_list', $this->get('menus.helpers')->menuItemsList());
         }

@@ -68,7 +68,7 @@ class Pictures extends Core\Modules\Controller\Admin
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = [];
                 $options[0]['name'] = 'comments';
-                $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
+                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked');
                 $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }
@@ -128,7 +128,7 @@ class Pictures extends Core\Modules\Controller\Admin
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = [];
                 $options[0]['name'] = 'comments';
-                $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $picture['comments'], 'checked');
+                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $picture['comments'], 'checked');
                 $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }

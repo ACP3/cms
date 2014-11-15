@@ -2,26 +2,27 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Helpers\Forms;
+
 /**
  * Stellt Funktionen zur Datumsformatierung und Ausrichtung an den Zeitzonen bereit
  * @package ACP3\Core
  */
 class Date
 {
-
     /**
      * Langes Datumsformat
      *
      * @var string
      */
-    protected $dateFormatLong = CONFIG_DATE_FORMAT_LONG;
+    protected $dateFormatLong = '';
 
     /**
      * Kurzes Datumsformat
      *
      * @var string
      */
-    protected $dateFormatShort = CONFIG_DATE_FORMAT_SHORT;
+    protected $dateFormatShort = '';
 
     /**
      * PHP DateTimeZone-Object
@@ -35,36 +36,87 @@ class Date
      */
     protected $lang;
     /**
+     * @var Forms
+     */
+    protected $formsHelper;
+    /**
      * @var \ACP3\Core\Validator\Rules\Date
      */
     protected $dateValidator;
 
     /**
-     * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
-     *
      * @param Auth $auth
      * @param Lang $lang
+     * @param Forms $formsHelper
      * @param Validator\Rules\Date $dateValidator
      */
     function __construct(
         Auth $auth,
         Lang $lang,
+        Forms $formsHelper,
         \ACP3\Core\Validator\Rules\Date $dateValidator
     )
     {
-        $info = $auth->getUserInfo();
-
         $this->lang = $lang;
+        $this->formsHelper = $formsHelper;
         $this->dateValidator = $dateValidator;
 
-        if (!empty($info)) {
-            $this->dateFormatLong = $info['date_format_long'];
-            $this->dateFormatShort = $info['date_format_short'];
-            $timeZone = $info['time_zone'];
+        $this->_setFormatAndTimeZone($auth->getUserInfo());
+    }
+
+    /**
+     * @param array $settings
+     */
+    protected function _setFormatAndTimeZone(array $settings)
+    {
+        if (!empty($settings)) {
+            $this->dateFormatLong = $settings['date_format_long'];
+            $this->dateFormatShort = $settings['date_format_short'];
+            $timeZone = $settings['time_zone'];
         } else {
+            $this->dateFormatLong = CONFIG_DATE_FORMAT_LONG;
+            $this->dateFormatShort = CONFIG_DATE_FORMAT_SHORT;
             $timeZone = CONFIG_DATE_TIME_ZONE;
         }
         $this->dateTimeZone = new \DateTimeZone($timeZone);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFormatLong()
+    {
+        return $this->dateFormatLong;
+    }
+
+    /**
+     * @param $dateFormatLong
+     * @return $this
+     */
+    public function setDateFormatLong($dateFormatLong)
+    {
+        $this->dateFormatLong = $dateFormatLong;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFormatShort()
+    {
+        return $this->dateFormatShort;
+    }
+
+    /**
+     * @param $dateFormatShort
+     * @return $this
+     */
+    public function setDateFormatShort($dateFormatShort)
+    {
+        $this->dateFormatShort = $dateFormatShort;
+
+        return $this;
     }
 
     /**
@@ -74,7 +126,7 @@ class Date
      *
      * @return array
      */
-    public static function getTimeZones($currentValue = '')
+    public function getTimeZones($currentValue = '')
     {
         $timeZones = array(
             'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
@@ -94,7 +146,7 @@ class Date
             $i = 0;
             foreach ($values as $row) {
                 unset($timeZones[$key][$i]);
-                $timeZones[$key][$row]['selected'] = Functions::selectEntry('date_time_zone', $row, $currentValue);
+                $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry('date_time_zone', $row, $currentValue);
                 ++$i;
             }
         }
@@ -116,7 +168,7 @@ class Date
             $this->lang->t('system', 'date_format_short'),
             $this->lang->t('system', 'date_format_long')
         );
-        return Functions::selectGenerator('dateformat', array('short', 'long'), $dateformatLang, $format);
+        return $this->formsHelper->selectGenerator('dateformat', array('short', 'long'), $dateformatLang, $format);
     }
 
     /**
@@ -162,7 +214,7 @@ class Date
             )
         );
         if ($withTime === true) {
-            $datepicker['params']['format'].= ' HH:mm';
+            $datepicker['params']['format'] .= ' HH:mm';
         }
 
         // Zusätzliche Datepicker-Parameter hinzufügen

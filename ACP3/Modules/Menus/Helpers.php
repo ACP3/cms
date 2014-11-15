@@ -28,6 +28,10 @@ class Helpers
      */
     protected $router;
     /**
+     * @var Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
      * @var Model
      */
     protected $menusModel;
@@ -39,18 +43,21 @@ class Helpers
     /**
      * @param Core\Request $request
      * @param Core\Router $router
+     * @param Core\Helpers\Forms $formsHelper
      * @param Model $menusModel
      * @param Cache $menusCache
      */
     public function __construct(
         Core\Request $request,
         Core\Router $router,
+        Core\Helpers\Forms $formsHelper,
         Model $menusModel,
         Cache $menusCache
     )
     {
         $this->request = $request;
         $this->router = $router;
+        $this->formsHelper = $formsHelper;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
     }
@@ -77,7 +84,7 @@ class Helpers
         if (count($this->menuItems) > 0) {
             foreach ($this->menuItems as $row) {
                 if (!($row['left_id'] >= $leftId && $row['right_id'] <= $rightId)) {
-                    $row['selected'] = Core\Functions::selectEntry('parent', $row['id'], $parentId);
+                    $row['selected'] = $this->formsHelper->selectEntry('parent', $row['id'], $parentId);
                     $row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
 
                     // Titel für den aktuellen Block setzen
@@ -102,7 +109,7 @@ class Helpers
         $menus = $this->menusModel->getAllMenus();
         $c_menus = count($menus);
         for ($i = 0; $i < $c_menus; ++$i) {
-            $menus[$i]['selected'] = Core\Functions::selectEntry('block_id', (int)$menus[$i]['id'], (int)$selected);
+            $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int)$menus[$i]['id'], (int)$selected);
         }
 
         return $menus;

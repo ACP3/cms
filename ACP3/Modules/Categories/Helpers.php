@@ -31,6 +31,10 @@ class Helpers
      */
     protected $categoriesModel;
     /**
+     * @var Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
      * @var \ACP3\Core\Lang
      */
     protected $lang;
@@ -49,6 +53,7 @@ class Helpers
      * @param Core\Modules $modules
      * @param Core\View $view
      * @param Cache $cache
+     * @param Core\Helpers\Forms $formsHelper
      * @param Model $categoriesModel
      */
     public function __construct(
@@ -56,6 +61,7 @@ class Helpers
         Core\Lang $lang,
         Core\Modules $modules,
         Core\View $view,
+        Core\Helpers\Forms $formsHelper,
         Cache $cache,
         Model $categoriesModel
     )
@@ -64,6 +70,7 @@ class Helpers
         $this->lang = $lang;
         $this->modules = $modules;
         $this->view = $view;
+        $this->formsHelper = $formsHelper;
         $this->cache = $cache;
         $this->categoriesModel = $categoriesModel;
     }
@@ -144,7 +151,7 @@ class Helpers
         $categories['name'] = $formFieldName;
         if ($c_data > 0) {
             for ($i = 0; $i < $c_data; ++$i) {
-                $data[$i]['selected'] = Core\Functions::selectEntry('cat', $data[$i]['id'], $categoryId);
+                $data[$i]['selected'] = $this->formsHelper->selectEntry('cat', $data[$i]['id'], $categoryId);
             }
             $categories['categories'] = $data;
         } else {

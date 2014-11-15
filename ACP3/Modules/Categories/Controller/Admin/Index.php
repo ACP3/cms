@@ -61,7 +61,7 @@ class Index extends Core\Modules\Controller\Admin
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
             if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = Core\Functions::selectEntry('module', $info['dir']);
+                $modules[$name]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $info['dir']);
             } else {
                 unset($modules[$name]);
             }

@@ -68,7 +68,7 @@ class Items extends Core\Modules\Controller\Admin
             $values_mode[] = 4;
             $lang_mode[] = $this->lang->t('menus', 'article');
         }
-        $this->view->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode));
+        $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $values_mode, $lang_mode));
 
         // Menus
         $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown());
@@ -77,16 +77,16 @@ class Items extends Core\Modules\Controller\Admin
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $row) {
             $row['dir'] = strtolower($row['dir']);
-            $modules[$row['name']]['selected'] = Core\Functions::selectEntry('module', $row['dir']);
+            $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $row['dir']);
         }
         $this->view->assign('modules', $modules);
 
         // Ziel des Hyperlinks
         $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
-        $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target));
+        $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', array(1, 2), $lang_target));
 
         $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
+        $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
         if ($this->modules->isActive('articles') === true) {
             $this->view->assign('articles', $this->get('articles.helpers')->articlesList());
@@ -156,7 +156,7 @@ class Items extends Core\Modules\Controller\Admin
                 $modeValues[] = 4;
                 $modeLang[] = $this->lang->t('menus', 'article');
             }
-            $this->view->assign('mode', Core\Functions::selectGenerator('mode', $modeValues, $modeLang, $menuItem['mode']));
+            $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $modeValues, $modeLang, $menuItem['mode']));
 
             // Block
             $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown($menuItem['block_id']));
@@ -165,16 +165,16 @@ class Items extends Core\Modules\Controller\Admin
             $modules = $this->modules->getAllModules();
             foreach ($modules as $row) {
                 $row['dir'] = strtolower($row['dir']);
-                $modules[$row['name']]['selected'] = Core\Functions::selectEntry('module', $row['dir'], $menuItem['mode'] == 1 ? $menuItem['uri'] : '');
+                $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $row['dir'], $menuItem['mode'] == 1 ? $menuItem['uri'] : '');
             }
             $this->view->assign('modules', $modules);
 
             // Ziel des Hyperlinks
             $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
-            $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $menuItem['target']));
+            $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', array(1, 2), $lang_target, $menuItem['target']));
 
             $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, $menuItem['display'], 'checked'));
+            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', array(1, 0), $lang_display, $menuItem['display'], 'checked'));
 
             if ($this->modules->isActive('articles') === true) {
                 $matches = [];

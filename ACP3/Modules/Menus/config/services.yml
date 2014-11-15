@@ -13,7 +13,7 @@ services:
 
   menus.helpers:
     class: ACP3\Modules\Menus\Helpers
-    arguments: ['@core.request', '@core.router', '@menus.model', '@menus.cache']
+    arguments: ['@core.request', '@core.router', '@core.helpers.forms', '@menus.model', '@menus.cache']
 
   menus.model:
     class: ACP3\Modules\Menus\Model
