@@ -21,6 +21,10 @@ class Pictures extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
+     * @var Core\Helpers\Sort
+     */
+    protected $sortHelper;
+    /**
      * @var Gallery\Model
      */
     protected $galleryModel;
@@ -37,6 +41,7 @@ class Pictures extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
+        Core\Helpers\Sort $sortHelper,
         Gallery\Model $guestbookModel,
         Gallery\Cache $galleryCache,
         Core\Config $galleryConfig)
@@ -45,6 +50,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
         $this->date = $date;
         $this->secureHelper = $secureHelper;
+        $this->sortHelper = $sortHelper;
         $this->galleryModel = $guestbookModel;
         $this->galleryCache = $galleryCache;
         $this->galleryConfig = $galleryConfig;
@@ -146,7 +152,11 @@ class Pictures extends Core\Modules\Controller\Admin
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true) {
             if (($this->request->action === 'up' || $this->request->action === 'down') && $this->galleryModel->pictureExists((int)$this->request->id) === true) {
-                $this->get('core.functions')->moveOneStep($this->request->action, Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->request->id, 'gallery_id');
+                if ($this->request->action === 'up') {
+                    $this->sortHelper->up(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->request->id, 'gallery_id');
+                } else {
+                    $this->sortHelper->down(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->request->id, 'gallery_id');
+                }
 
                 $galleryId = $this->galleryModel->getGalleryIdFromPictureId($this->request->id);
 

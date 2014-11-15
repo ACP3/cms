@@ -1,11 +1,23 @@
 services:
+  core.acl:
+    class: ACP3\Core\ACL
+    arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache', '@core.db']
+
   core.assets:
     class: ACP3\Core\Assets
     arguments: ['@core.modules', '@core.router', '@core.assets.themeResolver']
 
+  core.auth:
+    class: ACP3\Core\Auth
+    arguments: ['@core.db', '@core.session', '@core.helpers.secure']
+
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver
     arguments: ['@minify.cache']
+
+  core.breadcrumb:
+    class: ACP3\Core\Breadcrumb
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router']
 
   core.context:
     class : ACP3\Core\Context
@@ -19,21 +31,44 @@ services:
     class : ACP3\Core\Context\Frontend
     arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
 
-  core.view:
-    class: ACP3\Core\View
-    arguments: ['@core.router']
-    calls:
-      - ['setContainer', ['@service_container']]
+  core.date:
+    class: ACP3\Core\Date
+    arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date']
 
-  core.view.renderer.smarty:
-    class: ACP3\Core\View\Renderer\Smarty
-    calls:
-      - ['setContainer', ['@service_container']]
+  core.functions:
+    class: ACP3\Core\Functions
 
-  core.view.renderer.feedgenerator:
-    class: ACP3\Core\View\Renderer\FeedGenerator
-    calls:
-      - ['setContainer', ['@service_container']]
+  core.lang:
+    class: ACP3\Core\Lang
+    arguments: ['@core.auth']
+
+  core.mailer:
+    class: ACP3\Core\Mailer
+    arguments: ['@core.view']
+
+  core.modules:
+    class: ACP3\Core\Modules
+    arguments: ['@core.db', '@core.lang']
+
+  core.modules.abstractInstaller:
+    abstract: true
+    arguments: ['@core.db', '@system.model', '@permissions.model']
+
+  core.modules.controller:
+    abstract: true
+    arguments: ['@core.context']
+
+  core.modules.controller.frontend:
+    abstract: true
+    arguments: ['@core.context.frontend']
+
+  core.modules.controller.admin:
+    abstract: true
+    arguments: ['@core.context.admin']
+
+  core.pagination:
+    class: ACP3\Core\Pagination
+    arguments: ['@core.auth', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
 
   core.redirect:
     class: ACP3\Core\Redirect
@@ -51,102 +86,34 @@ services:
     class: ACP3\Core\Router\Aliases
     arguments: ['@core.db']
 
-  core.session:
-    class: ACP3\Core\Session
-    arguments: ['@core.db']
-
-  core.auth:
-    class: ACP3\Core\Auth
-    arguments: ['@core.db', '@core.session', '@core.helpers.secure']
-
-  core.acl:
-    class: ACP3\Core\ACL
-    arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache', '@core.db']
-
-  core.lang:
-    class: ACP3\Core\Lang
-    arguments: ['@core.auth']
-
-  core.modules:
-    class: ACP3\Core\Modules
-    arguments: ['@core.db', '@core.lang']
-
-  core.pagination:
-    class: ACP3\Core\Pagination
-    arguments: ['@core.auth', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
-
   core.seo:
     class: ACP3\Core\SEO
     arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms']
 
-  core.date:
-    class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date']
-
-  core.breadcrumb:
-    class: ACP3\Core\Breadcrumb
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router']
-
-  core.functions:
-    class: ACP3\Core\Functions
+  core.session:
+    class: ACP3\Core\Session
     arguments: ['@core.db']
 
-  core.helpers.alerts:
-    class: ACP3\Core\Helpers\Alerts
-    arguments: ['@core.request', '@core.view', '@core.helpers.output']
-
-  core.helpers.forms:
-    class: ACP3\Core\Helpers\Forms
-
-  core.helpers.sendEmail:
-    class: ACP3\Core\Helpers\SendEmail
-    arguments: ['@core.mailer']
-
-  core.helpers.output:
-    class: ACP3\Core\Helpers\Output
-
-  core.helpers.redirect:
-    class: ACP3\Core\Helpers\RedirectMessages
-    arguments: ['@core.redirect', '@core.request', '@core.view']
-
-  core.helpers.secure:
-    class: ACP3\Core\Helpers\Secure
-    arguments: ['@core.view']
-
-  core.helpers.stringFormatter:
-    class: ACP3\Core\Helpers\StringFormatter
-
-  core.helpers.formatter.rewriteInternalUri:
-    class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
-    arguments: ['@core.modules', '@core.router', '@core.validator.rules.router.aliases']
-
-  core.helpers.toc:
-    class: ACP3\Core\Helpers\TableOfContents
-    arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.validator.rules.misc', '@core.view']
-
-  system.config:
+  core.config.system:
     class: ACP3\Core\Config
     arguments: ['@core.db', 'system']
 
-  core.mailer:
-    class: ACP3\Core\Mailer
-    arguments: ['@core.view']
+  core.view:
+    class: ACP3\Core\View
+    arguments: ['@core.router']
+    calls:
+      - ['setContainer', ['@service_container']]
 
-  core.modules.controller:
-    abstract: true
-    arguments: ['@core.context']
+  core.view.renderer.smarty:
+    class: ACP3\Core\View\Renderer\Smarty
+    calls:
+      - ['setContainer', ['@service_container']]
 
-  core.modules.controller.frontend:
-    abstract: true
-    arguments: ['@core.context.frontend']
-
-  core.modules.controller.admin:
-    abstract: true
-    arguments: ['@core.context.admin']
-
-  core.modules.abstract.installer:
-    abstract: true
-    arguments: ['@core.db', '@system.model', '@permissions.model']
+  core.view.renderer.feedgenerator:
+    class: ACP3\Core\View\Renderer\FeedGenerator
+    calls:
+      - ['setContainer', ['@service_container']]
 
 imports:
+  - { resource: helpers.yml }
   - { resource: validation.yml }

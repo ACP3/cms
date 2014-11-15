@@ -25,4 +25,4 @@ services:
 
   menus.installer:
     class: ACP3\Modules\Menus\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

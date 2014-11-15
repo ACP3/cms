@@ -5,4 +5,4 @@ services:
 
   errors.installer:
     class: ACP3\Modules\Errors\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

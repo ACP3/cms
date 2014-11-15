@@ -25,4 +25,4 @@ services:
 
   categories.installer:
     class: ACP3\Modules\Categories\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

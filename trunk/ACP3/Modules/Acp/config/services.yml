@@ -5,4 +5,4 @@ services:
 
   acp.installer:
     class: ACP3\Modules\Acp\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

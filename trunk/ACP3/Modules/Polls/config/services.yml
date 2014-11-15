@@ -21,4 +21,4 @@ services:
 
   polls.installer:
     class: ACP3\Modules\Polls\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

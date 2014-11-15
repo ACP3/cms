@@ -9,4 +9,4 @@ services:
 
   captcha.installer:
     class: ACP3\Modules\Captcha\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller

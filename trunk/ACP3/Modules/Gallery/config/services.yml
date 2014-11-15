@@ -5,7 +5,7 @@ services:
 
   gallery.controller.admin.pictures:
     class: ACP3\Modules\Gallery\Controller\Admin\Pictures
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@gallery.model', '@gallery.cache', '@gallery.config']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.sort', '@gallery.model', '@gallery.cache', '@gallery.config']
 
   gallery.controller.frontend.index:
     class: ACP3\Modules\Gallery\Controller\Index
@@ -37,4 +37,4 @@ services:
 
   gallery.installer:
     class: ACP3\Modules\Gallery\Installer
-    parent: core.modules.abstract.installer
+    parent: core.modules.abstractInstaller
