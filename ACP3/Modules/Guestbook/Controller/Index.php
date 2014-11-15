@@ -62,10 +62,8 @@ class Index extends Core\Modules\Controller\Frontend
         $settings = $this->guestbookConfig->getSettings();
         $hasNewsletterAccess = $this->acl->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
-        $overlayIsActive = false;
-
         if (empty($_POST) === false) {
-            $this->_createPost($_POST, $settings, $overlayIsActive, $hasNewsletterAccess);
+            $this->_createPost($_POST, $settings, $hasNewsletterAccess);
         }
 
         // Emoticons einbinden
@@ -147,10 +145,9 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @param array $formData
      * @param array $settings
-     * @param $overlayIsActive
      * @param $hasNewsletterAccess
      */
-    private function _createPost(array $formData, array $settings, $overlayIsActive, $hasNewsletterAccess)
+    private function _createPost(array $formData, array $settings, $hasNewsletterAccess)
     {
         try {
             $validator = $this->get('guestbook.validator');
@@ -186,7 +183,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook');
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'guestbook');
         } catch (Core\Exceptions\ValidationFailed $e) {

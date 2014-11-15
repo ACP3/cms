@@ -45,6 +45,10 @@ jQuery.fn.setCaretPosition = function (pos) {
     return this;
 };
 
+/**
+ *
+ * @param textareaId
+ */
 jQuery.fn.insertEmoticon = function(textareaId) {
     var caretPosition = 0,
         textarea = $(textareaId),
@@ -67,3 +71,7 @@ jQuery.fn.insertEmoticon = function(textareaId) {
         caretPosition = textarea.getCaretPosition();
     });
 };
+
+jQuery(document).ready(function($) {
+    $('.icons a').insertEmoticon($('.icons').data('emoticons-input'));
+});
