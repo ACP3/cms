@@ -1,6 +1,5 @@
 {$wysiwyg.editor}
 {if $wysiwyg.advanced === true}
-    {js_libraries enable="bootstrap"}
     <div id="page-break-form" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -25,22 +24,9 @@
         <a href="#" class="btn btn-default" data-toggle="modal" data-target="#page-break-form">{lang t="system|insert_page_break"}</a>
     </div>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#page-break-form').find('.modal-footer button.btn-primary').click(function (e) {
-                e.preventDefault();
-
-                var $tocTitle = $('#toc-title'),
-                    text;
-
-                if ($tocTitle.val().length > 0) {
-                    text = '<hr class="page-break" title="' + $tocTitle.val() + '" />';
-                } else {
-                    text = '<hr class="page-break" />';
-                }
-
-                {$wysiwyg.advanced_replace_content}
-                $('#page-break-form').modal('hide');
-            });
-        });
+        var wysiwygCallback = function(text) {
+            {$wysiwyg.advanced_replace_content};
+        };
     </script>
+    {include_js module="system" file="wysiwyg" depends="bootstrap"}
 {/if}

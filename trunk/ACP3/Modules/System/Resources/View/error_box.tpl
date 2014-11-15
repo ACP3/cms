@@ -6,19 +6,6 @@
         {/foreach}
     </ul>
     {if $error_box.non_integer_keys === true}
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#error-box').find('li').each(function () {
-                    var errorClass = $(this).data('error');
-                    if (errorClass.length > 0) {
-                        $('#' + errorClass).parents('div.form-group').addClass('has-error');
-                    }
-                });
-                if ($('.tabbable').length > 0) {
-                    var tabId = $('.tabbable .form-group.has-error:first').parents('.tab-pane').prop('id');
-                    $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
-                }
-            });
-        </script>
+        {include_js module="system" file="error_box"}
     {/if}
 </div>
