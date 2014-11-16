@@ -70,6 +70,15 @@ class Pagination
      */
     private $pagination = [];
 
+    /**
+     * @param Auth $auth
+     * @param Lang $lang
+     * @param SEO $seo
+     * @param Request $request
+     * @param Router $router
+     * @param View $view
+     * @param Misc $miscValidator
+     */
     function __construct(
         Auth $auth,
         Lang $lang,

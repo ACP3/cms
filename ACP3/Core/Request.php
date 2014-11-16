@@ -19,7 +19,7 @@ class Request
      */
     public $originalQuery = '';
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var DB
      */
     protected $db;
     /**
@@ -37,11 +37,11 @@ class Request
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      *
-     * @param \Doctrine\DBAL\Connection $db
+     * @param DB $db
      * @param Modules $modules
      */
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        DB $db,
         Modules $modules
     )
     {
@@ -105,7 +105,7 @@ class Request
             }
 
             // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-            $alias = $this->db->fetchColumn('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($probableQuery, 0, -1)));
+            $alias = $this->db->getConnection()->fetchColumn('SELECT uri FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', array(substr($probableQuery, 0, -1)));
             if (!empty($alias)) {
                 $this->query = $alias . (!empty($params) ? $params : '');
             }

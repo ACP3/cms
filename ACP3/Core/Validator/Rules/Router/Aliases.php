@@ -10,7 +10,7 @@ use ACP3\Core;
 class Aliases
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -18,8 +18,12 @@ class Aliases
      */
     protected $routerValidator;
 
+    /**
+     * @param Core\DB $db
+     * @param Core\Validator\Rules\Router $routerValidator
+     */
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         Core\Validator\Rules\Router $routerValidator
     )
     {
@@ -43,8 +47,8 @@ class Aliases
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
                 if ($path !== '/' && $this->routerValidator->isInternalURI($path) === true) {
-                    return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0;
-                } elseif ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ?', array($alias)) > 0) {
+                    return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0;
+                } elseif ($this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', array($alias)) > 0) {
                     return true;
                 }
             }

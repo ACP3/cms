@@ -1,6 +1,10 @@
 <?php
 namespace ACP3\Core\Modules;
 
+/**
+ * Interface InstallerInterface
+ * @package ACP3\Core\Modules
+ */
 interface InstallerInterface
 {
     /**

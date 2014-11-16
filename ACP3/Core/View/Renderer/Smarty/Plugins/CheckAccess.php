@@ -34,7 +34,6 @@ class CheckAccess extends AbstractPlugin
      * @param Core\ACL $acl
      * @param Core\Lang $lang
      * @param Core\Router $router
-     * @param Core\View $view
      * @param Icon $icon
      */
     public function __construct(

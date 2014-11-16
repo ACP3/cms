@@ -45,7 +45,7 @@ class Index extends AbstractController
 
         $this->view->assign('requirements', $requirements);
 
-        $defaults = array('ACP3/config/config.php');
+        $defaults = array('ACP3/config/config.yml');
 
         // Uploadordner
         $uploads = array_diff(scandir(UPLOADS_DIR), array('.', '..'));

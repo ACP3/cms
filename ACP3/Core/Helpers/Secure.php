@@ -14,6 +14,9 @@ class Secure
      */
     protected $view;
 
+    /**
+     * @param Core\View $view
+     */
     public function __construct(Core\View $view)
     {
         $this->view = $view;
@@ -114,5 +117,4 @@ class Secure
             }
         }
     }
-
-} 
+}

@@ -24,6 +24,11 @@ class RewriteInternalUri
      */
     protected $aliasesValidator;
 
+    /**
+     * @param Core\Modules $modules
+     * @param Core\Router $router
+     * @param Core\Validator\Rules\Router\Aliases $aliasValidator
+     */
     public function __construct(
         Core\Modules $modules,
         Core\Router $router,

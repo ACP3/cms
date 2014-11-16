@@ -22,6 +22,11 @@ class RedirectMessages
      */
     private $view;
 
+    /**
+     * @param Core\Redirect $redirect
+     * @param Core\Request $request
+     * @param Core\View $view
+     */
     public function __construct(
         Core\Redirect $redirect,
         Core\Request $request,

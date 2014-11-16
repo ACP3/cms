@@ -3,9 +3,8 @@
 namespace ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author Tino Goratsch
+ * Class Model
+ * @package ACP3\Core
  */
 class Model
 {
@@ -15,22 +14,14 @@ class Model
      */
     const TABLE_NAME = '';
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var
      */
     protected $db;
-    /**
-     * The table prefix
-     *
-     * @var string
-     */
-    protected $prefix = DB_PRE;
 
     /**
-     * Injects the dependencies
-     *
-     * @param \Doctrine\DBAL\Connection $db
+     * @param DB $db
      */
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(DB $db)
     {
         $this->db = $db;
     }
@@ -45,15 +36,15 @@ class Model
      */
     public function insert(array $params, $tableName = '')
     {
-        $this->db->beginTransaction();
+        $this->db->getConnection()->beginTransaction();
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
-            $this->db->insert($this->prefix . $tableName, $params);
-            $lastId = (int)$this->db->lastInsertId();
-            $this->db->commit();
+            $this->db->getConnection()->insert($this->db->getPrefix() . $tableName, $params);
+            $lastId = (int)$this->db->getConnection()->lastInsertId();
+            $this->db->getConnection()->commit();
             return $lastId;
         } catch (\Exception $e) {
-            $this->db->rollback();
+            $this->db->getConnection()->rollback();
             Logger::error('database', $e->getMessage());
             return false;
         }
@@ -70,15 +61,15 @@ class Model
      */
     public function delete($id, $field = '', $tableName = '')
     {
-        $this->db->beginTransaction();
+        $this->db->getConnection()->beginTransaction();
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
             $field = empty($field) ? 'id' : $field;
-            $bool = $this->db->delete($this->prefix . $tableName, is_array($id) ? $id : array($field => (int)$id));
-            $this->db->commit();
+            $bool = $this->db->getConnection()->delete($this->db->getPrefix() . $tableName, is_array($id) ? $id : array($field => (int)$id));
+            $this->db->getConnection()->commit();
             return $bool;
         } catch (\Exception $e) {
-            $this->db->rollback();
+            $this->db->getConnection()->rollback();
             Logger::error('database', $e->getMessage());
             return false;
         }
@@ -95,15 +86,15 @@ class Model
      */
     public function update(array $params, $id, $tableName = '')
     {
-        $this->db->beginTransaction();
+        $this->db->getConnection()->beginTransaction();
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
             $where = is_array($id) === true ? $id : array('id' => $id);
-            $bool = $this->db->update($this->prefix . $tableName, $params, $where);
-            $this->db->commit();
+            $bool = $this->db->getConnection()->update($this->db->getPrefix() . $tableName, $params, $where);
+            $this->db->getConnection()->commit();
             return $bool;
         } catch (\Exception $e) {
-            $this->db->rollback();
+            $this->db->getConnection()->rollback();
             Logger::error('database', $e->getMessage());
             return false;
         }

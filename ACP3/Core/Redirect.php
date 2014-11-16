@@ -28,6 +28,10 @@ class Redirect
      */
     protected $router;
 
+    /**
+     * @param Request $request
+     * @param Router $router
+     */
     public function __construct(Request $request, Router $router)
     {
         $this->request = $request;

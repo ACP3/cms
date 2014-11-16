@@ -33,7 +33,6 @@ services:
 
   core.functions:
     class: ACP3\Core\Functions
-    arguments: ['@core.auth', '@?core.db', '@core.view']
 
   system.config:
     class: ACP3\Core\Config

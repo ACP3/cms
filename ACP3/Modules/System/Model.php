@@ -20,7 +20,7 @@ class Model extends Core\Model
      */
     public function getSchemaTables()
     {
-        return $this->db->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', CONFIG_DB_NAME));
+        return $this->db->getConnection()->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', $this->db->getName()));
     }
 
     /**
@@ -29,7 +29,7 @@ class Model extends Core\Model
      */
     public function getModuleId($moduleName)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
+        return $this->db->getConnection()->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
     /**
@@ -38,7 +38,7 @@ class Model extends Core\Model
      */
     public function getSettingsByModuleName($moduleName)
     {
-        return $this->db->fetchAll('SELECT s.name, s.value FROM ' . $this->prefix . static::TABLE_NAME_SETTINGS . ' AS s JOIN ' . $this->prefix . static::TABLE_NAME . ' AS m ON(m.id = s.module_id) WHERE m.name = ?', array($moduleName));
+        return $this->db->getConnection()->fetchAll('SELECT s.name, s.value FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SETTINGS . ' AS s JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS m ON(m.id = s.module_id) WHERE m.name = ?', array($moduleName));
     }
 
     /**
@@ -47,7 +47,7 @@ class Model extends Core\Model
      */
     public function getModuleSchemaVersion($moduleName)
     {
-        return $this->db->fetchColumn('SELECT version FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
+        return $this->db->getConnection()->fetchColumn('SELECT version FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
     /**
@@ -56,7 +56,7 @@ class Model extends Core\Model
      */
     public function uriAliasExists($path)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE uri = ?', array($path)) > 0;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SEO . ' WHERE uri = ?', array($path)) > 0;
     }
 
     /**
@@ -65,7 +65,7 @@ class Model extends Core\Model
      */
     public function moduleExists($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName)) > 0;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', array($moduleName)) > 0;
     }
 
     /**
@@ -73,7 +73,7 @@ class Model extends Core\Model
      */
     public function getAllUriAliases()
     {
-        return $this->db->fetchAll('SELECT uri, alias FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE alias != ""');
+        return $this->db->getConnection()->fetchAll('SELECT uri, alias FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SEO . ' WHERE alias != ""');
     }
 
     /**
@@ -82,7 +82,7 @@ class Model extends Core\Model
      */
     public function getInfoByModuleName($moduleName)
     {
-        return $this->db->fetchAssoc('SELECT id, version, active FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
+        return $this->db->getConnection()->fetchAssoc('SELECT id, version, active FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
     /**
@@ -91,7 +91,7 @@ class Model extends Core\Model
      */
     public function getModuleNameById($moduleId)
     {
-        return $this->db->fetchColumn('SELECT name FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($moduleId));
+        return $this->db->getConnection()->fetchColumn('SELECT name FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($moduleId));
     }
 
 }

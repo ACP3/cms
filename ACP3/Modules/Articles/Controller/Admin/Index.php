@@ -17,7 +17,7 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -44,7 +44,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param Core\Context\Admin $context
      * @param Core\Date $date
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param Articles\Model $articlesModel
      * @param Articles\Cache $articlesCache
      * @param Menus\Model $menusModel
@@ -54,7 +54,7 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         Articles\Model $articlesModel,
         Articles\Cache $articlesCache,
         Menus\Model $menusModel,

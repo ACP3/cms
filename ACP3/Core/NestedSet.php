@@ -23,20 +23,23 @@ class NestedSet
     protected $enableBlocks;
 
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var DB
      */
     protected $db;
 
     /**
-     *
-     * @param \Doctrine\DBAL\Connection $db
-     * @param string                    $tableName
-     * @param bool                      $enableBlocks
+     * @param DB $db
+     * @param $tableName
+     * @param bool $enableBlocks
      */
-    public function __construct(\Doctrine\DBAL\Connection $db, $tableName, $enableBlocks = false)
+    public function __construct(
+        DB $db,
+        $tableName,
+        $enableBlocks = false
+    )
     {
-        $this->db = $db;
-        $this->tableName = DB_PRE . $tableName;
+        $this->db = $db->getConnection();
+        $this->tableName = $db->getPrefix() . $tableName;
         $this->enableBlocks = $enableBlocks;
     }
 
@@ -90,7 +93,7 @@ class NestedSet
      *
      * @param integer $parentId
      *    ID der übergeordneten Seite
-     * @param array   $insertValues
+     * @param array $insertValues
      *
      * @return boolean
      */
@@ -161,7 +164,7 @@ class NestedSet
      *    ID des neuen Elternelements
      * @param integer $blockId
      *    ID des neuen Blocks
-     * @param array   $updateValues
+     * @param array $updateValues
      *
      * @return boolean
      */
@@ -273,7 +276,7 @@ class NestedSet
      * Methode zum Umsortieren von Knoten
      *
      * @param integer $id
-     * @param string  $mode
+     * @param string $mode
      *
      * @return boolean
      */

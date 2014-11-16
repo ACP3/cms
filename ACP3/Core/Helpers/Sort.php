@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core\Helpers;
 
+use ACP3\Core\DB;
+
 /**
  * Class Sort
  * @package ACP3\Core\Helpers
@@ -8,14 +10,14 @@ namespace ACP3\Core\Helpers;
 class Sort
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var DB
      */
     protected $db;
 
     /**
-     * @param \Doctrine\DBAL\Connection $db
+     * @param DB $db
      */
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(DB $db)
     {
         $this->db = $db;
     }
@@ -63,10 +65,10 @@ class Sort
      */
     private function _moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
-        $this->db->beginTransaction();
+        $this->db->getConnection()->beginTransaction();
         try {
             $id = (int)$id;
-            $table = DB_PRE . $table;
+            $table = $this->db->getPrefix() . $table;
 
             // Zusätzliche WHERE-Bedingung
             $where = !empty($where) ? 'a.' . $where . ' = b.' . $where . ' AND ' : '';
@@ -75,24 +77,24 @@ class Sort
             $queryString = 'SELECT a.%2$s AS other_id, a.%3$s AS other_sort, b.%3$s AS elem_sort FROM %1$s AS a, %1$s AS b WHERE %5$sb.%2$s = %4$s AND a.%3$s %6$s b.%3$s ORDER BY a.%3$s %7$s LIMIT 1';
 
             if ($action === 'up') {
-                $query = $this->db->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '<', 'DESC'));
+                $query = $this->db->getConnection()->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '<', 'DESC'));
             } else {
-                $query = $this->db->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '>', 'ASC'));
+                $query = $this->db->getConnection()->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '>', 'ASC'));
             }
 
             if (!empty($query)) {
                 // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
                 // um Probleme mit möglichen Duplicate-Keys zu umgehen
-                $this->db->update($table, array($sortField => 0), array($idField => $id));
-                $this->db->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
+                $this->db->getConnection()->update($table, array($sortField => 0), array($idField => $id));
+                $this->db->getConnection()->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
                 // Element nun den richtigen Wert zuweisen
-                $this->db->update($table, array($sortField => $query['other_sort']), array($idField => $id));
+                $this->db->getConnection()->update($table, array($sortField => $query['other_sort']), array($idField => $id));
 
-                $this->db->commit();
+                $this->db->getConnection()->commit();
                 return true;
             }
         } catch (\Exception $e) {
-            $this->db->rollback();
+            $this->db->getConnection()->rollback();
         }
 
         return false;

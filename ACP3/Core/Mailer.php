@@ -64,7 +64,7 @@ class Mailer
      * Initializes PHPMailer and sets the basic configuration parameters
      * @param View $view
      */
-    public function __construct(View $view = null)
+    public function __construct(View $view)
     {
         $this->view = $view;
         $this->phpMailer = new \PHPMailer(true);

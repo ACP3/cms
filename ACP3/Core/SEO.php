@@ -19,7 +19,7 @@ class SEO
      */
     protected $aliases;
     /**
-     * @var Lang
+     * @var DB
      */
     protected $db;
     /**
@@ -63,14 +63,14 @@ class SEO
     protected $metaDescriptionPostfix = '';
 
     /**
-     * @param \Doctrine\DBAL\Connection $db
+     * @param DB $db
      * @param Lang $lang
      * @param Request $request
      * @param Aliases $aliases
      * @param Forms $formsHelper
      */
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        DB $db,
         Lang $lang,
         Request $request,
         Aliases $aliases,
@@ -108,7 +108,7 @@ class SEO
      */
     public function setCache()
     {
-        $aliases = $this->db->fetchAll('SELECT uri, keywords, description, robots FROM ' . DB_PRE . 'seo WHERE keywords != "" OR description != "" OR robots != 0');
+        $aliases = $this->db->getConnection()->fetchAll('SELECT uri, keywords, description, robots FROM ' . $this->db->getPrefix() . 'seo WHERE keywords != "" OR description != "" OR robots != 0');
         $c_aliases = count($aliases);
         $data = [];
 

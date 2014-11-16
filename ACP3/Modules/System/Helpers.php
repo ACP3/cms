@@ -19,7 +19,7 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -28,10 +28,13 @@ class Helpers
     protected $modules;
 
     /**
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param Core\Modules $modules
      */
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Modules $modules)
+    public function __construct(
+        Core\DB $db,
+        Core\Modules $modules
+    )
     {
         $this->db = $db;
         $this->modules = $modules;
@@ -95,7 +98,7 @@ class Helpers
         foreach ($tables as $table) {
             // Struktur ausgeben
             if ($exportType === 'complete' || $exportType === 'structure') {
-                $result = $this->db->fetchAssoc('SHOW CREATE TABLE ' . $table);
+                $result = $this->db->getConnection()->fetchAssoc('SHOW CREATE TABLE ' . $table);
                 if (!empty($result)) {
                     $structure .= $withDropTables == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
                     $structure .= $result['Create Table'] . ';' . "\n\n";
@@ -104,7 +107,7 @@ class Helpers
 
             // Datensätze ausgeben
             if ($exportType === 'complete' || $exportType === 'data') {
-                $resultSets = $this->db->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
+                $resultSets = $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . substr($table, strlen($this->db->getPrefix())));
                 if (count($resultSets) > 0) {
                     $fields = '';
                     // Felder der jeweiligen Tabelle auslesen

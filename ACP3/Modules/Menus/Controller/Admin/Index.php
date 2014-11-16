@@ -12,7 +12,7 @@ use ACP3\Modules\Menus;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -30,14 +30,14 @@ class Index extends Core\Modules\Controller\Admin
 
     /**
      * @param Core\Context\Admin $context
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param Core\Helpers\Secure $secureHelper
      * @param Menus\Model $menusModel
      * @param Menus\Cache $menusCache
      */
     public function __construct(
         Core\Context\Admin $context,
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         Core\Helpers\Secure $secureHelper,
         Menus\Model $menusModel,
         Menus\Cache $menusCache)

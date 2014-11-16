@@ -12,7 +12,7 @@ use ACP3\Modules\System;
 class Maintenance extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -26,13 +26,13 @@ class Maintenance extends Core\Modules\Controller\Admin
 
     /**
      * @param Core\Context\Admin $context
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param Core\Helpers\Secure $secureHelper
      * @param System\Model $systemModel
      */
     public function __construct(
         Core\Context\Admin $context,
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         Core\Helpers\Secure $secureHelper,
         System\Model $systemModel)
     {
@@ -58,7 +58,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         $tables = [];
         foreach ($dbTables as $row) {
             $table = $row['TABLE_NAME'];
-            if (strpos($table, CONFIG_DB_PRE) === 0) {
+            if (strpos($table, $this->db->getPrefix()) === 0) {
                 $tables[$table]['name'] = $table;
                 $tables[$table]['selected'] = $this->get('core.helpers.forms')->selectEntry('tables', $table);
             }
@@ -134,7 +134,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             // Als Datei ausgeben
             if ($formData['output'] === 'file') {
                 header('Content-Type: text/sql');
-                header('Content-Disposition: attachment; filename=' . CONFIG_DB_NAME . '_export.sql');
+                header('Content-Disposition: attachment; filename=' . $this->db->getName() . '_export.sql');
                 header('Content-Length: ' . strlen($export));
                 exit($export);
             } else { // Im Browser ausgeben
@@ -171,7 +171,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             $i = 0;
             foreach ($importData as $row) {
                 if (!empty($row)) {
-                    $bool = $this->db->query($row);
+                    $bool = $this->db->getConnection()->query($row);
                     $sqlQueries[$i]['query'] = str_replace("\n", '<br />', $row);
                     $sqlQueries[$i]['color'] = $bool !== null ? '090' : 'f00';
                     ++$i;

@@ -29,9 +29,9 @@ class Aliases
     protected $systemModel;
 
     /**
-     * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
+     * @param Core\DB $db
      */
-    function __construct(\Doctrine\DBAL\Connection $db)
+    function __construct(Core\DB $db)
     {
         $this->systemModel = new System\Model($db);
         $this->cache = new Core\Cache('uri');

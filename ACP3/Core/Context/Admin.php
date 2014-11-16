@@ -32,7 +32,8 @@ class Admin extends Frontend
         Core\Context\Frontend $frontendContext,
         Core\Validator\Rules\Misc $validate,
         Core\Session $session,
-        Core\Router\Aliases $aliases)
+        Core\Router\Aliases $aliases
+    )
     {
         parent::__construct(
             $frontendContext,

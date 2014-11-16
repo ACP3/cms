@@ -1,7 +1,12 @@
+imports:
+  - { resource: config.yml }
+  - { resource: helpers.yml }
+  - { resource: validation.yml }
+
 services:
   core.acl:
     class: ACP3\Core\ACL
-    arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache', '@core.db']
+    arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache']
 
   core.assets:
     class: ACP3\Core\Assets
@@ -34,6 +39,10 @@ services:
   core.date:
     class: ACP3\Core\Date
     arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date']
+
+  core.db:
+    class: ACP3\Core\DB
+    arguments: ['%db_host%', '%db_name%', '%db_user%', '%db_password%', '%db_table_prefix%', '%db_driver%', '%db_charset%']
 
   core.functions:
     class: ACP3\Core\Functions
@@ -113,7 +122,3 @@ services:
     class: ACP3\Core\View\Renderer\FeedGenerator
     calls:
       - ['setContainer', ['@service_container']]
-
-imports:
-  - { resource: helpers.yml }
-  - { resource: validation.yml }
