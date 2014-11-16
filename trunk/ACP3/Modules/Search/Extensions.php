@@ -30,9 +30,7 @@ class Extensions
     protected $searchTerm;
 
     /**
-     * DB Connection Handler
-     *
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -52,13 +50,13 @@ class Extensions
     protected $params = [];
 
     /**
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param Core\Date $date
      * @param Core\Lang $lang
      * @param Core\Router $router
      */
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         Core\Date $date,
         Core\Lang $lang,
         Core\Router $router
@@ -127,7 +125,7 @@ class Extensions
         }
 
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'articles WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', title ' . $this->sort, $this->params);
+        $results = $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . 'articles WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', title ' . $this->sort, $this->params);
         $c_results = count($results);
         $searchResults = [];
 
@@ -160,7 +158,7 @@ class Extensions
         }
 
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'files WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
+        $results = $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . 'files WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
         $c_results = count($results);
         $searchResults = [];
 
@@ -193,7 +191,7 @@ class Extensions
         }
 
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'news WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
+        $results = $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . 'news WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
         $c_results = count($results);
         $searchResults = [];
 

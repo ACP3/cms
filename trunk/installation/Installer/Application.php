@@ -89,12 +89,7 @@ class Application
 
         $this->container->set('core.db', new \StdClass());
 
-        $params = array(
-            'compile_id' => 'installer',
-            'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
-            'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
-        );
-        $this->container->get('core.view')->setRenderer('smarty', $params);
+        $this->container->get('core.view')->setRenderer('smarty', [ 'compile_id' => 'installer' ]);
 
         $this->container->compile();
     }
@@ -143,12 +138,9 @@ class Application
 
         if (defined('IN_UPDATER') === true) {
             // DB-Config des ACP3 laden
-            $path = ACP3_DIR . 'config/config.php';
+            $path = ACP3_DIR . 'config/config.yml';
             if (is_file($path) === false || filesize($path) === 0) {
                 exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
-                // Wenn alles okay ist, config.php einbinden und error_reporting setzen
-            } else {
-                require_once $path;
             }
         }
     }
@@ -158,19 +150,6 @@ class Application
      */
     public function initializeUpdaterClasses()
     {
-        $config = new DBAL\Configuration();
-        $connectionParams = array(
-            'dbname' => CONFIG_DB_NAME,
-            'user' => CONFIG_DB_USER,
-            'password' => CONFIG_DB_PASSWORD,
-            'host' => CONFIG_DB_HOST,
-            'driver' => 'pdo_mysql',
-            'charset' => 'utf8'
-        );
-        $db = DBAL\DriverManager::getConnection($connectionParams, $config);
-
-        define('DB_PRE', CONFIG_DB_PRE);
-
         $this->container = new ContainerBuilder();
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
@@ -196,19 +175,12 @@ class Application
             }
         }
 
-        $this->container->set('core.db', $db);
-
         // Systemeinstellungen laden
         $this->container
-            ->get('system.config')
+            ->get('core.config.system')
             ->getSettingsAsConstants();
 
-        $params = array(
-            'compile_id' => 'installer',
-            'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
-            'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
-        );
-        $this->container->get('core.view')->setRenderer('smarty', $params);
+        $this->container->get('core.view')->setRenderer('smarty', ['compile_id' => 'installer']);
 
         $this->container->compile();
     }

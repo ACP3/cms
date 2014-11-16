@@ -18,7 +18,7 @@ class Model extends Core\Model
      */
     public function resultExists($id)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0);
+        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0);
     }
 
     /**
@@ -33,9 +33,9 @@ class Model extends Core\Model
     public function resultExistsByUserName($nickname, $id = '')
     {
         if (!empty($id)) {
-            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array((int)$id, $nickname)) == 1 ? true : false;
+            return !empty($nickname) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array((int)$id, $nickname)) == 1 ? true : false;
         } else {
-            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname)) == 1 ? true : false;
+            return !empty($nickname) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname)) == 1 ? true : false;
         }
     }
 
@@ -51,9 +51,9 @@ class Model extends Core\Model
     public function resultExistsByEmail($mail, $id = '')
     {
         if (!empty($id)) {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array((int)$id, $mail)) > 0 ? true : false;
+            return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array((int)$id, $mail)) > 0 ? true : false;
         } else {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE mail = ?', array($mail)) > 0 ? true : false;
+            return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE mail = ?', array($mail)) > 0 ? true : false;
         }
     }
 
@@ -63,7 +63,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id));
     }
 
     /**
@@ -72,7 +72,7 @@ class Model extends Core\Model
      */
     public function getOneByNickname($nickname)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname));
     }
 
     /**
@@ -81,7 +81,7 @@ class Model extends Core\Model
      */
     public function getOneActiveUserByNickname($nickname)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ? AND login_errors < 3', array($nickname));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE nickname = ? AND login_errors < 3', array($nickname));
     }
 
     /**
@@ -90,7 +90,7 @@ class Model extends Core\Model
      */
     public function getOneByEmail($email)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE mail = ?', array($email));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE mail = ?', array($email));
     }
 
     /**
@@ -109,7 +109,7 @@ class Model extends Core\Model
     public function getAll($limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY nickname ASC, id ASC' . $limitStmt);
+        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY nickname ASC, id ASC' . $limitStmt);
     }
 
     /**
@@ -117,7 +117,7 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY nickname ASC');
+        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY nickname ASC');
     }
 
 }

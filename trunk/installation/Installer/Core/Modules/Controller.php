@@ -77,12 +77,14 @@ class Controller
             $this->redirect()->temporary($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
         }
 
-        if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
-            is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true
-        ) {
-            define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
-        } else {
-            define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
+        if (defined('LANG') === false) {
+            if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
+                is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true
+            ) {
+                define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
+            } else {
+                define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
+            }
         }
 
         $this->lang->setLanguage(LANG);
@@ -210,13 +212,13 @@ class Controller
     /**
      * Setzt das Template der Seite
      *
-     * @param string $file
+     * @param string $template
      *
      * @return $this
      */
-    public function setTemplate($file)
+    public function setTemplate($template)
     {
-        $this->template = $file;
+        $this->template = $template;
 
         return $this;
     }

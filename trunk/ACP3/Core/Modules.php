@@ -10,10 +10,6 @@ use ACP3\Modules\System;
 class Modules
 {
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Lang
      */
     protected $lang;
@@ -35,11 +31,10 @@ class Modules
     private $allModules = [];
 
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        DB $db,
         Lang $lang
     )
     {
-        $this->db = $db;
         $this->lang = $lang;
         $this->cache = new Cache('modules');
         $this->systemModel = new System\Model($db);

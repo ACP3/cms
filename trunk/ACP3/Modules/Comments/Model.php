@@ -19,7 +19,7 @@ class Model extends Core\Model
      */
     public function resultExists($id)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id)) > 0;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id)) > 0;
     }
 
     /**
@@ -28,7 +28,7 @@ class Model extends Core\Model
      */
     public function resultsExist($moduleId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE module_id = ?', array($moduleId)) > 0;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE module_id = ?', array($moduleId)) > 0;
     }
 
     /**
@@ -37,7 +37,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT c.*, m.name AS module FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . 'modules AS m ON(m.id = c.module_id) WHERE c.id = ?', array($id));
+        return $this->db->getConnection()->fetchAssoc('SELECT c.*, m.name AS module FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . 'modules AS m ON(m.id = c.module_id) WHERE c.id = ?', array($id));
     }
 
     /**
@@ -46,7 +46,7 @@ class Model extends Core\Model
      */
     public function getLastDateFromIp($ipAddress)
     {
-        return $this->db->fetchColumn('SELECT MAX(date) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE ip = ?', array($ipAddress));
+        return $this->db->getConnection()->fetchColumn('SELECT MAX(date) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE ip = ?', array($ipAddress));
     }
 
     /**
@@ -59,7 +59,7 @@ class Model extends Core\Model
     public function getAllByModule($moduleId, $resultId, $limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . 'modules AS m ON(m.id = c.module_id) LEFT JOIN (' . $this->prefix . 'users AS u) ON u.id = c.user_id WHERE m.name = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt, array($moduleId, $resultId));
+        return $this->db->getConnection()->fetchAll('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . 'modules AS m ON(m.id = c.module_id) LEFT JOIN (' . $this->db->getPrefix() . 'users AS u) ON u.id = c.user_id WHERE m.name = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt, array($moduleId, $resultId));
     }
 
     /**
@@ -69,7 +69,7 @@ class Model extends Core\Model
      */
     public function countAllByModule($moduleId, $resultId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.entry_id = ?', array($moduleId, $resultId));
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.entry_id = ?', array($moduleId, $resultId));
     }
 
     /**
@@ -78,7 +78,7 @@ class Model extends Core\Model
      */
     public function getAllByModuleInAcp($moduleId)
     {
-        return $this->db->fetchAll('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->prefix . static::TABLE_NAME . ' AS c LEFT JOIN ' . $this->prefix . 'users AS u ON u.id = c.user_id WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.id ASC', array($moduleId));
+        return $this->db->getConnection()->fetchAll('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c LEFT JOIN ' . $this->db->getPrefix() . 'users AS u ON u.id = c.user_id WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.id ASC', array($moduleId));
     }
 
     /**
@@ -86,7 +86,7 @@ class Model extends Core\Model
      */
     public function getCommentsGroupedByModule()
     {
-        return $this->db->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . 'modules AS m ON(m.id = c.module_id) GROUP BY c.module_id ORDER BY m.name');
+        return $this->db->getConnection()->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . 'modules AS m ON(m.id = c.module_id) GROUP BY c.module_id ORDER BY m.name');
     }
 
 }

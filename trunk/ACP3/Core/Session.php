@@ -35,11 +35,14 @@ class Session
     public $gcProbability = 10;
 
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var DB
      */
     protected $db;
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    /**
+     * @param DB $db
+     */
+    public function __construct(DB $db)
     {
         $this->db = $db;
 
@@ -129,7 +132,7 @@ class Session
      */
     public function session_read($sessionId)
     {
-        $session = $this->db->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($sessionId));
+        $session = $this->db->getConnection()->fetchAssoc('SELECT session_data FROM ' . $this->db->getPrefix() . 'sessions WHERE session_id = ?', array($sessionId));
 
         // Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
         return !empty($session) ? $session['session_data'] : '';
@@ -145,7 +148,7 @@ class Session
      */
     public function session_write($sessionId, $data)
     {
-        $this->db->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($sessionId, time(), $data, $data));
+        $this->db->getConnection()->executeUpdate('INSERT INTO ' . $this->db->getPrefix() . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($sessionId, time(), $data, $data));
 
         return true;
     }
@@ -166,7 +169,7 @@ class Session
         }
 
         // Session aus Datenbank löschen
-        $this->db->delete(DB_PRE . 'sessions', array('session_id' => $sessionId));
+        $this->db->getConnection()->delete($this->db->getPrefix() . 'sessions', array('session_id' => $sessionId));
     }
 
     /**
@@ -182,7 +185,7 @@ class Session
             return false;
         }
 
-        $this->db->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($sessionLifetime, time()));
+        $this->db->getConnection()->executeUpdate('DELETE FROM ' . $this->db->getPrefix() . 'sessions WHERE session_starttime + ? < ?', array($sessionLifetime, time()));
 
         return true;
     }

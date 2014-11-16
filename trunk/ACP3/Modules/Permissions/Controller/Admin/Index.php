@@ -12,7 +12,7 @@ use ACP3\Modules\Permissions;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -30,14 +30,14 @@ class Index extends Core\Modules\Controller\Admin
 
     /**
      * @param Core\Context\Admin $context
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param Core\Helpers\Secure $secureHelper
      * @param Permissions\Model $permissionsModel
      * @param Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Context\Admin $context,
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         Core\Helpers\Secure $secureHelper,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache)
@@ -229,7 +229,7 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('permissions.validator');
             $validator->validateCreate($formData);
 
-            $this->db->beginTransaction();
+            $this->db->getConnection()->beginTransaction();
 
             $insertValues = array(
                 'id' => '',
@@ -239,7 +239,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             $bool = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
-            $roleId = $this->db->lastInsertId();
+            $roleId = $this->db->getConnection()->lastInsertId();
 
             foreach ($formData['privileges'] as $moduleId => $privileges) {
                 foreach ($privileges as $id => $permission) {
@@ -254,7 +254,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->db->commit();
+            $this->db->getConnection()->commit();
 
             $this->permissionsCache->setRolesCache();
 
@@ -285,7 +285,7 @@ class Index extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$formData['parent'], 0, $updateValues);
 
-            $this->db->beginTransaction();
+            $this->db->getConnection()->beginTransaction();
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
             $this->permissionsModel->delete($this->request->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
             foreach ($formData['privileges'] as $moduleId => $privileges) {
@@ -300,7 +300,7 @@ class Index extends Core\Modules\Controller\Admin
                     $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                 }
             }
-            $this->db->commit();
+            $this->db->getConnection()->commit();
 
             $cache = new Core\Cache('acl');
             $cache->getDriver()->deleteAll();

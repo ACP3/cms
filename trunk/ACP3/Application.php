@@ -50,11 +50,9 @@ class Application
         date_default_timezone_set('UTC');
 
         // DB-Config des ACP3 laden
-        $path = ACP3_DIR . 'config/config.php';
+        $path = ACP3_DIR . 'config/config.yml';
         if (is_file($path) === false || filesize($path) === 0) {
             exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
-        } else {
-            require_once $path;
         }
     }
 
@@ -141,34 +139,16 @@ class Application
     {
         $file = UPLOADS_DIR . 'cache/sql/container.php';
 
-        $config = new DBAL\Configuration();
-        $connectionParams = array(
-            'dbname' => CONFIG_DB_NAME,
-            'user' => CONFIG_DB_USER,
-            'password' => CONFIG_DB_PASSWORD,
-            'host' => CONFIG_DB_HOST,
-            'driver' => 'pdo_mysql',
-            'charset' => 'utf8'
-        );
-        $db = DBAL\DriverManager::getConnection($connectionParams, $config);
-
-        define('DB_PRE', CONFIG_DB_PRE);
-
-        if (file_exists($file) && (!defined('DEBUG') || DEBUG === false)) {
+        if (is_file($file) && (!defined('DEBUG') || DEBUG === false)) {
             require_once $file;
             $this->container = new \ACP3ServiceContainer();
-
-            $this->container->set('core.db', $db);
 
             // Systemeinstellungen laden
             $this->container
                 ->get('core.config.system')
                 ->getSettingsAsConstants();
 
-            // Pfade zum Theme setzen
-            define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-            define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-            define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
+            $this->_setThemeConstants();
 
             $this->container->get('core.view')->setRenderer('smarty');
         } else {
@@ -177,17 +157,12 @@ class Application
             $loader->load(ACP3_DIR . 'config/services.yml');
             $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
-            $this->container->set('core.db', $db);
-
             // Systemeinstellungen laden
             $this->container
                 ->get('core.config.system')
                 ->getSettingsAsConstants();
 
-            // Pfade zum Theme setzen
-            define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-            define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-            define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
+            $this->_setThemeConstants();
 
             // Try to get all available services
             /** @var Modules $modules */
@@ -207,6 +182,16 @@ class Application
             $dumper = new PhpDumper($this->container);
             file_put_contents($file, $dumper->dump(array('class' => 'ACP3ServiceContainer')));
         }
+    }
+
+    /**
+     * Pfade zum Theme setzen
+     */
+    private function _setThemeConstants()
+    {
+        define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+        define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
     }
 
     /**
@@ -233,7 +218,7 @@ class Application
         } catch (Core\Exceptions\UnauthorizedAccess $e) {
             $redirectUri = base64_encode($request->originalQuery);
             $redirect->temporary('users/index/login/redirect_' . $redirectUri);
-        } catch(Core\Exceptions\AccessForbidden $e) {
+        } catch (Core\Exceptions\AccessForbidden $e) {
             $redirect->temporary('errors/index/403');
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             Core\Logger::error('404', 'Request: ' . $request->query);

@@ -11,7 +11,7 @@ use ACP3\Core;
 class Extensions
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -32,14 +32,14 @@ class Extensions
     protected $formatter;
 
     /**
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param Core\Date $date
      * @param Core\Router $router
      * @param Core\View $view
      * @param Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         Core\Date $date,
         Core\Router $router,
         Core\View $view,
@@ -55,7 +55,7 @@ class Extensions
 
     public function newsFeed()
     {
-        $results = $this->db->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'news WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
+        $results = $this->db->getConnection()->fetchAll('SELECT id, start, title, text FROM ' . $this->db->getPrefix() . 'news WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
         $c_results = count($results);
 
         for ($i = 0; $i < $c_results; ++$i) {
@@ -71,7 +71,7 @@ class Extensions
 
     public function filesFeed()
     {
-        $results = $this->db->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'files WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
+        $results = $this->db->getConnection()->fetchAll('SELECT id, start, title, text FROM ' . $this->db->getPrefix() . 'files WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
         $c_results = count($results);
 
         for ($i = 0; $i < $c_results; ++$i) {

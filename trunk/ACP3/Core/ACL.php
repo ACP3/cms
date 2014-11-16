@@ -46,17 +46,16 @@ class ACL
     protected $resources = [];
 
     /**
-     * Konstruktor - erzeugt die ACL für den jeweiligen User
-     *
-     * @param Auth                      $auth
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Auth $auth
+     * @param Modules $modules
+     * @param Permissions\Model $permissionsModel
+     * @param Permissions\Cache $permissionsCache
      */
     public function __construct(
         Auth $auth,
         Modules $modules,
         Permissions\Model $permissionsModel,
-        Permissions\Cache $permissionsCache,
-        \Doctrine\DBAL\Connection $db
+        Permissions\Cache $permissionsCache
     )
     {
         $this->auth = $auth;

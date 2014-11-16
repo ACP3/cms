@@ -26,7 +26,7 @@ abstract class AbstractInstaller implements InstallerInterface
     const SCHEMA_VERSION = 0;
 
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Core\DB
      */
     protected $db;
     /**
@@ -53,12 +53,12 @@ abstract class AbstractInstaller implements InstallerInterface
     protected $specialResources = [];
 
     /**
-     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\DB $db
      * @param System\Model $systemModel
      * @param Permissions\Model $permissionsModel
      */
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        Core\DB $db,
         System\Model $systemModel,
         Permissions\Model $permissionsModel
     )
@@ -124,18 +124,18 @@ abstract class AbstractInstaller implements InstallerInterface
     {
         if (count($queries) > 0) {
             $search = array('{pre}', '{engine}', '{charset}');
-            $replace = array(DB_PRE, 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
+            $replace = array($this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
 
-            $this->db->beginTransaction();
+            $this->db->getConnection()->beginTransaction();
             try {
                 foreach ($queries as $query) {
                     if (!empty($query)) {
-                        $this->db->query(str_replace($search, $replace, $query));
+                        $this->db->getConnection()->query(str_replace($search, $replace, $query));
                     }
                 }
-                $this->db->commit();
+                $this->db->getConnection()->commit();
             } catch (\Exception $e) {
-                $this->db->rollBack();
+                $this->db->getConnection()->rollBack();
 
                 Core\Logger::warning('installer', $e);
                 return false;
@@ -174,7 +174,7 @@ abstract class AbstractInstaller implements InstallerInterface
     protected function installSettings(array $settings)
     {
         if (count($settings) > 0) {
-            $this->db->beginTransaction();
+            $this->db->getConnection()->beginTransaction();
             try {
                 foreach ($settings as $key => $value) {
                     $insertValues = array(
@@ -185,9 +185,9 @@ abstract class AbstractInstaller implements InstallerInterface
                     );
                     $this->systemModel->insert($insertValues, System\Model::TABLE_NAME_SETTINGS);
                 }
-                $this->db->commit();
+                $this->db->getConnection()->commit();
             } catch (\Exception $e) {
-                $this->db->rollback();
+                $this->db->getConnection()->rollback();
 
                 Core\Logger::warning('installer', $e);
                 return false;
@@ -499,6 +499,6 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($moduleName)) == 1;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', array($moduleName)) == 1;
     }
 }

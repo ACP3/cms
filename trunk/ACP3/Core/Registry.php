@@ -3,8 +3,7 @@ namespace ACP3\Core;
 
 /**
  * Class Registry
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class Registry
 {

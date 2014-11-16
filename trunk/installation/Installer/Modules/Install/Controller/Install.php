@@ -29,7 +29,7 @@ class Install extends AbstractController
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
@@ -52,7 +52,7 @@ class Install extends AbstractController
 
         $this->date = $date;
         $this->installHelper = $installHelper;
-        $this->configFilePath = ACP3_DIR . 'config/config.php';
+        $this->configFilePath = ACP3_DIR . 'config/config.yml';
     }
 
     public function actionIndex()
@@ -88,7 +88,7 @@ class Install extends AbstractController
             $validator = $this->get('install.validator');
             $validator->validateConfiguration($formData, $this->configFilePath);
 
-            $this->_initDatabase($formData);
+            $this->_writeConfigFile($formData);
             $this->_setContainer();
             $bool = $this->_installModules();
 
@@ -107,33 +107,22 @@ class Install extends AbstractController
     /**
      * @param array $formData
      */
-    private function _initDatabase(array $formData)
+    private function _writeConfigFile(array $formData)
     {
         // Systemkonfiguration erstellen
-        $configParams = array(
-            'db_host' => $formData['db_host'],
-            'db_name' => $formData['db_name'],
-            'db_pre' => $formData['db_pre'],
-            'db_password' => $formData['db_password'],
-            'db_user' => $formData['db_user'],
-        );
+        $configParams = [
+            'parameters' => [
+                'db_host' => $formData['db_host'],
+                'db_name' => $formData['db_name'],
+                'db_table_prefix' => $formData['db_pre'],
+                'db_password' => $formData['db_password'],
+                'db_user' => $formData['db_user'],
+                'db_driver' => 'pdo_mysql',
+                'db_charset' => 'utf8'
+            ]
+        ];
 
         $this->installHelper->writeConfigFile($this->configFilePath, $configParams);
-
-        // Doctrine DBAL Initialisieren
-        $config = new \Doctrine\DBAL\Configuration();
-        $connectionParams = array(
-            'dbname' => $formData['db_name'],
-            'user' => $formData['db_user'],
-            'password' => $formData['db_password'],
-            'host' => $formData['db_host'],
-            'driver' => 'pdo_mysql',
-            'charset' => 'utf8'
-        );
-
-        define('DB_PRE', $formData['db_pre']);
-
-        $this->db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
     }
 
     /**
@@ -165,14 +154,7 @@ class Install extends AbstractController
             }
         }
 
-        $this->container->set('core.db', $this->db);
-
-        $params = array(
-            'compile_id' => 'installer',
-            'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
-            'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
-        );
-        $this->container->get('core.view')->setRenderer('smarty', $params);
+        $this->container->get('core.view')->setRenderer('smarty', ['compile_id' => 'installer']);
 
         $this->container->compile();
     }
@@ -197,7 +179,7 @@ class Install extends AbstractController
         if ($bool === true) {
             // Systemeinstellungen laden
             $this
-                ->get('system.config')
+                ->get('core.config.system')
                 ->getSettingsAsConstants();
 
             $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
@@ -216,15 +198,21 @@ class Install extends AbstractController
         return $bool;
     }
 
+    /**
+     * @param array $formData
+     */
     private function _installSampleData(array $formData)
     {
+        /** @var \ACP3\Core\DB db */
+        $this->db = $this->get('core.db');
+
         $securityHelper = $this->get('core.helpers.secure');
         $salt = $securityHelper->salt(12);
         $currentDate = gmdate('Y-m-d H:i:s');
 
-        $newsModuleId = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
+        $newsModuleId = $this->db->getConnection()->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', array('news'));
         $queries = array(
-            "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->quote($formData["date_format_long"]) . ", " . $this->db->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
+            "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->getConnection()->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->getConnection()->quote($formData["date_format_long"]) . ", " . $this->db->getConnection()->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
             'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('install', 'category_name') . '\', \'\', \'' . $this->lang->t('install', 'category_description') . '\', \'' . $newsModuleId . '\');',
             'INSERT INTO `{pre}news` VALUES (\'\', \'' . $currentDate . '\', \'' . $currentDate . '\', \'' . $this->lang->t('install', 'news_headline') . '\', \'' . $this->lang->t('install', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
             'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $this->lang->t('install', 'pages_news') . '\', \'news\', 1);',
@@ -274,16 +262,16 @@ class Install extends AbstractController
             'wysiwyg' => 'CKEditor'
         );
 
-        $configSystem = new Config($this->db, 'system');
+        $configSystem = $this->get('core.config.system');
         $configSystem->setSettings($systemSettings);
 
-        $configUsers = new Config($this->db, 'users');
+        $configUsers = $this->get('users.config');
         $configUsers->setSettings(array('mail' => $formData['mail']));
 
-        $configContact = new Config($this->db, 'contact');
+        $configContact = $this->get('contact.config');
         $configContact->setSettings(array('mail' => $formData['mail'], 'disclaimer' => $this->lang->t('install', 'disclaimer')));
 
-        $configNewsletter = new Config($this->db, 'newsletter');
+        $configNewsletter = $this->get('newsletter.config');
         $configNewsletter->setSettings(array('mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')));
     }
 

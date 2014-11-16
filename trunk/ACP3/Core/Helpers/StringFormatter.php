@@ -13,8 +13,7 @@ class StringFormatter
     /**
      * Macht einen String URL sicher
      *
-     * @param string $var
-     *    Die unzuwandelnde Variable
+     * @param string $var Die unzuwandelnde Variable
      *
      * @return string
      */

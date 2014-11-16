@@ -2,19 +2,13 @@
 namespace ACP3\Core;
 
 use ACP3\Modules\System;
-use Doctrine\DBAL\Connection;
 
 /**
  * Manages the various module settings
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class Config
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
     /**
      * @var Model
      */
@@ -28,10 +22,9 @@ class Config
      */
     protected $module = '';
 
-    public function __construct(Connection $db, $module)
+    public function __construct(DB $db, $module)
     {
         $this->cache = new Cache($module);
-        $this->db = $db;
         $this->module = strtolower($module);
         $this->systemModel = new System\Model($db);
     }

@@ -14,6 +14,9 @@ class Mime
      */
     protected $validate;
 
+    /**
+     * @param Misc $validate
+     */
     public function __construct(Core\Validator\Rules\Misc $validate)
     {
         $this->validate = $validate;

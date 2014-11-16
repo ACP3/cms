@@ -22,6 +22,11 @@ class Alerts
      */
     protected $request;
 
+    /**
+     * @param Core\Request $request
+     * @param Core\View $view
+     * @param Output $outputHelper
+     */
     public function __construct(
         Core\Request $request,
         Core\View $view,

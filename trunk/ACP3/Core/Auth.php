@@ -49,7 +49,7 @@ class Auth
      */
     protected $userInfo = [];
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
@@ -69,12 +69,12 @@ class Auth
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
      * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
      *
-     * @param \Doctrine\DBAL\Connection $db
+     * @param \ACP3\Core\DB $db
      * @param \ACP3\Core\Session        $session
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      */
     function __construct(
-        \Doctrine\DBAL\Connection $db,
+        DB $db,
         Session $session,
         Secure $secureHelper)
     {

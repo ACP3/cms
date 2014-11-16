@@ -56,7 +56,7 @@ class Breadcrumb
     protected $router;
 
     public function __construct(
-        \Doctrine\DBAL\Connection $db,
+        DB $db,
         Lang $lang,
         Request $request,
         Router $router
@@ -75,7 +75,7 @@ class Breadcrumb
                 $request->mod . '/' . $request->controller . '/',
                 $request->mod
             );
-            $items = $db->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
+            $items = $db->getConnection()->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . $db->getPrefix() . 'menu_items AS c, ' . $db->getPrefix() . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
             $c_items = count($items);
 
             // Dynamische Seite (ACP3 intern)

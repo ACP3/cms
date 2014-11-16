@@ -4,6 +4,7 @@ namespace ACP3\Installer\Modules\Install;
 
 use ACP3\Core;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Yaml\Dumper;
 
 /**
  * Class Helpers
@@ -14,7 +15,7 @@ class Helpers
     /**
      * Writes the system config file
      *
-     * @param       $configFilePath
+     * @param string $configFilePath
      * @param array $data
      *
      * @return bool
@@ -25,19 +26,11 @@ class Helpers
             // Konfigurationsdatei in ein Array schreiben
             ksort($data);
 
-            $content = "<?php\n";
-            $content .= "define('INSTALLED', true);\n";
+            $dumper = new Dumper();
 
-            $pattern = "define('CONFIG_%s', %s);\n";
-            foreach ($data as $key => $value) {
-                if (is_bool($value) === true) {
-                    $value = $value === true ? 'true' : 'false';
-                } elseif (is_numeric($value) !== true) {
-                    $value = '\'' . $value . '\'';
-                }
-                $content .= sprintf($pattern, strtoupper($key), $value);
-            }
-            $bool = @file_put_contents($configFilePath, $content, LOCK_EX);
+            $yaml = $dumper->dump($data);
+
+            $bool = @file_put_contents($configFilePath, $yaml, LOCK_EX);
             return $bool !== false;
         }
         return false;
@@ -64,22 +57,28 @@ class Helpers
         return $bool;
     }
 
-    public function executeSqlQueries(array $queries, \Doctrine\DBAL\Connection $db)
+    /**
+     * @param array $queries
+     * @param Core\DB $db
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    public function executeSqlQueries(array $queries, Core\DB $db)
     {
         if (count($queries) > 0) {
             $search = array('{pre}', '{engine}', '{charset}');
-            $replace = array(DB_PRE, 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
+            $replace = array($db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
 
-            $db->beginTransaction();
+            $db->getConnection()->beginTransaction();
             try {
                 foreach ($queries as $query) {
                     if (!empty($query)) {
-                        $db->query(str_replace($search, $replace, $query));
+                        $db->getConnection()->query(str_replace($search, $replace, $query));
                     }
                 }
-                $db->commit();
+                $db->getConnection()->commit();
             } catch (\Exception $e) {
-                $db->rollBack();
+                $db->getConnection()->rollBack();
 
                 Core\Logger::warning('installer', $e);
                 return false;

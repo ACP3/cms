@@ -60,7 +60,7 @@ class Router
             $alias = $this->aliases->getUriAlias($path);
             $path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
         }
-        $prefix = ((bool)CONFIG_SEO_MOD_REWRITE === false || $isAdminUrl === true) ? PHP_SELF . '/' : ROOT_DIR;
+        $prefix = ((bool)CONFIG_SEO_MOD_REWRITE === false || $isAdminUrl === true || (defined('DEBUG') && DEBUG === true)) ? PHP_SELF . '/' : ROOT_DIR;
         return $prefix . $path;
     }
 
