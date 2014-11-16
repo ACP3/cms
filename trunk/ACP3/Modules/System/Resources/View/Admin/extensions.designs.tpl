@@ -23,11 +23,15 @@
                     {if $row.selected == 1}
                         {icon path="16/apply"}
                     {else}
-                        <a href="{uri args="acp/system/extensions/designs/dir_`$row.dir`"}">{icon path="16/cancel"}</a>
+                        <a href="{uri args="acp/system/extensions/designs/dir_`$row.dir`"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">{icon path="16/cancel"}</a>
                     {/if}
                 </td>
             </tr>
         {/foreach}
         </tbody>
     </table>
+{/block}
+
+{block JAVASCRIPTS append}
+    {include_js module="system" file="forms"}
 {/block}

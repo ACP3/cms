@@ -65,9 +65,9 @@ class Date
     }
 
     /**
-     * @param array $settings
+     * @param $settings
      */
-    protected function _setFormatAndTimeZone(array $settings)
+    protected function _setFormatAndTimeZone($settings)
     {
         if (!empty($settings)) {
             $this->dateFormatLong = $settings['date_format_long'];

@@ -32,17 +32,29 @@
                                 {else}
                                     <div class="btn-group">
                                         {if $row.active === true}
-                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_deactivate"}" class="btn btn-default btn-sm" title="{lang t="system|disable_module"}">
+                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_deactivate"}"
+                                               class="btn btn-default btn-sm"
+                                               title="{lang t="system|disable_module"}"
+                                               data-ajax-form="true"
+                                               data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                                 <i class="glyphicon glyphicon-remove"></i>
                                                 {lang t="system|disable"}
                                             </a>
                                         {else}
-                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_activate"}" class="btn btn-default btn-sm" title="{lang t="system|enable_module"}">
+                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_activate"}"
+                                               class="btn btn-default btn-sm"
+                                               title="{lang t="system|enable_module"}"
+                                               data-ajax-form="true"
+                                               data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                                 <i class="glyphicon glyphicon-ok"></i>
                                                 {lang t="system|enable"}
                                             </a>
                                         {/if}
-                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_uninstall"}" class="btn btn-default btn-sm" title="{lang t="system|uninstall_module"}">
+                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_uninstall"}"
+                                           class="btn btn-default btn-sm"
+                                           title="{lang t="system|uninstall_module"}"
+                                           data-ajax-form="true"
+                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                             <i class="glyphicon glyphicon-off"></i>
                                             {lang t="system|uninstall"}
                                         </a>
@@ -74,7 +86,11 @@
                                 <td>{$row.version}</td>
                                 <td>{$row.author}</td>
                                 <td>
-                                    <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_install"}" class="btn btn-default btn-sm" title="{lang t="system|install_module"}">
+                                    <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_install"}"
+                                       class="btn btn-default btn-sm"
+                                       title="{lang t="system|install_module"}"
+                                       data-ajax-form="true"
+                                       data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                         <i class="glyphicon glyphicon-off"></i>
                                         {lang t="system|install"}
                                     </a>
@@ -91,4 +107,8 @@
             </div>
         </div>
     </div>
+{/block}
+
+{block JAVASCRIPTS append}
+    {include_js module="system" file="forms"}
 {/block}
