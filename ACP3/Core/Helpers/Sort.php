@@ -63,40 +63,38 @@ class Sort
      */
     private function _moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
-        if ($action === 'up' || $action === 'down') {
-            $this->db->beginTransaction();
-            try {
-                $id = (int)$id;
-                $table = DB_PRE . $table;
+        $this->db->beginTransaction();
+        try {
+            $id = (int)$id;
+            $table = DB_PRE . $table;
 
-                // Zusätzliche WHERE-Bedingung
-                $where = !empty($where) ? 'a.' . $where . ' = b.' . $where . ' AND ' : '';
+            // Zusätzliche WHERE-Bedingung
+            $where = !empty($where) ? 'a.' . $where . ' = b.' . $where . ' AND ' : '';
 
-                // Ein Schritt nach oben
-                if ($action === 'up') {
-                    // Aktuelles Element und das vorherige Element selektieren
-                    $query = $this->db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' < b.' . $sortField . ' ORDER BY a.' . $sortField . ' DESC LIMIT 1');
-                    // Ein Schritt nach unten
-                } else {
-                    // Aktuelles Element und das nachfolgende Element selektieren
-                    $query = $this->db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' > b.' . $sortField . ' ORDER BY a.' . $sortField . ' ASC LIMIT 1');
-                }
+            // Aktuelles Element und das vorherige Element selektieren
+            $queryString = 'SELECT a.%2$s AS other_id, a.%3$s AS other_sort, b.%3$s AS elem_sort FROM %1$s AS a, %1$s AS b WHERE %5$sb.%2$s = %4$s AND a.%3$s %6$s b.%3$s ORDER BY a.%3$s %7$s LIMIT 1';
 
-                if (!empty($query)) {
-                    // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
-                    // um Probleme mit möglichen Duplicate-Keys zu umgehen
-                    $this->db->update($table, array($sortField => 0), array($idField => $id));
-                    $this->db->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
-                    // Element nun den richtigen Wert zuweisen
-                    $this->db->update($table, array($sortField => $query['other_sort']), array($idField => $id));
-
-                    $this->db->commit();
-                    return true;
-                }
-            } catch (\Exception $e) {
-                $this->db->rollback();
+            if ($action === 'up') {
+                $query = $this->db->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '<', 'DESC'));
+            } else {
+                $query = $this->db->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '>', 'ASC'));
             }
+
+            if (!empty($query)) {
+                // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
+                // um Probleme mit möglichen Duplicate-Keys zu umgehen
+                $this->db->update($table, array($sortField => 0), array($idField => $id));
+                $this->db->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
+                // Element nun den richtigen Wert zuweisen
+                $this->db->update($table, array($sortField => $query['other_sort']), array($idField => $id));
+
+                $this->db->commit();
+                return true;
+            }
+        } catch (\Exception $e) {
+            $this->db->rollback();
         }
+
         return false;
     }
 } 

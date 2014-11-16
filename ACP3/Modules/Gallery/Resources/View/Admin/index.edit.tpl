@@ -81,12 +81,12 @@
                         {if $can_order === true}
                             <td>
                                 {if !$row.last}
-                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}">
+                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                         {icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}
                                     </a>
                                 {/if}
                                 {if !$row.first}
-                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}">
+                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                         {icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}
                                     </a>
                                 {/if}
@@ -115,6 +115,5 @@
         {if $can_delete === true}
             {include file="asset:system/mark.tpl"}
         {/if}
-        {include file="asset:system/datatable.tpl" dt=$datatable_config}
     {/if}
 {/block}

@@ -123,37 +123,33 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             $this->view->assign('gallery_id', $this->request->id);
-
-            // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($gallery['start'], $gallery['end'])));
-
             $this->view->assign('form', array_merge($gallery, $_POST));
 
-            $pictures = $this->galleryModel->getPicturesByGalleryId((int)$this->request->id);
-            $c_pictures = count($pictures);
-
-            if ($c_pictures > 0) {
-                $canDelete = $this->acl->hasPermission('admin/gallery/pictures/delete');
-                $config = array(
-                    'element' => '#acp-table',
-                    'hide_col_sort' => $canDelete === true ? 0 : '',
-                    'records_per_page' => $this->auth->entries
-                );
-                $this->view->assign('datatable_config', $config);
-
-                for ($i = 0; $i < $c_pictures; ++$i) {
-                    $pictures[$i]['first'] = $i == 0;
-                    $pictures[$i]['last'] = $i == $c_pictures - 1;
-                }
-                $this->view->assign('pictures', $pictures);
-                $this->view->assign('can_delete', $canDelete);
-                $this->view->assign('can_order', $this->acl->hasPermission('admin/gallery/pictures/order'));
-                $this->view->assign('can_edit_picture', $this->acl->hasPermission('admin/gallery/pictures/edit'));
-            }
+            $this->_actionEditPictures();
 
             $this->secureHelper->generateFormToken($this->request->query);
         } else {
             throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+    private function _actionEditPictures()
+    {
+        $pictures = $this->galleryModel->getPicturesByGalleryId((int)$this->request->id);
+        $c_pictures = count($pictures);
+
+        if ($c_pictures > 0) {
+            $canDelete = $this->acl->hasPermission('admin/gallery/pictures/delete');
+
+            for ($i = 0; $i < $c_pictures; ++$i) {
+                $pictures[$i]['first'] = $i == 0;
+                $pictures[$i]['last'] = $i == $c_pictures - 1;
+            }
+            $this->view->assign('pictures', $pictures);
+            $this->view->assign('can_delete', $canDelete);
+            $this->view->assign('can_order', $this->acl->hasPermission('admin/gallery/pictures/order'));
+            $this->view->assign('can_edit_picture', $this->acl->hasPermission('admin/gallery/pictures/edit'));
         }
     }
 

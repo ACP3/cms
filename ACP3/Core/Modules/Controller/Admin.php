@@ -64,11 +64,16 @@ abstract class Admin extends Core\Modules\Controller\Frontend
             $entries = $this->request->entries;
         }
 
+        /** @var \ACP3\Core\Helpers\Alerts $alerts */
         $alerts = $this->get('core.helpers.alerts');
 
         if (!isset($entries)) {
             $this->setContent($alerts->errorBox($this->lang->t('system', 'no_entries_selected')));
-        } elseif (is_array($entries) === true && $this->request->action !== 'confirmed') {
+        } elseif (empty($entries) === false && $this->request->action !== 'confirmed') {
+            if (is_array($entries) === false) {
+                $entries = array($entries);
+            }
+
             $data = array(
                 'action' => 'confirmed',
                 'entries' => $entries
@@ -77,6 +82,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
             $confirmationText = count($entries) == 1 ? $this->lang->t('system', 'confirm_delete_single') : str_replace('{items}', count($entries), $this->lang->t('system', 'confirm_delete_multiple'));
 
             $confirmBox = $alerts->confirmBoxPost($confirmationText, $data, $this->router->route($moduleConfirmUrl), $this->router->route($moduleIndexUrl));
+
             $this->setContent($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
