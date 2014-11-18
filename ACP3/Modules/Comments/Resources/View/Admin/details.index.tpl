@@ -55,13 +55,12 @@
             <strong>{lang t="system|no_entries"}</strong>
         </div>
     {/if}
-{/block}
-
-{block JAVASCRIPTS append}
+    {javascripts}
     {if isset($comments)}
         {if $can_delete === true}
             {include file="asset:system/mark.tpl"}
         {/if}
         {include file="asset:system/datatable.tpl" dt=$datatable_config}
     {/if}
+    {/javascripts}
 {/block}

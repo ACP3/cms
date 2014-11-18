@@ -4,7 +4,6 @@
     {if isset($pictures)}
         {$i=1}
         {if $overlay == 1}
-            {include_js module="gallery" file="frontend/index.pics" depends="fancybox"}
             {foreach $pictures as $row}
                 {if $i % 4 === 0}
                     <div class="row">
@@ -19,6 +18,9 @@
                 {/if}
                 {$i=$i+1}
             {/foreach}
+            {javascripts}
+                {include_js module="gallery" file="frontend/index.pics" depends="fancybox"}
+            {/javascripts}
         {else}
             {foreach $pictures as $row}
                 {if $i % 4 === 0}

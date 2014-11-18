@@ -4,27 +4,12 @@
     <!DOCTYPE html>
     <html lang="{$LANG}" dir="{$LANG_DIRECTION}">
     <head>
-        <title>{$HEAD_TITLE}</title>
-        {block META}
-            {include file="asset:system/meta.tpl" meta=$META}
-        {/block}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_news"}" title="{$PAGE_TITLE} - {lang t="news|news"}">
-        <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_files"}" title="{$PAGE_TITLE} - {lang t="files|files"}">
-        {block STYLESHEETS}
-            <!-- STYLESHEETS -->
-        {/block}
-        {block JAVASCRIPTS}
-            <!-- JAVASCRIPTS -->
-        {/block}
-        <!--[if lt IE 9]>
-        {include_js module="system" file="libs/html5shiv"}
-        <![endif]-->
+        {include file="asset:system/head.tpl" inline}
     </head>
 
     <body>
     <div class="container-fluid">
-        <h1 id="logo" class="hidden-xs"><a href="{$ROOT_DIR}">{$PAGE_TITLE}</a></h1>
+        <h1 id="logo" class="hidden-xs"><a href="{uri args=""}">{$PAGE_TITLE}</a></h1>
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">

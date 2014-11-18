@@ -101,26 +101,11 @@ abstract class Frontend extends Core\Modules\Controller
                 $this->view->assign('CONTENT', $this->getContentAppend());
                 $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 
-                echo $this->_addAssets();
+                $this->view->displayTemplate($this->getTemplate());
             } else {
                 echo $this->getContent();
             }
         }
-    }
-
-    /**
-     * @return mixed|string
-     */
-    private function _addAssets()
-    {
-        $content = $this->view->fetchTemplate($this->getTemplate());
-
-        if ($this->request->getIsAjax() !== true) {
-            $content = str_replace('<!-- STYLESHEETS -->', '<link rel="stylesheet" type="text/css" href="' . $this->assets->buildMinifyLink('css') . '">', $content);
-            $content = str_replace('<!-- JAVASCRIPTS -->', '<script type="text/javascript" src="' . $this->assets->buildMinifyLink('js') . '"></script>', $content);
-        }
-
-        return $content;
     }
 
     /**

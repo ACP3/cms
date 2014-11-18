@@ -93,9 +93,7 @@
             </div>
         </div>
     </form>
-{/block}
-
-{block JAVASCRIPTS append}
-    {include_js module="system" file="datepicker" depends="datetimepicker"}
-    {include_js module="system" file="forms"}
+    {javascripts}
+        {include_js module="system" file="forms"}
+    {/javascripts}
 {/block}

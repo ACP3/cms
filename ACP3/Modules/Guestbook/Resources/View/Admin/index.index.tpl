@@ -54,13 +54,12 @@
             </div>
         {/if}
     </form>
-{/block}
-
-{block JAVASCRIPTS append}
+    {javascripts}
     {if isset($guestbook)}
         {if $can_delete === true}
             {include file="asset:system/mark.tpl"}
         {/if}
         {include file="asset:system/datatable.tpl" dt=$datatable_config}
     {/if}
+    {/javascripts}
 {/block}

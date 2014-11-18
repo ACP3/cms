@@ -56,7 +56,3 @@
         </div>
     </form>
 {/block}
-
-{block JAVASCRIPTS append}
-    {include_js module="system" file="datepicker" depends="datetimepicker"}
-{/block}
