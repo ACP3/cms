@@ -90,7 +90,7 @@ class Index extends Core\Modules\Controller\Frontend
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->auth->isUser() === true) {
             $users = $this->auth->getUserInfo();
-            $disabled = ' readonly="readonly" class="readonly"';
+            $disabled = ' readonly="readonly"';
             $defaults['name'] = $users['nickname'];
             $defaults['name_disabled'] = $disabled;
             $defaults['mail'] = $users['mail'];
