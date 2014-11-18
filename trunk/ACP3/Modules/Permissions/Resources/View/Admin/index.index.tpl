@@ -69,10 +69,9 @@
             </div>
         {/if}
     </form>
-{/block}
-
-{block JAVASCRIPTS append}
+    {javascripts}
     {if isset($roles) &&  $can_delete === true}
         {include file="asset:system/mark.tpl"}
     {/if}
+    {/javascripts}
 {/block}

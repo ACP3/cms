@@ -72,11 +72,8 @@
                 </div>
             </div>
         </form>
-    {/if}
-{/block}
-
-{block JAVASCRIPTS append}
-    {if !isset($export)}
-        {include_js module="system" file="admin/maintenance.sql_export"}
+        {javascripts}
+            {include_js module="system" file="admin/maintenance.sql_export"}
+        {/javascripts}
     {/if}
 {/block}

@@ -66,14 +66,13 @@
             </div>
         {/if}
     </form>
-{/block}
-
-{block JAVASCRIPTS append}
-    {if isset($newsletter)}
+    {javascripts}
+    {if isset($accounts)}
         {if $can_delete === true}
             {include file="asset:system/mark.tpl"}
         {/if}
         {include file="asset:system/datatable.tpl" dt=$datatable_config}
         {include_js module="system" file="forms"}
     {/if}
+    {/javascripts}
 {/block}

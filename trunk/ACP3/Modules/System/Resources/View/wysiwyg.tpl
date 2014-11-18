@@ -23,10 +23,12 @@
     <div id="page-break-link" class="align-left">
         <a href="#" class="btn btn-default" data-toggle="modal" data-target="#page-break-form">{lang t="system|insert_page_break"}</a>
     </div>
-    <script type="text/javascript">
-        var wysiwygCallback = function(text) {
-            {$wysiwyg.advanced_replace_content};
-        };
-    </script>
-    {include_js module="system" file="wysiwyg" depends="bootstrap"}
+    {javascripts}
+        <script type="text/javascript">
+            var wysiwygCallback = function(text) {
+                {$wysiwyg.advanced_replace_content};
+            };
+        </script>
+        {include_js module="system" file="wysiwyg" depends="bootstrap"}
+    {/javascripts}
 {/if}

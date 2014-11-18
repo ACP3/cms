@@ -33,6 +33,6 @@
     </form>
 {/block}
 
-{block JAVASCRIPTS append}
+{javascripts}
     {include_js module="system" file="forms"}
-{/block}
+{/javascripts}

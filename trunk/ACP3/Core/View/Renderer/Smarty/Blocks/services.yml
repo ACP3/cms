@@ -1,0 +1,8 @@
+services:
+  smarty.block.javascripts:
+    class: ACP3\Core\View\Renderer\Smarty\Blocks\Javascripts
+    arguments: ['@core.request']
+
+  smarty.block.stylesheets:
+    class: ACP3\Core\View\Renderer\Smarty\Blocks\Stylesheets
+    arguments: ['@core.request']

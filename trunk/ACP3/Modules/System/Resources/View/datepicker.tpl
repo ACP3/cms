@@ -1,3 +1,6 @@
+{javascripts}
+    {include_js module="system" file="datepicker" depends="datetimepicker"}
+{/javascripts}
 {if $datepicker.range == 1}
     {if $datepicker.input_only}
         <div class="row" data-datepicker-range='{$datepicker.range_json}'>

@@ -109,7 +109,6 @@
 {/block}
 
 {block JAVASCRIPTS append}
-    {include_js module="system" file="datepicker" depends="datetimepicker"}
     {include_js module="system" file="forms"}
     {if isset($pictures)}
         {if $can_delete === true}
