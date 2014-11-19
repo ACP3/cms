@@ -95,8 +95,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->setContent($this->get('core.helpers.alerts')->confirmBox($bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'), $this->router->route('contact')));
-            return;
+            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'), $this->router->route('contact')));
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'contact');
         } catch (Core\Exceptions\ValidationFailed $e) {

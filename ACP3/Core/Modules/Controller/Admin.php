@@ -83,7 +83,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
 
             $confirmBox = $alerts->confirmBoxPost($confirmationText, $data, $this->router->route($moduleConfirmUrl), $this->router->route($moduleIndexUrl));
 
-            $this->setContent($confirmBox);
+            $this->setTemplate($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
         }

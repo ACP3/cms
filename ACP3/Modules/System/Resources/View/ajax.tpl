@@ -1,5 +1,7 @@
 <div id="breadcrumb">
-    {$BREADCRUMB}
+    {block BREADCRUMB}
+        {include file="asset:system/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
+    {/block}
 </div>
 <h2>{$TITLE}</h2>
 {block CONTENT}
