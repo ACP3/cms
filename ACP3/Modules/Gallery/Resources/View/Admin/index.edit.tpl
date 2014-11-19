@@ -100,6 +100,9 @@
                 {/foreach}
                 </tbody>
             </table>
+            {if $can_delete === true}
+                {include file="asset:system/mark.tpl"}
+            {/if}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
@@ -108,11 +111,6 @@
     </form>
 {/block}
 
-{block JAVASCRIPTS append}
+{javascripts}
     {include_js module="system" file="forms"}
-    {if isset($pictures)}
-        {if $can_delete === true}
-            {include file="asset:system/mark.tpl"}
-        {/if}
-    {/if}
-{/block}
+{/javascripts}

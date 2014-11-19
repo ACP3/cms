@@ -63,15 +63,13 @@
                 {/foreach}
                 </tbody>
             </table>
+            {if $can_delete === true}
+                {include file="asset:system/mark.tpl"}
+            {/if}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
-    {javascripts}
-    {if isset($roles) &&  $can_delete === true}
-        {include file="asset:system/mark.tpl"}
-    {/if}
-    {/javascripts}
 {/block}

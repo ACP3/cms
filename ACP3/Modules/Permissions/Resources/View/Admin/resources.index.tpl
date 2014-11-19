@@ -53,18 +53,14 @@
                 {/foreach}
                 </tbody>
             </table>
+            {if $can_delete_resource === true}
+                {include file="asset:system/mark.tpl"}
+            {/if}
+            {include_js module="permissions" file="admin/resources.index"}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
-    {javascripts}
-    {if isset($resources)}
-        {if $can_delete_resource === true}
-            {include file="asset:system/mark.tpl"}
-        {/if}
-        {include_js module="permissions" file="admin/resources.index"}
-    {/if}
-    {/javascripts}
 {/block}
