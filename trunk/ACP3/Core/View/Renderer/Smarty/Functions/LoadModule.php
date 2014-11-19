@@ -1,5 +1,5 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\FrontController;
 use ACP3\Core\ACL;
@@ -7,18 +7,14 @@ use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class LoadModule
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class LoadModule extends AbstractPlugin
+class LoadModule extends AbstractFunction
 {
     /**
      * @var Container
      */
     protected $container;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'load_module';
 
     /**
      * @param Container $container
@@ -26,6 +22,14 @@ class LoadModule extends AbstractPlugin
     public function __construct(Container $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'load_module';
     }
 
     /**

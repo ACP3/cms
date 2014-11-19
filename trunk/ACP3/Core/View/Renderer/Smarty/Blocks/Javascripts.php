@@ -8,9 +8,12 @@ namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 class Javascripts extends AbstractBlock
 {
     /**
-     * @var string
+     * @inheritdoc
      */
-    protected $blockName = 'javascripts';
+    public function getPluginName()
+    {
+        return 'javascripts';
+    }
 
     /**
      * @param $params

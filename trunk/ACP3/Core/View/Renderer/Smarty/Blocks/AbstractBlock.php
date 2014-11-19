@@ -1,23 +1,20 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
+use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
+
 /**
  * Class AbstractBlock
- * @package ACP3\Core\View\Renderer\Smarty\Block
+ * @package ACP3\Core\View\Renderer\Smarty\Blocks
  */
-abstract class AbstractBlock
+abstract class AbstractBlock extends AbstractPlugin
 {
     /**
-     * @var string
+     * @inheritdoc
      */
-    protected $blockName = '';
-
-    /**
-     * @param \Smarty $smarty
-     */
-    public function registerBlock(\Smarty $smarty)
+    public function getPluginType()
     {
-        $smarty->registerPlugin('block', $this->blockName, array($this, 'process'));
+        return 'block';
     }
 
     /**

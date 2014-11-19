@@ -1,22 +1,18 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class HasPermission
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class HasPermission extends AbstractPlugin
+class HasPermission extends AbstractFunction
 {
     /**
      * @var Core\ACL
      */
     protected $acl;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'has_permission';
 
     /**
      * @param Core\ACL $acl
@@ -24,6 +20,14 @@ class HasPermission extends AbstractPlugin
     public function __construct(Core\ACL $acl)
     {
         $this->acl = $acl;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'has_permission';
     }
 
     /**

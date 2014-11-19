@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class TemplatePath
- * @package ACP3\Core\View\Renderer\Smarty\Plugins
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class TemplatePath extends AbstractPlugin
+class TemplatePath extends AbstractFunction
 {
     /**
      * @var Core\Assets\ThemeResolver
@@ -24,6 +24,14 @@ class TemplatePath extends AbstractPlugin
     public function __construct(Core\Assets\ThemeResolver $themeResolver)
     {
         $this->themeResolver = $themeResolver;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'template_path';
     }
 
     /**

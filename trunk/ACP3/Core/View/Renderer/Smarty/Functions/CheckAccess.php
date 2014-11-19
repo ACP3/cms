@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class CheckAccess
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class CheckAccess extends AbstractPlugin
+class CheckAccess extends AbstractFunction
 {
     /**
      * @var Core\ACL
@@ -25,10 +25,6 @@ class CheckAccess extends AbstractPlugin
      * @var Icon
      */
     protected $icon;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'check_access';
 
     /**
      * @param Core\ACL $acl
@@ -47,6 +43,14 @@ class CheckAccess extends AbstractPlugin
         $this->acl = $acl;
         $this->router = $router;
         $this->icon = $icon;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'check_access';
     }
 
     /**
@@ -112,4 +116,5 @@ class CheckAccess extends AbstractPlugin
 
         return '';
     }
+
 }

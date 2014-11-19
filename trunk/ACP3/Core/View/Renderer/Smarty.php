@@ -3,10 +3,8 @@
 namespace ACP3\Core\View\Renderer;
 
 use ACP3\Core\View\AbstractRenderer;
-use ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock;
+use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter;
-use ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier;
-use ACP3\Core\View\Renderer\Smarty\Plugins\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 
 /**
@@ -42,26 +40,16 @@ class Smarty extends AbstractRenderer
                 /** @var AbstractPlugin $plugin */
                 $plugin = $this->container->get($serviceName);
                 $plugin->registerPlugin($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.block.') === 0) {
-                /** @var AbstractBlock $block */
-                $block = $this->container->get($serviceName);
-                $block->registerBlock($this->renderer);
             } elseif (strpos($serviceName, 'smarty.filter.') === 0) {
                 /** @var AbstractFilter $filter */
                 $filter = $this->container->get($serviceName);
                 $filter->registerFilter($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.modifier.') === 0) {
-                /** @var AbstractModifier $modifier */
-                $modifier = $this->container->get($serviceName);
-                $modifier->registerModifier($this->renderer);
             } elseif (strpos($serviceName, 'smarty.resource.') === 0) {
                 /** @var AbstractResource $resource */
                 $resource = $this->container->get($serviceName);
                 $resource->registerResource($this->renderer);
             }
         }
-
-        $this->renderer->registerClass('Misc', "\\ACP3\\Core\\Validator\\Rules\\Misc");
     }
 
     /**

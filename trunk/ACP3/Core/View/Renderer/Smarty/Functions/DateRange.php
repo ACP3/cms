@@ -1,19 +1,14 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Date;
 
 /**
  * Class DateRange
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class DateRange extends AbstractPlugin
+class DateRange extends AbstractFunction
 {
-    /**
-     * @var string
-     */
-    protected $pluginName = 'date_range';
-
     /**
      * @var \ACP3\Core\Date
      */
@@ -25,6 +20,14 @@ class DateRange extends AbstractPlugin
     public function __construct(Date $date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'date_range';
     }
 
     /**

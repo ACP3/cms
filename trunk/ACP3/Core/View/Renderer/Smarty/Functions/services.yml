@@ -1,60 +1,60 @@
 services:
   smarty.plugin.check_access:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\CheckAccess
+    class: ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess
     arguments: ['@core.acl', '@core.lang', '@core.router', '@smarty.plugin.icon']
 
   smarty.plugin.date_format:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\DateFormat
+    class: ACP3\Core\View\Renderer\Smarty\Functions\DateFormat
     arguments: ['@core.date']
 
   smarty.plugin.date_ramge:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\DateRange
+    class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
     arguments: ['@core.date']
 
   smarty.plugin.redirect_message:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\RedirectMessage
+    class: ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage
     arguments: ['@core.helpers.redirect']
 
   smarty.plugin.has_permission:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\HasPermission
+    class: ACP3\Core\View\Renderer\Smarty\Functions\HasPermission
     arguments: ['@core.acl']
 
   smarty.plugin.icon:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\Icon
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Icon
     arguments: ['@core.assets.themeResolver', '@core.validator.rules.misc']
 
   smarty.plugin.include_js:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\IncludeJs
+    class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
     arguments: ['@core.assets', '@core.assets.themeResolver']
 
   smarty.plugin.js_libraries:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\JsLibraries
+    class: ACP3\Core\View\Renderer\Smarty\Functions\JsLibraries
     arguments: ['@core.assets']
 
   smarty.plugin.lang:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\Lang
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Lang
     arguments: ['@core.lang']
 
   smarty.plugin.load_module:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\LoadModule
+    class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
     arguments: ['@service_container']
 
   smarty.plugin.mark:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\Mark
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Mark
     arguments: ['@core.lang']
 
   smarty.plugin.navbar:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\Navbar
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Navbar
     arguments: ['@core.modules', '@menus.helpers']
 
   smarty.plugin.router:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\Router
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Router
     arguments: ['@core.router']
 
   smarty.plugin.template_path:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\TemplatePath
+    class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
     arguments: ['@core.assets.themeResolver']
 
   smarty.plugin.wysiwyg:
-    class: ACP3\Core\View\Renderer\Smarty\Plugins\WYSIWYG
+    class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG
     arguments: ['@service_container']

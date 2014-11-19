@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class RedirectMessage
- * @package ACP3\Core\View\Renderer\Smarty\Plugins
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class RedirectMessage extends AbstractPlugin
+class RedirectMessage extends AbstractFunction
 {
     /**
      * @var Core\Helpers\RedirectMessages
@@ -24,6 +24,14 @@ class RedirectMessage extends AbstractPlugin
     public function __construct(Core\Helpers\RedirectMessages $redirectMessages)
     {
         $this->redirectMessages = $redirectMessages;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'redirect_message';
     }
 
     /**
