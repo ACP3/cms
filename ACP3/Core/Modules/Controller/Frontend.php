@@ -70,6 +70,7 @@ abstract class Frontend extends Core\Modules\Controller
         $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
         $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
         $this->view->assign('IN_ADM', $this->request->area === 'admin');
+        $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 
         $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
         $this->view->assign('LANG', $this->lang->getLanguage2Characters());
@@ -99,7 +100,6 @@ abstract class Frontend extends Core\Modules\Controller
                 $this->view->assign('BREADCRUMB', $this->breadcrumb->output());
                 $this->view->assign('META', $this->seo->getMetaTags());
                 $this->view->assign('CONTENT', $this->getContentAppend());
-                $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 
                 $this->view->displayTemplate($this->getTemplate());
             } else {

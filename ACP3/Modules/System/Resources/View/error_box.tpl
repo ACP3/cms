@@ -6,8 +6,12 @@
         {/foreach}
     </ul>
     {if $error_box.non_integer_keys === true}
-        {javascripts}
+        {if $IS_AJAX === true}
             {include_js module="system" file="error_box"}
-        {/javascripts}
+        {else}
+            {javascripts}
+                {include_js module="system" file="error_box"}
+            {/javascripts}
+        {/if}
     {/if}
 </div>
