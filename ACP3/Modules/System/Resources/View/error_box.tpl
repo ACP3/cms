@@ -6,6 +6,8 @@
         {/foreach}
     </ul>
     {if $error_box.non_integer_keys === true}
-        {include_js module="system" file="error_box"}
+        {javascripts}
+            {include_js module="system" file="error_box"}
+        {/javascripts}
     {/if}
 </div>

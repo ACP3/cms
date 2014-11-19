@@ -58,6 +58,7 @@
             </div>
         </div>
     </div>
+    <!-- JAVASCRIPTS -->
     </body>
     </html>
 {/if}

@@ -5,3 +5,4 @@
 {block CONTENT}
     {$CONTENT}
 {/block}
+<!-- JAVASCRIPTS -->
