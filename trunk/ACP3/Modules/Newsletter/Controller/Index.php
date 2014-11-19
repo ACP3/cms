@@ -51,7 +51,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $bool = $this->newsletterModel->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-            $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
+            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
@@ -96,8 +96,8 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
-                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
-                    return;
+                    $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+                    break;
                 case 'unsubscribe':
                     $validator->validateUnsubscribe($formData);
 
@@ -105,8 +105,8 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
-                    $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
-                    return;
+                    $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+                    break;
                 default:
                     throw new Core\Exceptions\ResultNotExists();
             }

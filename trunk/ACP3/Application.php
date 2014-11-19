@@ -269,6 +269,6 @@ class Application
         $view->assign('ROOT_DIR', ROOT_DIR);
         $view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
         $view->assign('CONTENT', $errorMessage);
-        $view->displayTemplate('system/maintenance.tpl');
+        $view->displayTemplate('system/exception.tpl');
     }
 }

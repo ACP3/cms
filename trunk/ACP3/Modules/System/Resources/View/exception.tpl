@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="{$LANG}">
+<html>
 <head>
     <title>{$PAGE_TITLE}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/css/bootstrap.min.css">
     <style type="text/css">
-        #maintenance {
+        #exception {
             width: 70%;
             height: 40px;
             margin: -20px auto;
@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<div id="maintenance" class="alert alert-warning">
+<div id="exception" class="alert alert-danger">
     <strong>{$CONTENT}</strong>
 </div>
 </body>

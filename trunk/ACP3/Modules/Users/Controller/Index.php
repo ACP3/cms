@@ -219,8 +219,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
-            return;
+            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/forgot_pwd');
         } catch (Core\Exceptions\ValidationFailed $e) {
@@ -259,8 +258,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->setContent($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
-            return;
+            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/register');
         } catch (Core\Exceptions\ValidationFailed $e) {

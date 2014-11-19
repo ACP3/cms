@@ -62,7 +62,7 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return $this->view->fetchTemplate('system/confirm_box.tpl');
+            return 'system/confirm_box.tpl';
         }
         return '';
     }
@@ -91,7 +91,7 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return $this->view->fetchTemplate('system/confirm_box_post.tpl');
+            return 'system/confirm_box_post.tpl';
         }
         return '';
     }
