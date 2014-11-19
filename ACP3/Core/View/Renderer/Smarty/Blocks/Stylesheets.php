@@ -8,9 +8,12 @@ namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 class Stylesheets extends AbstractBlock
 {
     /**
-     * @var string
+     * @inheritdoc
      */
-    protected $blockName = 'stylesheets';
+    public function getPluginName()
+    {
+        return 'stylesheets';
+    }
 
     /**
      * @param $params

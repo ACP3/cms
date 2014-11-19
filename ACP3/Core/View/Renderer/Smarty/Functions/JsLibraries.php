@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class JsLibraries
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class JsLibraries extends AbstractPlugin
+class JsLibraries extends AbstractFunction
 {
     /**
      * @var Core\Assets
@@ -17,10 +17,6 @@ class JsLibraries extends AbstractPlugin
      * @var array
      */
     protected $alreadyIncluded = [];
-    /**
-     * @var string
-     */
-    protected $pluginName = 'js_libraries';
 
     /**
      * @param Core\Assets $assets
@@ -28,6 +24,14 @@ class JsLibraries extends AbstractPlugin
     public function __construct(Core\Assets $assets)
     {
         $this->assets = $assets;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'js_libraries';
     }
 
     /**

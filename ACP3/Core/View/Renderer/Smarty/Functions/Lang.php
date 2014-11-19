@@ -1,22 +1,18 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class Lang
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class Lang extends AbstractPlugin
+class Lang extends AbstractFunction
 {
     /**
      * @var Core\Lang
      */
     protected $lang;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'lang';
 
     /**
      * @param Core\Lang $lang
@@ -24,6 +20,14 @@ class Lang extends AbstractPlugin
     public function __construct(Core\Lang $lang)
     {
         $this->lang = $lang;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'lang';
     }
 
     /**

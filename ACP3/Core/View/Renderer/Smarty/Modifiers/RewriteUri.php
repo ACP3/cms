@@ -10,10 +10,6 @@ use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 class RewriteUri extends AbstractModifier
 {
     /**
-     * @var string
-     */
-    protected $modifierName = 'rewrite_uri';
-    /**
      * @var RewriteInternalUri
      */
     protected $rewriteInternalUri;
@@ -27,8 +23,15 @@ class RewriteUri extends AbstractModifier
     }
 
     /**
-     * @param $value
-     * @return string
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'rewrite_uri';
+    }
+
+    /**
+     * @inheritdoc
      */
     public function process($value)
     {

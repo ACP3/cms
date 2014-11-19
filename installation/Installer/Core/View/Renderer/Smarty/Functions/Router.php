@@ -1,22 +1,18 @@
 <?php
-namespace ACP3\Installer\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Installer\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\View\Renderer\Smarty\Plugins\AbstractPlugin;
+use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 /**
  * Class Router
- * @package ACP3\Installer\Core\View\Renderer\Smarty
+ * @package ACP3\Installer\Core\View\Renderer\Smarty\Functions
  */
-class Router extends AbstractPlugin
+class Router extends AbstractFunction
 {
     /**
      * @var \ACP3\Installer\Core\Router
      */
     protected $router;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'uri';
 
     /**
      * @param \ACP3\Installer\Core\Router $router
@@ -24,6 +20,14 @@ class Router extends AbstractPlugin
     public function __construct(\ACP3\Installer\Core\Router $router)
     {
         $this->router = $router;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'uri';
     }
 
     /**

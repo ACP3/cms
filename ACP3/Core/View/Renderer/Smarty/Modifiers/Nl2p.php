@@ -10,10 +10,6 @@ use ACP3\Core\Helpers\StringFormatter;
 class Nl2p extends AbstractModifier
 {
     /**
-     * @var string
-     */
-    protected $modifierName = 'nl2p';
-    /**
      * @var StringFormatter
      */
     protected $stringFormatter;
@@ -27,8 +23,15 @@ class Nl2p extends AbstractModifier
     }
 
     /**
-     * @param $value
-     * @return string
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'nl2p';
+    }
+
+    /**
+     * @inheritdoc
      */
     public function process($value)
     {

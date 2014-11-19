@@ -1,14 +1,14 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 use ACP3\Modules\Menus;
 
 /**
  * Class Navbar
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class Navbar extends AbstractPlugin
+class Navbar extends AbstractFunction
 {
     /**
      * @var Core\Modules
@@ -18,10 +18,6 @@ class Navbar extends AbstractPlugin
      * @var Menus\Helpers
      */
     protected $menuHelpers;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'navbar';
 
     /**
      * @param Core\Modules $modules
@@ -34,6 +30,14 @@ class Navbar extends AbstractPlugin
     {
         $this->modules = $modules;
         $this->menuHelpers = $menuHelpers;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'navbar';
     }
 
     /**

@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class Icon
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class Icon extends AbstractPlugin
+class Icon extends AbstractFunction
 {
     /**
      * @var Core\Assets\ThemeResolver
@@ -17,10 +17,6 @@ class Icon extends AbstractPlugin
      * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'icon';
 
     /**
      * @param Core\Assets\ThemeResolver $themeResolver
@@ -33,6 +29,14 @@ class Icon extends AbstractPlugin
     {
         $this->themeResolver = $themeResolver;
         $this->validate = $validate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'icon';
     }
 
     /**

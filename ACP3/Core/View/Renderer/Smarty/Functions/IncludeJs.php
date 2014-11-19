@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
  * Class IncludeJs
- * @package ACP3\Core\View\Renderer\Smarty
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class IncludeJs extends AbstractPlugin
+class IncludeJs extends AbstractFunction
 {
     /**
      * @var Core\Assets
@@ -21,10 +21,6 @@ class IncludeJs extends AbstractPlugin
      * @var array
      */
     protected $alreadyIncluded = [];
-    /**
-     * @var string
-     */
-    protected $pluginName = 'include_js';
 
     /**
      * @param Core\Assets $assets
@@ -37,6 +33,14 @@ class IncludeJs extends AbstractPlugin
     {
         $this->assets = $assets;
         $this->themeResolver = $themeResolver;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'include_js';
     }
 
     /**

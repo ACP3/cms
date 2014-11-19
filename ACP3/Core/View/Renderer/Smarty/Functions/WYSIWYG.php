@@ -1,19 +1,15 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
- * Class CheckAccess
- * @package ACP3\Core\View\Renderer\Smarty
+ * Class WYSIWYG
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class WYSIWYG extends AbstractPlugin
+class WYSIWYG extends AbstractFunction
 {
-    /**
-     * @var string
-     */
-    protected $pluginName = 'wysiwyg';
     /**
      * @var Container
      */
@@ -25,6 +21,14 @@ class WYSIWYG extends AbstractPlugin
     public function __construct(Container $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'wysiwyg';
     }
 
     /**

@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Plugins;
+namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
 /**
- * Class URI
- * @package ACP3\Core\View\Renderer\Smarty
+ * Class Router
+ * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class Router extends AbstractPlugin
+class Router extends AbstractFunction
 {
     /**
      * @var Core\Router
@@ -24,6 +24,14 @@ class Router extends AbstractPlugin
     public function __construct(Core\Router $router)
     {
         $this->router = $router;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPluginName()
+    {
+        return 'uri';
     }
 
     /**

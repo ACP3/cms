@@ -1,29 +1,25 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
+use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
+
 /**
  * Class AbstractModifier
  * @package ACP3\Core\View\Renderer\Smarty\Modifiers
  */
-abstract class AbstractModifier
+abstract class AbstractModifier extends AbstractPlugin
 {
     /**
-     * @var string
+     * @inheritdoc
      */
-    protected $modifierName = '';
-
-    /**
-     * @param \Smarty $smarty
-     */
-    public function registerModifier(\Smarty $smarty)
+    public function getPluginType()
     {
-        $smarty->registerPlugin('modifier', $this->modifierName, array($this, 'process'));
+        return 'modifier';
     }
 
     /**
      * @param $params
-     *
-     * @return mixed
+     * @return string
      */
     abstract public function process($params);
 } 
