@@ -47,18 +47,14 @@
                 {/foreach}
                 </tbody>
             </table>
+            {if $can_delete === true}
+                {include file="asset:system/mark.tpl"}
+            {/if}
+            {include file="asset:system/datatable.tpl" dt=$datatable_config}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
-    {javascripts}
-    {if isset($news)}
-        {if $can_delete === true}
-            {include file="asset:system/mark.tpl"}
-        {/if}
-        {include file="asset:system/datatable.tpl" dt=$datatable_config}
-    {/if}
-    {/javascripts}
 {/block}
