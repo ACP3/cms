@@ -5,7 +5,7 @@ services:
 
   categories.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'categories']
+    arguments: ['@categories.cache.core', '@system.model', 'categories']
 
   categories.model:
     class: ACP3\Modules\Categories\Model
@@ -13,7 +13,11 @@ services:
 
   categories.cache:
     class: ACP3\Modules\Categories\Cache
-    arguments: ['@categories.model']
+    arguments: ['@categories.cache.core', '@categories.model']
+
+  categories.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'categories']
 
   categories.helpers:
     class: ACP3\Modules\Categories\Helpers

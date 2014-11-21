@@ -15,9 +15,13 @@ services:
     class: ACP3\Modules\Users\Controller\Sidebar\Index
     arguments: ['@core.context', '@users.config']
 
+  users.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'users']
+
   users.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'users']
+    arguments: ['@users.cache.core', '@system.model', 'users']
 
   users.model:
     class: ACP3\Modules\Users\Model

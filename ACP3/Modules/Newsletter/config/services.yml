@@ -19,9 +19,13 @@ services:
     class: ACP3\Modules\Newsletter\Controller\Sidebar\Index
     arguments: ['@core.context', '@core.helpers.secure']
 
+  newsletter.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'newsletter']
+
   newsletter.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'newsletter']
+    arguments: ['@newsletter.cache.core', '@system.model', 'newsletter']
 
   newsletter.model:
     class: ACP3\Modules\Newsletter\Model
@@ -29,7 +33,7 @@ services:
 
   newsletter.helpers:
     class: ACP3\Modules\Newsletter\Helpers
-    arguments: ['@core.lang', '@core.mailer', '@core.router', '@core.helpers.stringFormatter', '@newsletter.config', '@newsletter.model']
+    arguments: ['@core.lang', '@core.mailer', '@core.router', '@core.helpers.stringFormatter', '@system.config', '@newsletter.config', '@newsletter.model']
 
   newsletter.validator:
     class: ACP3\Modules\Newsletter\Validator

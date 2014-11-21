@@ -28,6 +28,10 @@ class Helpers
      */
     protected $stringFormatter;
     /**
+     * @var Core\Config
+     */
+    protected $systemConfig;
+    /**
      * @var Model
      */
     protected $newsletterModel;
@@ -41,6 +45,7 @@ class Helpers
      * @param Core\Mailer $mailer
      * @param Core\Router $router
      * @param Core\Helpers\StringFormatter $stringFormatter
+     * @param Core\Config $systemConfig
      * @param Core\Config $newsletterConfig
      * @param Model $newsletterModel
      */
@@ -49,6 +54,7 @@ class Helpers
         Core\Mailer $mailer,
         Core\Router $router,
         Core\Helpers\StringFormatter $stringFormatter,
+        Core\Config $systemConfig,
         Core\Config $newsletterConfig,
         Model $newsletterModel
     )
@@ -57,6 +63,7 @@ class Helpers
         $this->mailer = $mailer;
         $this->router = $router;
         $this->stringFormatter = $stringFormatter;
+        $this->systemConfig = $systemConfig;
         $this->newsletterConfig = $newsletterConfig;
         $this->newsletterModel = $newsletterModel;
     }
@@ -77,7 +84,7 @@ class Helpers
         $newsletter = $this->newsletterModel->getOneById($newsletterId);
         $from = array(
             'email' => $settings['mail'],
-            'name' => CONFIG_SEO_TITLE
+            'name' => $this->systemConfig->getSettings()['seo_title']
         );
 
         $this->mailer
@@ -114,14 +121,15 @@ class Helpers
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
         $url = 'http://' . $host . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
+        $systemSettings = $this->systemConfig->getSettings();
         $settings = $this->newsletterConfig->getSettings();
 
-        $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
+        $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), $systemSettings['seo_title']);
         $body = str_replace('{host}', $host, $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 
         $from = array(
             'email' => $settings['mail'],
-            'name' => CONFIG_SEO_TITLE
+            'name' => $systemSettings['seo_title']
         );
 
         $this->mailer

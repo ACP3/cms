@@ -62,6 +62,7 @@ class ACL
         $this->modules = $modules;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
+
         $this->userRoles = $this->getUserRoles($auth->getUserId());
         $this->resources = $this->getResources();
         $this->privileges = $this->getRules($this->userRoles);

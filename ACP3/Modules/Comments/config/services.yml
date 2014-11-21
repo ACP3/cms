@@ -13,9 +13,13 @@ services:
     calls:
       - ['setContainer', ['@service_container']]
 
+  comments.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'comments']
+
   comments.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'comments']
+    arguments: ['@comments.cache.core', '@system.model', 'comments']
 
   comments.helpers:
     class: ACP3\Modules\Comments\Helpers

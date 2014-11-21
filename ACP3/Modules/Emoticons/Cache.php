@@ -20,11 +20,15 @@ class Cache
     protected $emoticonsModel;
 
     /**
+     * @param Core\Cache $cache
      * @param Model $emoticonsModel
      */
-    public function __construct(Model $emoticonsModel)
+    public function __construct(
+        Core\Cache $cache,
+        Model $emoticonsModel
+    )
     {
-        $this->cache = new Core\Cache('emoticons');
+        $this->cache = $cache;
         $this->emoticonsModel = $emoticonsModel;
     }
 

@@ -23,12 +23,16 @@ class Cache
     protected $permissionsModel;
 
     /**
+     * @param Core\Cache $cache
      * @param Model $permissionsModel
      */
-    public function __construct(Model $permissionsModel)
+    public function __construct(
+        Core\Cache $cache,
+        Model $permissionsModel
+    )
     {
+        $this->cache = $cache;
         $this->permissionsModel = $permissionsModel;
-        $this->cache = new Core\Cache('acl');
     }
 
     /**

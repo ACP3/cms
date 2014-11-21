@@ -198,10 +198,12 @@ class Index extends Core\Modules\Controller\Frontend
                 $user = $this->usersModel->getOneByNickname($formData['nick_mail']);
             }
 
+            $systemSettings = $this->systemConfig->getSettings();
+
             // E-Mail mit dem neuen Passwort versenden
-            $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'forgot_pwd_mail_subject'));
+            $subject = str_replace(array('{title}', '{host}'), array($systemSettings['seo_title'], $host), $this->lang->t('users', 'forgot_pwd_mail_subject'));
             $search = array('{name}', '{mail}', '{password}', '{title}', '{host}');
-            $replace = array($user['nickname'], $user['mail'], $newPassword, CONFIG_SEO_TITLE, $host);
+            $replace = array($user['nickname'], $user['mail'], $newPassword, $systemSettings['seo_title'], $host);
             $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
             $settings = $this->usersConfig->getSettings();
@@ -233,10 +235,20 @@ class Index extends Core\Modules\Controller\Frontend
             $validator = $this->get('users.validator');
             $validator->validateRegistration($formData);
 
+            $systemSettings = $this->systemConfig->getSettings();
+
             // E-Mail mit den Accountdaten zusenden
             $host = htmlentities($_SERVER['HTTP_HOST']);
-            $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_subject'));
-            $body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($formData['nickname'], $formData['mail'], $formData['pwd'], CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_message'));
+            $subject = str_replace(
+                array('{title}', '{host}'),
+                array($systemSettings['seo_title'], $host),
+                $this->lang->t('users', 'register_mail_subject')
+            );
+            $body = str_replace(
+                array('{name}', '{mail}', '{password}', '{title}', '{host}'),
+                array($formData['nickname'], $formData['mail'], $formData['pwd'], $systemSettings['seo_title'], $host),
+                $this->lang->t('users', 'register_mail_message')
+            );
             $mailIsSent = $this->get('core.helpers.sendEmail')->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
             $salt = $this->secureHelper->salt(12);
@@ -245,11 +257,11 @@ class Index extends Core\Modules\Controller\Frontend
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
                 'mail' => $formData['mail'],
-                'date_format_long' => CONFIG_DATE_FORMAT_LONG,
-                'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
-                'time_zone' => CONFIG_DATE_TIME_ZONE,
-                'language' => CONFIG_LANG,
-                'entries' => CONFIG_ENTRIES,
+                'date_format_long' => $systemSettings['date_format_long'],
+                'date_format_short' => $systemSettings['date_format_short'],
+                'time_zone' => $systemSettings['date_time_zone'],
+                'language' => $systemSettings['lang'],
+                'entries' => $systemSettings['entries'],
                 'registration_date' => $this->date->getCurrentDateTime(),
             );
 

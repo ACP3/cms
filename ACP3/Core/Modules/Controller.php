@@ -43,6 +43,10 @@ abstract class Controller
      */
     protected $view;
     /**
+     * @var Core\Config
+     */
+    protected $systemConfig;
+    /**
      * Nichts ausgeben
      */
     protected $noOutput = false;
@@ -81,6 +85,7 @@ abstract class Controller
         $this->router = $context->getRouter();
         $this->view = $context->getView();
         $this->modules = $context->getModules();
+        $this->systemConfig = $context->getSystemConfig();
     }
 
     /**

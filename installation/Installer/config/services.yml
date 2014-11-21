@@ -47,12 +47,19 @@ services:
   core.router:
     class: ACP3\Installer\Core\Router
 
+  core.validator.rules.date:
+    class: ACP3\Core\Validator\Rules\Date
+
+  core.validator.rules.misc:
+    class: ACP3\Core\Validator\Rules\Misc
+    arguments: ['@core.request']
+
   core.view:
     class: ACP3\Core\View
     calls:
       - ['setContainer', ['@service_container']]
 
   core.view.renderer.smarty:
-    class: ACP3\Core\View\Renderer\Smarty
+    class: ACP3\Installer\Core\View\Renderer\Smarty
     calls:
       - ['setContainer', ['@service_container']]

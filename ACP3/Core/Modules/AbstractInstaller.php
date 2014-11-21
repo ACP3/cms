@@ -7,9 +7,8 @@ use ACP3\Modules\System;
 use ACP3\Modules\Permissions;
 
 /**
- * Module Installer Klasse
- *
- * @author Tino Goratsch
+ * Class AbstractInstaller
+ * @package ACP3\Core\Modules
  */
 abstract class AbstractInstaller implements InstallerInterface
 {
@@ -29,6 +28,14 @@ abstract class AbstractInstaller implements InstallerInterface
      * @var Core\DB
      */
     protected $db;
+    /**
+     * @var Core\XML
+     */
+    protected $xml;
+    /**
+     * @var Core\Cache
+     */
+    protected $aclCache;
     /**
      * @var \ACP3\Modules\System\Model
      */
@@ -54,43 +61,37 @@ abstract class AbstractInstaller implements InstallerInterface
 
     /**
      * @param Core\DB $db
+     * @param Core\XML $xml
+     * @param Core\Cache $aclCache
      * @param System\Model $systemModel
      * @param Permissions\Model $permissionsModel
      */
     public function __construct(
         Core\DB $db,
+        Core\XML $xml,
+        Core\Cache $aclCache,
         System\Model $systemModel,
         Permissions\Model $permissionsModel
     )
     {
         $this->db = $db;
+        $this->xml = $xml;
+        $this->aclCache = $aclCache;
         $this->systemModel = $systemModel;
         $this->permissionsModel = $permissionsModel;
     }
 
     /**
-     * @param $module
-     * @return string
-     */
-    public static function buildClassName($module)
-    {
-        $moduleName = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module))));
-        return "\\ACP3\\Modules\\$moduleName\\Installer";
-    }
-
-    /**
      * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
-     *
-     * @param string $module
      *
      * @return array
      */
-    public static function getDependencies($module)
+    public function getDependencies()
     {
-        if ((bool)preg_match('=/=', $module) === false) {
-            $path = MODULES_DIR . $module . '/module.xml';
-            if (is_file($path)) {
-                $deps = Core\XML::parseXmlFile($path, '/module/info/dependencies');
+        if ((bool)preg_match('=/=', static::MODULE_NAME) === false) {
+            $path = MODULES_DIR . static::MODULE_NAME . '/module.xml';
+            if (is_file($path) === true) {
+                $deps = $this->xml->parseXmlFile($path, '/module/info/dependencies');
                 return array_values($deps);
             }
         }
@@ -254,8 +255,7 @@ abstract class AbstractInstaller implements InstallerInterface
             $this->_insertAclRules();
         }
 
-        $cache = new Core\Cache('acl');
-        $cache->getDriver()->deleteAll();
+        $this->aclCache->getDriver()->deleteAll();
 
         return true;
     }
@@ -400,8 +400,7 @@ abstract class AbstractInstaller implements InstallerInterface
         $bool = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
         $bool2 = $this->permissionsModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RULES);
 
-        $cache = new Core\Cache('acl');
-        $cache->getDriver()->deleteAll();
+        $this->aclCache->getDriver()->deleteAll();
 
         return $bool !== false && $bool2 !== false;
     }

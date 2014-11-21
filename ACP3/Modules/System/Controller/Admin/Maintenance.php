@@ -2,6 +2,7 @@
 
 namespace ACP3\Modules\System\Controller\Admin;
 
+use ACP3\Application;
 use ACP3\Core;
 use ACP3\Modules\System;
 
@@ -104,7 +105,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             $data = explode('||', $file);
             if (count($data) === 2) {
                 $update = array(
-                    'installed_version' => CONFIG_VERSION,
+                    'installed_version' => Application::VERSION,
                     'current_version' => $data[0],
                 );
 

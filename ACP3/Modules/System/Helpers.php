@@ -43,14 +43,12 @@ class Helpers
     /**
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
      *
-     * @param string $module
-     *
+     * @param Core\Modules\AbstractInstaller $moduleInstaller
      * @return array
      */
-    public function checkInstallDependencies($module)
+    public function checkInstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
     {
-        $module = strtolower($module);
-        $deps = Core\Modules\AbstractInstaller::getDependencies($module);
+        $deps = $moduleInstaller->getDependencies();
         $modulesToEnable = [];
         if (!empty($deps)) {
             foreach ($deps as $dep) {
@@ -65,19 +63,18 @@ class Helpers
     /**
      * Überprüft die Modulabhängigkeiten vor dem Deinstallieren eines Moduls
      *
-     * @param string $module
-     *
+     * @param Core\Modules\AbstractInstaller $moduleInstaller
      * @return array
      */
-    public function checkUninstallDependencies($module)
+    public function checkUninstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
     {
-        $module = strtolower($module);
+        $module = $moduleInstaller::MODULE_NAME;
         $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
         $modulesToUninstall = [];
         foreach ($modules as $row) {
             $row = strtolower($row);
             if ($row !== $module) {
-                $deps = Core\Modules\AbstractInstaller::getDependencies($row); // Modulabhängigkeiten
+                $deps = $moduleInstaller->getDependencies();
                 if (!empty($deps) && $this->modules->isInstalled($row) === true && in_array($module, $deps) === true) {
                     $modulesToUninstall[] = ucfirst($row);
                 }

@@ -19,12 +19,16 @@ class Cache
     protected $cache;
 
     /**
+     * @param Core\Cache $cache
      * @param Model $categoriesModel
      */
-    public function __construct(Model $categoriesModel)
+    public function __construct(
+        Core\Cache $cache,
+        Model $categoriesModel
+    )
     {
         $this->categoriesModel = $categoriesModel;
-        $this->cache = new Core\Cache('categories');
+        $this->cache = $cache;
     }
 
     /**

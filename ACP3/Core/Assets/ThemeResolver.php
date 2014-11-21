@@ -11,6 +11,10 @@ use ACP3\Modules\Minify;
 class ThemeResolver
 {
     /**
+     * @var Core\XML
+     */
+    protected $xml;
+    /**
      * @var Minify\Cache
      */
     protected $minifyCache;
@@ -34,8 +38,12 @@ class ThemeResolver
     /**
      * @param Minify\Cache $minifyCache
      */
-    public function __construct(Minify\Cache $minifyCache)
+    public function __construct(
+        Core\XML $xml,
+        Minify\Cache $minifyCache
+    )
     {
+        $this->xml = $xml;
         $this->minifyCache = $minifyCache;
         $this->cachedPaths = $minifyCache->getCache();
     }
@@ -96,7 +104,7 @@ class ThemeResolver
         if (is_file($designAssetPath) === true) {
             $assetPath = $designAssetPath;
         } else {
-            $designInfo = Core\XML::parseXmlFile($this->designAssetsPath . '/info.xml', '/design');
+            $designInfo = $this->xml->parseXmlFile($this->designAssetsPath . '/info.xml', '/design');
 
             if (!empty($designInfo['parent'])) {
                 $this->designAssetsPath = ACP3_ROOT_DIR . 'designs/' . $designInfo['parent'];

@@ -1,5 +1,5 @@
 {if $IS_AJAX === true}
-    {include file="asset:ajax.tpl"}
+    {include file="asset:ajax.tpl" inline}
 {else}
     <!DOCTYPE html>
     <html lang="{$LANG}" dir="{$LANG_DIRECTION}">

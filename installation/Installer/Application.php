@@ -4,7 +4,6 @@ namespace ACP3\Installer;
 
 use ACP3\Core;
 use ACP3\Installer\Core\FrontController;
-use Doctrine\DBAL;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
@@ -73,21 +72,17 @@ class Application
     {
         $this->container = new ContainerBuilder();
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
-        $loader->load(ACP3_DIR . 'config/validation.yml');
-        $loader->load(INSTALLER_ACP3_DIR . 'config/overridden.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
-        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..', 'Update'));
         foreach ($modules as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
                 $loader->load($path);
             }
         }
-
-        $this->container->set('core.db', new \StdClass());
 
         $this->container->get('core.view')->setRenderer('smarty', [ 'compile_id' => 'installer' ]);
 
@@ -100,17 +95,18 @@ class Application
     public function outputPage()
     {
         $request = $this->container->get('core.request');
+        $redirect = $this->container->get('core.redirect');
 
         $frontController = new FrontController($this->container);
-        $errorsServiceId = 'errors.controller.install.index';
 
         try {
             $serviceId = $request->mod . '.controller.install.' . $request->controller;
             $frontController->dispatch($serviceId, $request->file);
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
-            $frontController->dispatch($errorsServiceId, '404');
+            $redirect->temporary('errors/index/404');
         } catch (\Exception $e) {
-            $frontController->dispatch($errorsServiceId, '404');
+            Core\Logger::critical('installer', $e->getMessage());
+            $redirect->temporary('errors/index/500');
         }
     }
 
@@ -174,11 +170,6 @@ class Application
                 $loader->load($path);
             }
         }
-
-        // Systemeinstellungen laden
-        $this->container
-            ->get('core.config.system')
-            ->getSettingsAsConstants();
 
         $this->container->get('core.view')->setRenderer('smarty', ['compile_id' => 'installer']);
 

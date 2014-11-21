@@ -76,20 +76,22 @@ class Index extends Core\Modules\Controller\Frontend
     private function _indexPost(array $formData)
     {
         try {
+            $systemSettings = $this->systemConfig->getSettings();
+            $settings = $this->contactConfig->getSettings();
+
             $validator = $this->get('contact.validator');
             $validator->validate($formData);
 
-            $settings = $this->contactConfig->getSettings();
             $formData['message'] = Core\Functions::strEncode($formData['message'], true);
 
-            $subject = sprintf($this->lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
+            $subject = sprintf($this->lang->t('contact', 'contact_subject'), $systemSettings['seo_title']);
             $body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($formData['name'], $formData['mail'], $formData['message'], "\n"), $this->lang->t('contact', 'contact_body'));
             $bool = $this->get('core.helpers.sendEmail')->execute('', $settings['mail'], $formData['mail'], $subject, $body);
 
             // Nachrichtenkopie an Absender senden
             if (isset($formData['copy'])) {
-                $subjectCopy = sprintf($this->lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
-                $bodyCopy = sprintf($this->lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $formData['message']);
+                $subjectCopy = sprintf($this->lang->t('contact', 'sender_subject'), $systemSettings['seo_title']);
+                $bodyCopy = sprintf($this->lang->t('contact', 'sender_body'), $systemSettings['seo_title'], $formData['message']);
                 $this->get('core.helpers.sendEmail')->execute($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
             }
 

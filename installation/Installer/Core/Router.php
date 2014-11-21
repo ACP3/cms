@@ -11,7 +11,6 @@ class Router extends Core\Router
 {
     public function __construct()
     {
-        return;
     }
 
     /**

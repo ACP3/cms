@@ -54,17 +54,23 @@ class Breadcrumb
      * @var Router
      */
     protected $router;
+    /**
+     * @var array
+     */
+    protected $systemConfig = [];
 
     public function __construct(
         DB $db,
         Lang $lang,
         Request $request,
-        Router $router
+        Router $router,
+        Config $systemConfig
     )
     {
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
+        $this->systemConfig = $systemConfig->getSettings();
 
         // Frontendbereich
         if ($request->area !== 'admin') {
@@ -187,7 +193,7 @@ class Breadcrumb
                 if (!empty($this->title['postfix'])) {
                     $title .= $separator . $this->title['postfix'];
                 }
-                $title .= ' | ' . CONFIG_SEO_TITLE;
+                $title .= ' | ' . $this->systemConfig['seo_title'];
             }
             return $title;
         }

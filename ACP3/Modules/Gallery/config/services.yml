@@ -17,11 +17,15 @@ services:
 
   gallery.cache:
     class: ACP3\Modules\Gallery\Cache
-    arguments: ['@gallery.model', '@gallery.config']
+    arguments: ['@gallery.cache.core', '@gallery.model', '@gallery.config']
+
+  gallery.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'gallery']
 
   gallery.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'gallery']
+    arguments: ['@gallery.cache.core', '@system.model', 'gallery']
 
   gallery.model:
     class: ACP3\Modules\Gallery\Model

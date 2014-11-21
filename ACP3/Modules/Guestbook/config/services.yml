@@ -7,9 +7,13 @@ services:
     class: ACP3\Modules\Guestbook\Controller\Index
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@guestbook.model', '@guestbook.config']
 
+  guestbook.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'guestbook']
+
   guestbook.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'guestbook']
+    arguments: ['@guestbook.cache.core', '@system.model', 'guestbook']
 
   guestbook.model:
     class: ACP3\Modules\Guestbook\Model

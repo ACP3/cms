@@ -34,6 +34,10 @@ class SEO
      * @var Forms
      */
     protected $formsHelper;
+    /**
+     * @var array
+     */
+    protected $systemConfig = [];
 
     /**
      * Gibt die nächste Seite an
@@ -68,21 +72,26 @@ class SEO
      * @param Request $request
      * @param Aliases $aliases
      * @param Forms $formsHelper
+     * @param Cache $seoCache
+     * @param Config $systemConfig
      */
     public function __construct(
         DB $db,
         Lang $lang,
         Request $request,
         Aliases $aliases,
-        Forms $formsHelper
+        Forms $formsHelper,
+        Cache $seoCache,
+        Config $systemConfig
     )
     {
-        $this->cache = new Cache('seo');
+        $this->cache = $seoCache;
         $this->db = $db;
         $this->lang = $lang;
         $this->request = $request;
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
+        $this->systemConfig = $systemConfig->getSettings();
 
         $this->aliasCache = $this->getCache();
     }
@@ -148,8 +157,8 @@ class SEO
     public function getPageDescription()
     {
         // Meta Description für die Homepage einer Website
-        if ($this->request->query === CONFIG_HOMEPAGE) {
-            return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
+        if ($this->request->query === $this->systemConfig['homepage']) {
+            return $this->systemConfig['seo_meta_description'] !== '' ? $this->systemConfig['seo_meta_description'] : '';
         } else {
             $description = $this->getDescription($this->request->getUriWithoutPages());
             if (empty($description)) {
@@ -189,7 +198,7 @@ class SEO
             $keywords = $this->getKeywords($this->request->mod);
         }
 
-        return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
+        return strtolower(!empty($keywords) ? $keywords : $this->systemConfig['seo_meta_keywords']);
     }
 
     /**
@@ -239,11 +248,16 @@ class SEO
         );
 
         if ($path === '') {
-            return strtr(CONFIG_SEO_ROBOTS, $replace);
+            return strtr($this->systemConfig['seo_robots'], $replace);
         } else {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $robot = isset($this->aliasCache[$path]) === false || $this->aliasCache[$path]['robots'] == 0 ? CONFIG_SEO_ROBOTS : $this->aliasCache[$path]['robots'];
+            if (isset($this->aliasCache[$path]) === false || $this->aliasCache[$path]['robots'] == 0) {
+                $robot = $this->systemConfig['seo_robots'];
+            } else {
+                $robot = $this->aliasCache[$path]['robots'];
+            }
+
             return strtr($robot, $replace);
         }
     }

@@ -11,9 +11,13 @@ services:
     class: ACP3\Modules\Contact\Controller\Sidebar\Index
     arguments: ['@core.context', '@contact.config']
 
+  contact.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'contact']
+
   contact.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'contact']
+    arguments: ['@contact.cache.core', '@system.model', 'contact']
 
   contact.validator:
     class: ACP3\Modules\Contact\Validator

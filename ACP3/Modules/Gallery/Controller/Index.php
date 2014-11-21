@@ -139,12 +139,12 @@ class Index extends Core\Modules\Controller\Frontend
             $action = $this->request->action === 'thumb' ? 'thumb' : '';
 
             $options = array(
-                'enable_cache' => CONFIG_CACHE_IMAGES == 1 ? true : false,
+                'enable_cache' => $this->systemConfig->getSettings()['cache_images'] == 1,
                 'cache_prefix' => 'gallery_' . $action,
                 'max_width' => $this->settings[$action . 'width'],
                 'max_height' => $this->settings[$action . 'height'],
                 'file' => UPLOADS_DIR . 'gallery/' . $picture,
-                'prefer_height' => $action === 'thumb' ? true : false
+                'prefer_height' => $action === 'thumb'
             );
 
             $image = new Core\Image($options);

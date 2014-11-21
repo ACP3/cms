@@ -19,13 +19,13 @@ class Auth
      *
      * @var integer
      */
-    public $entries = CONFIG_ENTRIES;
+    public $entries = '';
     /**
      * Standardsprache des Benutzers
      *
      * @var string
      */
-    public $language = CONFIG_LANG;
+    public $language = '';
     /**
      * Eingeloggter Benutzer oder nicht
      *
@@ -49,13 +49,13 @@ class Auth
      */
     protected $userInfo = [];
     /**
-     * @var \ACP3\Core\DB
-     */
-    protected $db;
-    /**
      * @var Session
      */
     protected $session;
+    /**
+     * @var Config
+     */
+    protected $usersConfig;
     /**
      * @var \ACP3\Modules\Users\Model
      */
@@ -66,28 +66,36 @@ class Auth
     protected $secureHelper;
 
     /**
-     * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
-     * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
-     *
-     * @param \ACP3\Core\DB $db
-     * @param \ACP3\Core\Session        $session
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param Session $session
+     * @param Secure $secureHelper
+     * @param Config $systemConfig
+     * @param Config $usersConfig
+     * @param Users\Model $usersModel
      */
     function __construct(
-        DB $db,
         Session $session,
-        Secure $secureHelper)
+        Secure $secureHelper,
+        Config $systemConfig,
+        Config $usersConfig,
+        Users\Model $usersModel
+    )
     {
-        $this->db = $db;
         $this->session = $session;
-        $this->usersModel = new Users\Model($db);
         $this->secureHelper = $secureHelper;
+        $this->usersConfig = $usersConfig;
+        $this->usersModel = $usersModel;
+
+        $settings = $systemConfig->getSettings();
+
+        $this->entries = $settings['entries'];
+        $this->language = $settings['lang'];
 
         $this->authenticate();
     }
 
     /**
-     *
+     * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
+     * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
      */
     protected function authenticate()
     {
@@ -103,10 +111,14 @@ class Auth
                     $this->userId = (int)$user['id'];
                     $this->superUser = (bool)$user['super_user'];
 
-                    $config = new Config($this->db, 'users');
-                    $settings = $config->getSettings();
-                    $this->entries = $settings['entries_override'] == 1 && $user['entries'] > 0 ? (int)$user['entries'] : (int)CONFIG_ENTRIES;
-                    $this->language = $settings['language_override'] == 1 ? $user['language'] : CONFIG_LANG;
+                    $settings = $this->usersConfig->getSettings();
+
+                    if ($settings['entries_override'] == 1 && $user['entries'] > 0) {
+                        $this->entries = (int)$user['entries'];
+                    }
+                    if ($settings['language_override'] == 1) {
+                        $this->language = $user['language'];
+                    }
                 }
             } else {
                 $this->logout();
@@ -128,9 +140,9 @@ class Auth
     /**
      * Setzt den internen Authentifizierungscookie
      *
-     * @param string  $nickname
+     * @param string $nickname
      *  Der Loginname des Users
-     * @param string  $password
+     * @param string $password
      *  Die Hashsumme des Passwortes
      * @param integer $expiry
      *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
@@ -215,9 +227,9 @@ class Auth
     /**
      * Loggt einen User ein
      *
-     * @param string  $username
+     * @param string $username
      *    Der zu verwendente Username
-     * @param string  $password
+     * @param string $password
      *    Das zu verwendente Passwort
      * @param integer $expiry
      *    Gibt die Zeit in Sekunden an, wie lange der User eingeloggt bleiben soll

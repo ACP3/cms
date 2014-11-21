@@ -32,21 +32,26 @@ class Lang
 
     /**
      * @param Auth $auth
+     * @param Cache $langCache
+     * @param Config $systemConfig
      */
-    function __construct(Auth $auth)
+    function __construct(
+        Auth $auth,
+        Cache $langCache,
+        Config $systemConfig
+    )
     {
         $lang = $auth->getUserLanguage();
-        $this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
+        $this->lang = $this->languagePackExists($lang) === true ? $lang : $systemConfig->getSettings()['lang'];
         $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
 
-        $this->cache = new Cache('lang');
+        $this->cache = $langCache;
     }
 
     /**
      * Überprüft, ob das angegebene Sprachpaket existiert
      *
      * @param string $lang
-     *
      * @return boolean
      */
     public static function languagePackExists($lang)

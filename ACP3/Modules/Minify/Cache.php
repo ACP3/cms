@@ -16,11 +16,11 @@ class Cache
     protected $cache;
 
     /**
-     *
+     * @param Core\Cache $cache
      */
-    public function __construct()
+    public function __construct(Core\Cache $cache)
     {
-        $this->cache = new Core\Cache('minify');
+        $this->cache = $cache;
     }
 
     /**

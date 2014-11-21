@@ -18,7 +18,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class Install extends AbstractController
 {
-    const ACP3_VERSION = '4.0-dev';
     /**
      * @var string
      */
@@ -154,7 +153,7 @@ class Install extends AbstractController
             }
         }
 
-        $this->container->get('core.view')->setRenderer('smarty', ['compile_id' => 'installer']);
+        $this->container->setParameter('cache_driver', 'Array');
 
         $this->container->compile();
     }
@@ -177,11 +176,6 @@ class Install extends AbstractController
 
         // Install "normal" modules
         if ($bool === true) {
-            // Systemeinstellungen laden
-            $this
-                ->get('core.config.system')
-                ->getSettingsAsConstants();
-
             $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
 
             foreach ($modules as $module) {
@@ -234,35 +228,14 @@ class Install extends AbstractController
 
         // Modulkonfigurationsdateien schreiben
         $systemSettings = array(
-            'cache_images' => true,
-            'cache_minify' => 3600,
             'date_format_long' => \ACP3\Core\Functions::strEncode($formData['date_format_long']),
             'date_format_short' => \ACP3\Core\Functions::strEncode($formData['date_format_short']),
             'date_time_zone' => $formData['date_time_zone'],
-            'design' => 'acp3',
-            'entries' => 20,
-            'flood' => 30,
-            'homepage' => 'news/index/index/',
-            'lang' => LANG,
-            'mailer_smtp_auth' => 0,
-            'mailer_smtp_host' => '',
-            'mailer_smtp_password' => '',
-            'mailer_smtp_port' => 25,
-            'mailer_smtp_security' => 'none',
-            'mailer_smtp_user' => '',
-            'mailer_type' => 'mail',
-            'maintenance_mode' => 0,
             'maintenance_message' => $this->lang->t('install', 'offline_message'),
-            'seo_meta_description' => '',
-            'seo_meta_keywords' => '',
-            'seo_mod_rewrite' => 1,
-            'seo_robots' => 1,
             'seo_title' => !empty($formData['seo_title']) ? $formData['seo_title'] : 'ACP3',
-            'version' => self::ACP3_VERSION,
-            'wysiwyg' => 'CKEditor'
         );
 
-        $configSystem = $this->get('core.config.system');
+        $configSystem = $this->get('system.config');
         $configSystem->setSettings($systemSettings);
 
         $configUsers = $this->get('users.config');

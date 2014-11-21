@@ -18,13 +18,22 @@ class Router
      * @var Aliases
      */
     protected $aliases;
+    /**
+     * @var array
+     */
+    protected $systemConfig = [];
 
     /**
      * @param Aliases $aliases
+     * @param Config $systemConfig
      */
-    function __construct(Aliases $aliases)
+    function __construct(
+        Aliases $aliases,
+        Config $systemConfig
+    )
     {
         $this->aliases = $aliases;
+        $this->systemConfig = $systemConfig->getSettings();
     }
 
     /**
@@ -65,7 +74,7 @@ class Router
             }
         }
 
-        $prefix = ((bool)CONFIG_SEO_MOD_REWRITE === false || $isAdminUrl === true || (defined('DEBUG') && DEBUG === true)) ? PHP_SELF . '/' : ROOT_DIR;
+        $prefix = ((bool)$this->systemConfig['seo_mod_rewrite'] === false || $isAdminUrl === true || (defined('DEBUG') && DEBUG === true)) ? PHP_SELF . '/' : ROOT_DIR;
         return $prefix . $path;
     }
 

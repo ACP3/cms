@@ -20,12 +20,16 @@ class Cache
     protected $newsModel;
 
     /**
+     * @param Core\Cache $cache
      * @param Model $newsModel
      */
-    public function __construct(Model $newsModel)
+    public function __construct(
+        Core\Cache $cache,
+        Model $newsModel
+    )
     {
         $this->newsModel = $newsModel;
-        $this->cache = new Core\Cache('news');
+        $this->cache = $cache;
     }
 
     /**

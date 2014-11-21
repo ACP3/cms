@@ -47,7 +47,7 @@ class Index extends Core\Modules\Controller\Frontend
                 'feed_image' => $settings['feed_image'],
                 'feed_type' => $settings['feed_type'],
                 'feed_link' => FEED_LINK . ROOT_DIR,
-                'feed_title' => CONFIG_SEO_TITLE,
+                'feed_title' => $this->systemConfig->getSettings()['seo_title'],
                 'module' => $module,
             );
 

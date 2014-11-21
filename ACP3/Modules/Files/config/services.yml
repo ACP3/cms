@@ -13,11 +13,15 @@ services:
 
   files.cache:
     class: ACP3\Modules\Files\Cache
-    arguments: ['@files.model']
+    arguments: ['@files.cache.core', '@files.model']
+
+  files.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'files']
 
   files.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'files']
+    arguments: ['@files.cache.core', '@system.model', 'files']
 
   files.model:
     class: ACP3\Modules\Files\Model

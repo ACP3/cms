@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use Doctrine\Common\Cache\CacheProvider;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class Cache
@@ -18,29 +19,42 @@ class Cache
      */
     protected $driver;
 
-    public function __construct($namespace)
+    /**
+     * @param Container $container
+     * @param $namespace
+     */
+    public function __construct(
+        Container $container,
+        $namespace
+    )
     {
         $this->namespace = $namespace;
 
-        $driverName = defined('CONFIG_CACHE_DRIVER') ? CONFIG_CACHE_DRIVER : 'Array';
+        if ($container->hasParameter('cache_driver')) {
+            $driverName = $container->getParameter('cache_driver');
+        } else {
+            $driverName = 'Array';
+        }
 
         // If debug mode is enabled, override the cache driver configuration
         if (defined('DEBUG') && DEBUG === true) {
             $driverName = 'Array';
         }
 
-        $driverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
-        if (class_exists($driverPath)) {
+        Logger::debug('installer', $driverName);
+
+        $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
+        if (class_exists($cacheDriverPath)) {
             if ($driverName === 'PhpFile') {
                 $cacheDir = UPLOADS_DIR . 'cache/sql/';
-                $this->driver = new $driverPath($cacheDir);
+                $this->driver = new $cacheDriverPath($cacheDir);
             } else {
-                $this->driver = new $driverPath();
+                $this->driver = new $cacheDriverPath();
             }
 
             $this->driver->setNamespace($namespace);
         } else {
-            throw new \InvalidArgumentException(sprintf('Could not find the requested cache driver "%s"!', $driverPath));
+            throw new \InvalidArgumentException(sprintf('Could not find the requested cache driver "%s"!', $cacheDriverPath));
         }
     }
 
@@ -126,4 +140,4 @@ class Cache
     {
         return $this->driver;
     }
-} 
+}
