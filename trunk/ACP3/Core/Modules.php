@@ -72,7 +72,11 @@ class Modules
             $pathArray[3] = 'Index';
         }
 
-        $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[0]\\$pathArray[2]";
+        if ($pathArray[0] !== 'Frontend') {
+            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[0]\\$pathArray[2]";
+        } else {
+            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[2]";
+        }
 
         return method_exists($className, 'action' . $pathArray[3]);
     }
