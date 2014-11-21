@@ -56,7 +56,9 @@
             {if $can_delete_resource === true}
                 {include file="asset:system/mark.tpl"}
             {/if}
-            {include_js module="permissions" file="admin/resources.index"}
+            {javascripts}
+                {include_js module="permissions" file="admin/resources.index"}
+            {/javascripts}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
