@@ -18,7 +18,7 @@ class Aliases
     /**
      * @var \ACP3\Core\Cache
      */
-    protected $cache;
+    protected $uriCache;
     /**
      * @var Core\Modules
      */
@@ -29,12 +29,16 @@ class Aliases
     protected $systemModel;
 
     /**
-     * @param Core\DB $db
+     * @param Core\Cache $uriCache
+     * @param System\Model $systemModel
      */
-    function __construct(Core\DB $db)
+    function __construct(
+        Core\Cache $uriCache,
+        System\Model $systemModel
+    )
     {
-        $this->systemModel = new System\Model($db);
-        $this->cache = new Core\Cache('uri');
+        $this->uriCache = $uriCache;
+        $this->systemModel = $systemModel;
         $this->aliases = $this->getCache();
     }
 
@@ -45,11 +49,11 @@ class Aliases
      */
     public function getCache()
     {
-        if ($this->cache->contains('aliases') === false) {
+        if ($this->uriCache->contains('aliases') === false) {
             $this->setCache();
         }
 
-        return $this->cache->fetch('aliases');
+        return $this->uriCache->fetch('aliases');
     }
 
     /**
@@ -69,7 +73,7 @@ class Aliases
             );
         }
 
-        return $this->cache->save('aliases', $data);
+        return $this->uriCache->save('aliases', $data);
     }
 
     /**

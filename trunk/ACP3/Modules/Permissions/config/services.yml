@@ -9,7 +9,11 @@ services:
 
   permissions.cache:
     class: ACP3\Modules\Permissions\Cache
-    arguments: ['@permissions.model']
+    arguments: ['@permissions.cache.core', '@permissions.model']
+
+  permissions.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'acl']
 
   permissions.model:
     class: ACP3\Modules\Permissions\Model

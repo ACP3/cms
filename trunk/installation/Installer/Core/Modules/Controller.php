@@ -98,8 +98,8 @@ class Controller
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
 
-        $languageInfo = \ACP3\Core\XML::parseXmlFile(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->lang->getLanguage() . '.xml', '/language/info');
-        $this->view->assign('LANG_DIRECTION', isset($languageInfo['direction']) ? $languageInfo['direction'] : 'ltr');
+        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->lang->getLanguage() . '.xml');
+        $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
         $this->view->assign('LANG', $this->lang->getLanguage2Characters());
     }
 
@@ -137,12 +137,12 @@ class Controller
         $path = INSTALLER_MODULES_DIR . 'Install/Languages/';
         $files = array_diff(scandir($path), array('.', '..'));
         foreach ($files as $row) {
-            $langInfo = XML::parseXmlFile($path . $row, '/language/info');
+            $langInfo = simplexml_load_file($path . $row);
             if (!empty($langInfo)) {
                 $languages[] = array(
                     'language' => substr($row, 0, -4),
                     'selected' => $selectedLanguage === substr($row, 0, -4) ? ' selected="selected"' : '',
-                    'name' => $langInfo['name']
+                    'name' => $langInfo->info->name
                 );
             }
         }

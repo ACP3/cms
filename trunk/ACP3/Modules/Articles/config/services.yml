@@ -9,7 +9,11 @@ services:
 
   articles.cache:
     class: ACP3\Modules\Articles\Cache
-    arguments: ['@articles.model']
+    arguments: ['@articles.cache.core', '@articles.model']
+
+  articles.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'articles']
 
   articles.helpers:
     class: ACP3\Modules\Articles\Helpers

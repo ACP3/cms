@@ -94,7 +94,7 @@ abstract class Frontend extends Core\Modules\Controller
                     $this->setTemplate($this->request->mod . '/' . ucfirst($this->request->area) . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
                 }
 
-                $this->view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+                $this->view->assign('PAGE_TITLE', $this->systemConfig->getSettings()['seo_title']);
                 $this->view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
                 $this->view->assign('TITLE', $this->breadcrumb->output(2));
                 $this->view->assign('BREADCRUMB', $this->breadcrumb->output());

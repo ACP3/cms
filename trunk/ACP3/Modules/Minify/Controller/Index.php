@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller
                 return !empty($var);
             });
 
-            $options['maxAge'] = CONFIG_CACHE_MINIFY;
+            $options['maxAge'] = $this->systemConfig->getSettings()['cache_minify'];
             $options['minifiers']['text/css'] = array('Minify_CSSmin', 'minify');
 
             \Minify::setCache(new \Minify_Cache_File(UPLOADS_DIR . 'cache/minify/', true));

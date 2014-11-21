@@ -35,6 +35,10 @@ class Context
      * @var View
      */
     protected $view;
+    /**
+     * @var Config
+     */
+    protected $systemConfig;
 
     /**
      * @param ACL $acl
@@ -44,6 +48,7 @@ class Context
      * @param Request $request
      * @param Router $router
      * @param View $view
+     * @param Config $systemConfig
      */
     public function __construct(
         ACL $acl,
@@ -52,7 +57,9 @@ class Context
         Modules $modules,
         Request $request,
         Router $router,
-        View $view)
+        View $view,
+        Config $systemConfig
+    )
     {
         $this->acl = $acl;
         $this->auth = $auth;
@@ -61,6 +68,7 @@ class Context
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
+        $this->systemConfig = $systemConfig;
     }
 
     /**
@@ -117,6 +125,14 @@ class Context
     public function getView()
     {
         return $this->view;
+    }
+
+    /**
+     * @return Config
+     */
+    public function getSystemConfig()
+    {
+        return $this->systemConfig;
     }
 
 }

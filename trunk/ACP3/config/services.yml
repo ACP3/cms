@@ -1,7 +1,11 @@
 imports:
   - { resource: config.yml }
+  - { resource: cache.yml }
   - { resource: helpers.yml }
   - { resource: validation.yml }
+  - { resource: ../modules/Permissions/config/services.yml }
+  - { resource: ../modules/System/config/services.yml }
+  - { resource: ../modules/Users/config/services.yml }
 
 services:
   core.acl:
@@ -10,23 +14,23 @@ services:
 
   core.assets:
     class: ACP3\Core\Assets
-    arguments: ['@core.modules', '@core.router', '@core.assets.themeResolver']
+    arguments: ['@core.modules', '@core.router', '@core.assets.themeResolver', '@system.config']
 
   core.auth:
     class: ACP3\Core\Auth
-    arguments: ['@core.db', '@core.session', '@core.helpers.secure']
+    arguments: ['@core.session', '@core.helpers.secure', '@system.config', '@users.config', '@users.model']
 
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver
-    arguments: ['@minify.cache']
+    arguments: ['@core.xml', '@minify.cache']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@system.config']
 
   core.context:
     class : ACP3\Core\Context
-    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view']
+    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@system.config']
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
@@ -38,7 +42,7 @@ services:
 
   core.date:
     class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date']
+    arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date', '@system.config']
 
   core.db:
     class: ACP3\Core\DB
@@ -49,19 +53,19 @@ services:
 
   core.lang:
     class: ACP3\Core\Lang
-    arguments: ['@core.auth']
+    arguments: ['@core.auth', '@system.cache.core.lang', '@system.config']
 
   core.mailer:
     class: ACP3\Core\Mailer
-    arguments: ['@core.view']
+    arguments: ['@core.view', '@system.config']
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@core.db', '@core.lang']
+    arguments: ['@core.lang', '@core.xml', '@system.cache.core.modules', '@system.model']
 
   core.modules.abstractInstaller:
     abstract: true
-    arguments: ['@core.db', '@system.model', '@permissions.model']
+    arguments: ['@core.db', '@core.xml', '@permissions.cache.core', '@system.model', '@permissions.model']
 
   core.modules.controller:
     abstract: true
@@ -85,27 +89,23 @@ services:
 
   core.request:
     class: ACP3\Core\Request
-    arguments: ['@core.db', '@core.modules']
+    arguments: ['@core.db', '@core.modules', '@system.config']
 
   core.router:
     class: ACP3\Core\Router
-    arguments: ['@core.router.aliases']
+    arguments: ['@core.router.aliases', '@system.config']
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
-    arguments: ['@core.db']
+    arguments: ['@system.cache.core.uri', '@system.model']
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@system.cache.core.seo', '@system.config']
 
   core.session:
     class: ACP3\Core\Session
     arguments: ['@core.db']
-
-  core.config.system:
-    class: ACP3\Core\Config
-    arguments: ['@core.db', 'system']
 
   core.view:
     class: ACP3\Core\View
@@ -122,3 +122,6 @@ services:
     class: ACP3\Core\View\Renderer\FeedGenerator
     calls:
       - ['setContainer', ['@service_container']]
+
+  core.xml:
+    class: ACP3\Core\XML

@@ -9,7 +9,11 @@ services:
 
   menus.cache:
     class: ACP3\Modules\Menus\Cache
-    arguments: ['@core.lang', '@menus.model']
+    arguments: ['@menus.cache.core', '@core.lang', '@menus.model']
+
+  menus.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'menus']
 
   menus.helpers:
     class: ACP3\Modules\Menus\Helpers

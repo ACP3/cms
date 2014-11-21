@@ -5,6 +5,11 @@ services:
 
   minify.cache:
     class: ACP3\Modules\Minify\Cache
+    arguments: ['@minify.cache.core']
+
+  minify.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'minify']
 
   minify.installer:
     class: ACP3\Modules\Minify\Installer

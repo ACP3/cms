@@ -39,10 +39,12 @@ class Request
      *
      * @param DB $db
      * @param Modules $modules
+     * @param Config $systemConfig
      */
     public function __construct(
         DB $db,
-        Modules $modules
+        Modules $modules,
+        Config $systemConfig
     )
     {
         $this->db = $db;
@@ -50,9 +52,11 @@ class Request
 
         $this->preprocessUriQuery();
 
+        $settings = $systemConfig->getSettings();
+
         // Set the user defined homepage of the website
-        if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
-            $this->query = CONFIG_HOMEPAGE;
+        if ($this->query === '/' && $settings['homepage'] !== '') {
+            $this->query = $settings['homepage'];
         }
 
         $this->checkForUriAlias();

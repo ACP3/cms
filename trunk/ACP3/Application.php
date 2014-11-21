@@ -5,7 +5,6 @@ namespace ACP3;
 use ACP3\Core\FrontController;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\Controller;
-use Doctrine\DBAL;
 use Monolog\ErrorHandler;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -17,16 +16,23 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * Front Controller of the CMS
- *
- * @author Tino Goratsch
+ * Bootstraps the application
+ * @package ACP3
  */
 class Application
 {
     /**
+     * Contains the current ACP3 version string
+     */
+    const VERSION = '4.0-dev';
+    /**
      * @var Container
      */
     protected $container;
+    /**
+     * @var array
+     */
+    protected $systemSettings = [];
 
     /**
      * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
@@ -119,14 +125,15 @@ class Application
     private function _checkForMaintenanceMode()
     {
         $request = $this->container->get('core.request');
-        if ((bool)CONFIG_MAINTENANCE_MODE === true &&
+
+        if ((bool)$this->systemSettings['maintenance_mode'] === true &&
             ($request->area !== 'admin' && strpos($request->query, 'users/login/') !== 0)
         ) {
             header('HTTP/1.0 503 Service Unavailable');
 
             $view = $this->container->get('core.view');
-            $view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-            $view->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
+            $view->assign('PAGE_TITLE', $this->systemSettings['seo_title']);
+            $view->assign('CONTENT', $this->systemSettings['maintenance_message']);
             $view->displayTemplate('system/maintenance.tpl');
             exit;
         }
@@ -143,10 +150,8 @@ class Application
             require_once $file;
             $this->container = new \ACP3ServiceContainer();
 
-            // Systemeinstellungen laden
-            $this->container
-                ->get('core.config.system')
-                ->getSettingsAsConstants();
+            // Load system settings
+            $this->systemSettings = $this->container->get('system.config')->getSettings();
 
             $this->_setThemeConstants();
 
@@ -156,13 +161,6 @@ class Application
             $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
             $loader->load(ACP3_DIR . 'config/services.yml');
             $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
-
-            // Systemeinstellungen laden
-            $this->container
-                ->get('core.config.system')
-                ->getSettingsAsConstants();
-
-            $this->_setThemeConstants();
 
             // Try to get all available services
             /** @var Modules $modules */
@@ -174,6 +172,11 @@ class Application
                     $loader->load($path);
                 }
             }
+
+            // Load system settings
+            $this->systemSettings = $this->container->get('system.config')->getSettings();
+
+            $this->_setThemeConstants();
 
             $this->container->get('core.view')->setRenderer('smarty');
 
@@ -189,8 +192,8 @@ class Application
      */
     private function _setThemeConstants()
     {
-        define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+        define('DESIGN_PATH', ROOT_DIR . 'designs/' . $this->systemSettings['design'] . '/');
+        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . $this->systemSettings['design'] . '/');
         define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
     }
 
@@ -267,7 +270,7 @@ class Application
     {
         $view = $this->container->get('core.view');
         $view->assign('ROOT_DIR', ROOT_DIR);
-        $view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+        $view->assign('PAGE_TITLE', $this->systemSettings['seo_title']);
         $view->assign('CONTENT', $errorMessage);
         $view->displayTemplate('system/exception.tpl');
     }

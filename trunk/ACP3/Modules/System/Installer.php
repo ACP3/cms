@@ -12,7 +12,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 47;
+    const SCHEMA_VERSION = 48;
 
     /**
      * @var array
@@ -149,7 +149,6 @@ class Installer extends Modules\AbstractInstaller
     public function settings()
     {
         return array(
-            'cache_driver' => 'PhpFile',
             'cache_images' => true,
             'cache_minify' => 3600,
             'date_format_long' => '',
@@ -174,7 +173,6 @@ class Installer extends Modules\AbstractInstaller
             'seo_mod_rewrite' => false,
             'seo_robots' => 1,
             'seo_title' => '',
-            'version' => '',
             'wysiwyg' => 'CKEditor'
         );
     }
@@ -266,6 +264,10 @@ class Installer extends Modules\AbstractInstaller
             47 => array(
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"extra_css\";",
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"extra_js\";",
+            ),
+            48 => array(
+                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"cache_driver\";",
+                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"version\";",
             )
         );
     }

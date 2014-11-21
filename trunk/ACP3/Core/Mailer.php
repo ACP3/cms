@@ -63,21 +63,27 @@ class Mailer
     /**
      * Initializes PHPMailer and sets the basic configuration parameters
      * @param View $view
+     * @param Config $systemConfig
      */
-    public function __construct(View $view)
+    public function __construct(
+        View $view,
+        Config $systemConfig
+    )
     {
         $this->view = $view;
         $this->phpMailer = new \PHPMailer(true);
 
-        if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
+        $settings = $systemConfig->getSettings();
+
+        if (strtolower($settings['mailer_type']) === 'smtp') {
             $this->phpMailer->set('Mailer', 'smtp');
-            $this->phpMailer->Host = CONFIG_MAILER_SMTP_HOST;
-            $this->phpMailer->Port = CONFIG_MAILER_SMTP_PORT;
-            $this->phpMailer->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
-            if ((bool)CONFIG_MAILER_SMTP_AUTH === true) {
+            $this->phpMailer->Host = $settings['mailer_smtp_host'];
+            $this->phpMailer->Port = $settings['mailer_smtp_port'];
+            $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls']) ? $settings['mailer_smtp_security'] : '';
+            if ((bool)$settings['mailer_smtp_auth'] === true) {
                 $this->phpMailer->SMTPAuth = true;
-                $this->phpMailer->Username = CONFIG_MAILER_SMTP_USER;
-                $this->phpMailer->Password = CONFIG_MAILER_SMTP_PASSWORD;
+                $this->phpMailer->Username = $settings['mailer_smtp_user'];
+                $this->phpMailer->Password = $settings['mailer_smtp_password'];
             }
         } else {
             $this->phpMailer->set('Mailer', 'mail');

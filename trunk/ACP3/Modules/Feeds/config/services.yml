@@ -7,9 +7,13 @@ services:
     class: ACP3\Modules\Feeds\Controller\Index
     arguments: ['@core.context.frontend', '@feeds.config']
 
+  feeds.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'feeds']
+
   feeds.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'feeds']
+    arguments: ['@feeds.cache.core', '@system.model', 'feeds']
 
   feeds.validator:
     class: ACP3\Modules\Feeds\Validator

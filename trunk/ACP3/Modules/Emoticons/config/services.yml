@@ -9,11 +9,15 @@ services:
 
   emoticons.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'emoticons']
+    arguments: ['@emoticons.cache.core', '@system.model', 'emoticons']
 
   emoticons.cache:
     class: ACP3\Modules\Emoticons\Cache
-    arguments: ['@emoticons.model']
+    arguments: ['@emoticons.cache.core', '@emoticons.model']
+
+  emoticons.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'emoticons']
 
   emoticons.helpers:
     class: ACP3\Modules\Emoticons\Helpers

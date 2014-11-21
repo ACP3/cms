@@ -27,12 +27,17 @@ class Cache
     protected $galleryConfig;
 
     /**
+     * @param Core\Cache $cache
      * @param Model $galleryModel
      * @param Core\Config $galleryConfig
      */
-    public function __construct(Model $galleryModel, Core\Config $galleryConfig)
+    public function __construct(
+        Core\Cache $cache,
+        Model $galleryModel,
+        Core\Config $galleryConfig
+    )
     {
-        $this->cache = new Core\Cache('gallery');
+        $this->cache = $cache;
         $this->galleryModel = $galleryModel;
         $this->galleryConfig = $galleryConfig;
     }

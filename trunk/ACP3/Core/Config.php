@@ -10,23 +10,32 @@ use ACP3\Modules\System;
 class Config
 {
     /**
-     * @var Model
+     * @var System\Model
      */
     protected $systemModel;
     /**
      * @var Cache
      */
-    protected $cache;
+    protected $moduleCache;
     /**
      * @var string
      */
     protected $module = '';
 
-    public function __construct(DB $db, $module)
+    /**
+     * @param Cache $moduleCache
+     * @param System\Model $systemModel
+     * @param $module
+     */
+    public function __construct(
+        Cache $moduleCache,
+        System\Model $systemModel,
+        $module
+    )
     {
-        $this->cache = new Cache($module);
+        $this->moduleCache = $moduleCache;
+        $this->systemModel = $systemModel;
         $this->module = strtolower($module);
-        $this->systemModel = new System\Model($db);
     }
 
     /**
@@ -78,18 +87,7 @@ class Config
             }
         }
 
-        return $this->cache->save('settings', $data);
-    }
-
-    /**
-     * Outputs module settings as constants
-     */
-    public function getSettingsAsConstants()
-    {
-        $settings = $this->getSettings();
-        foreach ($settings as $key => $value) {
-            define('CONFIG_' . strtoupper($key), $value);
-        }
+        return $this->moduleCache->save('settings', $data);
     }
 
     /**
@@ -99,11 +97,11 @@ class Config
      */
     public function getSettings()
     {
-        if ($this->cache->contains('settings') === false) {
+        if ($this->moduleCache->contains('settings') === false) {
             $this->setCache();
         }
 
-        return $this->cache->fetch('settings');
+        return $this->moduleCache->fetch('settings');
     }
 
 }

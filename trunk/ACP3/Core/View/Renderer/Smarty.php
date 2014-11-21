@@ -26,30 +26,17 @@ class Smarty extends AbstractRenderer
      */
     public function configure(array $params = array())
     {
+        $settings = $this->container->get('system.config')->getSettings();
+
         $this->renderer = new \Smarty();
         $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
-        $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : CONFIG_DESIGN;
+        $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : $settings['design'];
         $this->renderer->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
         $this->renderer
             ->setCompileDir(CACHE_DIR . 'tpl_compiled/')
             ->setCacheDir(CACHE_DIR . 'tpl_cached/');
 
-        $services = $this->container->getServiceIds();
-        foreach ($services as $serviceName) {
-            if (strpos($serviceName, 'smarty.plugin.') === 0) {
-                /** @var AbstractPlugin $plugin */
-                $plugin = $this->container->get($serviceName);
-                $plugin->registerPlugin($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.filter.') === 0) {
-                /** @var AbstractFilter $filter */
-                $filter = $this->container->get($serviceName);
-                $filter->registerFilter($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.resource.') === 0) {
-                /** @var AbstractResource $resource */
-                $resource = $this->container->get($serviceName);
-                $resource->registerResource($this->renderer);
-            }
-        }
+        $this->_registerPlugins();
     }
 
     /**
@@ -92,6 +79,29 @@ class Smarty extends AbstractRenderer
     public function templateExists($template)
     {
         return $this->renderer->templateExists($template);
+    }
+
+    /**
+     * Register all available Smarty plugins
+     */
+    protected function _registerPlugins()
+    {
+        $services = $this->container->getServiceIds();
+        foreach ($services as $serviceName) {
+            if (strpos($serviceName, 'smarty.plugin.') === 0) {
+                /** @var AbstractPlugin $plugin */
+                $plugin = $this->container->get($serviceName);
+                $plugin->registerPlugin($this->renderer);
+            } elseif (strpos($serviceName, 'smarty.filter.') === 0) {
+                /** @var AbstractFilter $filter */
+                $filter = $this->container->get($serviceName);
+                $filter->registerFilter($this->renderer);
+            } elseif (strpos($serviceName, 'smarty.resource.') === 0) {
+                /** @var AbstractResource $resource */
+                $resource = $this->container->get($serviceName);
+                $resource->registerResource($this->renderer);
+            }
+        }
     }
 
 }

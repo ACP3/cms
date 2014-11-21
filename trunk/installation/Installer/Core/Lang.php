@@ -3,13 +3,15 @@
 namespace ACP3\Installer\Core;
 
 /**
- * Stellt Funktionen bereit, um das ACP3 in verschiendene Sprachen zu übersetzen
- *
- * @author Tino Goratsch
+ * Class Lang
+ * @package ACP3\Installer\Core
  */
 class Lang extends \ACP3\Core\Lang
 {
 
+    /**
+     * @param \ACP3\Core\Auth $lang
+     */
     function __construct($lang)
     {
         $this->lang = $lang;

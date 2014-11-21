@@ -26,12 +26,17 @@ class Cache
     protected $menuModel;
 
     /**
+     * @param Core\Cache $cache
      * @param Core\Lang $lang
      * @param Model $menuModel
      */
-    public function __construct(Core\Lang $lang, Model $menuModel)
+    public function __construct(
+        Core\Cache $cache,
+        Core\Lang $lang,
+        Model $menuModel
+    )
     {
-        $this->cache = new Core\Cache('menus');
+        $this->cache = $cache;
         $this->lang = $lang;
         $this->menuModel = $menuModel;
     }

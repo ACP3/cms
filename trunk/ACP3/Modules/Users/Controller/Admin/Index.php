@@ -60,6 +60,8 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
+        $systemSettings = $this->systemConfig->getSettings();
+
         // Zugriffslevel holen
         $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
@@ -74,13 +76,13 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('super_user', $this->get('core.helpers.forms')->selectGenerator('super_user', array(1, 0), $lang_super_user, 0, 'checked'));
 
         // Sprache
-        $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : CONFIG_LANG));
+        $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $systemSettings['lang']));
 
         // Einträge pro Seite
-        $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage(CONFIG_ENTRIES));
+        $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']));
 
         // Zeitzonen
-        $this->view->assign('time_zones', $this->date->getTimeZones(CONFIG_DATE_TIME_ZONE));
+        $this->view->assign('time_zones', $this->date->getTimeZones($systemSettings['date_time_zone']));
 
         // Geschlecht
         $lang_gender = array(
@@ -155,8 +157,8 @@ class Index extends Core\Modules\Controller\Admin
             'house_number' => '',
             'zip' => '',
             'city' => '',
-            'date_format_long' => CONFIG_DATE_FORMAT_LONG,
-            'date_format_short' => CONFIG_DATE_FORMAT_SHORT
+            'date_format_long' => $systemSettings['date_format_long'],
+            'date_format_short' => $systemSettings['date_format_short']
         );
 
         $this->view->assign('form', array_merge($defaults, $_POST));

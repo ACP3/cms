@@ -21,12 +21,16 @@ class Cache
     protected $filesModel;
 
     /**
+     * @param Core\Cache $cache
      * @param Model $filesModel
      */
-    public function __construct(Model $filesModel)
+    public function __construct(
+        Core\Cache $cache,
+        Model $filesModel
+    )
     {
         $this->filesModel = $filesModel;
-        $this->cache = new Core\Cache('files');
+        $this->cache = $cache;
     }
 
     /**

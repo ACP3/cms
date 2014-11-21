@@ -21,6 +21,10 @@ class Assets
      * @var ThemeResolver
      */
     protected $themeResolver;
+    /**
+     * @var array
+     */
+    protected $systemConfig = [];
 
     /**
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
@@ -67,7 +71,9 @@ class Assets
      * @var string
      */
     protected $systemAssetsDesignPath = 'System/';
-
+    /**
+     * @var \SimpleXMLElement
+     */
     protected $designXml;
 
     /**
@@ -78,12 +84,14 @@ class Assets
     public function __construct(
         Modules $modules,
         Router $router,
-        ThemeResolver $themeResolver
+        ThemeResolver $themeResolver,
+        Config $systemConfig
     )
     {
         $this->modules = $modules;
         $this->router = $router;
         $this->themeResolver = $themeResolver;
+        $this->systemConfig = $systemConfig->getSettings();
 
         $this->_checkBootstrap();
     }
@@ -250,7 +258,7 @@ class Assets
             $libraries = '/libraries_' . substr($libraries, 0, -1);
         }
 
-        return $this->router->route('minify/index/index/group_' . $group . '/design_' . CONFIG_DESIGN . $layout . $libraries);
+        return $this->router->route('minify/index/index/group_' . $group . '/design_' . $this->systemConfig['design'] . $layout . $libraries);
     }
 
     /**

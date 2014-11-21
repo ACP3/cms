@@ -14,6 +14,10 @@ class Modules
      */
     protected $lang;
     /**
+     * @var XML
+     */
+    protected $xml;
+    /**
      * @var Cache
      */
     protected $cache;
@@ -30,21 +34,29 @@ class Modules
      */
     private $allModules = [];
 
+    /**
+     * @param Lang $lang
+     * @param XML $xml
+     * @param Cache $modulesCache
+     * @param System\Model $systemModel
+     */
     public function __construct(
-        DB $db,
-        Lang $lang
+        Lang $lang,
+        XML $xml,
+        Cache $modulesCache,
+        System\Model $systemModel
     )
     {
         $this->lang = $lang;
-        $this->cache = new Cache('modules');
-        $this->systemModel = new System\Model($db);
+        $this->xml = $xml;
+        $this->cache = $modulesCache;
+        $this->systemModel = $systemModel;
     }
 
     /**
      * Überprüft, ob eine Modulaktion überhaupt existiert
      *
      * @param string $path
-     *
      * @return boolean
      */
     public function actionExists($path)
@@ -60,11 +72,7 @@ class Modules
             $pathArray[3] = 'Index';
         }
 
-        if ($pathArray[0] !== 'Frontend') {
-            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[0]\\$pathArray[2]";
-        } else {
-            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[2]";
-        }
+        $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[0]\\$pathArray[2]";
 
         return method_exists($className, 'action' . $pathArray[3]);
     }
@@ -121,7 +129,7 @@ class Modules
         foreach ($dirs as $dir) {
             $path = MODULES_DIR . '/' . $dir . '/config/module.xml';
             if (is_file($path) === true) {
-                $moduleInfo = XML::parseXmlFile($path, 'info');
+                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
 
                 if (!empty($moduleInfo)) {
                     $moduleName = strtolower($dir);
@@ -133,12 +141,12 @@ class Modules
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
                         'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
                         'author' => $moduleInfo['author'],
-                        'version' => isset($moduleInfo['version']['core']) && $moduleInfo['version']['core'] === 'true' ? CONFIG_VERSION : $moduleInfo['version'],
+                        'version' => $moduleInfo['version'],
                         'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
                         'categories' => isset($moduleInfo['categories']) ? true : false,
                         'protected' => isset($moduleInfo['protected']) ? true : false,
                     );
-                    $infos[$moduleName]['dependencies'] = array_values(XML::parseXmlFile($path, 'info/dependencies'));
+                    $infos[$moduleName]['dependencies'] = array_values($this->xml->parseXmlFile($path, 'info/dependencies'));
                 }
             }
         }

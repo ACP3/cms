@@ -13,11 +13,15 @@ services:
 
   news.cache:
     class: ACP3\Modules\News\Cache
-    arguments: ['@news.model']
+    arguments: ['@news.cache.core', '@news.model']
+
+  news.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'news']
 
   news.config:
     class: ACP3\Core\Config
-    arguments: ['@core.db', 'news']
+    arguments: ['@news.cache.core', '@system.model', 'news']
 
   news.model:
     class: ACP3\Modules\News\Model

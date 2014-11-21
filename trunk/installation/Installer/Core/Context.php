@@ -24,6 +24,12 @@ class Context
      */
     protected $view;
 
+    /**
+     * @param Lang $lang
+     * @param Request $request
+     * @param Router $router
+     * @param \ACP3\Core\View $view
+     */
     public function __construct(
         Lang $lang,
         Request $request,

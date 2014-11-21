@@ -5,8 +5,9 @@
         <direction>ltr</direction>
     </info>
     <keys>
-        <item key="404">Page not found</item>
-        <item key="error_404">File not found</item>
+        <item key="index_404">Page not found</item>
+        <item key="index_500">Internal server error</item>
         <item key="file_not_found"><![CDATA[The requested module or the requested file is either missing or has not been activated.<br />Please contact the administrator of this site, if the error should occur repeatedly.]]></item>
+        <item key="server_unavailable">Currently the server is not able to respond to your request. This may because of to much load or there is an active maintenance window. Please try it in a few minutes again.</item>
     </keys>
 </language>

@@ -12,7 +12,10 @@ use ACP3\Modules\System;
  */
 class Extensions extends Core\Modules\Controller\Admin
 {
-
+    /**
+     * @var Core\XML
+     */
+    protected $xml;
     /**
      * @var System\Model
      */
@@ -28,18 +31,21 @@ class Extensions extends Core\Modules\Controller\Admin
 
     /**
      * @param Core\Context\Admin $context
+     * @param Core\XML $xml
      * @param System\Model $systemModel
      * @param Core\Config $systemConfig
      * @param Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Context\Admin $context,
+        Core\XML $xml,
         System\Model $systemModel,
         Core\Config $systemConfig,
         Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
 
+        $this->xml = $xml;
         $this->systemModel = $systemModel;
         $this->systemConfig = $systemConfig;
         $this->permissionsCache = $permissionsCache;
@@ -55,10 +61,10 @@ class Extensions extends Core\Modules\Controller\Admin
             $directories = scandir($path);
             $count_dir = count($directories);
             for ($i = 0; $i < $count_dir; ++$i) {
-                $designInfo = Core\XML::parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
+                $designInfo = $this->xml->parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
                 if (!empty($designInfo)) {
                     $designs[$i] = $designInfo;
-                    $designs[$i]['selected'] = CONFIG_DESIGN === $directories[$i] ? 1 : 0;
+                    $designs[$i]['selected'] = $this->systemConfig->getSettings()['design'] === $directories[$i] ? 1 : 0;
                     $designs[$i]['dir'] = $directories[$i];
                 }
             }
@@ -164,17 +170,25 @@ class Extensions extends Core\Modules\Controller\Admin
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            // Modulabhängigkeiten prüfen
-            $deps = $this->get('system.helpers')->checkUninstallDependencies($this->request->dir);
+            $serviceId = strtolower($this->request->dir . '.installer');
 
-            if (empty($deps)) {
-                $bool = $this->systemModel->update(array('active' => 0), array('name' => $this->request->dir));
+            if ($this->container->has($serviceId) === true) {
+                $installer = $this->get($serviceId);
 
-                $this->_renewCaches();
+                // Modulabhängigkeiten prüfen
+                $deps = $this->get('system.helpers')->checkUninstallDependencies($installer);
 
-                $text = $this->lang->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
+                if (empty($deps)) {
+                    $bool = $this->systemModel->update(array('active' => 0), array('name' => $this->request->dir));
+
+                    $this->_renewCaches();
+
+                    $text = $this->lang->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
+                } else {
+                    $text = sprintf($this->lang->t('system', 'module_disable_not_possible'), implode(', ', $deps));
+                }
             } else {
-                $text = sprintf($this->lang->t('system', 'module_disable_not_possible'), implode(', ', $deps));
+                throw new Core\Exceptions\ResultNotExists();
             }
         }
 
@@ -189,12 +203,14 @@ class Extensions extends Core\Modules\Controller\Admin
             $serviceId = strtolower($this->request->dir . '.installer');
 
             if ($this->container->has($serviceId) === true) {
+                $installer = $this->get($serviceId);
+
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkInstallDependencies($this->request->dir);
+                $deps = $this->get('system.helpers')->checkInstallDependencies($installer);
 
                 // Modul installieren
                 if (empty($deps)) {
-                    $bool = $this->get($serviceId)->install();
+                    $bool = $installer->install();
 
                     $this->_renewCaches();
 
@@ -221,12 +237,14 @@ class Extensions extends Core\Modules\Controller\Admin
             $serviceId = strtolower($this->request->dir . '.installer');
 
             if ($this->container->has($serviceId) === true) {
+                $installer = $this->get($serviceId);
+
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkUninstallDependencies($this->request->dir);
+                $deps = $this->get('system.helpers')->checkUninstallDependencies($installer);
 
                 // Modul deinstallieren
                 if (empty($deps)) {
-                    $bool = $this->get($serviceId)->uninstall();
+                    $bool = $installer->uninstall();
 
                     $this->_renewCaches();
 
