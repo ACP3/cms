@@ -2,23 +2,10 @@
     <h4>{lang t="install|failure"}</h4>
     <ul>
         {foreach $error_box.errors as $key => $value}
-            <li{if intval($key) === 0} class="error-{$key}"{/if}>{$value}</li>
+            <li{if intval($key) === 0} data-error="{$key}"{/if}>{$value}</li>
         {/foreach}
     </ul>
     {if $error_box.non_integer_keys === true}
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#error-box').find('li').each(function () {
-                    var errorClass = $(this).data('error');
-                    if (errorClass.length > 0) {
-                        $('#' + errorClass).parents('div.form-group').addClass('has-error');
-                    }
-                });
-                if ($('.tabbable').length > 0) {
-                    var tabId = $('.tabbable .form-group.has-error:first').parents('.tab-pane').prop('id');
-                    $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
-                }
-            });
-        </script>
+        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/js/error_box.js"></script>
     {/if}
 </div>

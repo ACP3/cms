@@ -45,7 +45,7 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array  $formData
+     * @param array $formData
      * @param        $file
      * @param        $settings
      * @param string $categoryId

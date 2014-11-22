@@ -82,10 +82,10 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['name'] = $this->lang->t('permissions', 'role_already_exists');
         }
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
-            $errors[] = $this->lang->t('permissions', 'no_privilege_selected');
+            $errors['privileges'] = $this->lang->t('permissions', 'no_privilege_selected');
         }
         if (!empty($formData['privileges']) && $this->aclValidator->aclPrivilegesExist($formData['privileges']) === false) {
-            $errors[] = $this->lang->t('permissions', 'invalid_privileges');
+            $errors['privileges'] = $this->lang->t('permissions', 'invalid_privileges');
         }
 
         if (!empty($errors)) {
@@ -144,10 +144,10 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['name'] = $this->lang->t('permissions', 'role_already_exists');
         }
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
-            $errors[] = $this->lang->t('permissions', 'no_privilege_selected');
+            $errors['privileges'] = $this->lang->t('permissions', 'no_privilege_selected');
         }
         if (!empty($formData['privileges']) && $this->aclValidator->aclPrivilegesExist($formData['privileges']) === false) {
-            $errors[] = $this->lang->t('permissions', 'invalid_privileges');
+            $errors['privileges'] = $this->lang->t('permissions', 'invalid_privileges');
         }
 
         if (!empty($errors)) {

@@ -58,7 +58,7 @@ class Validator extends Core\Validator\AbstractValidator
                 $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
                 $db->query('USE `' . $formData['db_name'] . '`');
             } catch (\Exception $e) {
-                $errors[] = sprintf($this->lang->t('install', 'db_connection_failed'), $e->getMessage());
+                $errors['db'] = sprintf($this->lang->t('install', 'db_connection_failed'), $e->getMessage());
             }
         }
         if (empty($formData['user_name'])) {
@@ -73,10 +73,10 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['mail'] = $this->lang->t('install', 'wrong_email_format');
         }
         if (empty($formData['date_format_long'])) {
-            $errors['date-format-long'] = $this->lang->t('install', 'type_in_date_format');
+            $errors['date-format-long'] = $this->lang->t('install', 'type_in_long_date_format');
         }
         if (empty($formData['date_format_short'])) {
-            $errors['date-format-short'] = $this->lang->t('install', 'type_in_date_format');
+            $errors['date-format-short'] = $this->lang->t('install', 'type_in_short_date_format');
         }
         if ($this->dateValidator->timeZone($formData['date_time_zone']) === false) {
             $errors['date-time-zone'] = $this->lang->t('install', 'select_time_zone');

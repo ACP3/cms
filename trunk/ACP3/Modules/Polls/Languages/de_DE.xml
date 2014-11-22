@@ -31,7 +31,7 @@
         <item key="question">Frage</item>
         <item key="reset_votes">Stimmen zurücksetzen</item>
         <item key="total_votes">Gesamt</item>
-        <item key="type_in_answer">Bitte geben Sie zumindest eine Antwort ein.</item>
+        <item key="type_in_two_answers">Bitte geben Sie zumindest 2 Antworten ein.</item>
         <item key="type_in_question">Bitte geben Sie eine Frage ein.</item>
         <item key="votes">Stimmen</item>
     </keys>

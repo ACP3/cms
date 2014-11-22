@@ -19,8 +19,8 @@
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
                     {foreach $search_mods as $row}
-                        <label for="{$row.dir}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                            <input type="checkbox" name="mods[]" id="{$row.dir}" value="{$row.dir}"{$row.checked}>
+                        <label for="mods-{$row.dir}" class="btn btn-default{if !empty($row.checked)} active{/if}">
+                            <input type="checkbox" name="mods[]" id="mods-{$row.dir}" value="{$row.dir}"{$row.checked}>
                             {$row.name}
                         </label>
                     {/foreach}

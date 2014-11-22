@@ -71,7 +71,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['link-title'] = $this->lang->t('files', 'type_in_title');
@@ -114,7 +114,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['link-title'] = $this->lang->t('files', 'type_in_title');
@@ -162,7 +162,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
         if ($this->modules->isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
-            $errors[] = $this->lang->t('files', 'select_allow_comments');
+            $errors['comments'] = $this->lang->t('files', 'select_allow_comments');
         }
 
         if (!empty($errors)) {

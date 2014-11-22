@@ -290,12 +290,13 @@
         <item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
         <item key="toc_page">Seite %d</item>
         <item key="toggle_navigation">Navigation einblenden/ausblenden</item>
-        <item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
         <item key="type_in_flood_barrier">Bitte geben Sie ein, für wie viele Sekunden ein Benutzer keine Beiträge abschicken kann.</item>
+        <item key="type_in_long_date_format">Bitte geben Sie die lange Datumsformatierung ein.</item>
         <item key="type_in_mailer_smtp_host">Bitte geben Sie den Hostnamen des SMTP-Servers an.</item>
         <item key="type_in_mailer_smtp_port">Bitte geben Sie die Portnummer des SMTP-Servers an.</item>
         <item key="type_in_mailer_smtp_username">Bitte geben Sie den Benutzernamen des SMTP-Servers an.</item>
         <item key="type_in_minify_cache_lifetime">Bitte geben Sie die Cache-Lebenszeit der CSS- und JavaScript-Dateien ein.</item>
+        <item key="type_in_short_date_format">Bitte geben Sie die verkürzte Datumsformatierung ein.</item>
         <item key="type_in_text_or_select_sql_file">Bitte geben Sie die SQL-Abfragen entweder in dem Textfeld ein oder laden Sie eine Datei hoch.</item>
         <item key="uninstall">Deinstallieren</item>
         <item key="uninstall_following_modules_first">Um das Modul deinstallieren zu können, müssen zunächst die Folgenden deinstalliert werden: %s</item>

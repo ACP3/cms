@@ -69,14 +69,17 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->lang->languagePackExists($formData['language']) === false) {
             $errors['language'] = $this->lang->t('system', 'select_language');
         }
-        if (empty($formData['date_format_long']) || empty($formData['date_format_short'])) {
-            $errors[] = $this->lang->t('system', 'type_in_date_format');
+        if (empty($formData['date_format_long'])) {
+            $errors['date-format-long'] = $this->lang->t('system', 'type_in_long_date_format');
+        }
+        if (empty($formData['date_format_short'])) {
+            $errors['date-format-short'] = $this->lang->t('system', 'type_in_short_date_format');
         }
         if ($this->dateValidator->timeZone($formData['date_time_zone']) === false) {
             $errors['date-time-zone'] = $this->lang->t('system', 'select_time_zone');
         }
         if ($this->validate->isNumber($formData['maintenance_mode']) === false) {
-            $errors[] = $this->lang->t('system', 'select_online_maintenance');
+            $errors['maintenance-mode'] = $this->lang->t('system', 'select_online_maintenance');
         }
         if (strlen($formData['maintenance_message']) < 3) {
             $errors['maintenance-message'] = $this->lang->t('system', 'maintenance_message_to_short');
@@ -85,13 +88,13 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['seo-title'] = $this->lang->t('system', 'title_to_short');
         }
         if ($this->validate->isNumber($formData['seo_robots']) === false) {
-            $errors[] = $this->lang->t('system', 'select_seo_robots');
+            $errors['seo-robots'] = $this->lang->t('system', 'select_seo_robots');
         }
         if ($this->validate->isNumber($formData['seo_mod_rewrite']) === false) {
-            $errors[] = $this->lang->t('system', 'select_mod_rewrite');
+            $errors['seo-mod-rewrite'] = $this->lang->t('system', 'select_mod_rewrite');
         }
         if ($this->validate->isNumber($formData['cache_images']) === false) {
-            $errors[] = $this->lang->t('system', 'select_cache_images');
+            $errors['cache-images'] = $this->lang->t('system', 'select_cache_images');
         }
         if ($this->validate->isNumber($formData['cache_minify']) === false) {
             $errors['cache-minify'] = $this->lang->t('system', 'type_in_minify_cache_lifetime');
@@ -114,50 +117,6 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * Überprüft, ob die zusätzlich zu ladenden Stylesheets überhaupt existieren
-     *
-     * @param string $var
-     *
-     * @return boolean
-     */
-    private function _extraCSS($var)
-    {
-        if ((bool)preg_match('=/=', $var) === false) {
-            $var_ary = explode(',', $var);
-            foreach ($var_ary as $stylesheet) {
-                $stylesheet = trim($stylesheet);
-                if (is_file(DESIGN_PATH_INTERNAL . 'css/' . $stylesheet) === false) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Überprüft, ob die zusätzlich zu ladenden JavaScript Dateien überhaupt existieren
-     *
-     * @param string $var
-     *
-     * @return boolean
-     */
-    private function _extraJS($var)
-    {
-        if ((bool)preg_match('=/=', $var) === false) {
-            $var_ary = explode(',', $var);
-            foreach ($var_ary as $js) {
-                $js = trim($js);
-                if (is_file(DESIGN_PATH_INTERNAL . 'js/' . $js) === false) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * @param array $formData
      *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
@@ -171,10 +130,10 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['tables'] = $this->lang->t('system', 'select_sql_tables');
         }
         if ($formData['output'] !== 'file' && $formData['output'] !== 'text') {
-            $errors[] = $this->lang->t('system', 'select_output');
+            $errors['output'] = $this->lang->t('system', 'select_output');
         }
         if (in_array($formData['export_type'], array('complete', 'structure', 'data')) === false) {
-            $errors[] = $this->lang->t('system', 'select_export_type');
+            $errors['export-type'] = $this->lang->t('system', 'select_export_type');
         }
 
         if (!empty($errors)) {

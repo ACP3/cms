@@ -109,7 +109,7 @@ class Validator extends Core\Validator\AbstractValidator
                 $errors['mail'] = $this->lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
             }
             if ($this->validate->email($formData['mail']) === true && $this->newsletterModel->accountExists($formData['mail']) === true) {
-                $errors[] = $this->lang->t('newsletter', 'account_exists');
+                $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
             }
         }
 
@@ -164,13 +164,13 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['notify-email'] = $this->lang->t('system', 'wrong_email_format');
         }
         if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0) {
-            $errors[] = $this->lang->t('guestbook', 'select_use_overlay');
+            $errors['overlay'] = $this->lang->t('guestbook', 'select_use_overlay');
         }
         if ($this->modules->isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
-            $errors[] = $this->lang->t('guestbook', 'select_emoticons');
+            $errors['emoticons'] = $this->lang->t('guestbook', 'select_emoticons');
         }
         if ($this->modules->isActive('newsletter') === true && (!isset($formData['newsletter_integration']) || ($formData['newsletter_integration'] != 0 && $formData['newsletter_integration'] != 1))) {
-            $errors[] = $this->lang->t('guestbook', 'select_newsletter_integration');
+            $errors['newsletter-integration'] = $this->lang->t('guestbook', 'select_newsletter_integration');
         }
 
         if (!empty($errors)) {

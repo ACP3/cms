@@ -70,7 +70,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('news', 'title_to_short');
@@ -107,7 +107,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('news', 'title_to_short');
@@ -154,7 +154,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (!isset($formData['readmore']) ||
             ($formData['readmore'] != 1 && $formData['readmore'] != 0)
         ) {
-            $errors[] = $this->lang->t('news', 'select_activate_readmore');
+            $errors['readmore'] = $this->lang->t('news', 'select_activate_readmore');
         }
         if ($this->validate->isNumber($formData['readmore_chars']) === false ||
             $formData['readmore_chars'] == 0
@@ -164,12 +164,12 @@ class Validator extends Core\Validator\AbstractValidator
         if (!isset($formData['category_in_breadcrumb']) ||
             ($formData['category_in_breadcrumb'] != 1 && $formData['category_in_breadcrumb'] != 0)
         ) {
-            $errors[] = $this->lang->t('news', 'select_display_category_in_breadcrumb');
+            $errors['category-in-breadcrumb'] = $this->lang->t('news', 'select_display_category_in_breadcrumb');
         }
         if ($this->modules->isActive('comments') === true &&
             (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)
         ) {
-            $errors[] = $this->lang->t('news', 'select_allow_comments');
+            $errors['comments'] = $this->lang->t('news', 'select_allow_comments');
         }
 
         if (!empty($errors)) {

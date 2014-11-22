@@ -24,13 +24,13 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['search-term'] = $this->lang->t('search', 'search_term_to_short');
         }
         if (empty($formData['mods'])) {
-            $errors[] = $this->lang->t('search', 'no_module_selected');
+            $errors['mods'] = $this->lang->t('search', 'no_module_selected');
         }
         if (empty($formData['area'])) {
-            $errors[] = $this->lang->t('search', 'no_area_selected');
+            $errors['area'] = $this->lang->t('search', 'no_area_selected');
         }
         if (empty($formData['sort']) || $formData['sort'] != 'asc' && $formData['sort'] != 'desc') {
-            $errors[] = $this->lang->t('search', 'no_sorting_selected');
+            $errors['sort'] = $this->lang->t('search', 'no_sorting_selected');
         }
 
         if (!empty($errors)) {

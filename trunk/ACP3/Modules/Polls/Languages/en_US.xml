@@ -31,7 +31,7 @@
         <item key="question">Question</item>
         <item key="reset_votes">Reset votes</item>
         <item key="total_votes">Total votes</item>
-        <item key="type_in_answer">Please type in at least one anwers.</item>
+        <item key="type_in_two_answers">Please type in at least two answers.</item>
         <item key="type_in_question">Please type in a question.</item>
         <item key="votes">Votes</item>
     </keys>

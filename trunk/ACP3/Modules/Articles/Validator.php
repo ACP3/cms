@@ -65,7 +65,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('articles', 'title_to_short');
@@ -89,7 +89,7 @@ class Validator extends Core\Validator\AbstractValidator
                     }
                 }
                 if ($formData['display'] != 0 && $formData['display'] != 1) {
-                    $errors[] = $this->lang->t('menus', 'select_item_visibility');
+                    $errors['display'] = $this->lang->t('menus', 'select_item_visibility');
                 }
             }
         }
@@ -113,7 +113,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('articles', 'title_to_short');

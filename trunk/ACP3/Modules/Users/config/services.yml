@@ -29,7 +29,7 @@ services:
 
   users.validator:
     class: ACP3\Modules\Users\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.captcha', '@core.validator.rules.date', '@core.acl', '@core.auth', '@core.modules', 'users.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.captcha', '@core.validator.rules.date', '@core.acl', '@core.auth', '@core.request', '@users.model']
 
   users.installer:
     class: ACP3\Modules\Users\Installer
