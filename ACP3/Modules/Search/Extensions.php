@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Search;
 
 use ACP3\Core;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class Extensions
@@ -28,11 +29,17 @@ class Extensions
      * @var string
      */
     protected $searchTerm;
+    /**
+     * The current datetime
+     *
+     * @var string
+     */
+    protected $time;
 
     /**
-     * @var Core\DB
+     * @var Container
      */
-    protected $db;
+    protected $container;
     /**
      * @var \ACP3\Core\Lang
      */
@@ -43,33 +50,23 @@ class Extensions
     protected $router;
 
     /**
-     * SQL Prepared Parameters
-     *
-     * @var array
-     */
-    protected $params = [];
-
-    /**
-     * @param Core\DB $db
+     * @param Container $container
      * @param Core\Date $date
      * @param Core\Lang $lang
      * @param Core\Router $router
      */
     public function __construct(
-        Core\DB $db,
+        Container $container,
         Core\Date $date,
         Core\Lang $lang,
         Core\Router $router
     )
     {
-        $this->db = $db;
+        $this->container = $container;
         $this->lang = $lang;
         $this->router = $router;
 
-        $this->params = array(
-            'searchterm' => $this->searchTerm,
-            'time' => $date->getCurrentDateTime()
-        );
+        $this->time = $date->getCurrentDateTime();
     }
 
     /**
@@ -124,8 +121,7 @@ class Extensions
                 $fields = 'title, text';
         }
 
-        $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        $results = $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . 'articles WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', title ' . $this->sort, $this->params);
+        $results = $this->container->get('articles.model')->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
         $c_results = count($results);
         $searchResults = [];
 
@@ -157,8 +153,7 @@ class Extensions
                 $fields = 'title, file, text';
         }
 
-        $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        $results = $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . 'files WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
+        $results = $this->container->get('files.model')->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
         $c_results = count($results);
         $searchResults = [];
 
@@ -190,8 +185,7 @@ class Extensions
                 $fields = 'title, text';
         }
 
-        $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        $results = $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . 'news WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
+        $results = $this->container->get('news.model')->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
         $c_results = count($results);
         $searchResults = [];
 

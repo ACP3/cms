@@ -13,13 +13,21 @@ class Model extends Core\Model
     const TABLE_NAME = 'articles';
 
     /**
+     * @return string
+     */
+    private function _getPeriod()
+    {
+        return '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+    }
+
+    /**
      * @param $id
      * @param string $time
      * @return bool
      */
     public function resultExists($id, $time = '')
     {
-        $period = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
+        $period = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
         return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0;
     }
 
@@ -49,7 +57,7 @@ class Model extends Core\Model
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY title ASC' . $limitStmt, array('time' => $time));
     }
@@ -60,6 +68,19 @@ class Model extends Core\Model
     public function getAllInAcp()
     {
         return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY title ASC');
+    }
+
+    /**
+     * @param $fields
+     * @param $searchTerm
+     * @param $sort
+     * @param $time
+     * @return array
+     */
+    public function getAllSearchResults($fields, $searchTerm, $sort, $time)
+    {
+        $period = ' AND ' . $this->_getPeriod();
+        return $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY start ' . $sort . ', end ' . $sort . ', title ' . $sort, ['time' => $time]);
     }
 
 }
