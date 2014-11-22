@@ -137,7 +137,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
         if ($this->modules->isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
-            $errors[] = $this->lang->t('comments', 'select_emoticons');
+            $errors['emoticons'] = $this->lang->t('comments', 'select_emoticons');
         }
 
         if (!empty($errors)) {

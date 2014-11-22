@@ -119,11 +119,12 @@
         <item key="submit">Senden</item>
         <item key="time_zone">Zeitzone</item>
         <item key="toggle_navigation">Navigation einblenden/ausblenden</item>
-        <item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
         <item key="type_in_db_host">Bitte geben Sie den Hostnamen zur Datenbank ein.</item>
         <item key="type_in_db_name">Bitte geben Sie den Datenbankname ein.</item>
         <item key="type_in_db_username">Bitte geben Sie den Benutzernamen für die Datenbank ein.</item>
+        <item key="type_in_long_date_format">Bitte geben Sie die lange Datumsformatierung ein.</item>
         <item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler.</item>
+        <item key="type_in_short_date_format">Bitte geben Sie die verkürzte Datumsformatierung ein.</item>
         <item key="type_in_user_name">Bitte geben Sie einen Benutzernamen für das Administrator Konto an.</item>
         <item key="writable">Beschreibbar</item>
         <item key="wrong_chmod_for_config_file">Bitte geben Sie der Datei config.php, welche sich im "includes"-Ordner

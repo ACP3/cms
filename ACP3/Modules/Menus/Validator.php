@@ -130,7 +130,7 @@ class Validator extends Core\Validator\AbstractValidator
             }
         }
         if ($formData['display'] != 0 && $formData['display'] != 1) {
-            $errors[] = $this->lang->t('menus', 'select_item_visibility');
+            $errors['display'] = $this->lang->t('menus', 'select_item_visibility');
         }
         if ($this->validate->isNumber($formData['target']) === false ||
             $formData['mode'] == 1 && $this->modules->isInstalled($formData['module']) === false ||

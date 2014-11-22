@@ -69,7 +69,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
@@ -120,7 +120,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
@@ -174,10 +174,10 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
         if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0) {
-            $errors[] = $this->lang->t('gallery', 'select_use_overlay');
+            $errors['overlay'] = $this->lang->t('gallery', 'select_use_overlay');
         }
         if ($this->modules->isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
-            $errors[] = $this->lang->t('gallery', 'select_allow_comments');
+            $errors['comments'] = $this->lang->t('gallery', 'select_allow_comments');
         }
         if ($this->validate->isNumber($formData['thumbwidth']) === false || $this->validate->isNumber($formData['width']) === false || $this->validate->isNumber($formData['maxwidth']) === false) {
             $errors[] = $this->lang->t('gallery', 'invalid_image_width_entered');

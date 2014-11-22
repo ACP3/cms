@@ -41,7 +41,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (empty($formData['title'])) {
             $errors['title'] = $this->lang->t('polls', 'type_in_question');
@@ -52,8 +52,8 @@ class Validator extends Core\Validator\AbstractValidator
                 ++$i;
             }
         }
-        if ($i <= 1) {
-            $errors[] = $this->lang->t('polls', 'type_in_answer');
+        if ($i <= 2) {
+            $errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
         }
 
         if (!empty($errors)) {
@@ -88,10 +88,10 @@ class Validator extends Core\Validator\AbstractValidator
             }
         }
         if ($allAnswersEmpty === true) {
-            $errors[] = $this->lang->t('polls', 'type_in_answer');
+            $errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
         }
         if (count($formData['answers']) - $markedAnswers < 2) {
-            $errors[] = $this->lang->t('polls', 'can_not_delete_all_answers');
+            $errors['answer'] = $this->lang->t('polls', 'can_not_delete_all_answers');
         }
 
         if (!empty($errors)) {

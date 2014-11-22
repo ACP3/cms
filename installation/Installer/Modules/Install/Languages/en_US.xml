@@ -115,11 +115,12 @@
         <item key="submit">Submit</item>
         <item key="time_zone">Time zone</item>
         <item key="toggle_navigation">Toggle navigation</item>
-        <item key="type_in_date_format">Please type in a date format.</item>
         <item key="type_in_db_host">Please type in the hostname, which belongs to the database.</item>
         <item key="type_in_db_name">Please type in the database name.</item>
         <item key="type_in_db_username">Please type in the user name for the database.</item>
+        <item key="type_in_long_date_format">Please type in the long date format.</item>
         <item key="type_in_pwd">Either the password is empty or in the repetition is a typo.</item>
+        <item key="type_in_short_date_format">Please type in the short date format.</item>
         <item key="type_in_user_name">Please type in an user name for the administrator account.</item>
         <item key="writable">Writable</item>
         <item key="wrong_chmod_for_config_file">Please set the CHMOD for the config.php, which is located in the

@@ -40,7 +40,7 @@ class Date
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Core\Validator\Rules\Date
+     * @var Validator\Rules\Date
      */
     protected $dateValidator;
     /**
@@ -59,7 +59,7 @@ class Date
         Auth $auth,
         Lang $lang,
         Forms $formsHelper,
-        \ACP3\Core\Validator\Rules\Date $dateValidator,
+        Validator\Rules\Date $dateValidator,
         Config $systemConfig
     )
     {
@@ -250,15 +250,17 @@ class Date
 
             $datepicker['name_start'] = $name[0];
             $datepicker['name_end'] = $name[1];
+            $datepicker['id_start'] = 'date-' . str_replace('_', '-', $name[0]);
+            $datepicker['id_end'] = 'date-' . str_replace('_', '-', $name[1]);
             $datepicker['value_start'] = $valueStart;
             $datepicker['value_start_r'] = $valueStartR;
             $datepicker['value_end'] = $valueEnd;
             $datepicker['value_end_r'] = $valueEndR;
             $datepicker['range_json'] = json_encode(
                 [
-                    'start' => '#' . $name[0],
+                    'start' => '#' . $datepicker['id_start'],
                     'startDefaultDate' => $valueStartR,
-                    'end' => '#' . $name[1],
+                    'end' => '#' . $datepicker['id_end'],
                     'endDefaultDate' => $valueEndR
                 ]
             );
@@ -272,6 +274,7 @@ class Date
             }
 
             $datepicker['name'] = $name;
+            $datepicker['id'] = 'date-' . str_replace('_', '-', $name);
             $datepicker['value'] = $value;
         }
 

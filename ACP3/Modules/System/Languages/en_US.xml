@@ -60,8 +60,8 @@
         <item key="date_feb">Feb</item>
         <item key="date_february">February</item>
         <item key="date_format">Date format</item>
-        <item key="date_format_long">Short date format</item>
-        <item key="date_format_short">Long date format</item>
+        <item key="date_format_long">Long date format</item>
+        <item key="date_format_short">Short date format</item>
         <item key="date_fri">Fri</item>
         <item key="date_friday">Friday</item>
         <item key="date_jan">Jan</item>
@@ -286,10 +286,12 @@
         <item key="type_in_additional_stylesheets">Some of the specified stylesheets could not be found.</item>
         <item key="type_in_date_format">Please type in a date format.</item>
         <item key="type_in_flood_barrier">Please enter the number of seconds a user can not submit posts.</item>
+        <item key="type_in_long_date_format">Please type in the long date format.</item>
         <item key="type_in_mailer_smtp_host">Please type in the hostname of the SMTP server.</item>
         <item key="type_in_mailer_smtp_port">Please type in the portnumber of the SMTP server.</item>
         <item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
         <item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
+        <item key="type_in_short_date_format">Please type in the short date format.</item>
         <item key="type_in_text_or_select_sql_file">Please enter the sql queries either in the textarea oder upload a file.
         </item>
         <item key="uninstall">Uninstall</item>
