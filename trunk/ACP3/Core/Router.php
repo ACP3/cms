@@ -11,7 +11,6 @@ use ACP3\Modules\System;
  */
 class Router
 {
-
     const ADMIN_PANEL_PATTERN = '=^acp/=';
 
     /**
@@ -26,11 +25,11 @@ class Router
     /**
      * @var string
      */
-    protected $protocol = '';
+    private $protocol = '';
     /**
      * @var string
      */
-    protected $hostname = '';
+    private $hostname = '';
 
     /**
      * @param Aliases $aliases
@@ -44,8 +43,24 @@ class Router
         $this->aliases = $aliases;
         $this->systemConfig = $systemConfig->getSettings();
 
-        $this->protocol = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off' ? 'http://' : 'https://';
+        $this->protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
         $this->hostname = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * @return string
+     */
+    public function getProtocol()
+    {
+        return $this->protocol;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHostname()
+    {
+        return $this->hostname;
     }
 
     /**

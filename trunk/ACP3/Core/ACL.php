@@ -170,7 +170,10 @@ class ACL
         $area = $resourceArray[0];
         $resource = $resourceArray[1] . '/' . $resourceArray[2] . '/' . $resourceArray[3] . '/';
 
-        if (isset($this->resources[$area][$resource])) {
+        // At least allow users to access the login page
+        if ($area === 'frontend' && $resource === 'users/index/login/') {
+            return true;
+        } elseif (isset($this->resources[$area][$resource])) {
             $module = $resourceArray[1];
             $key = $this->resources[$area][$resource]['key'];
             return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
