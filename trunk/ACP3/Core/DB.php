@@ -32,7 +32,15 @@ class DB
      * @param string $dbCharset
      * @throws DBAL\DBALException
      */
-    public function __construct($dbHost, $dbName, $dbUser, $dbPassword, $dbTablePrefix = '', $dbDriver = 'pdo_mysql', $dbCharset = 'utf8')
+    public function __construct(
+        $dbHost,
+        $dbName,
+        $dbUser,
+        $dbPassword,
+        $dbTablePrefix = '',
+        $dbDriver = 'pdo_mysql',
+        $dbCharset = 'utf8'
+    )
     {
         $config = new DBAL\Configuration();
         $connectionParams = array(
@@ -46,6 +54,7 @@ class DB
         $this->connection = DBAL\DriverManager::getConnection($connectionParams, $config);
 
         $this->prefix = $dbTablePrefix;
+        $this->name = $dbName;
     }
 
     /**
