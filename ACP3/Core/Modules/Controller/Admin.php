@@ -68,7 +68,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
         $alerts = $this->get('core.helpers.alerts');
 
         if (!isset($entries)) {
-            $this->setContent($alerts->errorBox($this->lang->t('system', 'no_entries_selected'), false));
+            $this->setTemplate($alerts->errorBoxContent($this->lang->t('system', 'no_entries_selected')));
         } elseif (empty($entries) === false && $this->request->action !== 'confirmed') {
             if (is_array($entries) === false) {
                 $entries = array($entries);

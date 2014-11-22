@@ -4,9 +4,8 @@ namespace ACP3\Modules\System;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author Tino Goratsch
+ * Class Model
+ * @package ACP3\Modules\System
  */
 class Model extends Core\Model
 {
