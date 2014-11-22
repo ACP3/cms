@@ -41,10 +41,10 @@ class Alerts
     /**
      * Displays a confirm box
      *
-     * @param string           $text
+     * @param string $text
      * @param int|string|array $forward
-     * @param int|string       $backward
-     * @param integer          $overlay
+     * @param int|string $backward
+     * @param integer $overlay
      *
      * @return string
      */
@@ -73,7 +73,7 @@ class Alerts
      * @param       $text
      * @param array $data
      * @param       $forward
-     * @param int   $backward
+     * @param int $backward
      *
      * @return string
      */
@@ -97,13 +97,9 @@ class Alerts
     }
 
     /**
-     * Gibt eine Box mit den aufgetretenen Fehlern aus
-     *
-     * @param string|array $errors
-     * @param bool $contentOnly
-     * @return string
+     * @param $errors
      */
-    public function errorBox($errors, $contentOnly = true)
+    protected function _setErrorBoxData($errors)
     {
         $hasNonIntegerKeys = false;
 
@@ -122,13 +118,30 @@ class Alerts
             $errors = (array)$errors;
         }
 
+        $this->view->assign(
+            'error_box',
+            [
+                'non_integer_keys' => $hasNonIntegerKeys,
+                'errors' => $errors
+            ]
+        );
+    }
+
+    /**
+     * Gibt eine Box mit den aufgetretenen Fehlern aus
+     *
+     * @param string|array $errors
+     * @param bool $contentOnly
+     * @return string
+     */
+    public function errorBox($errors, $contentOnly = true)
+    {
         if ($this->request->getIsAjax() === true) {
             $contentOnly = true;
         }
 
         $this->view->assign('CONTENT_ONLY', $contentOnly);
-        $this->view->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
-        $content = $this->view->fetchTemplate('system/alerts/error_box.tpl');
+        $content = $this->view->fetchTemplate($this->errorBoxContent($errors));
 
         if ($this->request->getIsAjax() === true) {
             $return = array(
@@ -139,6 +152,17 @@ class Alerts
             $this->outputHelper->outputJson($return);
         }
         return $content;
+    }
+
+    /**
+     * @param $errors
+     * @return string
+     */
+    public function errorBoxContent($errors)
+    {
+        $this->_setErrorBoxData($errors);
+
+        return 'system/alerts/error_box.tpl';
     }
 
 }
