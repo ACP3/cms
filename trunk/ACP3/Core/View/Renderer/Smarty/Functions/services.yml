@@ -47,13 +47,13 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Navbar
     arguments: ['@core.modules', '@menus.helpers']
 
-  smarty.plugin.router:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Router
-    arguments: ['@core.router']
-
   smarty.plugin.template_path:
     class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
     arguments: ['@core.assets.themeResolver']
+
+  smarty.plugin.uri:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
+    arguments: ['@core.router']
 
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG

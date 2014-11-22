@@ -24,6 +24,15 @@ class Router
     protected $systemConfig = [];
 
     /**
+     * @var string
+     */
+    protected $protocol = '';
+    /**
+     * @var string
+     */
+    protected $hostname = '';
+
+    /**
      * @param Aliases $aliases
      * @param Config $systemConfig
      */
@@ -34,16 +43,20 @@ class Router
     {
         $this->aliases = $aliases;
         $this->systemConfig = $systemConfig->getSettings();
+
+        $this->protocol = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off' ? 'http://' : 'https://';
+        $this->hostname = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
     }
 
     /**
      * Generiert die ACP3 internen Hyperlinks
      *
      * @param $path
-     *
+     * @param bool $absolute
+     * @param bool $forceSecure
      * @return string
      */
-    public function route($path)
+    public function route($path, $absolute = false, $forceSecure = false)
     {
         $isAdminUrl = false;
 
@@ -74,7 +87,23 @@ class Router
             }
         }
 
-        $prefix = ((bool)$this->systemConfig['seo_mod_rewrite'] === false || $isAdminUrl === true || (defined('DEBUG') && DEBUG === true)) ? PHP_SELF . '/' : ROOT_DIR;
+        $prefix = '';
+        // Append the current hostname to the URL
+        if ($absolute === true) {
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->protocol;
+            $prefix .= $this->hostname;
+        }
+
+        // Check, whether to use urls with mod_rewrite or not
+        if ((bool)$this->systemConfig['seo_mod_rewrite'] === false ||
+            $isAdminUrl === true ||
+            (defined('DEBUG') && DEBUG === true)
+        ) {
+            $prefix .= PHP_SELF . '/';
+        } else {
+            $prefix .= ROOT_DIR;
+        }
+
         return $prefix . $path;
     }
 

@@ -61,8 +61,8 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
      */
     public function assign($name, $value = null)
     {
-        $item = $this->renderer->createNewItem();
         if (is_array($name) === true) {
+            $item = $this->renderer->createNewItem();
             $item->setTitle($name['title']);
             $item->setDate($name['date']);
             $item->setDescription($name['description']);
@@ -70,10 +70,8 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
             if ($this->config['feed_type'] !== 'ATOM') {
                 $item->addElement('guid', $name['link'], array('isPermaLink' => 'true'));
             }
-        } elseif (is_null($value) === false) {
-            $item->addElement($name, $value);
+            $this->renderer->addItem($item);
         }
-        $this->renderer->addItem($item);
     }
 
     /**

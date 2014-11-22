@@ -15,45 +15,55 @@ class Index extends Core\Modules\Controller\Frontend
      * @var \ACP3\Core\Config
      */
     protected $feedsConfig;
+    /**
+     * @var Feeds\Extensions
+     */
+    protected $feedsExtensions;
 
     /**
      * @param Core\Context\Frontend $context
      * @param Core\Config $feedsConfig
+     * @param Feeds\Extensions $feedsExtensions
      */
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Config $feedsConfig)
+        Core\Config $feedsConfig,
+        Feeds\Extensions $feedsExtensions
+    )
     {
         parent::__construct($context);
 
         $this->feedsConfig = $feedsConfig;
+        $this->feedsExtensions = $feedsExtensions;
+    }
+
+    public function preDispatch()
+    {
+        $settings = $this->feedsConfig->getSettings();
+
+        $config = array(
+            'feed_image' => $settings['feed_image'],
+            'feed_type' => $settings['feed_type'],
+            'feed_link' => $this->router->route('', true),
+            'feed_title' => $this->systemConfig->getSettings()['seo_title'],
+            'module' => $this->request->feed,
+        );
+
+        $this->view->setRenderer('feedgenerator', $config);
+
+        parent::preDispatch();
     }
 
     public function actionIndex()
     {
-        $module = $this->request->feed;
-        $action = strtolower($module) . 'Feed';
+        $action = strtolower($this->request->feed) . 'Feed';
 
-        $feed = $this->get('feeds.extensions');
-
-        if ($this->acl->hasPermission('frontend/' . $module) === true &&
-            method_exists($feed, $action) === true
+        if ($this->acl->hasPermission('frontend/' . $this->request->feed) === true &&
+            method_exists($this->feedsExtensions, $action) === true
         ) {
             $settings = $this->feedsConfig->getSettings();
 
-            define('FEED_LINK', 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES));
-
-            $config = array(
-                'feed_image' => $settings['feed_image'],
-                'feed_type' => $settings['feed_type'],
-                'feed_link' => FEED_LINK . ROOT_DIR,
-                'feed_title' => $this->systemConfig->getSettings()['seo_title'],
-                'module' => $module,
-            );
-
-            $this->view->setRenderer('feedgenerator', $config);
-
-            $feed->$action();
+            $this->feedsExtensions->$action();
 
             $this->setContentType('text/xml');
             $this->setTemplate($settings['feed_type']);
