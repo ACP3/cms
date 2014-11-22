@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {if isset($update)}
         <div class="alert alert-block alert-{$update.class}">
             <h4>{$update.text}</h4>

@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {if isset($newsletter)}
         <article class="dataset-box">
             <header class="navbar navbar-default">

@@ -113,8 +113,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $cache = new Core\Cache('acl');
-            $cache->getDriver()->deleteAll();
+            $this->get('permissions.cache.core')->getDriver()->deleteAll();
 
             if ($levelUndeletable === true) {
                 $text = $this->lang->t('permissions', 'role_undeletable');
@@ -210,8 +209,7 @@ class Index extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             $nestedSet->order($this->request->id, $this->request->action);
 
-            $cache = new Core\Cache('acl');
-            $cache->getDriver()->deleteAll();
+            $this->get('permissions.cache.core')->getDriver()->deleteAll();
 
             $this->redirect()->temporary('acp/permissions');
         } else {
@@ -302,8 +300,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->db->getConnection()->commit();
 
-            $cache = new Core\Cache('acl');
-            $cache->getDriver()->deleteAll();
+            $this->get('permissions.cache.core')->getDriver()->deleteAll();
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

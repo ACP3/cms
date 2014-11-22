@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {redirect_message}
     <h4 style="margin-bottom:10px">{$question}</h4>
     <table class="table table-striped">

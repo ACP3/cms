@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <div class="well well-small">
         <h4>{lang t="acp|access_to_modules"}</h4>
         <ul>

@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {redirect_message}
     <table class="table table-striped table-hover">
         <thead>

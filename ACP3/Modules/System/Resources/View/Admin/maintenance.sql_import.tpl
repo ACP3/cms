@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {if isset($sql_queries)}
         <pre>
         {foreach $sql_queries as $row}

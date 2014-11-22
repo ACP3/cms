@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <fieldset>
         <legend>{lang t="system|general"}</legend>
         <dl class="dl-horizontal">

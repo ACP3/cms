@@ -110,7 +110,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = false;
             $commentsInstalled = $this->modules->isInstalled('comments');
-            $cache = new Core\Cache('news');
+            $cache = $this->get('news.cache.core');
 
             foreach ($items as $item) {
                 $bool = $this->newsModel->delete($item);

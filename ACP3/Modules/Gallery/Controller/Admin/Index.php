@@ -80,7 +80,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = $bool2 = false;
 
-            $cache = new Core\Cache('gallery');
+            $cache = $this->get('gallery.cache.core');
 
             foreach ($items as $item) {
                 if (!empty($item) && $this->galleryModel->galleryExists($item) === true) {
@@ -308,8 +308,7 @@ class Index extends Core\Modules\Controller\Admin
             ) {
                 Core\Cache::purge(UPLOADS_DIR . 'cache/images', 'gallery');
 
-                $cache = new Core\Cache('gallery');
-                $cache->getDriver()->deleteAll();
+                $this->get('gallery.cache.core')->getDriver()->deleteAll();
             }
 
             $this->secureHelper->unsetFormToken($this->request->query);
