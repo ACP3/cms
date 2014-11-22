@@ -11,15 +11,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class Redirect
 {
     /**
-     * @var string
-     */
-    protected $protocol = '';
-    /**
-     * @var string
-     */
-    protected $hostname = '';
-
-    /**
      * @var Request
      */
     protected $request;
@@ -32,13 +23,13 @@ class Redirect
      * @param Request $request
      * @param Router $router
      */
-    public function __construct(Request $request, Router $router)
+    public function __construct(
+        Request $request,
+        Router $router
+    )
     {
         $this->request = $request;
         $this->router = $router;
-
-        $this->protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
-        $this->hostname = $_SERVER['HTTP_HOST'];
     }
 
     /**
@@ -46,28 +37,12 @@ class Redirect
      */
     public function toNewPage($url)
     {
+        if ($this->request->getIsAjax() === true) {
+            $this->_ajax($url);
+        }
+
         $response = new RedirectResponse($url);
         $response->send();
-    }
-
-    /**
-     * Outputs a JSON response with redirect url
-     *
-     * @param $path
-     */
-    public function ajax($path)
-    {
-        $url = $this->protocol . $this->hostname . $this->router->route($path);
-
-        if ($this->request->getIsAjax() === true) {
-            $return = array(
-                'redirect_url' => $url
-            );
-
-            $response = new JsonResponse($return);
-            $response->send();
-            exit;
-        }
     }
 
     /**
@@ -88,20 +63,38 @@ class Redirect
      */
     private function _redirect($path, $movedPermanently)
     {
-        if ($this->request->getIsAjax() === true) {
-            $this->ajax($path);
-        }
+        $path = $this->router->getProtocol() . $this->router->getHostname() . $this->router->route($path);
 
-        $url = $this->protocol . $this->hostname . $this->router->route($path);
+        if ($this->request->getIsAjax() === true) {
+            $this->_ajax($path);
+        }
 
         $status = 302;
         if ($movedPermanently === true) {
             $status = 301;
         }
 
-        $response = new RedirectResponse($url, $status);
+        $response = new RedirectResponse($path, $status);
         $response->send();
         exit;
+    }
+
+    /**
+     * Outputs a JSON response with redirect url
+     *
+     * @param $path
+     */
+    private function _ajax($path)
+    {
+        if ($this->request->getIsAjax() === true) {
+            $return = array(
+                'redirect_url' => $path
+            );
+
+            $response = new JsonResponse($return);
+            $response->send();
+            exit;
+        }
     }
 
     /**
