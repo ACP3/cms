@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {if isset($comments)}
         <form action="{uri args="acp/comments/details/delete"}" method="post">
             <nav id="adm-list" class="navbar navbar-default" role="navigation">

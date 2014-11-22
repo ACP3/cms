@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {if isset($results_mods)}
         <div class="tabbable">
             <ul class="nav nav-tabs">

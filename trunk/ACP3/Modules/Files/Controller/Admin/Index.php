@@ -111,7 +111,7 @@ class Index extends Core\Modules\Controller\Admin
             $bool = false;
             $commentsInstalled = $this->modules->isInstalled('comments');
 
-            $cache = new Core\Cache('files');
+            $cache = $this->get('files.cache.core');
             $upload = new Core\Helpers\Upload('files');
             foreach ($items as $item) {
                 if (!empty($item)) {

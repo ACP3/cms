@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
             <label for="answer-{$answers.0.id}" class="col-sm-2 control-label">{$question}</label>

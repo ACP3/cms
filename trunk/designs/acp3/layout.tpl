@@ -45,9 +45,7 @@
                     {/block}
                 </div>
                 <h2>{$TITLE}</h2>
-                {block CONTENT}
-                    {$CONTENT}
-                {/block}
+                {block CONTENT}{/block}
             </main>
             <div class="col-md-2 hidden-xs hidden-sm">
                 {load_module module="sidebar/news"}

@@ -62,7 +62,7 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return 'system/confirm_box.tpl';
+            return 'system/alerts/confirm_box.tpl';
         }
         return '';
     }
@@ -91,7 +91,7 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return 'system/confirm_box_post.tpl';
+            return 'system/alerts/confirm_box_post.tpl';
         }
         return '';
     }
@@ -100,10 +100,10 @@ class Alerts
      * Gibt eine Box mit den aufgetretenen Fehlern aus
      *
      * @param string|array $errors
-     *
+     * @param bool $contentOnly
      * @return string
      */
-    public function errorBox($errors)
+    public function errorBox($errors, $contentOnly = true)
     {
         $hasNonIntegerKeys = false;
 
@@ -121,8 +121,14 @@ class Alerts
         } else {
             $errors = (array)$errors;
         }
+
+        if ($this->request->getIsAjax() === true) {
+            $contentOnly = true;
+        }
+
+        $this->view->assign('CONTENT_ONLY', $contentOnly);
         $this->view->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
-        $content = $this->view->fetchTemplate('system/error_box.tpl');
+        $content = $this->view->fetchTemplate('system/alerts/error_box.tpl');
 
         if ($this->request->getIsAjax() === true) {
             $return = array(

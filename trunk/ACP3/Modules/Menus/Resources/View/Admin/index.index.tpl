@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <form action="{uri args="acp/menus/items/delete"}" method="post">
         <nav id="adm-list" class="navbar navbar-default" role="navigation">
             <div class="navbar-header">

@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {if !is_array($page)}
         {$page}
     {else}

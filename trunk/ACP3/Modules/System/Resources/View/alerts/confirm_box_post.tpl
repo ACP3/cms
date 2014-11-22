@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <div class="modal static">
         <div class="modal-dialog">
             <div class="modal-content">

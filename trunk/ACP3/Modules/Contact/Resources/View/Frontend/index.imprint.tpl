@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <dl>
         {if !empty($imprint.address)}
             <dt>{lang t="contact|address"}</dt>

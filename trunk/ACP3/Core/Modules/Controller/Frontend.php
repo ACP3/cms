@@ -99,7 +99,6 @@ abstract class Frontend extends Core\Modules\Controller
                 $this->view->assign('TITLE', $this->breadcrumb->output(2));
                 $this->view->assign('BREADCRUMB', $this->breadcrumb->output());
                 $this->view->assign('META', $this->seo->getMetaTags());
-                $this->view->assign('CONTENT', $this->getContentAppend());
 
                 $this->view->displayTemplate($this->getTemplate());
             } else {

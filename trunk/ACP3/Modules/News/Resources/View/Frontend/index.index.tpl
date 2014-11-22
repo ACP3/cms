@@ -1,6 +1,6 @@
 {extends file="asset:layout.tpl"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <div class="navbar navbar-default">
     <div class="container-fluid">
         {if isset($categories)}

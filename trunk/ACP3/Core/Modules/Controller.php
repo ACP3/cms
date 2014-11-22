@@ -68,10 +68,6 @@ abstract class Controller
      * @var string
      */
     protected $content = '';
-    /**
-     * @var string
-     */
-    protected $contentAppend = '';
 
     /**
      * @param Core\Context $context
@@ -123,20 +119,6 @@ abstract class Controller
     }
 
     /**
-     * Fügt weitere Daten an den Seiteninhalt an
-     *
-     * @param string $data
-     *
-     * @return $this
-     */
-    public function appendContent($data)
-    {
-        $this->contentAppend .= $data;
-
-        return $this;
-    }
-
-    /**
      * Gibt den auszugebenden Seiteninhalt zurück
      *
      * @return string
@@ -158,16 +140,6 @@ abstract class Controller
         $this->content = $data;
 
         return $this;
-    }
-
-    /**
-     * Gibt die anzuhängenden Inhalte an den Seiteninhalt zurück
-     *
-     * @return string
-     */
-    public function getContentAppend()
-    {
-        return $this->contentAppend;
     }
 
     /**
