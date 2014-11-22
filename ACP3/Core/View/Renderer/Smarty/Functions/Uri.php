@@ -4,19 +4,15 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 use ACP3\Core;
 
 /**
- * Class Router
+ * Class Uri
  * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class Router extends AbstractFunction
+class Uri extends AbstractFunction
 {
     /**
      * @var Core\Router
      */
     protected $router;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'uri';
 
     /**
      * @param Core\Router $router
@@ -39,6 +35,10 @@ class Router extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        return $this->router->route(!empty($params['args']) ? $params['args'] : '');
+        return $this->router->route(
+            !empty($params['args']) ? $params['args'] : '',
+            isset($params['absolute']) ? (bool)$params['absolute'] : false,
+            isset($params['secure']) ? (bool)$params['secure'] : false
+        );
     }
 }

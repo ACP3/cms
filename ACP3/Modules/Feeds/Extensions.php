@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Feeds;
 
 use ACP3\Core;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class Extensions
@@ -11,9 +12,9 @@ use ACP3\Core;
 class Extensions
 {
     /**
-     * @var Core\DB
+     * @var Container
      */
-    protected $db;
+    protected $container;
     /**
      * @var \ACP3\Core\Date
      */
@@ -32,14 +33,14 @@ class Extensions
     protected $formatter;
 
     /**
-     * @param Core\DB $db
+     * @param Container $container
      * @param Core\Date $date
      * @param Core\Router $router
      * @param Core\View $view
      * @param Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(
-        Core\DB $db,
+        Container $container,
         Core\Date $date,
         Core\Router $router,
         Core\View $view,
@@ -47,7 +48,7 @@ class Extensions
     )
     {
         $this->date = $date;
-        $this->db = $db;
+        $this->container = $container;
         $this->router = $router;
         $this->view = $view;
         $this->formatter = $stringFormatter;
@@ -55,7 +56,7 @@ class Extensions
 
     public function newsFeed()
     {
-        $results = $this->db->getConnection()->fetchAll('SELECT id, start, title, text FROM ' . $this->db->getPrefix() . 'news WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
+        $results = $this->container->get('news.model')->getAll($this->date->getCurrentDateTime(), 10);
         $c_results = count($results);
 
         for ($i = 0; $i < $c_results; ++$i) {
@@ -63,7 +64,7 @@ class Extensions
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
                 'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
-                'link' => FEED_LINK . $this->router->route('news/index/details/id_' . $results[$i]['id'])
+                'link' => $this->router->route('news/index/details/id_' . $results[$i]['id'], true)
             );
             $this->view->assign($params);
         }
@@ -71,7 +72,7 @@ class Extensions
 
     public function filesFeed()
     {
-        $results = $this->db->getConnection()->fetchAll('SELECT id, start, title, text FROM ' . $this->db->getPrefix() . 'files WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
+        $results = $this->container->get('files.model')->getAll($this->date->getCurrentDateTime(), 10);
         $c_results = count($results);
 
         for ($i = 0; $i < $c_results; ++$i) {
@@ -79,7 +80,7 @@ class Extensions
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
                 'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
-                'link' => FEED_LINK . $this->router->route('files/index/details/id_' . $results[$i]['id'])
+                'link' => $this->router->route('files/index/details/id_' . $results[$i]['id'], true)
             );
             $this->view->assign($params);
         }

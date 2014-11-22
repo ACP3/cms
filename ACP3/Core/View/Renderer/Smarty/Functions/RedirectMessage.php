@@ -13,10 +13,6 @@ class RedirectMessage extends AbstractFunction
      * @var Core\Helpers\RedirectMessages
      */
     protected $redirectMessages;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'redirect_message';
 
     /**
      * @param Core\Helpers\RedirectMessages $redirectMessages

@@ -5,7 +5,7 @@ services:
 
   feeds.controller.frontend.index:
     class: ACP3\Modules\Feeds\Controller\Index
-    arguments: ['@core.context.frontend', '@feeds.config']
+    arguments: ['@core.context.frontend', '@feeds.config', '@feeds.extensions']
 
   feeds.cache.core:
     class: ACP3\Core\Cache
@@ -21,7 +21,7 @@ services:
 
   feeds.extensions:
     class: ACP3\Modules\Feeds\Extensions
-    arguments: ['@core.db', '@core.date', '@core.router', '@core.view', '@core.helpers.stringFormatter']
+    arguments: ['@service_container', '@core.date', '@core.router', '@core.view', '@core.helpers.stringFormatter']
 
   feeds.installer:
     class: ACP3\Modules\Feeds\Installer

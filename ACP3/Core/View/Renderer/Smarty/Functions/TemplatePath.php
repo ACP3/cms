@@ -13,10 +13,6 @@ class TemplatePath extends AbstractFunction
      * @var Core\Assets\ThemeResolver
      */
     protected $themeResolver;
-    /**
-     * @var string
-     */
-    protected $pluginName = 'template_path';
 
     /**
      * @param Core\Assets\ThemeResolver $themeResolver
