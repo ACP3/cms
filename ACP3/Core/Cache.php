@@ -41,8 +41,6 @@ class Cache
             $driverName = 'Array';
         }
 
-        Logger::debug('installer', $driverName);
-
         $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
         if (class_exists($cacheDriverPath)) {
             if ($driverName === 'PhpFile') {
