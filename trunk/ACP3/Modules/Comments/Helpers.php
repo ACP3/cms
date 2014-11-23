@@ -46,7 +46,7 @@ class Helpers
      */
     public function deleteCommentsByModuleAndResult($moduleName, $resultId)
     {
-        return $this->comentsModel->delete(array('module_id' => $moduleName, 'entry_id' => $resultId));
+        return $this->comentsModel->delete(['module_id' => $moduleName, 'entry_id' => $resultId]);
     }
 
 }

@@ -135,7 +135,7 @@ class Date
      */
     public function getTimeZones($currentValue = '')
     {
-        $timeZones = array(
+        $timeZones = [
             'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
             'America' => \DateTimeZone::listIdentifiers(\DateTimeZone::AMERICA),
             'Antarctica' => \DateTimeZone::listIdentifiers(\DateTimeZone::ANTARCTICA),
@@ -147,7 +147,7 @@ class Date
             'Indian' => \DateTimeZone::listIdentifiers(\DateTimeZone::INDIAN),
             'Pacitic' => \DateTimeZone::listIdentifiers(\DateTimeZone::PACIFIC),
             'UTC' => \DateTimeZone::listIdentifiers(\DateTimeZone::UTC),
-        );
+        ];
 
         foreach ($timeZones as $key => $values) {
             $i = 0;
@@ -171,11 +171,11 @@ class Date
      */
     public function dateFormatDropdown($format = '')
     {
-        $dateformatLang = array(
+        $dateformatLang = [
             $this->lang->t('system', 'date_format_short'),
             $this->lang->t('system', 'date_format_long')
-        );
-        return $this->formsHelper->selectGenerator('dateformat', array('short', 'long'), $dateformatLang, $format);
+        ];
+        return $this->formsHelper->selectGenerator('dateformat', ['short', 'long'], $dateformatLang, $format);
     }
 
     /**
@@ -201,7 +201,7 @@ class Date
         $name,
         $value = '',
         $format = 'Y-m-d H:i',
-        array $params = array(),
+        array $params = [],
         $range = 1,
         $withTime = true,
         $inputFieldOnly = false
@@ -209,17 +209,17 @@ class Date
     {
         $range = (is_array($name) === true && $range === 1);
 
-        $datepicker = array(
+        $datepicker = [
             'range' => $range,
             'with_time' => (bool)$withTime,
             'length' => $withTime === true ? 16 : 10,
             'input_only' => (bool)$inputFieldOnly,
-            'params' => array(
+            'params' => [
                 'format' => 'YYYY-MM-DD',
                 'changeMonth' => 'true',
                 'changeYear' => 'true',
-            )
-        );
+            ]
+        ];
         if ($withTime === true) {
             $datepicker['params']['format'] .= ' HH:mm';
         }
@@ -339,7 +339,7 @@ class Date
      */
     protected function localizeDaysAbbr()
     {
-        return array(
+        return [
             'Mon' => $this->lang->t('system', 'date_mon'),
             'Tue' => $this->lang->t('system', 'date_tue'),
             'Wed' => $this->lang->t('system', 'date_wed'),
@@ -347,7 +347,7 @@ class Date
             'Fri' => $this->lang->t('system', 'date_fri'),
             'Sat' => $this->lang->t('system', 'date_sat'),
             'Sun' => $this->lang->t('system', 'date_sun')
-        );
+        ];
     }
 
     /**
@@ -355,7 +355,7 @@ class Date
      */
     protected function localizeDays()
     {
-        return array(
+        return [
             'Monday' => $this->lang->t('system', 'date_monday'),
             'Tuesday' => $this->lang->t('system', 'date_tuesday'),
             'Wednesday' => $this->lang->t('system', 'date_wednesday'),
@@ -363,7 +363,7 @@ class Date
             'Friday' => $this->lang->t('system', 'date_friday'),
             'Saturday' => $this->lang->t('system', 'date_saturday'),
             'Sunday' => $this->lang->t('system', 'date_sunday')
-        );
+        ];
     }
 
     /**
@@ -371,7 +371,7 @@ class Date
      */
     protected function localizeMonthsAbbr()
     {
-        return array(
+        return [
             'Jan' => $this->lang->t('system', 'date_jan'),
             'Feb' => $this->lang->t('system', 'date_feb'),
             'Mar' => $this->lang->t('system', 'date_mar'),
@@ -384,7 +384,7 @@ class Date
             'Oct' => $this->lang->t('system', 'date_oct'),
             'Nov' => $this->lang->t('system', 'date_nov'),
             'Dec' => $this->lang->t('system', 'date_dec')
-        );
+        ];
     }
 
     /**
@@ -392,7 +392,7 @@ class Date
      */
     protected function localizeMonths()
     {
-        return array(
+        return [
             'January' => $this->lang->t('system', 'date_january'),
             'February' => $this->lang->t('system', 'date_february'),
             'March' => $this->lang->t('system', 'date_march'),
@@ -405,7 +405,7 @@ class Date
             'October' => $this->lang->t('system', 'date_october'),
             'November' => $this->lang->t('system', 'date_november'),
             'December' => $this->lang->t('system', 'date_december')
-        );
+        ];
     }
 
     /**

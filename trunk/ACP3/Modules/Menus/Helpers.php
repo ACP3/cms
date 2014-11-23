@@ -218,13 +218,13 @@ class Helpers
     {
         // Selektion nur vornehmen, wenn man sich im Frontend befindet
         if ($this->request->area !== 'admin') {
-            $in = array(
+            $in = [
                 $this->request->query,
                 $this->request->getUriWithoutPages(),
                 $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
                 $this->request->mod . '/' . $this->request->controller . '/',
                 $this->request->mod
-            );
+            ];
             return (int) $this->menusModel->getLeftIdByUris($menu, $in);
         }
 

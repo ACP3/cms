@@ -68,13 +68,13 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('date', $this->date->datepicker('date'));
         $this->view->assign('settings', $settings);
-        $this->view->assign('form', array_merge(array('title' => '', 'text' => ''), $_POST));
+        $this->view->assign('form', array_merge(['title' => '', 'text' => ''], $_POST));
 
-        $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
+        $lang_test = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', [1, 0], $lang_test, 0, 'checked'));
 
-        $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
-        $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
+        $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
+        $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -107,14 +107,14 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             $this->view->assign('date', $this->date->datepicker('date', $newsletter['date']));
-            $this->view->assign('settings', array_merge($settings, array('html' => $newsletter['html'])));
+            $this->view->assign('settings', array_merge($settings, ['html' => $newsletter['html']]));
             $this->view->assign('form', array_merge($newsletter, $_POST));
 
-            $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
+            $lang_test = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', [1, 0], $lang_test, 0, 'checked'));
 
-            $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
-            $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
+            $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
+            $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
 
             $this->secureHelper->generateFormToken($this->request->query);
         } else {
@@ -128,13 +128,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if (count($newsletter) > 0) {
             $canDelete = $this->acl->hasPermission('admin/newsletter/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
@@ -158,7 +158,7 @@ class Index extends Core\Modules\Controller\Admin
             $bool = $this->newsletterHelpers->sendNewsletter($this->request->id, $recipients);
             $bool2 = false;
             if ($bool === true) {
-                $bool2 = $this->newsletterModel->update(array('status' => '1'), $this->request->id);
+                $bool2 = $this->newsletterModel->update(['status' => '1'], $this->request->id);
             }
 
             $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
@@ -177,11 +177,11 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
-        $langHtml = array(
+        $langHtml = [
             $this->lang->t('system', 'yes'),
             $this->lang->t('system', 'no')
-        );
-        $this->view->assign('html', $this->get('core.helpers.forms')->selectGenerator('html', array(1, 0), $langHtml, $settings['html'], 'checked'));
+        ];
+        $this->view->assign('html', $this->get('core.helpers.forms')->selectGenerator('html', [1, 0], $langHtml, $settings['html'], 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -197,7 +197,7 @@ class Index extends Core\Modules\Controller\Admin
             $validator->validate($formData);
 
             // Newsletter archivieren
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'date' => $this->date->toSQL($formData['date']),
                 'title' => Core\Functions::strEncode($formData['title']),
@@ -205,7 +205,7 @@ class Index extends Core\Modules\Controller\Admin
                 'html' => $settings['html'],
                 'status' => 0,
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
             $lastId = $this->newsletterModel->insert($insertValues);
 
             // Test-Newsletter
@@ -243,12 +243,12 @@ class Index extends Core\Modules\Controller\Admin
             $validator->validate($formData);
 
             // Newsletter archivieren
-            $updateValues = array(
+            $updateValues = [
                 'date' => $this->date->toSQL($formData['date']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
             $bool = $this->newsletterModel->update($updateValues, $this->request->id);
 
             // Test-Newsletter
@@ -285,11 +285,11 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('newsletter.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'mail' => $formData['mail'],
                 'mailsig' => Core\Functions::strEncode($formData['mailsig'], true),
                 'html' => (int)$formData['html']
-            );
+            ];
 
             $bool = $this->newsletterConfig->setSettings($data);
 

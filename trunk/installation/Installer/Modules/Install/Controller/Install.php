@@ -63,7 +63,7 @@ class Install extends AbstractController
         // Zeitzonen
         $this->view->assign('time_zones', $this->date->getTimeZones(date_default_timezone_get()));
 
-        $defaults = array(
+        $defaults = [
             'db_host' => 'localhost',
             'db_pre' => 'acp3_',
             'db_user' => '',
@@ -73,7 +73,7 @@ class Install extends AbstractController
             'date_format_long' => $this->date->getDateFormatLong(),
             'date_format_short' => $this->date->getDateFormatShort(),
             'seo_title' => 'ACP3',
-        );
+        ];
 
         $this->view->assign('form', array_merge($defaults, $_POST));
     }
@@ -137,7 +137,7 @@ class Install extends AbstractController
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
-        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..']);
         foreach ($installerModules as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
@@ -145,7 +145,7 @@ class Install extends AbstractController
             }
         }
 
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
@@ -165,7 +165,7 @@ class Install extends AbstractController
     {
         $bool = false;
         // Install core modules
-        $installFirst = array('system', 'permissions', 'users');
+        $installFirst = ['system', 'permissions', 'users'];
         foreach ($installFirst as $module) {
             $bool = $this->installHelper->installModule($module, $this->container);
             if ($bool === false) {
@@ -176,7 +176,7 @@ class Install extends AbstractController
 
         // Install "normal" modules
         if ($bool === true) {
-            $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+            $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
 
             foreach ($modules as $module) {
                 $module = strtolower($module);
@@ -204,8 +204,8 @@ class Install extends AbstractController
         $salt = $securityHelper->salt(12);
         $currentDate = gmdate('Y-m-d H:i:s');
 
-        $newsModuleId = $this->db->getConnection()->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', array('news'));
-        $queries = array(
+        $newsModuleId = $this->db->getConnection()->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', ['news']);
+        $queries = [
             "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->getConnection()->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->getConnection()->quote($formData["date_format_long"]) . ", " . $this->db->getConnection()->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
             'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('install', 'category_name') . '\', \'\', \'' . $this->lang->t('install', 'category_description') . '\', \'' . $newsModuleId . '\');',
             'INSERT INTO `{pre}news` VALUES (\'\', \'' . $currentDate . '\', \'' . $currentDate . '\', \'' . $this->lang->t('install', 'news_headline') . '\', \'' . $this->lang->t('install', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
@@ -220,32 +220,32 @@ class Install extends AbstractController
             'INSERT INTO `{pre}menu_items` VALUES (\'\', 2, 2, 9, 0, 17, 18, 1, \'' . $this->lang->t('install', 'pages_imprint') . '\', \'contact/index/imprint/\', 1);',
             'INSERT INTO `{pre}menus` VALUES (1, \'main\', \'' . $this->lang->t('install', 'pages_main') . '\');',
             'INSERT INTO `{pre}menus` VALUES (2, \'sidebar\', \'' . $this->lang->t('install', 'pages_sidebar') . '\');',
-        );
+        ];
 
         if ($this->installHelper->executeSqlQueries($queries, $this->db) === false) {
             $this->view->assign('install_error', true);
         }
 
         // Modulkonfigurationsdateien schreiben
-        $systemSettings = array(
+        $systemSettings = [
             'date_format_long' => \ACP3\Core\Functions::strEncode($formData['date_format_long']),
             'date_format_short' => \ACP3\Core\Functions::strEncode($formData['date_format_short']),
             'date_time_zone' => $formData['date_time_zone'],
             'maintenance_message' => $this->lang->t('install', 'offline_message'),
             'seo_title' => !empty($formData['seo_title']) ? $formData['seo_title'] : 'ACP3',
-        );
+        ];
 
         $configSystem = $this->get('system.config');
         $configSystem->setSettings($systemSettings);
 
         $configUsers = $this->get('users.config');
-        $configUsers->setSettings(array('mail' => $formData['mail']));
+        $configUsers->setSettings(['mail' => $formData['mail']]);
 
         $configContact = $this->get('contact.config');
-        $configContact->setSettings(array('mail' => $formData['mail'], 'disclaimer' => $this->lang->t('install', 'disclaimer')));
+        $configContact->setSettings(['mail' => $formData['mail'], 'disclaimer' => $this->lang->t('install', 'disclaimer')]);
 
         $configNewsletter = $this->get('newsletter.config');
-        $configNewsletter->setSettings(array('mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')));
+        $configNewsletter->setSettings(['mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')]);
     }
 
 }

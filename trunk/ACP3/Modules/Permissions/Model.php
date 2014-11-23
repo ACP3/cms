@@ -30,7 +30,7 @@ class Model extends Core\Model
      */
     public function roleExists($id)
     {
-        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0);
+        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', ['id' => $id]) > 0);
     }
 
     /**
@@ -41,9 +41,9 @@ class Model extends Core\Model
     public function roleExistsByName($roleName, $id = '')
     {
         if ($id !== '') {
-            return !empty($roleName) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND name = ?', array((int) $id, $roleName)) == 1;
+            return !empty($roleName) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND name = ?', [(int) $id, $roleName]) == 1;
         } else {
-            return !empty($roleName) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', array($roleName)) == 1;
+            return !empty($roleName) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$roleName]) == 1;
         }
     }
 
@@ -53,7 +53,7 @@ class Model extends Core\Model
      */
     public function resourceExists($id)
     {
-        return (int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_RESOURCES . ' WHERE id = :id', array('id' => $id)) > 0;
+        return (int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_RESOURCES . ' WHERE id = :id', ['id' => $id]) > 0;
     }
 
     /**
@@ -62,7 +62,7 @@ class Model extends Core\Model
      */
     public function getRoleById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -79,7 +79,7 @@ class Model extends Core\Model
      */
     public function getRolesByUserId($userId)
     {
-        return $this->db->getConnection()->fetchAll('SELECT r.* FROM ' . $this->db->getPrefix() . static::TABLE_NAME_USER_ROLES . ' AS ur JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC', array($userId), array(\PDO::PARAM_INT));
+        return $this->db->getConnection()->fetchAll('SELECT r.* FROM ' . $this->db->getPrefix() . static::TABLE_NAME_USER_ROLES . ' AS ur JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC', [$userId], [\PDO::PARAM_INT]);
     }
 
     /**
@@ -91,8 +91,8 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->executeQuery(
             'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->db->getPrefix() . static::TABLE_NAME_RULES . ' AS ru JOIN ' . $this->db->getPrefix() . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_PRIVILEGES . ' AS p ON(ru.privilege_id = p.id) WHERE m.active = 1 AND ru.role_id IN(?)',
-            array($roles),
-            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+            [$roles],
+            [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
         )->fetchAll();
     }
 
@@ -102,7 +102,7 @@ class Model extends Core\Model
      */
     public function getResourceById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->db->getPrefix() . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->db->getPrefix() . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', array($id));
+        return $this->db->getConnection()->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->db->getPrefix() . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->db->getPrefix() . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', [$id]);
     }
 
     /**
@@ -136,7 +136,7 @@ class Model extends Core\Model
      */
     public function getPermissionByKeyAndRoleId($key, $roleId)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT ru.permission FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS r, ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS parent JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_RULES . ' AS ru ON(parent.id = ru.role_id) JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_PRIVILEGES . ' AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', array($roleId, $key));
+        return $this->db->getConnection()->fetchAssoc('SELECT ru.permission FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS r, ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS parent JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_RULES . ' AS ru ON(parent.id = ru.role_id) JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_PRIVILEGES . ' AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', [$roleId, $key]);
     }
 
 }

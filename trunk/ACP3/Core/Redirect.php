@@ -87,9 +87,9 @@ class Redirect
     private function _ajax($path)
     {
         if ($this->request->getIsAjax() === true) {
-            $return = array(
+            $return = [
                 'redirect_url' => $path
-            );
+            ];
 
             $response = new JsonResponse($return);
             $response->send();

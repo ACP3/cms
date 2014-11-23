@@ -66,11 +66,11 @@ class Cache
             }
             $path = $resources[$i]['module_name'] . '/' . $resources[$i]['controller'] . '/' . $resources[$i]['page'] . '/';
             $path .= !empty($resources[$i]['params']) ? $resources[$i]['params'] . '/' : '';
-            $data[$area][$path] = array(
+            $data[$area][$path] = [
                 'resource_id' => $resources[$i]['resource_id'],
                 'privilege_id' => $resources[$i]['privilege_id'],
                 'key' => $resources[$i]['privilege_name'],
-            );
+            ];
         }
         return $this->cache->save(static::CACHE_ID_RESOURCES, $data);
     }
@@ -155,12 +155,12 @@ class Cache
         $privileges = [];
         for ($i = 0; $i < $c_rules; ++$i) {
             $key = strtolower($rules[$i]['key']);
-            $privileges[$rules[$i]['module_name']][$key] = array(
+            $privileges[$rules[$i]['module_name']][$key] = [
                 'id' => $rules[$i]['privilege_id'],
                 'description' => $rules[$i]['description'],
                 'permission' => $rules[$i]['permission'],
                 'access' => $rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->_getPermissionValue($key, $rules[$i]['role_id']) == 1) ? true : false,
-            );
+            ];
         }
 
         return $this->cache->save(static::CACHE_ID_RULES . implode(',', $roles), $privileges);

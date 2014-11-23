@@ -19,7 +19,7 @@ class Model extends Core\Model
      */
     public function resultExists($id)
     {
-        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0);
+        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', ['id' => $id]) > 0);
     }
 
     /**
@@ -28,7 +28,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -59,7 +59,7 @@ class Model extends Core\Model
      */
     public function getLastDateFromIp($ipAddress)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT MAX(date) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE ip = ?', array($ipAddress));
+        return $this->db->getConnection()->fetchColumn('SELECT MAX(date) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE ip = ?', [$ipAddress]);
     }
 
     /**

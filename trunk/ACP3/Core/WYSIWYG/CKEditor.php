@@ -11,7 +11,7 @@ class CKEditor extends AbstractWYSIWYG
     /**
      * @param array $params
      */
-    public function setParameters(array $params = array())
+    public function setParameters(array $params = [])
     {
         $this->id = $params['id'];
         $this->name = $params['name'];
@@ -34,11 +34,11 @@ class CKEditor extends AbstractWYSIWYG
         $ckeditor = new \CKEditor(ROOT_DIR . 'libraries/ckeditor/');
         $ckeditor->returnOutput = true;
 
-        $wysiwyg = array(
+        $wysiwyg = [
             'id' => $this->id,
             'editor' => $ckeditor->editor($this->name, $this->id, $this->value, $this->config),
             'advanced' => $this->advanced,
-        );
+        ];
 
         if ($wysiwyg['advanced'] === true) {
             $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';

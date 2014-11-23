@@ -43,11 +43,11 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            )
-        );
+            ]
+        ];
     }
 
 }

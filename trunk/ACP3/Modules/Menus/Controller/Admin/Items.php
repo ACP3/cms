@@ -58,12 +58,12 @@ class Items extends Core\Modules\Controller\Admin
         }
 
         // Seitentyp
-        $values_mode = array(1, 2, 3);
-        $lang_mode = array(
+        $values_mode = [1, 2, 3];
+        $lang_mode = [
             $this->lang->t('menus', 'module'),
             $this->lang->t('menus', 'dynamic_page'),
             $this->lang->t('menus', 'hyperlink')
-        );
+        ];
         if ($this->modules->isActive('articles')) {
             $values_mode[] = 4;
             $lang_mode[] = $this->lang->t('menus', 'article');
@@ -82,20 +82,20 @@ class Items extends Core\Modules\Controller\Admin
         $this->view->assign('modules', $modules);
 
         // Ziel des Hyperlinks
-        $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
-        $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', array(1, 2), $lang_target));
+        $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
+        $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target));
 
-        $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
+        $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, 1, 'checked'));
 
         if ($this->modules->isActive('articles') === true) {
             $this->view->assign('articles', $this->get('articles.helpers')->articlesList());
         }
 
-        $defaults = array(
+        $defaults = [
             'title' => '',
             'uri' => '',
-        );
+        ];
 
         // Daten an Smarty übergeben
         $this->view->assign('pages_list', $this->get('menus.helpers')->menuItemsList());
@@ -143,12 +143,12 @@ class Items extends Core\Modules\Controller\Admin
             }
 
             // Seitentyp
-            $modeValues = array(1, 2, 3);
-            $modeLang = array(
+            $modeValues = [1, 2, 3];
+            $modeLang = [
                 $this->lang->t('menus', 'module'),
                 $this->lang->t('menus', 'dynamic_page'),
                 $this->lang->t('menus', 'hyperlink')
-            );
+            ];
             if ($this->modules->isActive('articles')) {
                 $modeValues[] = 4;
                 $modeLang[] = $this->lang->t('menus', 'article');
@@ -167,11 +167,11 @@ class Items extends Core\Modules\Controller\Admin
             $this->view->assign('modules', $modules);
 
             // Ziel des Hyperlinks
-            $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
-            $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', array(1, 2), $lang_target, $menuItem['target']));
+            $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
+            $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target, $menuItem['target']));
 
-            $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', array(1, 0), $lang_display, $menuItem['display'], 'checked'));
+            $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, $menuItem['display'], 'checked'));
 
             if ($this->modules->isActive('articles') === true) {
                 $matches = [];
@@ -219,7 +219,7 @@ class Items extends Core\Modules\Controller\Admin
             }
             $validator->validateItem($formData);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'mode' => ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'],
                 'block_id' => (int)$formData['block_id'],
@@ -228,7 +228,7 @@ class Items extends Core\Modules\Controller\Admin
                 'title' => Core\Functions::strEncode($formData['title']),
                 'uri' => $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']),
                 'target' => $formData['display'] == 0 ? 1 : $formData['target'],
-            );
+            ];
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             $bool = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
@@ -284,7 +284,7 @@ class Items extends Core\Modules\Controller\Admin
             $mode = ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
             $uriType = $formData['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri'];
 
-            $updateValues = array(
+            $updateValues = [
                 'mode' => $mode,
                 'block_id' => $formData['block_id'],
                 'parent_id' => $formData['parent'],
@@ -292,7 +292,7 @@ class Items extends Core\Modules\Controller\Admin
                 'title' => Core\Functions::strEncode($formData['title']),
                 'uri' => $formData['mode'] == 1 ? $formData['module'] : $uriType,
                 'target' => $formData['display'] == 0 ? 1 : $formData['target'],
-            );
+            ];
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             $bool = $nestedSet->editNode($this->request->id, (int)$formData['parent'], (int)$formData['block_id'], $updateValues);

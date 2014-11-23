@@ -19,7 +19,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}emoticons` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `code` VARCHAR(10) NOT NULL,
@@ -50,7 +50,7 @@ class Installer extends Modules\AbstractInstaller
             "INSERT INTO `{pre}emoticons` VALUES ('', ':arrow:', 'Arrow', '20.gif');",
             "INSERT INTO `{pre}emoticons` VALUES ('', ':|', 'Neutral', '21.gif');",
             "INSERT INTO `{pre}emoticons` VALUES ('', ':mrgreen:', 'Mr. Green', '22.gif');"
-        );
+        ];
     }
 
     /**
@@ -58,7 +58,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array("DROP TABLE `{pre}emoticons`;");
+        return ["DROP TABLE `{pre}emoticons`;"];
     }
 
     /**
@@ -66,11 +66,11 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'width' => 32,
             'height' => 32,
             'filesize' => 10240,
-        );
+        ];
     }
 
     /**
@@ -78,11 +78,11 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            )
-        );
+            ]
+        ];
     }
 
 }

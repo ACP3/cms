@@ -258,7 +258,7 @@ class Auth
             if ($dbHash === $formPasswordHash) {
                 // Login-Fehler zurücksetzen
                 if ($user['login_errors'] > 0) {
-                    $this->usersModel->update(array('login_errors' => 0), (int)$user['id']);
+                    $this->usersModel->update(['login_errors' => 0], (int)$user['id']);
                 }
 
                 $this->setCookie($username, $dbHash, $expiry);
@@ -272,7 +272,7 @@ class Auth
                 return 1;
             } else { // Beim dritten falschen Login den Account sperren
                 $loginErrors = $user['login_errors'] + 1;
-                $this->usersModel->update(array('login_errors' => $loginErrors), (int)$user['id']);
+                $this->usersModel->update(['login_errors' => $loginErrors], (int)$user['id']);
                 if ($loginErrors === 3) {
                     return -1;
                 }

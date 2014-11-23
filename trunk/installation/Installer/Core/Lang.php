@@ -66,9 +66,9 @@ class Lang extends \ACP3\Core\Lang
      */
     public function setLanguageCache()
     {
-        $data = array();
+        $data = [];
 
-        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..']);
 
         foreach ($modules as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';

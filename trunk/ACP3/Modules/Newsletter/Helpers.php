@@ -82,10 +82,10 @@ class Helpers
         $settings = $this->newsletterConfig->getSettings();
 
         $newsletter = $this->newsletterModel->getOneById($newsletterId);
-        $from = array(
+        $from = [
             'email' => $settings['mail'],
             'name' => $this->systemConfig->getSettings()['seo_title']
-        );
+        ];
 
         $this->mailer
             ->reset()
@@ -127,10 +127,10 @@ class Helpers
         $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), $systemSettings['seo_title']);
         $body = str_replace('{host}', $host, $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 
-        $from = array(
+        $from = [
             'email' => $settings['mail'],
             'name' => $systemSettings['seo_title']
-        );
+        ];
 
         $this->mailer
             ->reset()
@@ -155,11 +155,11 @@ class Helpers
 
         // Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
         if ($mailSent === true) {
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'mail' => $emailAddress,
                 'hash' => $hash
-            );
+            ];
             $bool = $this->newsletterModel->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
         }
 

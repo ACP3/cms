@@ -122,11 +122,11 @@ class SEO
         $data = [];
 
         for ($i = 0; $i < $c_aliases; ++$i) {
-            $data[$aliases[$i]['uri']] = array(
+            $data[$aliases[$i]['uri']] = [
                 'keywords' => $aliases[$i]['keywords'],
                 'description' => $aliases[$i]['description'],
                 'robots' => $aliases[$i]['robots']
-            );
+            ];
         }
 
         return $this->cache->save('meta', $data);
@@ -139,14 +139,14 @@ class SEO
      */
     public function getMetaTags()
     {
-        return array(
+        return [
             'description' => $this->request->area === 'admin' ? '' : $this->getPageDescription(),
             'keywords' => $this->request->area === 'admin' ? '' : $this->getPageKeywords(),
             'robots' => $this->request->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
             'canonical' => $this->canonical,
-        );
+        ];
     }
 
     /**
@@ -240,12 +240,12 @@ class SEO
      */
     public function getRobotsSetting($path = '')
     {
-        $replace = array(
+        $replace = [
             1 => 'index,follow',
             2 => 'index,nofollow',
             3 => 'noindex,follow',
             4 => 'noindex,nofollow',
-        );
+        ];
 
         if ($path === '') {
             return strtr($this->systemConfig['seo_robots'], $replace);
@@ -330,20 +330,20 @@ class SEO
             $robots = 0;
         }
 
-        $langRobots = array(
+        $langRobots = [
             sprintf($this->lang->t('system', 'seo_robots_use_system_default'), $this->getRobotsSetting()),
             $this->lang->t('system', 'seo_robots_index_follow'),
             $this->lang->t('system', 'seo_robots_index_nofollow'),
             $this->lang->t('system', 'seo_robots_noindex_follow'),
             $this->lang->t('system', 'seo_robots_noindex_nofollow')
-        );
+        ];
 
-        return array(
+        return [
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
-            'robots' => $this->formsHelper->selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $langRobots, $robots)
-        );
+            'robots' => $this->formsHelper->selectGenerator('seo_robots', [0, 1, 2, 3, 4], $langRobots, $robots)
+        ];
     }
 
 }

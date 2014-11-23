@@ -34,7 +34,7 @@ class View extends ContainerAware
      *
      * @throws \Exception
      */
-    public function setRenderer($renderer = 'smarty', array $params = array())
+    public function setRenderer($renderer = 'smarty', array $params = [])
     {
         $serviceId = 'core.view.renderer.' . $renderer;
         if ($this->container->has($serviceId) === true) {

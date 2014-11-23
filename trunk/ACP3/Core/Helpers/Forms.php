@@ -79,12 +79,12 @@ class Forms
             $c_values = count($values);
             $id = str_replace('_', '-', $name);
             for ($i = 0; $i < $c_values; ++$i) {
-                $select[] = array(
+                $select[] = [
                     'value' => $values[$i],
                     'id' => ($selected === 'checked' ? $id . '-' . $values[$i] : ''),
                     $selected => $this->selectEntry($name, $values[$i], $currentValue, $selected),
                     'lang' => $lang[$i]
-                );
+                ];
             }
         }
         return $select;

@@ -124,8 +124,8 @@ abstract class AbstractInstaller implements InstallerInterface
     public function executeSqlQueries(array $queries)
     {
         if (count($queries) > 0) {
-            $search = array('{pre}', '{engine}', '{charset}');
-            $replace = array($this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
+            $search = ['{pre}', '{engine}', '{charset}'];
+            $replace = [$this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
 
             $this->db->getConnection()->beginTransaction();
             try {
@@ -153,12 +153,12 @@ abstract class AbstractInstaller implements InstallerInterface
     protected function addToModulesTable()
     {
         // Modul in die Modules-SQL-Tabelle eintragen
-        $insertValues = array(
+        $insertValues = [
             'id' => '',
             'name' => static::MODULE_NAME,
             'version' => static::SCHEMA_VERSION,
             'active' => 1
-        );
+        ];
         $lastId = $this->systemModel->insert($insertValues);
         $this->moduleId = $lastId;
 
@@ -178,12 +178,12 @@ abstract class AbstractInstaller implements InstallerInterface
             $this->db->getConnection()->beginTransaction();
             try {
                 foreach ($settings as $key => $value) {
-                    $insertValues = array(
+                    $insertValues = [
                         'id' => '',
                         'module_id' => $this->getModuleId(),
                         'name' => $key,
                         'value' => $value
-                    );
+                    ];
                     $this->systemModel->insert($insertValues, System\Model::TABLE_NAME_SETTINGS);
                 }
                 $this->db->getConnection()->commit();
@@ -234,13 +234,13 @@ abstract class AbstractInstaller implements InstallerInterface
         $moduleName = static::MODULE_NAME;
         $dir = ucfirst($moduleName);
         $path = MODULES_DIR . $dir . '/Controller/';
-        $controllers = array_diff(scandir($path), array('.', '..'));
+        $controllers = array_diff(scandir($path), ['.', '..']);
 
         foreach ($controllers as $controller) {
             if (is_file($path . $controller) === true) {
                 $this->_insertAclResources($dir, substr($controller, 0, -4));
             } elseif (is_dir($path . $controller) === true) {
-                $subModuleControllers = array_diff(scandir($path . $controller), array('.', '..'));
+                $subModuleControllers = array_diff(scandir($path . $controller), ['.', '..']);
 
                 foreach ($subModuleControllers as $subController) {
                     if (is_file($path . $controller . '/' . $subController) === true) {
@@ -307,7 +307,7 @@ abstract class AbstractInstaller implements InstallerInterface
                     }
                 }
 
-                $insertValues = array(
+                $insertValues = [
                     'id' => '',
                     'module_id' => $this->getModuleId(),
                     'area' => !empty($area) ? strtolower($area) : 'frontend',
@@ -315,7 +315,7 @@ abstract class AbstractInstaller implements InstallerInterface
                     'page' => $action,
                     'params' => '',
                     'privilege_id' => (int)$privilegeId
-                );
+                ];
                 $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
             }
         }
@@ -344,13 +344,13 @@ abstract class AbstractInstaller implements InstallerInterface
                     $permission = 1;
                 }
 
-                $insertValues = array(
+                $insertValues = [
                     'id' => '',
                     'role_id' => $role['id'],
                     'module_id' => $this->getModuleId(),
                     'privilege_id' => $privilege['id'],
                     'permission' => $permission
-                );
+                ];
                 $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RULES);
             }
         }
@@ -442,7 +442,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function renameModule()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -487,8 +487,8 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function setNewSchemaVersion($newVersion)
     {
-        $updateValues = array('version' => (int)$newVersion);
-        return $this->systemModel->update($updateValues, array('name' => static::MODULE_NAME)) !== false;
+        $updateValues = ['version' => (int)$newVersion];
+        return $this->systemModel->update($updateValues, ['name' => static::MODULE_NAME]) !== false;
     }
 
     /**
@@ -498,6 +498,6 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', array($moduleName)) == 1;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', [$moduleName]) == 1;
     }
 }

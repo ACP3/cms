@@ -76,7 +76,7 @@ class Application
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
-        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..', 'Update'));
+        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..', 'Update']);
         foreach ($modules as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
@@ -155,7 +155,7 @@ class Application
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
-        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), array('.', '..'));
+        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..']);
         foreach ($installerModules as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
@@ -163,7 +163,7 @@ class Application
             }
         }
 
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {

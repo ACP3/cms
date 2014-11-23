@@ -58,13 +58,13 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         // Datumsauswahl
-        $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
+        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $defaults = array(
+        $defaults = [
             'title' => '',
-        );
+        ];
         $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
@@ -120,7 +120,7 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             $this->view->assign('gallery_id', $this->request->id);
-            $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($gallery['start'], $gallery['end'])));
+            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$gallery['start'], $gallery['end']]));
             $this->view->assign('form', array_merge($gallery, $_POST));
 
             $this->_actionEditPictures();
@@ -156,13 +156,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if (count($galleries) > 0) {
             $canDelete = $this->acl->hasPermission('admin/gallery/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('galleries', $galleries);
             $this->view->assign('can_delete', $canDelete);
@@ -178,12 +178,12 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         if ($this->modules->isActive('comments') === true) {
-            $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
+            $lang_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', [1, 0], $lang_comments, $settings['comments'], 'checked'));
         }
 
-        $lang_overlay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
+        $lang_overlay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', [1, 0], $lang_overlay, $settings['overlay'], 'checked'));
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
@@ -203,13 +203,13 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('gallery.validator');
             $validator->validateCreate($formData);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
             $lastId = $this->galleryModel->insert($insertValues);
 
@@ -241,12 +241,12 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('gallery.validator');
             $validator->validateEdit($formData);
 
-            $updateValues = array(
+            $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
             $bool = $this->galleryModel->update($updateValues, $this->request->id);
 
@@ -281,7 +281,7 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('gallery.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'width' => (int)$formData['width'],
                 'height' => (int)$formData['height'],
                 'thumbwidth' => (int)$formData['thumbwidth'],
@@ -292,7 +292,7 @@ class Index extends Core\Modules\Controller\Admin
                 'overlay' => $formData['overlay'],
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
                 'sidebar' => (int)$formData['sidebar'],
-            );
+            ];
             if ($this->modules->isActive('comments') === true) {
                 $data['comments'] = (int)$formData['comments'];
             }

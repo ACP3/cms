@@ -60,12 +60,12 @@ class Extensions
         $c_results = count($results);
 
         for ($i = 0; $i < $c_results; ++$i) {
-            $params = array(
+            $params = [
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
                 'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
                 'link' => $this->router->route('news/index/details/id_' . $results[$i]['id'], true)
-            );
+            ];
             $this->view->assign($params);
         }
     }
@@ -76,12 +76,12 @@ class Extensions
         $c_results = count($results);
 
         for ($i = 0; $i < $c_results; ++$i) {
-            $params = array(
+            $params = [
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
                 'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
                 'link' => $this->router->route('files/index/details/id_' . $results[$i]['id'], true)
-            );
+            ];
             $this->view->assign($params);
         }
     }

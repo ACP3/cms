@@ -19,7 +19,7 @@ class Model extends Core\Model
      */
     public function resultExists($id)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id)) > 0;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]) > 0;
     }
 
     /**
@@ -28,7 +28,7 @@ class Model extends Core\Model
      */
     public function resultsExist($moduleId)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE module_id = ?', array($moduleId)) > 0;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE module_id = ?', [$moduleId]) > 0;
     }
 
     /**
@@ -37,7 +37,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -46,7 +46,7 @@ class Model extends Core\Model
      */
     public function getOneImageById($id)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT img FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id));
+        return $this->db->getConnection()->fetchColumn('SELECT img FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
     }
 
     /**

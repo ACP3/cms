@@ -197,7 +197,7 @@ class Image
             $newWidth = intval($width * $newHeight / $height);
         }
 
-        return array('width' => $newWidth, 'height' => $newHeight);
+        return ['width' => $newWidth, 'height' => $newHeight];
     }
 
     /**

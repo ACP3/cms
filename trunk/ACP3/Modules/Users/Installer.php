@@ -27,7 +27,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}users` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `super_user` TINYINT(1) UNSIGNED NOT NULL,
@@ -59,7 +59,7 @@ class Installer extends Modules\AbstractInstaller
                 `registration_date` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -75,12 +75,12 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'enable_registration' => 1,
             'entries_override' => 1,
             'language_override' => 1,
             'mail' => ''
-        );
+        ];
     }
 
     /**
@@ -104,11 +104,11 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'mail', '');",
-            ),
-            32 => array(
+            ],
+            32 => [
                 "ALTER TABLE `{pre}users` DROP `msn`;",
                 "UPDATE `{pre}users` SET mail = REVERSE(SUBSTRING(REVERSE(mail), 1 + LOCATE(':', REVERSE(mail))));",
                 "UPDATE `{pre}users` SET realname = REVERSE(SUBSTRING(REVERSE(realname), 1 + LOCATE(':', REVERSE(realname))));",
@@ -128,40 +128,40 @@ class Installer extends Modules\AbstractInstaller
                 "ALTER TABLE `{pre}users` ADD `address_display` TINYINT(1) UNSIGNED NOT NULL AFTER `city`;",
                 "ALTER TABLE `{pre}users` ADD `country_display` TINYINT(1) UNSIGNED NOT NULL AFTER `country`;",
                 "ALTER TABLE `{pre}users` ADD `mail_display` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;",
-            ),
-            33 => array(
+            ],
+            33 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            ),
-            34 => array(
+            ],
+            34 => [
                 "ALTER TABLE `{pre}users` ADD `registration_date` DATETIME NOT NULL AFTER `draft`;",
                 "UPDATE `{pre}users` SET registration_date = '" . gmdate('Y-m-d H:i:s') . "';"
-            ),
-            35 => array(
+            ],
+            35 => [
                 "DELETE FROM `{pre}acl_resources` WHERE module_id =" . $this->getModuleId() . " AND page = 'sidebar';",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar_login', '', 1);",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar_user_menu', '', 1);",
-            ),
-            36 => array(
+            ],
+            36 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "users/", "users/index/") WHERE uri LIKE "users/%";',
-            ),
-            37 => array(
+            ],
+            37 => [
                 'UPDATE `{pre}acl_resources` SET controller = "account", page = "edit" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "frontend" AND page = "edit_profile";',
                 'UPDATE `{pre}acl_resources` SET controller = "account", page = "settings" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "frontend" AND page = "edit_settings";',
                 'UPDATE `{pre}acl_resources` SET controller = "account", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "frontend" AND page = "home";',
-            ),
-            38 => array(
+            ],
+            38 => [
                 'UPDATE `{pre}users` SET language = "de_DE" WHERE language = "de";',
                 'UPDATE `{pre}users` SET language = "en_US" WHERE language = "en";',
-            ),
-            39 => array(
+            ],
+            39 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/forgot_pwd/", "users/index/forgot_pwd/") WHERE uri LIKE "users/forgot_pwd/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/list/", "users/index/index/") WHERE uri LIKE "users/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/login/", "users/index/login/") WHERE uri LIKE "users/login/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/logout/", "users/index/logout/") WHERE uri LIKE "users/logout/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/register/", "users/index/register/") WHERE uri LIKE "users/register/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/view_profile/", "users/index/view_profile/") WHERE uri LIKE "users/view_profile/%";' : '',
-            )
-        );
+            ]
+        ];
     }
 
 }

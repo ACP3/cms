@@ -49,7 +49,7 @@ class Index extends Core\Modules\Controller\Frontend
             $validator = $this->get('newsletter.validator');
             $validator->validateActivate($mail, $hash);
 
-            $bool = $this->newsletterModel->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
+            $bool = $this->newsletterModel->update(['hash' => ''], ['mail' => $mail, 'hash' => $hash], Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         } catch (Core\Exceptions\ValidationFailed $e) {
@@ -63,15 +63,15 @@ class Index extends Core\Modules\Controller\Frontend
             $this->_indexPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(array('mail' => ''), $_POST));
+        $this->view->assign('form', array_merge(['mail' => ''], $_POST));
 
         $field_value = $this->request->action ? $this->request->action : 'subscribe';
 
-        $actions_Lang = array(
+        $actions_Lang = [
             $this->lang->t('newsletter', 'subscribe'),
             $this->lang->t('newsletter', 'unsubscribe')
-        );
-        $this->view->assign('actions', $this->get('core.helpers.forms')->selectGenerator('action', array('subscribe', 'unsubscribe'), $actions_Lang, $field_value, 'checked'));
+        ];
+        $this->view->assign('actions', $this->get('core.helpers.forms')->selectGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $field_value, 'checked'));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());

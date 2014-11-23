@@ -67,9 +67,9 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         // Datumsauswahl
-        $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
+        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
 
-        $units = array('Byte', 'KiB', 'MiB', 'GiB', 'TiB');
+        $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
         $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''));
 
         // Formularelemente
@@ -85,13 +85,13 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
 
-        $defaults = array(
+        $defaults = [
             'title' => '',
             'file_internal' => '',
             'file_external' => '',
             'filesize' => '',
             'text' => '',
-        );
+        ];
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
@@ -143,9 +143,9 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             // Datumsauswahl
-            $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($dl['start'], $dl['end'])));
+            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$dl['start'], $dl['end']]));
 
-            $units = array('Byte', 'KiB', 'MiB', 'GiB', 'TiB');
+            $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
             $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($dl['size'], ' '))));
 
             $dl['filesize'] = substr($dl['size'], 0, strpos($dl['size'], ' '));
@@ -179,13 +179,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if (count($files) > 0) {
             $canDelete = $this->acl->hasPermission('admin/files/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('files', $files);
             $this->view->assign('can_delete', $canDelete);
@@ -201,8 +201,8 @@ class Index extends Core\Modules\Controller\Admin
         $settings = $this->filesConfig->getSettings();
 
         if ($this->modules->isActive('comments') === true) {
-            $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
+            $lang_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', [1, 0], $lang_comments, $settings['comments'], 'checked'));
         }
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
@@ -242,7 +242,7 @@ class Index extends Core\Modules\Controller\Admin
                 $filesize = $formData['filesize'] . ' ' . $formData['unit'];
             }
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
@@ -253,7 +253,7 @@ class Index extends Core\Modules\Controller\Admin
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
 
             $lastId = $this->filesModel->insert($insertValues);
@@ -297,7 +297,7 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('files.validator');
             $validator->validateEdit($formData, $file);
 
-            $updateValues = array(
+            $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
@@ -305,7 +305,7 @@ class Index extends Core\Modules\Controller\Admin
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
             // Falls eine neue Datei angegeben wurde, Änderungen durchführen
             if (isset($file)) {
@@ -321,10 +321,10 @@ class Index extends Core\Modules\Controller\Admin
                     $filesize = $formData['filesize'] . ' ' . $formData['unit'];
                 }
                 // SQL Query für die Änderungen
-                $newFileSql = array(
+                $newFileSql = [
                     'file' => $newFile,
                     'size' => $filesize,
-                );
+                ];
 
                 $upload->removeUploadedFile($dl['file']);
 
@@ -363,11 +363,11 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('files.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
                 'sidebar' => (int)$formData['sidebar'],
                 'comments' => $formData['comments']
-            );
+            ];
             $bool = $this->filesConfig->setSettings($data);
 
             $this->secureHelper->unsetFormToken($this->request->query);
