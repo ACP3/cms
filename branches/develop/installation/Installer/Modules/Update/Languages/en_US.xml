@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="db_update_description">To start the database update, please click on the button below.</item>
+        <item key="db_update_error">While updating the database an error has occurred!</item>
+        <item key="db_update_next_steps">The database has been successfully updated. You may now return to your website, but please follow the instructions below.</item>
+        <item key="db_update_no_update">The most recent version is already installed!</item>
+        <item key="db_update_text">Update of module &quot;%s&quot;:</item>
+        <item key="db_update_success">The database has been successfully updated!</item>
+        <item key="do_db_update">Begin update process</item>
+        <item key="index_index">Database update</item>
+    </keys>
+</language>

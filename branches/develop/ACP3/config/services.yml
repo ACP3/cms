@@ -1,0 +1,127 @@
+imports:
+  - { resource: config.yml }
+  - { resource: cache.yml }
+  - { resource: helpers.yml }
+  - { resource: validation.yml }
+  - { resource: ../modules/Permissions/config/services.yml }
+  - { resource: ../modules/System/config/services.yml }
+  - { resource: ../modules/Users/config/services.yml }
+
+services:
+  core.acl:
+    class: ACP3\Core\ACL
+    arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache']
+
+  core.assets:
+    class: ACP3\Core\Assets
+    arguments: ['@core.modules', '@core.router', '@core.assets.themeResolver', '@system.config']
+
+  core.auth:
+    class: ACP3\Core\Auth
+    arguments: ['@core.session', '@core.helpers.secure', '@system.config', '@users.config', '@users.model']
+
+  core.assets.themeResolver:
+    class: ACP3\Core\Assets\ThemeResolver
+    arguments: ['@core.xml', '@minify.cache']
+
+  core.breadcrumb:
+    class: ACP3\Core\Breadcrumb
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@system.config']
+
+  core.context:
+    class : ACP3\Core\Context
+    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@system.config']
+
+  core.context.admin:
+    class : ACP3\Core\Context\Admin
+    arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session', '@core.router.aliases']
+
+  core.context.frontend:
+    class : ACP3\Core\Context\Frontend
+    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
+
+  core.date:
+    class: ACP3\Core\Date
+    arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date', '@system.config']
+
+  core.db:
+    class: ACP3\Core\DB
+    arguments: ['%db_host%', '%db_name%', '%db_user%', '%db_password%', '%db_table_prefix%', '%db_driver%', '%db_charset%']
+
+  core.functions:
+    class: ACP3\Core\Functions
+
+  core.lang:
+    class: ACP3\Core\Lang
+    arguments: ['@core.auth', '@system.cache.core.lang', '@system.config']
+
+  core.mailer:
+    class: ACP3\Core\Mailer
+    arguments: ['@core.view', '@system.config']
+
+  core.modules:
+    class: ACP3\Core\Modules
+    arguments: ['@core.lang', '@core.xml', '@system.cache.core.modules', '@system.model']
+
+  core.modules.abstractInstaller:
+    abstract: true
+    arguments: ['@core.db', '@core.xml', '@permissions.cache.core', '@system.model', '@permissions.model']
+
+  core.modules.controller:
+    abstract: true
+    arguments: ['@core.context']
+
+  core.modules.controller.frontend:
+    abstract: true
+    arguments: ['@core.context.frontend']
+
+  core.modules.controller.admin:
+    abstract: true
+    arguments: ['@core.context.admin']
+
+  core.pagination:
+    class: ACP3\Core\Pagination
+    arguments: ['@core.auth', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
+
+  core.redirect:
+    class: ACP3\Core\Redirect
+    arguments: ['@core.request', '@core.router']
+
+  core.request:
+    class: ACP3\Core\Request
+    arguments: ['@core.db', '@core.modules', '@system.config']
+
+  core.router:
+    class: ACP3\Core\Router
+    arguments: ['@core.router.aliases', '@system.config']
+
+  core.router.aliases:
+    class: ACP3\Core\Router\Aliases
+    arguments: ['@system.cache.core.uri', '@system.model']
+
+  core.seo:
+    class: ACP3\Core\SEO
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@system.cache.core.seo', '@system.config']
+
+  core.session:
+    class: ACP3\Core\Session
+    arguments: ['@core.db']
+
+  core.view:
+    class: ACP3\Core\View
+    arguments: ['@core.router']
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.view.renderer.smarty:
+    class: ACP3\Core\View\Renderer\Smarty
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.view.renderer.feedgenerator:
+    class: ACP3\Core\View\Renderer\FeedGenerator
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.xml:
+    class: ACP3\Core\XML

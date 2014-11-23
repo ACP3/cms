@@ -1,0 +1,28 @@
+services:
+  guestbook.controller.admin.index:
+    class: ACP3\Modules\Guestbook\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@guestbook.model', '@guestbook.config']
+
+  guestbook.controller.frontend.index:
+    class: ACP3\Modules\Guestbook\Controller\Index
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@guestbook.model', '@guestbook.config']
+
+  guestbook.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'guestbook']
+
+  guestbook.config:
+    class: ACP3\Core\Config
+    arguments: ['@guestbook.cache.core', '@system.model', 'guestbook']
+
+  guestbook.model:
+    class: ACP3\Modules\Guestbook\Model
+    arguments: ['@core.db']
+
+  guestbook.validator:
+    class: ACP3\Modules\Guestbook\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@core.date', '@core.modules', '@guestbook.model', '@newsletter.model']
+
+  guestbook.installer:
+    class: ACP3\Modules\Guestbook\Installer
+    parent: core.modules.abstractInstaller

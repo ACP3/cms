@@ -1,0 +1,32 @@
+services:
+  menus.controller.admin.index:
+    class: ACP3\Modules\Menus\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.model', '@menus.cache']
+
+  menus.controller.admin.items:
+    class: ACP3\Modules\Menus\Controller\Admin\Items
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.model', '@menus.cache']
+
+  menus.cache:
+    class: ACP3\Modules\Menus\Cache
+    arguments: ['@menus.cache.core', '@core.lang', '@menus.model']
+
+  menus.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'menus']
+
+  menus.helpers:
+    class: ACP3\Modules\Menus\Helpers
+    arguments: ['@core.request', '@core.router', '@core.helpers.forms', '@menus.model', '@menus.cache']
+
+  menus.model:
+    class: ACP3\Modules\Menus\Model
+    arguments: ['@core.db']
+
+  menus.validator:
+    class: ACP3\Modules\Menus\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.router', '@core.modules', '@core.request', '@menus.model']
+
+  menus.installer:
+    class: ACP3\Modules\Menus\Installer
+    parent: core.modules.abstractInstaller

@@ -1,0 +1,30 @@
+{
+    "name": "acp3/acp3",
+    "description": "ACP3 is a highly customizable and easy to use web content management system based on PHP5 and MySQL.",
+    "authors": [
+        {
+            "name": "Tino Goratsch",
+            "email": "mail@acp3-cms.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ACP3\\Installer\\": "./installation/Installer",
+            "ACP3\\": "./ACP3"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "doctrine/dbal": "2.4.*",
+        "phpmailer/phpmailer": "5.2.*",
+        "smarty/smarty": "~3.1",
+        "inlinestyle/inlinestyle": "1.*",
+        "mibe/feedwriter": "1.0.1",
+        "monolog/monolog": "1.11.*",
+        "mrclay/minify": "dev-master",
+        "symfony/config": "2.5.*",
+        "symfony/dependency-injection": "2.5.*",
+        "symfony/http-foundation": "2.5.*",
+        "symfony/yaml": "2.5.*"
+    }
+}

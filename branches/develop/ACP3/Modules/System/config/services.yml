@@ -1,0 +1,52 @@
+services:
+  system.controller.admin.extensions:
+    class: ACP3\Modules\System\Controller\Admin\Extensions
+    arguments: ['@core.context.admin', '@core.xml', '@system.model', '@system.config', '@permissions.cache']
+
+  system.controller.admin.index:
+    class: ACP3\Modules\System\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@system.model', '@system.config']
+
+  system.controller.admin.maintenance:
+    class: ACP3\Modules\System\Controller\Admin\Maintenance
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@system.model']
+
+  system.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'system']
+
+  system.cache.core.lang:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'lang']
+
+  system.cache.core.modules:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'modules']
+
+  system.cache.core.seo:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'seo']
+
+  system.cache.core.uri:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'uri']
+
+  system.config:
+    class: ACP3\Core\Config
+    arguments: ['@system.cache.core', '@system.model', 'system']
+
+  system.model:
+    class: ACP3\Modules\System\Model
+    arguments: ['@core.db']
+
+  system.helpers:
+    class: ACP3\Modules\System\Helpers
+    arguments: ['@core.db', '@core.modules']
+
+  system.validator:
+    class: ACP3\Modules\System\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.validator.rules.router']
+
+  system.installer:
+    class: ACP3\Modules\System\Installer
+    parent: core.modules.abstractInstaller

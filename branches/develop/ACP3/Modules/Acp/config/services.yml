@@ -1,0 +1,8 @@
+services:
+  acp.controller.admin.index:
+    class: ACP3\Modules\Acp\Controller\Admin\Index
+    parent: core.modules.controller.admin
+
+  acp.installer:
+    class: ACP3\Modules\Acp\Installer
+    parent: core.modules.abstractInstaller

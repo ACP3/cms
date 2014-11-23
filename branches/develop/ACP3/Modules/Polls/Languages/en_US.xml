@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Create new poll</item>
+        <item key="admin_index_delete">Delete polls</item>
+        <item key="admin_index_edit">Edit poll</item>
+        <item key="add_answer">Add answer</item>
+        <item key="already_voted">You have already voted in this poll.</item>
+        <item key="answer">Answer</item>
+        <item key="answers">Answers</item>
+        <item key="can_not_delete_all_answers">It's impossible to delete all answers.</item>
+        <item key="delete_answer_description">You can delete answers by simply left-clicking on the selection box next to the answers.</item>
+        <item key="frontend_index_result">Result</item>
+        <item key="frontend_index_vote">Vote</item>
+        <item key="latest_poll">Latest poll</item>
+        <item key="mod_description">With this module you can administer the polls.</item>
+        <item key="multiple_choice">Multiple choice</item>
+        <item key="no_votes">No votes</item>
+        <item key="number_of_votes">%s votes</item>
+        <item key="one_vote">1 vote</item>
+        <item key="per_cent">Per cent</item>
+        <item key="poll">Poll</item>
+        <item key="poll_error">While saving your vote an error has occured.</item>
+        <item key="poll_success">Your vote has been successfully counted.</item>
+        <item key="polls">Polls</item>
+        <item key="polls_archive">Polls archive</item>
+        <item key="question">Question</item>
+        <item key="reset_votes">Reset votes</item>
+        <item key="total_votes">Total votes</item>
+        <item key="type_in_two_answers">Please type in at least two answers.</item>
+        <item key="type_in_question">Please type in a question.</item>
+        <item key="votes">Votes</item>
+    </keys>
+</language>
