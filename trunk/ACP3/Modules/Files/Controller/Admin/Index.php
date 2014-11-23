@@ -91,9 +91,6 @@ class Index extends Core\Modules\Controller\Admin
             'file_external' => '',
             'filesize' => '',
             'text' => '',
-            'alias' => '',
-            'seo_keywords' => '',
-            'seo_description' => '',
         );
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());

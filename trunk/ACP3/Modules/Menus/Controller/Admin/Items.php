@@ -94,10 +94,7 @@ class Items extends Core\Modules\Controller\Admin
 
         $defaults = array(
             'title' => '',
-            'alias' => '',
             'uri' => '',
-            'seo_keywords' => '',
-            'seo_description' => '',
         );
 
         // Daten an Smarty übergeben

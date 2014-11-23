@@ -97,7 +97,12 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $defaults = array('title' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => '');
+        $defaults = array(
+            'title' => '',
+            'text' => '',
+            'uri' => '',
+            'link_title' => ''
+        );
         $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);

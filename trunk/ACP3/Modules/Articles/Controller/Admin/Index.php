@@ -95,10 +95,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $defaults = array(
             'title' => '',
-            'text' => '',
-            'alias' => '',
-            'seo_keywords' => '',
-            'seo_description' => ''
+            'text' => ''
         );
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
