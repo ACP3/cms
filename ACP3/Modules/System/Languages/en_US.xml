@@ -138,10 +138,10 @@
         <item key="general_statements">General statements</item>
         <item key="home">Home</item>
         <item key="homepage">Homepage</item>
-        <item key="homepage_description">To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.</item>
+        <item key="homepage_description">To specify a custom homepage, please use the format &quot;module/controller/action/optional_parameters/&quot;.</item>
         <item key="hour">Hour</item>
         <item key="id">ID</item>
-        <item key="incorrect_homepage">To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.</item>
+        <item key="incorrect_homepage">To specify a custom homepage, please use the format &quot;module/controller/action/optional_parameters/&quot;.</item>
         <item key="insert_page_break">Insert page break</item>
         <item key="install">Install</item>
         <item key="install_module">Install module</item>

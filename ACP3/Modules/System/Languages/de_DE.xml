@@ -143,12 +143,10 @@
         <item key="general_statements">Allgemeine Angaben</item>
         <item key="home">Home</item>
         <item key="homepage">Startseite</item>
-        <item key="homepage_description">Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.
-        </item>
+        <item key="homepage_description">Bitte geben Sie die Startseite in der Form &quot;module/controller/action/weitere_parameter/&quot; ein.</item>
         <item key="hour">Stunde</item>
         <item key="id">ID</item>
-        <item key="incorrect_homepage">Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.
-        </item>
+        <item key="incorrect_homepage">Bitte geben Sie die Startseite in der Form &quot;module/controller/action/weitere_parameter/&quot; ein.</item>
         <item key="insert_page_break">Seitenumbruch einfügen</item>
         <item key="install">Installieren</item>
         <item key="install_module">Modul installieren</item>
