@@ -109,13 +109,13 @@ class Details extends Core\Modules\Controller\Admin
 
             if ($c_comments > 0) {
                 $canDelete = $this->acl->hasPermission('admin/comments/details/delete');
-                $config = array(
+                $config = [
                     'element' => '#acp-table',
                     'sort_col' => $canDelete === true ? 5 : 4,
                     'sort_dir' => 'asc',
                     'hide_col_sort' => $canDelete === true ? 0 : '',
                     'records_per_page' => $this->auth->entries
-                );
+                ];
                 $this->view->assign('datatable_config', $config);
 
                 $settings = $this->commentsConfig->getSettings();

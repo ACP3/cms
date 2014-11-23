@@ -26,7 +26,7 @@ abstract class AbstractRenderer extends ContainerAware implements RendererInterf
     /**
      * @param array $params
      */
-    public function configure(array $params = array())
+    public function configure(array $params = [])
     {
         $this->config = $params;
     }

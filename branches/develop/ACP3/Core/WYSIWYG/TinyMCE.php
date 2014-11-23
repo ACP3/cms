@@ -11,7 +11,7 @@ class TinyMCE extends AbstractWYSIWYG
     /**
      * @param array $params
      */
-    public function setParameters(array $params = array())
+    public function setParameters(array $params = [])
     {
         $this->id = $params['id'];
         $this->name = $params['name'];
@@ -66,11 +66,11 @@ class TinyMCE extends AbstractWYSIWYG
         $editor .= "</script>\n";
         $editor .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="50" rows="5" style="width:100%">' . $this->value . "</textarea>\n";
 
-        $wysiwyg = array(
+        $wysiwyg = [
             'id' => $this->id,
             'editor' => $editor,
             'advanced' => $this->advanced,
-        );
+        ];
 
         if ($wysiwyg['advanced'] === true)
             $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';

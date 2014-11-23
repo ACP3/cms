@@ -85,10 +85,10 @@ class Sort
             if (!empty($query)) {
                 // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
                 // um Probleme mit möglichen Duplicate-Keys zu umgehen
-                $this->db->getConnection()->update($table, array($sortField => 0), array($idField => $id));
-                $this->db->getConnection()->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
+                $this->db->getConnection()->update($table, [$sortField => 0], [$idField => $id]);
+                $this->db->getConnection()->update($table, [$sortField => $query['elem_sort']], [$idField => $query['other_id']]);
                 // Element nun den richtigen Wert zuweisen
-                $this->db->getConnection()->update($table, array($sortField => $query['other_sort']), array($idField => $id));
+                $this->db->getConnection()->update($table, [$sortField => $query['other_sort']], [$idField => $id]);
 
                 $this->db->getConnection()->commit();
                 return true;

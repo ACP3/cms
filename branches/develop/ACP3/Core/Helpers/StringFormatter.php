@@ -23,22 +23,22 @@ class StringFormatter
         if (!preg_match('/&([a-z]+);/', $var)) {
             $var = htmlentities($var, ENT_QUOTES, 'UTF-8');
         }
-        $search = array(
+        $search = [
             '/&([a-z]{1})uml;/',
             '/&szlig;/',
             '/&([a-z0-9]+);/',
             '/(\s+)/',
             '/-{2,}/',
             '/[^a-z0-9-]/',
-        );
-        $replace = array(
+        ];
+        $replace = [
             '${1}e',
             'ss',
             '',
             '-',
             '-',
             '',
-        );
+        ];
         return preg_replace($search, $replace, strtolower($var));
     }
 
@@ -55,7 +55,7 @@ class StringFormatter
     {
         $data = trim($data);
         if ($lineBreaks === true) {
-            return '<p>' . preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br' . ($isXhtml == true ? ' /' : '') . '>'), $data) . '</p>';
+            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '<br' . ($isXhtml == true ? ' /' : '') . '>'], $data) . '</p>';
         } else {
             return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
         }

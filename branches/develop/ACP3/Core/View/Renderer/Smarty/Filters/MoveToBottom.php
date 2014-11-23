@@ -47,7 +47,7 @@ class MoveToBottom extends AbstractFilter
         $pattern = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
 
         if (strpos($tpl_output, '<!-- JAVASCRIPTS -->') !== false) {
-            $matches = array();
+            $matches = [];
             preg_match_all($pattern, $tpl_output, $matches);
 
             // Remove placeholder comments

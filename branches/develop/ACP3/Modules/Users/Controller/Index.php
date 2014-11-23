@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->_forgotPasswordPost($_POST);
             }
 
-            $this->view->assign('form', array_merge(array('nick_mail' => ''), $_POST));
+            $this->view->assign('form', array_merge(['nick_mail' => ''], $_POST));
 
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
@@ -151,10 +151,10 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->_registerPost($_POST, $settings);
             }
 
-            $defaults = array(
+            $defaults = [
                 'nickname' => '',
                 'mail' => '',
-            );
+            ];
 
             $this->view->assign('form', array_merge($defaults, $_POST));
 
@@ -170,7 +170,7 @@ class Index extends Core\Modules\Controller\Frontend
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
             $user = $this->auth->getUserInfo($this->request->id);
-            $user['gender'] = str_replace(array(1, 2, 3), array('', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')), $user['gender']);
+            $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
             if (!empty($user['website']) && (bool)preg_match('=^http(s)?://=', $user['website']) === false) {
                 $user['website'] = 'http://' . $user['website'];
             }
@@ -201,9 +201,9 @@ class Index extends Core\Modules\Controller\Frontend
             $systemSettings = $this->systemConfig->getSettings();
 
             // E-Mail mit dem neuen Passwort versenden
-            $subject = str_replace(array('{title}', '{host}'), array($systemSettings['seo_title'], $host), $this->lang->t('users', 'forgot_pwd_mail_subject'));
-            $search = array('{name}', '{mail}', '{password}', '{title}', '{host}');
-            $replace = array($user['nickname'], $user['mail'], $newPassword, $systemSettings['seo_title'], $host);
+            $subject = str_replace(['{title}', '{host}'], [$systemSettings['seo_title'], $host], $this->lang->t('users', 'forgot_pwd_mail_subject'));
+            $search = ['{name}', '{mail}', '{password}', '{title}', '{host}'];
+            $replace = [$user['nickname'], $user['mail'], $newPassword, $systemSettings['seo_title'], $host];
             $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
             $settings = $this->usersConfig->getSettings();
@@ -212,10 +212,10 @@ class Index extends Core\Modules\Controller\Frontend
             // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
             if ($mailIsSent === true) {
                 $salt = $this->secureHelper->salt(12);
-                $updateValues = array(
+                $updateValues = [
                     'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
                     'login_errors' => 0
-                );
+                ];
                 $bool = $this->usersModel->update($updateValues, $user['id']);
             }
 
@@ -240,19 +240,19 @@ class Index extends Core\Modules\Controller\Frontend
             // E-Mail mit den Accountdaten zusenden
             $host = htmlentities($_SERVER['HTTP_HOST']);
             $subject = str_replace(
-                array('{title}', '{host}'),
-                array($systemSettings['seo_title'], $host),
+                ['{title}', '{host}'],
+                [$systemSettings['seo_title'], $host],
                 $this->lang->t('users', 'register_mail_subject')
             );
             $body = str_replace(
-                array('{name}', '{mail}', '{password}', '{title}', '{host}'),
-                array($formData['nickname'], $formData['mail'], $formData['pwd'], $systemSettings['seo_title'], $host),
+                ['{name}', '{mail}', '{password}', '{title}', '{host}'],
+                [$formData['nickname'], $formData['mail'], $formData['pwd'], $systemSettings['seo_title'], $host],
                 $this->lang->t('users', 'register_mail_message')
             );
             $mailIsSent = $this->get('core.helpers.sendEmail')->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
             $salt = $this->secureHelper->salt(12);
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
@@ -263,10 +263,10 @@ class Index extends Core\Modules\Controller\Frontend
                 'language' => $systemSettings['lang'],
                 'entries' => $systemSettings['entries'],
                 'registration_date' => $this->date->getCurrentDateTime(),
-            );
+            ];
 
             $lastId = $this->usersModel->insert($insertValues);
-            $bool2 = $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => 2), Permissions\Model::TABLE_NAME_USER_ROLES);
+            $bool2 = $this->permissionsModel->insert(['user_id' => $lastId, 'role_id' => 2], Permissions\Model::TABLE_NAME_USER_ROLES);
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

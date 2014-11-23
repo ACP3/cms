@@ -68,15 +68,15 @@ class Account extends Core\Modules\Controller\Frontend
         $user = $this->auth->getUserInfo();
 
         // Geschlecht
-        $lang_gender = array(
+        $lang_gender = [
             $this->lang->t('users', 'gender_not_specified'),
             $this->lang->t('users', 'gender_female'),
             $this->lang->t('users', 'gender_male')
-        );
-        $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', array(1, 2, 3), $lang_gender, $user['gender']));
+        ];
+        $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', [1, 2, 3], $lang_gender, $user['gender']));
 
         // Geburtstag
-        $datepickerParams = array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\'');
+        $datepickerParams = ['constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''];
         $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
 
         // Kontaktangaben
@@ -102,11 +102,11 @@ class Account extends Core\Modules\Controller\Frontend
         $countries = Core\Lang::worldCountries();
         $countries_select = [];
         foreach ($countries as $key => $value) {
-            $countries_select[] = array(
+            $countries_select[] = [
                 'value' => $key,
                 'lang' => $value,
                 'selected' => $this->get('core.helpers.forms')->selectEntry('countries', $key, $user['country']),
-            );
+            ];
         }
         $this->view->assign('countries', $countries_select);
 
@@ -137,21 +137,21 @@ class Account extends Core\Modules\Controller\Frontend
         // Zeitzonen
         $this->view->assign('time_zones', $this->date->getTimeZones($user['time_zone']));
 
-        $lang_mailDisplay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', array(1, 0), $lang_mailDisplay, $user['mail_display'], 'checked'));
+        $lang_mailDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', [1, 0], $lang_mailDisplay, $user['mail_display'], 'checked'));
 
-        $lang_addressDisplay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('address_display', $this->get('core.helpers.forms')->selectGenerator('address_display', array(1, 0), $lang_addressDisplay, $user['address_display'], 'checked'));
+        $lang_addressDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('address_display', $this->get('core.helpers.forms')->selectGenerator('address_display', [1, 0], $lang_addressDisplay, $user['address_display'], 'checked'));
 
-        $lang_countryDisplay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('country_display', $this->get('core.helpers.forms')->selectGenerator('country_display', array(1, 0), $lang_countryDisplay, $user['country_display'], 'checked'));
+        $lang_countryDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('country_display', $this->get('core.helpers.forms')->selectGenerator('country_display', [1, 0], $lang_countryDisplay, $user['country_display'], 'checked'));
 
-        $lang_birthdayDisplay = array(
+        $lang_birthdayDisplay = [
             $this->lang->t('users', 'birthday_hide'),
             $this->lang->t('users', 'birthday_display_completely'),
             $this->lang->t('users', 'birthday_hide_year')
-        );
-        $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', array(0, 1, 2), $lang_birthdayDisplay, $user['birthday_display'], 'checked'));
+        ];
+        $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $user['birthday_display'], 'checked'));
 
         $this->view->assign('form', array_merge($user, $_POST));
 
@@ -161,9 +161,9 @@ class Account extends Core\Modules\Controller\Frontend
     public function actionIndex()
     {
         if (empty($_POST) === false) {
-            $updateValues = array(
+            $updateValues = [
                 'draft' => Core\Functions::strEncode($_POST['draft'], true)
-            );
+            ];
             $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
@@ -180,7 +180,7 @@ class Account extends Core\Modules\Controller\Frontend
             $validator = $this->get('users.validator');
             $validator->validateEditProfile($formData);
 
-            $updateValues = array(
+            $updateValues = [
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
                 'realname' => Core\Functions::strEncode($formData['realname']),
                 'gender' => (int)$formData['gender'],
@@ -194,7 +194,7 @@ class Account extends Core\Modules\Controller\Frontend
                 'zip' => Core\Functions::strEncode($formData['zip']),
                 'city' => Core\Functions::strEncode($formData['city']),
                 'country' => Core\Functions::strEncode($formData['country']),
-            );
+            ];
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
@@ -226,7 +226,7 @@ class Account extends Core\Modules\Controller\Frontend
             $validator = $this->get('users.validator');
             $validator->validateUserSettings($formData, $settings);
 
-            $updateValues = array(
+            $updateValues = [
                 'mail_display' => (int)$formData['mail_display'],
                 'birthday_display' => (int)$formData['birthday_display'],
                 'address_display' => (int)$formData['address_display'],
@@ -234,7 +234,7 @@ class Account extends Core\Modules\Controller\Frontend
                 'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
                 'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
                 'time_zone' => $formData['date_time_zone'],
-            );
+            ];
             if ($settings['language_override'] == 1) {
                 $updateValues['language'] = $formData['language'];
             }

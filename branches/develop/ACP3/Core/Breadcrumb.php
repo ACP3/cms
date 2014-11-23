@@ -29,11 +29,11 @@ class Breadcrumb
     /**
      * @var array
      */
-    protected $title = array(
+    protected $title = [
         'separator' => '-',
         'prefix' => '',
         'postfix' => ''
-    );
+    ];
 
     /**
      * Enthält die gecachete Brotkrümelspur
@@ -74,14 +74,14 @@ class Breadcrumb
 
         // Frontendbereich
         if ($request->area !== 'admin') {
-            $in = array(
+            $in = [
                 $request->query,
                 $request->getUriWithoutPages(),
                 $request->mod . '/' . $request->controller . '/' . $request->file . '/',
                 $request->mod . '/' . $request->controller . '/',
                 $request->mod
-            );
-            $items = $db->getConnection()->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . $db->getPrefix() . 'menu_items AS c, ' . $db->getPrefix() . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
+            ];
+            $items = $db->getConnection()->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . $db->getPrefix() . 'menu_items AS c, ' . $db->getPrefix() . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', [$in], [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetchAll();
             $c_items = count($items);
 
             // Dynamische Seite (ACP3 intern)
@@ -103,10 +103,10 @@ class Breadcrumb
      */
     protected function _appendFromDB($title, $path = '')
     {
-        $this->stepsFromDb[] = array(
+        $this->stepsFromDb[] = [
             'title' => $title,
             'uri' => !empty($path) ? $this->router->route($path) : ''
-        );
+        ];
 
         return $this;
     }
@@ -281,10 +281,10 @@ class Breadcrumb
      */
     public function append($title, $path = '')
     {
-        $this->stepsFromModules[] = array(
+        $this->stepsFromModules[] = [
             'title' => $title,
             'uri' => !empty($path) ? $this->router->route($path) : ''
-        );
+        ];
 
         return $this;
     }
@@ -301,10 +301,10 @@ class Breadcrumb
      */
     protected function prepend($title, $path)
     {
-        $step = array(
+        $step = [
             'title' => $title,
             'uri' => $this->router->route($path)
-        );
+        ];
         array_unshift($this->stepsFromModules, $step);
         return $this;
     }

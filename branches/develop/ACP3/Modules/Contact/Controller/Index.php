@@ -42,13 +42,13 @@ class Index extends Core\Modules\Controller\Frontend
             $this->_indexPost($_POST);
         }
 
-        $defaults = array(
+        $defaults = [
             'name' => '',
             'name_disabled' => '',
             'mail' => '',
             'mail_disabled' => '',
             'message' => '',
-        );
+        ];
 
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->auth->isUser() === true) {
@@ -85,7 +85,7 @@ class Index extends Core\Modules\Controller\Frontend
             $formData['message'] = Core\Functions::strEncode($formData['message'], true);
 
             $subject = sprintf($this->lang->t('contact', 'contact_subject'), $systemSettings['seo_title']);
-            $body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($formData['name'], $formData['mail'], $formData['message'], "\n"), $this->lang->t('contact', 'contact_body'));
+            $body = str_replace(['{name}', '{mail}', '{message}', '\n'], [$formData['name'], $formData['mail'], $formData['message'], "\n"], $this->lang->t('contact', 'contact_body'));
             $bool = $this->get('core.helpers.sendEmail')->execute('', $settings['mail'], $formData['mail'], $subject, $body);
 
             // Nachrichtenkopie an Absender senden

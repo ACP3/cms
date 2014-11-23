@@ -67,10 +67,10 @@ class RedirectMessages
     public function setMessage($success, $text, $path)
     {
         if (empty($text) === false && empty($path) === false) {
-            $_SESSION['redirect_message'] = array(
+            $_SESSION['redirect_message'] = [
                 'success' => is_int($success) ? true : (bool)$success,
                 'text' => $text
-            );
+            ];
 
             $this->redirect->temporary($path);
         }

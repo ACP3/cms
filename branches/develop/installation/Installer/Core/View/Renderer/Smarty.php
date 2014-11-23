@@ -13,7 +13,7 @@ class Smarty extends \ACP3\Core\View\Renderer\Smarty
      * @param array $params
      * @throws \SmartyException
      */
-    public function configure(array $params = array())
+    public function configure(array $params = [])
     {
         $this->renderer = new \Smarty();
         $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;

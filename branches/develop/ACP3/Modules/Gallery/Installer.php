@@ -21,7 +21,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}gallery` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `start` DATETIME NOT NULL,
@@ -39,7 +39,7 @@ class Installer extends Modules\AbstractInstaller
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -47,10 +47,10 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array(
+        return [
             "DROP TABLE `{pre}gallery_pictures`;",
             "DROP TABLE `{pre}gallery`;"
-        );
+        ];
     }
 
     /**
@@ -58,7 +58,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'width' => 640,
             'height' => 480,
             'thumbwidth' => 160,
@@ -70,7 +70,7 @@ class Installer extends Modules\AbstractInstaller
             'comments' => 1,
             'dateformat' => 'long',
             'sidebar' => 5,
-        );
+        ];
     }
 
     /**
@@ -78,27 +78,27 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "ALTER TABLE `{pre}gallery` CHANGE `name` `title` VARCHAR(120) {charset} NOT NULL;",
-            ),
-            32 => array(
+            ],
+            32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            ),
-            33 => array(
+            ],
+            33 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "gallery/", "gallery/index/") WHERE uri LIKE "gallery/%";',
-            ),
-            34 => array(
+            ],
+            34 => [
                 'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
                 'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_picture", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
                 'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "order";',
-            ),
-            35 => array(
+            ],
+            35 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/list/", "gallery/index/index/") WHERE uri LIKE "gallery/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/pics/", "gallery/index/pics/") WHERE uri LIKE "gallery/pics/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/details/", "gallery/index/details/") WHERE uri LIKE "gallery/details/%";' : '',
-            )
-        );
+            ]
+        ];
     }
 
 }

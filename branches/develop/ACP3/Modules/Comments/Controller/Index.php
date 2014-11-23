@@ -144,11 +144,11 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
         }
 
-        $defaults = array(
+        $defaults = [
             'name' => '',
             'name_disabled' => '',
             'message' => ''
-        );
+        ];
 
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->auth->isUser() === true) {
@@ -182,7 +182,7 @@ class Index extends Core\Modules\Controller\Frontend
             $validator->validateCreate($formData, $ip);
 
             $moduleInfo = $this->modules->getModuleInfo($this->module);
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'date' => $this->date->toSQL(),
                 'ip' => $ip,
@@ -191,7 +191,7 @@ class Index extends Core\Modules\Controller\Frontend
                 'message' => Core\Functions::strEncode($formData['message']),
                 'module_id' => $moduleInfo['id'],
                 'entry_id' => $this->entryId,
-            );
+            ];
 
             $bool = $this->commentsModel->insert($insertValues);
 

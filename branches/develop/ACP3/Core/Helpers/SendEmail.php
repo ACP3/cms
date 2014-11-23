@@ -36,10 +36,10 @@ class SendEmail
     public function execute($recipientName, $recipientEmail, $from, $subject, $body, $mailSignature = '')
     {
         if (!empty($recipientName)) {
-            $to = array(
+            $to = [
                 'name' => $recipientName,
                 'email' => $recipientEmail
-            );
+            ];
         } else {
             $to = $recipientEmail;
         }

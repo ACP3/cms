@@ -22,7 +22,7 @@ class Model extends Core\Model
     public function newsletterExists($id, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
-        return ((int)$this->db->getConnection()->fetchAssoc('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where, array('id' => $id, 'status' => $status)) > 0);
+        return ((int)$this->db->getConnection()->fetchAssoc('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where, ['id' => $id, 'status' => $status]) > 0);
     }
 
     /**
@@ -33,7 +33,7 @@ class Model extends Core\Model
     public function accountExists($emailAddress, $hash = '')
     {
         $where = empty($hash) === false ? ' AND hash = :hash' : '';
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE mail = :mail' . $where, array('mail' => $emailAddress, 'hash' => $hash)) > 0;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE mail = :mail' . $where, ['mail' => $emailAddress, 'hash' => $hash]) > 0;
     }
 
     /**
@@ -44,7 +44,7 @@ class Model extends Core\Model
     public function getOneById($id, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where, array('id' => $id, 'status' => $status));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where, ['id' => $id, 'status' => $status]);
     }
 
     /**
@@ -54,7 +54,7 @@ class Model extends Core\Model
     public function countAll($status = '')
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where, array('status' => $status));
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where, ['status' => $status]);
     }
 
     /**
@@ -83,7 +83,7 @@ class Model extends Core\Model
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY date DESC' . $limitStmt, array('status' => $status));
+        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY date DESC' . $limitStmt, ['status' => $status]);
     }
 
     /**

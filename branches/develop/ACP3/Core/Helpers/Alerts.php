@@ -51,11 +51,11 @@ class Alerts
     public function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
     {
         if (!empty($text)) {
-            $confirm = array(
+            $confirm = [
                 'text' => $text,
                 'forward' => $forward,
                 'overlay' => $overlay,
-            );
+            ];
             if (!empty($backward)) {
                 $confirm['backward'] = $backward;
             }
@@ -80,11 +80,11 @@ class Alerts
     public function confirmBoxPost($text, array $data, $forward, $backward = 0)
     {
         if (!empty($text) && !empty($data)) {
-            $confirm = array(
+            $confirm = [
                 'text' => $text,
                 'data' => $data,
                 'forward' => $forward,
-            );
+            ];
             if (!empty($backward)) {
                 $confirm['backward'] = $backward;
             }
@@ -144,10 +144,10 @@ class Alerts
         $content = $this->view->fetchTemplate($this->errorBoxContent($errors));
 
         if ($this->request->getIsAjax() === true) {
-            $return = array(
+            $return = [
                 'success' => false,
                 'content' => $content,
-            );
+            ];
 
             $this->outputHelper->outputJson($return);
         }

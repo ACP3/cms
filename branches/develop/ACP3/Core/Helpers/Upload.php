@@ -74,7 +74,7 @@ class Upload
      */
     public function calcFilesize($value)
     {
-        $units = array(
+        $units = [
             0 => 'Byte',
             1 => 'KiB',
             2 => 'MiB',
@@ -84,7 +84,7 @@ class Upload
             6 => 'EiB',
             7 => 'ZiB',
             8 => 'YiB',
-        );
+        ];
 
         for ($i = 0; $value >= 1024; ++$i) {
             $value = $value / 1024;

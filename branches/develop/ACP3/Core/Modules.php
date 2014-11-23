@@ -129,7 +129,7 @@ class Modules
     public function setModulesCache()
     {
         $infos = [];
-        $dirs = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $dirs = array_diff(scandir(MODULES_DIR), ['.', '..']);
         foreach ($dirs as $dir) {
             $path = MODULES_DIR . '/' . $dir . '/config/module.xml';
             if (is_file($path) === true) {
@@ -138,7 +138,7 @@ class Modules
                 if (!empty($moduleInfo)) {
                     $moduleName = strtolower($dir);
                     $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
-                    $infos[$moduleName] = array(
+                    $infos[$moduleName] = [
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
                         'dir' => $dir,
                         'active' => !empty($moduleInfoDb) && $moduleInfoDb['active'] == 1 ? true : false,
@@ -149,7 +149,7 @@ class Modules
                         'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
                         'categories' => isset($moduleInfo['categories']) ? true : false,
                         'protected' => isset($moduleInfo['protected']) ? true : false,
-                    );
+                    ];
                     $infos[$moduleName]['dependencies'] = array_values($this->xml->parseXmlFile($path, 'info/dependencies'));
                 }
             }
@@ -198,7 +198,7 @@ class Modules
     public function getAllModules()
     {
         if (empty($this->allModules)) {
-            $dir = array_diff(scandir(MODULES_DIR), array('.', '..'));
+            $dir = array_diff(scandir(MODULES_DIR), ['.', '..']);
             foreach ($dir as $module) {
                 $info = $this->getModuleInfo($module);
                 if (!empty($info)) {

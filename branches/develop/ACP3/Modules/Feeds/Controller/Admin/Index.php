@@ -44,11 +44,11 @@ class Index extends Core\Modules\Controller\Admin
 
         $settings = $this->feedsConfig->getSettings();
 
-        $feedType = array(
+        $feedType = [
             'RSS 1.0',
             'RSS 2.0',
             'ATOM'
-        );
+        ];
         $this->view->assign('feed_types', $this->get('core.helpers.forms')->selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']));
 
         $this->view->assign('form', array_merge($settings, $_POST));
@@ -65,10 +65,10 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('feeds.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'feed_image' => Core\Functions::strEncode($formData['feed_image']),
                 'feed_type' => $formData['feed_type']
-            );
+            ];
 
             $bool = $this->feedsConfig->setSettings($data);
 

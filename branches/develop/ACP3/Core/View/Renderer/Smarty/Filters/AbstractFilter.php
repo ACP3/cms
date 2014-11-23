@@ -17,7 +17,7 @@ abstract class AbstractFilter
      */
     public function registerFilter(\Smarty $smarty)
     {
-        $smarty->registerFilter($this->filterType, array($this, 'process'));
+        $smarty->registerFilter($this->filterType, [$this, 'process']);
     }
 
     /**

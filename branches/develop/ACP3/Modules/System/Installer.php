@@ -17,23 +17,23 @@ class Installer extends Modules\AbstractInstaller
     /**
      * @var array
      */
-    protected $specialResources = array(
-        'Admin' => array(
-            'Extensions' => array(
+    protected $specialResources = [
+        'Admin' => [
+            'Extensions' => [
                 'index' => 7,
                 'designs' => 7,
                 'languages' => 7,
                 'modules' => 7,
-            ),
-            'Index' => array(
+            ],
+            'Index' => [
                 'configuration' => 7,
-            ),
-            'Maintenance' => array(
+            ],
+            'Maintenance' => [
                 'sql_export' => 7,
                 'sql_import' => 7,
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     /**
      * @inheritdoc
@@ -48,7 +48,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}modules` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `name` varchar(100) NOT NULL,
@@ -132,7 +132,7 @@ class Installer extends Modules\AbstractInstaller
             "INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (4, 'Administrator', 1, 3, 4, 5);",
             "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1)",
             "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
-        );
+        ];
     }
 
     /**
@@ -148,7 +148,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'cache_images' => true,
             'cache_minify' => 3600,
             'date_format_long' => '',
@@ -174,7 +174,7 @@ class Installer extends Modules\AbstractInstaller
             'seo_robots' => 1,
             'seo_title' => '',
             'wysiwyg' => 'CKEditor'
-        );
+        ];
     }
 
     /**
@@ -198,78 +198,78 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'extra_css', '');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'extra_js', '');",
-            ),
-            32 => array(
+            ],
+            32 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'icons_path', 'libraries/crystal_project/');",
-            ),
-            33 => array(
+            ],
+            33 => [
                 "UPDATE `{pre}acl_resources` SET privilege_id = 3 WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_maintenance';",
-            ),
-            34 => array(
+            ],
+            34 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'functions', '', 1);",
-            ),
-            35 => array(
+            ],
+            35 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
                 "UPDATE `{pre}settings` SET value = \"4.0-dev\" WHERE module_id = " . $this->getModuleId() . " AND name = \"version\";",
-            ),
-            36 => array(
+            ],
+            36 => [
                 'ALTER TABLE `{pre}acl_resources` ADD COLUMN `area` VARCHAR(255) NOT NULL AFTER `module_id`;',
                 'ALTER TABLE `{pre}acl_resources` ADD COLUMN `controller` VARCHAR(255) NOT NULL AFTER `area`;',
                 'UPDATE `{pre}acl_resources` SET area="frontend";',
                 'UPDATE `{pre}acl_resources` SET area="admin" WHERE page LIKE "acp_%";',
                 'UPDATE `{pre}acl_resources` SET area="sidebar" WHERE page LIKE "sidebar%";',
-            ),
-            37 => array(
+            ],
+            37 => [
                 'UPDATE `{pre}acl_resources` SET controller="index";',
                 'UPDATE `{pre}acl_resources` SET page=REPLACE(page, "acp_", "") WHERE page LIKE "acp_%";',
-            ),
-            38 => array(
+            ],
+            38 => [
                 'UPDATE `{pre}acl_resources` SET page="index" WHERE page="sidebar";',
-            ),
-            39 => array(
+            ],
+            39 => [
                 'UPDATE `{pre}acl_resources` SET page=REPLACE(page, "list", "index") WHERE page LIKE "list%";',
-            ),
-            40 => array(
+            ],
+            40 => [
                 'UPDATE `{pre}acl_resources` SET controller = "maintenance" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "sql_export";',
                 'UPDATE `{pre}acl_resources` SET controller = "maintenance" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "sql_import";',
                 'UPDATE `{pre}acl_resources` SET controller = "maintenance" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "update_check";',
                 'UPDATE `{pre}acl_resources` SET controller = "maintenance", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "maintenance";',
-            ),
-            41 => array(
+            ],
+            41 => [
                 'UPDATE `{pre}acl_resources` SET controller = "extensions" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "designs";',
                 'UPDATE `{pre}acl_resources` SET controller = "extensions" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "languages";',
                 'UPDATE `{pre}acl_resources` SET controller = "extensions" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "modules";',
                 'UPDATE `{pre}acl_resources` SET controller = "extensions", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "extensions";',
-            ),
-            42 => array(
+            ],
+            42 => [
                 "UPDATE `{pre}settings` SET value = \"de_DE\" WHERE module_id = " . $this->getModuleId() . " AND name = \"lang\" AND value = \"de\";",
                 "UPDATE `{pre}settings` SET value = \"en_US\" WHERE module_id = " . $this->getModuleId() . " AND name = \"lang\" AND value = \"en\";",
-            ),
-            43 => array(
+            ],
+            43 => [
                 'DELETE FROM `{pre}acl_resources` WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "admin" AND controller = "extensions" AND page = "languages";',
-            ),
-            44 => array(
+            ],
+            44 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'cache_driver', 'PhpFile');",
-            ),
-            45 => array(
+            ],
+            45 => [
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"seo_aliases\";",
-            ),
-            46 => array(
+            ],
+            46 => [
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"icons_path\";",
-            ),
-            47 => array(
+            ],
+            47 => [
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"extra_css\";",
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"extra_js\";",
-            ),
-            48 => array(
+            ],
+            48 => [
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"cache_driver\";",
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"version\";",
-            )
-        );
+            ]
+        ];
     }
 
 }

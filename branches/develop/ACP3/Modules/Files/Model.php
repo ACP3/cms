@@ -30,7 +30,7 @@ class Model extends Core\Model
     public function resultExists($id, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
-        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0);
+        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $period, ['id' => $id, 'time' => $time]) > 0);
     }
 
     /**
@@ -40,7 +40,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS n LEFT JOIN ' . $this->db->getPrefix() . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', array($id));
+        return $this->db->getConnection()->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS n LEFT JOIN ' . $this->db->getPrefix() . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', [$id]);
     }
 
     /**
@@ -50,7 +50,7 @@ class Model extends Core\Model
      */
     public function getFileById($id)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT file FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', array($id));
+        return $this->db->getConnection()->fetchColumn('SELECT file FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -82,7 +82,7 @@ class Model extends Core\Model
     {
         $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time, 'categoryId' => $categoryId));
+        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
     }
 
     /**
@@ -96,7 +96,7 @@ class Model extends Core\Model
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
+        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, ['time' => $time]);
     }
 
     public function getAllInAcp()

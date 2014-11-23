@@ -61,17 +61,17 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']));
 
         // WYSIWYG-Editoren
-        $editors = array_diff(scandir(CLASSES_DIR . 'WYSIWYG'), array('.', '..', 'AbstractWYSIWYG.php'));
+        $editors = array_diff(scandir(CLASSES_DIR . 'WYSIWYG'), ['.', '..', 'AbstractWYSIWYG.php']);
         $wysiwyg = [];
 
         foreach ($editors as $editor) {
             $editor = substr($editor, 0, strrpos($editor, '.php'));
             if (!empty($editor)) {
-                $wysiwyg[] = array(
+                $wysiwyg[] = [
                     'value' => $editor,
                     'selected' => $this->get('core.helpers.forms')->selectEntry('wysiwyg', $editor, $systemSettings['wysiwyg']),
                     'lang' => $editor
-                );
+                ];
             }
         }
         $this->view->assign('wysiwyg', $wysiwyg);
@@ -82,41 +82,41 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('time_zones', $this->date->getTimeZones($systemSettings['date_time_zone']));
 
         // Wartungsmodus an/aus
-        $lang_maintenance = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('maintenance', $this->get('core.helpers.forms')->selectGenerator('maintenance_mode', array(1, 0), $lang_maintenance, $systemSettings['maintenance_mode'], 'checked'));
+        $lang_maintenance = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('maintenance', $this->get('core.helpers.forms')->selectGenerator('maintenance_mode', [1, 0], $lang_maintenance, $systemSettings['maintenance_mode'], 'checked'));
 
         // Robots
-        $lang_robots = array(
+        $lang_robots = [
             $this->lang->t('system', 'seo_robots_index_follow'),
             $this->lang->t('system', 'seo_robots_index_nofollow'),
             $this->lang->t('system', 'seo_robots_noindex_follow'),
             $this->lang->t('system', 'seo_robots_noindex_nofollow')
-        );
-        $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('seo_robots', array(1, 2, 3, 4), $lang_robots, $systemSettings['seo_robots']));
+        ];
+        $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('seo_robots', [1, 2, 3, 4], $lang_robots, $systemSettings['seo_robots']));
 
         // Sef-URIs
-        $lang_mod_rewrite = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('seo_mod_rewrite', array(1, 0), $lang_mod_rewrite, $systemSettings['seo_mod_rewrite'], 'checked'));
+        $lang_mod_rewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('seo_mod_rewrite', [1, 0], $lang_mod_rewrite, $systemSettings['seo_mod_rewrite'], 'checked'));
 
         // Caching von Bildern
-        $lang_cache_images = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('cache_images', $this->get('core.helpers.forms')->selectGenerator('cache_images', array(1, 0), $lang_cache_images, $systemSettings['cache_images'], 'checked'));
+        $lang_cache_images = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('cache_images', $this->get('core.helpers.forms')->selectGenerator('cache_images', [1, 0], $lang_cache_images, $systemSettings['cache_images'], 'checked'));
 
         // Mailertyp
-        $lang_mailer_type = array($this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp'));
-        $this->view->assign('mailer_type', $this->get('core.helpers.forms')->selectGenerator('mailer_type', array('mail', 'smtp'), $lang_mailer_type, $systemSettings['mailer_type']));
+        $lang_mailer_type = [$this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp')];
+        $this->view->assign('mailer_type', $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $lang_mailer_type, $systemSettings['mailer_type']));
 
         // Mailer SMTP Authentifizierung
-        $lang_mailer_smtp_auth = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('mailer_smtp_auth', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_auth', array(1, 0), $lang_mailer_smtp_auth, $systemSettings['mailer_smtp_auth'], 'checked'));
+        $lang_mailer_smtp_auth = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('mailer_smtp_auth', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_auth', [1, 0], $lang_mailer_smtp_auth, $systemSettings['mailer_smtp_auth'], 'checked'));
 
         // Mailer SMTP Verschlüsselung
-        $lang_mailer_smtp_security = array(
+        $lang_mailer_smtp_security = [
             $this->lang->t('system', 'mailer_smtp_security_none'),
             $this->lang->t('system', 'mailer_smtp_security_ssl'),
             $this->lang->t('system', 'mailer_smtp_security_tls')
-        );
-        $this->view->assign('mailer_smtp_security', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, $systemSettings['mailer_smtp_security']));
+        ];
+        $this->view->assign('mailer_smtp_security', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailer_smtp_security, $systemSettings['mailer_smtp_security']));
 
         $this->view->assign('form', array_merge($systemSettings, $_POST));
 
@@ -135,7 +135,7 @@ class Index extends Core\Modules\Controller\Admin
             $validator->validateSettings($formData);
 
             // Config aktualisieren
-            $data = array(
+            $data = [
                 'cache_images' => (int)$formData['cache_images'],
                 'cache_minify' => (int)$formData['cache_minify'],
                 'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
@@ -160,7 +160,7 @@ class Index extends Core\Modules\Controller\Admin
                 'seo_robots' => (int)$formData['seo_robots'],
                 'seo_title' => Core\Functions::strEncode($formData['seo_title']),
                 'wysiwyg' => $formData['wysiwyg']
-            );
+            ];
 
             $bool = $this->systemConfig->setSettings($data);
 

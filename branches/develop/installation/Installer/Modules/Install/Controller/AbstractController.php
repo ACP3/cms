@@ -14,24 +14,24 @@ abstract class AbstractController extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $navbar = array(
-            'index_index' => array(
+        $navbar = [
+            'index_index' => [
                 'lang' => $this->lang->t('install', 'index_index'),
                 'active' => false,
-            ),
-            'index_licence' => array(
+            ],
+            'index_licence' => [
                 'lang' => $this->lang->t('install', 'index_licence'),
                 'active' => false,
-            ),
-            'index_requirements' => array(
+            ],
+            'index_requirements' => [
                 'lang' => $this->lang->t('install', 'index_requirements'),
                 'active' => false,
-            ),
-            'install_index' => array(
+            ],
+            'install_index' => [
                 'lang' => $this->lang->t('install', 'install_index'),
                 'active' => false,
-            )
-        );
+            ]
+        ];
 
         $key = $this->request->controller . '_' . $this->request->file;
         if (isset($navbar[$key]) === true) {

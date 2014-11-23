@@ -61,12 +61,12 @@ class Session
         // Eigene Session Handling Methoden setzen
         ini_set('session.save_handler', 'user');
         session_set_save_handler(
-            array($this, 'session_open'),
-            array($this, 'session_close'),
-            array($this, 'session_read'),
-            array($this, 'session_write'),
-            array($this, 'session_destroy'),
-            array($this, 'session_gc')
+            [$this, 'session_open'],
+            [$this, 'session_close'],
+            [$this, 'session_read'],
+            [$this, 'session_write'],
+            [$this, 'session_destroy'],
+            [$this, 'session_gc']
         );
 
         // Session starten und anschließend sichern
@@ -132,7 +132,7 @@ class Session
      */
     public function session_read($sessionId)
     {
-        $session = $this->db->getConnection()->fetchAssoc('SELECT session_data FROM ' . $this->db->getPrefix() . 'sessions WHERE session_id = ?', array($sessionId));
+        $session = $this->db->getConnection()->fetchAssoc('SELECT session_data FROM ' . $this->db->getPrefix() . 'sessions WHERE session_id = ?', [$sessionId]);
 
         // Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
         return !empty($session) ? $session['session_data'] : '';
@@ -148,7 +148,7 @@ class Session
      */
     public function session_write($sessionId, $data)
     {
-        $this->db->getConnection()->executeUpdate('INSERT INTO ' . $this->db->getPrefix() . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($sessionId, time(), $data, $data));
+        $this->db->getConnection()->executeUpdate('INSERT INTO ' . $this->db->getPrefix() . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', [$sessionId, time(), $data, $data]);
 
         return true;
     }
@@ -169,7 +169,7 @@ class Session
         }
 
         // Session aus Datenbank löschen
-        $this->db->getConnection()->delete($this->db->getPrefix() . 'sessions', array('session_id' => $sessionId));
+        $this->db->getConnection()->delete($this->db->getPrefix() . 'sessions', ['session_id' => $sessionId]);
     }
 
     /**
@@ -185,7 +185,7 @@ class Session
             return false;
         }
 
-        $this->db->getConnection()->executeUpdate('DELETE FROM ' . $this->db->getPrefix() . 'sessions WHERE session_starttime + ? < ?', array($sessionLifetime, time()));
+        $this->db->getConnection()->executeUpdate('DELETE FROM ' . $this->db->getPrefix() . 'sessions WHERE session_starttime + ? < ?', [$sessionLifetime, time()]);
 
         return true;
     }
