@@ -94,12 +94,12 @@
             </div>
         {/if}
     </form>
-    {javascripts}
     {if isset($pages_list)}
-        {include_js module="system" file="forms"}
+        {javascripts}
+            {include_js module="system" file="forms"}
+        {/javascripts}
         {if $can_delete === true}
             {include file="asset:system/mark.tpl"}
         {/if}
     {/if}
-    {/javascripts}
 {/block}
