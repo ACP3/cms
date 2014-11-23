@@ -35,7 +35,7 @@ class MoveToHead extends AbstractFilter
     public function process($tpl_output, \Smarty_Internal_Template $smarty)
     {
         if (strpos($tpl_output, '<!-- STYLESHEETS -->') !== false) {
-            $matches = array();
+            $matches = [];
             preg_match_all('!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is', $tpl_output, $matches);
 
             // Remove placeholder comments

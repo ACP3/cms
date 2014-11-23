@@ -51,17 +51,17 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
-            ),
-            32 => array(
+            ],
+            32 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "search/", "search/index/") WHERE uri LIKE "search/%";',
-            ),
-            33 => array(
+            ],
+            33 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "search/list/", "search/index/index/") WHERE uri LIKE "search/list/%";' : '',
-            )
-        );
+            ]
+        ];
     }
 
 }

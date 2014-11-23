@@ -34,14 +34,14 @@ class Alerts extends \ACP3\Core\Helpers\Alerts
         } else {
             $errors = (array)$errors;
         }
-        $this->view->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
+        $this->view->assign('error_box', ['non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors]);
         $content = $this->view->fetchTemplate('error_box.tpl');
 
         if ($this->request->getIsAjax() === true) {
-            $return = array(
+            $return = [
                 'success' => false,
                 'content' => $content,
-            );
+            ];
 
             $this->outputHelper->outputJson($return);
         }

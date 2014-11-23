@@ -65,11 +65,11 @@ class Icon extends AbstractFunction
             $width = $height = '';
         }
 
-        return array(
+        return [
             'path' => ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1),
             'width' => $width,
             'height' => $height
-        );
+        ];
     }
 
     /**

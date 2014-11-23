@@ -21,7 +21,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}guestbook` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
@@ -34,7 +34,7 @@ class Installer extends Modules\AbstractInstaller
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX `foreign_user_id` (`user_id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -42,7 +42,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array("DROP TABLE `{pre}guestbook`;");
+        return ["DROP TABLE `{pre}guestbook`;"];
     }
 
     /**
@@ -50,14 +50,14 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'dateformat' => 'long',
             'notify' => 0,
             'notify_email' => '',
             'emoticons' => 1,
             'newsletter_integration' => 0,
             'overlay' => 1
-        );
+        ];
     }
 
     /**
@@ -65,15 +65,15 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "guestbook/", "guestbook/index/") WHERE uri LIKE "guestbook/%";',
-            ),
-            32 => array(
+            ],
+            32 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/list/", "guestbook/index/index/") WHERE uri LIKE "guestbook/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/create/", "guestbook/index/create/") WHERE uri LIKE "guestbook/create/%";' : '',
-            )
-        );
+            ]
+        ];
     }
 
 }

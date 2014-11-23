@@ -133,17 +133,17 @@ class Controller
     private function _languagesDropdown($selectedLanguage)
     {
         // Dropdown-Menü für die Sprachen
-        $languages = array();
+        $languages = [];
         $path = INSTALLER_MODULES_DIR . 'Install/Languages/';
-        $files = array_diff(scandir($path), array('.', '..'));
+        $files = array_diff(scandir($path), ['.', '..']);
         foreach ($files as $row) {
             $langInfo = simplexml_load_file($path . $row);
             if (!empty($langInfo)) {
-                $languages[] = array(
+                $languages[] = [
                     'language' => substr($row, 0, -4),
                     'selected' => $selectedLanguage === substr($row, 0, -4) ? ' selected="selected"' : '',
                     'name' => $langInfo->info->name
-                );
+                ];
             }
         }
         return $languages;

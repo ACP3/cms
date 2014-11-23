@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->systemConfig->getSettings()['seo_title']));
         }
 
-        $defaults = array(
+        $defaults = [
             'name' => '',
             'name_disabled' => '',
             'mail' => '',
@@ -85,7 +85,7 @@ class Index extends Core\Modules\Controller\Frontend
             'website' => '',
             'website_disabled' => '',
             'message' => '',
-        );
+        ];
 
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->auth->isUser() === true) {
@@ -153,7 +153,7 @@ class Index extends Core\Modules\Controller\Frontend
             $validator = $this->get('guestbook.validator');
             $validator->validateCreate($formData, $hasNewsletterAccess);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'date' => $this->date->toSQL(),
                 'ip' => $_SERVER['REMOTE_ADDR'],
@@ -163,7 +163,7 @@ class Index extends Core\Modules\Controller\Frontend
                 'website' => Core\Functions::strEncode($formData['website']),
                 'mail' => $formData['mail'],
                 'active' => $settings['notify'] == 2 ? 0 : 1,
-            );
+            ];
 
             $lastId = $this->guestbookModel->insert($insertValues);
 

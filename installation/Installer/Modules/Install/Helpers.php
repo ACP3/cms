@@ -66,8 +66,8 @@ class Helpers
     public function executeSqlQueries(array $queries, Core\DB $db)
     {
         if (count($queries) > 0) {
-            $search = array('{pre}', '{engine}', '{charset}');
-            $replace = array($db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
+            $search = ['{pre}', '{engine}', '{charset}'];
+            $replace = [$db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
 
             $db->getConnection()->beginTransaction();
             try {

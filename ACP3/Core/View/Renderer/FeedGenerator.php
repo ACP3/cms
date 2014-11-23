@@ -16,7 +16,7 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
     /**
      * @param array $params
      */
-    public function configure(array $params = array())
+    public function configure(array $params = [])
     {
         switch ($params['feed_type']) {
             case 'ATOM':
@@ -48,7 +48,7 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
             $this->renderer->setDescription($this->container->get('core.lang')->t($this->config['module'], $this->config['module']));
         } else {
             $this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
-            $this->renderer->setChannelElement('author', array('name' => $this->config['feed_title']));
+            $this->renderer->setChannelElement('author', ['name' => $this->config['feed_title']]);
         }
 
         if (!empty($this->config['feed_image']))
@@ -68,7 +68,7 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
             $item->setDescription($name['description']);
             $item->setLink($name['link']);
             if ($this->config['feed_type'] !== 'ATOM') {
-                $item->addElement('guid', $name['link'], array('isPermaLink' => 'true'));
+                $item->addElement('guid', $name['link'], ['isPermaLink' => 'true']);
             }
             $this->renderer->addItem($item);
         }

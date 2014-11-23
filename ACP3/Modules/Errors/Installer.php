@@ -67,22 +67,22 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "errors/", "errors/index/") WHERE uri LIKE "errors/%";',
-            ),
-            32 => array(
+            ],
+            32 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "errors/403/", "errors/index/403/") WHERE uri LIKE "errors/403/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "errors/404/", "errors/index/404/") WHERE uri LIKE "errors/404/%";' : '',
-            ),
-            33 => array(
+            ],
+            33 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'frontend', 'index', '500', '', 1);",
                 "UPDATE `{pre}acl_resources` SET page = '401' WHERE module_id = " . $this->getModuleId() . " AND area = 'frontend' AND controller = 'index' AND page = '403';"
-            ),
-            34 => array(
+            ],
+            34 => [
                 "UPDATE `{pre}acl_resources` SET page = '403' WHERE module_id = " . $this->getModuleId() . " AND area = 'frontend' AND controller = 'index' AND page = '401';"
-            )
-        );
+            ]
+        ];
     }
 
 }

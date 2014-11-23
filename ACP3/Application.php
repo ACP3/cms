@@ -94,7 +94,7 @@ class Application
      */
     public function setErrorHandler()
     {
-        $errorLevelMap = array(
+        $errorLevelMap = [
             E_ERROR => Logger::ERROR,
             E_WARNING => Logger::WARNING,
             E_PARSE => Logger::ERROR,
@@ -110,12 +110,12 @@ class Application
             E_RECOVERABLE_ERROR => Logger::ERROR,
             E_DEPRECATED => Logger::WARNING,
             E_USER_DEPRECATED => Logger::WARNING,
-        );
+        ];
 
         $stream = new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE);
         $stream->setFormatter(new LineFormatter(null, null, true));
 
-        $logger = new Logger('system', array($stream));
+        $logger = new Logger('system', [$stream]);
         ErrorHandler::register($logger, $errorLevelMap);
     }
 
@@ -183,7 +183,7 @@ class Application
             $this->container->compile();
 
             $dumper = new PhpDumper($this->container);
-            file_put_contents($file, $dumper->dump(array('class' => 'ACP3ServiceContainer')));
+            file_put_contents($file, $dumper->dump(['class' => 'ACP3ServiceContainer']));
         }
     }
 

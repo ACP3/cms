@@ -100,13 +100,13 @@ class Helpers
         if ($this->categoryIsDuplicate($title, $module) === false) {
             $moduleInfo = $this->modules->getModuleInfo($module);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'title' => Core\Functions::strEncode($title),
                 'picture' => '',
                 'description' => '',
                 'module_id' => $moduleInfo['id'],
-            );
+            ];
             $result = $this->categoriesModel->insert($insertValues);
 
             $this->cache->setCache($module);

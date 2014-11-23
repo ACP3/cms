@@ -65,12 +65,12 @@ class Aliases
     {
         $aliases = $this->systemModel->getAllUriAliases();
         $c_aliases = count($aliases);
-        $data = array();
+        $data = [];
 
         for ($i = 0; $i < $c_aliases; ++$i) {
-            $data[$aliases[$i]['uri']] = array(
+            $data[$aliases[$i]['uri']] = [
                 'alias' => $aliases[$i]['alias'],
-            );
+            ];
         }
 
         return $this->uriCache->save('aliases', $data);
@@ -122,16 +122,16 @@ class Aliases
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
         $keywords = Core\Functions::strEncode($keywords);
         $description = Core\Functions::strEncode($description);
-        $values = array(
+        $values = [
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
             'robots' => (int)$robots
-        );
+        ];
 
         // Update an existing result
         if ($this->systemModel->uriAliasExists($path) === true) {
-            $bool = $this->systemModel->update($values, array('uri' => $path), System\Model::TABLE_NAME_SEO);
+            $bool = $this->systemModel->update($values, ['uri' => $path], System\Model::TABLE_NAME_SEO);
         } else {
             $values['uri'] = $path;
             $bool = $this->systemModel->insert($values, System\Model::TABLE_NAME_SEO);

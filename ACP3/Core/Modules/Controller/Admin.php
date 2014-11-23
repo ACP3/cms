@@ -71,13 +71,13 @@ abstract class Admin extends Core\Modules\Controller\Frontend
             $this->setTemplate($alerts->errorBoxContent($this->lang->t('system', 'no_entries_selected')));
         } elseif (empty($entries) === false && $this->request->action !== 'confirmed') {
             if (is_array($entries) === false) {
-                $entries = array($entries);
+                $entries = [$entries];
             }
 
-            $data = array(
+            $data = [
                 'action' => 'confirmed',
                 'entries' => $entries
-            );
+            ];
 
             $confirmationText = count($entries) == 1 ? $this->lang->t('system', 'confirm_delete_single') : str_replace('{items}', count($entries), $this->lang->t('system', 'confirm_delete_multiple'));
 

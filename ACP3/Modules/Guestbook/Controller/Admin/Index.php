@@ -82,8 +82,8 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             if ($settings['notify'] == 2) {
-                $langActivate = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-                $this->view->assign('activate', $this->get('core.helpers.forms')->selectGenerator('active', array(1, 0), $langActivate, $guestbook['active'], 'checked'));
+                $langActivate = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+                $this->view->assign('activate', $this->get('core.helpers.forms')->selectGenerator('active', [1, 0], $langActivate, $guestbook['active'], 'checked'));
             }
 
             $this->view->assign('form', array_merge($guestbook, $_POST));
@@ -101,13 +101,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($c_guestbook > 0) {
             $canDelete = $this->acl->hasPermission('admin/guestbook/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
 
             $settings = $this->guestbookConfig->getSettings();
@@ -135,29 +135,29 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
-        $lang_notify = array(
+        $lang_notify = [
             $this->lang->t('guestbook', 'no_notification'),
             $this->lang->t('guestbook', 'notify_on_new_entry'),
             $this->lang->t('guestbook', 'notify_and_enable')
-        );
-        $this->view->assign('notify', $this->get('core.helpers.forms')->selectGenerator('notify', array(0, 1, 2), $lang_notify, $settings['notify']));
+        ];
+        $this->view->assign('notify', $this->get('core.helpers.forms')->selectGenerator('notify', [0, 1, 2], $lang_notify, $settings['notify']));
 
-        $lang_overlay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
+        $lang_overlay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', [1, 0], $lang_overlay, $settings['overlay'], 'checked'));
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
-            $lang_allow_emoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
+            $lang_allow_emoticons = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->selectGenerator('emoticons', [1, 0], $lang_allow_emoticons, $settings['emoticons'], 'checked'));
         }
 
         // In Newsletter integrieren
         if ($this->modules->isActive('newsletter') === true) {
-            $lang_newsletter_integration = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->selectGenerator('newsletter_integration', array(1, 0), $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
+            $lang_newsletter_integration = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->selectGenerator('newsletter_integration', [1, 0], $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
         }
 
-        $this->view->assign('form', array_merge(array('notify_email' => $settings['notify_email']), $_POST));
+        $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -172,11 +172,11 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('guestbook.validator');
             $validator->validateEdit($formData, $settings);
 
-            $updateValues = array(
+            $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),
                 'message' => Core\Functions::strEncode($formData['message']),
                 'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
-            );
+            ];
 
             $bool = $this->guestbookModel->update($updateValues, $this->request->id);
 
@@ -199,14 +199,14 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('guestbook.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
                 'notify' => $formData['notify'],
                 'notify_email' => $formData['notify_email'],
                 'overlay' => $formData['overlay'],
                 'emoticons' => $formData['emoticons'],
                 'newsletter_integration' => $formData['newsletter_integration'],
-            );
+            ];
             $bool = $this->guestbookConfig->setSettings($data);
 
             $this->secureHelper->unsetFormToken($this->request->query);

@@ -79,7 +79,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', array_merge(array('description' => ''), $_POST));
+            $this->view->assign('form', array_merge(['description' => ''], $_POST));
             $this->view->assign('gallery_id', $this->request->id);
 
             $this->secureHelper->generateFormToken($this->request->query);
@@ -188,14 +188,14 @@ class Pictures extends Core\Modules\Controller\Admin
             $result = $upload->moveFile($file['tmp_name'], $file['name']);
             $picNum = $this->galleryModel->getLastPictureByGalleryId($this->request->id);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'pic' => !is_null($picNum) ? $picNum + 1 : 1,
                 'gallery_id' => $this->request->id,
                 'file' => $result['name'],
                 'description' => Core\Functions::strEncode($formData['description'], true),
                 'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
-            );
+            ];
 
             $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
             $bool2 = $this->get('gallery.helpers')->generatePictureAlias($lastId);
@@ -230,10 +230,10 @@ class Pictures extends Core\Modules\Controller\Admin
             $validator = $this->get('gallery.validator');
             $validator->validateEditPicture($file, $settings);
 
-            $updateValues = array(
+            $updateValues = [
                 'description' => Core\Functions::strEncode($formData['description'], true),
                 'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
-            );
+            ];
 
             if (!empty($file)) {
                 $upload = new Core\Helpers\Upload('gallery');
@@ -242,7 +242,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
                 $this->get('gallery.helpers')->removePicture($oldFile);
 
-                $updateValues = array_merge($updateValues, array('file' => $result['name']));
+                $updateValues = array_merge($updateValues, ['file' => $result['name']]);
             }
 
             $bool = $this->galleryModel->update($updateValues, $this->request->id, Gallery\Model::TABLE_NAME_PICTURES);

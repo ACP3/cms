@@ -19,7 +19,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}categories` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(120) NOT NULL,
@@ -28,7 +28,7 @@ class Installer extends Modules\AbstractInstaller
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -36,7 +36,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array("DROP TABLE `{pre}categories`;");
+        return ["DROP TABLE `{pre}categories`;"];
     }
 
     /**
@@ -44,11 +44,11 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'width' => 100,
             'height' => 50,
             'filesize' => 40960
-        );
+        ];
     }
 
     /**
@@ -56,14 +56,14 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "ALTER TABLE `{pre}categories` CHANGE `name` `title` VARCHAR(120) {charset} NOT NULL;",
-            ),
-            32 => array(
+            ],
+            32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            )
-        );
+            ]
+        ];
     }
 
 }

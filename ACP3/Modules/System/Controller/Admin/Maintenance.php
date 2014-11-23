@@ -68,16 +68,16 @@ class Maintenance extends Core\Modules\Controller\Admin
         $this->view->assign('tables', $tables);
 
         // Ausgabe
-        $lang_output = array($this->lang->t('system', 'output_as_file'), $this->lang->t('system', 'output_as_text'));
-        $this->view->assign('output', $this->get('core.helpers.forms')->selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
+        $lang_output = [$this->lang->t('system', 'output_as_file'), $this->lang->t('system', 'output_as_text')];
+        $this->view->assign('output', $this->get('core.helpers.forms')->selectGenerator('output', ['file', 'text'], $lang_output, 'file', 'checked'));
 
         // Exportart
-        $lang_export_type = array(
+        $lang_export_type = [
             $this->lang->t('system', 'complete_export'),
             $this->lang->t('system', 'export_structure'),
             $this->lang->t('system', 'export_data')
-        );
-        $this->view->assign('export_type', $this->get('core.helpers.forms')->selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
+        ];
+        $this->view->assign('export_type', $this->get('core.helpers.forms')->selectGenerator('export_type', ['complete', 'structure', 'data'], $lang_export_type, 'complete', 'checked'));
 
         $drop = [];
         $drop['checked'] = $this->get('core.helpers.forms')->selectEntry('drop', '1', '', 'checked');
@@ -93,7 +93,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             $this->_sqlImportPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(array('text' => ''), $_POST));
+        $this->view->assign('form', array_merge(['text' => ''], $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -104,10 +104,10 @@ class Maintenance extends Core\Modules\Controller\Admin
         if ($file !== false) {
             $data = explode('||', $file);
             if (count($data) === 2) {
-                $update = array(
+                $update = [
                     'installed_version' => Application::VERSION,
                     'current_version' => $data[0],
-                );
+                ];
 
                 if (version_compare($update['installed_version'], $update['current_version'], '>=')) {
                     $update['text'] = $this->lang->t('system', 'acp3_up_to_date');
@@ -166,7 +166,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             $this->secureHelper->unsetFormToken($this->request->query);
 
             $data = isset($file) ? file_get_contents($file['tmp_name']) : $formData['text'];
-            $importData = explode(";\n", str_replace(array("\r\n", "\r", "\n"), "\n", $data));
+            $importData = explode(";\n", str_replace(["\r\n", "\r", "\n"], "\n", $data));
             $sqlQueries = [];
 
             $i = 0;

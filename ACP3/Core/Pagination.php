@@ -240,10 +240,10 @@ class Pagination
             }
         }
 
-        return array(
+        return [
             'start' => $rangeStart,
             'end' => $rangeEnd
-        );
+        ];
     }
 
     /**
@@ -272,12 +272,12 @@ class Pagination
      */
     private function buildPageNumber($selected, $pageNumber, $uri, $title = '')
     {
-        return array(
+        return [
             'selected' => (bool)$selected,
             'page' => $pageNumber,
             'uri' => $uri,
             'title' => $title
-        );
+        ];
     }
 
     /**
