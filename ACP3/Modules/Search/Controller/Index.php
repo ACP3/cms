@@ -36,21 +36,21 @@ class Index extends Core\Modules\Controller\Frontend
             $this->_indexPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(array('search_term' => ''), $_POST));
+        $this->view->assign('form', array_merge(['search_term' => ''], $_POST));
 
         $this->view->assign('search_mods', $this->get('search.helpers')->getModules());
 
         // Zu durchsuchende Bereiche
-        $langSearchAreas = array(
+        $langSearchAreas = [
             $this->lang->t('search', 'title_and_content'),
             $this->lang->t('search', 'title_only'),
             $this->lang->t('search', 'content_only')
-        );
-        $this->view->assign('search_areas', $this->get('core.helpers.forms')->selectGenerator('area', array('title_content', 'title', 'content'), $langSearchAreas, 'title_content', 'checked'));
+        ];
+        $this->view->assign('search_areas', $this->get('core.helpers.forms')->selectGenerator('area', ['title_content', 'title', 'content'], $langSearchAreas, 'title_content', 'checked'));
 
         // Treffer sortieren
-        $langSortHits = array($this->lang->t('search', 'asc'), $this->lang->t('search', 'desc'));
-        $this->view->assign('sort_hits', $this->get('core.helpers.forms')->selectGenerator('sort', array('asc', 'desc'), $langSortHits, 'asc', 'checked'));
+        $langSortHits = [$this->lang->t('search', 'asc'), $this->lang->t('search', 'desc')];
+        $this->view->assign('sort_hits', $this->get('core.helpers.forms')->selectGenerator('sort', ['asc', 'desc'], $langSortHits, 'asc', 'checked'));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }

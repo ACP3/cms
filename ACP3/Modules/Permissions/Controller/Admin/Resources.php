@@ -62,7 +62,7 @@ class Resources extends Core\Modules\Controller\Admin
         }
         $this->view->assign('privileges', $privileges);
 
-        $this->view->assign('form', array_merge(array('resource' => '', 'area' => '', 'controller' => ''), $_POST));
+        $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -101,12 +101,12 @@ class Resources extends Core\Modules\Controller\Admin
             }
             $this->view->assign('privileges', $privileges);
 
-            $defaults = array(
+            $defaults = [
                 'resource' => $resource['page'],
                 'area' => $resource['area'],
                 'controller' => $resource['controller'],
                 'modules' => $resource['module_name']
-            );
+            ];
             $this->view->assign('form', array_merge($defaults, $_POST));
 
             $this->secureHelper->generateFormToken($this->request->query);
@@ -141,7 +141,7 @@ class Resources extends Core\Modules\Controller\Admin
             $validator->validateCreateResource($formData);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'module_id' => $moduleInfo['id'],
                 'area' => $formData['area'],
@@ -149,7 +149,7 @@ class Resources extends Core\Modules\Controller\Admin
                 'page' => $formData['resource'],
                 'params' => '',
                 'privilege_id' => $formData['privileges'],
-            );
+            ];
             $bool = $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
 
             $this->permissionsCache->setResourcesCache();
@@ -173,12 +173,12 @@ class Resources extends Core\Modules\Controller\Admin
             $validator = $this->get('permissions.validator');
             $validator->validateEditResource($formData);
 
-            $updateValues = array(
+            $updateValues = [
                 'controller' => $formData['controller'],
                 'area' => $formData['area'],
                 'page' => $formData['resource'],
                 'privilege_id' => $formData['privileges'],
-            );
+            ];
             $bool = $this->permissionsModel->update($updateValues, $this->request->id, Permissions\Model::TABLE_NAME_RESOURCES);
 
             $this->permissionsCache->setResourcesCache();

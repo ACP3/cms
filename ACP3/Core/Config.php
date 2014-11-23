@@ -51,13 +51,13 @@ class Config
         $moduleId = $this->systemModel->getModuleId($this->module);
         if (!empty($moduleId)) {
             foreach ($data as $key => $value) {
-                $updateValues = array(
+                $updateValues = [
                     'value' => $value
-                );
-                $where = array(
+                ];
+                $where = [
                     'module_id' => $moduleId,
                     'name' => $key
-                );
+                ];
                 $bool = $this->systemModel->update($updateValues, $where, System\Model::TABLE_NAME_SETTINGS);
             }
             $bool2 = $this->setCache();

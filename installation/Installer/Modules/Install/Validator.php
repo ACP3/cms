@@ -33,7 +33,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateConfiguration(array $formData, $configFilePath)
     {
-        $errors = array();
+        $errors = [];
         if (empty($formData['db_host'])) {
             $errors['db-host'] = $this->lang->t('install', 'type_in_db_host');
         }
@@ -47,14 +47,14 @@ class Validator extends Core\Validator\AbstractValidator
             try {
                 $config = new \Doctrine\DBAL\Configuration();
 
-                $connectionParams = array(
+                $connectionParams = [
                     'dbname' => $formData['db_name'],
                     'user' => $formData['db_user'],
                     'password' => $formData['db_password'],
                     'host' => $formData['db_host'],
                     'driver' => 'pdo_mysql',
                     'charset' => 'utf8'
-                );
+                ];
                 $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
                 $db->query('USE `' . $formData['db_name'] . '`');
             } catch (\Exception $e) {

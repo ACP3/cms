@@ -82,13 +82,13 @@ class Cache
                 }
             }
 
-            $modeSearch = array('1', '2', '3', '4');
-            $modeReplace = array(
+            $modeSearch = ['1', '2', '3', '4'];
+            $modeReplace = [
                 $this->lang->t('menus', 'module'),
                 $this->lang->t('menus', 'dynamic_page'),
                 $this->lang->t('menus', 'hyperlink'),
                 $this->lang->t('menus', 'article')
-            );
+            ];
 
             for ($i = 0; $i < $c_items; ++$i) {
                 $items[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $items[$i]['mode']);

@@ -24,7 +24,7 @@ class Smarty extends AbstractRenderer
      * @param array $params
      * @throws \SmartyException
      */
-    public function configure(array $params = array())
+    public function configure(array $params = [])
     {
         $settings = $this->container->get('system.config')->getSettings();
 

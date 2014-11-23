@@ -56,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(array('index_name' => '', 'title' => ''), $_POST));
+        $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -144,11 +144,11 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('menus.validator');
             $validator->validateCreate($formData);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'index_name' => $formData['index_name'],
                 'title' => Core\Functions::strEncode($formData['title']),
-            );
+            ];
 
             $lastId = $this->menusModel->insert($insertValues);
 
@@ -171,10 +171,10 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('menus.validator');
             $validator->validateEdit($formData);
 
-            $updateValues = array(
+            $updateValues = [
                 'index_name' => $formData['index_name'],
                 'title' => Core\Functions::strEncode($formData['title']),
-            );
+            ];
 
             $bool = $this->menusModel->update($updateValues, $this->request->id);
 

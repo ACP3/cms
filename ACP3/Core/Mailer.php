@@ -262,13 +262,13 @@ class Mailer
     private function _generateBody()
     {
         if (!empty($this->htmlBody) && !empty($this->template)) {
-            $mail = array(
+            $mail = [
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
                 'body' => $this->htmlBody,
                 'signature' => $this->_getHtmlSignature(),
                 'url_web_view' => $this->urlWeb
-            );
+            ];
             $this->view->assign('mail', $mail);
 
             $htmlDocument = new InlineStyle($this->view->fetchTemplate($this->template));
@@ -334,7 +334,7 @@ class Mailer
     private function _sendBcc()
     {
         if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
-            $this->recipients = array($this->recipients);
+            $this->recipients = [$this->recipients];
         }
 
         foreach ($this->recipients as $recipient) {
@@ -403,7 +403,7 @@ class Mailer
     private function _sendTo()
     {
         if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
-            $this->recipients = array($this->recipients);
+            $this->recipients = [$this->recipients];
         }
 
         foreach ($this->recipients as $recipient) {

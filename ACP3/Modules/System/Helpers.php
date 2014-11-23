@@ -69,7 +69,7 @@ class Helpers
     public function checkUninstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
     {
         $module = $moduleInstaller::MODULE_NAME;
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
         $modulesToUninstall = [];
         foreach ($modules as $row) {
             $row = strtolower($row);

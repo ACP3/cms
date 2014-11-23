@@ -35,15 +35,15 @@ class Index extends Core\Modules\Controller
 
     private function _indexPost()
     {
-        $results = array();
+        $results = [];
         // Zuerst die wichtigen System-Module aktualisieren...
-        $coreModules = array('system', 'permissions', 'users');
+        $coreModules = ['system', 'permissions', 'users'];
         foreach ($coreModules as $row) {
             $results[$row] = $this->_returnUpdateModuleResult($row);
         }
 
         // ...danach die Restlichen
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
         foreach ($modules as $row) {
             if (in_array(strtolower($row), $coreModules) === false) {
                 $results[$row] = $this->_returnUpdateModuleResult($row);
@@ -65,11 +65,11 @@ class Index extends Core\Modules\Controller
     {
         $result = $this->_updateModule($moduleName, $this->container);
 
-        return array(
+        return [
             'text' => sprintf($this->lang->t('update', 'db_update_text'), ucfirst($moduleName)),
             'class' => $result === 1 ? 'success' : ($result === 0 ? 'danger' : 'info'),
             'result_text' => $this->lang->t('update', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
-        );
+        ];
     }
 
     /**

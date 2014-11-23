@@ -125,18 +125,18 @@ class Index extends Core\Modules\Controller\Frontend
 
             // Multiple Answers
             if (is_array($answers) === false) {
-                $answers = array($answers);
+                $answers = [$answers];
             }
 
             foreach ($answers as $answer) {
                 if ($this->get('core.validator.rules.misc')->isNumber($answer) === true) {
-                    $insertValues = array(
+                    $insertValues = [
                         'poll_id' => $this->request->id,
                         'answer_id' => $answer,
                         'user_id' => $userId,
                         'ip' => $ip,
                         'time' => $time,
-                    );
+                    ];
                     $bool = $this->pollsModel->insert($insertValues, Polls\Model::TABLE_NAME_VOTES);
                 }
             }

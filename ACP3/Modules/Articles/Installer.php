@@ -19,9 +19,9 @@ class Installer extends Modules\AbstractInstaller
      */
     public function renameModule()
     {
-        return array(
+        return [
             31 => "UPDATE `{pre}modules` SET name = 'articles' WHERE name = 'static_pages';"
-        );
+        ];
     }
 
     /**
@@ -29,7 +29,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}articles` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `start` DATETIME NOT NULL,
@@ -39,7 +39,7 @@ class Installer extends Modules\AbstractInstaller
                 `user_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -47,7 +47,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array("DROP TABLE `{pre}articles`;");
+        return ["DROP TABLE `{pre}articles`;"];
     }
 
     /**
@@ -63,31 +63,31 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "RENAME TABLE `{pre}static_pages` TO `{pre}articles`;",
                 "UPDATE `{pre}seo` SET uri = REPLACE(uri, 'static_pages', 'articles') WHERE uri REGEXP '^(static_pages/list/id_[0-9]+/)$';",
                 "UPDATE `{pre}articles` SET `text` = REPLACE(`text`, 'static_pages/list/id_', 'articles/list/id_') WHERE `text` REGEXP '(static_pages/list/id_[0-9]+/)';",
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET uri = REPLACE(uri, 'static_pages', 'articles') WHERE uri REGEXP '^(static_pages/list/id_[0-9]+/)$';" : ''
-            ),
-            32 => array(
+            ],
+            32 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'details', '', 1);",
                 "UPDATE `{pre}seo` SET uri = REPLACE(uri, '/list/', '/details/') WHERE uri REGEXP '^(articles/list/id_[0-9]+/)$';",
                 "UPDATE `{pre}articles` SET `text` = REPLACE(`text`, 'articles/list/id_', 'articles/details/id_') WHERE `text` REGEXP '(articles/list/id_[0-9]+/)';",
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET uri = REPLACE(uri, '/list/', '/details/') WHERE uri REGEXP '^(articles/list/id_[0-9]+/)$';" : ''
-            ),
-            33 => array(
+            ],
+            33 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            ),
-            34 => array(
+            ],
+            34 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "articles/", "articles/index/") WHERE uri LIKE "articles/%";',
-            ),
-            35 => array(
+            ],
+            35 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "articles/list/", "articles/index/index/") WHERE uri LIKE "articles/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "articles/details/", "articles/index/details/") WHERE uri LIKE "articles/details/%";' : '',
-            )
-        );
+            ]
+        ];
     }
 
 }

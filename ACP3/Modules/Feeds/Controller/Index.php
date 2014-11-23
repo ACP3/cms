@@ -41,13 +41,13 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $settings = $this->feedsConfig->getSettings();
 
-        $config = array(
+        $config = [
             'feed_image' => $settings['feed_image'],
             'feed_type' => $settings['feed_type'],
             'feed_link' => $this->router->route('', true),
             'feed_title' => $this->systemConfig->getSettings()['seo_title'],
             'module' => $this->request->feed,
-        );
+        ];
 
         $this->view->setRenderer('feedgenerator', $config);
 

@@ -109,7 +109,7 @@ class Request
             }
 
             // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-            $alias = $this->db->getConnection()->fetchColumn('SELECT uri FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', array(substr($probableQuery, 0, -1)));
+            $alias = $this->db->getConnection()->fetchColumn('SELECT uri FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', [substr($probableQuery, 0, -1)]);
             if (!empty($alias)) {
                 $this->query = $alias . (!empty($params) ? $params : '');
             }

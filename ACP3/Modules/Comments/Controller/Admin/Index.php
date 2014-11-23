@@ -73,13 +73,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($c_comments > 0) {
             $canDelete = $this->acl->hasPermission('admin/comments/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
 
             for ($i = 0; $i < $c_comments; ++$i) {
@@ -102,8 +102,8 @@ class Index extends Core\Modules\Controller\Admin
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
-            $lang_allowEmoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->selectGenerator('emoticons', array(1, 0), $lang_allowEmoticons, $settings['emoticons'], 'checked'));
+            $lang_allowEmoticons = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->selectGenerator('emoticons', [1, 0], $lang_allowEmoticons, $settings['emoticons'], 'checked'));
         }
 
         $this->secureHelper->generateFormToken($this->request->query);
@@ -118,10 +118,10 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('comments.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
                 'emoticons' => $formData['emoticons'],
-            );
+            ];
             $bool = $this->commentsConfig->setSettings($data);
 
             $this->secureHelper->unsetFormToken($this->request->query);

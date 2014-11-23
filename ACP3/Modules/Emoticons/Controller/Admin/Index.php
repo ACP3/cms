@@ -56,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(array('code' => '', 'description' => ''), $_POST));
+        $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -80,12 +80,12 @@ class Index extends Core\Modules\Controller\Admin
             $upload = new Core\Helpers\Upload('emoticons');
             $result = $upload->moveFile($file['tmp_name'], $file['name']);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'code' => Core\Functions::strEncode($formData['code']),
                 'description' => Core\Functions::strEncode($formData['description']),
                 'img' => $result['name'],
-            );
+            ];
 
             $bool = $this->emoticonsModel->insert($insertValues);
 
@@ -160,10 +160,10 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('emoticons.validator');
             $validator->validateEdit($formData, $file, $this->emoticonsConfig->getSettings());
 
-            $updateValues = array(
+            $updateValues = [
                 'code' => Core\Functions::strEncode($formData['code']),
                 'description' => Core\Functions::strEncode($formData['description']),
-            );
+            ];
 
             if (empty($file) === false) {
                 $upload = new Core\Helpers\Upload('emoticons');
@@ -192,13 +192,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if (count($emoticons) > 0) {
             $canDelete = $this->acl->hasPermission('admin/emoticons/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 4 : 3,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('emoticons', $emoticons);
             $this->view->assign('can_delete', $canDelete);
@@ -225,11 +225,11 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('emoticons.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'width' => (int)$formData['width'],
                 'height' => (int)$formData['height'],
                 'filesize' => (int)$formData['filesize'],
-            );
+            ];
             $bool = $this->emoticonsConfig->setSettings($data);
 
             $this->secureHelper->unsetFormToken($this->request->query);

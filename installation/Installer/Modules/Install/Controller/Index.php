@@ -21,7 +21,7 @@ class Index extends AbstractController
     public function actionRequirements()
     {
         // Allgemeine Voraussetzungen
-        $requirements = array();
+        $requirements = [];
         $requirements[0]['name'] = $this->lang->t('install', 'php_version');
         $requirements[0]['color'] = version_compare(phpversion(), self::REQUIRED_PHP_VERSION, '>=') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
         $requirements[0]['found'] = phpversion();
@@ -45,17 +45,17 @@ class Index extends AbstractController
 
         $this->view->assign('requirements', $requirements);
 
-        $defaults = array('ACP3/config/config.yml');
+        $defaults = ['ACP3/config/config.yml'];
 
         // Uploadordner
-        $uploads = array_diff(scandir(UPLOADS_DIR), array('.', '..'));
+        $uploads = array_diff(scandir(UPLOADS_DIR), ['.', '..']);
         foreach ($uploads as $row) {
             $path = 'uploads/' . $row . '/';
             if (is_dir(ACP3_ROOT_DIR . $path) === true) {
                 $defaults[] = $path;
             }
         }
-        $requiredFilesAndDirs = array();
+        $requiredFilesAndDirs = [];
         $checkAgain = false;
 
         $i = 0;
@@ -82,7 +82,7 @@ class Index extends AbstractController
         $this->view->assign('files_dirs', $requiredFilesAndDirs);
 
         // PHP Einstellungen
-        $phpSettings = array();
+        $phpSettings = [];
         $phpSettings[0]['setting'] = $this->lang->t('install', 'maximum_uploadsize');
         $phpSettings[0]['class'] = ini_get('post_max_size') > 0 ? self::CLASS_SUCCESS : self::CLASS_WARNING;
         $phpSettings[0]['value'] = ini_get('post_max_size');

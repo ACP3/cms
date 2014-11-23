@@ -132,7 +132,7 @@ class Validator extends Core\Validator\AbstractValidator
         if ($formData['output'] !== 'file' && $formData['output'] !== 'text') {
             $errors['output'] = $this->lang->t('system', 'select_output');
         }
-        if (in_array($formData['export_type'], array('complete', 'structure', 'data')) === false) {
+        if (in_array($formData['export_type'], ['complete', 'structure', 'data']) === false) {
             $errors['export-type'] = $this->lang->t('system', 'select_export_type');
         }
 

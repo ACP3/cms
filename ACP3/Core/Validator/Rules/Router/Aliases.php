@@ -47,8 +47,8 @@ class Aliases
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
                 if ($path !== '/' && $this->routerValidator->isInternalURI($path) === true) {
-                    return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0;
-                } elseif ($this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', array($alias)) > 0) {
+                    return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
+                } elseif ($this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', [$alias]) > 0) {
                     return true;
                 }
             }

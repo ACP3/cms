@@ -82,7 +82,7 @@ class Extensions extends Core\Modules\Controller\Admin
         if ((bool)preg_match('=/=', $design) === false &&
             is_file(ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml') === true
         ) {
-            $bool = $this->systemConfig->setSettings(array('design' => $design));
+            $bool = $this->systemConfig->setSettings(['design' => $design]);
 
             // Template Cache leeren
             Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
@@ -143,7 +143,7 @@ class Extensions extends Core\Modules\Controller\Admin
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $bool = $this->systemModel->update(array('active' => 1), array('name' => $this->request->dir));
+            $bool = $this->systemModel->update(['active' => 1], ['name' => $this->request->dir]);
 
             $this->_renewCaches();
 
@@ -179,7 +179,7 @@ class Extensions extends Core\Modules\Controller\Admin
                 $deps = $this->get('system.helpers')->checkUninstallDependencies($installer);
 
                 if (empty($deps)) {
-                    $bool = $this->systemModel->update(array('active' => 0), array('name' => $this->request->dir));
+                    $bool = $this->systemModel->update(['active' => 0], ['name' => $this->request->dir]);
 
                     $this->_renewCaches();
 

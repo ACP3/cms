@@ -56,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(array('title' => '', 'description' => ''), $_POST));
+        $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $_POST));
 
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
@@ -90,12 +90,12 @@ class Index extends Core\Modules\Controller\Admin
             $validator->validate($formData, $file, $settings);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['module']);
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'title' => Core\Functions::strEncode($formData['title']),
                 'description' => Core\Functions::strEncode($formData['description']),
                 'module_id' => $moduleInfo['id'],
-            );
+            ];
             if (!empty($file)) {
                 $upload = new Core\Helpers\Upload('categories');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -193,10 +193,10 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('categories.validator');
             $validator->validate($formData, $file, $settings, $this->request->id);
 
-            $updateValues = array(
+            $updateValues = [
                 'title' => Core\Functions::strEncode($formData['title']),
                 'description' => Core\Functions::strEncode($formData['description']),
-            );
+            ];
 
             if (empty($file) === false) {
                 $upload = new Core\Helpers\Upload('categories');
@@ -226,13 +226,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($c_categories > 0) {
             $canDelete = $this->acl->hasPermission('admin/categories/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
             for ($i = 0; $i < $c_categories; ++$i) {
                 $categories[$i]['module'] = $this->lang->t($categories[$i]['module'], $categories[$i]['module']);
@@ -264,11 +264,11 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('categories.validator');
             $validator->validateSettings($formData, $this->lang);
 
-            $data = array(
+            $data = [
                 'width' => (int)$formData['width'],
                 'height' => (int)$formData['height'],
                 'filesize' => (int)$formData['filesize'],
-            );
+            ];
             $bool = $this->categoriesConfig->setSettings($data);
 
             $this->secureHelper->unsetFormToken($this->request->query);

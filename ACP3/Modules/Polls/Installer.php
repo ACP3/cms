@@ -19,7 +19,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}polls` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `start` DATETIME NOT NULL,
@@ -43,7 +43,7 @@ class Installer extends Modules\AbstractInstaller
                 `time` DATETIME NOT NULL,
                 INDEX (`poll_id`, `answer_id`, `user_id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -51,11 +51,11 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array(
+        return [
             "DROP TABLE `{pre}poll_votes`;",
             "DROP TABLE `{pre}poll_answers`;",
             "DROP TABLE `{pre}polls`;"
-        );
+        ];
     }
 
     /**
@@ -79,19 +79,19 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {charset} NOT NULL",
-            ),
-            32 => array(
+            ],
+            32 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "polls/", "polls/index/") WHERE uri LIKE "polls/%";',
-            ),
-            33 => array(
+            ],
+            33 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/list/", "polls/index/index/") WHERE uri LIKE "polls/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/vote/", "polls/index/vote/") WHERE uri LIKE "polls/vote/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/result/", "polls/index/result/") WHERE uri LIKE "polls/result/%";' : '',
-            )
-        );
+            ]
+        ];
     }
 
 }

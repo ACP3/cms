@@ -79,24 +79,24 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-            $lang_options = array($this->lang->t('articles', 'create_menu_item'));
-            $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', array(1), $lang_options, 0, 'checked'));
+            $lang_options = [$this->lang->t('articles', 'create_menu_item')];
+            $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', [1], $lang_options, 0, 'checked'));
 
             // Block
             $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown());
 
-            $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
+            $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, 1, 'checked'));
 
             $this->view->assign('pages_list', $this->get('menus.helpers')->menuItemsList());
         }
 
-        $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
+        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
 
-        $defaults = array(
+        $defaults = [
             'title' => '',
             'text' => ''
-        );
+        ];
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
@@ -114,14 +114,14 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('articles.validator');
             $validator->validateCreate($formData);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
             $lastId = $this->articlesModel->insert($insertValues);
 
@@ -134,7 +134,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->seo->setCache();
 
             if (isset($formData['create']) === true && $this->acl->hasPermission('admin/menus/items/create') === true) {
-                $insertValues = array(
+                $insertValues = [
                     'id' => '',
                     'mode' => 4,
                     'block_id' => $formData['block_id'],
@@ -143,7 +143,7 @@ class Index extends Core\Modules\Controller\Admin
                     'title' => Core\Functions::strEncode($formData['title']),
                     'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                     'target' => 1,
-                );
+                ];
 
                 $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
                 $lastId = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
@@ -202,7 +202,7 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             // Datumsauswahl
-            $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($article['start'], $article['end'])));
+            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$article['start'], $article['end']]));
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id)));
 
@@ -223,13 +223,13 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('articles.validator');
             $validator->validateEdit($formData);
 
-            $updateValues = array(
+            $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
             $bool = $this->articlesModel->update($updateValues, $this->request->id);
 
@@ -263,13 +263,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if (count($articles) > 0) {
             $canDelete = $this->acl->hasPermission('admin/articles/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 2 : 1,
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('articles', $articles);
             $this->view->assign('can_delete', $canDelete);

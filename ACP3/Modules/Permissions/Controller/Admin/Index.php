@@ -56,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(array('name' => ''), $_POST));
+        $this->view->assign('form', array_merge(['name' => ''], $_POST));
 
         $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
@@ -104,7 +104,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             foreach ($items as $item) {
-                if (in_array($item, array(1, 2, 4)) === true) {
+                if (in_array($item, [1, 2, 4]) === true) {
                     $levelUndeletable = true;
                 } else {
                     $bool = $nestedSet->deleteNode($item);
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('parent', $roles);
             }
 
-            $rules = $this->acl->getRules(array($this->request->id));
+            $rules = $this->acl->getRules([$this->request->id]);
             $modules = $this->modules->getActiveModules();
             $privileges = $this->acl->getAllPrivileges();
             $c_privileges = count($privileges);
@@ -229,11 +229,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->db->getConnection()->beginTransaction();
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'name' => Core\Functions::strEncode($formData['name']),
                 'parent_id' => $formData['parent'],
-            );
+            ];
 
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             $bool = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
@@ -241,13 +241,13 @@ class Index extends Core\Modules\Controller\Admin
 
             foreach ($formData['privileges'] as $moduleId => $privileges) {
                 foreach ($privileges as $id => $permission) {
-                    $ruleInsertValues = array(
+                    $ruleInsertValues = [
                         'id' => '',
                         'role_id' => $roleId,
                         'module_id' => $moduleId,
                         'privilege_id' => $id,
                         'permission' => $permission
-                    );
+                    ];
                     $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                 }
             }
@@ -276,10 +276,10 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('permissions.validator');
             $validator->validateEdit($formData);
 
-            $updateValues = array(
+            $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),
                 'parent_id' => $this->request->id == 1 ? 0 : $formData['parent'],
-            );
+            ];
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$formData['parent'], 0, $updateValues);
 
@@ -288,13 +288,13 @@ class Index extends Core\Modules\Controller\Admin
             $this->permissionsModel->delete($this->request->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
             foreach ($formData['privileges'] as $moduleId => $privileges) {
                 foreach ($privileges as $id => $permission) {
-                    $ruleInsertValues = array(
+                    $ruleInsertValues = [
                         'id' => '',
                         'role_id' => $this->request->id,
                         'module_id' => $moduleId,
                         'privilege_id' => $id,
                         'permission' => $permission
-                    );
+                    ];
                     $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                 }
             }

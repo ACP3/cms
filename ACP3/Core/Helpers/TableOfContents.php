@@ -97,12 +97,12 @@ class TableOfContents
                     $this->seo->setPreviousPage($previousPage);
                 }
 
-                $page = array(
+                $page = [
                     'toc' => $this->generateTOC($matches[0], $path),
                     'text' => $pages[$currentPage - 1],
                     'next' => $nextPage,
                     'previous' => $previousPage,
-                );
+                ];
 
                 return $page;
             }

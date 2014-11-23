@@ -104,7 +104,7 @@ class Assets
         $this->designXml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
 
         if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
-            $this->enableJsLibraries(array('bootstrap'));
+            $this->enableJsLibraries(['bootstrap']);
         }
     }
 

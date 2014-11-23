@@ -72,7 +72,7 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         // Übergabe der Daten an Smarty
-        $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
+        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
         $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
         $this->view->assign('answers', $answers);
         $this->view->assign('multiple', $this->get('core.helpers.forms')->selectEntry('multiple', '1', '0', 'checked'));
@@ -145,7 +145,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('options', $options);
 
             // Übergabe der Daten an Smarty
-            $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($poll['start'], $poll['end'])));
+            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$poll['start'], $poll['end']]));
             $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
 
             $this->secureHelper->generateFormToken($this->request->query);
@@ -161,13 +161,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($c_polls > 0) {
             $canDelete = $this->acl->hasPermission('admin/polls/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
 
             $this->view->assign('polls', $polls);
@@ -184,14 +184,14 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('polls.validator');
             $validator->validateCreate($formData);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'multiple' => isset($formData['multiple']) ? '1' : '0',
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
             $pollId = $this->pollsModel->insert($insertValues);
             $bool2 = false;
@@ -199,11 +199,11 @@ class Index extends Core\Modules\Controller\Admin
             if ($pollId !== false) {
                 foreach ($formData['answers'] as $row) {
                     if (!empty($row)) {
-                        $insertAnswer = array(
+                        $insertAnswer = [
                             'id' => '',
                             'text' => Core\Functions::strEncode($row),
                             'poll_id' => $pollId,
-                        );
+                        ];
                         $bool2 = $this->pollsModel->insert($insertAnswer, Polls\Model::TABLE_NAME_ANSWERS);
                     }
                 }
@@ -229,13 +229,13 @@ class Index extends Core\Modules\Controller\Admin
             $validator->validateEdit($formData);
 
             // Frage aktualisieren
-            $updateValues = array(
+            $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'multiple' => isset($formData['multiple']) ? '1' : '0',
                 'user_id' => $this->auth->getUserId(),
-            );
+            ];
 
             $bool = $this->pollsModel->update($updateValues, $this->request->id);
 
@@ -250,14 +250,14 @@ class Index extends Core\Modules\Controller\Admin
                 if (empty($row['id'])) {
                     // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                     if (!empty($row['value']) && !isset($row['delete']))
-                        $this->pollsModel->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id), Polls\Model::TABLE_NAME_ANSWERS);
+                        $this->pollsModel->insert(['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id], Polls\Model::TABLE_NAME_ANSWERS);
                     // Antwort mitsamt Stimmen löschen
                 } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
                     $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
                     $this->pollsModel->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
                     // Antwort aktualisieren
                 } elseif (!empty($row['value']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
-                    $bool = $this->pollsModel->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
+                    $bool = $this->pollsModel->update(['text' => Core\Functions::strEncode($row['value'])], $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
                 }
             }
 

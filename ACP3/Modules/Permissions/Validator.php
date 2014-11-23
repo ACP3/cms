@@ -106,7 +106,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['modules']) || $this->modules->isInstalled($formData['modules']) === false) {
             $errors['modules'] = $this->lang->t('permissions', 'select_module');
         }
-        if (empty($formData['area']) || in_array($formData['area'], array('admin', 'frontend', 'sidebar')) === false) {
+        if (empty($formData['area']) || in_array($formData['area'], ['admin', 'frontend', 'sidebar']) === false) {
             $errors['controller'] = $this->lang->t('permissions', 'type_in_area');
         }
         if (empty($formData['controller'])) {
@@ -168,7 +168,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['modules']) || $this->modules->isInstalled($formData['modules']) === false) {
             $errors['modules'] = $this->lang->t('permissions', 'select_module');
         }
-        if (empty($formData['area']) || in_array($formData['area'], array('admin', 'frontend', 'sidebar')) === false) {
+        if (empty($formData['area']) || in_array($formData['area'], ['admin', 'frontend', 'sidebar']) === false) {
             $errors['controller'] = $this->lang->t('permissions', 'type_in_area');
         }
         if (empty($formData['controller'])) {

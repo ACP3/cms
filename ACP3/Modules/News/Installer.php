@@ -19,7 +19,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}news` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `start` DATETIME NOT NULL,
@@ -35,7 +35,7 @@ class Installer extends Modules\AbstractInstaller
                 `user_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`,`text`), INDEX `foreign_category_id` (`category_id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -43,10 +43,10 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array(
+        return [
             "DROP TABLE `{pre}news`;",
             "DELETE FROM `{pre}categories` WHERE module_id = " . $this->getModuleId() . ";"
-        );
+        ];
     }
 
     /**
@@ -54,14 +54,14 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'comments' => 1,
             'dateformat' => 'long',
             'readmore' => 1,
             'readmore_chars' => 350,
             'sidebar' => 5,
             'category_in_breadcrumb' => 1
-        );
+        ];
     }
 
     /**
@@ -69,23 +69,23 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "ALTER TABLE `{pre}news` CHANGE `headline` `title` VARCHAR(120) {charset} NOT NULL",
-            ),
-            32 => array(
+            ],
+            32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/feeds\";",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            ),
-            33 => array(
+            ],
+            33 => [
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "news/", "news/index/") WHERE uri LIKE "news/%";',
-            ),
-            34 => array(
+            ],
+            34 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "news/list/", "news/index/index/") WHERE uri LIKE "news/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "news/details/", "news/index/details/") WHERE uri LIKE "news/details/%";' : '',
-            )
-        );
+            ]
+        ];
     }
 
 }

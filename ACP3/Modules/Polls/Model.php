@@ -25,7 +25,7 @@ class Model extends Core\Model
     {
         $where = !empty($time) ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         $multiple = ($multiple === true) ? ' AND multiple = :multiple' : '';
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where . $multiple, array('id' => $pollId, 'time' => $time, 'multiple' => 1)) > 0 ? true : false;
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where . $multiple, ['id' => $pollId, 'time' => $time, 'multiple' => 1]) > 0 ? true : false;
     }
 
     /**
@@ -34,7 +34,7 @@ class Model extends Core\Model
      */
     public function getOneById($pollId)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', array('id' => $pollId));
+        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', ['id' => $pollId]);
     }
 
     /**
@@ -43,7 +43,7 @@ class Model extends Core\Model
      */
     public function getOneByIdWithTotalVotes($pollId)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT p.*, COUNT(pv.poll_id) AS total_votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id) WHERE p.id = ?', array($pollId));
+        return $this->db->getConnection()->fetchAssoc('SELECT p.*, COUNT(pv.poll_id) AS total_votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id) WHERE p.id = ?', [$pollId]);
     }
 
     /**
@@ -52,7 +52,7 @@ class Model extends Core\Model
      */
     public function getAnswersById($id)
     {
-        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ANSWERS . ' WHERE poll_id = ? ORDER BY id ASC', array($id));
+        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ANSWERS . ' WHERE poll_id = ? ORDER BY id ASC', [$id]);
     }
 
     /**
@@ -74,7 +74,7 @@ class Model extends Core\Model
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->getConnection()->fetchAll('SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt, array('time' => $time));
+        return $this->db->getConnection()->fetchAll('SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt, ['time' => $time]);
     }
 
     /**
@@ -85,7 +85,7 @@ class Model extends Core\Model
      */
     public function getVotesByUserId($pollId, $userId, $ipAddress)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)', array($pollId, $userId, $ipAddress));
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)', [$pollId, $userId, $ipAddress]);
     }
 
     /**
@@ -95,7 +95,7 @@ class Model extends Core\Model
      */
     public function getVotesByIpAddress($pollId, $ipAddress)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' WHERE poll_id = ? AND ip = ?', array($pollId, $ipAddress));
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' WHERE poll_id = ? AND ip = ?', [$pollId, $ipAddress]);
     }
 
     /**
@@ -104,7 +104,7 @@ class Model extends Core\Model
      */
     public function getAnswersByPollId($pollId)
     {
-        return $this->db->getConnection()->fetchAll('SELECT pa.id, pa.text, COUNT(pv.answer_id) AS votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ANSWERS . ' AS pa LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(pa.id = pv.answer_id) WHERE pa.poll_id = ? GROUP BY pa.id ORDER BY pa.id ASC', array($pollId));
+        return $this->db->getConnection()->fetchAll('SELECT pa.id, pa.text, COUNT(pv.answer_id) AS votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ANSWERS . ' AS pa LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(pa.id = pv.answer_id) WHERE pa.poll_id = ? GROUP BY pa.id ORDER BY pa.id ASC', [$pollId]);
     }
 
     /**
@@ -114,7 +114,7 @@ class Model extends Core\Model
     public function getLatestPoll($time)
     {
         $period = 'p.start = p.end AND p.start <= :time OR p.start != p.end AND :time BETWEEN p.start AND p.end';
-        return $this->db->getConnection()->fetchAssoc('SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1', array('time' => $time));
+        return $this->db->getConnection()->fetchAssoc('SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1', ['time' => $time]);
     }
 
     /**

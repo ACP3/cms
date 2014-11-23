@@ -43,14 +43,14 @@ class DB
     )
     {
         $config = new DBAL\Configuration();
-        $connectionParams = array(
+        $connectionParams = [
             'dbname' => $dbName,
             'user' => $dbUser,
             'password' => $dbPassword,
             'host' => $dbHost,
             'driver' => $dbDriver,
             'charset' => $dbCharset
-        );
+        ];
         $this->connection = DBAL\DriverManager::getConnection($connectionParams, $config);
 
         $this->prefix = $dbTablePrefix;

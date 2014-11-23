@@ -19,9 +19,9 @@ class Installer extends Modules\AbstractInstaller
      */
     public function renameModule()
     {
-        return array(
+        return [
             31 => "UPDATE `{pre}modules` SET name = 'menus' WHERE name = 'menu_items';"
-        );
+        ];
     }
 
     /**
@@ -29,7 +29,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}menu_items` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `mode` TINYINT(1) UNSIGNED NOT NULL,
@@ -50,7 +50,7 @@ class Installer extends Modules\AbstractInstaller
                 `title` VARCHAR(120) NOT NULL,
                 PRIMARY KEY (`id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -58,10 +58,10 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array(
+        return [
             "DROP TABLE `{pre}menus`;",
             "DROP TABLE `{pre}menu_items`;"
-        );
+        ];
     }
 
     /**
@@ -85,23 +85,23 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "UPDATE `{pre}acl_resources` SET page = 'acp_create_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_create_block';",
                 "UPDATE `{pre}acl_resources` SET page = 'acp_delete_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete_blocks';",
                 "UPDATE `{pre}acl_resources` SET page = 'acp_edit_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_edit_block';",
                 "DELETE  FROM `{pre}acl_resources` WHERE page = 'acp_list_blocks' AND module_id = " . $this->getModuleId() . ";",
                 "RENAME TABLE `{pre}menu_items_blocks` TO `{pre}menus`"
-            ),
-            32 => array(
+            ],
+            32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-            ),
-            33 => array(
+            ],
+            33 => [
                 'UPDATE `{pre}acl_resources` SET controller = "items" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_item";',
                 'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_item", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_item";',
                 'UPDATE `{pre}acl_resources` SET controller = "items" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "order";',
-            )
-        );
+            ]
+        ];
     }
 
 }

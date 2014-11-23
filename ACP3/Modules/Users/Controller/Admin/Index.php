@@ -72,8 +72,8 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('roles', $roles);
 
         // Super User
-        $lang_super_user = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('super_user', $this->get('core.helpers.forms')->selectGenerator('super_user', array(1, 0), $lang_super_user, 0, 'checked'));
+        $lang_super_user = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('super_user', $this->get('core.helpers.forms')->selectGenerator('super_user', [1, 0], $lang_super_user, 0, 'checked'));
 
         // Sprache
         $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $systemSettings['lang']));
@@ -85,20 +85,20 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('time_zones', $this->date->getTimeZones($systemSettings['date_time_zone']));
 
         // Geschlecht
-        $lang_gender = array(
+        $lang_gender = [
             $this->lang->t('users', 'gender_not_specified'),
             $this->lang->t('users', 'gender_female'),
             $this->lang->t('users', 'gender_male')
-        );
-        $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', array(1, 2, 3), $lang_gender, ''));
+        ];
+        $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', [1, 2, 3], $lang_gender, ''));
 
         // Geburtstag
-        $datepickerParams = array(
+        $datepickerParams = [
             'constrainInput' => 'true',
             'changeMonth' => 'true',
             'changeYear' => 'true',
             'yearRange' => '\'-50:+0\''
-        );
+        ];
         $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', '', 'Y-m-d', $datepickerParams, 0, false, true));
 
         // Kontaktangaben
@@ -124,31 +124,31 @@ class Index extends Core\Modules\Controller\Admin
         $countries = Core\Lang::worldCountries();
         $countries_select = [];
         foreach ($countries as $key => $value) {
-            $countries_select[] = array(
+            $countries_select[] = [
                 'value' => $key,
                 'lang' => $value,
                 'selected' => $this->get('core.helpers.forms')->selectEntry('countries', $key),
-            );
+            ];
         }
         $this->view->assign('countries', $countries_select);
 
-        $lang_mail_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', array(1, 0), $lang_mail_display, 0, 'checked'));
+        $lang_mail_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', [1, 0], $lang_mail_display, 0, 'checked'));
 
-        $lang_address_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('address_display', $this->get('core.helpers.forms')->selectGenerator('address_display', array(1, 0), $lang_address_display, 0, 'checked'));
+        $lang_address_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('address_display', $this->get('core.helpers.forms')->selectGenerator('address_display', [1, 0], $lang_address_display, 0, 'checked'));
 
-        $lang_country_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('country_display', $this->get('core.helpers.forms')->selectGenerator('country_display', array(1, 0), $lang_country_display, 0, 'checked'));
+        $lang_country_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('country_display', $this->get('core.helpers.forms')->selectGenerator('country_display', [1, 0], $lang_country_display, 0, 'checked'));
 
-        $lang_birthday_display = array(
+        $lang_birthday_display = [
             $this->lang->t('users', 'birthday_hide'),
             $this->lang->t('users', 'birthday_display_completely'),
             $this->lang->t('users', 'birthday_hide_year')
-        );
-        $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', array(0, 1, 2), $lang_birthday_display, 0, 'checked'));
+        ];
+        $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', [0, 1, 2], $lang_birthday_display, 0, 'checked'));
 
-        $defaults = array(
+        $defaults = [
             'nickname' => '',
             'realname' => '',
             'mail' => '',
@@ -159,7 +159,7 @@ class Index extends Core\Modules\Controller\Admin
             'city' => '',
             'date_format_long' => $systemSettings['date_format_long'],
             'date_format_short' => $systemSettings['date_format_short']
-        );
+        ];
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
@@ -217,8 +217,8 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('roles', $roles);
 
             // Super User
-            $langSuperUser = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('super_user', $this->get('core.helpers.forms')->selectGenerator('super_user', array(1, 0), $langSuperUser, $user['super_user'], 'checked'));
+            $langSuperUser = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('super_user', $this->get('core.helpers.forms')->selectGenerator('super_user', [1, 0], $langSuperUser, $user['super_user'], 'checked'));
 
             // Sprache
             $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $user['language']));
@@ -230,15 +230,15 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('time_zones', $this->date->getTimeZones($user['time_zone']));
 
             // Geschlecht
-            $lang_gender = array(
+            $lang_gender = [
                 $this->lang->t('users', 'gender_not_specified'),
                 $this->lang->t('users', 'gender_female'),
                 $this->lang->t('users', 'gender_male')
-            );
-            $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', array(1, 2, 3), $lang_gender, $user['gender']));
+            ];
+            $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', [1, 2, 3], $lang_gender, $user['gender']));
 
             // Geburtstag
-            $datepickerParams = array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\'');
+            $datepickerParams = ['constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''];
             $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
 
             // Kontaktangaben
@@ -264,29 +264,29 @@ class Index extends Core\Modules\Controller\Admin
             $countries = Core\Lang::worldCountries();
             $countries_select = [];
             foreach ($countries as $key => $value) {
-                $countries_select[] = array(
+                $countries_select[] = [
                     'value' => $key,
                     'lang' => $value,
                     'selected' => $this->get('core.helpers.forms')->selectEntry('countries', $key, $user['country']),
-                );
+                ];
             }
             $this->view->assign('countries', $countries_select);
 
-            $lang_mail_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', array(1, 0), $lang_mail_display, $user['mail_display'], 'checked'));
+            $lang_mail_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', [1, 0], $lang_mail_display, $user['mail_display'], 'checked'));
 
-            $lang_address_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('address_display', $this->get('core.helpers.forms')->selectGenerator('address_display', array(1, 0), $lang_address_display, $user['address_display'], 'checked'));
+            $lang_address_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('address_display', $this->get('core.helpers.forms')->selectGenerator('address_display', [1, 0], $lang_address_display, $user['address_display'], 'checked'));
 
-            $lang_country_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('country_display', $this->get('core.helpers.forms')->selectGenerator('country_display', array(1, 0), $lang_country_display, $user['country_display'], 'checked'));
+            $lang_country_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('country_display', $this->get('core.helpers.forms')->selectGenerator('country_display', [1, 0], $lang_country_display, $user['country_display'], 'checked'));
 
-            $lang_birthday_display = array(
+            $lang_birthday_display = [
                 $this->lang->t('users', 'birthday_hide'),
                 $this->lang->t('users', 'birthday_display_completely'),
                 $this->lang->t('users', 'birthday_hide_year')
-            );
-            $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', array(0, 1, 2), $lang_birthday_display, $user['birthday_display'], 'checked'));
+            ];
+            $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', [0, 1, 2], $lang_birthday_display, $user['birthday_display'], 'checked'));
 
             $this->view->assign('form', array_merge($user, $_POST));
 
@@ -304,16 +304,16 @@ class Index extends Core\Modules\Controller\Admin
 
         $settings = $this->usersConfig->getSettings();
 
-        $lang_languages = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('languages', $this->get('core.helpers.forms')->selectGenerator('language_override', array(1, 0), $lang_languages, $settings['language_override'], 'checked'));
+        $lang_languages = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('languages', $this->get('core.helpers.forms')->selectGenerator('language_override', [1, 0], $lang_languages, $settings['language_override'], 'checked'));
 
-        $lang_entries = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('entries', $this->get('core.helpers.forms')->selectGenerator('entries_override', array(1, 0), $lang_entries, $settings['entries_override'], 'checked'));
+        $lang_entries = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('entries', $this->get('core.helpers.forms')->selectGenerator('entries_override', [1, 0], $lang_entries, $settings['entries_override'], 'checked'));
 
-        $lang_registration = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('registration', $this->get('core.helpers.forms')->selectGenerator('enable_registration', array(1, 0), $lang_registration, $settings['enable_registration'], 'checked'));
+        $lang_registration = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('registration', $this->get('core.helpers.forms')->selectGenerator('enable_registration', [1, 0], $lang_registration, $settings['enable_registration'], 'checked'));
 
-        $this->view->assign('form', array_merge(array('mail' => $settings['mail']), $_POST));
+        $this->view->assign('form', array_merge(['mail' => $settings['mail']], $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -325,13 +325,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($c_users > 0) {
             $canDelete = $this->acl->hasPermission('admin/users/index/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
 
             for ($i = 0; $i < $c_users; ++$i) {
@@ -354,7 +354,7 @@ class Index extends Core\Modules\Controller\Admin
             $securityHelper = $this->get('core.helpers.secure');
             $salt = $securityHelper->salt(12);
 
-            $insertValues = array(
+            $insertValues = [
                 'id' => '',
                 'super_user' => (int)$formData['super_user'],
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
@@ -382,11 +382,11 @@ class Index extends Core\Modules\Controller\Admin
                 'entries' => (int)$formData['entries'],
                 'draft' => '',
                 'registration_date' => $this->date->getCurrentDateTime(),
-            );
+            ];
 
             $lastId = $this->usersModel->insert($insertValues);
             foreach ($formData['roles'] as $row) {
-                $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
+                $this->permissionsModel->insert(['user_id' => $lastId, 'role_id' => $row], Permissions\Model::TABLE_NAME_USER_ROLES);
             }
 
             $this->secureHelper->unsetFormToken($this->request->query);
@@ -408,7 +408,7 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('users.validator');
             $validator->validateEdit($formData);
 
-            $updateValues = array(
+            $updateValues = [
                 'super_user' => (int)$formData['super_user'],
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
                 'realname' => Core\Functions::strEncode($formData['realname']),
@@ -432,11 +432,11 @@ class Index extends Core\Modules\Controller\Admin
                 'time_zone' => $formData['date_time_zone'],
                 'language' => $formData['language'],
                 'entries' => (int)$formData['entries'],
-            );
+            ];
 
-            $this->permissionsModel->delete(array('user_id' => $this->request->id), Permissions\Model::TABLE_NAME_USER_ROLES);
+            $this->permissionsModel->delete(['user_id' => $this->request->id], Permissions\Model::TABLE_NAME_USER_ROLES);
             foreach ($formData['roles'] as $row) {
-                $this->permissionsModel->insert(array('user_id' => $this->request->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
+                $this->permissionsModel->insert(['user_id' => $this->request->id, 'role_id' => $row], Permissions\Model::TABLE_NAME_USER_ROLES);
             }
 
             // Neues Passwort
@@ -473,12 +473,12 @@ class Index extends Core\Modules\Controller\Admin
             $validator = $this->get('users.validator');
             $validator->validateSettings($formData);
 
-            $data = array(
+            $data = [
                 'enable_registration' => $formData['enable_registration'],
                 'entries_override' => $formData['entries_override'],
                 'language_override' => $formData['language_override'],
                 'mail' => $formData['mail']
-            );
+            ];
             $bool = $this->usersConfig->setSettings($data);
 
             $this->secureHelper->unsetFormToken($this->request->query);

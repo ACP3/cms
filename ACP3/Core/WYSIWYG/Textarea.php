@@ -11,7 +11,7 @@ class Textarea extends AbstractWYSIWYG
     /**
      * @param array $params
      */
-    public function setParameters(array $params = array())
+    public function setParameters(array $params = [])
     {
         $this->id = $params['id'];
         $this->name = $params['name'];

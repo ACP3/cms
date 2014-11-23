@@ -19,7 +19,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function createTables()
     {
-        return array(
+        return [
             "CREATE TABLE `{pre}comments` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `ip` VARCHAR(40) NOT NULL,
@@ -31,7 +31,7 @@ class Installer extends Modules\AbstractInstaller
                 `entry_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX (`module_id`, `entry_id`)
             ) {engine} {charset};"
-        );
+        ];
     }
 
     /**
@@ -39,7 +39,7 @@ class Installer extends Modules\AbstractInstaller
      */
     public function removeTables()
     {
-        return array("DROP TABLE `{pre}comments`;");
+        return ["DROP TABLE `{pre}comments`;"];
     }
 
     /**
@@ -47,10 +47,10 @@ class Installer extends Modules\AbstractInstaller
      */
     public function settings()
     {
-        return array(
+        return [
             'dateformat' => 'long',
             'emoticons' => 1,
-        );
+        ];
     }
 
     /**
@@ -58,21 +58,21 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return array(
-            31 => array(
+        return [
+            31 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'acp_list_comments', '', 3);",
                 "UPDATE `{pre}acl_resources` SET page = 'acp_delete' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete_comments_per_module';",
-            ),
-            32 => array(
+            ],
+            32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'list', '', 1);",
-            ),
-            33 => array(
+            ],
+            33 => [
                 'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_comments";',
                 'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_comments", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_comments";',
                 'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "edit";',
-            )
-        );
+            ]
+        ];
     }
 
 }

@@ -65,7 +65,7 @@ class Model
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
             $field = empty($field) ? 'id' : $field;
-            $bool = $this->db->getConnection()->delete($this->db->getPrefix() . $tableName, is_array($id) ? $id : array($field => (int)$id));
+            $bool = $this->db->getConnection()->delete($this->db->getPrefix() . $tableName, is_array($id) ? $id : [$field => (int)$id]);
             $this->db->getConnection()->commit();
             return $bool;
         } catch (\Exception $e) {
@@ -89,7 +89,7 @@ class Model
         $this->db->getConnection()->beginTransaction();
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
-            $where = is_array($id) === true ? $id : array('id' => $id);
+            $where = is_array($id) === true ? $id : ['id' => $id];
             $bool = $this->db->getConnection()->update($this->db->getPrefix() . $tableName, $params, $where);
             $this->db->getConnection()->commit();
             return $bool;

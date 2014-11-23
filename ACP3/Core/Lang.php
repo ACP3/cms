@@ -64,7 +64,7 @@ class Lang
      */
     public static function worldCountries()
     {
-        return array(
+        return [
             'AU' => 'Australia',
             'AF' => 'Afghanistan',
             'AL' => 'Albania',
@@ -311,7 +311,7 @@ class Lang
             'ZR' => 'Zaire',
             'ZM' => 'Zambia',
             'ZW' => 'Zimbabwe'
-        );
+        ];
     }
 
     /**
@@ -422,7 +422,7 @@ class Lang
     {
         $data = [];
 
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
 
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';
@@ -508,23 +508,23 @@ class Lang
      */
     protected function _setLanguagesCache()
     {
-        $modules = array_diff(scandir(MODULES_DIR), array('.', '..'));
+        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
         $languages = [];
 
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/Languages/';
             if (is_dir($path) === true) {
-                $moduleLanguages = array_diff(scandir($path), array('.', '..'));
+                $moduleLanguages = array_diff(scandir($path), ['.', '..']);
 
                 foreach ($moduleLanguages as $language) {
                     if (is_file($path . $language) === true) {
                         $xml = simplexml_load_file($path . $language);
                         $languageIso = substr($language, 0, -4);
                         if (!empty($xml) && isset($languages[$languageIso]) === false) {
-                            $languages[$languageIso] = array(
+                            $languages[$languageIso] = [
                                 'iso' => $languageIso,
                                 'name' => (string)$xml->info->name
-                            );
+                            ];
                         }
                     }
                 }

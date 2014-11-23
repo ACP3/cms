@@ -34,7 +34,7 @@ class Accounts extends Core\Modules\Controller\Admin
     {
         $bool = false;
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true) {
-            $bool = $this->newsletterModel->update(array('hash' => ''), $this->request->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
+            $bool = $this->newsletterModel->update(['hash' => ''], $this->request->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 
         $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter/accounts');
@@ -62,13 +62,13 @@ class Accounts extends Core\Modules\Controller\Admin
 
         if (count($accounts) > 0) {
             $canDelete = $this->acl->hasPermission('admin/newsletter/accounts/delete');
-            $config = array(
+            $config = [
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 3 : 2,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->auth->entries
-            );
+            ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('accounts', $accounts);
             $this->view->assign('can_delete', $canDelete);
