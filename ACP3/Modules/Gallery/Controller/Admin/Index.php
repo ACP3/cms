@@ -64,9 +64,6 @@ class Index extends Core\Modules\Controller\Admin
 
         $defaults = array(
             'title' => '',
-            'alias' => '',
-            'seo_keywords' => '',
-            'seo_description' => ''
         );
         $this->view->assign('form', array_merge($defaults, $_POST));
 
