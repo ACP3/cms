@@ -51,7 +51,7 @@
                         {if $can_send && $has_active_newsletter_accounts}
                             <td>
                                 <a href="{uri args="acp/newsletter/index/send/id_`$row.id`"}" title="{lang t="newsletter|send"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                    {icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}
+                                    {icon path="16/mail_send" width="16" height="16" alt={lang t="newsletter|send"}}
                                 </a>
                             </td>
                         {/if}
@@ -64,7 +64,9 @@
                 {include file="asset:system/mark.tpl"}
             {/if}
             {include file="asset:system/datatable.tpl" dt=$datatable_config}
-            {include_js module="system" file="forms"}
+            {javascripts}
+                {include_js module="system" file="forms"}
+            {/javascripts}
         {else}
             <div class="alert alert-warning text-center">
                 <strong>{lang t="system|no_entries"}</strong>
