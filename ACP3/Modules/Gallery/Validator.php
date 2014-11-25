@@ -125,7 +125,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
-        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $this->request->id))) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id))) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
