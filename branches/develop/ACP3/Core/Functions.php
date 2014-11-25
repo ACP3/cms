@@ -8,7 +8,6 @@ namespace ACP3\Core;
  */
 class Functions
 {
-
     /**
      * Enkodiert alle HTML-Entitäten eines Strings
      * zur Vermeidung von XSS
@@ -23,5 +22,4 @@ class Functions
         $var = preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
         return $scriptTagOnly === true ? $var : htmlentities($var, ENT_QUOTES, 'UTF-8');
     }
-
 }

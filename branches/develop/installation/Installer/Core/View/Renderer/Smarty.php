@@ -8,7 +8,6 @@ namespace ACP3\Installer\Core\View\Renderer;
  */
 class Smarty extends \ACP3\Core\View\Renderer\Smarty
 {
-
     /**
      * @param array $params
      * @throws \SmartyException
@@ -29,5 +28,4 @@ class Smarty extends \ACP3\Core\View\Renderer\Smarty
 
         $this->_registerPlugins();
     }
-
 }

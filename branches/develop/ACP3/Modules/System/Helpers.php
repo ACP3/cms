@@ -34,8 +34,7 @@ class Helpers
     public function __construct(
         Core\DB $db,
         Core\Modules $modules
-    )
-    {
+    ) {
         $this->db = $db;
         $this->modules = $modules;
     }
@@ -126,5 +125,4 @@ class Helpers
 
         return $structure . $data;
     }
-
 }

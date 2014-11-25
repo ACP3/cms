@@ -39,5 +39,4 @@ class Index extends Core\Modules\Controller
 
         $this->setTemplate('Newsletter/Sidebar/index.index.tpl');
     }
-
 }

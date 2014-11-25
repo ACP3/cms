@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'comments';
 
     /**
@@ -88,5 +87,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . 'modules AS m ON(m.id = c.module_id) GROUP BY c.module_id ORDER BY m.name');
     }
-
 }

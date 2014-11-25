@@ -41,8 +41,7 @@ class ThemeResolver
     public function __construct(
         Core\XML $xml,
         Minify\Cache $minifyCache
-    )
-    {
+    ) {
         $this->xml = $xml;
         $this->minifyCache = $minifyCache;
         $this->cachedPaths = $minifyCache->getCache();

@@ -8,7 +8,6 @@
 
 namespace ACP3\Modules\Permissions;
 
-
 use ACP3\Core;
 
 /**
@@ -17,7 +16,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'acl_roles';
     const TABLE_NAME_PRIVILEGES = 'acl_privileges';
     const TABLE_NAME_RESOURCES = 'acl_resources';
@@ -138,5 +136,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->fetchAssoc('SELECT ru.permission FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS r, ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS parent JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_RULES . ' AS ru ON(parent.id = ru.role_id) JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_PRIVILEGES . ' AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', [$roleId, $key]);
     }
-
 }

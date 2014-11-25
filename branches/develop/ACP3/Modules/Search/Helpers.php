@@ -32,8 +32,7 @@ class Helpers
         Core\ACL $acl,
         Core\Modules $modules,
         Core\Helpers\Forms $formsHelper
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->modules = $modules;
         $this->formsHelper = $formsHelper;
@@ -64,5 +63,4 @@ class Helpers
 
         return $searchModules;
     }
-
 }

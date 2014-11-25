@@ -31,8 +31,7 @@ class MoveToBottom extends AbstractFilter
     public function __construct(
         Assets $assets,
         Request $request
-    )
-    {
+    ) {
         $this->assets = $assets;
         $this->request = $request;
     }

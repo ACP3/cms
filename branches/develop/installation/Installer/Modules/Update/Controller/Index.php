@@ -19,8 +19,7 @@ class Index extends Core\Modules\Controller
     public function __construct(
         Core\Context $context,
         \ACP3\Core\Modules $modules
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->modules = $modules;
@@ -103,5 +102,4 @@ class Index extends Core\Modules\Controller
         Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
         Cache::purge(UPLOADS_DIR . 'cache/minify');
     }
-
 }

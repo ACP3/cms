@@ -31,5 +31,4 @@ class Textarea extends AbstractWYSIWYG
         $out .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="50" rows="6" class="span6">' . $this->value . '</textarea>';
         return $out;
     }
-
 }

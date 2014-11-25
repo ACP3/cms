@@ -72,13 +72,13 @@ class TinyMCE extends AbstractWYSIWYG
             'advanced' => $this->advanced,
         ];
 
-        if ($wysiwyg['advanced'] === true)
+        if ($wysiwyg['advanced'] === true) {
             $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
+        }
 
         $view = $this->container->get('core.view');
 
         $view->assign('wysiwyg', $wysiwyg);
         return $view->fetchTemplate('system/wysiwyg.tpl');
     }
-
 }

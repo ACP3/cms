@@ -10,7 +10,6 @@ use ACP3\Core\Modules;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'search';
     const SCHEMA_VERSION = 32;
 
@@ -63,5 +62,4 @@ class Installer extends Modules\AbstractInstaller
             ]
         ];
     }
-
 }

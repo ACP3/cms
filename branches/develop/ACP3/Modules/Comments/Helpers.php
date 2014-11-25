@@ -9,7 +9,6 @@ use ACP3\Core;
  */
 class Helpers
 {
-
     /**
      * @var Model
      */
@@ -48,5 +47,4 @@ class Helpers
     {
         return $this->comentsModel->delete(['module_id' => $moduleName, 'entry_id' => $resultId]);
     }
-
 }

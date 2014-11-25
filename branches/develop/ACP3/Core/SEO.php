@@ -83,8 +83,7 @@ class SEO
         Forms $formsHelper,
         Cache $seoCache,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->cache = $seoCache;
         $this->db = $db;
         $this->lang = $lang;
@@ -345,5 +344,4 @@ class SEO
             'robots' => $this->formsHelper->selectGenerator('seo_robots', [0, 1, 2, 3, 4], $langRobots, $robots)
         ];
     }
-
 }

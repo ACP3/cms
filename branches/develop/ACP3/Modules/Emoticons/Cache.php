@@ -26,8 +26,7 @@ class Cache
     public function __construct(
         Core\Cache $cache,
         Model $emoticonsModel
-    )
-    {
+    ) {
         $this->cache = $cache;
         $this->emoticonsModel = $emoticonsModel;
     }
@@ -66,6 +65,4 @@ class Cache
 
         return $this->cache->save(static::CACHE_ID, $data);
     }
-
-
-} 
+}

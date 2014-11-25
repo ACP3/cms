@@ -45,8 +45,7 @@ class Request
         DB $db,
         Modules $modules,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->db = $db;
         $this->modules = $modules;
 
@@ -261,5 +260,4 @@ class Request
     {
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }
-
 }

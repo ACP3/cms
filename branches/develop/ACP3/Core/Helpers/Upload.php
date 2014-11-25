@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-
 use ACP3\Core\Exceptions;
 
 /**
@@ -109,4 +108,4 @@ class Upload
         }
         return false;
     }
-} 
+}

@@ -33,8 +33,7 @@ class Admin extends Frontend
         Core\Validator\Rules\Misc $validate,
         Core\Session $session,
         Core\Router\Aliases $aliases
-    )
-    {
+    ) {
         parent::__construct(
             $frontendContext,
             $frontendContext->getAssets(),
@@ -67,5 +66,4 @@ class Admin extends Frontend
     {
         return $this->aliases;
     }
-
-} 
+}

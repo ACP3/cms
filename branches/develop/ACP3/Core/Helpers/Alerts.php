@@ -31,8 +31,7 @@ class Alerts
         Core\Request $request,
         Core\View $view,
         Core\Helpers\Output $outputHelper
-    )
-    {
+    ) {
         $this->request = $request;
         $this->view = $view;
         $this->outputHelper = $outputHelper;
@@ -164,5 +163,4 @@ class Alerts
 
         return 'system/alerts/error_box.tpl';
     }
-
 }

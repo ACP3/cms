@@ -8,11 +8,10 @@ namespace ACP3\Installer\Core;
  */
 class Lang extends \ACP3\Core\Lang
 {
-
     /**
      * @param \ACP3\Core\Auth $lang
      */
-    function __construct($lang)
+    public function __construct($lang)
     {
         $this->lang = $lang;
         $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
@@ -87,5 +86,4 @@ class Lang extends \ACP3\Core\Lang
 
         return $data;
     }
-
 }

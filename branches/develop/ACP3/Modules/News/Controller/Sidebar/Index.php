@@ -11,7 +11,6 @@ use ACP3\Modules\News;
  */
 class Index extends Core\Modules\Controller
 {
-
     /**
      * @var Core\Date
      */
@@ -57,5 +56,4 @@ class Index extends Core\Modules\Controller
 
         $this->setTemplate('News/Sidebar/index.index.tpl');
     }
-
 }

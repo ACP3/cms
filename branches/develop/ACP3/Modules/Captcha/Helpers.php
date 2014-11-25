@@ -43,8 +43,7 @@ class Helpers
         Core\Router $router,
         Core\View $view,
         Core\Helpers\Secure $secureHelper
-    )
-    {
+    ) {
         $this->auth = $auth;
         $this->request = $request;
         $this->router = $router;
@@ -82,5 +81,4 @@ class Helpers
         }
         return '';
     }
-
 }

@@ -261,5 +261,4 @@ class Extensions extends Core\Modules\Controller\Admin
 
         $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
-
 }

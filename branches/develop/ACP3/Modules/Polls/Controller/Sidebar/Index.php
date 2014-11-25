@@ -11,7 +11,6 @@ use ACP3\Modules\Polls;
  */
 class Index extends Core\Modules\Controller
 {
-
     /**
      * @var Core\Date
      */

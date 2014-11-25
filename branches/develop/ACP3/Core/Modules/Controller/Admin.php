@@ -88,5 +88,4 @@ abstract class Admin extends Core\Modules\Controller\Frontend
             return is_array($entries) ? $entries : explode('|', $entries);
         }
     }
-
 }

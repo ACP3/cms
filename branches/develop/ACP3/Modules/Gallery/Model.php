@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'gallery';
     const TABLE_NAME_PICTURES = 'gallery_pictures';
 
@@ -159,5 +158,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->executeUpdate('UPDATE ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?', [$pictureNumber, $galleryId]);
     }
-
 }

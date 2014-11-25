@@ -119,5 +119,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY nickname ASC');
     }
-
 }

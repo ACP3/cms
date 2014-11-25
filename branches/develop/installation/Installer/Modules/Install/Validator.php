@@ -18,8 +18,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Date $dateValidator
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->dateValidator = $dateValidator;
@@ -89,5 +88,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
 }

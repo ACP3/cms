@@ -46,7 +46,7 @@ class Index extends Core\Modules\Controller
                     $files = [];
             }
 
-            $options['files'] = array_filter($files, function($var) {
+            $options['files'] = array_filter($files, function ($var) {
                 return !empty($var);
             });
 
@@ -57,5 +57,4 @@ class Index extends Core\Modules\Controller
             \Minify::serve('Files', $options);
         }
     }
-
 }

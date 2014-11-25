@@ -135,5 +135,4 @@ class Index extends Core\Modules\Controller\Frontend
             throw new Core\Exceptions\ResultNotExists();
         }
     }
-
 }

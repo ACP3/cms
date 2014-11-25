@@ -26,4 +26,4 @@ abstract class AbstractFilter
      * @return string
      */
     abstract public function process($tpl_output, \Smarty_Internal_Template $smarty);
-} 
+}

@@ -14,12 +14,11 @@ class Date extends \ACP3\Core\Date
      * @param Forms $formsHelper
      * @param \ACP3\Core\Validator\Rules\Date $dateValidator
      */
-    function __construct(
+    public function __construct(
         Lang $lang,
         Forms $formsHelper,
         \ACP3\Core\Validator\Rules\Date $dateValidator
-    )
-    {
+    ) {
         $this->lang = $lang;
         $this->formsHelper = $formsHelper;
         $this->dateValidator = $dateValidator;
@@ -33,5 +32,4 @@ class Date extends \ACP3\Core\Date
         ];
         $this->_setFormatAndTimeZone($settings);
     }
-
-} 
+}
