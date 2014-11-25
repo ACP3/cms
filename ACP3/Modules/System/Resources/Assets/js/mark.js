@@ -1,4 +1,4 @@
-var cssClassName = 'active';
+var cssClassName = 'info';
 
 /**
  * Marks all visible results
