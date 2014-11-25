@@ -10,7 +10,6 @@ use ACP3\Core\Modules;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'contact';
     const SCHEMA_VERSION = 35;
 
@@ -79,5 +78,4 @@ class Installer extends Modules\AbstractInstaller
             ]
         ];
     }
-
 }

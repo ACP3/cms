@@ -45,8 +45,7 @@ class Extensions
         Core\Router $router,
         Core\View $view,
         Core\Helpers\StringFormatter $stringFormatter
-    )
-    {
+    ) {
         $this->date = $date;
         $this->container = $container;
         $this->router = $router;
@@ -85,5 +84,4 @@ class Extensions
             $this->view->assign($params);
         }
     }
-
 }

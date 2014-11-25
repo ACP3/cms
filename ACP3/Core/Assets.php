@@ -86,8 +86,7 @@ class Assets
         Router $router,
         ThemeResolver $themeResolver,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->modules = $modules;
         $this->router = $router;
         $this->themeResolver = $themeResolver;
@@ -224,7 +223,6 @@ class Assets
     {
         foreach ($libraries as $library) {
             if (array_key_exists($library, $this->jsLibraries) === true) {
-
                 // Resolve javascript library dependencies recursively
                 if (!empty($this->jsLibraries[$library]['dependencies'])) {
                     $this->enableJsLibraries($this->jsLibraries[$library]['dependencies']);
@@ -276,6 +274,5 @@ class Assets
         }
 
         return $this->jsLibrariesCache;
-
     }
 }

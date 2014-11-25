@@ -56,8 +56,7 @@ class ACL
         Modules $modules,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache
-    )
-    {
+    ) {
         $this->auth = $auth;
         $this->modules = $modules;
         $this->permissionsModel = $permissionsModel;

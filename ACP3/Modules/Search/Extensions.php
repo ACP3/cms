@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class Extensions
 {
-
     /**
      *
      * @var string
@@ -60,8 +59,7 @@ class Extensions
         Core\Date $date,
         Core\Lang $lang,
         Core\Router $router
-    )
-    {
+    ) {
         $this->container = $container;
         $this->lang = $lang;
         $this->router = $router;
@@ -200,5 +198,4 @@ class Extensions
         }
         return $searchResults;
     }
-
 }

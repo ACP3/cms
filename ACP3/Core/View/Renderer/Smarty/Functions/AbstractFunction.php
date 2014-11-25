@@ -23,4 +23,4 @@ abstract class AbstractFunction extends AbstractPlugin
      * @return mixed
      */
     abstract public function process(array $params, \Smarty_Internal_Template $smarty);
-} 
+}

@@ -324,5 +324,4 @@ class Items extends Core\Modules\Controller\Admin
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
-
 }

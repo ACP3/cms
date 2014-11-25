@@ -10,7 +10,6 @@ use ACP3\Core\Modules;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'captcha';
     const SCHEMA_VERSION = 31;
 
@@ -49,5 +48,4 @@ class Installer extends Modules\AbstractInstaller
             ]
         ];
     }
-
 }

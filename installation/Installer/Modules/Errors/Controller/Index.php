@@ -10,7 +10,6 @@ use ACP3\Installer\Core\Modules\Controller;
  */
 class Index extends Controller
 {
-
     public function action404()
     {
         header('HTTP/1.0 404 not found');
@@ -20,5 +19,4 @@ class Index extends Controller
     {
         header('HTTP/1.0 500 Internal Server Error');
     }
-
 }

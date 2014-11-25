@@ -8,7 +8,6 @@ namespace ACP3\Core;
  */
 class Model
 {
-
     /**
      * The name of the default sql table
      */
@@ -118,5 +117,4 @@ class Model
 
         return '';
     }
-
 }

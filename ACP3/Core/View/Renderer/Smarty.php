@@ -14,7 +14,6 @@ use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
  */
 class Smarty extends AbstractRenderer
 {
-
     /**
      * @var \Smarty
      */
@@ -103,5 +102,4 @@ class Smarty extends AbstractRenderer
             }
         }
     }
-
 }

@@ -45,8 +45,7 @@ class Modules
         XML $xml,
         Cache $modulesCache,
         System\Model $systemModel
-    )
-    {
+    ) {
         $this->lang = $lang;
         $this->xml = $xml;
         $this->cache = $modulesCache;
@@ -210,5 +209,4 @@ class Modules
 
         return $this->allModules;
     }
-
 }

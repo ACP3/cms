@@ -33,8 +33,7 @@ class Frontend extends Core\Context
         Core\Assets $assets,
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo
-    )
-    {
+    ) {
         parent::__construct(
             $context->getACL(),
             $context->getAuth(),
@@ -74,5 +73,4 @@ class Frontend extends Core\Context
     {
         return $this->seo;
     }
-
-} 
+}

@@ -60,4 +60,4 @@ class FrontController extends \ACP3\Core\FrontController
             throw new Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
         }
     }
-} 
+}

@@ -101,5 +101,4 @@ class View extends ContainerAware
     {
         return $this->renderer->assign($name, $value);
     }
-
 }

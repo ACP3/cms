@@ -43,5 +43,4 @@ class Cache
     {
         return $this->cache->save(self::CACHE_ID, $paths);
     }
-
 }

@@ -79,7 +79,7 @@ class Pagination
      * @param View $view
      * @param Misc $miscValidator
      */
-    function __construct(
+    public function __construct(
         Auth $auth,
         Lang $lang,
         SEO $seo,

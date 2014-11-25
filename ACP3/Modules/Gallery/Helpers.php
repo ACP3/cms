@@ -35,8 +35,7 @@ class Helpers
         Core\Router\Aliases $aliases,
         Core\SEO $seo,
         Model $galleryModel
-    )
-    {
+    ) {
         $this->aliases = $aliases;
         $this->seo = $seo;
         $this->galleryModel = $galleryModel;
@@ -133,5 +132,4 @@ class Helpers
         $upload = new Core\Helpers\Upload('gallery');
         $upload->removeUploadedFile($file);
     }
-
 }

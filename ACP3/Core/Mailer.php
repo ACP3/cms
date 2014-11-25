@@ -68,8 +68,7 @@ class Mailer
     public function __construct(
         View $view,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->view = $view;
         $this->phpMailer = new \PHPMailer(true);
 
@@ -438,5 +437,4 @@ class Mailer
 
         return $this;
     }
-
 }

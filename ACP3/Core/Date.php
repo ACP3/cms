@@ -55,14 +55,13 @@ class Date
      * @param Validator\Rules\Date $dateValidator
      * @param Config $systemConfig
      */
-    function __construct(
+    public function __construct(
         Auth $auth,
         Lang $lang,
         Forms $formsHelper,
         Validator\Rules\Date $dateValidator,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->lang = $lang;
         $this->formsHelper = $formsHelper;
         $this->dateValidator = $dateValidator;
@@ -205,8 +204,7 @@ class Date
         $range = 1,
         $withTime = true,
         $inputFieldOnly = false
-    )
-    {
+    ) {
         $range = (is_array($name) === true && $range === 1);
 
         $datepicker = [
@@ -478,5 +476,4 @@ class Date
     {
         return $this->format($value, 'Y-m-d H:i:s', true, $isLocalTime);
     }
-
 }

@@ -59,8 +59,7 @@ class Context
         Router $router,
         View $view,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->auth = $auth;
         $this->lang = $lang;
@@ -134,5 +133,4 @@ class Context
     {
         return $this->systemConfig;
     }
-
 }

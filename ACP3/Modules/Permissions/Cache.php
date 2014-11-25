@@ -29,8 +29,7 @@ class Cache
     public function __construct(
         Core\Cache $cache,
         Model $permissionsModel
-    )
-    {
+    ) {
         $this->cache = $cache;
         $this->permissionsModel = $permissionsModel;
     }
@@ -45,7 +44,6 @@ class Cache
         }
 
         return $this->cache->fetch(static::CACHE_ID_RESOURCES);
-
     }
 
     /**
@@ -85,7 +83,6 @@ class Cache
         }
 
         return $this->cache->fetch(static::CACHE_ID_ROLES);
-
     }
 
     /**
@@ -181,4 +178,4 @@ class Cache
         $value = $this->permissionsModel->getPermissionByKeyAndRoleId($key, $roleId);
         return isset($value['permission']) ? $value['permission'] : 0;
     }
-} 
+}

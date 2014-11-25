@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Index extends Core\Modules\Controller\Frontend
 {
-
     public function actionImage()
     {
         $this->setNoOutput(true);

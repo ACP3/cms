@@ -25,4 +25,4 @@ abstract class AbstractBlock extends AbstractPlugin
      * @return string
      */
     abstract public function process($params, $content, \Smarty_Internal_Template $smarty, &$repeat);
-} 
+}

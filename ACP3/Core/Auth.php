@@ -72,14 +72,13 @@ class Auth
      * @param Config $usersConfig
      * @param Users\Model $usersModel
      */
-    function __construct(
+    public function __construct(
         Session $session,
         Secure $secureHelper,
         Config $systemConfig,
         Config $usersConfig,
         Users\Model $usersModel
-    )
-    {
+    ) {
         $this->session = $session;
         $this->secureHelper = $secureHelper;
         $this->usersConfig = $usersConfig;

@@ -107,5 +107,4 @@ class Index extends Core\Modules\Controller
             $this->setNoOutput(true);
         }
     }
-
 }

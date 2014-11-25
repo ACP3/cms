@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  */
 abstract class AbstractRenderer extends ContainerAware implements RendererInterface
 {
-
     /**
      * The assigned layout renderer
      *

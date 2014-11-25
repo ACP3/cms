@@ -8,7 +8,6 @@ namespace ACP3\Core;
  */
 class Breadcrumb
 {
-
     /**
      * Enthält alle Schritte der Brotkrümelspur,
      * welche sich aus der Navigationsstruktur der Website ergeben
@@ -65,8 +64,7 @@ class Breadcrumb
         Request $request,
         Router $router,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
@@ -348,5 +346,4 @@ class Breadcrumb
             }
         }
     }
-
 }

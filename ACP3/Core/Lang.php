@@ -35,12 +35,11 @@ class Lang
      * @param Cache $langCache
      * @param Config $systemConfig
      */
-    function __construct(
+    public function __construct(
         Auth $auth,
         Cache $langCache,
         Config $systemConfig
-    )
-    {
+    ) {
         $lang = $auth->getUserLanguage();
         $this->lang = $this->languagePackExists($lang) === true ? $lang : $systemConfig->getSettings()['lang'];
         $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));

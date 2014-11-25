@@ -37,5 +37,4 @@ class Index extends Core\Modules\Controller
 
         $this->setTemplate('Search/Sidebar/index.index.tpl');
     }
-
 }

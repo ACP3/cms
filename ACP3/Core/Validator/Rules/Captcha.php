@@ -21,8 +21,7 @@ class Captcha
     public function __construct(
         Core\Request $request,
         Core\Router $router
-    )
-    {
+    ) {
         $this->request = $request;
         $this->router = $router;
     }
@@ -41,5 +40,4 @@ class Captcha
 
         return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION[$index]) && strtolower($input) === strtolower($_SESSION[$index]) ? true : false;
     }
-
-} 
+}

@@ -29,8 +29,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Config $feedsConfig,
         Feeds\Extensions $feedsExtensions
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->feedsConfig = $feedsConfig;
@@ -71,5 +70,4 @@ class Index extends Core\Modules\Controller\Frontend
             throw new Core\Exceptions\ResultNotExists();
         }
     }
-
 }
