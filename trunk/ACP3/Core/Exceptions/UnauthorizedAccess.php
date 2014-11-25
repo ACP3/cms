@@ -8,5 +8,4 @@ namespace ACP3\Core\Exceptions;
  */
 class UnauthorizedAccess extends \Exception
 {
-
 }

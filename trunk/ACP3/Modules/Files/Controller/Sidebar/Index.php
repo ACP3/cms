@@ -12,7 +12,6 @@ use ACP3\Modules\Files;
  */
 class Index extends Core\Modules\Controller
 {
-
     /**
      * @var \ACP3\Core\Date
      */
@@ -53,5 +52,4 @@ class Index extends Core\Modules\Controller
 
         $this->setTemplate('Files/Sidebar/index.index.tpl');
     }
-
 }

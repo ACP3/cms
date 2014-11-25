@@ -9,7 +9,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'menus';
     const TABLE_NAME_ITEMS = 'menu_items';
 

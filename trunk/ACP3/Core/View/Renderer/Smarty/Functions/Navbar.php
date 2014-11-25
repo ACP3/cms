@@ -26,8 +26,7 @@ class Navbar extends AbstractFunction
     public function __construct(
         Core\Modules $modules,
         Menus\Helpers $menuHelpers
-    )
-    {
+    ) {
         $this->modules = $modules;
         $this->menuHelpers = $menuHelpers;
     }

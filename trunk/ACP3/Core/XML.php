@@ -9,7 +9,6 @@ use ACP3\Application;
  */
 class XML
 {
-
     /**
      * Cache für bereits ausgelesene XML-Dateien
      *
@@ -61,5 +60,4 @@ class XML
         }
         return [];
     }
-
 }

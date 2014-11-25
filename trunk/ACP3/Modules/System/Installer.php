@@ -10,7 +10,6 @@ use ACP3\Core\Modules;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'system';
     const SCHEMA_VERSION = 48;
 
@@ -271,5 +270,4 @@ class Installer extends Modules\AbstractInstaller
             ]
         ];
     }
-
 }

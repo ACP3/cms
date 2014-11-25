@@ -9,7 +9,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'articles';
 
     /**
@@ -82,5 +81,4 @@ class Model extends Core\Model
         $period = ' AND ' . $this->_getPeriod();
         return $this->db->getConnection()->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY start ' . $sort . ', end ' . $sort . ', title ' . $sort, ['time' => $time]);
     }
-
 }

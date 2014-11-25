@@ -11,7 +11,6 @@ use ACP3\Modules\Newsletter;
  */
 class Archive extends Core\Modules\Controller\Frontend
 {
-
     /**
      * @var Core\Pagination
      */
@@ -60,5 +59,4 @@ class Archive extends Core\Modules\Controller\Frontend
 
         $this->view->assign('newsletters', $this->newsletterModel->getAll(1, POS, $this->auth->entries));
     }
-
 }

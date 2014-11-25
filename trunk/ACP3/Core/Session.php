@@ -9,7 +9,6 @@ namespace ACP3\Core;
  */
 class Session
 {
-
     /**
      * Name der Session
      */
@@ -189,5 +188,4 @@ class Session
 
         return true;
     }
-
 }

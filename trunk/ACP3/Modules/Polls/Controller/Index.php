@@ -11,7 +11,6 @@ use ACP3\Modules\Polls;
  */
 class Index extends Core\Modules\Controller\Frontend
 {
-
     /**
      * @var Core\Date
      */
@@ -147,5 +146,4 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $this->request->id);
     }
-
 }

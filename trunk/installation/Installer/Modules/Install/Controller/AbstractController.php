@@ -9,7 +9,6 @@ use ACP3\Installer\Core;
  */
 abstract class AbstractController extends Core\Modules\Controller
 {
-
     public function preDispatch()
     {
         parent::preDispatch();
@@ -39,5 +38,4 @@ abstract class AbstractController extends Core\Modules\Controller
         }
         $this->view->assign('navbar', $navbar);
     }
-
-} 
+}

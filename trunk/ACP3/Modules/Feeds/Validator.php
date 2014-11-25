@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Validator extends Core\Validator\AbstractValidator
 {
-
     /**
      * @param array $formData
      *

@@ -9,7 +9,6 @@ namespace ACP3\Core;
  */
 class NestedSet
 {
-
     /**
      * Der Tabellenname
      * @var string
@@ -36,8 +35,7 @@ class NestedSet
         DB $db,
         $tableName,
         $enableBlocks = false
-    )
-    {
+    ) {
         $this->db = $db->getConnection();
         $this->tableName = $db->getPrefix() . $tableName;
         $this->enableBlocks = $enableBlocks;
@@ -107,8 +105,9 @@ class NestedSet
             $this->db->beginTransaction();
             try {
                 // Letzten Eintrag selektieren
-                if ($this->enableBlocks === true)
+                if ($this->enableBlocks === true) {
                     $node = $this->db->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->tableName . ' WHERE block_id = ?', [$insertValues['block_id']]);
+                }
                 if ($this->enableBlocks === false || empty($node['right_id'])) {
                     $node = $this->db->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->tableName);
                 }
@@ -209,8 +208,9 @@ class NestedSet
                                     $newBlock['left_id'] += 1;
                                 }
 
-                                if ($blockId > $items[0]['block_id'])
+                                if ($blockId > $items[0]['block_id']) {
                                     $newBlock['left_id'] -= $pageDiff;
+                                }
 
                                 $diff = $newBlock['left_id'] - $items[0]['left_id'];
 
@@ -258,8 +258,9 @@ class NestedSet
                         } else {
                             $bool = $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?', [$rootId, !empty($parent['id']) ? $parent['id'] : 0, $items[$i]['left_id'] + $diff, $items[$i]['right_id'] + $diff, $items[$i]['id']]);
                         }
-                        if ($bool === false)
+                        if ($bool === false) {
                             break;
+                        }
                     }
                     $this->db->update($this->tableName, $updateValues, ['id' => $id]);
                     $this->db->commit();

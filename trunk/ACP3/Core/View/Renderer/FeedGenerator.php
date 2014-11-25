@@ -51,8 +51,9 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
             $this->renderer->setChannelElement('author', ['name' => $this->config['feed_title']]);
         }
 
-        if (!empty($this->config['feed_image']))
+        if (!empty($this->config['feed_image'])) {
             $this->renderer->setImage($this->config['feed_title'], $link, $this->config['feed_image']);
+        }
     }
 
     /**
@@ -101,5 +102,4 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
     {
         return true;
     }
-
 }

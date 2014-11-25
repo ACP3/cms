@@ -53,5 +53,4 @@ class SendEmail
             ->setRecipients($to)
             ->send();
     }
-
-} 
+}

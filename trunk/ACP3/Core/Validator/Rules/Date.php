@@ -79,6 +79,4 @@ class Date
         }
         return $bool;
     }
-
-
-} 
+}

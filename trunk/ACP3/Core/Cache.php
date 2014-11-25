@@ -26,8 +26,7 @@ class Cache
     public function __construct(
         Container $container,
         $namespace
-    )
-    {
+    ) {
         $this->namespace = $namespace;
 
         if ($container->hasParameter('cache_driver')) {

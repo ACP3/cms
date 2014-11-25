@@ -25,8 +25,7 @@ class Aliases
     public function __construct(
         Core\DB $db,
         Core\Validator\Rules\Router $routerValidator
-    )
-    {
+    ) {
         $this->db = $db;
         $this->routerValidator = $routerValidator;
     }
@@ -55,5 +54,4 @@ class Aliases
         }
         return false;
     }
-
-} 
+}

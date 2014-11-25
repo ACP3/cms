@@ -66,5 +66,4 @@ class Helpers
     {
         return strtr($string, $this->emoticons);
     }
-
 }

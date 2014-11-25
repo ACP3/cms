@@ -18,5 +18,4 @@ class Output
         $response->send();
         exit;
     }
-
 }

@@ -84,5 +84,4 @@ class Mime
 
         return $return;
     }
-
 }

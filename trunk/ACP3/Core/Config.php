@@ -31,8 +31,7 @@ class Config
         Cache $moduleCache,
         System\Model $systemModel,
         $module
-    )
-    {
+    ) {
         $this->moduleCache = $moduleCache;
         $this->systemModel = $systemModel;
         $this->module = strtolower($module);
@@ -103,5 +102,4 @@ class Config
 
         return $this->moduleCache->fetch('settings');
     }
-
 }

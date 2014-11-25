@@ -80,5 +80,4 @@ class Misc
     {
         return (bool)preg_match('/^(\d+)$/', $var);
     }
-
 }

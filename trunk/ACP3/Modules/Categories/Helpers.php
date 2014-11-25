@@ -64,8 +64,7 @@ class Helpers
         Core\Helpers\Forms $formsHelper,
         Cache $cache,
         Model $categoriesModel
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->lang = $lang;
         $this->modules = $modules;
@@ -164,5 +163,4 @@ class Helpers
         $this->view->assign('categories', $categories);
         return $this->view->fetchTemplate('categories/create_list.tpl');
     }
-
 }

@@ -34,8 +34,7 @@ class Cache
         Core\Cache $cache,
         Core\Lang $lang,
         Model $menuModel
-    )
-    {
+    ) {
         $this->cache = $cache;
         $this->lang = $lang;
         $this->menuModel = $menuModel;
@@ -146,6 +145,4 @@ class Cache
 
         return $this->cache->fetch(self::CACHE_ID_VISIBLE . $block);
     }
-
-
-} 
+}

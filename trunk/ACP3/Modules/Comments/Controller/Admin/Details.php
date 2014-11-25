@@ -12,7 +12,6 @@ use ACP3\Modules\System;
  */
 class Details extends Core\Modules\Controller\Admin
 {
-
     /**
      * @var Comments\Model
      */
@@ -163,7 +162,5 @@ class Details extends Core\Modules\Controller\Admin
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
-
     }
-
 }

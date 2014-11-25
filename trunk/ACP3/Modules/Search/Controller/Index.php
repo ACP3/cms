@@ -11,7 +11,6 @@ use ACP3\Modules\Search;
  */
 class Index extends Core\Modules\Controller\Frontend
 {
-
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -110,5 +109,4 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
-
 }

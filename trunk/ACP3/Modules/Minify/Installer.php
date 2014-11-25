@@ -10,7 +10,6 @@ use ACP3\Core\Modules;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'minify';
     const SCHEMA_VERSION = 1;
 
@@ -45,5 +44,4 @@ class Installer extends Modules\AbstractInstaller
     {
         return [];
     }
-
 }

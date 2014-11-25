@@ -25,8 +25,7 @@ class Cache
     public function __construct(
         Core\Cache $cache,
         Model $categoriesModel
-    )
-    {
+    ) {
         $this->categoriesModel = $categoriesModel;
         $this->cache = $cache;
     }
@@ -60,5 +59,4 @@ class Cache
     {
         return $this->cache->save($moduleName, $this->categoriesModel->getAllByModuleName($moduleName));
     }
-
 }

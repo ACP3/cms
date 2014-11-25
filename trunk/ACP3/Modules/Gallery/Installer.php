@@ -12,7 +12,6 @@ use ACP3\Modules\Permissions;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'gallery';
     const SCHEMA_VERSION = 35;
 
@@ -100,5 +99,4 @@ class Installer extends Modules\AbstractInstaller
             ]
         ];
     }
-
 }

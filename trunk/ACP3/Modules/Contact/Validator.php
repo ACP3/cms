@@ -36,8 +36,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\ACL $acl,
         Core\Auth $auth
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;

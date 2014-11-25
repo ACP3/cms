@@ -160,5 +160,4 @@ class Logger
     {
         self::_log($channel, 'emergency', $message);
     }
-
 }

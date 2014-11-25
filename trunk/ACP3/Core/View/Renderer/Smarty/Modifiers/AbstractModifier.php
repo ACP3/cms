@@ -22,4 +22,4 @@ abstract class AbstractModifier extends AbstractPlugin
      * @return string
      */
     abstract public function process($params);
-} 
+}

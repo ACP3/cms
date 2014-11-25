@@ -54,8 +54,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Modules $modules,
         Core\Request $request,
         Model $permissionsModel
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->aclValidator = $aclValidator;
@@ -188,5 +187,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
-} 
+}

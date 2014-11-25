@@ -110,5 +110,4 @@ class Index extends Core\Modules\Controller\Frontend
         $this->view->assign('imprint', $this->contactConfig->getSettings());
         $this->view->assign('powered_by', sprintf($this->lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" target="_blank">ACP3</a>'));
     }
-
 }

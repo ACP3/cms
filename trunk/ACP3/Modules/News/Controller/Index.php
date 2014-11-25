@@ -12,7 +12,6 @@ use ACP3\Modules\News;
  */
 class Index extends Core\Modules\Controller\Frontend
 {
-
     /**
      * @var Core\Date
      */
@@ -161,5 +160,4 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('dateformat', $settings['dateformat']);
         }
     }
-
 }

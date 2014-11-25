@@ -35,11 +35,10 @@ class Router
      * @param Aliases $aliases
      * @param Config $systemConfig
      */
-    function __construct(
+    public function __construct(
         Aliases $aliases,
         Config $systemConfig
-    )
-    {
+    ) {
         $this->aliases = $aliases;
         $this->systemConfig = $systemConfig->getSettings();
 
@@ -121,5 +120,4 @@ class Router
 
         return $prefix . $path;
     }
-
 }

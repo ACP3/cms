@@ -11,7 +11,6 @@ use ACP3\Modules\Polls;
  */
 class Index extends Core\Modules\Controller\Admin
 {
-
     /**
      * @var Core\Date
      */
@@ -249,8 +248,9 @@ class Index extends Core\Modules\Controller\Admin
                 // Neue Antwort hinzufügen
                 if (empty($row['id'])) {
                     // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
-                    if (!empty($row['value']) && !isset($row['delete']))
+                    if (!empty($row['value']) && !isset($row['delete'])) {
                         $this->pollsModel->insert(['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id], Polls\Model::TABLE_NAME_ANSWERS);
+                    }
                     // Antwort mitsamt Stimmen löschen
                 } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
                     $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
@@ -270,5 +270,4 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
-
 }

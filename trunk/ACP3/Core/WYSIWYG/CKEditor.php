@@ -103,5 +103,4 @@ class CKEditor extends AbstractWYSIWYG
             $this->config['toolbar_Basic'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
         }
     }
-
 }

@@ -9,7 +9,6 @@ use ACP3\Core;
  */
 class StringFormatter
 {
-
     /**
      * Macht einen String URL sicher
      *

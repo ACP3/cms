@@ -40,8 +40,7 @@ class DB
         $dbTablePrefix = '',
         $dbDriver = 'pdo_mysql',
         $dbCharset = 'utf8'
-    )
-    {
+    ) {
         $config = new DBAL\Configuration();
         $connectionParams = [
             'dbname' => $dbName,
@@ -80,5 +79,4 @@ class DB
     {
         return $this->prefix;
     }
-
 }
