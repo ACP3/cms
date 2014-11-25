@@ -72,8 +72,7 @@ abstract class AbstractInstaller implements InstallerInterface
         Core\Cache $aclCache,
         System\Model $systemModel,
         Permissions\Model $permissionsModel
-    )
-    {
+    ) {
         $this->db = $db;
         $this->xml = $xml;
         $this->aclCache = $aclCache;

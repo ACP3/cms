@@ -11,7 +11,6 @@ use ACP3\Modules\Newsletter;
  */
 class Accounts extends Core\Modules\Controller\Admin
 {
-
     /**
      * @var Newsletter\Model
      */
@@ -74,5 +73,4 @@ class Accounts extends Core\Modules\Controller\Admin
             $this->view->assign('can_delete', $canDelete);
         }
     }
-
 }

@@ -37,8 +37,7 @@ class CheckAccess extends AbstractFunction
         Core\Lang $lang,
         Core\Router $router,
         Icon $icon
-    )
-    {
+    ) {
         $this->lang = $lang;
         $this->acl = $acl;
         $this->router = $router;
@@ -116,5 +115,4 @@ class CheckAccess extends AbstractFunction
 
         return '';
     }
-
 }

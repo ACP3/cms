@@ -32,11 +32,10 @@ class Aliases
      * @param Core\Cache $uriCache
      * @param System\Model $systemModel
      */
-    function __construct(
+    public function __construct(
         Core\Cache $uriCache,
         System\Model $systemModel
-    )
-    {
+    ) {
         $this->uriCache = $uriCache;
         $this->systemModel = $systemModel;
         $this->aliases = $this->getCache();
@@ -153,4 +152,4 @@ class Aliases
 
         return isset($this->aliases[$path]) === true && !empty($this->aliases[$path]['alias']);
     }
-} 
+}

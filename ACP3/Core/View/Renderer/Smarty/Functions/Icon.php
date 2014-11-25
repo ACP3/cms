@@ -25,8 +25,7 @@ class Icon extends AbstractFunction
     public function __construct(
         Core\Assets\ThemeResolver $themeResolver,
         Core\Validator\Rules\Misc $validate
-    )
-    {
+    ) {
         $this->themeResolver = $themeResolver;
         $this->validate = $validate;
     }

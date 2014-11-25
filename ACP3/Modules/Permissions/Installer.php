@@ -10,7 +10,6 @@ use ACP3\Core\Modules;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'permissions';
     const SCHEMA_VERSION = 32;
 
@@ -61,5 +60,4 @@ class Installer extends Modules\AbstractInstaller
             ]
         ];
     }
-
 }

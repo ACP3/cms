@@ -183,5 +183,4 @@ class Application
     {
         return $this->container;
     }
-
 }

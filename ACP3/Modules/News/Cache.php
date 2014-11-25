@@ -26,8 +26,7 @@ class Cache
     public function __construct(
         Core\Cache $cache,
         Model $newsModel
-    )
-    {
+    ) {
         $this->newsModel = $newsModel;
         $this->cache = $cache;
     }
@@ -61,5 +60,4 @@ class Cache
     {
         return $this->cache->save(self::CACHE_ID . $id, $this->newsModel->getOneById($id));
     }
-
-} 
+}

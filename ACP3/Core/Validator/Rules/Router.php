@@ -31,5 +31,4 @@ class Router
     {
         return (bool)preg_match('/^([a-z\d_\-]+\/){3,}$/', $var);
     }
-
-} 
+}

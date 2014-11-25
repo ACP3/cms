@@ -111,5 +111,4 @@ class Index extends AbstractController
     {
         return;
     }
-
 }

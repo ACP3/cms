@@ -129,5 +129,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
-} 
+}

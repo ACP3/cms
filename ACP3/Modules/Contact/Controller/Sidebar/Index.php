@@ -35,5 +35,4 @@ class Index extends Core\Modules\Controller
 
         $this->setTemplate('Contact/Sidebar/index.index.tpl');
     }
-
 }

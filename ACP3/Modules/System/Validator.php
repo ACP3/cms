@@ -35,8 +35,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Date $dateValidator,
         Core\Validator\Rules\Mime $mimeValidator,
         Core\Validator\Rules\Router $routerValidator
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->dateValidator = $dateValidator;
@@ -166,5 +165,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
-} 
+}

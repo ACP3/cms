@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Helpers
 {
-
     /**
      * @var Core\Lang
      */
@@ -57,8 +56,7 @@ class Helpers
         Core\Config $systemConfig,
         Core\Config $newsletterConfig,
         Model $newsletterModel
-    )
-    {
+    ) {
         $this->lang = $lang;
         $this->mailer = $mailer;
         $this->router = $router;
@@ -165,5 +163,4 @@ class Helpers
 
         return $mailSent === true && $bool !== false;
     }
-
 }

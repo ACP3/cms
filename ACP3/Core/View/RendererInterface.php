@@ -2,7 +2,6 @@
 
 namespace ACP3\Core\View;
 
-
 interface RendererInterface
 {
     public function assign($name, $value = null);

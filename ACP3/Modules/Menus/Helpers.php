@@ -53,8 +53,7 @@ class Helpers
         Core\Helpers\Forms $formsHelper,
         Model $menusModel,
         Cache $menusCache
-    )
-    {
+    ) {
         $this->request = $request;
         $this->router = $router;
         $this->formsHelper = $formsHelper;
@@ -230,5 +229,4 @@ class Helpers
 
         return 0;
     }
-
 }

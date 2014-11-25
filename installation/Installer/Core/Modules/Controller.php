@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class Controller
 {
-
     /**
      * @var Container
      */

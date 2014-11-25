@@ -9,7 +9,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'modules';
     const TABLE_NAME_SETTINGS = 'settings';
     const TABLE_NAME_SEO = 'seo';
@@ -92,5 +91,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->fetchColumn('SELECT name FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$moduleId]);
     }
-
 }

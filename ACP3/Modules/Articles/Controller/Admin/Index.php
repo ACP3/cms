@@ -275,5 +275,4 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('can_delete', $canDelete);
         }
     }
-
 }

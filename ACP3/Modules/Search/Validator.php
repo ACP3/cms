@@ -9,7 +9,6 @@ use ACP3\Core;
  */
 class Validator extends Core\Validator\AbstractValidator
 {
-
     /**
      * @param array $formData
      *
@@ -37,5 +36,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
 }

@@ -21,8 +21,7 @@ class AbstractValidator
     public function __construct(
         Core\Lang $lang,
         Rules\Misc $validate
-    )
-    {
+    ) {
         $this->lang = $lang;
         $this->validate = $validate;
     }
@@ -36,5 +35,4 @@ class AbstractValidator
             throw new Core\Exceptions\InvalidFormToken($this->lang->t('system', 'form_already_submitted'));
         }
     }
-
-} 
+}

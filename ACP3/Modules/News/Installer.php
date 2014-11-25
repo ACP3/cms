@@ -10,7 +10,6 @@ use ACP3\Core\Modules;
  */
 class Installer extends Modules\AbstractInstaller
 {
-
     const MODULE_NAME = 'news';
     const SCHEMA_VERSION = 34;
 
@@ -87,5 +86,4 @@ class Installer extends Modules\AbstractInstaller
             ]
         ];
     }
-
 }

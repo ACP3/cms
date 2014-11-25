@@ -89,5 +89,4 @@ class Forms
         }
         return $select;
     }
-
-} 
+}

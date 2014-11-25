@@ -33,5 +33,4 @@ class Router extends Core\Router
         $prefix = PHP_SELF . '/';
         return $prefix . $path;
     }
-
 }

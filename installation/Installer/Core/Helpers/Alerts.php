@@ -47,5 +47,4 @@ class Alerts extends \ACP3\Core\Helpers\Alerts
         }
         return $content;
     }
-
 }

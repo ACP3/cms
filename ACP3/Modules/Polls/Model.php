@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'polls';
     const TABLE_NAME_ANSWERS = 'poll_answers';
     const TABLE_NAME_VOTES = 'poll_votes';
@@ -124,5 +123,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY start DESC, end DESC, id DESC');
     }
-
 }

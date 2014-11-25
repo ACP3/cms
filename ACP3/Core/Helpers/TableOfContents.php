@@ -46,8 +46,7 @@ class TableOfContents
         Core\Router $router,
         Core\Validator\Rules\Misc $validate,
         Core\View $view
-    )
-    {
+    ) {
         $this->breadcrumb = $breadcrumb;
         $this->lang = $lang;
         $this->seo = $seo;
@@ -182,5 +181,4 @@ class TableOfContents
 
         return $return;
     }
-
-} 
+}

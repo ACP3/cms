@@ -23,8 +23,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Mime $mimeValidator
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->mimeValidator = $mimeValidator;
@@ -108,5 +107,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
-} 
+}

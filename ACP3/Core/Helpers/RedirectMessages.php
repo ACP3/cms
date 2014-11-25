@@ -31,8 +31,7 @@ class RedirectMessages
         Core\Redirect $redirect,
         Core\Request $request,
         Core\View $view
-    )
-    {
+    ) {
         $this->redirect = $redirect;
         $this->request = $request;
         $this->view = $view;
@@ -75,4 +74,4 @@ class RedirectMessages
             $this->redirect->temporary($path);
         }
     }
-} 
+}

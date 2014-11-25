@@ -53,8 +53,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Date $date,
         Core\Modules $modules,
         Model $commentsModel
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
@@ -144,6 +143,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
-
-} 
+}

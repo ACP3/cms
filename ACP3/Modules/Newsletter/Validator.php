@@ -41,8 +41,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Modules $acl,
         Core\Auth $auth,
         Model $newsletterModel
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
@@ -159,5 +158,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
 }

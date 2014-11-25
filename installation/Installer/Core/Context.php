@@ -73,5 +73,4 @@ class Context
     {
         return $this->view;
     }
-
 }

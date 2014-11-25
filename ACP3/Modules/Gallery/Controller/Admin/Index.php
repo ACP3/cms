@@ -11,7 +11,6 @@ use ACP3\Modules\Gallery;
  */
 class Index extends Core\Modules\Controller\Admin
 {
-
     /**
      * @var Core\Date
      */
@@ -317,5 +316,4 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
-
 }

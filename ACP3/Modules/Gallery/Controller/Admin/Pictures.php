@@ -11,7 +11,6 @@ use ACP3\Modules\Gallery;
  */
 class Pictures extends Core\Modules\Controller\Admin
 {
-
     /**
      * @var Core\Date
      */

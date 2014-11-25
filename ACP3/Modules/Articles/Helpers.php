@@ -26,8 +26,7 @@ class Helpers
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         Model $articlesModel
-    )
-    {
+    ) {
         $this->formsHelper = $formsHelper;
         $this->articlesModel = $articlesModel;
     }
@@ -59,5 +58,4 @@ class Helpers
     {
         return $this->articlesModel->resultExists($id);
     }
-
 }

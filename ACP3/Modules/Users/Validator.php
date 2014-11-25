@@ -59,8 +59,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Auth $auth,
         Core\Request $request,
         Model $userModel
-    )
-    {
+    ) {
         parent::__construct($lang, $validate);
 
         $this->aclValidator = $aclValidator;
@@ -417,5 +416,4 @@ class Validator extends Core\Validator\AbstractValidator
             throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
-
 }

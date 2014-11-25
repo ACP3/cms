@@ -70,5 +70,4 @@ class ACL
         }
         return true;
     }
-
-} 
+}

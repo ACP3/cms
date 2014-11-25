@@ -15,4 +15,4 @@ abstract class AbstractPlugin implements PluginInterface
     {
         $smarty->registerPlugin($this->getPluginType(), $this->getPluginName(), [$this, 'process']);
     }
-} 
+}

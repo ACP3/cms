@@ -55,5 +55,4 @@ class Index extends Core\Modules\Controller
 
         $this->setTemplate('Gallery/Sidebar/index.index.tpl');
     }
-
 }

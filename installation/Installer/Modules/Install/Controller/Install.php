@@ -45,8 +45,7 @@ class Install extends AbstractController
         Core\Context $context,
         Date $date,
         Helpers $installHelper
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -247,5 +246,4 @@ class Install extends AbstractController
         $configNewsletter = $this->get('newsletter.config');
         $configNewsletter->setSettings(['mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')]);
     }
-
 }

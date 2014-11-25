@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'newsletters';
     const TABLE_NAME_ACCOUNTS = 'newsletter_accounts';
 
@@ -109,5 +108,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE hash = "" ORDER BY id DESC');
     }
-
 }

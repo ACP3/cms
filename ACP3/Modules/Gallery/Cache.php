@@ -35,8 +35,7 @@ class Cache
         Core\Cache $cache,
         Model $galleryModel,
         Core\Config $galleryConfig
-    )
-    {
+    ) {
         $this->cache = $cache;
         $this->galleryModel = $galleryModel;
         $this->galleryConfig = $galleryConfig;
@@ -91,4 +90,4 @@ class Cache
 
         return $this->cache->save(self::CACHE_ID . $id, $pictures);
     }
-} 
+}

@@ -10,7 +10,6 @@ use ACP3\Core;
  */
 class Model extends Core\Model
 {
-
     const TABLE_NAME = 'categories';
 
     /**
@@ -85,5 +84,4 @@ class Model extends Core\Model
     {
         return $this->db->getConnection()->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', [$id]);
     }
-
 }
