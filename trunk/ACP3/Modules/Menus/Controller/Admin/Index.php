@@ -141,8 +141,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('menus.validator');
-            $validator->validateCreate($formData);
+            $this->get('menus.validator')->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -168,8 +167,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('menus.validator');
-            $validator->validateEdit($formData);
+            $this->get('menus.validator')->validate($formData, (int) $this->request->id);
 
             $updateValues = [
                 'index_name' => $formData['index_name'],

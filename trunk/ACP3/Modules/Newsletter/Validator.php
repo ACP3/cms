@@ -52,110 +52,99 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (strlen($formData['title']) < 3) {
-            $errors['title'] = $this->lang->t('newsletter', 'subject_to_short');
+            $this->errors['title'] = $this->lang->t('newsletter', 'subject_to_short');
         }
         if (strlen($formData['text']) < 3) {
-            $errors['text'] = $this->lang->t('newsletter', 'text_to_short') . strlen($formData['text']);
+            $this->errors['text'] = $this->lang->t('newsletter', 'text_to_short') . strlen($formData['text']);
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateSubscribe(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->validate->email($formData['mail']) === false) {
-            $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === true) {
-            $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
+            $this->errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
-            $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
+            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateUnsubscribe(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->validate->email($formData['mail']) === false) {
-            $errors[] = $this->lang->t('system', 'wrong_email_format');
+            $this->errors[] = $this->lang->t('system', 'wrong_email_format');
         }
         if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === false) {
-            $errors[] = $this->lang->t('newsletter', 'account_not_exists');
+            $this->errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
-            $errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
+            $this->errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->validate->email($formData['mail']) === false) {
-            $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param $mail
      * @param $hash
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateActivate($mail, $hash)
     {
-        $errors = [];
+        $this->errors = [];
         if ($this->newsletterModel->accountExists($mail, $hash) === false) {
-            $errors[] = $this->lang->t('newsletter', 'account_not_exists');
+            $this->errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }

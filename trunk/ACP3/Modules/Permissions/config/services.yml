@@ -21,7 +21,7 @@ services:
 
   permissions.validator:
     class: ACP3\Modules\Permissions\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.router', '@core.modules', '@core.request', '@permissions.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.router', '@core.modules', '@permissions.model']
 
   permissions.installer:
     class: ACP3\Modules\Permissions\Installer

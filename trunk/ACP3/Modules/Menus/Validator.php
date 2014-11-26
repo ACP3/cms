@@ -41,7 +41,6 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
      * @param Core\Validator\Rules\Router $routerValidator
      * @param Core\Modules $modules
-     * @param Core\Request $request
      * @param Model $menuModel
      */
     public function __construct(
@@ -50,7 +49,6 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
-        Core\Request $request,
         Model $menuModel
     ) {
         parent::__construct($lang, $validate);
@@ -58,13 +56,11 @@ class Validator extends Core\Validator\AbstractValidator
         $this->aliasesValidator = $aliasesValidator;
         $this->routerValidator = $routerValidator;
         $this->modules = $modules;
-        $this->request = $request;
         $this->menuModel = $menuModel;
     }
 
     /**
-     * @param \ACP3\Modules\Articles\Helpers $articlesHelpers
-     *
+     * @param Articles\Helpers $articlesHelpers
      * @return $this
      */
     public function setArticlesHelpers(Articles\Helpers $articlesHelpers)
@@ -76,60 +72,59 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @param int $menuId
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
-    public function validateCreate(array $formData)
+    public function validate(array $formData, $menuId = 0)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
-            $errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
+            $this->errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
         }
-        if (!isset($errors) && $this->menuModel->menuExistsByName($formData['index_name']) === true) {
-            $errors['index-name'] = $this->lang->t('menus', 'index_name_unique');
+        if (!isset($this->errors) && $this->menuModel->menuExistsByName($formData['index_name'], $menuId) === true) {
+            $this->errors['index-name'] = $this->lang->t('menus', 'index_name_unique');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['title'] = $this->lang->t('menus', 'menu_bar_title_to_short');
+            $this->errors['title'] = $this->lang->t('menus', 'menu_bar_title_to_short');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateItem(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->validate->isNumber($formData['mode']) === false) {
-            $errors['mode'] = $this->lang->t('menus', 'select_page_type');
+            $this->errors['mode'] = $this->lang->t('menus', 'select_page_type');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['title'] = $this->lang->t('menus', 'title_to_short');
+            $this->errors['title'] = $this->lang->t('menus', 'title_to_short');
         }
         if ($this->validate->isNumber($formData['block_id']) === false) {
-            $errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
+            $this->errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
         }
         if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === false) {
-            $errors['parent'] = $this->lang->t('menus', 'select_superior_page');
+            $this->errors['parent'] = $this->lang->t('menus', 'select_superior_page');
         }
         if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === true) {
             // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
             $parentBlock = $this->menuModel->getMenuItemBlockIdById($formData['parent']);
             if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
-                $errors['parent'] = $this->lang->t('menus', 'superior_page_not_allowed');
+                $this->errors['parent'] = $this->lang->t('menus', 'superior_page_not_allowed');
             }
         }
         if ($formData['display'] != 0 && $formData['display'] != 1) {
-            $errors['display'] = $this->lang->t('menus', 'select_item_visibility');
+            $this->errors['display'] = $this->lang->t('menus', 'select_item_visibility');
         }
         if ($this->validate->isNumber($formData['target']) === false ||
             $formData['mode'] == 1 && $this->modules->isInstalled($formData['module']) === false ||
@@ -137,39 +132,12 @@ class Validator extends Core\Validator\AbstractValidator
             $formData['mode'] == 3 && empty($formData['uri']) ||
             $formData['mode'] == 4 && ($this->validate->isNumber($formData['articles']) === false || ($this->articlesHelpers && $this->articlesHelpers->articleExists($formData['articles']) === false))
         ) {
-            $errors[] = $this->lang->t('menus', 'type_in_uri_and_target');
+            $this->errors[] = $this->lang->t('menus', 'type_in_uri_and_target');
         }
         if ($formData['mode'] == 2 && !empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $formData['uri']) === true) {
-            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
-     */
-    public function validateEdit(array $formData)
-    {
-        $this->validateFormKey();
-
-        $errors = [];
-        if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
-            $errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
-        }
-        if (!isset($errors) && $this->menuModel->menuExistsByName($formData['index_name'], $this->request->id) === true) {
-            $errors['index-name'] = $this->lang->t('menus', 'index_name_unique');
-        }
-        if (strlen($formData['title']) < 3) {
-            $errors['title'] = $this->lang->t('menus', 'menu_bar_title_to_short');
-        }
-
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }

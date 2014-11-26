@@ -26,11 +26,11 @@ class Model extends Core\Model
      *
      * @param string $nickname
      *  Der zu überprüfende Nickname
-     * @param string $id
+     * @param int $id
      *
      * @return boolean
      */
-    public function resultExistsByUserName($nickname, $id = '')
+    public function resultExistsByUserName($nickname, $id = 0)
     {
         if (!empty($id)) {
             return !empty($nickname) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', [(int)$id, $nickname]) == 1 ? true : false;
@@ -44,11 +44,11 @@ class Model extends Core\Model
      *
      * @param string $mail
      *  Die zu überprüfende E-Mail-Adresse
-     * @param string $id
+     * @param int $id
      *
      * @return boolean
      */
-    public function resultExistsByEmail($mail, $id = '')
+    public function resultExistsByEmail($mail, $id = 0)
     {
         if (!empty($id)) {
             return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', [(int)$id, $mail]) > 0 ? true : false;

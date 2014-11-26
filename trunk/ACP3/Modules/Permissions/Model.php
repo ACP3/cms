@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: goratsch
- * Date: 22.12.13
- * Time: 17:00
- */
-
 namespace ACP3\Modules\Permissions;
 
 use ACP3\Core;
@@ -33,12 +26,12 @@ class Model extends Core\Model
 
     /**
      * @param $roleName
-     * @param string $id
+     * @param int $id
      * @return bool
      */
-    public function roleExistsByName($roleName, $id = '')
+    public function roleExistsByName($roleName, $id = 0)
     {
-        if ($id !== '') {
+        if ($id !== 0) {
             return !empty($roleName) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND name = ?', [(int) $id, $roleName]) == 1;
         } else {
             return !empty($roleName) && $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$roleName]) == 1;

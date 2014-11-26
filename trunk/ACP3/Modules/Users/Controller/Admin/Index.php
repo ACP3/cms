@@ -348,8 +348,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost($formData)
     {
         try {
-            $validator = $this->get('users.validator');
-            $validator->validateCreate($formData);
+            $this->get('users.validator')->validate($formData);
 
             $securityHelper = $this->get('core.helpers.secure');
             $salt = $securityHelper->salt(12);
@@ -405,8 +404,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('users.validator');
-            $validator->validateEdit($formData);
+            $this->get('users.validator')->validate($formData, (int) $this->request->id);
 
             $updateValues = [
                 'super_user' => (int)$formData['super_user'],

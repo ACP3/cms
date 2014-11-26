@@ -66,9 +66,9 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param       $ip
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @param $ip
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData, $ip)
     {
@@ -79,68 +79,62 @@ class Validator extends Core\Validator\AbstractValidator
         $floodTime = !empty($flood) ? $this->date->timestamp($flood, true) + 30 : 0;
         $time = $this->date->timestamp('now', true);
 
-        $errors = [];
+        $this->errors = [];
         if ($floodTime > $time) {
-            $errors[] = sprintf($this->lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
+            $this->errors[] = sprintf($this->lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
         }
         if (empty($formData['name'])) {
-            $errors['name'] = $this->lang->t('system', 'name_to_short');
+            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
         }
         if (strlen($formData['message']) < 3) {
-            $errors['message'] = $this->lang->t('system', 'message_to_short');
+            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
             $this->auth->isUser() === false &&
             $this->captchaValidator->captcha($formData['captcha']) === false) {
-            $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
+            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ((empty($comment['user_id']) || $this->validate->isNumber($comment['user_id']) === false) && empty($formData['name'])) {
-            $errors['name'] = $this->lang->t('system', 'name_to_short');
+            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
         }
         if (strlen($formData['message']) < 3) {
-            $errors['message'] = $this->lang->t('system', 'message_to_short');
+            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
+            $this->errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
         if ($this->modules->isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
-            $errors['emoticons'] = $this->lang->t('comments', 'select_emoticons');
+            $this->errors['emoticons'] = $this->lang->t('comments', 'select_emoticons');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }

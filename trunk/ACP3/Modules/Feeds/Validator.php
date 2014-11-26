@@ -12,20 +12,18 @@ class Validator extends Core\Validator\AbstractValidator
 {
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (empty($formData['feed_type']) || in_array($formData['feed_type'], ['RSS 1.0', 'RSS 2.0', 'ATOM']) === false) {
-            $errors['feed-type'] = $this->lang->t('feeds', 'select_feed_type');
+            $this->errors['feed-type'] = $this->lang->t('feeds', 'select_feed_type');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }
