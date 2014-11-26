@@ -241,8 +241,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('news.validator');
-            $validator->validateCreate($formData);
+            $this->get('news.validator')->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -287,8 +286,10 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('news.validator');
-            $validator->validateEdit($formData);
+            $this->get('news.validator')->validate(
+                $formData,
+                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id)
+            );
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
