@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: goratsch
- * Date: 22.12.13
- * Time: 17:00
- */
-
 namespace ACP3\Modules\Permissions;
 
 use ACP3\Core;
