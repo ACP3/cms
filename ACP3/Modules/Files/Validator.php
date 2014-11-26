@@ -60,112 +60,106 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param       $file
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @param $file
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData, $file)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors['date'] = $this->lang->t('system', 'select_date');
+            $this->errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['link-title'] = $this->lang->t('files', 'type_in_title');
+            $this->errors['link-title'] = $this->lang->t('files', 'type_in_title');
         }
         if (isset($formData['external']) && (empty($file) || empty($formData['filesize']) || empty($formData['unit']))) {
-            $errors['external'] = $this->lang->t('files', 'type_in_external_resource');
+            $this->errors['external'] = $this->lang->t('files', 'type_in_external_resource');
         }
         if (!isset($formData['external']) &&
             (empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
+            $this->errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
         }
         if (strlen($formData['text']) < 3) {
-            $errors['text'] = $this->lang->t('files', 'description_to_short');
+            $this->errors['text'] = $this->lang->t('files', 'description_to_short');
         }
         if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
-            $errors['cat'] = $this->lang->t('files', 'select_category');
+            $this->errors['cat'] = $this->lang->t('files', 'select_category');
         }
         if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'files') === true) {
-            $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
+            $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias']) === true) {
-            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     * @param       $file
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @param $file
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData, $file)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors['date'] = $this->lang->t('system', 'select_date');
+            $this->errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['link-title'] = $this->lang->t('files', 'type_in_title');
+            $this->errors['link-title'] = $this->lang->t('files', 'type_in_title');
         }
         if (isset($formData['external']) && (empty($file) || empty($formData['filesize']) || empty($formData['unit']))) {
-            $errors['external'] = $this->lang->t('files', 'type_in_external_resource');
+            $this->errors['external'] = $this->lang->t('files', 'type_in_external_resource');
         }
         if (!isset($formData['external']) && isset($file) && is_array($file) &&
             (empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
+            $this->errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
         }
         if (strlen($formData['text']) < 3) {
-            $errors['text'] = $this->lang->t('files', 'description_to_short');
+            $this->errors['text'] = $this->lang->t('files', 'description_to_short');
         }
         if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
-            $errors['cat'] = $this->lang->t('files', 'select_category');
+            $this->errors['cat'] = $this->lang->t('files', 'select_category');
         }
         if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'files') === true) {
-            $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
+            $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true) {
-            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
+            $this->errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
         if ($this->validate->isNumber($formData['sidebar']) === false) {
-            $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
+            $this->errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
         if ($this->modules->isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
-            $errors['comments'] = $this->lang->t('files', 'select_allow_comments');
+            $this->errors['comments'] = $this->lang->t('files', 'select_allow_comments');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }

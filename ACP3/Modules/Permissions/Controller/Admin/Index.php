@@ -224,8 +224,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('permissions.validator');
-            $validator->validateCreate($formData);
+            $this->get('permissions.validator')->validate($formData);
 
             $this->db->getConnection()->beginTransaction();
 
@@ -273,8 +272,10 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('permissions.validator');
-            $validator->validateEdit($formData);
+            $this->get('permissions.validator')->validate(
+                $formData,
+                (int) $this->request->id
+            );
 
             $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),

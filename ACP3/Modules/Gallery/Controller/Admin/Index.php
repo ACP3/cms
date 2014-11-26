@@ -199,8 +199,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('gallery.validator');
-            $validator->validateCreate($formData);
+            $this->get('gallery.validator')->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -237,8 +236,10 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('gallery.validator');
-            $validator->validateEdit($formData);
+            $this->get('gallery.validator')->validate(
+                $formData,
+                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id)
+            );
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
