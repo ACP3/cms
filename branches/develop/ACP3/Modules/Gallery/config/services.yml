@@ -37,7 +37,7 @@ services:
 
   gallery.validator:
     class: ACP3\Modules\Gallery\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.modules', '@core.request']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.modules']
 
   gallery.installer:
     class: ACP3\Modules\Gallery\Installer

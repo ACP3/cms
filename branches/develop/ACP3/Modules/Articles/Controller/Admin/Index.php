@@ -111,8 +111,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('articles.validator');
-            $validator->validateCreate($formData);
+            $this->get('articles.validator')->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -220,8 +219,10 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('articles.validator');
-            $validator->validateEdit($formData);
+            $this->get('articles.validator')->validate(
+                $formData,
+                sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id)
+            );
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),

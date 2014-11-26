@@ -137,8 +137,7 @@ class Resources extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('permissions.validator');
-            $validator->validateCreateResource($formData);
+            $this->get('permissions.validator')->validateResource($formData);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
             $insertValues = [
@@ -170,8 +169,7 @@ class Resources extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('permissions.validator');
-            $validator->validateEditResource($formData);
+            $this->get('permissions.validator')->validateResource($formData);
 
             $updateValues = [
                 'controller' => $formData['controller'],

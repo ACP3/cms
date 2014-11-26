@@ -74,9 +74,9 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param       $newsletterAccess
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @param $newsletterAccess
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData, $newsletterAccess)
     {
@@ -87,93 +87,87 @@ class Validator extends Core\Validator\AbstractValidator
         $floodTime = !empty($flood) ? $this->date->timestamp($flood, true) + 30 : 0;
         $time = $this->date->timestamp('now', true);
 
-        $errors = [];
+        $this->errors = [];
         if ($floodTime > $time) {
-            $errors[] = sprintf($this->lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
+            $this->errors[] = sprintf($this->lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
         }
         if (empty($formData['name'])) {
-            $errors['name'] = $this->lang->t('system', 'name_to_short');
+            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
         }
         if (!empty($formData['mail']) && $this->validate->email($formData['mail']) === false) {
-            $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if (strlen($formData['message']) < 3) {
-            $errors['message'] = $this->lang->t('system', 'message_to_short');
+            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
-            $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
+            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
             if ($this->validate->email($formData['mail']) === false) {
-                $errors['mail'] = $this->lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
+                $this->errors['mail'] = $this->lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
             }
             if ($this->validate->email($formData['mail']) === true && $this->newsletterModel->accountExists($formData['mail']) === true) {
-                $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
+                $this->errors['mail'] = $this->lang->t('newsletter', 'account_exists');
             }
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
      * @param array $settings
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData, array $settings)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (empty($formData['name'])) {
-            $errors['name'] = $this->lang->t('system', 'name_to_short');
+            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
         }
         if (strlen($formData['message']) < 3) {
-            $errors['message'] = $this->lang->t('system', 'message_to_short');
+            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($settings['notify'] == 2 && (!isset($formData['active']) || ($formData['active'] != 0 && $formData['active'] != 1))) {
-            $errors['notify'] = $this->lang->t('guestbook', 'select_activate');
+            $this->errors['notify'] = $this->lang->t('guestbook', 'select_activate');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
+            $this->errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
         if (!isset($formData['notify']) || ($formData['notify'] != 0 && $formData['notify'] != 1 && $formData['notify'] != 2)) {
-            $errors['notify'] = $this->lang->t('guestbook', 'select_notification_type');
+            $this->errors['notify'] = $this->lang->t('guestbook', 'select_notification_type');
         }
         if ($formData['notify'] != 0 && $this->validate->email($formData['notify_email']) === false) {
-            $errors['notify-email'] = $this->lang->t('system', 'wrong_email_format');
+            $this->errors['notify-email'] = $this->lang->t('system', 'wrong_email_format');
         }
         if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0) {
-            $errors['overlay'] = $this->lang->t('guestbook', 'select_use_overlay');
+            $this->errors['overlay'] = $this->lang->t('guestbook', 'select_use_overlay');
         }
         if ($this->modules->isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
-            $errors['emoticons'] = $this->lang->t('guestbook', 'select_emoticons');
+            $this->errors['emoticons'] = $this->lang->t('guestbook', 'select_emoticons');
         }
         if ($this->modules->isActive('newsletter') === true && (!isset($formData['newsletter_integration']) || ($formData['newsletter_integration'] != 0 && $formData['newsletter_integration'] != 1))) {
-            $errors['newsletter-integration'] = $this->lang->t('guestbook', 'select_newsletter_integration');
+            $this->errors['newsletter-integration'] = $this->lang->t('guestbook', 'select_newsletter_integration');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }

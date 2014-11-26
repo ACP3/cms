@@ -46,50 +46,46 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (empty($formData['name'])) {
-            $errors['name'] = $this->lang->t('system', 'name_to_short');
+            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
         }
         if ($this->validate->email($formData['mail']) === false) {
-            $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if (strlen($formData['message']) < 3) {
-            $errors['message'] = $this->lang->t('system', 'message_to_short');
+            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
             $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false
         ) {
-            $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
+            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if (!empty($formData['mail']) && $this->validate->email($formData['mail']) === false) {
-            $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }

@@ -31,19 +31,19 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors['date'] = $this->lang->t('system', 'select_date');
+            $this->errors['date'] = $this->lang->t('system', 'select_date');
         }
         if (empty($formData['title'])) {
-            $errors['title'] = $this->lang->t('polls', 'type_in_question');
+            $this->errors['title'] = $this->lang->t('polls', 'type_in_question');
         }
         $i = 0;
         foreach ($formData['answers'] as $row) {
@@ -52,29 +52,27 @@ class Validator extends Core\Validator\AbstractValidator
             }
         }
         if ($i <= 2) {
-            $errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
+            $this->errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 
     /**
      * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData)
     {
         $this->validateFormKey();
 
-        $errors = [];
+        $this->errors = [];
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
+            $this->errors[] = $this->lang->t('system', 'select_date');
         }
         if (empty($formData['title'])) {
-            $errors['title'] = $this->lang->t('polls', 'type_in_question');
+            $this->errors['title'] = $this->lang->t('polls', 'type_in_question');
         }
         $markedAnswers = 0;
         $allAnswersEmpty = true;
@@ -87,14 +85,12 @@ class Validator extends Core\Validator\AbstractValidator
             }
         }
         if ($allAnswersEmpty === true) {
-            $errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
+            $this->errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
         }
         if (count($formData['answers']) - $markedAnswers < 2) {
-            $errors['answer'] = $this->lang->t('polls', 'can_not_delete_all_answers');
+            $this->errors['answer'] = $this->lang->t('polls', 'can_not_delete_all_answers');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }

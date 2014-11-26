@@ -14,6 +14,11 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $dateValidator;
 
+    /**
+     * @param Core\Lang $lang
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Validator\Rules\Date $dateValidator
+     */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
@@ -32,15 +37,15 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateConfiguration(array $formData, $configFilePath)
     {
-        $errors = [];
+        $this->errors = [];
         if (empty($formData['db_host'])) {
-            $errors['db-host'] = $this->lang->t('install', 'type_in_db_host');
+            $this->errors['db-host'] = $this->lang->t('install', 'type_in_db_host');
         }
         if (empty($formData['db_user'])) {
-            $errors['db-user'] = $this->lang->t('install', 'type_in_db_username');
+            $this->errors['db-user'] = $this->lang->t('install', 'type_in_db_username');
         }
         if (empty($formData['db_name'])) {
-            $errors['db-name'] = $this->lang->t('install', 'type_in_db_name');
+            $this->errors['db-name'] = $this->lang->t('install', 'type_in_db_name');
         }
         if (!empty($formData['db_host']) && !empty($formData['db_user']) && !empty($formData['db_name'])) {
             try {
@@ -57,35 +62,33 @@ class Validator extends Core\Validator\AbstractValidator
                 $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
                 $db->query('USE `' . $formData['db_name'] . '`');
             } catch (\Exception $e) {
-                $errors['db'] = sprintf($this->lang->t('install', 'db_connection_failed'), $e->getMessage());
+                $this->errors['db'] = sprintf($this->lang->t('install', 'db_connection_failed'), $e->getMessage());
             }
         }
         if (empty($formData['user_name'])) {
-            $errors['user-name'] = $this->lang->t('install', 'type_in_user_name');
+            $this->errors['user-name'] = $this->lang->t('install', 'type_in_user_name');
         }
         if ((empty($formData['user_pwd']) || empty($formData['user_pwd_wdh'])) ||
             (!empty($formData['user_pwd']) && !empty($formData['user_pwd_wdh']) && $formData['user_pwd'] != $formData['user_pwd_wdh'])
         ) {
-            $errors['user-pwd'] = $this->lang->t('install', 'type_in_pwd');
+            $this->errors['user-pwd'] = $this->lang->t('install', 'type_in_pwd');
         }
         if ($this->validate->email($formData['mail']) === false) {
-            $errors['mail'] = $this->lang->t('install', 'wrong_email_format');
+            $this->errors['mail'] = $this->lang->t('install', 'wrong_email_format');
         }
         if (empty($formData['date_format_long'])) {
-            $errors['date-format-long'] = $this->lang->t('install', 'type_in_long_date_format');
+            $this->errors['date-format-long'] = $this->lang->t('install', 'type_in_long_date_format');
         }
         if (empty($formData['date_format_short'])) {
-            $errors['date-format-short'] = $this->lang->t('install', 'type_in_short_date_format');
+            $this->errors['date-format-short'] = $this->lang->t('install', 'type_in_short_date_format');
         }
         if ($this->dateValidator->timeZone($formData['date_time_zone']) === false) {
-            $errors['date-time-zone'] = $this->lang->t('install', 'select_time_zone');
+            $this->errors['date-time-zone'] = $this->lang->t('install', 'select_time_zone');
         }
         if (is_file($configFilePath) === false || is_writable($configFilePath) === false) {
-            $errors[] = $this->lang->t('install', 'wrong_chmod_for_config_file');
+            $this->errors[] = $this->lang->t('install', 'wrong_chmod_for_config_file');
         }
 
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed($errors);
-        }
+        $this->_checkForFailedValidation();
     }
 }
