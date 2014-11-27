@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Create new article</item>
+        <item key="admin_index_delete">Delete article</item>
+        <item key="admin_index_edit">Edit article</item>
+        <item key="articles">Articles</item>
+        <item key="create_menu_item">Create menu item for this article</item>
+        <item key="mod_description">This module manages the articles.</item>
+        <item key="page_statements">Page statements</item>
+        <item key="text">Text</item>
+        <item key="text_to_short">The text should be at least 3 characters long.</item>
+        <item key="title">Title</item>
+        <item key="title_to_short">The title should be at least 3 characters long.</item>
+    </keys>
+</language>

@@ -1,0 +1,28 @@
+services:
+  feeds.controller.admin.index:
+    class: ACP3\Modules\Feeds\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@feeds.config']
+
+  feeds.controller.frontend.index:
+    class: ACP3\Modules\Feeds\Controller\Index
+    arguments: ['@core.context.frontend', '@feeds.config', '@feeds.extensions']
+
+  feeds.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'feeds']
+
+  feeds.config:
+    class: ACP3\Core\Config
+    arguments: ['@feeds.cache.core', '@system.model', 'feeds']
+
+  feeds.validator:
+    class: ACP3\Modules\Feeds\Validator
+    parent: core.validator.abstract
+
+  feeds.extensions:
+    class: ACP3\Modules\Feeds\Extensions
+    arguments: ['@service_container', '@core.date', '@core.router', '@core.view', '@core.helpers.stringFormatter']
+
+  feeds.installer:
+    class: ACP3\Modules\Feeds\Installer
+    parent: core.modules.abstractInstaller

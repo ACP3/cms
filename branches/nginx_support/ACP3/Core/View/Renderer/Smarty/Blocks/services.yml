@@ -1,0 +1,6 @@
+services:
+  smarty.plugin.javascripts:
+    class: ACP3\Core\View\Renderer\Smarty\Blocks\Javascripts
+
+  smarty.plugin.stylesheets:
+    class: ACP3\Core\View\Renderer\Smarty\Blocks\Stylesheets

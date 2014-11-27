@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="minify">Minify</item>
+        <item key="mod_description">Merges and compresses CSS and JavaScript files.</item>
+    </keys>
+</language>

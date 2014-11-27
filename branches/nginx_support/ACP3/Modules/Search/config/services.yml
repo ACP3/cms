@@ -1,0 +1,24 @@
+services:
+  search.controller.frontend.index:
+    class: ACP3\Modules\Search\Controller\Index
+    arguments: ['@core.context.frontend', '@core.helpers.secure']
+
+  search.controller.sidebar.index:
+    class: ACP3\Modules\Search\Controller\Sidebar\Index
+    arguments: ['@core.context', '@core.helpers.secure']
+
+  search.helpers:
+    class: ACP3\Modules\Search\Helpers
+    arguments: ['@core.acl', '@core.modules', '@core.helpers.forms']
+
+  search.validator:
+    class: ACP3\Modules\Search\Validator
+    parent: core.validator.abstract
+
+  search.extensions:
+    class: ACP3\Modules\Search\Extensions
+    arguments: ['@service_container', '@core.date', '@core.lang', '@core.router']
+
+  search.installer:
+    class: ACP3\Modules\Search\Installer
+    parent: core.modules.abstractInstaller

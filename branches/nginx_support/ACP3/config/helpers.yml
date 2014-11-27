@@ -1,0 +1,37 @@
+services:
+  core.helpers.alerts:
+    class: ACP3\Core\Helpers\Alerts
+    arguments: ['@core.request', '@core.view', '@core.helpers.output']
+
+  core.helpers.forms:
+    class: ACP3\Core\Helpers\Forms
+
+  core.helpers.sendEmail:
+    class: ACP3\Core\Helpers\SendEmail
+    arguments: ['@core.mailer']
+
+  core.helpers.output:
+    class: ACP3\Core\Helpers\Output
+
+  core.helpers.redirect:
+    class: ACP3\Core\Helpers\RedirectMessages
+    arguments: ['@core.redirect', '@core.request', '@core.view']
+
+  core.helpers.secure:
+    class: ACP3\Core\Helpers\Secure
+    arguments: ['@core.view']
+
+  core.helpers.sort:
+    class: ACP3\Core\Helpers\Sort
+    arguments: ['@core.db']
+
+  core.helpers.stringFormatter:
+    class: ACP3\Core\Helpers\StringFormatter
+
+  core.helpers.formatter.rewriteInternalUri:
+    class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
+    arguments: ['@core.modules', '@core.router', '@core.validator.rules.router.aliases']
+
+  core.helpers.toc:
+    class: ACP3\Core\Helpers\TableOfContents
+    arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.validator.rules.misc', '@core.view']

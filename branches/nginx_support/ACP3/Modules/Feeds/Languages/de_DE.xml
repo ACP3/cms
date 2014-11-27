@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="feed_image">Feed Bild</item>
+        <item key="feed_type">Typ des Newsfeeds</item>
+        <item key="feeds">Feeds</item>
+        <item key="mod_description">Mit diesem Modul können Feeds erstellt werden, welche z.B. die aktuellen News und
+            Downloads anzeigen.
+        </item>
+        <item key="select_feed_type">Bitte wählen Sie den Typ des auszugebenden Feeds aus.</item>
+    </keys>
+</language>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_delete">Delete guestbook entries</item>
+        <item key="admin_index_edit">Edit guestbook entry</item>
+        <item key="admin_index_settings">Settings</item>
+        <item key="activate_entry">Enable entry</item>
+        <item key="allow_emoticons">Allow Emoticons</item>
+        <item key="create">New entry</item>
+        <item key="frontend_index_create">New entry</item>
+        <item key="guestbook">Guestbook</item>
+        <item key="guestbook_entries">Guestbook entries</item>
+        <item key="ip">IP Address</item>
+        <item key="mod_description">With this module you can administer the guestbook.</item>
+        <item key="newsletter_integration">Integrate into the newsletter</item>
+        <item key="no_notification">No notification</item>
+        <item key="notification">Notification</item>
+        <item key="notification_email">Notification e-mail address</item>
+        <item key="notification_email_subject">Notification on new guestbook entries</item>
+        <item key="notification_email_body_1">Someone has written a new guestbook entry on the website %1$s.
+            Please click on the link below to review the entry (maybe it is necessary to login before):
+            %2$s
+        </item>
+        <item key="notification_email_body_2">Someone has written a new guestbook entry on the website %1$s.
+            Please click on the link below to review and activate the entry (maybe it is necessary to login before):
+            %2$s
+        </item>
+        <item key="notify_and_enable">Notify and activate through administrator</item>
+        <item key="notify_on_new_entry">Notify on new entries</item>
+        <item key="select_emoticons">Please select whether you want to allow emoticons or not.</item>
+        <item key="select_newsletter_integration">Please select whether you want to allow users to subscribe into the
+            newsletter when creating a new guestbook entry.
+        </item>
+        <item key="select_notification_type">Please select whether you want to be notified about new guestbook entries or
+            not.
+        </item>
+        <item key="select_use_overlay">Please select whether users shoud be allowed to create guestbook entries in an
+            overlay or not.
+        </item>
+        <item key="send_email">Send E-mail</item>
+        <item key="subscribe_to_newsletter">Yes, I would like to receive the newsletter of &quot;%s&quot;.</item>
+        <item key="type_in_email_address_to_subscribe_to_newsletter">To receive the newsletter, you must provide a valid
+            e-mail address.
+        </item>
+        <item key="use_overlay">Create guestbook entries in an overlay</item>
+        <item key="visit_website">Visit website</item>
+    </keys>
+</language>
