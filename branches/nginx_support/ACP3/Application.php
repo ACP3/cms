@@ -144,7 +144,7 @@ class Application
      */
     public function initializeClasses()
     {
-        $file = UPLOADS_DIR . 'cache/sql/container.php';
+        $file = CACHE_DIR . 'sql/container.php';
 
         if (is_file($file) && (!defined('DEBUG') || DEBUG === false)) {
             require_once $file;
