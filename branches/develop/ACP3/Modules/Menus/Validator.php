@@ -132,7 +132,7 @@ class Validator extends Core\Validator\AbstractValidator
             $formData['mode'] == 3 && empty($formData['uri']) ||
             $formData['mode'] == 4 && ($this->validate->isNumber($formData['articles']) === false || ($this->articlesHelpers && $this->articlesHelpers->articleExists($formData['articles']) === false))
         ) {
-            $this->errors[] = $this->lang->t('menus', 'type_in_uri_and_target');
+            $this->errors['link'] = $this->lang->t('menus', 'type_in_uri_and_target');
         }
         if ($formData['mode'] == 2 && !empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $formData['uri']) === true) {
             $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
