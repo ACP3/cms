@@ -2,6 +2,7 @@
 namespace ACP3\Core\Validator\Rules\Router;
 
 use ACP3\Core;
+use ACP3\Modules\System;
 
 /**
  * Class Aliases
@@ -10,24 +11,24 @@ use ACP3\Core;
 class Aliases
 {
     /**
-     * @var Core\DB
-     */
-    protected $db;
-    /**
      * @var Core\Validator\Rules\Router
      */
     protected $routerValidator;
+    /**
+     * @var System\Model
+     */
+    protected $systemModel;
 
     /**
-     * @param Core\DB $db
      * @param Core\Validator\Rules\Router $routerValidator
+     * @param System\Model $systemModel
      */
     public function __construct(
-        Core\DB $db,
-        Core\Validator\Rules\Router $routerValidator
+        Core\Validator\Rules\Router $routerValidator,
+        System\Model $systemModel
     ) {
-        $this->db = $db;
         $this->routerValidator = $routerValidator;
+        $this->systemModel = $systemModel;
     }
 
     /**
@@ -46,8 +47,8 @@ class Aliases
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
                 if ($path !== '/' && $this->routerValidator->isInternalURI($path) === true) {
-                    return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
-                } elseif ($this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', [$alias]) > 0) {
+                    return $this->systemModel->uriAliasExistsByAlias($alias, $path);
+                } elseif ($this->systemModel->uriAliasExistsByAlias($alias) === true) {
                     return true;
                 }
             }
