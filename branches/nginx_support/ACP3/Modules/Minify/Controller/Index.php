@@ -53,7 +53,8 @@ class Index extends Core\Modules\Controller
             $options['maxAge'] = $this->systemConfig->getSettings()['cache_minify'];
             $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];
 
-            \Minify::setCache(new \Minify_Cache_File(UPLOADS_DIR . 'cache/minify/', true));
+            \Minify::setCache(new \Minify_Cache_File(CACHE_DIR . 'minify/', true));
+            \Minify::setDocRoot(ACP3_ROOT_DIR);
             \Minify::serve('Files', $options);
         }
     }

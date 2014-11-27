@@ -68,8 +68,7 @@ class Application
     public function defineDirConstants()
     {
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-        $phpSelf = dirname(PHP_SELF);
-        define('ROOT_DIR', $phpSelf !== '/' ? $phpSelf . '/' : '/');
+        define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
         define('HOST_NAME', 'http://' . $_SERVER['HTTP_HOST']);
         define('ROOT_DIR_ABSOLUTE', HOST_NAME . ROOT_DIR);
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
@@ -77,8 +76,9 @@ class Application
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('VENDOR_DIR', ACP3_ROOT_DIR . 'vendor/');
-        define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
-        define('CACHE_DIR', UPLOADS_DIR . 'cache/');
+        define('UPLOADS_DIR', ACP3_ROOT_DIR . 'web/uploads/');
+        define('VAR_DIR', ACP3_ROOT_DIR . 'uploads/');
+        define('CACHE_DIR', VAR_DIR . 'cache/');
     }
 
     /**
@@ -112,7 +112,7 @@ class Application
             E_USER_DEPRECATED => Logger::WARNING,
         ];
 
-        $stream = new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE);
+        $stream = new StreamHandler(VAR_DIR . 'logs/system.log', Logger::NOTICE);
         $stream->setFormatter(new LineFormatter(null, null, true));
 
         $logger = new Logger('system', [$stream]);
