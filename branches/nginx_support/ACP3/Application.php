@@ -77,7 +77,7 @@ class Application
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('VENDOR_DIR', ACP3_ROOT_DIR . 'vendor/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'web/uploads/');
-        define('VAR_DIR', ACP3_ROOT_DIR . 'uploads/');
+        define('VAR_DIR', ACP3_ROOT_DIR . 'var/');
         define('CACHE_DIR', VAR_DIR . 'cache/');
     }
 

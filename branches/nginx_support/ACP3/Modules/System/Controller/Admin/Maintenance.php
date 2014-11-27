@@ -185,11 +185,11 @@ class Maintenance extends Core\Modules\Controller\Admin
 
             $this->view->assign('sql_queries', $sqlQueries);
 
-            Core\Cache::purge(UPLOADS_DIR . 'cache/images');
-            Core\Cache::purge(UPLOADS_DIR . 'cache/minify');
-            Core\Cache::purge(UPLOADS_DIR . 'cache/sql');
-            Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
-            Core\Cache::purge(UPLOADS_DIR . 'cache/tpl_cached');
+            Core\Cache::purge(CACHE_DIR . 'images');
+            Core\Cache::purge(CACHE_DIR . 'minify');
+            Core\Cache::purge(CACHE_DIR . 'sql');
+            Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
+            Core\Cache::purge(CACHE_DIR . 'tpl_cached');
             return;
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
