@@ -60,17 +60,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="uri" class="col-sm-2 control-label">{lang t="news|uri"}</label>
+                        <label for="link-uri" class="col-sm-2 control-label">{lang t="news|uri"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="url" name="uri" id="uri" value="{$form.uri}" maxlength="120">
+                            <input class="form-control" type="url" name="uri" id="link-uri" value="{$form.uri}" maxlength="120">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="target" class="col-sm-2 control-label">{lang t="news|target_page"}</label>
+                        <label for="link-target" class="col-sm-2 control-label">{lang t="news|target_page"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="target" id="target">
+                            <select class="form-control" name="target" id="link-target">
                                 {foreach $target as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}

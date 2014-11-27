@@ -75,10 +75,10 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div id="module-container" class="form-group">
-                        <label for="module" class="col-sm-2 control-label">{lang t="menus|module"}</label>
+                        <label for="link-module" class="col-sm-2 control-label">{lang t="menus|module"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="module" id="module">
+                            <select class="form-control" name="module" id="link-module">
                                 <option value="">{lang t="system|pls_select"}</option>
                                 {foreach $modules as $row}
                                     <option value="{$row.dir|lower}"{$row.selected}>{$row.name}</option>
@@ -87,20 +87,20 @@
                         </div>
                     </div>
                     <div id="link-container" class="form-group">
-                        <label for="uri" class="col-sm-2 control-label">{lang t="menus|uri"}</label>
+                        <label for="link-uri" class="col-sm-2 control-label">{lang t="menus|uri"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="uri" id="uri" value="{$form.uri}" maxlength="120">
+                            <input class="form-control" type="text" name="uri" id="link-uri" value="{$form.uri}" maxlength="120">
 
                             <p id="link-hints" class="help-block">{lang t="menus|dynamic_page_hints"}</p>
                         </div>
                     </div>
                     {if isset($articles)}
                         <div id="articles-container" class="form-group">
-                            <label for="articles" class="col-sm-2 control-label">{lang t="articles|articles"}</label>
+                            <label for="link-articles" class="col-sm-2 control-label">{lang t="articles|articles"}</label>
 
                             <div class="col-sm-10">
-                                <select class="form-control" name="articles" id="articles">
+                                <select class="form-control" name="articles" id="link-articles">
                                     <option value="">{lang t="system|pls_select"}</option>
                                     {foreach $articles as $row}
                                         <option value="{$row.id}"{$row.selected}>{$row.title}</option>
@@ -110,10 +110,10 @@
                         </div>
                     {/if}
                     <div id="target-container" class="form-group">
-                        <label for="target" class="col-sm-2 control-label">{lang t="menus|target_page"}</label>
+                        <label for="link-target" class="col-sm-2 control-label">{lang t="menus|target_page"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="target" id="target">
+                            <select class="form-control" name="target" id="link-target">
                                 {foreach $target as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
