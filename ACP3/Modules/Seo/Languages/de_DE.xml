@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Neuen URL-Rewrite erstellen</item>
+        <item key="admin_index_delete">URL-Rewrites löschen</item>
+        <item key="admin_index_edit">URL-Rewrite bearbeiten</item>
+        <item key="alias">Alias</item>
+        <item key="alias_description">Bitte nur Kleinbuchstaben von a-z, Ziffern und den Bindestrich verwenden.</item>
+        <item key="alias_unallowed_characters_or_exists">Entweder haben Sie für den URI-Alias unerlaubte Zeichen eingegeben oder es existiert bereits einer mit diesem Namen.</item>
+        <item key="description">Beschreibung</item>
+        <item key="keywords">Schlüsselwörter</item>
+        <item key="keywords_separate_with_commas">Bitte mit Kommata trennen.</item>
+        <item key="mod_description">Dieses Modul ist für die Verwaltung von URL-Rewrites, Schlüsselwörtern, Beschreibungen und den Robots-Einstellungen zuständig.</item>
+        <item key="robots">Robots</item>
+        <item key="robots_use_system_default">Systemstandard verwenden (%s)</item>
+        <item key="robots_index_follow">index, follow</item>
+        <item key="robots_index_nofollow">index, nofollow</item>
+        <item key="robots_noindex_follow">noindex, follow</item>
+        <item key="robots_noindex_nofollow">noindex, nofollow</item>
+        <item key="select_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.</item>
+        <item key="seo">URL-Rewrites (SEO)</item>
+        <item key="uri">Pfad</item>
+    </keys>
+</language>

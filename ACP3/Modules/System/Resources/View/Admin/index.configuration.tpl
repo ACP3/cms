@@ -11,7 +11,7 @@
                 <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
                 <li><a href="#tab-2" data-toggle="tab">{lang t="system|date"}</a></li>
                 <li><a href="#tab-3" data-toggle="tab">{lang t="system|maintenance"}</a></li>
-                <li><a href="#tab-4" data-toggle="tab">{lang t="system|seo"}</a></li>
+                <li><a href="#tab-4" data-toggle="tab">{lang t="seo|seo"}</a></li>
                 <li><a href="#tab-5" data-toggle="tab">{lang t="system|performance"}</a></li>
                 <li><a href="#tab-6" data-toggle="tab">{lang t="system|email"}</a></li>
             </ul>
@@ -135,23 +135,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo-meta-description" class="col-sm-2 control-label">{lang t="system|seo_description"}</label>
+                        <label for="seo-meta-description" class="col-sm-2 control-label">{lang t="seo|description"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="seo_meta_description" id="seo-meta-description" value="{$form.seo_meta_description}" maxlength="120">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo-meta-keywords" class="col-sm-2 control-label">{lang t="system|seo_keywords"}</label>
+                        <label for="seo-meta-keywords" class="col-sm-2 control-label">{lang t="seo|keywords"}</label>
 
                         <div class="col-sm-10">
                             <textarea class="form-control" name="seo_meta_keywords" id="seo-meta-keywords" cols="50" rows="6">{$form.seo_meta_keywords}</textarea>
 
-                            <p class="help-block">{lang t="system|seo_keywords_separate_with_commas"}</p>
+                            <p class="help-block">{lang t="seo|keywords_separate_with_commas"}</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo-robots" class="col-sm-2 control-label">{lang t="system|seo_robots"}</label>
+                        <label for="seo-robots" class="col-sm-2 control-label">{lang t="seo|robots"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="seo_robots" id="seo-robots">

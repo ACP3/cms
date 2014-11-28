@@ -93,7 +93,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias']) === true) {
-            $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
 
         $this->_checkForFailedValidation();
@@ -134,7 +134,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true) {
-            $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
 
         $this->_checkForFailedValidation();
