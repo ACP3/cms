@@ -22,7 +22,7 @@
         <item key="robots_noindex_follow">noindex, follow</item>
         <item key="robots_noindex_nofollow">noindex, nofollow</item>
         <item key="select_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.</item>
-        <item key="seo">URL-Rewrites (SEO)</item>
+        <item key="seo">SEO</item>
         <item key="uri">Pfad</item>
     </keys>
 </language>

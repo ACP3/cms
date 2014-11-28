@@ -1,3 +1,4 @@
+/* AJAX loading layer */
 #loading-layer {
     width: 100%;
     background: rgba(255, 255, 255, 0.5);
@@ -58,6 +59,7 @@
     padding-top: 15px;
 }
 
+/* Pagination */
 .pagination {
     margin: 0 0 10px;
 }
@@ -146,7 +148,7 @@ table .sub-table-header span, table .sub-table-header div {
     float: right;
 }
 
-/* Bootstrap Modal Dialog statisch positionieren */
+/* Position Bootstrap modal dialogs statically */
 .modal.static {
     margin: 0 auto;
     position: static;
