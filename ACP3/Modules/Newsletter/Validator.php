@@ -30,7 +30,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Lang $lang
      * @param Core\Validator\Rules\Misc $validate
      * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\Modules $acl
+     * @param Core\ACL $acl
      * @param Core\Auth $auth
      * @param Model $newsletterModel
      */
@@ -38,7 +38,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
-        Core\Modules $acl,
+        Core\ACL $acl,
         Core\Auth $auth,
         Model $newsletterModel
     ) {
