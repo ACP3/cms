@@ -104,6 +104,9 @@ class CheckAccess extends AbstractFunction
                 } else {
                     $accessCheck['lang'] = $this->lang->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
                 }
+                if (isset($params['class'])) {
+                    $accessCheck['class'] = $params['class'];
+                }
 
                 $accessCheck['mode'] = $params['mode'];
                 $smarty->assign('access_check', $accessCheck);

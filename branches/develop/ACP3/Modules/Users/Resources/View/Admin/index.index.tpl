@@ -13,9 +13,9 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="link" path="acp/users/index/create" icon="32/add_user" width="32" height="32"}
-                    {check_access mode="link" path="acp/users/index/settings" icon="32/advancedsettings" width="32" height="32"}
-                    {check_access mode="input" path="acp/users/index/delete" icon="32/cancel" lang="system|delete_marked"}
+                    {check_access mode="link" path="acp/users/index/create" class="glyphicon glyphicon-plus text-success"}
+                    {check_access mode="link" path="acp/users/index/settings" class="glyphicon glyphicon-cog"}
+                    {check_access mode="button" path="acp/users/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>
         </nav>
