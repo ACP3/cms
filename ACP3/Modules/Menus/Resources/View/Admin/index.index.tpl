@@ -68,17 +68,19 @@
                             {if $can_order_item === true}
                                 <td>
                                     {if !$row.last}
-                                        <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            {icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}
-                                        </a>
+                                        <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_down"}"
+                                           title="{lang t="system|move_down"}"
+                                           data-ajax-form="true"
+                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>
                                     {/if}
                                     {if !$row.first}
-                                        <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            {icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}
-                                        </a>
+                                        <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_up"}"
+                                           title="{lang t="system|move_up"}"
+                                           data-ajax-form="true"
+                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>
                                     {/if}
                                     {if $row.first && $row.last}
-                                        {icon path="16/editdelete" width="16" height="16" alt={lang t="system|move_impossible"} title={lang t="system|move_impossible"}}
+                                        <i class="glyphicon glyphicon-remove-circle text-danger" aria-hidden="true" title="{lang t="system|move_impossible"}"></i>
                                     {/if}
                                 </td>
                             {/if}

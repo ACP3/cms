@@ -10,7 +10,7 @@
                 <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
                 <li><a href="#tab-2" data-toggle="tab">{lang t="news|news"}</a></li>
                 <li><a href="#tab-3" data-toggle="tab">{lang t="news|hyperlink"}</a></li>
-                <li><a href="#tab-4" data-toggle="tab">{lang t="system|seo"}</a></li>
+                <li><a href="#tab-4" data-toggle="tab">{lang t="seo|seo"}</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">

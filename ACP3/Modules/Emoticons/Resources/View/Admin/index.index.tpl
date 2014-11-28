@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
                     {check_access mode="link" path="acp/emoticons/index/create" class="glyphicon glyphicon-plus text-success"}
-                    {check_access mode="link" path="acp/emoticons/index/settings" class="glyphicon glyphicon-cog"}
+                    {check_access mode="link" path="acp/emoticons/index/settings" class="glyphicon glyphicon-wrench"}
                     {check_access mode="button" path="acp/emoticons/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>

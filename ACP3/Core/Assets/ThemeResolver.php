@@ -135,6 +135,9 @@ class ThemeResolver
             // Pfad zerlegen
             $fragments = explode('/', $template);
 
+            if (isset($fragments[2])) {
+                $fragments[1] = ucfirst($fragments[1]);
+            }
             $modulesPath .= $fragments[0] . '/Resources/View/' . $fragments[1];
             if (isset($fragments[2])) {
                 $modulesPath .= '/' . $fragments[2];

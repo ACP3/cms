@@ -1,39 +1,6 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:gallery/admin/index.create.tpl"}
 
-{block CONTENT}
-    {if isset($error_msg)}
-        {$error_msg}
-    {/if}
-    <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="tabbable">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general_statements"}</a></li>
-                <li><a href="#tab-2" data-toggle="tab">{lang t="system|seo"}</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="tab-1" class="tab-pane fade in active">
-                    {include file="asset:system/datepicker.tpl" datepicker=$publication_period}
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="gallery|title"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
-                        </div>
-                    </div>
-                </div>
-                <div id="tab-2" class="tab-pane fade">
-                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/gallery"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
-    </form>
+{block CONTENT append}
     <form action="{uri args="acp/gallery/pictures/delete/id_$gallery_id"}" method="post">
         <nav id="adm-list" class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
@@ -73,25 +40,33 @@
                         {if $can_delete === true}
                             <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                         {/if}
-                        <td>{if $can_edit_picture}
-                            <a href="{uri args="acp/gallery/pictures/edit/id_`$row.id`"}" title="{lang t="gallery|edit_picture"}">
-                                <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt=""></a>{else}
-                                <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="">{/if}</td>
+                        <td>
+                            {if $can_edit_picture}
+                                <a href="{uri args="acp/gallery/pictures/edit/id_`$row.id`"}" title="{lang t="gallery|admin_pictures_edit"}">
+                                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="">
+                                </a>
+                            {else}
+                                <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="">
+                            {/if}
+                        </td>
                         <td>{$row.description}</td>
                         {if $can_order === true}
                             <td>
                                 {if !$row.last}
-                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                        {icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}
-                                    </a>
+                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_down"}"
+                                       title="{lang t="system|move_down"}"
+                                       data-ajax-form="true"
+                                       data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>
                                 {/if}
                                 {if !$row.first}
-                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                        {icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}
+                                    <a href="{uri args="acp/gallery/pictures/order/id_`$row.id`/action_up"}"
+                                       title="{lang t="system|move_up"}"
+                                       data-ajax-form="true"
+                                       data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>
                                     </a>
                                 {/if}
                                 {if $row.first && $row.last}
-                                    {icon path="16/editdelete" width="16" height="16" alt={lang t="system|move_impossible"} title={lang t="system|move_impossible"}}
+                                    <i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="{lang t="system|move_impossible"}"></i>
                                 {/if}
                             </td>
                         {/if}
