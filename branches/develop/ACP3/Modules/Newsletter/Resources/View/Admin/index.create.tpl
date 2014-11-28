@@ -11,7 +11,7 @@
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="title" id="title" value="{$form.title}" required></div>
         </div>
-        {$date}
+        {include file="asset:system/datepicker.tpl" datepicker=$date}
         <div class="form-group">
             <label for="text" class="col-sm-2 control-label">{lang t="newsletter|text"}</label>
 
