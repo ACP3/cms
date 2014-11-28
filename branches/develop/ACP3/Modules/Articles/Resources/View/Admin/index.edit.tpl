@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:system/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>

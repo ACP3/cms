@@ -87,7 +87,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['seo-title'] = $this->lang->t('system', 'title_to_short');
         }
         if ($this->validate->isNumber($formData['seo_robots']) === false) {
-            $this->errors['seo-robots'] = $this->lang->t('system', 'select_seo_robots');
+            $this->errors['seo-robots'] = $this->lang->t('seo', 'select_robots');
         }
         if ($this->validate->isNumber($formData['seo_mod_rewrite']) === false) {
             $this->errors['seo-mod-rewrite'] = $this->lang->t('system', 'select_mod_rewrite');

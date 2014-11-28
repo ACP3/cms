@@ -135,7 +135,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['link'] = $this->lang->t('menus', 'type_in_uri_and_target');
         }
         if ($formData['mode'] == 2 && !empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $formData['uri']) === true) {
-            $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
 
         $this->_checkForFailedValidation();

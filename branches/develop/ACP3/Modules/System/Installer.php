@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 48;
+    const SCHEMA_VERSION = 49;
 
     /**
      * @var array
@@ -54,14 +54,6 @@ class Installer extends Modules\AbstractInstaller
                 `version` tinyint(3) UNSIGNED NOT NULL,
                 `active` tinyint(1) unsigned NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};",
-            "CREATE TABLE `{pre}seo` (
-                `uri` varchar(255) NOT NULL,
-                `alias` varchar(100) NOT NULL,
-                `keywords` varchar(255) NOT NULL,
-                `description` varchar(255) NOT NULL,
-                `robots` TINYINT(1) UNSIGNED NOT NULL,
-                PRIMARY KEY (`uri`), INDEX (`alias`)
             ) {engine} {charset};",
             "CREATE TABLE `{pre}sessions` (
                 `session_id` varchar(32) NOT NULL,
@@ -267,6 +259,11 @@ class Installer extends Modules\AbstractInstaller
             48 => [
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"cache_driver\";",
                 "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"version\";",
+            ],
+            49 => [
+                'ALTER TABLE `{pre}seo` DROP INDEX `PRIMARY`;',
+                'ALTER TABLE `{pre}seo` ADD UNIQUE (uri);',
+                'ALTER TABLE `{pre}seo` ADD `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
             ]
         ];
     }

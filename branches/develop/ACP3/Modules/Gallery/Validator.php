@@ -68,7 +68,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $uriAlias) === true) {
-            $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
 
         $this->_checkForFailedValidation();
