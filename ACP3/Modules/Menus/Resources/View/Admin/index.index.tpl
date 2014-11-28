@@ -13,9 +13,9 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="link" path="acp/menus/items/create" icon="32/kmenuedit" width="32" height="32"}
+                    {check_access mode="link" path="acp/menus/items/create" class="glyphicon glyphicon-plus text-success"}
                     {check_access mode="link" path="acp/menus/index/create" icon="32/source_moc" width="32" height="32"}
-                    {check_access mode="input" path="acp/menus/items/delete" icon="32/cancel" lang="system|delete_marked"}
+                    {check_access mode="button" path="acp/menus/items/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>
         </nav>
