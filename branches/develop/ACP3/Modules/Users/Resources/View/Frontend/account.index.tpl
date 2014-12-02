@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
                 {check_access mode="link" path="users/account/edit" class="glyphicon glyphicon-pencil text-info"}
-                {check_access mode="link" path="users/account/settings" class="glyphicon glyphicon-wrench"}
+                {check_access mode="link" path="users/account/settings" class="glyphicon glyphicon-cog"}
             </div>
         </div>
     </nav>

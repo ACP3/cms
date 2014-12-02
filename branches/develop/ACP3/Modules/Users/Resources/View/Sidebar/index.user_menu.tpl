@@ -24,7 +24,7 @@
         {if isset($user_sidebar.system)}
             <div id="menu-system" class="list-group-item dropdown">
                 <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-system">
-                    <i class="glyphicon glyphicon-wrench"></i>
+                    <i class="glyphicon glyphicon-cog"></i>
                     {lang t="system|system"}
                     <b class="caret"></b>
                 </a>
