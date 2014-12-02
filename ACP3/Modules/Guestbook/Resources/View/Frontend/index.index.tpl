@@ -39,12 +39,12 @@
                     <div class="pull-right">
                         {if $row.website != ''}
                             <a href="{$row.website}" target="_blank" rel="nofollow" title="{lang t="guestbook|visit_website"}">
-                                {icon path="16/gohome" width="16" height="16" alt="`$row.website`"}
+                                <i class="glyphicon glyphicon-link"></i>
                             </a>
                             <br>
                         {/if}
                         {if $row.mail != ''}
-                            {mailto address=$row.mail encode="javascript" text="{icon path="16/mail" width="16" height="16" alt="`$row.mail`"}"}
+                            {mailto address=$row.mail encode="javascript" text='<i class="glyphicon glyphicon-envelope"></i>'}
                         {/if}
                     </div>
                     {$row.message|nl2p}

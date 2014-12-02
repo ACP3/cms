@@ -232,6 +232,7 @@ class Install extends AbstractController
             'date_time_zone' => $formData['date_time_zone'],
             'maintenance_message' => $this->lang->t('install', 'offline_message'),
             'seo_title' => !empty($formData['seo_title']) ? $formData['seo_title'] : 'ACP3',
+            'lang' => LANG
         ];
 
         $configSystem = $this->get('system.config');
