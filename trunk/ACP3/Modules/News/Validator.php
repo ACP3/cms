@@ -78,7 +78,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['link_title']) && (empty($formData['uri']) || $this->validate->isNumber($formData['target']) === false)) {
-            $this->errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
+            $this->errors['link'] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $uriAlias) === true) {
             $this->errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');

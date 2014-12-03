@@ -36,9 +36,9 @@ $(document).ready(function () {
 
             // Modul im Dropdown-Menü selektieren, falls zuvor als Modus eine dynamische Seite aktiv war
             if (currentMode == 2) {
-                var match = $('#uri').val().match(/^([a-z\d_\-]+)\/([a-z\d_\-]+\/)+$/);
-                if (!$('#uri').val().match(/^articles\/details\/id_(\d+)\/$/) && match[1] != null && $('#module option[value="' + match[1] + '"]').length > 0) {
-                    $('#module').val(match[1]);
+                var match = $('#link-uri').val().match(/^([a-z\d_\-]+)\/([a-z\d_\-]+\/)+$/);
+                if (!$('#link-uri').val().match(/^articles\/details\/id_(\d+)\/$/) && match[1] != null && $('#module option[value="' + match[1] + '"]').length > 0) {
+                    $('#link-module').val(match[1]);
                 }
             }
         } else if (mode == 2) {
@@ -69,11 +69,11 @@ $(document).ready(function () {
         currentMode = mode;
     }).change();
 
-    $('#uri').blur(function () {
+    $('#link-uri').blur(function () {
         var match = $(this).val().match(/^articles\/details\/id_(\d+)\/$/);
         if (match[1] !== null && $('#articles option[value="' + match[1] + '"]').length > 0) {
             $('#mode').val(4).change();
-            $('#articles').val(match[1]);
+            $('#link-articles').val(match[1]);
         }
     });
 

@@ -105,11 +105,11 @@ jQuery.fn.formSubmit = function (customFormData) {
     $(this).each(function () {
         var $this = $(this);
 
-        $this.on('submit',function (e) {
+        $this.on('submit', function (e) {
             e.preventDefault();
 
             if (typeof CKEDITOR !== "undefined") {
-                for (instance in CKEDITOR.instances) {
+                for (var instance in CKEDITOR.instances) {
                     CKEDITOR.instances[instance].updateElement();
                 }
             }
