@@ -154,3 +154,8 @@ table .sub-table-header span, table .sub-table-header div {
 .list-group-item a:hover {
     background-color: #F5F5F5;
 }
+
+/* Inline validation errors */
+.validation-failed {
+    margin: 15px 0 0;
+}

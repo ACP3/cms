@@ -98,8 +98,8 @@ class Index extends Core\Modules\Controller
 
     protected function _clearCaches()
     {
-        Cache::purge(UPLOADS_DIR . 'cache/sql');
-        Cache::purge(UPLOADS_DIR . 'cache/tpl_compiled');
-        Cache::purge(UPLOADS_DIR . 'cache/minify');
+        Cache::purge(CACHE_DIR . 'sql');
+        Cache::purge(CACHE_DIR . 'tpl_compiled');
+        Cache::purge(CACHE_DIR . 'minify');
     }
 }

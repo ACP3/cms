@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="birthday" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
+                        <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
                             {include file="asset:system/datepicker.tpl" datepicker=$birthday_datepicker}

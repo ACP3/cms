@@ -43,7 +43,7 @@ class Cache
         $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
         if (class_exists($cacheDriverPath)) {
             if ($driverName === 'PhpFile') {
-                $cacheDir = UPLOADS_DIR . 'cache/sql/';
+                $cacheDir = CACHE_DIR . 'sql/';
                 $this->driver = new $cacheDriverPath($cacheDir);
             } else {
                 $this->driver = new $cacheDriverPath();
