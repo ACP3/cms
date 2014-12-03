@@ -41,7 +41,7 @@
                         <label for="flood" class="col-sm-2 control-label">{lang t="system|flood_barrier"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="flood" id="flood" value="{$form.flood}">
+                            <input class="form-control" type="number" name="flood" id="flood" value="{$form.flood}" min="0">
 
                             <p class="help-block">{lang t="system|flood_barrier_description"}</p>
                         </div>
