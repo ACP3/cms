@@ -147,7 +147,7 @@ class Installer extends Modules\AbstractInstaller
             'date_time_zone' => '',
             'design' => 'acp3',
             'entries' => '',
-            'flood' => '',
+            'flood' => '20',
             'homepage' => 'news/index/index/',
             'lang' => '',
             'mailer_smtp_auth' => false,

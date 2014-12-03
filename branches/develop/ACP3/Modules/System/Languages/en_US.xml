@@ -272,7 +272,7 @@
         <item key="type_in_additional_javascript_files">Some of the specified javascript files could not be found.</item>
         <item key="type_in_additional_stylesheets">Some of the specified stylesheets could not be found.</item>
         <item key="type_in_date_format">Please type in a date format.</item>
-        <item key="type_in_flood_barrier">Please enter the number of seconds a user can not submit posts.</item>
+        <item key="type_in_flood_barrier">Please enter the number in seconds a user can not submit posts.</item>
         <item key="type_in_long_date_format">Please type in the long date format.</item>
         <item key="type_in_mailer_smtp_host">Please type in the hostname of the SMTP server.</item>
         <item key="type_in_mailer_smtp_port">Please type in the portnumber of the SMTP server.</item>
