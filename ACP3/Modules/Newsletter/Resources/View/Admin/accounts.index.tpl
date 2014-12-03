@@ -13,7 +13,7 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="input" path="acp/newsletter/accounts/delete" icon="32/cancel" lang="system|delete_marked"}
+                    {check_access mode="button" path="acp/newsletter/accounts/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>
         </nav>

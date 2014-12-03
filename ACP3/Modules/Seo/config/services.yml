@@ -1,0 +1,28 @@
+services:
+  seo.controller.admin.index:
+    class: ACP3\Modules\Seo\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@seo.model']
+
+  seo.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'seo']
+
+  seo.config:
+    class: ACP3\Core\Config
+    arguments: ['@seo.cache.core', '@system.model', 'seo']
+
+  seo.model:
+    class: ACP3\Modules\Seo\Model
+    arguments: ['@core.db']
+
+  seo.validator:
+    class: ACP3\Modules\Seo\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.validator.rules.router.aliases']
+
+  seo.installer:
+    class: ACP3\Modules\Seo\Installer
+    parent: core.modules.abstractInstaller
+
+  smarty.plugin.robots:
+    class: ACP3\Modules\Seo\View\Renderer\Smarty\Modifiers\Robots
+    arguments: ['@core.lang', '@core.seo']

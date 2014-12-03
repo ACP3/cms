@@ -13,8 +13,8 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="link" path="acp/permissions/resources/create"  icon="32/resource"}
-                    {check_access mode="input" path="acp/permissions/resources/delete" icon="32/cancel" lang="system|delete_marked"}
+                    {check_access mode="link" path="acp/permissions/resources/create"  class="glyphicon glyphicon-plus text-success"}
+                    {check_access mode="button" path="acp/permissions/resources/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>
         </nav>

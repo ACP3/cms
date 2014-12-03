@@ -12,7 +12,7 @@
                                 {if !empty($row.size)}
                                     ({$row.size})
                                 {else}
-                                    ({lang t="files|unknown_filesize")}
+                                    ({lang t="files|unknown_filesize"})
                                 {/if}
                             </a>
                         </h2>

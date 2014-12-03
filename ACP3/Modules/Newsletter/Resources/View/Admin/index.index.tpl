@@ -13,10 +13,10 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="link" path="acp/newsletter/index/create" icon="32/mail_new" width="32" height="32"}
-                    {check_access mode="link" path="acp/newsletter/accounts" icon="32/personal" width="32" height="32"}
-                    {check_access mode="link" path="acp/newsletter/index/settings" icon="32/advancedsettings" width="32" height="32"}
-                    {check_access mode="input" path="acp/newsletter/index/delete" icon="32/cancel" lang="system|delete_marked"}
+                    {check_access mode="link" path="acp/newsletter/index/create" class="glyphicon glyphicon-plus text-success"}
+                    {check_access mode="link" path="acp/newsletter/accounts" class="glyphicon glyphicon-user text-info"}
+                    {check_access mode="link" path="acp/newsletter/index/settings" class="glyphicon glyphicon-cog"}
+                    {check_access mode="button" path="acp/newsletter/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>
         </nav>
@@ -51,7 +51,7 @@
                         {if $can_send && $has_active_newsletter_accounts}
                             <td>
                                 <a href="{uri args="acp/newsletter/index/send/id_`$row.id`"}" title="{lang t="newsletter|send"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                    {icon path="16/mail_send" width="16" height="16" alt={lang t="newsletter|send"}}
+                                    <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
                                 </a>
                             </td>
                         {/if}

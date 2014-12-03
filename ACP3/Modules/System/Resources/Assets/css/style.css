@@ -1,3 +1,4 @@
+/* AJAX loading layer */
 #loading-layer {
     width: 100%;
     background: rgba(255, 255, 255, 0.5);
@@ -58,6 +59,7 @@
     padding-top: 15px;
 }
 
+/* Pagination */
 .pagination {
     margin: 0 0 10px;
 }
@@ -122,12 +124,31 @@ table .sub-table-header span, table .sub-table-header div {
     margin: 0;
 }
 
+#adm-list .navbar-text a {
+    color: #333;
+}
+
+#adm-list .navbar-text .btn-link {
+    margin-left: 8px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#adm-list .navbar-text .glyphicon {
+    font-size: 32px;
+}
+
+#adm-list .navbar-text .glyphicon-plus:before {
+    position: relative;
+    top: -2px;
+}
+
 #adm-list a, #adm-list input {
     margin: 8px 0 0 8px;
     float: right;
 }
 
-/* Bootstrap Modal Dialog statisch positionieren */
+/* Position Bootstrap modal dialogs statically */
 .modal.static {
     margin: 0 auto;
     position: static;

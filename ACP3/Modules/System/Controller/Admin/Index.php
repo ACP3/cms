@@ -87,36 +87,36 @@ class Index extends Core\Modules\Controller\Admin
 
         // Robots
         $lang_robots = [
-            $this->lang->t('system', 'seo_robots_index_follow'),
-            $this->lang->t('system', 'seo_robots_index_nofollow'),
-            $this->lang->t('system', 'seo_robots_noindex_follow'),
-            $this->lang->t('system', 'seo_robots_noindex_nofollow')
+            $this->lang->t('seo', 'robots_index_follow'),
+            $this->lang->t('seo', 'robots_index_nofollow'),
+            $this->lang->t('seo', 'robots_noindex_follow'),
+            $this->lang->t('seo', 'robots_noindex_nofollow')
         ];
         $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('seo_robots', [1, 2, 3, 4], $lang_robots, $systemSettings['seo_robots']));
 
         // Sef-URIs
-        $lang_mod_rewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('seo_mod_rewrite', [1, 0], $lang_mod_rewrite, $systemSettings['seo_mod_rewrite'], 'checked'));
+        $lang_modRewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('seo_mod_rewrite', [1, 0], $lang_modRewrite, $systemSettings['seo_mod_rewrite'], 'checked'));
 
         // Caching von Bildern
-        $lang_cache_images = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('cache_images', $this->get('core.helpers.forms')->selectGenerator('cache_images', [1, 0], $lang_cache_images, $systemSettings['cache_images'], 'checked'));
+        $lang_cacheImages = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('cache_images', $this->get('core.helpers.forms')->selectGenerator('cache_images', [1, 0], $lang_cacheImages, $systemSettings['cache_images'], 'checked'));
 
         // Mailertyp
-        $lang_mailer_type = [$this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp')];
-        $this->view->assign('mailer_type', $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $lang_mailer_type, $systemSettings['mailer_type']));
+        $lang_mailerType = [$this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp')];
+        $this->view->assign('mailer_type', $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $lang_mailerType, $systemSettings['mailer_type']));
 
         // Mailer SMTP Authentifizierung
-        $lang_mailer_smtp_auth = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mailer_smtp_auth', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_auth', [1, 0], $lang_mailer_smtp_auth, $systemSettings['mailer_smtp_auth'], 'checked'));
+        $lang_mailerSmtpAuth = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('mailer_smtp_auth', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_auth', [1, 0], $lang_mailerSmtpAuth, $systemSettings['mailer_smtp_auth'], 'checked'));
 
         // Mailer SMTP Verschlüsselung
-        $lang_mailer_smtp_security = [
+        $lang_mailerSmtpSecurity = [
             $this->lang->t('system', 'mailer_smtp_security_none'),
             $this->lang->t('system', 'mailer_smtp_security_ssl'),
             $this->lang->t('system', 'mailer_smtp_security_tls')
         ];
-        $this->view->assign('mailer_smtp_security', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailer_smtp_security, $systemSettings['mailer_smtp_security']));
+        $this->view->assign('mailer_smtp_security', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailerSmtpSecurity, $systemSettings['mailer_smtp_security']));
 
         $this->view->assign('form', array_merge($systemSettings, $_POST));
 

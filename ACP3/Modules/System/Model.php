@@ -58,6 +58,16 @@ class Model extends Core\Model
     }
 
     /**
+     * @param $alias
+     * @param string $path
+     * @return bool
+     */
+    public function uriAliasExistsByAlias($alias, $path = '')
+    {
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SEO . ' WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
+    }
+
+    /**
      * @param $moduleName
      * @return bool
      */

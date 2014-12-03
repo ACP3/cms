@@ -11,14 +11,16 @@ class Router extends Core\Router
 {
     public function __construct()
     {
+        $this->_setBaseUrl();
     }
 
     /**
-     * Generiert die ACP3 internen Hyperlinks
      * @param $path
+     * @param bool $absolute
+     * @param bool $forceSecure
      * @return string
      */
-    public function route($path)
+    public function route($path, $absolute = false, $forceSecure = false)
     {
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
         $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
@@ -30,7 +32,14 @@ class Router extends Core\Router
             $path .= 'index/';
         }
 
-        $prefix = PHP_SELF . '/';
+        $prefix = '';
+        // Append the current hostname to the URL
+        if ($absolute === true) {
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->getProtocol();
+            $prefix .= $this->getHostname();
+        }
+
+        $prefix.= PHP_SELF . '/';
         return $prefix . $path;
     }
 }

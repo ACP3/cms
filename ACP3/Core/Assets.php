@@ -148,17 +148,17 @@ class Assets
         // Stylesheets der Module
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $module) {
-            $modulePath = MODULES_DIR . $module['dir'] . '/Resources/Assets/';
-            $designPath = DESIGN_PATH_INTERNAL . $module['dir'] . '/';
+            $modulePath = $module['dir'] . '/Resources/Assets/';
+            $designPath = $module['dir'] . '/';
             if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'css', 'style.css')) &&
                 $module['dir'] !== 'System'
             ) {
                 $css[] = $stylesheet;
             }
-            // Append some custom styles to the default module styling
-            $pathModuleAppend = $designPath . 'css/append.css';
-            if (is_file($pathModuleAppend) === true) {
-                $css[] = $pathModuleAppend;
+
+            // Append custom styles to the default module styling
+            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'css', 'append.css'))) {
+                $css[] = $stylesheet;
             }
         }
 

@@ -16,7 +16,7 @@
                         <th>{lang t="system|description"}</th>
                         <th>{lang t="system|version"}</th>
                         <th>{lang t="system|author"}</th>
-                        <th>{lang t="system|options"}</th>
+                        <th style="width:20%">{lang t="system|options"}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -28,9 +28,9 @@
                             <td>{$row.author}</td>
                             <td>
                                 {if $row.protected === true}
-                                    {icon path="16/editdelete" width="16" height="16" alt={lang t="system|protected_module"} title={lang t="system|protected_module_description"}}
+                                    <i class="glyphicon glyphicon-remove-circle text-danger" title="{lang t="system|protected_module_description"}"></i>
                                 {else}
-                                    <div class="btn-group">
+                                    <div class="btn-group text-nowrap">
                                         {if $row.active === true}
                                             <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_deactivate"}"
                                                class="btn btn-default btn-sm"

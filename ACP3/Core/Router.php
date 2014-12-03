@@ -42,6 +42,14 @@ class Router
         $this->aliases = $aliases;
         $this->systemConfig = $systemConfig->getSettings();
 
+        $this->_setBaseUrl();
+    }
+
+    /**
+     * Sets the base url (Protocol + Hostname)
+     */
+    protected function _setBaseUrl()
+    {
         $this->protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
         $this->hostname = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
     }

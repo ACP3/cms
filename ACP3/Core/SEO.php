@@ -330,11 +330,11 @@ class SEO
         }
 
         $langRobots = [
-            sprintf($this->lang->t('system', 'seo_robots_use_system_default'), $this->getRobotsSetting()),
-            $this->lang->t('system', 'seo_robots_index_follow'),
-            $this->lang->t('system', 'seo_robots_index_nofollow'),
-            $this->lang->t('system', 'seo_robots_noindex_follow'),
-            $this->lang->t('system', 'seo_robots_noindex_nofollow')
+            sprintf($this->lang->t('seo', 'robots_use_system_default'), $this->getRobotsSetting()),
+            $this->lang->t('seo', 'robots_index_follow'),
+            $this->lang->t('seo', 'robots_index_nofollow'),
+            $this->lang->t('seo', 'robots_noindex_follow'),
+            $this->lang->t('seo', 'robots_noindex_nofollow')
         ];
 
         return [

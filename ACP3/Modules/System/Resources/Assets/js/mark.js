@@ -116,5 +116,7 @@ jQuery(document).ready(function($) {
             .highlightTableRow($this.data('checkbox-name'));
     });
 
-    $('form #adm-list input[type="image"]').deleteMarkedResults($markAll.data('delete-options'));
+    $('form #adm-list .glyphicon-remove')
+        .closest('.btn')
+        .deleteMarkedResults($markAll.data('delete-options'));
 });
