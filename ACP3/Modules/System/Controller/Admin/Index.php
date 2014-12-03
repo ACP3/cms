@@ -87,10 +87,10 @@ class Index extends Core\Modules\Controller\Admin
 
         // Robots
         $lang_robots = [
-            $this->lang->t('system', 'seo_robots_index_follow'),
-            $this->lang->t('system', 'seo_robots_index_nofollow'),
-            $this->lang->t('system', 'seo_robots_noindex_follow'),
-            $this->lang->t('system', 'seo_robots_noindex_nofollow')
+            $this->lang->t('seo', 'robots_index_follow'),
+            $this->lang->t('seo', 'robots_index_nofollow'),
+            $this->lang->t('seo', 'robots_noindex_follow'),
+            $this->lang->t('seo', 'robots_noindex_nofollow')
         ];
         $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('seo_robots', [1, 2, 3, 4], $lang_robots, $systemSettings['seo_robots']));
 
