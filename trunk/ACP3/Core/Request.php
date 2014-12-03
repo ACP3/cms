@@ -58,7 +58,7 @@ class Request
             $this->query = $settings['homepage'];
         }
 
-        $this->checkForUriAlias();
+        $this->_checkForUriAlias();
         $this->setUriParameters();
     }
 
@@ -75,7 +75,7 @@ class Request
         // Definieren, dass man sich im Administrationsbereich befindet
         if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
             $this->area = 'admin';
-            // "acp/" entfernen
+            // strip "acp/"
             $this->query = substr($this->query, 4);
         } else {
             $this->area = 'frontend';
@@ -84,7 +84,7 @@ class Request
         return;
     }
 
-    protected function checkForUriAlias()
+    protected function _checkForUriAlias()
     {
         // Nur ausführen, falls URI-Aliase aktiviert sind
         if ($this->area !== 'admin') {

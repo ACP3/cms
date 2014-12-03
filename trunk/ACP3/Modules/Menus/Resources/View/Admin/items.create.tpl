@@ -9,7 +9,7 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general_statements"}</a></li>
                 <li><a href="#tab-2" data-toggle="tab">{lang t="menus|page_type"}</a></li>
-                <li><a href="#tab-3" data-toggle="tab">{lang t="system|seo"}</a></li>
+                <li><a href="#tab-3" data-toggle="tab">{lang t="seo|seo"}</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:system/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>

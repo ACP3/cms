@@ -9,7 +9,7 @@
                     <div class="row">
                 {/if}
                     <div class="col-sm-3">
-                        <a href="{uri args="gallery/index/image/id_`$pictures.id`/action_normal"}" class="thumbnail" data-fancybox-group="gallery"{if !empty($row.description)} title="{$row.description|strip_tags}"{/if}>
+                        <a href="{uri args="gallery/index/image/id_`$row.id`/action_normal"}" class="thumbnail" data-fancybox-group="gallery"{if !empty($row.description)} title="{$row.description|strip_tags}"{/if}>
                             <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
                         </a>
                     </div>
@@ -27,7 +27,7 @@
                     <div class="row">
                 {/if}
                 <div class="col-sm-3">
-                    <a href="{uri args="gallery/index/details/id_`$pictures.id`"}" class="thumbnail">
+                    <a href="{uri args="gallery/index/details/id_`$row.id`"}" class="thumbnail">
                         <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
                     </a>
                 </div>

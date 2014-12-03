@@ -13,7 +13,7 @@
                                 {if $row.pics == 1}
                                     ({$row.pics} {lang t="gallery|picture"})
                                 {else}
-                                    ({$row.pics} {lang t="gallery|picture"})
+                                    ({$row.pics} {lang t="gallery|pictures"})
                                 {/if}
                             </a>
                         </h2>

@@ -19,17 +19,18 @@
                             <input class="form-control" type="text" name="name" id="name" value="{$form.name}" maxlength="120" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="parent" class="col-sm-2 control-label">{lang t="permissions|superior_role"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="parent" id="parent">
-                                {foreach $parent as $row}
-                                    <option value="{$row.id}"{$row.selected}>{$row.name}</option>
-                                {/foreach}
-                            </select>
+                    {if isset($parent)}
+                        <div class="form-group">
+                            <label for="parent" class="col-sm-2 control-label">{lang t="permissions|superior_role"}</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="parent" id="parent">
+                                    {foreach $parent as $row}
+                                        <option value="{$row.id}"{$row.selected}>{$row.name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    {/if}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     {$i=1}

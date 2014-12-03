@@ -13,9 +13,9 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="link" path="acp/permissions/index/create" icon="32/add_group" width="32" height="32"}
+                    {check_access mode="link" path="acp/permissions/index/create" class="glyphicon glyphicon-plus text-success"}
                     {check_access mode="link" path="acp/permissions/resources" icon="32/resource" width="32" height="32"}
-                    {check_access mode="input" path="acp/permissions/index/delete" icon="32/cancel" lang="system|delete_marked"}
+                    {check_access mode="button" path="acp/permissions/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>
         </nav>
@@ -44,17 +44,15 @@
                         {if $can_order === true}
                             <td>
                                 {if !$row.last}
-                                    <a href="{uri args="acp/permissions/index/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}">
-                                        {icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}
-                                    </a>
+                                    <a href="{uri args="acp/permissions/index/order/id_`$row.id`/action_down"}"
+                                       title="{lang t="system|move_down"}"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>
                                 {/if}
                                 {if !$row.first}
-                                    <a href="{uri args="acp/permissions/index/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}">
-                                        {icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}
-                                    </a>
+                                    <a href="{uri args="acp/permissions/index/order/id_`$row.id`/action_up"}"
+                                       title="{lang t="system|move_up"}"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>
                                 {/if}
                                 {if $row.first && $row.last}
-                                    {icon path="16/editdelete" width="16" height="16" alt={lang t="system|move_impossible"} title={lang t="system|move_impossible"}}
+                                    <i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="{lang t="system|move_impossible"}"></i>
                                 {/if}
                             </td>
                         {/if}
