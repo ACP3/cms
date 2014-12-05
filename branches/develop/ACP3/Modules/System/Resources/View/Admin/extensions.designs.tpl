@@ -21,9 +21,11 @@
                 <td>{$row.version}</td>
                 <td>
                     {if $row.selected == 1}
-                        {icon path="16/apply"}
+                        <i class="glyphicon glyphicon-ok text-success"></i>
                     {else}
-                        <a href="{uri args="acp/system/extensions/designs/dir_`$row.dir`"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">{icon path="16/cancel"}</a>
+                        <a href="{uri args="acp/system/extensions/designs/dir_`$row.dir`"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
+                            <i class="glyphicon glyphicon-remove text-danger"></i>
+                        </a>
                     {/if}
                 </td>
             </tr>
