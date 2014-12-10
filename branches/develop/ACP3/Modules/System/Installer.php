@@ -237,8 +237,8 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}acl_resources` SET controller = "extensions", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "extensions";',
             ],
             42 => [
-                "UPDATE `{pre}settings` SET value = \"de_DE\" WHERE module_id = " . $this->getModuleId() . " AND name = \"lang\" AND value = \"de\";",
-                "UPDATE `{pre}settings` SET value = \"en_US\" WHERE module_id = " . $this->getModuleId() . " AND name = \"lang\" AND value = \"en\";",
+                'UPDATE `{pre}settings` SET value = "de_DE" WHERE module_id = ' . $this->getModuleId() . ' AND name = "lang" AND value = "de";',
+                'UPDATE `{pre}settings` SET value = "en_US" WHERE module_id = ' . $this->getModuleId() . ' AND name = "lang" AND value = "en";',
             ],
             43 => [
                 'DELETE FROM `{pre}acl_resources` WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "admin" AND controller = "extensions" AND page = "languages";',
@@ -264,7 +264,7 @@ class Installer extends Modules\AbstractInstaller
                 'ALTER TABLE `{pre}seo` DROP INDEX `PRIMARY`;',
                 'ALTER TABLE `{pre}seo` ADD UNIQUE (uri);',
                 'ALTER TABLE `{pre}seo` ADD `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
-            ]
+            ],
         ];
     }
 }

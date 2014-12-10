@@ -20,7 +20,7 @@ class Router
     /**
      * @var array
      */
-    protected $systemConfig = [];
+    protected $seoConfig = [];
 
     /**
      * @var string
@@ -33,14 +33,14 @@ class Router
 
     /**
      * @param Aliases $aliases
-     * @param Config $systemConfig
+     * @param Config $seoConfig
      */
     public function __construct(
         Aliases $aliases,
-        Config $systemConfig
+        Config $seoConfig
     ) {
         $this->aliases = $aliases;
-        $this->systemConfig = $systemConfig->getSettings();
+        $this->seoConfig = $seoConfig->getSettings();
 
         $this->_setBaseUrl();
     }
@@ -117,7 +117,7 @@ class Router
         }
 
         // Check, whether to use urls with mod_rewrite or not
-        if ((bool)$this->systemConfig['seo_mod_rewrite'] === false ||
+        if ((bool)$this->seoConfig['seo_mod_rewrite'] === false ||
             $isAdminUrl === true ||
             (defined('DEBUG') && DEBUG === true)
         ) {

@@ -4,6 +4,7 @@ imports:
   - { resource: helpers.yml }
   - { resource: validation.yml }
   - { resource: ../modules/Permissions/config/services.yml }
+  - { resource: ../modules/Seo/config/services.yml }
   - { resource: ../modules/System/config/services.yml }
   - { resource: ../modules/Users/config/services.yml }
 
@@ -26,7 +27,7 @@ services:
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@system.config']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@seo.config']
 
   core.context:
     class : ACP3\Core\Context
@@ -93,7 +94,7 @@ services:
 
   core.router:
     class: ACP3\Core\Router
-    arguments: ['@core.router.aliases', '@system.config']
+    arguments: ['@core.router.aliases', '@seo.config']
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
@@ -101,7 +102,7 @@ services:
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@system.cache.core.seo', '@system.config']
+    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@system.cache.core.seo', '@seo.config']
 
   core.session:
     class: ACP3\Core\Session
