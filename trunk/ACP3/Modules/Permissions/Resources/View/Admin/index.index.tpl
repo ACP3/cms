@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
                     {check_access mode="link" path="acp/permissions/index/create" class="glyphicon glyphicon-plus text-success"}
-                    {check_access mode="link" path="acp/permissions/resources" icon="32/resource" width="32" height="32"}
+                    {check_access mode="link" path="acp/permissions/resources" class="glyphicon glyphicon-file text-info"}
                     {check_access mode="button" path="acp/permissions/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                 </div>
             </div>

@@ -85,19 +85,6 @@ class Index extends Core\Modules\Controller\Admin
         $lang_maintenance = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('maintenance', $this->get('core.helpers.forms')->selectGenerator('maintenance_mode', [1, 0], $lang_maintenance, $systemSettings['maintenance_mode'], 'checked'));
 
-        // Robots
-        $lang_robots = [
-            $this->lang->t('seo', 'robots_index_follow'),
-            $this->lang->t('seo', 'robots_index_nofollow'),
-            $this->lang->t('seo', 'robots_noindex_follow'),
-            $this->lang->t('seo', 'robots_noindex_nofollow')
-        ];
-        $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('seo_robots', [1, 2, 3, 4], $lang_robots, $systemSettings['seo_robots']));
-
-        // Sef-URIs
-        $lang_modRewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('seo_mod_rewrite', [1, 0], $lang_modRewrite, $systemSettings['seo_mod_rewrite'], 'checked'));
-
         // Caching von Bildern
         $lang_cacheImages = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('cache_images', $this->get('core.helpers.forms')->selectGenerator('cache_images', [1, 0], $lang_cacheImages, $systemSettings['cache_images'], 'checked'));
@@ -131,8 +118,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _configurationPost(array $formData)
     {
         try {
-            $validator = $this->get('system.validator');
-            $validator->validateSettings($formData);
+            $this->get('system.validator')->validateSettings($formData);
 
             // Config aktualisieren
             $data = [
@@ -154,11 +140,6 @@ class Index extends Core\Modules\Controller\Admin
                 'mailer_type' => $formData['mailer_type'],
                 'maintenance_message' => $formData['maintenance_message'],
                 'maintenance_mode' => (int)$formData['maintenance_mode'],
-                'seo_meta_description' => Core\Functions::strEncode($formData['seo_meta_description']),
-                'seo_meta_keywords' => Core\Functions::strEncode($formData['seo_meta_keywords']),
-                'seo_mod_rewrite' => (int)$formData['seo_mod_rewrite'],
-                'seo_robots' => (int)$formData['seo_robots'],
-                'seo_title' => Core\Functions::strEncode($formData['seo_title']),
                 'wysiwyg' => $formData['wysiwyg']
             ];
 

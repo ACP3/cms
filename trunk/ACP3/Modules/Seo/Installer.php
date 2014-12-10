@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'seo';
-    const SCHEMA_VERSION = 1;
+    const SCHEMA_VERSION = 3;
 
     /**
      * @inheritdoc
@@ -82,6 +82,14 @@ class Installer extends Modules\AbstractInstaller
      */
     public function schemaUpdates()
     {
-        return true;
+        return [
+            2 => [
+                'DELETE FROM `{pre}settings` WHERE module_id = ' . $this->getModuleId() . ' AND `name` LIKE "seo_%";',
+                'UPDATE `{pre}settings` SET module_id = ' . $this->getModuleId(). ' WHERE module_id = (SELECT id FROM `{pre}modules` WHERE `name` = "system") AND `name` LIKE "seo_%";'
+            ],
+            3 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'admin', 'index', 'settings', '', 7);",
+            ]
+        ];
     }
 }
