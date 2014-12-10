@@ -83,15 +83,6 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['maintenance_message']) < 3) {
             $this->errors['maintenance-message'] = $this->lang->t('system', 'maintenance_message_to_short');
         }
-        if (empty($formData['seo_title'])) {
-            $this->errors['seo-title'] = $this->lang->t('system', 'title_to_short');
-        }
-        if ($this->validate->isNumber($formData['seo_robots']) === false) {
-            $this->errors['seo-robots'] = $this->lang->t('seo', 'select_robots');
-        }
-        if ($this->validate->isNumber($formData['seo_mod_rewrite']) === false) {
-            $this->errors['seo-mod-rewrite'] = $this->lang->t('system', 'select_mod_rewrite');
-        }
         if ($this->validate->isNumber($formData['cache_images']) === false) {
             $this->errors['cache-images'] = $this->lang->t('system', 'select_cache_images');
         }

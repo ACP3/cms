@@ -57,4 +57,27 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->_checkForFailedValidation();
     }
+
+    /**
+     * @param array $formData
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
+     */
+    public function validateSettings(array $formData)
+    {
+        $this->validateFormKey();
+
+        $this->errors = [];
+        if (empty($formData['seo_title'])) {
+            $this->errors['seo-title'] = $this->lang->t('system', 'title_to_short');
+        }
+        if ($this->validate->isNumber($formData['seo_robots']) === false) {
+            $this->errors['seo-robots'] = $this->lang->t('seo', 'select_robots');
+        }
+        if ($this->validate->isNumber($formData['seo_mod_rewrite']) === false) {
+            $this->errors['seo-mod-rewrite'] = $this->lang->t('seo', 'select_mod_rewrite');
+        }
+
+        $this->_checkForFailedValidation();
+    }
 }

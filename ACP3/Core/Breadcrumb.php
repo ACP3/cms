@@ -56,19 +56,20 @@ class Breadcrumb
     /**
      * @var array
      */
-    protected $systemConfig = [];
+    protected $seoConfig = [];
 
     public function __construct(
         DB $db,
         Lang $lang,
         Request $request,
         Router $router,
-        Config $systemConfig
-    ) {
+        Config $seoConfig
+    )
+    {
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
-        $this->systemConfig = $systemConfig->getSettings();
+        $this->seoConfig = $seoConfig->getSettings();
 
         // Frontendbereich
         if ($request->area !== 'admin') {
@@ -142,7 +143,7 @@ class Breadcrumb
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @param bool   $dbSteps
+     * @param bool $dbSteps
      *
      * @return $this
      */
@@ -191,10 +192,18 @@ class Breadcrumb
                 if (!empty($this->title['postfix'])) {
                     $title .= $separator . $this->title['postfix'];
                 }
-                $title .= ' | ' . $this->systemConfig['seo_title'];
+                $title .= ' | ' . $this->seoConfig['seo_title'];
             }
             return $title;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getPageTitle()
+    {
+        return $this->seoConfig['seo_title'];
     }
 
     /**

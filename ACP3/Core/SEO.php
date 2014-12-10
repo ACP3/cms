@@ -37,7 +37,7 @@ class SEO
     /**
      * @var array
      */
-    protected $systemConfig = [];
+    protected $seoConfig = [];
 
     /**
      * Gibt die nächste Seite an
@@ -73,7 +73,7 @@ class SEO
      * @param Aliases $aliases
      * @param Forms $formsHelper
      * @param Cache $seoCache
-     * @param Config $systemConfig
+     * @param Config $seoConfig
      */
     public function __construct(
         DB $db,
@@ -82,15 +82,16 @@ class SEO
         Aliases $aliases,
         Forms $formsHelper,
         Cache $seoCache,
-        Config $systemConfig
-    ) {
+        Config $seoConfig
+    )
+    {
         $this->cache = $seoCache;
         $this->db = $db;
         $this->lang = $lang;
         $this->request = $request;
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
-        $this->systemConfig = $systemConfig->getSettings();
+        $this->seoConfig = $seoConfig->getSettings();
 
         $this->aliasCache = $this->getCache();
     }
@@ -155,17 +156,23 @@ class SEO
      */
     public function getPageDescription()
     {
-        // Meta Description für die Homepage einer Website
-        if ($this->request->query === $this->systemConfig['homepage']) {
-            return $this->systemConfig['seo_meta_description'] !== '' ? $this->systemConfig['seo_meta_description'] : '';
-        } else {
-            $description = $this->getDescription($this->request->getUriWithoutPages());
-            if (empty($description)) {
-                $description = $this->getDescription($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
-            }
-
-            return $description . (!empty($description) && !empty($this->metaDescriptionPostfix) ? ' - ' . $this->metaDescriptionPostfix : '');
+        $description = $this->getDescription($this->request->getUriWithoutPages());
+        if (empty($description)) {
+            $description = $this->getDescription($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
         }
+        if (empty($description)) {
+            $description = $this->getDescription($this->request->mod);
+        }
+        if (empty($description)) {
+            $description = $this->seoConfig['seo_meta_description'];
+        }
+
+        $postfix = '';
+        if (!empty($description) && !empty($this->metaDescriptionPostfix)) {
+            $postfix.= ' - ' . $this->metaDescriptionPostfix;
+        }
+
+        return $description . $postfix;
     }
 
     /**
@@ -197,7 +204,7 @@ class SEO
             $keywords = $this->getKeywords($this->request->mod);
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->systemConfig['seo_meta_keywords']);
+        return strtolower(!empty($keywords) ? $keywords : $this->seoConfig['seo_meta_keywords']);
     }
 
     /**
@@ -247,12 +254,12 @@ class SEO
         ];
 
         if ($path === '') {
-            return strtr($this->systemConfig['seo_robots'], $replace);
+            return strtr($this->seoConfig['seo_robots'], $replace);
         } else {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
             if (isset($this->aliasCache[$path]) === false || $this->aliasCache[$path]['robots'] == 0) {
-                $robot = $this->systemConfig['seo_robots'];
+                $robot = $this->seoConfig['seo_robots'];
             } else {
                 $robot = $this->aliasCache[$path]['robots'];
             }

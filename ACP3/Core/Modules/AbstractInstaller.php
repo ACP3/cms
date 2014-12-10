@@ -425,7 +425,7 @@ abstract class AbstractInstaller implements InstallerInterface
         }
 
         $queries = $this->schemaUpdates();
-        if (count($queries) > 0) {
+        if (is_array($queries) && count($queries) > 0) {
             // Nur für den Fall der Fälle... ;)
             ksort($queries);
 

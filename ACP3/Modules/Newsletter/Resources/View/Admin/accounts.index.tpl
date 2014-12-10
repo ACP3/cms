@@ -40,10 +40,10 @@
                         <td>
                             {if !empty($row.hash)}
                                 <a href="{uri args="acp/newsletter/accounts/activate/id_`$row.id`"}" title="{lang t="newsletter|activate_account"}">
-                                    {icon path="16/cancel"}
+                                    <i class="glyphicon glyphicon-remove text-danger"></i>
                                 </a>
                             {else}
-                                {icon path="16/apply"}
+                                <i class="glyphicon glyphicon-ok text-success"></i>
                             {/if}
                         </td>
                         <td>{$row.id}</td>

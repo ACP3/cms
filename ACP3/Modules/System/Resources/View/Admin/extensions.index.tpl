@@ -11,8 +11,8 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
-                {check_access mode="link" path="acp/system/extensions/modules" icon="32/blockdevice" width="32" height="32"}
-                {check_access mode="link" path="acp/system/extensions/designs" icon="32/style" width="32" height="32"}
+                {check_access mode="link" path="acp/system/extensions/modules" class="glyphicon glyphicon-th"}
+                {check_access mode="link" path="acp/system/extensions/designs" class="glyphicon glyphicon-font"}
             </div>
         </div>
     </nav>

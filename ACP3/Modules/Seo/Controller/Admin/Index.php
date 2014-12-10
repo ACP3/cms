@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
+     * @var Core\Config
+     */
+    protected $seoConfig;
+    /**
      * @var Seo\Model
      */
     protected $seoModel;
@@ -23,16 +27,19 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param Core\Context\Admin $context
      * @param Core\Helpers\Secure $secureHelper
+     * @param Core\Config $seoConfig
      * @param Seo\Model $seoModel
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
+        Core\Config $seoConfig,
         Seo\Model $seoModel)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
+        $this->seoConfig = $seoConfig;
         $this->seoModel = $seoModel;
     }
 
@@ -146,7 +153,7 @@ class Index extends Core\Modules\Controller\Admin
                 'alias' => $formData['alias'],
                 'keywords' => Core\Functions::strEncode($formData['seo_keywords']),
                 'description' => Core\Functions::strEncode($formData['seo_description']),
-                'robots' => (int) $formData['seo_robots']
+                'robots' => (int)$formData['seo_robots']
             ];
 
             $bool = $this->seoModel->update($updateValues, $this->request->id);
@@ -156,6 +163,61 @@ class Index extends Core\Modules\Controller\Admin
             $this->secureHelper->unsetFormToken($this->request->query);
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/seo');
+        } catch (Core\Exceptions\InvalidFormToken $e) {
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/seo');
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        }
+    }
+
+    public function actionSettings()
+    {
+        if (empty($_POST) === false) {
+            $this->_settingsPost($_POST);
+        }
+
+        $seoSettings = $this->seoConfig->getSettings();
+
+        // Robots
+        $lang_robots = [
+            $this->lang->t('seo', 'robots_index_follow'),
+            $this->lang->t('seo', 'robots_index_nofollow'),
+            $this->lang->t('seo', 'robots_noindex_follow'),
+            $this->lang->t('seo', 'robots_noindex_nofollow')
+        ];
+        $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('seo_robots', [1, 2, 3, 4], $lang_robots, $seoSettings['seo_robots']));
+
+        // Sef-URIs
+        $lang_modRewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('seo_mod_rewrite', [1, 0], $lang_modRewrite, $seoSettings['seo_mod_rewrite'], 'checked'));
+
+        $this->view->assign('form', array_merge($seoSettings, $_POST));
+
+        $this->secureHelper->generateFormToken($this->request->query);
+    }
+
+    /**
+     * @param array $formData
+     */
+    private function _settingsPost(array $formData)
+    {
+        try {
+            $this->get('seo.validator')->validateSettings($formData);
+
+            // Config aktualisieren
+            $data = [
+                'seo_meta_description' => Core\Functions::strEncode($formData['seo_meta_description']),
+                'seo_meta_keywords' => Core\Functions::strEncode($formData['seo_meta_keywords']),
+                'seo_mod_rewrite' => (int)$formData['seo_mod_rewrite'],
+                'seo_robots' => (int)$formData['seo_robots'],
+                'seo_title' => Core\Functions::strEncode($formData['seo_title']),
+            ];
+
+            $bool = $this->seoConfig->setSettings($data);
+
+            $this->secureHelper->unsetFormToken($this->request->query);
+
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'acp/seo');
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/seo');
         } catch (Core\Exceptions\ValidationFailed $e) {
