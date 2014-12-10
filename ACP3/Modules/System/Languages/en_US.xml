@@ -185,8 +185,6 @@
         <item key="mod_description">This module is responsible for the basic functions of the ACP3.</item>
         <item key="mod_installation_error">While installing the module an error has occured.</item>
         <item key="mod_installation_success">The module has been successfully installed.</item>
-        <item key="mod_rewrite">Use mod_rewrite</item>
-        <item key="mod_rewrite_description">Only enable this if you are using the Apache web server.</item>
         <item key="mod_uninstallation_error">While uninstalling the module an error has occured.</item>
         <item key="mod_uninstallation_success">The module has been successfully uninstalled.</item>
         <item key="module">Module</item>
@@ -240,7 +238,6 @@
         <item key="select_export_type">Please select the export type.</item>
         <item key="select_language">Please select the language in which you want to see the website.</item>
         <item key="select_menu_item">Please choose from one of the menu items above to get to the desired action.</item>
-        <item key="select_mod_rewrite">Please select whether search engine friendly URIs should be used or not.</item>
         <item key="select_online_maintenance">Please select whether the maintenance mode should be turned on or off.</item>
         <item key="select_output">Please select whether the backup should be outputed as a file or a text.</item>
         <item key="select_records_per_page">Please select how many records per page to display.</item>

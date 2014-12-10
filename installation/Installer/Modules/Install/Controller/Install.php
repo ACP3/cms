@@ -45,7 +45,8 @@ class Install extends AbstractController
         Core\Context $context,
         Date $date,
         Helpers $installHelper
-    ) {
+    )
+    {
         parent::__construct($context);
 
         $this->date = $date;
@@ -203,7 +204,7 @@ class Install extends AbstractController
         $salt = $securityHelper->salt(12);
         $currentDate = gmdate('Y-m-d H:i:s');
 
-        $newsModuleId = $this->db->getConnection()->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', ['news']);
+        $newsModuleId = $this->db->getConnection()->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . 'modules WHERE NAME = ?', ['news']);
         $queries = [
             "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->getConnection()->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->getConnection()->quote($formData["date_format_long"]) . ", " . $this->db->getConnection()->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
             'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('install', 'category_name') . '\', \'\', \'' . $this->lang->t('install', 'category_description') . '\', \'' . $newsModuleId . '\');',
@@ -231,12 +232,14 @@ class Install extends AbstractController
             'date_format_short' => \ACP3\Core\Functions::strEncode($formData['date_format_short']),
             'date_time_zone' => $formData['date_time_zone'],
             'maintenance_message' => $this->lang->t('install', 'offline_message'),
-            'seo_title' => !empty($formData['seo_title']) ? $formData['seo_title'] : 'ACP3',
             'lang' => LANG
         ];
 
         $configSystem = $this->get('system.config');
         $configSystem->setSettings($systemSettings);
+
+        $configSeo = $this->get('seo.config');
+        $configSeo->setSettings(['seo_title' => !empty($formData['seo_title']) ? $formData['seo_title'] : 'ACP3']);
 
         $configUsers = $this->get('users.config');
         $configUsers->setSettings(['mail' => $formData['mail']]);
