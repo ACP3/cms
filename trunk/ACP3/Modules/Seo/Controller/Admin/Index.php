@@ -185,11 +185,11 @@ class Index extends Core\Modules\Controller\Admin
             $this->lang->t('seo', 'robots_noindex_follow'),
             $this->lang->t('seo', 'robots_noindex_nofollow')
         ];
-        $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('seo_robots', [1, 2, 3, 4], $lang_robots, $seoSettings['seo_robots']));
+        $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots, $seoSettings['robots']));
 
         // Sef-URIs
         $lang_modRewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('seo_mod_rewrite', [1, 0], $lang_modRewrite, $seoSettings['seo_mod_rewrite'], 'checked'));
+        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('mod_rewrite', [1, 0], $lang_modRewrite, $seoSettings['mod_rewrite'], 'checked'));
 
         $this->view->assign('form', array_merge($seoSettings, $_POST));
 
@@ -206,11 +206,11 @@ class Index extends Core\Modules\Controller\Admin
 
             // Config aktualisieren
             $data = [
-                'seo_meta_description' => Core\Functions::strEncode($formData['seo_meta_description']),
-                'seo_meta_keywords' => Core\Functions::strEncode($formData['seo_meta_keywords']),
-                'seo_mod_rewrite' => (int)$formData['seo_mod_rewrite'],
-                'seo_robots' => (int)$formData['seo_robots'],
-                'seo_title' => Core\Functions::strEncode($formData['seo_title']),
+                'meta_description' => Core\Functions::strEncode($formData['meta_description']),
+                'meta_keywords' => Core\Functions::strEncode($formData['meta_keywords']),
+                'mod_rewrite' => (int)$formData['mod_rewrite'],
+                'robots' => (int)$formData['robots'],
+                'title' => Core\Functions::strEncode($formData['title']),
             ];
 
             $bool = $this->seoConfig->setSettings($data);

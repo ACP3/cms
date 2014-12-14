@@ -159,11 +159,6 @@ class Installer extends Modules\AbstractInstaller
             'mailer_type' => 'mail',
             'maintenance_mode' => false,
             'maintenance_message' => '',
-            'seo_meta_description' => '',
-            'seo_meta_keywords' => '',
-            'seo_mod_rewrite' => false,
-            'seo_robots' => 1,
-            'seo_title' => '',
             'wysiwyg' => 'CKEditor'
         ];
     }

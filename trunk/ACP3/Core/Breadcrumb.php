@@ -192,7 +192,7 @@ class Breadcrumb
                 if (!empty($this->title['postfix'])) {
                     $title .= $separator . $this->title['postfix'];
                 }
-                $title .= ' | ' . $this->seoConfig['seo_title'];
+                $title .= ' | ' . $this->seoConfig['title'];
             }
             return $title;
         }
@@ -203,7 +203,7 @@ class Breadcrumb
      */
     public function getPageTitle()
     {
-        return $this->seoConfig['seo_title'];
+        return $this->seoConfig['title'];
     }
 
     /**

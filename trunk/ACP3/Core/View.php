@@ -46,14 +46,12 @@ class View extends ContainerAware
     }
 
     /**
-     * Gibt ein Template direkt aus
+     * Fetches a template and outputs its cotents
      *
-     * @param string $template
-     * @param mixed $cacheId
+     * @param      $template
+     * @param null $cacheId
      * @param null $compileId
      * @param null $parent
-     *
-     * @internal param int $cache_lifetime
      */
     public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -61,7 +59,7 @@ class View extends ContainerAware
     }
 
     /**
-     * Gibt ein Template aus
+     * Fetches a templates and returns its contents
      *
      * @param string $template
      * @param mixed $cacheId
@@ -90,7 +88,7 @@ class View extends ContainerAware
     }
 
     /**
-     * Weist dem View-Object eine Template-Variable zu
+     * Assigns a new template variable
      *
      * @param string $name
      * @param mixed $value

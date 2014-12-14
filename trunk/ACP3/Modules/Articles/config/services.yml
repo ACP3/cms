@@ -7,6 +7,10 @@ services:
     class: ACP3\Modules\Articles\Controller\Index
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@articles.model', '@articles.cache']
 
+  articles.controller.sidebar.index:
+    class: ACP3\Modules\Articles\Controller\Sidebar\Index
+    arguments: ['@core.context', '@core.date', '@articles.model', '@articles.cache']
+
   articles.cache:
     class: ACP3\Modules\Articles\Cache
     arguments: ['@articles.cache.core', '@articles.model']

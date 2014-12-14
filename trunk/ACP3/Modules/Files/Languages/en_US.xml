@@ -18,7 +18,7 @@
         <item key="filename">Filename</item>
         <item key="files">Downloads</item>
         <item key="filesize">Filesize</item>
-        <item key="latest_files">Latest download</item>
+        <item key="latest_files">Latest downloads</item>
         <item key="title">Title</item>
         <item key="mod_description">With this module you are able to administer the downloads.</item>
         <item key="new_file">Replace current file</item>

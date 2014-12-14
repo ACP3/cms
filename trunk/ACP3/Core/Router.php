@@ -117,7 +117,7 @@ class Router
         }
 
         // Check, whether to use urls with mod_rewrite or not
-        if ((bool)$this->seoConfig['seo_mod_rewrite'] === false ||
+        if ((bool)$this->seoConfig['mod_rewrite'] === false ||
             $isAdminUrl === true ||
             (defined('DEBUG') && DEBUG === true)
         ) {

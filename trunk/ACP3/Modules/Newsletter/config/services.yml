@@ -33,7 +33,7 @@ services:
 
   newsletter.helpers:
     class: ACP3\Modules\Newsletter\Helpers
-    arguments: ['@core.lang', '@core.mailer', '@core.router', '@core.helpers.stringFormatter', '@system.config', '@newsletter.config', '@newsletter.model']
+    arguments: ['@core.lang', '@core.mailer', '@core.router', '@core.helpers.stringFormatter', '@seo.config', '@newsletter.config', '@newsletter.model']
 
   newsletter.validator:
     class: ACP3\Modules\Newsletter\Validator

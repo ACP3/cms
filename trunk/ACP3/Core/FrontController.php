@@ -32,12 +32,13 @@ class FrontController
     }
 
     /**
-     * @param $serviceId
-     * @param $action
+     * @param string $serviceId
+     * @param string $action
+     * @param array  $arguments
      *
-     * @throws Exceptions\ControllerActionNotFound
+     * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
      */
-    public function dispatch($serviceId = '', $action = '')
+    public function dispatch($serviceId = '', $action = '', array $arguments = [])
     {
         $this->_checkForUriAlias();
 
@@ -58,7 +59,13 @@ class FrontController
             if (method_exists($controller, $action) === true) {
                 $controller->setContainer($this->container);
                 $controller->preDispatch();
-                $controller->$action();
+
+                if (!empty($arguments)) {
+                    call_user_func_array([$controller, $action], $arguments);
+                } else {
+                    $controller->$action();
+                }
+
                 $controller->display();
             } else {
                 throw new Exceptions\ControllerActionNotFound('Controller action ' . get_class($controller) . '::' . $action . '() was not found!');

@@ -28,8 +28,10 @@ class Index extends Core\Modules\Controller
         $this->secureHelper = $secureHelper;
     }
 
-
-    public function actionIndex()
+    /**
+     * @param string $template
+     */
+    public function actionIndex($template = '')
     {
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->get('captcha.helpers')->captcha(3, 'captcha', true, 'newsletter'));
@@ -37,6 +39,6 @@ class Index extends Core\Modules\Controller
 
         $this->secureHelper->generateFormToken('newsletter/index/index');
 
-        $this->setTemplate('Newsletter/Sidebar/index.index.tpl');
+        $this->setTemplate($template !== '' ? $template : 'Newsletter/Sidebar/index.index.tpl');
     }
 }

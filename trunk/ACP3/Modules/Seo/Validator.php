@@ -68,13 +68,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $this->errors = [];
-        if (empty($formData['seo_title'])) {
+        if (empty($formData['title'])) {
             $this->errors['seo-title'] = $this->lang->t('system', 'title_to_short');
         }
-        if ($this->validate->isNumber($formData['seo_robots']) === false) {
+        if ($this->validate->isNumber($formData['robots']) === false) {
             $this->errors['seo-robots'] = $this->lang->t('seo', 'select_robots');
         }
-        if ($this->validate->isNumber($formData['seo_mod_rewrite']) === false) {
+        if ($this->validate->isNumber($formData['mod_rewrite']) === false) {
             $this->errors['seo-mod-rewrite'] = $this->lang->t('seo', 'select_mod_rewrite');
         }
 

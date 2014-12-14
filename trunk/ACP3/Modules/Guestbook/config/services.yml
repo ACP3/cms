@@ -5,7 +5,7 @@ services:
 
   guestbook.controller.frontend.index:
     class: ACP3\Modules\Guestbook\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@guestbook.model', '@guestbook.config']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@guestbook.model', '@guestbook.config', '@seo.config']
 
   guestbook.cache.core:
     class: ACP3\Core\Cache
