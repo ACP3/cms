@@ -164,7 +164,7 @@ class SEO
             $description = $this->getDescription($this->request->mod);
         }
         if (empty($description)) {
-            $description = $this->seoConfig['seo_meta_description'];
+            $description = $this->seoConfig['meta_description'];
         }
 
         $postfix = '';
@@ -204,7 +204,7 @@ class SEO
             $keywords = $this->getKeywords($this->request->mod);
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->seoConfig['seo_meta_keywords']);
+        return strtolower(!empty($keywords) ? $keywords : $this->seoConfig['meta_keywords']);
     }
 
     /**
@@ -254,12 +254,12 @@ class SEO
         ];
 
         if ($path === '') {
-            return strtr($this->seoConfig['seo_robots'], $replace);
+            return strtr($this->seoConfig['robots'], $replace);
         } else {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
             if (isset($this->aliasCache[$path]) === false || $this->aliasCache[$path]['robots'] == 0) {
-                $robot = $this->seoConfig['seo_robots'];
+                $robot = $this->seoConfig['robots'];
             } else {
                 $robot = $this->aliasCache[$path]['robots'];
             }

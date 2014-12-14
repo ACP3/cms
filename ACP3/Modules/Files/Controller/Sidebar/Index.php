@@ -44,12 +44,22 @@ class Index extends Core\Modules\Controller
         $this->filesConfig = $filesConfig;
     }
 
-    public function actionIndex()
+    /**
+     * @param int    $categoryId
+     * @param string $template
+     */
+    public function actionIndex($categoryId = 0, $template = '')
     {
         $settings = $this->filesConfig->getSettings();
 
-        $this->view->assign('sidebar_files', $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
+        if (!empty($categoryId)) {
+            $categories = $this->filesModel->getAllByCategoryId((int) $categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
+        } else {
+            $categories = $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
+        }
 
-        $this->setTemplate('Files/Sidebar/index.index.tpl');
+        $this->view->assign('sidebar_files', $categories);
+
+        $this->setTemplate($template !== '' ? $template : 'Files/Sidebar/index.index.tpl');
     }
 }

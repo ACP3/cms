@@ -62,6 +62,20 @@ class Model extends Core\Model
     }
 
     /**
+     * @param string $time
+     * @param string $limitStart
+     * @param string $resultsPerPage
+     * @return array
+     */
+    public function getLatest($time = '', $limitStart = '', $resultsPerPage = '')
+    {
+        $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
+        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY `start` DESC' . $limitStmt, ['time' => $time]);
+    }
+
+
+    /**
      * @return array
      */
     public function getAllInAcp()

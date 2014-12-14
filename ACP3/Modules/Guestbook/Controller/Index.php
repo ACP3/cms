@@ -31,14 +31,19 @@ class Index extends Core\Modules\Controller\Frontend
      * @var Core\Config
      */
     protected $guestbookConfig;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $seoConfig;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date $date
-     * @param Core\Pagination $pagination
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Guestbook\Model $guestbookModel
-     * @param Core\Config $guestbookConfig
+     * @param \ACP3\Core\Context\Frontend   $context
+     * @param \ACP3\Core\Date               $date
+     * @param \ACP3\Core\Pagination         $pagination
+     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Modules\Guestbook\Model $guestbookModel
+     * @param \ACP3\Core\Config             $guestbookConfig
+     * @param \ACP3\Core\Config             $seoConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -46,7 +51,8 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel,
-        Core\Config $guestbookConfig)
+        Core\Config $guestbookConfig,
+        Core\Config $seoConfig)
     {
         parent::__construct($context);
 
@@ -55,6 +61,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
         $this->guestbookConfig = $guestbookConfig;
+        $this->seoConfig = $seoConfig;
     }
 
     public function actionCreate()
@@ -74,7 +81,7 @@ class Index extends Core\Modules\Controller\Frontend
         // In Newsletter integrieren
         if ($hasNewsletterAccess === true) {
             $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
-            $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->systemConfig->getSettings()['seo_title']));
+            $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->seoConfig->getSettings()['title']));
         }
 
         $defaults = [

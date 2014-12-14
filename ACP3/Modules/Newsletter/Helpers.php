@@ -29,7 +29,7 @@ class Helpers
     /**
      * @var Core\Config
      */
-    protected $systemConfig;
+    protected $seoConfig;
     /**
      * @var Model
      */
@@ -44,7 +44,7 @@ class Helpers
      * @param Core\Mailer $mailer
      * @param Core\Router $router
      * @param Core\Helpers\StringFormatter $stringFormatter
-     * @param Core\Config $systemConfig
+     * @param Core\Config $seoConfig
      * @param Core\Config $newsletterConfig
      * @param Model $newsletterModel
      */
@@ -53,15 +53,14 @@ class Helpers
         Core\Mailer $mailer,
         Core\Router $router,
         Core\Helpers\StringFormatter $stringFormatter,
-        Core\Config $systemConfig,
+        Core\Config $seoConfig,
         Core\Config $newsletterConfig,
-        Model $newsletterModel
-    ) {
+        Model $newsletterModel) {
         $this->lang = $lang;
         $this->mailer = $mailer;
         $this->router = $router;
         $this->stringFormatter = $stringFormatter;
-        $this->systemConfig = $systemConfig;
+        $this->seoConfig = $seoConfig;
         $this->newsletterConfig = $newsletterConfig;
         $this->newsletterModel = $newsletterModel;
     }
@@ -82,7 +81,7 @@ class Helpers
         $newsletter = $this->newsletterModel->getOneById($newsletterId);
         $from = [
             'email' => $settings['mail'],
-            'name' => $this->systemConfig->getSettings()['seo_title']
+            'name' => $this->seoConfig->getSettings()['title']
         ];
 
         $this->mailer
@@ -119,15 +118,15 @@ class Helpers
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
         $url = 'http://' . $host . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
-        $systemSettings = $this->systemConfig->getSettings();
+        $seoSettings = $this->seoConfig->getSettings();
         $settings = $this->newsletterConfig->getSettings();
 
-        $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), $systemSettings['seo_title']);
+        $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), $seoSettings['title']);
         $body = str_replace('{host}', $host, $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 
         $from = [
             'email' => $settings['mail'],
-            'name' => $systemSettings['seo_title']
+            'name' => $seoSettings['title']
         ];
 
         $this->mailer

@@ -132,7 +132,7 @@ class Application
             header('HTTP/1.0 503 Service Unavailable');
 
             $view = $this->container->get('core.view');
-            $view->assign('PAGE_TITLE', $this->systemSettings['seo_title']);
+            $view->assign('PAGE_TITLE', 'ACP3');
             $view->assign('CONTENT', $this->systemSettings['maintenance_message']);
             $view->displayTemplate('system/maintenance.tpl');
             exit;
@@ -270,7 +270,7 @@ class Application
     {
         $view = $this->container->get('core.view');
         $view->assign('ROOT_DIR', ROOT_DIR);
-        $view->assign('PAGE_TITLE', $this->systemSettings['seo_title']);
+        $view->assign('PAGE_TITLE', 'ACP3');
         $view->assign('CONTENT', $errorMessage);
         $view->displayTemplate('system/exception.tpl');
     }
