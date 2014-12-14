@@ -45,9 +45,10 @@ class Index extends Core\Modules\Controller
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
+     * @param string $template
      */
-    public function actionIndex($categoryId = 0)
+    public function actionIndex($categoryId = 0, $template = '')
     {
         $settings = $this->filesConfig->getSettings();
 
@@ -59,6 +60,6 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('sidebar_files', $categories);
 
-        $this->setTemplate('Files/Sidebar/index.index.tpl');
+        $this->setTemplate($template !== '' ? $template : 'Files/Sidebar/index.index.tpl');
     }
 }

@@ -42,11 +42,14 @@ class Index extends Core\Modules\Controller
         $this->articlesCache = $articlesCache;
     }
 
-    public function actionIndex()
+    /**
+     * @param string $template
+     */
+    public function actionIndex($template = '')
     {
         $this->view->assign('sidebar_articles', $this->articlesModel->getAll($this->date->getCurrentDateTime(), 5));
 
-        $this->setTemplate('Articles/Sidebar/index.index.tpl');
+        $this->setTemplate($template !== '' ? $template : 'Articles/Sidebar/index.index.tpl');
     }
 
     /**

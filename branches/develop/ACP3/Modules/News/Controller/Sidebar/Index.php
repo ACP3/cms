@@ -44,9 +44,10 @@ class Index extends Core\Modules\Controller
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
+     * @param string $template
      */
-    public function actionIndex($categoryId = 0)
+    public function actionIndex($categoryId = 0, $template = '')
     {
         $settings = $this->newsConfig->getSettings();
 
@@ -58,6 +59,6 @@ class Index extends Core\Modules\Controller
         $this->view->assign('sidebar_news', $news);
         $this->view->assign('dateformat', $settings['dateformat']);
 
-        $this->setTemplate('News/Sidebar/index.index.tpl');
+        $this->setTemplate($template !== '' ? $template : 'News/Sidebar/index.index.tpl');
     }
 }
