@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'articles';
-    const SCHEMA_VERSION = 35;
+    const SCHEMA_VERSION = 36;
 
     /**
      * @inheritdoc
@@ -37,7 +37,7 @@ class Installer extends Modules\AbstractInstaller
                 `text` TEXT NOT NULL,
                 `user_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 
@@ -85,6 +85,10 @@ class Installer extends Modules\AbstractInstaller
             35 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "articles/list/", "articles/index/index/") WHERE uri LIKE "articles/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "articles/details/", "articles/index/details/") WHERE uri LIKE "articles/details/%";' : '',
+            ],
+            36 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar', 'index', 'index', '', 1);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar', 'index', 'single', '', 1);",
             ]
         ];
     }
