@@ -80,10 +80,10 @@
                 </div>
                 <div id="tabs-3" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="seo-title" class="col-sm-2 control-label">{lang t="install|site-title"}</label>
+                        <label for="title" class="col-sm-2 control-label">{lang t="install|site-title"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="seo_title" id="seo-title" value="{$form.seo_title}" required>
+                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" required>
                         </div>
                     </div>
                     <div class="form-group">

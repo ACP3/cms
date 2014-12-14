@@ -27,12 +27,13 @@ class FrontController extends \ACP3\Core\FrontController
     }
 
     /**
-     * @param $serviceId
-     * @param $action
+     * @param string $serviceId
+     * @param string $action
+     * @param array  $arguments
      *
-     * @throws Exceptions\ControllerActionNotFound
+     * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
      */
-    public function dispatch($serviceId = '', $action = '')
+    public function dispatch($serviceId = '', $action = '', array $arguments = [])
     {
         if (empty($serviceId)) {
             $serviceId = $this->request->mod . '.controller.' . $this->request->area . '.' . $this->request->controller;

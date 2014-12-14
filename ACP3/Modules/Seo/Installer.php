@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'seo';
-    const SCHEMA_VERSION = 3;
+    const SCHEMA_VERSION = 4;
 
     /**
      * @inheritdoc
@@ -53,11 +53,11 @@ class Installer extends Modules\AbstractInstaller
     public function settings()
     {
         return [
-            'seo_meta_description' => '',
-            'seo_meta_keywords' => '',
-            'seo_mod_rewrite' => false,
-            'seo_robots' => 1,
-            'seo_title' => ''
+            'meta_description' => '',
+            'meta_keywords' => '',
+            'mod_rewrite' => false,
+            'robots' => 1,
+            'title' => ''
         ];
     }
 
@@ -89,6 +89,13 @@ class Installer extends Modules\AbstractInstaller
             ],
             3 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'admin', 'index', 'settings', '', 7);",
+            ],
+            4 => [
+                'UPDATE `{pre}settings` SET `name` = "meta_description" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_meta_description";',
+                'UPDATE `{pre}settings` SET `name` = "meta_keywords" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_meta_keywords";',
+                'UPDATE `{pre}settings` SET `name` = "mod_rewrite" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_mod_rewrite";',
+                'UPDATE `{pre}settings` SET `name` = "robots" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_robots";',
+                'UPDATE `{pre}settings` SET `name` = "title" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_title";',
             ]
         ];
     }

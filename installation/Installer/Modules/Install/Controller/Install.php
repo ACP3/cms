@@ -72,7 +72,7 @@ class Install extends AbstractController
             'mail' => '',
             'date_format_long' => $this->date->getDateFormatLong(),
             'date_format_short' => $this->date->getDateFormatShort(),
-            'seo_title' => 'ACP3',
+            'title' => 'ACP3',
         ];
 
         $this->view->assign('form', array_merge($defaults, $_POST));
@@ -239,7 +239,7 @@ class Install extends AbstractController
         $configSystem->setSettings($systemSettings);
 
         $configSeo = $this->get('seo.config');
-        $configSeo->setSettings(['seo_title' => !empty($formData['seo_title']) ? $formData['seo_title'] : 'ACP3']);
+        $configSeo->setSettings(['title' => !empty($formData['title']) ? $formData['title'] : 'ACP3']);
 
         $configUsers = $this->get('users.config');
         $configUsers->setSettings(['mail' => $formData['mail']]);

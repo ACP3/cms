@@ -21,19 +21,21 @@ class Index extends Core\Modules\Controller\Frontend
     protected $feedsExtensions;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Config $feedsConfig
-     * @param Feeds\Extensions $feedsExtensions
+     * @param \ACP3\Core\Context\Frontend    $context
+     * @param \ACP3\Core\Config              $feedsConfig
+     * @param \ACP3\Modules\Feeds\Extensions $feedsExtensions
+     * @param \ACP3\Core\Config              $seoConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Config $feedsConfig,
-        Feeds\Extensions $feedsExtensions
-    ) {
+        Feeds\Extensions $feedsExtensions,
+        Core\Config $seoConfig) {
         parent::__construct($context);
 
         $this->feedsConfig = $feedsConfig;
         $this->feedsExtensions = $feedsExtensions;
+        $this->seoConfig = $seoConfig;
     }
 
     public function preDispatch()
@@ -44,7 +46,7 @@ class Index extends Core\Modules\Controller\Frontend
             'feed_image' => $settings['feed_image'],
             'feed_type' => $settings['feed_type'],
             'feed_link' => $this->router->route('', true),
-            'feed_title' => $this->systemConfig->getSettings()['seo_title'],
+            'feed_title' => $this->seoConfig->getSettings()['title'],
             'module' => $this->request->feed,
         ];
 
