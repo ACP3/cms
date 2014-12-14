@@ -16,10 +16,6 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var News\Model
      */
     protected $newsModel;

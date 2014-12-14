@@ -51,6 +51,8 @@
                 {load_module module="sidebar/news"}
                 {load_module module="sidebar/newsletter"}
                 {load_module module="sidebar/files"}
+                {load_module module="sidebar/articles"}
+                {load_module module="sidebar/articles/index/single" args=[1]}
                 {load_module module="sidebar/gallery"}
                 {load_module module="sidebar/polls"}
             </div>

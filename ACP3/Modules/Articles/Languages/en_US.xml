@@ -10,8 +10,10 @@
         <item key="admin_index_edit">Edit article</item>
         <item key="articles">Articles</item>
         <item key="create_menu_item">Create menu item for this article</item>
+        <item key="latest_articles">Latest articles</item>
         <item key="mod_description">This module manages the articles.</item>
         <item key="page_statements">Page statements</item>
+        <item key="select_create_menu_item">Please select, whether you want to create am menu item for this article or not.</item>
         <item key="text">Text</item>
         <item key="text_to_short">The text should be at least 3 characters long.</item>
         <item key="title">Title</item>

@@ -176,6 +176,11 @@ table .sub-table-header span, table .sub-table-header div {
     background-color: #F5F5F5;
 }
 
+.panel-body p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 /* Inline validation errors */
 .validation-failed {
     margin: 15px 0 0;
