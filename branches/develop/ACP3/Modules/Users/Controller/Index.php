@@ -36,15 +36,20 @@ class Index extends Core\Modules\Controller\Frontend
      * @var Permissions\Model
      */
     protected $permissionsModel;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $seoConfig;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date $date
-     * @param Core\Pagination $pagination
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Users\Model $usersModel
-     * @param Core\Config $usersConfig
-     * @param Permissions\Model $permissionsModel
+     * @param \ACP3\Core\Context\Frontend     $context
+     * @param \ACP3\Core\Date                 $date
+     * @param \ACP3\Core\Pagination           $pagination
+     * @param \ACP3\Core\Helpers\Secure       $secureHelper
+     * @param \ACP3\Modules\Users\Model       $usersModel
+     * @param \ACP3\Core\Config               $usersConfig
+     * @param \ACP3\Modules\Permissions\Model $permissionsModel
+     * @param \ACP3\Core\Config               $seoConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -53,7 +58,8 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
         Core\Config $usersConfig,
-        Permissions\Model $permissionsModel)
+        Permissions\Model $permissionsModel,
+        Core\Config $seoConfig)
     {
         parent::__construct($context);
 
@@ -63,6 +69,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->usersModel = $usersModel;
         $this->usersConfig = $usersConfig;
         $this->permissionsModel = $permissionsModel;
+        $this->seoConfig = $seoConfig;
     }
 
     public function actionForgotPwd()
@@ -198,12 +205,12 @@ class Index extends Core\Modules\Controller\Frontend
                 $user = $this->usersModel->getOneByNickname($formData['nick_mail']);
             }
 
-            $systemSettings = $this->systemConfig->getSettings();
+            $seoSettings = $this->seoConfig->getSettings();
 
             // E-Mail mit dem neuen Passwort versenden
-            $subject = str_replace(['{title}', '{host}'], [$systemSettings['seo_title'], $host], $this->lang->t('users', 'forgot_pwd_mail_subject'));
+            $subject = str_replace(['{title}', '{host}'], [$seoSettings['title'], $host], $this->lang->t('users', 'forgot_pwd_mail_subject'));
             $search = ['{name}', '{mail}', '{password}', '{title}', '{host}'];
-            $replace = [$user['nickname'], $user['mail'], $newPassword, $systemSettings['seo_title'], $host];
+            $replace = [$user['nickname'], $user['mail'], $newPassword, $seoSettings['title'], $host];
             $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
             $settings = $this->usersConfig->getSettings();
@@ -236,17 +243,18 @@ class Index extends Core\Modules\Controller\Frontend
             $validator->validateRegistration($formData);
 
             $systemSettings = $this->systemConfig->getSettings();
+            $seoSettings = $this->seoConfig->getSettings();
 
             // E-Mail mit den Accountdaten zusenden
             $host = htmlentities($_SERVER['HTTP_HOST']);
             $subject = str_replace(
                 ['{title}', '{host}'],
-                [$systemSettings['seo_title'], $host],
+                [$seoSettings['title'], $host],
                 $this->lang->t('users', 'register_mail_subject')
             );
             $body = str_replace(
                 ['{name}', '{mail}', '{password}', '{title}', '{host}'],
-                [$formData['nickname'], $formData['mail'], $formData['pwd'], $systemSettings['seo_title'], $host],
+                [$formData['nickname'], $formData['mail'], $formData['pwd'], $seoSettings['title'], $host],
                 $this->lang->t('users', 'register_mail_message')
             );
             $mailIsSent = $this->get('core.helpers.sendEmail')->execute('', $formData['mail'], $settings['mail'], $subject, $body);

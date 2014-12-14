@@ -9,7 +9,7 @@ services:
 
   users.controller.frontend.index:
     class: ACP3\Modules\Users\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@users.model', '@users.config', '@permissions.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@users.model', '@users.config', '@permissions.model', '@seo.config']
 
   users.controller.sidebar.index:
     class: ACP3\Modules\Users\Controller\Sidebar\Index
