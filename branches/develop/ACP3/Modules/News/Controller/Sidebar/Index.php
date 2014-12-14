@@ -43,11 +43,19 @@ class Index extends Core\Modules\Controller
         $this->newsConfig = $newsConfig;
     }
 
-    public function actionIndex()
+    /**
+     * @param int $categoryId
+     */
+    public function actionIndex($categoryId = 0)
     {
         $settings = $this->newsConfig->getSettings();
 
-        $this->view->assign('sidebar_news', $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
+        if (!empty($categoryId)) {
+            $news = $this->newsModel->getAllByCategoryId((int) $categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
+        } else {
+            $news = $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
+        }
+        $this->view->assign('sidebar_news', $news);
         $this->view->assign('dateformat', $settings['dateformat']);
 
         $this->setTemplate('News/Sidebar/index.index.tpl');
