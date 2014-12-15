@@ -5,7 +5,7 @@ services:
 
   feeds.controller.frontend.index:
     class: ACP3\Modules\Feeds\Controller\Index
-    arguments: ['@core.context.frontend', '@feeds.config', '@feeds.extensions']
+    arguments: ['@core.context.frontend', '@feeds.config', '@feeds.extensions', '@seo.config']
 
   feeds.cache.core:
     class: ACP3\Core\Cache
