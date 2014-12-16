@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\DB\SQLLogger;
 use \Doctrine\DBAL;
 
 /**
@@ -50,6 +51,10 @@ class DB
             'driver' => $dbDriver,
             'charset' => $dbCharset
         ];
+        if (defined('DEBUG_SQL') === true && DEBUG_SQL === true) {
+            $config->setSQLLogger(new SQLLogger());
+        }
+
         $this->connection = DBAL\DriverManager::getConnection($connectionParams, $config);
 
         $this->prefix = $dbTablePrefix;
