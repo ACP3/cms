@@ -6,5 +6,6 @@
  */
 
 define('DEBUG', true);
+define('DEBUG_SQL', true);
 
 require 'index.php';
