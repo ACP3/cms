@@ -1,7 +1,10 @@
 services:
   articles.controller.admin.index:
     class: ACP3\Modules\Articles\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.db', '@articles.model', '@articles.cache', '@menus.model', '@menus.cache', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@articles.model', '@articles.cache', '@core.helpers.secure']
+    calls:
+      - ['setMenusCache', ['@?menus.cache']]
+      - ['setMenusModel', ['@?menus.model']]
 
   articles.controller.frontend.index:
     class: ACP3\Modules\Articles\Controller\Index
@@ -29,7 +32,9 @@ services:
 
   articles.validator:
     class: ACP3\Modules\Articles\Validator
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl', '@menus.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl']
+    calls:
+      - ['setMenusModel', ['@?menus.model']]
 
   articles.installer:
     class: ACP3\Modules\Articles\Installer
