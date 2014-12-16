@@ -56,12 +56,12 @@ class Logger
         /** @var \Monolog\Logger $logger */
         $logger = self::$channels[$channelName];
 
-        if (is_array($message) || is_object($message)) {
-            $message = var_export($message, true);
-        }
-
         switch ($level) {
             case 'debug':
+                if (is_array($message) || is_object($message)) {
+                    $message = var_export($message, true);
+                }
+
                 $logger->debug($message);
                 break;
             case 'info':
