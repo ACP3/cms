@@ -13,15 +13,16 @@
         {/if}
         <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
             <div class="form-group">
-                <label for="text" class="col-sm-2 control-label">{lang t="system|text"}</label>
+                <label for="upload-text" class="col-sm-2 control-label">{lang t="system|text"}</label>
 
                 <div class="col-sm-10">
-                    <textarea class="form-control" name="text" id="text" cols="50" rows="6">{$form.text}</textarea></div>
+                    <textarea class="form-control" name="text" id="upload-text" cols="50" rows="6">{$form.text}</textarea>
+                </div>
             </div>
             <div class="form-group">
-                <label for="file" class="col-sm-2 control-label">{lang t="system|file"}</label>
+                <label for="upload-file" class="col-sm-2 control-label">{lang t="system|file"}</label>
 
-                <div class="col-sm-10"><input type="file" name="file" id="file"></div>
+                <div class="col-sm-10"><input type="file" name="file" id="upload-file"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

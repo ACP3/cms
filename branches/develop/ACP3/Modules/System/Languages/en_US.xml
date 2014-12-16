@@ -276,11 +276,9 @@
         <item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
         <item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
         <item key="type_in_short_date_format">Please type in the short date format.</item>
-        <item key="type_in_text_or_select_sql_file">Please enter the sql queries either in the textarea oder upload a file.
-        </item>
+        <item key="type_in_text_or_select_sql_file">Please enter the sql queries either in the textarea or upload a file.</item>
         <item key="uninstall">Uninstall</item>
-        <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following modules first: %s
-        </item>
+        <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following modules first: %s</item>
         <item key="uninstall_module">Uninstall module</item>
         <item key="unmark_all">Unmark all</item>
         <item key="upload_error">While moving the file %s an error has occured.</item>
