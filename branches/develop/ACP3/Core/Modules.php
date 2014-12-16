@@ -140,14 +140,14 @@ class Modules
                     $infos[$moduleName] = [
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
                         'dir' => $dir,
-                        'active' => !empty($moduleInfoDb) && $moduleInfoDb['active'] == 1 ? true : false,
+                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
                         'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
                         'author' => $moduleInfo['author'],
                         'version' => $moduleInfo['version'],
                         'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
-                        'categories' => isset($moduleInfo['categories']) ? true : false,
-                        'protected' => isset($moduleInfo['protected']) ? true : false,
+                        'categories' => isset($moduleInfo['categories']),
+                        'protected' => isset($moduleInfo['protected']),
                     ];
                     $infos[$moduleName]['dependencies'] = array_values($this->xml->parseXmlFile($path, 'info/dependencies'));
                 }
@@ -180,8 +180,8 @@ class Modules
         $activeModules = $this->getAllModules();
 
         foreach ($this->allModules as $key => $values) {
-            if ($values['active'] === true) {
-                $activeModules[$key] = $values;
+            if ($values['active'] !== true) {
+                unset($activeModules[$key]);
             }
         }
 

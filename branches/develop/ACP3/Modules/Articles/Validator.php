@@ -17,39 +17,49 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @var \ACP3\Modules\Menus\Model
      */
-    protected $menuModel;
+    protected $menusModel;
     /**
      * @var \ACP3\Core\ACL
      */
     protected $acl;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
-     * @param Core\Validator\Rules\Date $dateValidator
-     * @param Core\ACL $acl
-     * @param Menus\Model $menuModel
+     * @param \ACP3\Core\Lang                           $lang
+     * @param \ACP3\Core\Validator\Rules\Misc           $validate
+     * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasesValidator
+     * @param \ACP3\Core\Validator\Rules\Date           $dateValidator
+     * @param \ACP3\Core\ACL                            $acl
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Date $dateValidator,
-        Core\ACL $acl,
-        Menus\Model $menuModel)
+        Core\ACL $acl)
     {
         parent::__construct($lang, $validate);
 
         $this->aliasesValidator = $aliasesValidator;
         $this->dateValidator = $dateValidator;
         $this->acl = $acl;
-        $this->menuModel = $menuModel;
     }
 
     /**
-     * @param array $formData
+     * @param \ACP3\Modules\Menus\Model $menusModel
+     *
+     * @return $this
+     */
+    public function setMenusModel(Menus\Model $menusModel)
+    {
+        $this->menusModel = $menusModel;
+
+        return $this;
+    }
+
+    /**
+     * @param array  $formData
      * @param string $uriAlias
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -77,7 +87,7 @@ class Validator extends Core\Validator\AbstractValidator
                 }
                 if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === true) {
                     // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-                    $parentBlock = $this->menuModel->getMenuItemBlockIdById($formData['parent']);
+                    $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent']);
                     if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
                         $this->errors['parent'] = $this->lang->t('menus', 'superior_page_not_allowed');
                     }
