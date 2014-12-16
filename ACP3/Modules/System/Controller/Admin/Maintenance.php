@@ -72,12 +72,12 @@ class Maintenance extends Core\Modules\Controller\Admin
         $this->view->assign('output', $this->get('core.helpers.forms')->selectGenerator('output', ['file', 'text'], $lang_output, 'file', 'checked'));
 
         // Exportart
-        $lang_export_type = [
+        $lang_exportType = [
             $this->lang->t('system', 'complete_export'),
             $this->lang->t('system', 'export_structure'),
             $this->lang->t('system', 'export_data')
         ];
-        $this->view->assign('export_type', $this->get('core.helpers.forms')->selectGenerator('export_type', ['complete', 'structure', 'data'], $lang_export_type, 'complete', 'checked'));
+        $this->view->assign('export_type', $this->get('core.helpers.forms')->selectGenerator('export_type', ['complete', 'structure', 'data'], $lang_exportType, 'complete', 'checked'));
 
         $drop = [];
         $drop['checked'] = $this->get('core.helpers.forms')->selectEntry('drop', '1', '', 'checked');
@@ -122,6 +122,9 @@ class Maintenance extends Core\Modules\Controller\Admin
         }
     }
 
+    /**
+     * @param array $formData
+     */
     private function _sqlExportPost(array $formData)
     {
         try {
@@ -144,12 +147,17 @@ class Maintenance extends Core\Modules\Controller\Admin
 
             return;
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/maintenance/sql_export');
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
 
+    /**
+     * @param array $formData
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     private function _sqlImportPost(array $formData)
     {
         try {
@@ -160,8 +168,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['file']['size'];
             }
 
-            $validator = $this->get('system.validator');
-            $validator->validateSqlImport($formData, $file);
+            $this->get('system.validator')->validateSqlImport($formData, $file);
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -190,9 +197,8 @@ class Maintenance extends Core\Modules\Controller\Admin
             Core\Cache::purge(CACHE_DIR . 'sql');
             Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
             Core\Cache::purge(CACHE_DIR . 'tpl_cached');
-            return;
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/maintenance/sql_import');
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }

@@ -139,13 +139,13 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->errors = [];
         if (empty($formData['text']) && empty($file['size'])) {
-            $this->errors['text'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
+            $this->errors['upload'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
         }
         if (!empty($file['size']) &&
             (!$this->mimeValidator->mimeType($file['tmp_name'], 'text/plain') ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $this->errors['file'] = $this->lang->t('system', 'select_sql_file');
+            $this->errors['upload-file'] = $this->lang->t('system', 'select_sql_file');
         }
 
         $this->_checkForFailedValidation();
