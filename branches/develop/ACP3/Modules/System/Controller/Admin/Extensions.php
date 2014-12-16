@@ -182,6 +182,8 @@ class Extensions extends Core\Modules\Controller\Admin
                     $bool = $this->systemModel->update(['active' => 0], ['name' => $this->request->dir]);
 
                     $this->_renewCaches();
+                    Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
+                    Core\Cache::purge(CACHE_DIR . 'tpl_cached');
 
                     $text = $this->lang->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
@@ -247,6 +249,8 @@ class Extensions extends Core\Modules\Controller\Admin
                     $bool = $installer->uninstall();
 
                     $this->_renewCaches();
+                    Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
+                    Core\Cache::purge(CACHE_DIR . 'tpl_cached');
 
                     $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
                 } else {
