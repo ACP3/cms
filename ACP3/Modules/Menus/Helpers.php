@@ -20,14 +20,6 @@ class Helpers
      */
     protected $navbar = [];
     /**
-     * @var Core\Request
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Core\Router
-     */
-    protected $router;
-    /**
      * @var Core\Helpers\Forms
      */
     protected $formsHelper;
@@ -41,21 +33,15 @@ class Helpers
     protected $menusCache;
 
     /**
-     * @param Core\Request $request
-     * @param Core\Router $router
-     * @param Core\Helpers\Forms $formsHelper
-     * @param Model $menusModel
-     * @param Cache $menusCache
+     * @param \ACP3\Core\Helpers\Forms  $formsHelper
+     * @param \ACP3\Modules\Menus\Model $menusModel
+     * @param \ACP3\Modules\Menus\Cache $menusCache
      */
     public function __construct(
-        Core\Request $request,
-        Core\Router $router,
         Core\Helpers\Forms $formsHelper,
         Model $menusModel,
         Cache $menusCache
     ) {
-        $this->request = $request;
-        $this->router = $router;
         $this->formsHelper = $formsHelper;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
@@ -114,119 +100,4 @@ class Helpers
         return $menus;
     }
 
-    /**
-     * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
-     * falls diese sich ebenfalls in der Navigationsleiste befindet
-     *
-     * @param string $menu
-     *    Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
-     * @param boolean $useBootstrap
-     * @param string $class
-     * @param string $dropdownItemClass
-     * @param string $tag
-     * @param string $itemTag
-     * @param string $dropdownWrapperTag
-     * @param string $linkCss
-     * @param string $inlineStyles
-     *
-     * @return string
-     */
-    public function processNavbar(
-        $menu,
-        $useBootstrap = true,
-        $class = '',
-        $dropdownItemClass = '',
-        $tag = 'ul',
-        $itemTag = 'li',
-        $dropdownWrapperTag = 'li',
-        $linkCss = '',
-        $inlineStyles = '')
-    {
-        // Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
-        if (isset($this->navbar[$menu])) {
-            return $this->navbar[$menu];
-        } else { // ...ansonsten Verarbeitung starten
-            $items = $this->menusCache->getVisibleMenuItems($menu);
-            $c_items = count($items);
-
-            if ($c_items > 0) {
-                $selected = $this->_selectMenuItem($menu);
-
-                $this->navbar[$menu] = '';
-
-                for ($i = 0; $i < $c_items; ++$i) {
-                    $css = 'navi-' . $items[$i]['id'];
-                    // Menüpunkt selektieren
-                    if (!empty($selected) &&
-                        $items[$i]['left_id'] <= $selected &&
-                        $items[$i]['right_id'] > $selected
-                    ) {
-                        $css .= ' active';
-                    }
-
-                    // Link zusammenbauen
-                    $href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $this->router->route($items[$i]['uri']) : $items[$i]['uri'];
-                    $target = $items[$i]['target'] == 2 ? ' target="_blank"' : '';
-                    $attributes = '';
-                    $attributes .= !empty($linkCss) ? ' class="' . $linkCss . '"' : '';
-
-                    // Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
-                    if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
-                        $caret = $subNavbarCss = '';
-                        // Special styling for bootstrap enabled navbars
-                        if ($useBootstrap === true) {
-                            $dropDownItemClassName = 'navigation-' . $menu . '-subnav-' . $items[$i]['id'] . '-dropdown';
-                            $css .= !empty($dropdownItemClass) ? ' ' . $dropdownItemClass : ' dropdown';
-                            $css .= $dropDownItemClassName;
-                            $caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
-                            $attributes .= $items[$i]['level'] == 0 ? '  data-target=".' . $dropDownItemClassName . '"' : '';
-                            $attributes .= ' class="dropdown-toggle" data-toggle="dropdown"';
-                            $subNavbarCss = 'dropdown-menu ';
-                        }
-
-                        $link = sprintf('<a href="%1$s"%2$s%3$s>%4$s%5$s</a>', $href, $target, $attributes, $items[$i]['title'], $caret);
-                        $this->navbar[$menu] .= sprintf('<%1$s class="%2$s">%3$s<ul class="%4$snavigation-%5$s-subnav-%6$d">', $dropdownWrapperTag, $css, $link, $subNavbarCss, $menu, $items[$i]['id']);
-                    } else { // Elemente ohne Kindelemente
-                        $link = sprintf('<a href="%1$s"%2$s%3$s>%4$s</a>', $href, $target, $attributes, $items[$i]['title']);
-                        $this->navbar[$menu] .= $itemTag === '' ? $link : sprintf('<%1$s class="%2$s">%3$s</%1$s>', $itemTag, $css, $link);
-
-                        // Liste für untergeordnete Elemente schließen
-                        if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
-                            // Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
-                            $diff = (isset($items[$i + 1]['level']) ? $items[$i]['level'] - $items[$i + 1]['level'] : $items[$i]['level']) * 2;
-                            for (; $diff > 0; --$diff) {
-                                $this->navbar[$menu] .= ($diff % 2 == 0 ? '</ul>' : '</' . $dropdownWrapperTag . '>');
-                            }
-                        }
-                    }
-                }
-                $attributes = ' class="navigation-' . $menu . (!empty($class) ? ' ' . $class : ($useBootstrap === true ? ' nav navbar-nav' : '')) . '"';
-                $attributes .= !empty($inlineStyles) ? ' style="' . $inlineStyles . '"' : '';
-                $this->navbar[$menu] = !empty($this->navbar[$menu]) ? sprintf('<%1$s%2$s>%3$s</%1$s>', $tag, $attributes, $this->navbar[$menu]) : '';
-                return $this->navbar[$menu];
-            }
-            return '';
-        }
-    }
-
-    /**
-     * @param $menu
-     * @return int
-     */
-    private function _selectMenuItem($menu)
-    {
-        // Selektion nur vornehmen, wenn man sich im Frontend befindet
-        if ($this->request->area !== 'admin') {
-            $in = [
-                $this->request->query,
-                $this->request->getUriWithoutPages(),
-                $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
-                $this->request->mod . '/' . $this->request->controller . '/',
-                $this->request->mod
-            ];
-            return (int) $this->menusModel->getLeftIdByUris($menu, $in);
-        }
-
-        return 0;
-    }
 }
