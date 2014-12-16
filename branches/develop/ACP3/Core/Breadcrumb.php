@@ -72,7 +72,7 @@ class Breadcrumb
         $this->seoConfig = $seoConfig->getSettings();
 
         // Frontendbereich
-        if ($request->area !== 'admin') {
+        if ($request->mod !== 'minify' && $request->area !== 'admin') {
             $in = [
                 $request->query,
                 $request->getUriWithoutPages(),
