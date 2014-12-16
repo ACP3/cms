@@ -64,9 +64,9 @@ class NestedSet
                     $this->db->delete($this->tableName, ['id' => $id]);
                     // root_id und parent_id der Kinder aktualisieren
                     for ($i = 1; $i < $c_items; ++$i) {
-                        $root_id = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id ASC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
-                        $parent_id = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id DESC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
-                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET root_id = ?, parent_id = ?, left_id = left_id - 1, right_id = right_id - 1 WHERE id = ?', [!empty($root_id) ? $root_id : $items[$i]['id'], !empty($parent_id) ? $parent_id : 0, $items[$i]['id']]);
+                        $rootId = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id ASC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
+                        $parentId = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id DESC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
+                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET root_id = ?, parent_id = ?, left_id = left_id - 1, right_id = right_id - 1 WHERE id = ?', [!empty($rootId) ? $rootId : $items[$i]['id'], !empty($parentId) ? $parentId : 0, $items[$i]['id']]);
                     }
 
                     // Übergeordnete Knoten aktualiseren
