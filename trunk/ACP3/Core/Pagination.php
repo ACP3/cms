@@ -10,6 +10,10 @@ class Pagination
      */
     protected $auth;
     /**
+     * @var \ACP3\Core\Breadcrumb
+     */
+    protected $breadcrumb;
+    /**
      * @var Lang
      */
     protected $lang;
@@ -71,16 +75,18 @@ class Pagination
     private $pagination = [];
 
     /**
-     * @param Auth $auth
-     * @param Lang $lang
-     * @param SEO $seo
-     * @param Request $request
-     * @param Router $router
-     * @param View $view
-     * @param Misc $miscValidator
+     * @param \ACP3\Core\Auth                 $auth
+     * @param \ACP3\Core\Breadcrumb           $breadcrumb
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\SEO                  $seo
+     * @param \ACP3\Core\Request              $request
+     * @param \ACP3\Core\Router               $router
+     * @param \ACP3\Core\View                 $view
+     * @param \ACP3\Core\Validator\Rules\Misc $miscValidator
      */
     public function __construct(
         Auth $auth,
+        Breadcrumb $breadcrumb,
         Lang $lang,
         SEO $seo,
         Request $request,
@@ -89,6 +95,7 @@ class Pagination
         Misc $miscValidator)
     {
         $this->auth = $auth;
+        $this->breadcrumb = $breadcrumb;
         $this->lang = $lang;
         $this->seo = $seo;
         $this->request = $request;

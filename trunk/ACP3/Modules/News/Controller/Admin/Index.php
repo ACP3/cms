@@ -32,14 +32,19 @@ class Index extends Core\Modules\Controller\Admin
      * @var Core\Config
      */
     protected $newsConfig;
+    /**
+     * @var \ACP3\Modules\Categories\Helpers
+     */
+    protected $categoriesHelpers;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param News\Model $newsModel
-     * @param News\Cache $newsCache
-     * @param Core\Config $newsConfig
+     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Core\Helpers\Secure        $secureHelper
+     * @param \ACP3\Modules\News\Model         $newsModel
+     * @param \ACP3\Modules\News\Cache         $newsCache
+     * @param \ACP3\Core\Config                $newsConfig
+     * @param \ACP3\Modules\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -47,7 +52,8 @@ class Index extends Core\Modules\Controller\Admin
         Core\Helpers\Secure $secureHelper,
         News\Model $newsModel,
         News\Cache $newsCache,
-        Core\Config $newsConfig)
+        Core\Config $newsConfig,
+        Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);
 
@@ -56,6 +62,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->newsModel = $newsModel;
         $this->newsCache = $newsCache;
         $this->newsConfig = $newsConfig;
+        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     public function actionCreate()
@@ -70,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
 
         // Kategorien
-        $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', '', true));
+        $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', '', true));
 
         // Weiterlesen & Kommentare
         if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
@@ -151,7 +158,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$news['start'], $news['end']]));
 
             // Kategorien
-            $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $news['category_id'], true));
+            $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $news['category_id'], true));
 
             // Weiterlesen & Kommentare
             if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
@@ -251,7 +258,7 @@ class Index extends Core\Modules\Controller\Admin
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'readmore' => $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0,
                 'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
-                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
+                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
                 'uri' => Core\Functions::strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
                 'link_title' => Core\Functions::strEncode($formData['link_title']),
@@ -298,7 +305,7 @@ class Index extends Core\Modules\Controller\Admin
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'readmore' => $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0,
                 'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
-                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
+                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
                 'uri' => Core\Functions::strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
                 'link_title' => Core\Functions::strEncode($formData['link_title']),

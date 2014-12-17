@@ -1,12 +1,4 @@
 <?php
-/**
- * Emoticons
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Emoticons;
 
 use ACP3\Core;

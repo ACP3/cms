@@ -37,6 +37,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $newsSettings;
     /**
+     * @var \ACP3\Modules\Categories\Helpers
+     */
+    protected $categoriesHelpers;
+    /**
      * @var Categories\Model
      */
     protected $categoriesModel;
@@ -46,13 +50,14 @@ class Index extends Core\Modules\Controller\Frontend
     private $commentsActive;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date             $date
-     * @param Core\Pagination       $pagination
-     * @param News\Model            $newsModel
-     * @param News\Cache            $newsCache
-     * @param Core\Config           $newsConfig
-     * @param Categories\Model      $categoriesModel
+     * @param \ACP3\Core\Context\Frontend      $context
+     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Core\Pagination            $pagination
+     * @param \ACP3\Modules\News\Model         $newsModel
+     * @param \ACP3\Modules\News\Cache         $newsCache
+     * @param \ACP3\Core\Config                $newsConfig
+     * @param \ACP3\Modules\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Modules\Categories\Model   $categoriesModel
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -61,6 +66,7 @@ class Index extends Core\Modules\Controller\Frontend
         News\Model $newsModel,
         News\Cache $newsCache,
         Core\Config $newsConfig,
+        Categories\Helpers $categoriesHelpers,
         Categories\Model $categoriesModel)
     {
         parent::__construct($context);
@@ -70,6 +76,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->newsModel = $newsModel;
         $this->newsCache = $newsCache;
         $this->newsSettings = $newsConfig->getSettings();
+        $this->categoriesHelpers = $categoriesHelpers;
         $this->categoriesModel = $categoriesModel;
 
         $this->commentsActive = ($this->newsSettings['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true);
@@ -121,7 +128,7 @@ class Index extends Core\Modules\Controller\Frontend
             $cat = 0;
         }
 
-        $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $cat));
+        $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $cat));
 
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
