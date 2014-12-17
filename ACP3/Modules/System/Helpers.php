@@ -42,12 +42,13 @@ class Helpers
      */
     public function checkInstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
     {
-        $deps = $moduleInstaller->getDependencies();
+        $dependencies = $moduleInstaller->getDependencies();
         $modulesToEnable = [];
-        if (!empty($deps)) {
-            foreach ($deps as $dep) {
-                if ($this->modules->isActive($dep) === false) {
-                    $modulesToEnable[] = ucfirst($dep);
+        if (!empty($dependencies)) {
+            foreach ($dependencies as $dependency) {
+                if ($this->modules->isActive($dependency) === false) {
+                    $moduleInfo = $this->modules->getModuleInfo($dependency);
+                    $modulesToEnable[] = $moduleInfo['name'];
                 }
             }
         }
@@ -65,12 +66,16 @@ class Helpers
         $modules = $this->modules->getInstalledModules();
         $moduleDependencies = [];
 
-        foreach ($modules as $localizedModuleName => $values) {
-            $moduleName = strtolower($values['dir']);
+        foreach ($modules as $module) {
+            $moduleName = strtolower($module['dir']);
             if ($moduleName !== $moduleToBeUninstalled) {
-                $deps = $container->get($moduleName . '.installer')->getDependencies();
-                if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
-                    $moduleDependencies[] = $localizedModuleName;
+                $service = $moduleName . '.installer';
+
+                if ($container->has($service) === true) {
+                    $deps = $container->get($moduleName . '.installer')->getDependencies();
+                    if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
+                        $moduleDependencies[] = $module['name'];
+                    }
                 }
             }
         }
