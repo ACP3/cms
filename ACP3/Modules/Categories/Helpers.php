@@ -1,13 +1,4 @@
 <?php
-
-/**
- * Categories
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Categories;
 
 use ACP3\Core;
@@ -23,18 +14,6 @@ class Helpers
      */
     protected $acl;
     /**
-     * @var Cache
-     */
-    protected $cache;
-    /**
-     * @var Model
-     */
-    protected $categoriesModel;
-    /**
-     * @var Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var \ACP3\Core\Lang
      */
     protected $lang;
@@ -46,15 +25,27 @@ class Helpers
      * @var Core\View
      */
     protected $view;
+    /**
+     * @var Cache
+     */
+    protected $categoriesCache;
+    /**
+     * @var Model
+     */
+    protected $categoriesModel;
+    /**
+     * @var Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
-     * @param Core\ACL $acl
-     * @param Core\Lang $lang
-     * @param Core\Modules $modules
-     * @param Core\View $view
-     * @param Cache $cache
-     * @param Core\Helpers\Forms $formsHelper
-     * @param Model $categoriesModel
+     * @param \ACP3\Core\ACL                 $acl
+     * @param \ACP3\Core\Lang                $lang
+     * @param \ACP3\Core\Modules             $modules
+     * @param \ACP3\Core\View                $view
+     * @param \ACP3\Core\Helpers\Forms       $formsHelper
+     * @param \ACP3\Modules\Categories\Cache $categoriesCache
+     * @param \ACP3\Modules\Categories\Model $categoriesModel
      */
     public function __construct(
         Core\ACL $acl,
@@ -62,7 +53,7 @@ class Helpers
         Core\Modules $modules,
         Core\View $view,
         Core\Helpers\Forms $formsHelper,
-        Cache $cache,
+        Cache $categoriesCache,
         Model $categoriesModel
     ) {
         $this->acl = $acl;
@@ -70,7 +61,7 @@ class Helpers
         $this->modules = $modules;
         $this->view = $view;
         $this->formsHelper = $formsHelper;
-        $this->cache = $cache;
+        $this->categoriesCache = $categoriesCache;
         $this->categoriesModel = $categoriesModel;
     }
 
@@ -108,7 +99,7 @@ class Helpers
             ];
             $result = $this->categoriesModel->insert($insertValues);
 
-            $this->cache->setCache($module);
+            $this->categoriesCache->setCache($module);
 
             return $result;
         }
@@ -143,7 +134,7 @@ class Helpers
     public function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '')
     {
         $categories = [];
-        $data = $this->cache->getCache($module);
+        $data = $this->categoriesCache->getCache($module);
         $c_data = count($data);
 
         $categories['custom_text'] = !empty($customText) ? $customText : $this->lang->t('system', 'pls_select');

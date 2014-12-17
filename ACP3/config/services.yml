@@ -82,7 +82,7 @@ services:
 
   core.pagination:
     class: ACP3\Core\Pagination
-    arguments: ['@core.auth', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
 
   core.redirect:
     class: ACP3\Core\Redirect
