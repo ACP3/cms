@@ -179,12 +179,14 @@ class Extensions extends Core\Modules\Controller\Admin
         } else {
             $serviceId = strtolower($this->request->dir . '.installer');
 
-            if ($this->container->has($serviceId) === true) {
+            $container = $this->systemHelpers->updateServiceContainer();
+
+            if ($container->has($serviceId) === true) {
                 /** @var Core\Modules\AbstractInstaller $installer */
-                $installer = $this->get($serviceId);
+                $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $this->container);
+                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $container);
 
                 if (empty($deps)) {
                     $bool = $this->systemModel->update(['active' => 0], ['name' => $this->request->dir]);
@@ -212,8 +214,10 @@ class Extensions extends Core\Modules\Controller\Admin
         if ($this->modules->isInstalled($this->request->dir) === false) {
             $serviceId = strtolower($this->request->dir . '.installer');
 
-            if ($this->container->has($serviceId) === true) {
-                $installer = $this->get($serviceId);
+            $container = $this->systemHelpers->updateServiceContainer(true);
+
+            if ($container->has($serviceId) === true) {
+                $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
                 $deps = $this->systemHelpers->checkInstallDependencies($installer);
@@ -246,12 +250,14 @@ class Extensions extends Core\Modules\Controller\Admin
         if ($info['protected'] === false && $this->modules->isInstalled($this->request->dir) === true) {
             $serviceId = strtolower($this->request->dir . '.installer');
 
-            if ($this->container->has($serviceId) === true) {
+            $container = $this->systemHelpers->updateServiceContainer();
+
+            if ($container->has($serviceId) === true) {
                 /** @var Core\Modules\AbstractInstaller $installer */
-                $installer = $this->get($serviceId);
+                $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $this->container);
+                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $container);
 
                 // Modul deinstallieren
                 if (empty($deps)) {

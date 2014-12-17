@@ -53,7 +53,7 @@
             {include file="asset:system/datatable.tpl" dt=$datatable_config}
         {else}
             <div class="alert alert-warning text-center">
-                <h5>{lang t="system|entries"}</h5>
+                <strong>{lang t="system|no_entries"}</strong>
             </div>
         {/if}
     </form>
