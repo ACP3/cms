@@ -18,7 +18,7 @@
                         </strong>
                     </div>
                     <small class="navbar-text pull-right">
-                        <time datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date_formatted format=$dateformat}</time>
+                        <time datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
                     </small>
                 </header>
                 <div class="content">
