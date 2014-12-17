@@ -121,9 +121,7 @@ class Index extends Core\Modules\Controller\Frontend
             $cat = 0;
         }
 
-        if ($this->modules->isActive('categories') === true) {
-            $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $cat));
-        }
+        $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $cat));
 
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {

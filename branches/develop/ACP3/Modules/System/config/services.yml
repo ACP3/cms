@@ -1,7 +1,7 @@
 services:
   system.controller.admin.extensions:
     class: ACP3\Modules\System\Controller\Admin\Extensions
-    arguments: ['@core.context.admin', '@core.xml', '@system.model', '@system.config', '@permissions.cache']
+    arguments: ['@core.context.admin', '@core.xml', '@system.model', '@system.config', '@system.helpers', '@permissions.cache']
 
   system.controller.admin.index:
     class: ACP3\Modules\System\Controller\Admin\Index

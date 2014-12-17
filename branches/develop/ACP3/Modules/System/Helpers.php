@@ -1,16 +1,8 @@
 <?php
-
-/**
- * System
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\System;
 
 use ACP3\Core;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class Helpers
@@ -60,26 +52,25 @@ class Helpers
     }
 
     /**
-     * Überprüft die Modulabhängigkeiten vor dem Deinstallieren eines Moduls
+     * @param                                                  $moduleToBeUninstalled
+     * @param \Symfony\Component\DependencyInjection\Container $container
      *
-     * @param Core\Modules\AbstractInstaller $moduleInstaller
      * @return array
      */
-    public function checkUninstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
+    public function checkUninstallDependencies($moduleToBeUninstalled, Container $container)
     {
-        $module = $moduleInstaller::MODULE_NAME;
-        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
-        $modulesToUninstall = [];
-        foreach ($modules as $row) {
-            $row = strtolower($row);
-            if ($row !== $module) {
-                $deps = $moduleInstaller->getDependencies();
-                if (!empty($deps) && $this->modules->isInstalled($row) === true && in_array($module, $deps) === true) {
-                    $modulesToUninstall[] = ucfirst($row);
+        $modules = $this->modules->getActiveModules();
+        $moduleDependencies = [];
+        foreach ($modules as $localizedModuleName => $values) {
+            $moduleName = strtolower($values['dir']);
+            if ($moduleName !== $moduleToBeUninstalled) {
+                $deps = $container->get($moduleName . '.installer')->getDependencies();
+                if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
+                    $moduleDependencies[] = $localizedModuleName;
                 }
             }
         }
-        return $modulesToUninstall;
+        return $moduleDependencies;
     }
 
     /**

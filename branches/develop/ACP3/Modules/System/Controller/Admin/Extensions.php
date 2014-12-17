@@ -25,22 +25,28 @@ class Extensions extends Core\Modules\Controller\Admin
      */
     protected $systemConfig;
     /**
+     * @var \ACP3\Modules\System\Helpers
+     */
+    protected $systemHelpers;
+    /**
      * @var \ACP3\Modules\Permissions\Cache
      */
     protected $permissionsCache;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\XML $xml
-     * @param System\Model $systemModel
-     * @param Core\Config $systemConfig
-     * @param Permissions\Cache $permissionsCache
+     * @param \ACP3\Core\Context\Admin        $context
+     * @param \ACP3\Core\XML                  $xml
+     * @param \ACP3\Modules\System\Model      $systemModel
+     * @param \ACP3\Core\Config               $systemConfig
+     * @param \ACP3\Modules\System\Helpers    $systemHelpers
+     * @param \ACP3\Modules\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\XML $xml,
         System\Model $systemModel,
         Core\Config $systemConfig,
+        System\Helpers $systemHelpers,
         Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
@@ -48,6 +54,7 @@ class Extensions extends Core\Modules\Controller\Admin
         $this->xml = $xml;
         $this->systemModel = $systemModel;
         $this->systemConfig = $systemConfig;
+        $this->systemHelpers = $systemHelpers;
         $this->permissionsCache = $permissionsCache;
     }
 
@@ -173,10 +180,11 @@ class Extensions extends Core\Modules\Controller\Admin
             $serviceId = strtolower($this->request->dir . '.installer');
 
             if ($this->container->has($serviceId) === true) {
+                /** @var Core\Modules\AbstractInstaller $installer */
                 $installer = $this->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkUninstallDependencies($installer);
+                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $this->container);
 
                 if (empty($deps)) {
                     $bool = $this->systemModel->update(['active' => 0], ['name' => $this->request->dir]);
@@ -208,7 +216,7 @@ class Extensions extends Core\Modules\Controller\Admin
                 $installer = $this->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkInstallDependencies($installer);
+                $deps = $this->systemHelpers->checkInstallDependencies($installer);
 
                 // Modul installieren
                 if (empty($deps)) {
@@ -239,10 +247,11 @@ class Extensions extends Core\Modules\Controller\Admin
             $serviceId = strtolower($this->request->dir . '.installer');
 
             if ($this->container->has($serviceId) === true) {
+                /** @var Core\Modules\AbstractInstaller $installer */
                 $installer = $this->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkUninstallDependencies($installer);
+                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $this->container);
 
                 // Modul deinstallieren
                 if (empty($deps)) {
