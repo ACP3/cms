@@ -58,7 +58,7 @@ class Model extends Core\Model
     public function getAllByModule($moduleId, $resultId, $limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->getConnection()->fetchAll('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . 'modules AS m ON(m.id = c.module_id) LEFT JOIN (' . $this->db->getPrefix() . 'users AS u) ON u.id = c.user_id WHERE m.name = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt, [$moduleId, $resultId]);
+        return $this->db->getConnection()->fetchAll('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c LEFT JOIN ' . $this->db->getPrefix() . 'users AS u ON (u.id = c.user_id) WHERE c.module_id = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt, [$moduleId, $resultId]);
     }
 
     /**
@@ -68,7 +68,7 @@ class Model extends Core\Model
      */
     public function countAllByModule($moduleId, $resultId)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.entry_id = ?', [$moduleId, $resultId]);
+        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE module_id = ? AND entry_id = ?', [$moduleId, $resultId]);
     }
 
     /**
@@ -77,7 +77,7 @@ class Model extends Core\Model
      */
     public function getAllByModuleInAcp($moduleId)
     {
-        return $this->db->getConnection()->fetchAll('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c LEFT JOIN ' . $this->db->getPrefix() . 'users AS u ON u.id = c.user_id WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.id ASC', [$moduleId]);
+        return $this->db->getConnection()->fetchAll('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c LEFT JOIN ' . $this->db->getPrefix() . 'users AS u ON (u.id = c.user_id) WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC', [$moduleId]);
     }
 
     /**

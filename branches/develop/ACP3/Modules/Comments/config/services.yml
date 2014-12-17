@@ -23,7 +23,7 @@ services:
 
   comments.helpers:
     class: ACP3\Modules\Comments\Helpers
-    arguments: ['@comments.model']
+    arguments: ['@core.modules', '@comments.model']
 
   comments.model:
     class: ACP3\Modules\Comments\Model

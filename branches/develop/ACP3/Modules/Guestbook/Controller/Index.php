@@ -28,13 +28,21 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $guestbookModel;
     /**
-     * @var Core\Config
+     * @var array
      */
-    protected $guestbookConfig;
+    protected $guestbookSettings;
     /**
      * @var \ACP3\Core\Config
      */
     protected $seoConfig;
+    /**
+     * @var bool
+     */
+    private $emoticonsActive;
+    /**
+     * @var bool
+     */
+    private $newsletterActive;
 
     /**
      * @param \ACP3\Core\Context\Frontend   $context
@@ -60,26 +68,26 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
-        $this->guestbookConfig = $guestbookConfig;
+        $this->guestbookSettings = $guestbookConfig->getSettings();
         $this->seoConfig = $seoConfig;
+
+        $this->emoticonsActive = ($this->guestbookSettings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
+        $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1 && $this->acl->hasPermission('frontend/newsletter') === true);
     }
 
     public function actionCreate()
     {
-        $settings = $this->guestbookConfig->getSettings();
-        $hasNewsletterAccess = $this->acl->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
-
         if (empty($_POST) === false) {
-            $this->_createPost($_POST, $settings, $hasNewsletterAccess);
+            $this->_createPost($_POST);
         }
 
         // Emoticons einbinden
-        if ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true) {
+        if ($this->emoticonsActive === true) {
             $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
         }
 
         // In Newsletter integrieren
-        if ($hasNewsletterAccess === true) {
+        if ($this->newsletterActive === true) {
             $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
             $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->seoConfig->getSettings()['title']));
         }
@@ -117,25 +125,18 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        $settings = $this->guestbookConfig->getSettings();
-        $this->view->assign('overlay', $settings['overlay']);
+        $this->view->assign('overlay', $this->guestbookSettings['overlay']);
 
-        $guestbook = $this->guestbookModel->getAll($settings['notify'], POS, $this->auth->entries);
+        $guestbook = $this->guestbookModel->getAll($this->guestbookSettings['notify'], POS, $this->auth->entries);
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $this->pagination->setTotalResults($this->guestbookModel->countAll($settings['notify']));
+            $this->pagination->setTotalResults($this->guestbookModel->countAll($this->guestbookSettings['notify']));
             $this->pagination->display();
-
-            // Emoticons einbinden
-            $emoticonsActive = false;
-            if ($settings['emoticons'] == 1) {
-                $emoticonsActive = $this->modules->isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
-            }
 
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
-                if ($emoticonsActive === true) {
+                if ($this->emoticonsActive === true) {
                     $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
                 }
                 $guestbook[$i]['website'] = strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'];
@@ -146,20 +147,18 @@ class Index extends Core\Modules\Controller\Frontend
                 $guestbook[$i]['mail'] = !empty($guestbook[$i]['user_mail']) ? substr($guestbook[$i]['user_mail'], 0, -2) : $guestbook[$i]['mail'];
             }
             $this->view->assign('guestbook', $guestbook);
-            $this->view->assign('dateformat', $settings['dateformat']);
+            $this->view->assign('dateformat', $this->guestbookSettings['dateformat']);
         }
     }
 
     /**
      * @param array $formData
-     * @param array $settings
-     * @param $hasNewsletterAccess
      */
-    private function _createPost(array $formData, array $settings, $hasNewsletterAccess)
+    private function _createPost(array $formData)
     {
         try {
             $validator = $this->get('guestbook.validator');
-            $validator->validateCreate($formData, $hasNewsletterAccess);
+            $validator->validateCreate($formData, $this->newsletterActive);
 
             $insertValues = [
                 'id' => '',
@@ -170,22 +169,22 @@ class Index extends Core\Modules\Controller\Frontend
                 'message' => Core\Functions::strEncode($formData['message']),
                 'website' => Core\Functions::strEncode($formData['website']),
                 'mail' => $formData['mail'],
-                'active' => $settings['notify'] == 2 ? 0 : 1,
+                'active' => $this->guestbookSettings['notify'] == 2 ? 0 : 1,
             ];
 
             $lastId = $this->guestbookModel->insert($insertValues);
 
             // E-Mail-Benachrichtigung bei neuem Eintrag der hinterlegten
             // E-Mail-Adresse zusenden
-            if ($settings['notify'] == 1 || $settings['notify'] == 2) {
+            if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
                 $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
                 $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $lastId;
-                $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
-                $this->get('core.helpers.sendEmail')->execute('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
+                $body = sprintf($this->guestbookSettings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
+                $this->get('core.helpers.sendEmail')->execute('', $this->guestbookSettings['notify_email'], $this->guestbookSettings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
             }
 
             // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-            if ($hasNewsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
+            if ($this->newsletterActive === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
                 $this->get('newsletter.helpers')->subscribeToNewsletter($formData['mail']);
             }
 

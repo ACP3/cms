@@ -33,22 +33,26 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $newsCache;
     /**
-     * @var Core\Config
+     * @var array
      */
-    protected $newsConfig;
+    protected $newsSettings;
     /**
      * @var Categories\Model
      */
     protected $categoriesModel;
+    /**
+     * @var bool
+     */
+    private $commentsActive;
 
     /**
      * @param Core\Context\Frontend $context
-     * @param Core\Date $date
-     * @param Core\Pagination $pagination
-     * @param News\Model $newsModel
-     * @param News\Cache $newsCache
-     * @param Core\Config $newsConfig
-     * @param Categories\Model $categoriesModel
+     * @param Core\Date             $date
+     * @param Core\Pagination       $pagination
+     * @param News\Model            $newsModel
+     * @param News\Cache            $newsCache
+     * @param Core\Config           $newsConfig
+     * @param Categories\Model      $categoriesModel
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -65,21 +69,22 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->newsModel = $newsModel;
         $this->newsCache = $newsCache;
-        $this->newsConfig = $newsConfig;
+        $this->newsSettings = $newsConfig->getSettings();
         $this->categoriesModel = $categoriesModel;
+
+        $this->commentsActive = ($this->newsSettings['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true);
     }
 
     public function actionDetails()
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
-            $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1) {
-            $settings = $this->newsConfig->getSettings();
-
+            $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1
+        ) {
             $news = $this->newsCache->getCache($this->request->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
 
-            if ($settings['category_in_breadcrumb'] == 1) {
+            if ($this->newsSettings['category_in_breadcrumb'] == 1) {
                 $this->breadcrumb->append($news['category_title'], 'news/index/index/cat_' . $news['category_id']);
             }
             $this->breadcrumb->append($news['title']);
@@ -90,9 +95,9 @@ class Index extends Core\Modules\Controller\Frontend
             $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';
 
             $this->view->assign('news', $news);
-            $this->view->assign('dateformat', $settings['dateformat']);
+            $this->view->assign('dateformat', $this->newsSettings['dateformat']);
 
-            if ($settings['comments'] == 1 && $news['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true) {
+            if ($this->commentsActive === true && $news['comments'] == 1) {
                 /** @var \ACP3\Modules\Comments\Controller\Index $comments */
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
@@ -120,9 +125,8 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $cat));
         }
 
-        $settings = $this->newsConfig->getSettings();
         // Kategorie in Brotkrümelspur anzeigen
-        if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
+        if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->router->route('news'));
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
             $category = $this->categoriesModel->getTitleById($cat);
@@ -141,23 +145,20 @@ class Index extends Core\Modules\Controller\Frontend
         $c_news = count($news);
 
         if ($c_news > 0) {
-            // Überprüfen, ob das Kommentare Modul aktiv ist
-            $commentsCheck = $this->modules->isActive('comments');
-
             $this->pagination->setTotalResults($this->newsModel->countAll($time, $cat));
             $this->pagination->display();
 
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_news; ++$i) {
-                if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $commentsCheck === true) {
+                if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
                 }
-                if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");
+                if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
+                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'], $this->newsSettings['readmore_chars'], 50, '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");
                 }
             }
             $this->view->assign('news', $news);
-            $this->view->assign('dateformat', $settings['dateformat']);
+            $this->view->assign('dateformat', $this->newsSettings['dateformat']);
         }
     }
 }

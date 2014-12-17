@@ -35,9 +35,9 @@ class Modules
     private $allModules = [];
 
     /**
-     * @param Lang $lang
-     * @param XML $xml
-     * @param Cache $modulesCache
+     * @param Lang         $lang
+     * @param XML          $xml
+     * @param Cache        $modulesCache
      * @param System\Model $systemModel
      */
     public function __construct(
@@ -45,7 +45,8 @@ class Modules
         XML $xml,
         Cache $modulesCache,
         System\Model $systemModel
-    ) {
+    )
+    {
         $this->lang = $lang;
         $this->xml = $xml;
         $this->cache = $modulesCache;
@@ -56,6 +57,7 @@ class Modules
      * Überprüft, ob eine Modulaktion überhaupt existiert
      *
      * @param string $path
+     *
      * @return boolean
      */
     public function actionExists($path)
@@ -112,6 +114,16 @@ class Modules
             $this->parseModules = $this->cache->fetch($filename);
         }
         return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : [];
+    }
+
+    /**
+     * @param string $module
+     *
+     * @return integer
+     */
+    public function getModuleId($module)
+    {
+        return $this->getModuleInfo($module)['id'];
     }
 
     /**
