@@ -84,10 +84,7 @@ class Index extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['picture']['size'];
             }
 
-            $settings = $this->categoriesConfig->getSettings();
-
-            $validator = $this->get('categories.validator');
-            $validator->validate($formData, $file, $settings);
+            $this->get('categories.validator')->validate($formData, $file, $this->categoriesConfig->getSettings());
 
             $moduleInfo = $this->modules->getModuleInfo($formData['module']);
             $insertValues = [
@@ -104,7 +101,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->categoriesModel->insert($insertValues);
 
-            $this->categoriesCache->setCache($formData['module']);
+            $this->categoriesCache->setCache(strtolower($formData['module']));
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -188,10 +185,8 @@ class Index extends Core\Modules\Controller\Admin
                 $file['name'] = $_FILES['picture']['name'];
                 $file['size'] = $_FILES['picture']['size'];
             }
-            $settings = $this->categoriesConfig->getSettings();
 
-            $validator = $this->get('categories.validator');
-            $validator->validate($formData, $file, $settings, $this->request->id);
+            $this->get('categories.validator')->validate($formData, $file, $this->categoriesConfig->getSettings(), $this->request->id);
 
             $updateValues = [
                 'title' => Core\Functions::strEncode($formData['title']),

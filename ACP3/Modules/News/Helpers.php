@@ -1,12 +1,4 @@
 <?php
-/**
- * News
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\News;
 
 use ACP3\Core;
