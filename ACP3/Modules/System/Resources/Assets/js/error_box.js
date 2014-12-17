@@ -18,8 +18,10 @@ jQuery(document).ready(function ($) {
 
                 // Move the error message to the responsible input field(s)
                 // and remove the list items for the error box container
-                $elem.closest('div').append('<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + $this.html() + '</small>');
-                $this.remove();
+                if ($elem.length == 1) {
+                    $elem.closest('div').append('<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + $this.html() + '</small>');
+                    $this.remove();
+                }
             }
         }
     });

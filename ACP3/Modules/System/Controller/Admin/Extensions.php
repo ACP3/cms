@@ -25,22 +25,28 @@ class Extensions extends Core\Modules\Controller\Admin
      */
     protected $systemConfig;
     /**
+     * @var \ACP3\Modules\System\Helpers
+     */
+    protected $systemHelpers;
+    /**
      * @var \ACP3\Modules\Permissions\Cache
      */
     protected $permissionsCache;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\XML $xml
-     * @param System\Model $systemModel
-     * @param Core\Config $systemConfig
-     * @param Permissions\Cache $permissionsCache
+     * @param \ACP3\Core\Context\Admin        $context
+     * @param \ACP3\Core\XML                  $xml
+     * @param \ACP3\Modules\System\Model      $systemModel
+     * @param \ACP3\Core\Config               $systemConfig
+     * @param \ACP3\Modules\System\Helpers    $systemHelpers
+     * @param \ACP3\Modules\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\XML $xml,
         System\Model $systemModel,
         Core\Config $systemConfig,
+        System\Helpers $systemHelpers,
         Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
@@ -48,6 +54,7 @@ class Extensions extends Core\Modules\Controller\Admin
         $this->xml = $xml;
         $this->systemModel = $systemModel;
         $this->systemConfig = $systemConfig;
+        $this->systemHelpers = $systemHelpers;
         $this->permissionsCache = $permissionsCache;
     }
 
@@ -143,11 +150,31 @@ class Extensions extends Core\Modules\Controller\Admin
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $bool = $this->systemModel->update(['active' => 1], ['name' => $this->request->dir]);
+            $serviceId = strtolower($this->request->dir . '.installer');
 
-            $this->_renewCaches();
+            $container = $this->systemHelpers->updateServiceContainer(true);
 
-            $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
+            if ($container->has($serviceId) === true) {
+                /** @var Core\Modules\AbstractInstaller $installer */
+                $installer = $container->get($serviceId);
+
+                // Modulabhängigkeiten prüfen
+                $deps = $this->systemHelpers->checkInstallDependencies($installer);
+
+                // Modul installieren
+                if (empty($deps)) {
+                    $bool = $this->systemModel->update(['active' => 1], ['name' => $this->request->dir]);
+
+                    $this->_renewCaches();
+                    Core\Cache::purge(CACHE_DIR . 'sql/container.php');
+
+                    $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
+                } else {
+                    $text = sprintf($this->lang->t('system', 'enable_following_modules_first'), implode(', ', $deps));
+                }
+            } else {
+                $text = $this->lang->t('system', 'module_installer_not_found');
+            }
         }
 
         $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
@@ -173,15 +200,19 @@ class Extensions extends Core\Modules\Controller\Admin
             $serviceId = strtolower($this->request->dir . '.installer');
 
             if ($this->container->has($serviceId) === true) {
-                $installer = $this->get($serviceId);
+                /** @var Core\Modules\AbstractInstaller $installer */
+                $installer = $this->container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkUninstallDependencies($installer);
+                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $this->container);
 
                 if (empty($deps)) {
                     $bool = $this->systemModel->update(['active' => 0], ['name' => $this->request->dir]);
 
                     $this->_renewCaches();
+                    Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
+                    Core\Cache::purge(CACHE_DIR . 'tpl_cached');
+                    Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
                     $text = $this->lang->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
@@ -202,17 +233,21 @@ class Extensions extends Core\Modules\Controller\Admin
         if ($this->modules->isInstalled($this->request->dir) === false) {
             $serviceId = strtolower($this->request->dir . '.installer');
 
-            if ($this->container->has($serviceId) === true) {
-                $installer = $this->get($serviceId);
+            $container = $this->systemHelpers->updateServiceContainer(true);
+
+            if ($container->has($serviceId) === true) {
+                /** @var Core\Modules\AbstractInstaller $installer */
+                $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkInstallDependencies($installer);
+                $deps = $this->systemHelpers->checkInstallDependencies($installer);
 
                 // Modul installieren
                 if (empty($deps)) {
                     $bool = $installer->install();
 
                     $this->_renewCaches();
+                    Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
                     $text = $this->lang->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
                 } else {
@@ -236,17 +271,23 @@ class Extensions extends Core\Modules\Controller\Admin
         if ($info['protected'] === false && $this->modules->isInstalled($this->request->dir) === true) {
             $serviceId = strtolower($this->request->dir . '.installer');
 
-            if ($this->container->has($serviceId) === true) {
-                $installer = $this->get($serviceId);
+            $container = $this->systemHelpers->updateServiceContainer();
+
+            if ($container->has($serviceId) === true) {
+                /** @var Core\Modules\AbstractInstaller $installer */
+                $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->get('system.helpers')->checkUninstallDependencies($installer);
+                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $container);
 
                 // Modul deinstallieren
                 if (empty($deps)) {
                     $bool = $installer->uninstall();
 
                     $this->_renewCaches();
+                    Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
+                    Core\Cache::purge(CACHE_DIR . 'tpl_cached');
+                    Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
                     $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
                 } else {

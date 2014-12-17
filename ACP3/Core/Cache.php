@@ -63,6 +63,10 @@ class Cache
      */
     public static function purge($dir, $cacheId = '')
     {
+        if (is_file($dir) === true) {
+            return @unlink($dir);
+        }
+
         $files = array_diff(scandir($dir), ['.', '..']);
         foreach ($files as $file) {
             $path = "$dir/$file";

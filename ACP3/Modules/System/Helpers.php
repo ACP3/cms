@@ -1,16 +1,11 @@
 <?php
-
-/**
- * System
- *
- * @author     Tino Goratsch
- * @package    ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\System;
 
 use ACP3\Core;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class Helpers
@@ -47,12 +42,13 @@ class Helpers
      */
     public function checkInstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
     {
-        $deps = $moduleInstaller->getDependencies();
+        $dependencies = $moduleInstaller->getDependencies();
         $modulesToEnable = [];
-        if (!empty($deps)) {
-            foreach ($deps as $dep) {
-                if ($this->modules->isActive($dep) === false) {
-                    $modulesToEnable[] = ucfirst($dep);
+        if (!empty($dependencies)) {
+            foreach ($dependencies as $dependency) {
+                if ($this->modules->isActive($dependency) === false) {
+                    $moduleInfo = $this->modules->getModuleInfo($dependency);
+                    $modulesToEnable[] = $moduleInfo['name'];
                 }
             }
         }
@@ -60,26 +56,60 @@ class Helpers
     }
 
     /**
-     * Überprüft die Modulabhängigkeiten vor dem Deinstallieren eines Moduls
+     * @param                                                  $moduleToBeUninstalled
+     * @param \Symfony\Component\DependencyInjection\Container $container
      *
-     * @param Core\Modules\AbstractInstaller $moduleInstaller
      * @return array
      */
-    public function checkUninstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
+    public function checkUninstallDependencies($moduleToBeUninstalled, Container $container)
     {
-        $module = $moduleInstaller::MODULE_NAME;
-        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
-        $modulesToUninstall = [];
-        foreach ($modules as $row) {
-            $row = strtolower($row);
-            if ($row !== $module) {
-                $deps = $moduleInstaller->getDependencies();
-                if (!empty($deps) && $this->modules->isInstalled($row) === true && in_array($module, $deps) === true) {
-                    $modulesToUninstall[] = ucfirst($row);
+        $modules = $this->modules->getInstalledModules();
+        $moduleDependencies = [];
+
+        foreach ($modules as $module) {
+            $moduleName = strtolower($module['dir']);
+            if ($moduleName !== $moduleToBeUninstalled) {
+                $service = $moduleName . '.installer';
+
+                if ($container->has($service) === true) {
+                    $deps = $container->get($moduleName . '.installer')->getDependencies();
+                    if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
+                        $moduleDependencies[] = $module['name'];
+                    }
                 }
             }
         }
-        return $modulesToUninstall;
+        return $moduleDependencies;
+    }
+
+    /**
+     * @param bool $allModules
+     *
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
+     */
+    public function updateServiceContainer($allModules = false)
+    {
+        $container = new ContainerBuilder();
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+        $loader->load(ACP3_DIR . 'config/services.yml');
+        $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
+
+        // Try to get all available services
+        if ($allModules === true) {
+            $modules = $this->modules->getAllModules();
+        } else {
+            $modules = $this->modules->getInstalledModules();
+        }
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
+            if (is_file($path)) {
+                $loader->load($path);
+            }
+        }
+
+        $container->compile();
+
+        return $container;
     }
 
     /**

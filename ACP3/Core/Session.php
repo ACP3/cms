@@ -45,34 +45,36 @@ class Session
     {
         $this->db = $db;
 
-        // php.ini Session Einstellungen konfigurieren
-        ini_set('session.name', self::SESSION_NAME);
-        ini_set('session.use_trans_sid', 0);
-        ini_set('session.use_cookies', 1);
-        ini_set('session.use_only_cookies', 1);
-        ini_set('session.cookie_httponly', 1);
+        if (session_status() == PHP_SESSION_NONE) {
+            // php.ini Session Einstellungen konfigurieren
+            ini_set('session.name', self::SESSION_NAME);
+            ini_set('session.use_trans_sid', 0);
+            ini_set('session.use_cookies', 1);
+            ini_set('session.use_only_cookies', 1);
+            ini_set('session.cookie_httponly', 1);
 
-        // Session GC
-        ini_set('session.gc_maxlifetime', $this->expireTime);
-        ini_set('session.gc_probability', $this->gcProbability);
-        ini_set('session.gc_divisor', 100);
+            // Session GC
+            ini_set('session.gc_maxlifetime', $this->expireTime);
+            ini_set('session.gc_probability', $this->gcProbability);
+            ini_set('session.gc_divisor', 100);
 
-        // Eigene Session Handling Methoden setzen
-        ini_set('session.save_handler', 'user');
-        session_set_save_handler(
-            [$this, 'session_open'],
-            [$this, 'session_close'],
-            [$this, 'session_read'],
-            [$this, 'session_write'],
-            [$this, 'session_destroy'],
-            [$this, 'session_gc']
-        );
+            // Eigene Session Handling Methoden setzen
+            ini_set('session.save_handler', 'user');
+            session_set_save_handler(
+                [$this, 'session_open'],
+                [$this, 'session_close'],
+                [$this, 'session_read'],
+                [$this, 'session_write'],
+                [$this, 'session_destroy'],
+                [$this, 'session_gc']
+            );
 
-        // Session starten und anschließend sichern
-        self::startSession();
-        self::secureSession();
+            // Session starten und anschließend sichern
+            self::startSession();
+            self::secureSession();
 
-        register_shutdown_function('session_write_close');
+            register_shutdown_function('session_write_close');
+        }
     }
 
     /**

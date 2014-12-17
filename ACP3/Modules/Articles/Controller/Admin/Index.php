@@ -40,16 +40,18 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var bool
+     */
+    protected $menusActive;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\DB $db
-     * @param Articles\Model $articlesModel
-     * @param Articles\Cache $articlesCache
-     * @param Menus\Model $menusModel
-     * @param Menus\Cache $menusCache
-     * @param Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Context\Admin     $context
+     * @param \ACP3\Core\Date              $date
+     * @param \ACP3\Core\DB                $db
+     * @param \ACP3\Modules\Articles\Model $articlesModel
+     * @param \ACP3\Modules\Articles\Cache $articlesCache
+     * @param \ACP3\Core\Helpers\Secure    $secureHelper
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -57,8 +59,6 @@ class Index extends Core\Modules\Controller\Admin
         Core\DB $db,
         Articles\Model $articlesModel,
         Articles\Cache $articlesCache,
-        Menus\Model $menusModel,
-        Menus\Cache $menusCache,
         Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
@@ -67,9 +67,33 @@ class Index extends Core\Modules\Controller\Admin
         $this->db = $db;
         $this->articlesModel = $articlesModel;
         $this->articlesCache = $articlesCache;
-        $this->menusModel = $menusModel;
-        $this->menusCache = $menusCache;
         $this->secureHelper = $secureHelper;
+
+        $this->menusActive = $this->modules->isActive('menus');
+    }
+
+    /**
+     * @param \ACP3\Modules\Menus\Cache $menusCache
+     *
+     * @return $this
+     */
+    public function setMenusCache(Menus\Cache $menusCache)
+    {
+        $this->menusCache = $menusCache;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\Menus\Model $menusModel
+     *
+     * @return $this
+     */
+    public function setMenusModel(Menus\Model $menusModel)
+    {
+        $this->menusModel = $menusModel;
+
+        return $this;
     }
 
     public function actionCreate()
@@ -147,8 +171,7 @@ class Index extends Core\Modules\Controller\Admin
                 $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
                 $lastId = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
 
-                $cacheMenu = $this->get('menus.cache');
-                $cacheMenu->setMenuItemsCache();
+                $this->menusCache->setMenuItemsCache();
             }
 
             $this->secureHelper->unsetFormToken($this->request->query);
@@ -175,13 +198,18 @@ class Index extends Core\Modules\Controller\Admin
                 $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
                 $bool = $this->articlesModel->delete($item);
-                $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
+
+                if ($this->menusActive === true) {
+                    $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
+                }
 
                 $cache->delete(Articles\Cache::CACHE_ID . $item);
                 $this->aliases->deleteUriAlias($uri);
             }
 
-            $this->menusCache->setMenuItemsCache();
+            if ($this->menusActive === true) {
+                $this->menusCache->setMenuItemsCache();
+            }
 
             $this->seo->setCache();
 
@@ -246,7 +274,9 @@ class Index extends Core\Modules\Controller\Admin
             $this->articlesCache->setCache($this->request->id);
 
             // Aliase in der Navigation aktualisieren
-            $this->menusCache->setMenuItemsCache();
+            if ($this->menusActive === true) {
+                $this->menusCache->setMenuItemsCache();
+            }
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

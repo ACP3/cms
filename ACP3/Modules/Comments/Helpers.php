@@ -10,41 +10,47 @@ use ACP3\Core;
 class Helpers
 {
     /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+    /**
      * @var Model
      */
     protected $comentsModel;
 
     /**
-     * @param Model $commentsModel
+     * @param \ACP3\Core\Modules           $modules
+     * @param \ACP3\Modules\Comments\Model $commentsModel
      */
-    public function __construct(Model $commentsModel)
+    public function __construct(
+        Core\Modules $modules,
+        Model $commentsModel)
     {
+        $this->modules = $modules;
         $this->comentsModel = $commentsModel;
     }
 
     /**
      * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen
      *
-     * @param string  $moduleId
-     *    Das jeweilige Modul
+     * @param string  $moduleName
      * @param integer $resultId
-     *    Die ID des jeweiligen Eintrages
      *
      * @return integer
      */
-    public function commentsCount($moduleId, $resultId)
+    public function commentsCount($moduleName, $resultId)
     {
-        return $this->comentsModel->countAllByModule($moduleId, $resultId);
+        return $this->comentsModel->countAllByModule($this->modules->getModuleId($moduleName), $resultId);
     }
 
     /**
-     * @param $moduleName
+     * @param $moduleId
      * @param $resultId
      *
      * @return int
      */
-    public function deleteCommentsByModuleAndResult($moduleName, $resultId)
+    public function deleteCommentsByModuleAndResult($moduleId, $resultId)
     {
-        return $this->comentsModel->delete(['module_id' => $moduleName, 'entry_id' => $resultId]);
+        return $this->comentsModel->delete(['module_id' => $moduleId, 'entry_id' => $resultId]);
     }
 }
