@@ -2,7 +2,10 @@
 namespace ACP3\Modules\System;
 
 use ACP3\Core;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class Helpers
@@ -59,8 +62,9 @@ class Helpers
      */
     public function checkUninstallDependencies($moduleToBeUninstalled, Container $container)
     {
-        $modules = $this->modules->getActiveModules();
+        $modules = $this->modules->getInstalledModules();
         $moduleDependencies = [];
+
         foreach ($modules as $localizedModuleName => $values) {
             $moduleName = strtolower($values['dir']);
             if ($moduleName !== $moduleToBeUninstalled) {
@@ -71,6 +75,36 @@ class Helpers
             }
         }
         return $moduleDependencies;
+    }
+
+    /**
+     * @param bool $allModules
+     *
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
+     */
+    public function updateServiceContainer($allModules = false)
+    {
+        $container = new ContainerBuilder();
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+        $loader->load(ACP3_DIR . 'config/services.yml');
+        $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
+
+        // Try to get all available services
+        if ($allModules === true) {
+            $modules = $this->modules->getAllModules();
+        } else {
+            $modules = $this->modules->getInstalledModules();
+        }
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
+            if (is_file($path)) {
+                $loader->load($path);
+            }
+        }
+
+        $container->compile();
+
+        return $container;
     }
 
     /**

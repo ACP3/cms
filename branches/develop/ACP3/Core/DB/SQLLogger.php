@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\DB;
+
 use ACP3\Core\Logger;
 
 /**
@@ -30,6 +31,15 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
      * @var string
      */
     private $logFilename = 'db-queries';
+    /**
+     * @var string
+     */
+    private $requestPath = '';
+
+    public function __construct()
+    {
+        $this->requestPath = $_SERVER['REQUEST_URI'];
+    }
 
     /**
      * {@inheritdoc}
@@ -37,7 +47,7 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
     public function startQuery($sql, array $params = null, array $types = null)
     {
         $this->start = microtime(true);
-        $this->queries[$_SERVER['REQUEST_URI']][++$this->currentQuery] = ['sql' => $sql, 'params' => $params, 'types' => $types, 'executionMS' => 0];
+        $this->queries[$this->requestPath][++$this->currentQuery] = ['sql' => $sql, 'params' => $params, 'types' => $types, 'executionMS' => 0];
     }
 
     /**
@@ -45,19 +55,21 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
      */
     public function stopQuery()
     {
-        $this->queries[$_SERVER['REQUEST_URI']][$this->currentQuery]['executionMS'] = microtime(true) - $this->start;
+        $this->queries[$this->requestPath][$this->currentQuery]['executionMS'] = microtime(true) - $this->start;
     }
 
     public function __destruct()
     {
-        $totalTime = 0;
-        foreach ($this->queries[$_SERVER['REQUEST_URI']] as $query) {
-            $totalTime += $query['executionMS'];
+        if (isset($this->queries[$this->requestPath])) {
+            $totalTime = 0;
+            foreach ($this->queries[$this->requestPath] as $query) {
+                $totalTime += $query['executionMS'];
+            }
+
+            $this->queries[$this->requestPath]['queryCount'] = count($this->queries[$this->requestPath]);
+            $this->queries[$this->requestPath]['totalTime'] = $totalTime;
+
+            Logger::debug($this->logFilename, $this->queries);
         }
-
-        $this->queries[$_SERVER['REQUEST_URI']]['queryCount'] = count($this->queries[$_SERVER['REQUEST_URI']]);
-        $this->queries[$_SERVER['REQUEST_URI']]['totalTime'] = $totalTime;
-
-        Logger::debug($this->logFilename, $this->queries);
     }
 }

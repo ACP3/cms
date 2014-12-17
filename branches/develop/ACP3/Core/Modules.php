@@ -92,7 +92,7 @@ class Modules
     public function isActive($module)
     {
         $info = $this->getModuleInfo($module);
-        return !empty($info) && $info['active'] == 1;
+        return !empty($info) && $info['active'] === true;
     }
 
     /**
@@ -152,6 +152,7 @@ class Modules
                     $infos[$moduleName] = [
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
                         'dir' => $dir,
+                        'installed' => (!empty($moduleInfoDb)),
                         'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
                         'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
@@ -179,25 +180,44 @@ class Modules
      */
     public function isInstalled($moduleName)
     {
-        return $this->systemModel->moduleExists($moduleName);
+        $info = $this->getModuleInfo($moduleName);
+        return !empty($info) && $info['installed'] === true;
     }
 
     /**
-     * Gibt alle derzeit aktiven Module in einem Array zurück
+     * Returns all currently installed AND active modules
      *
      * @return array
      */
     public function getActiveModules()
     {
-        $activeModules = $this->getAllModules();
+        $modules = $this->getAllModules();
 
         foreach ($this->allModules as $key => $values) {
-            if ($values['active'] !== true) {
-                unset($activeModules[$key]);
+            if ($values['active'] === false) {
+                unset($modules[$key]);
             }
         }
 
-        return $activeModules;
+        return $modules;
+    }
+
+    /**
+     * Returns all currently installed modules
+     *
+     * @return mixed
+     */
+    public function getInstalledModules()
+    {
+        $modules = $this->getAllModules();
+
+        foreach ($this->allModules as $key => $values) {
+            if ($values['installed'] === false) {
+                unset($modules[$key]);
+            }
+        }
+
+        return $modules;
     }
 
     /**
