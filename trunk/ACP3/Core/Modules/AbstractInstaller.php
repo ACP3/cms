@@ -88,7 +88,7 @@ abstract class AbstractInstaller implements InstallerInterface
     public function getDependencies()
     {
         if ((bool)preg_match('=/=', static::MODULE_NAME) === false) {
-            $path = MODULES_DIR . static::MODULE_NAME . '/module.xml';
+            $path = MODULES_DIR . ucfirst(static::MODULE_NAME) . '/config/module.xml';
             if (is_file($path) === true) {
                 $deps = $this->xml->parseXmlFile($path, '/module/info/dependencies');
                 return array_values($deps);

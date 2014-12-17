@@ -50,8 +50,7 @@ class Date
                 ) {
                     return true;
                 }
-                // Nur Startdatum überprüfen
-            } else {
+            } else { // Nur Startdatum überprüfen
                 if (checkdate($matchesStart[2], $matchesStart[3], $matchesStart[1])) {
                     return true;
                 }

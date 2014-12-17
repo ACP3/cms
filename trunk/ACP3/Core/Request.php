@@ -86,8 +86,7 @@ class Request
 
     protected function _checkForUriAlias()
     {
-        // Nur ausführen, falls URI-Aliase aktiviert sind
-        if ($this->area !== 'admin') {
+        if (strpos($this->query, 'minify') !== 0 && $this->area !== 'admin') {
             $probableQuery = $this->query;
             // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
             if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {

@@ -48,12 +48,13 @@ class Model extends Core\Model
     public function countAll($time = '', $categoryId = '')
     {
         if (!empty($categoryId)) {
-            $results = $this->getAllByCategoryId($categoryId, $time);
-        } else {
-            $results = $this->getAll($time);
-        }
+            $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
 
-        return count($results);
+            return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY start DESC, end DESC, id DESC', ['time' => $time, 'categoryId' => $categoryId]);
+        } else {
+            $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
+            return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC', ['time' => $time]);
+        }
     }
 
     /**

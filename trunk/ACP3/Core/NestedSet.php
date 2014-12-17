@@ -64,9 +64,9 @@ class NestedSet
                     $this->db->delete($this->tableName, ['id' => $id]);
                     // root_id und parent_id der Kinder aktualisieren
                     for ($i = 1; $i < $c_items; ++$i) {
-                        $root_id = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id ASC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
-                        $parent_id = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id DESC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
-                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET root_id = ?, parent_id = ?, left_id = left_id - 1, right_id = right_id - 1 WHERE id = ?', [!empty($root_id) ? $root_id : $items[$i]['id'], !empty($parent_id) ? $parent_id : 0, $items[$i]['id']]);
+                        $rootId = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id ASC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
+                        $parentId = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id DESC LIMIT 1', [$items[$i]['left_id'], $items[$i]['right_id']]);
+                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET root_id = ?, parent_id = ?, left_id = left_id - 1, right_id = right_id - 1 WHERE id = ?', [!empty($rootId) ? $rootId : $items[$i]['id'], !empty($parentId) ? $parentId : 0, $items[$i]['id']]);
                     }
 
                     // Übergeordnete Knoten aktualiseren
@@ -181,15 +181,14 @@ class NestedSet
             ) {
                 $bool = $this->db->update($this->tableName, $updateValues, ['id' => $id]);
             } else {
-                // Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-                $checkParent = $this->db->fetchAssoc('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', [$items[0]['left_id'], $items[0]['right_id']]);
-                if (!empty($checkParent) && $checkParent['id'] == $parent) {
+                // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
+                $checkParent = $this->db->fetchColumn('SELECT id FROM ' . $this->tableName . ' WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', [$items[0]['left_id'], $items[0]['right_id']]);
+                if (!empty($checkParent) && $checkParent == $parent) {
                     $bool = $this->db->update($this->tableName, $updateValues, ['id' => $id]);
-                    // ...ansonsten den Baum bearbeiten...
-                } else {
+                } else { // ...ansonsten den Baum bearbeiten...
                     $bool = false;
                     // Differenz zwischen linken und rechten Wert bilden
-                    $pageDiff = $items[0]['right_id'] - $items[0]['left_id'] + 1;
+                    $itemDiff = $items[0]['right_id'] - $items[0]['left_id'] + 1;
 
                     // Neues Elternelement
                     $newParent = $this->db->fetchAssoc('SELECT root_id, left_id, right_id FROM ' . $this->tableName . ' WHERE id = ?', [$parent]);
@@ -209,44 +208,44 @@ class NestedSet
                                 }
 
                                 if ($blockId > $items[0]['block_id']) {
-                                    $newBlock['left_id'] -= $pageDiff;
+                                    $newBlock['left_id'] -= $itemDiff;
                                 }
 
                                 $diff = $newBlock['left_id'] - $items[0]['left_id'];
 
-                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$pageDiff, $items[0]['left_id'], $items[0]['right_id']]);
-                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', [$pageDiff, $pageDiff, $items[0]['right_id']]);
-                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?', [$pageDiff, $pageDiff, $newBlock['left_id']]);
+                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$itemDiff, $items[0]['left_id'], $items[0]['right_id']]);
+                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', [$itemDiff, $itemDiff, $items[0]['right_id']]);
+                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?', [$itemDiff, $itemDiff, $newBlock['left_id']]);
                                 // Element zum neuen Wurzelknoten machen
                             } else {
                                 $maxId = $this->db->fetchColumn('SELECT MAX(right_id) AS right_id FROM ' . $this->tableName . ' WHERE block_id = ?', [$items[0]['block_id']]);
                                 $diff = $maxId - $items[0]['right_id'];
 
-                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$pageDiff, $items[0]['left_id'], $items[0]['right_id']]);
-                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND block_id = ?', [$pageDiff, $pageDiff, $items[0]['right_id'], $items[0]['block_id']]);
+                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$itemDiff, $items[0]['left_id'], $items[0]['right_id']]);
+                                $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND block_id = ?', [$itemDiff, $itemDiff, $items[0]['right_id'], $items[0]['block_id']]);
                             }
                         } else {
                             $maxId = $this->db->fetchColumn('SELECT MAX(right_id) AS right_id FROM ' . $this->tableName);
                             $diff = $maxId - $items[0]['right_id'];
 
-                            $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$pageDiff, $items[0]['left_id'], $items[0]['right_id']]);
-                            $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', [$pageDiff, $pageDiff, $items[0]['right_id']]);
+                            $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$itemDiff, $items[0]['left_id'], $items[0]['right_id']]);
+                            $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', [$itemDiff, $itemDiff, $items[0]['right_id']]);
                         }
                         // Knoten werden Kinder von einem anderen Knoten
                     } else {
                         // Teilbaum nach unten...
                         if ($newParent['left_id'] > $items[0]['left_id']) {
-                            $newParent['left_id'] -= $pageDiff;
-                            $newParent['right_id'] -= $pageDiff;
+                            $newParent['left_id'] -= $itemDiff;
+                            $newParent['right_id'] -= $itemDiff;
                         }
 
                         $diff = $newParent['left_id'] - $items[0]['left_id'] + 1;
                         $rootId = $newParent['root_id'];
 
-                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$pageDiff, $items[0]['left_id'], $items[0]['right_id']]);
-                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', [$pageDiff, $pageDiff, $items[0]['right_id']]);
-                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?', [$pageDiff, $newParent['left_id'], $newParent['right_id']]);
-                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id > ?', [$pageDiff, $pageDiff, $newParent['left_id']]);
+                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', [$itemDiff, $items[0]['left_id'], $items[0]['right_id']]);
+                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', [$itemDiff, $itemDiff, $items[0]['right_id']]);
+                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?', [$itemDiff, $newParent['left_id'], $newParent['right_id']]);
+                        $this->db->executeUpdate('UPDATE ' . $this->tableName . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id > ?', [$itemDiff, $itemDiff, $newParent['left_id']]);
                     }
 
                     // Einträge aktualisieren

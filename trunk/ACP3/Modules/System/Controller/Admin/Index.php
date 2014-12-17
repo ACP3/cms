@@ -115,6 +115,9 @@ class Index extends Core\Modules\Controller\Admin
         return;
     }
 
+    /**
+     * @param array $formData
+     */
     private function _configurationPost(array $formData)
     {
         try {
