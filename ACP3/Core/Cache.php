@@ -22,6 +22,7 @@ class Cache
     /**
      * @param Container $container
      * @param $namespace
+     * @throws \InvalidArgumentException
      */
     public function __construct(
         Container $container,
