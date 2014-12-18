@@ -148,13 +148,12 @@ class Index extends Core\Modules\Controller\Admin
 
             $lastId = $this->articlesModel->insert($insertValues);
 
-            $this->aliases->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+            $this->seo->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
-            $this->seo->setCache();
 
             if (isset($formData['create']) === true && $this->acl->hasPermission('admin/menus/items/create') === true) {
                 $insertValues = [
@@ -204,14 +203,12 @@ class Index extends Core\Modules\Controller\Admin
                 }
 
                 $cache->delete(Articles\Cache::CACHE_ID . $item);
-                $this->aliases->deleteUriAlias($uri);
+                $this->seo->deleteUriAlias($uri);
             }
 
             if ($this->menusActive === true) {
                 $this->menusCache->setMenuItemsCache();
             }
-
-            $this->seo->setCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
         } elseif (is_string($items)) {
@@ -262,14 +259,13 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->articlesModel->update($updateValues, $this->request->id);
 
-            $this->aliases->insertUriAlias(
+            $this->seo->insertUriAlias(
                 sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
-            $this->seo->setCache();
 
             $this->articlesCache->setCache($this->request->id);
 

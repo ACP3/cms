@@ -88,7 +88,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Galerie Cache löschen
                     $cache->delete(Gallery\Cache::CACHE_ID . $item);
-                    $this->aliases->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
+                    $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
                     $this->get('gallery.helpers')->deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
@@ -96,8 +96,6 @@ class Index extends Core\Modules\Controller\Admin
                     $bool2 = $this->galleryModel->delete($item, 'gallery_id', Gallery\Model::TABLE_NAME_PICTURES);
                 }
             }
-
-            $this->seo->setCache();
 
             $this->redirectMessages()->setMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/gallery');
         } elseif (is_string($items)) {
@@ -211,14 +209,13 @@ class Index extends Core\Modules\Controller\Admin
 
             $lastId = $this->galleryModel->insert($insertValues);
 
-            $this->aliases->insertUriAlias(
+            $this->seo->insertUriAlias(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
-            $this->seo->setCache();
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -250,7 +247,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->galleryModel->update($updateValues, $this->request->id);
 
-            $this->aliases->insertUriAlias(
+            $this->seo->insertUriAlias(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id),
                 $formData['alias'],
                 $formData['seo_keywords'],
@@ -258,8 +255,6 @@ class Index extends Core\Modules\Controller\Admin
                 (int)$formData['seo_robots']
             );
             $this->get('gallery.helpers')->generatePictureAliases($this->request->id);
-
-            $this->seo->setCache();
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

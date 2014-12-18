@@ -2,7 +2,7 @@
 namespace ACP3\Core\Validator\Rules\Router;
 
 use ACP3\Core;
-use ACP3\Modules\System;
+use ACP3\Modules\Seo;
 
 /**
  * Class Aliases
@@ -15,20 +15,20 @@ class Aliases
      */
     protected $routerValidator;
     /**
-     * @var System\Model
+     * @var \ACP3\Modules\Seo\Model
      */
-    protected $systemModel;
+    protected $seoModel;
 
     /**
-     * @param Core\Validator\Rules\Router $routerValidator
-     * @param System\Model $systemModel
+     * @param \ACP3\Core\Validator\Rules\Router $routerValidator
+     * @param \ACP3\Modules\Seo\Model           $seoModel
      */
     public function __construct(
         Core\Validator\Rules\Router $routerValidator,
-        System\Model $systemModel
+        Seo\Model $seoModel
     ) {
         $this->routerValidator = $routerValidator;
-        $this->systemModel = $systemModel;
+        $this->seoModel = $seoModel;
     }
 
     /**
@@ -47,8 +47,8 @@ class Aliases
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
                 if ($path !== '/' && $this->routerValidator->isInternalURI($path) === true) {
-                    return $this->systemModel->uriAliasExistsByAlias($alias, $path);
-                } elseif ($this->systemModel->uriAliasExistsByAlias($alias) === true) {
+                    return $this->seoModel->uriAliasExistsByAlias($alias, $path);
+                } elseif ($this->seoModel->uriAliasExistsByAlias($alias) === true) {
                     return true;
                 }
             }

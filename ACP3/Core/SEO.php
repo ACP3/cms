@@ -3,6 +3,8 @@ namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Router\Aliases;
+use ACP3\Modules\Seo\Cache;
+use ACP3\Modules\Seo\Model;
 
 /**
  * Class SEO
@@ -11,17 +13,9 @@ use ACP3\Core\Router\Aliases;
 class SEO
 {
     /**
-     * @var Cache
-     */
-    protected $cache;
-    /**
      * @var Router\Aliases
      */
     protected $aliases;
-    /**
-     * @var DB
-     */
-    protected $db;
     /**
      * @var Lang
      */
@@ -38,6 +32,14 @@ class SEO
      * @var array
      */
     protected $seoConfig = [];
+    /**
+     * @var \ACP3\Modules\Seo\Cache
+     */
+    protected $seoCache;
+    /**
+     * @var \ACP3\Modules\Seo\Model
+     */
+    protected $seoModel;
 
     /**
      * Gibt die nächste Seite an
@@ -67,69 +69,32 @@ class SEO
     protected $metaDescriptionPostfix = '';
 
     /**
-     * @param DB $db
-     * @param Lang $lang
-     * @param Request $request
-     * @param Aliases $aliases
-     * @param Forms $formsHelper
-     * @param Cache $seoCache
-     * @param Config $seoConfig
+     * @param \ACP3\Core\Lang           $lang
+     * @param \ACP3\Core\Request        $request
+     * @param \ACP3\Core\Router\Aliases $aliases
+     * @param \ACP3\Core\Helpers\Forms  $formsHelper
+     * @param \ACP3\Modules\Seo\Cache   $seoCache
+     * @param \ACP3\Core\Config         $seoConfig
+     * @param \ACP3\Modules\Seo\Model   $seoModel
      */
     public function __construct(
-        DB $db,
         Lang $lang,
         Request $request,
         Aliases $aliases,
         Forms $formsHelper,
         Cache $seoCache,
-        Config $seoConfig
-    )
+        Config $seoConfig,
+        Model $seoModel)
     {
-        $this->cache = $seoCache;
-        $this->db = $db;
         $this->lang = $lang;
         $this->request = $request;
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
+        $this->seoCache = $seoCache;
         $this->seoConfig = $seoConfig->getSettings();
+        $this->seoModel = $seoModel;
 
-        $this->aliasCache = $this->getCache();
-    }
-
-    /**
-     * Gibt den Cache der URI-Aliase zurück
-     *
-     * @return array
-     */
-    public function getCache()
-    {
-        if ($this->cache->contains('meta') === false) {
-            $this->setCache();
-        }
-
-        return $this->cache->fetch('meta');
-    }
-
-    /**
-     * Setzt den Cache für die URI-Aliase
-     *
-     * @return boolean
-     */
-    public function setCache()
-    {
-        $aliases = $this->db->getConnection()->fetchAll('SELECT uri, keywords, description, robots FROM ' . $this->db->getPrefix() . 'seo WHERE keywords != "" OR description != "" OR robots != 0');
-        $c_aliases = count($aliases);
-        $data = [];
-
-        for ($i = 0; $i < $c_aliases; ++$i) {
-            $data[$aliases[$i]['uri']] = [
-                'keywords' => $aliases[$i]['keywords'],
-                'description' => $aliases[$i]['description'],
-                'robots' => $aliases[$i]['robots']
-            ];
-        }
-
-        return $this->cache->save('meta', $data);
+        $this->aliasCache = $this->seoCache->getCache();
     }
 
     /**
@@ -351,4 +316,55 @@ class SEO
             'robots' => $this->formsHelper->selectGenerator('seo_robots', [0, 1, 2, 3, 4], $langRobots, $robots)
         ];
     }
+
+    /**
+     * Löscht einen URI-Alias
+     *
+     * @param string $path
+     *
+     * @return boolean
+     */
+    public function deleteUriAlias($path)
+    {
+        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+
+        $bool = $this->seoModel->delete($path, 'uri');
+        return $bool !== false && $this->seoCache->setCache() !== false;
+    }
+
+    /**
+     * Trägt einen URI-Alias in die Datenbank ein bzw. aktualisiert den Eintrag
+     *
+     * @param string $path
+     * @param string $alias
+     * @param string $keywords
+     * @param string $description
+     * @param int    $robots
+     *
+     * @return boolean
+     */
+    public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
+    {
+        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+        $keywords = Functions::strEncode($keywords);
+        $description = Functions::strEncode($description);
+        $values = [
+            'alias' => $alias,
+            'keywords' => $keywords,
+            'description' => $description,
+            'robots' => (int)$robots
+        ];
+
+        // Update an existing result
+        if ($this->aliases->uriAliasExists($path) === true) {
+            $bool = $this->seoModel->update($values, ['uri' => $path]);
+        } else {
+            $values['uri'] = $path;
+            $bool = $this->seoModel->insert($values);
+        }
+
+        return $bool !== false && $this->seoCache->setCache() !== false;
+    }
+
+
 }
