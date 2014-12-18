@@ -18,10 +18,6 @@ abstract class Admin extends Core\Modules\Controller\Frontend
      * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $validate;
-    /**
-     * @var Core\Router\Aliases
-     */
-    protected $aliases;
 
     /**
      * @param Core\Context\Admin $adminContext
@@ -32,7 +28,6 @@ abstract class Admin extends Core\Modules\Controller\Frontend
 
         $this->validate = $adminContext->getValidate();
         $this->session = $adminContext->getSession();
-        $this->aliases = $adminContext->getAliases();
     }
 
     /**

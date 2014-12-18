@@ -11,7 +11,6 @@ class Model extends Core\Model
 {
     const TABLE_NAME = 'modules';
     const TABLE_NAME_SETTINGS = 'settings';
-    const TABLE_NAME_SEO = 'seo';
 
     /**
      * @return array
@@ -49,39 +48,12 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $path
-     * @return bool
-     */
-    public function uriAliasExists($path)
-    {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SEO . ' WHERE uri = ?', [$path]) > 0;
-    }
-
-    /**
-     * @param $alias
-     * @param string $path
-     * @return bool
-     */
-    public function uriAliasExistsByAlias($alias, $path = '')
-    {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SEO . ' WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
-    }
-
-    /**
      * @param $moduleName
      * @return bool
      */
     public function moduleExists($moduleName)
     {
         return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$moduleName]) > 0;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllUriAliases()
-    {
-        return $this->db->getConnection()->fetchAll('SELECT uri, alias FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SEO . ' WHERE alias != ""');
     }
 
     /**

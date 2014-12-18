@@ -13,6 +13,10 @@ use ACP3\Modules\Menus;
 class Items extends Core\Modules\Controller\Admin
 {
     /**
+     * @var \ACP3\Core\Router\Aliases
+     */
+    protected $aliases;
+    /**
      * @var Core\DB
      */
     protected $db;
@@ -30,14 +34,16 @@ class Items extends Core\Modules\Controller\Admin
     protected $menusCache;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\DB $db
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Menus\Model $menusModel
-     * @param Menus\Cache $menusCache
+     * @param \ACP3\Core\Context\Admin  $context
+     * @param \ACP3\Core\Router\Aliases $aliases
+     * @param \ACP3\Core\DB             $db
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Modules\Menus\Model $menusModel
+     * @param \ACP3\Modules\Menus\Cache $menusCache
      */
     public function __construct(
         Core\Context\Admin $context,
+        Core\Router\Aliases $aliases,
         Core\DB $db,
         Core\Helpers\Secure $secureHelper,
         Menus\Model $menusModel,
@@ -45,6 +51,7 @@ class Items extends Core\Modules\Controller\Admin
     {
         parent::__construct($context);
 
+        $this->aliases = $aliases;
         $this->db = $db;
         $this->secureHelper = $secureHelper;
         $this->menusModel = $menusModel;
@@ -116,12 +123,10 @@ class Items extends Core\Modules\Controller\Admin
                 // URI-Alias löschen
                 $itemUri = $this->menusModel->getMenuItemUriById($item);
                 $bool = $nestedSet->deleteNode($item);
-                $this->aliases->deleteUriAlias($itemUri);
+                $this->seo->deleteUriAlias($itemUri);
             }
 
             $this->menusCache->setMenuItemsCache();
-
-            $this->seo->setCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
@@ -245,14 +250,13 @@ class Items extends Core\Modules\Controller\Admin
                     $keywords = $formData['seo_keywords'];
                     $description = $formData['seo_description'];
                 }
-                $this->aliases->insertUriAlias(
+                $this->seo->insertUriAlias(
                     $path,
                     $formData['mode'] == 1 ? '' : $alias,
                     $keywords,
                     $description,
                     (int)$formData['seo_robots']
                 );
-                $this->seo->setCache();
             }
 
             $this->menusCache->setMenuItemsCache();
@@ -303,14 +307,13 @@ class Items extends Core\Modules\Controller\Admin
                 $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
                 $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
                 $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-                $this->aliases->insertUriAlias(
+                $this->seo->insertUriAlias(
                     $path,
                     $formData['mode'] == 1 ? '' : $alias,
                     $keywords,
                     $description,
                     (int)$formData['seo_robots']
                 );
-                $this->seo->setCache();
             }
 
             $this->menusCache->setMenuItemsCache();

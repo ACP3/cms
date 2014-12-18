@@ -23,14 +23,6 @@ services:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'modules']
 
-  system.cache.core.seo:
-    class: ACP3\Core\Cache
-    arguments: ['@service_container', 'seo']
-
-  system.cache.core.uri:
-    class: ACP3\Core\Cache
-    arguments: ['@service_container', 'uri']
-
   system.config:
     class: ACP3\Core\Config
     arguments: ['@system.cache.core', '@system.model', 'system']

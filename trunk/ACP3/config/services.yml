@@ -35,7 +35,7 @@ services:
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
-    arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session', '@core.router.aliases']
+    arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session']
 
   core.context.frontend:
     class : ACP3\Core\Context\Frontend
@@ -98,11 +98,11 @@ services:
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
-    arguments: ['@system.cache.core.uri', '@system.model']
+    arguments: ['@seo.cache']
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@system.cache.core.seo', '@seo.config']
+    arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@seo.config', '@seo.model']
 
   core.session:
     class: ACP3\Core\Session

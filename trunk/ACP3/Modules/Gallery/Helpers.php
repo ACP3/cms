@@ -58,7 +58,7 @@ class Helpers
         $seoKeywords = $this->seo->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
         $seoDescription = $this->seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
-        return $this->aliases->insertUriAlias(
+        return $this->seo->insertUriAlias(
             sprintf(self::URL_KEY_PATTERN_PICTURE, $pictureId),
             $alias,
             $seoKeywords,
@@ -86,7 +86,7 @@ class Helpers
         $seoDescription = $this->seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            $this->aliases->insertUriAlias(
+            $this->seo->insertUriAlias(
                 sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']),
                 !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '',
                 $seoKeywords,
@@ -111,7 +111,7 @@ class Helpers
         $c_pictures = count($pictures);
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            $this->aliases->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
+            $this->seo->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
         }
 
         return true;
