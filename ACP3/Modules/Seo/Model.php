@@ -50,8 +50,8 @@ class Model extends Core\Model
     /**
      * @return array
      */
-    public function getAllUriAliases()
+    public function getAllMetaTags()
     {
-        return $this->db->getConnection()->fetchAll('SELECT uri, alias FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != ""');
+        return $this->db->getConnection()->fetchAll('SELECT uri, keywords, description, robots FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
     }
 }

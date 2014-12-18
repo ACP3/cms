@@ -101,13 +101,11 @@ class Pictures extends Core\Modules\Controller\Admin
                     $this->get('gallery.helpers')->removePicture($picture['file']);
 
                     $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
-                    $this->aliases->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
+                    $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
 
                     $this->galleryCache->setCache($picture['gallery_id']);
                 }
             }
-
-            $this->seo->setCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/index/edit/id_' . $this->request->id);
         } elseif (is_string($items)) {
