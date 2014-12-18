@@ -16,7 +16,9 @@
                     {check_access mode="link" path="acp/newsletter/index/create" class="glyphicon glyphicon-plus text-success"}
                     {check_access mode="link" path="acp/newsletter/accounts" class="glyphicon glyphicon-user text-info"}
                     {check_access mode="link" path="acp/newsletter/index/settings" class="glyphicon glyphicon-cog"}
-                    {check_access mode="button" path="acp/newsletter/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {if isset($newsletter)}
+                        {check_access mode="button" path="acp/newsletter/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {/if}
                 </div>
             </div>
         </nav>

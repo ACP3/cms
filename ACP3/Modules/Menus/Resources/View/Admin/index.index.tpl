@@ -15,7 +15,9 @@
                 <div class="navbar-text pull-right">
                     {check_access mode="link" path="acp/menus/items/create" class="glyphicon glyphicon-plus text-success"}
                     {check_access mode="link" path="acp/menus/index/create" class="glyphicon glyphicon-th-list text-info"}
-                    {check_access mode="button" path="acp/menus/items/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {if isset($pages_list)}
+                        {check_access mode="button" path="acp/menus/items/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {/if}
                 </div>
             </div>
         </nav>

@@ -15,7 +15,9 @@
                 <div class="navbar-text pull-right">
                     {check_access mode="link" path="acp/gallery/index/create" class="glyphicon glyphicon-plus text-success"}
                     {check_access mode="link" path="acp/gallery/index/settings" class="glyphicon glyphicon-cog"}
-                    {check_access mode="button" path="acp/gallery/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {if isset($galleries)}
+                        {check_access mode="button" path="acp/gallery/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {/if}
                 </div>
             </div>
         </nav>
