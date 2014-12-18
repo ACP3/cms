@@ -16,6 +16,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
+     * @var \ACP3\Modules\Seo\Cache
+     */
+    protected $seoCache;
+    /**
      * @var Core\Config
      */
     protected $seoConfig;
@@ -25,20 +29,23 @@ class Index extends Core\Modules\Controller\Admin
     protected $seoModel;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Core\Config $seoConfig
-     * @param Seo\Model $seoModel
+     * @param \ACP3\Core\Context\Admin  $context
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Modules\Seo\Cache   $seoCache
+     * @param \ACP3\Core\Config         $seoConfig
+     * @param \ACP3\Modules\Seo\Model   $seoModel
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
+        Seo\Cache $seoCache,
         Core\Config $seoConfig,
         Seo\Model $seoModel)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
+        $this->seoCache = $seoCache;
         $this->seoConfig = $seoConfig;
         $this->seoModel = $seoModel;
     }
@@ -121,7 +128,7 @@ class Index extends Core\Modules\Controller\Admin
         try {
             $this->get('seo.validator')->validate($formData);
 
-            $bool = $this->aliases->insertUriAlias(
+            $bool = $this->seo->insertUriAlias(
                 $formData['uri'],
                 $formData['alias'],
                 $formData['seo_keywords'],
@@ -158,7 +165,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->seoModel->update($updateValues, $this->request->id);
 
-            $this->seo->setCache();
+            $this->seoCache->setCache();
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

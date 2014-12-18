@@ -119,11 +119,9 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     $cache->delete(Files\Cache::CACHE_ID);
-                    $this->aliases->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
+                    $this->seo->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                 }
             }
-
-            $this->seo->setCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
         } elseif (is_string($items)) {
@@ -258,13 +256,13 @@ class Index extends Core\Modules\Controller\Admin
 
             $lastId = $this->filesModel->insert($insertValues);
 
-            $this->aliases->insertUriAlias(
+            $this->seo->insertUriAlias(
                 sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
-                (int)$formData['seo_robots']);
-            $this->seo->setCache();
+                (int)$formData['seo_robots']
+            );
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -333,14 +331,13 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->filesModel->update($updateValues, $this->request->id);
 
-            $this->aliases->insertUriAlias(
+            $this->seo->insertUriAlias(
                 sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
-            $this->seo->setCache();
 
             $this->filesCache->setCache($this->request->id);
 
