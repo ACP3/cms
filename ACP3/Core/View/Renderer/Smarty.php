@@ -30,10 +30,9 @@ class Smarty extends AbstractRenderer
         $this->renderer = new \Smarty();
         $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
         $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : $settings['design'];
-        $this->renderer->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
-        $this->renderer
-            ->setCompileDir(CACHE_DIR . 'tpl_compiled/')
-            ->setCacheDir(CACHE_DIR . 'tpl_cached/');
+        $this->renderer->compile_check = defined('DEBUG') === true && DEBUG === true;
+        $this->renderer->compile_dir = CACHE_DIR . 'tpl_compiled/';
+        $this->renderer->cache_dir = CACHE_DIR . 'tpl_cached/';
 
         $this->_registerPlugins();
     }
