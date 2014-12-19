@@ -15,7 +15,9 @@
                 <div class="navbar-text pull-right">
                     {check_access mode="link" path="acp/categories/index/create" class="glyphicon glyphicon-plus text-success"}
                     {check_access mode="link" path="acp/categories/index/settings" class="glyphicon glyphicon-cog"}
-                    {check_access mode="button" path="acp/categories/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {if isset($categories)}
+                        {check_access mode="button" path="acp/categories/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    {/if}
                 </div>
             </div>
         </nav>

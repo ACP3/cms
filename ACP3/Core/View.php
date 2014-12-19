@@ -46,7 +46,7 @@ class View extends ContainerAware
     }
 
     /**
-     * Fetches a template and outputs its cotents
+     * Fetches a template and outputs its contents
      *
      * @param      $template
      * @param null $cacheId

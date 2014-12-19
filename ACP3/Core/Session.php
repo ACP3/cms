@@ -133,10 +133,9 @@ class Session
      */
     public function session_read($sessionId)
     {
-        $session = $this->db->getConnection()->fetchAssoc('SELECT session_data FROM ' . $this->db->getPrefix() . 'sessions WHERE session_id = ?', [$sessionId]);
+        $session = $this->db->fetchColumn('SELECT session_data FROM ' . $this->db->getPrefix() . 'sessions WHERE session_id = ?', [$sessionId]);
 
-        // Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
-        return !empty($session) ? $session['session_data'] : '';
+        return $session ?: ''; // Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
     }
 
     /**

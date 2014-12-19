@@ -11,11 +11,13 @@
                 </button>
                 <span class="navbar-brand">{lang t="system|overview"}</span>
             </div>
-            <div class="collapse navbar-collapse navbar-ex2-collapse">
-                <div class="navbar-text pull-right">
-                    {check_access mode="button" path="acp/newsletter/accounts/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+            {if isset($accounts)}
+                <div class="collapse navbar-collapse navbar-ex2-collapse">
+                    <div class="navbar-text pull-right">
+                        {check_access mode="button" path="acp/newsletter/accounts/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                    </div>
                 </div>
-            </div>
+            {/if}
         </nav>
         {redirect_message}
         {if isset($accounts)}
