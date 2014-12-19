@@ -13,9 +13,13 @@ use ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier;
 class Robots extends AbstractModifier
 {
     /**
-     * @var Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
+    /**
+     * @var \ACP3\Core\SEO
+     */
+    protected $seo;
     /**
      * @var array
      */
@@ -34,18 +38,16 @@ class Robots extends AbstractModifier
         SEO $seo)
     {
         $this->lang = $lang;
-
-        $this->replace = $this->_setReplaceParams($seo);
+        $this->seo = $seo;
     }
 
     /**
-     * @param SEO $seo
      * @return array
      */
-    private function _setReplaceParams(SEO $seo)
+    private function _setReplaceParams()
     {
         return [
-            sprintf($this->lang->t('seo', 'robots_use_system_default'), $seo->getRobotsSetting()),
+            sprintf($this->lang->t('seo', 'robots_use_system_default'), $this->seo->getRobotsSetting()),
             $this->lang->t('seo', 'robots_index_follow'),
             $this->lang->t('seo', 'robots_index_nofollow'),
             $this->lang->t('seo', 'robots_noindex_follow'),
@@ -58,6 +60,10 @@ class Robots extends AbstractModifier
      */
     public function process($value)
     {
+        if (empty($this->replace) === true) {
+            $this->replace = $this->_setReplaceParams($this->seo);
+        }
+
         return str_replace($this->search, $this->replace, $value);
     }
 

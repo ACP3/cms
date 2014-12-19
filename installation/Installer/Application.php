@@ -150,7 +150,6 @@ class Application
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load(ACP3_DIR . 'config/services.yml');
-        $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
         $loader->load(INSTALLER_ACP3_DIR . 'config/update.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
