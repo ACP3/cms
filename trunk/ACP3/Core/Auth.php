@@ -239,6 +239,8 @@ class Auth
     {
         $user = $this->usersModel->getOneByNickname($username);
 
+        var_dump($user);
+
         if (!empty($user)) {
             // Useraccount ist gesperrt
             if ($user['login_errors'] >= 3) {

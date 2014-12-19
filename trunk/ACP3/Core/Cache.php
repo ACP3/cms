@@ -22,6 +22,7 @@ class Cache
     /**
      * @param Container $container
      * @param $namespace
+     * @throws \InvalidArgumentException
      */
     public function __construct(
         Container $container,
@@ -132,6 +133,22 @@ class Cache
     public function delete($id)
     {
         return $this->driver->delete($id);
+    }
+
+    /**
+     * @return bool
+     */
+    public function deleteAll()
+    {
+        return $this->driver->deleteAll();
+    }
+
+    /**
+     * @return bool
+     */
+    public function flushAll()
+    {
+        return $this->driver->flushAll();
     }
 
     /**

@@ -18,7 +18,7 @@ class Model extends Core\Model
      */
     public function menuExists($id)
     {
-        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id', ['id' => $id]) > 0);
     }
 
     /**
@@ -29,7 +29,7 @@ class Model extends Core\Model
     public function menuExistsByName($indexName, $id = 0)
     {
         $where = !empty($id) ? ' AND id != :id' : '';
-        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE index_name = :indexName' . $where, ['indexName' => $indexName, 'id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE index_name = :indexName' . $where, ['indexName' => $indexName, 'id' => $id]) > 0);
     }
 
     /**
@@ -38,7 +38,7 @@ class Model extends Core\Model
      */
     public function menuItemExists($id)
     {
-        return ((int)$this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = :id', ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = :id', ['id' => $id]) > 0);
     }
 
     /**
@@ -47,7 +47,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -56,7 +56,7 @@ class Model extends Core\Model
      */
     public function getOneMenuItemById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -65,7 +65,7 @@ class Model extends Core\Model
      */
     public function getAllItemsByBlockId($blockId)
     {
-        return $this->db->getConnection()->fetchAll('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE block_id = ?', [$blockId]);
+        return $this->db->fetchAll('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE block_id = ?', [$blockId]);
     }
 
     /**
@@ -74,7 +74,7 @@ class Model extends Core\Model
      */
     public function getMenuNameById($id)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT index_name FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn('SELECT index_name FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -83,7 +83,7 @@ class Model extends Core\Model
      */
     public function getMenuItemUriById($id)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT uri FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn('SELECT uri FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -92,7 +92,7 @@ class Model extends Core\Model
      */
     public function getMenuItemBlockIdById($id)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT block_id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn('SELECT block_id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -101,7 +101,7 @@ class Model extends Core\Model
      */
     public function getMenuItemIdByUri($uri)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE uri = ?', [$uri]);
+        return $this->db->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE uri = ?', [$uri]);
     }
 
     /**
@@ -112,7 +112,7 @@ class Model extends Core\Model
     public function getAllMenus($limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY title ASC, id ASC' . $limitStmt);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY title ASC, id ASC' . $limitStmt);
     }
 
     /**
@@ -120,7 +120,7 @@ class Model extends Core\Model
      */
     public function getAllMenuitems()
     {
-        return $this->db->getConnection()->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS p, ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+        return $this->db->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS p, ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
     }
 
     /**
@@ -129,7 +129,7 @@ class Model extends Core\Model
      */
     public function getVisibleMenuItemsByBlockName($blockName)
     {
-        return $this->db->getConnection()->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS p, ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS n JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id', [$blockName]);
+        return $this->db->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS p, ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS n JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id', [$blockName]);
     }
 
     /**
