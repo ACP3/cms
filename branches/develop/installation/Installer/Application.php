@@ -26,12 +26,12 @@ class Application
     {
         $this->defineDirConstants();
         $this->includeAutoLoader();
-        $this->initializeInstallerClasses();
+        $this->initializeClasses();
         $this->outputPage();
     }
 
     /**
-     * Einige Pfadkonstanten definieren
+     * Define some path constants
      */
     public function defineDirConstants()
     {
@@ -58,7 +58,7 @@ class Application
     }
 
     /**
-     * Klassen Autoloader inkludieren
+     * Include class autoloader
      */
     public function includeAutoLoader()
     {
@@ -66,25 +66,45 @@ class Application
     }
 
     /**
-     * Initialisieren der Klassen für den Installer
+     * Initializes the classes
      */
-    public function initializeInstallerClasses()
+    public function initializeClasses()
     {
         $this->container = new ContainerBuilder();
+
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
-        $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
+
+        if (defined('IN_UPDATER') === true) {
+            $loader->load(INSTALLER_ACP3_DIR . 'config/update.yml');
+            $excludedDirs = ['.', '..'];
+        } else {
+            $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
+            $excludedDirs = ['.', '..', 'Update'];
+        }
+
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services
-        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..', 'Update']);
-        foreach ($modules as $module) {
+        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), $excludedDirs);
+        foreach ($installerModules as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
                 $loader->load($path);
             }
         }
 
-        $this->container->get('core.view')->setRenderer('smarty', [ 'compile_id' => 'installer' ]);
+        // When in updater context, also include "Normal" module services
+        if (defined('IN_UPDATER') === true) {
+            $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
+            foreach ($modules as $module) {
+                $path = MODULES_DIR . $module . '/config/services.yml';
+                if (is_file($path) === true) {
+                    $loader->load($path);
+                }
+            }
+        }
+
+        $this->container->get('core.view')->setRenderer('smarty', ['compile_id' => 'installer']);
 
         $this->container->compile();
     }
@@ -118,7 +138,7 @@ class Application
         $this->defineDirConstants();
         $this->startupChecks();
         $this->includeAutoLoader();
-        $this->initializeUpdaterClasses();
+        $this->initializeClasses();
         $this->outputPage();
     }
 
@@ -139,40 +159,6 @@ class Application
                 exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
             }
         }
-    }
-
-    /**
-     * Initialisieren der Klassen für den Updater
-     */
-    public function initializeUpdaterClasses()
-    {
-        $this->container = new ContainerBuilder();
-
-        $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
-        $loader->load(ACP3_DIR . 'config/services.yml');
-        $loader->load(INSTALLER_ACP3_DIR . 'config/update.yml');
-        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
-
-        // Load installer modules services
-        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..']);
-        foreach ($installerModules as $module) {
-            $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
-            if (is_file($path) === true) {
-                $loader->load($path);
-            }
-        }
-
-        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
-        foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/config/services.yml';
-            if (is_file($path) === true) {
-                $loader->load($path);
-            }
-        }
-
-        $this->container->get('core.view')->setRenderer('smarty', ['compile_id' => 'installer']);
-
-        $this->container->compile();
     }
 
     /**
