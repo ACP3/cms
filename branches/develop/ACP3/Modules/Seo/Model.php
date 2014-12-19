@@ -17,7 +17,7 @@ class Model extends Core\Model
      */
     public function uriAliasExists($path)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE uri = ?', [$path]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE uri = ?', [$path]) > 0;
     }
 
     /**
@@ -27,7 +27,7 @@ class Model extends Core\Model
      */
     public function uriAliasExistsByAlias($alias, $path = '')
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
     }
 
     /**
@@ -35,7 +35,7 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME);
     }
 
     /**
@@ -44,7 +44,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->getConnection()->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [(int)$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [(int)$id]);
     }
 
     /**
@@ -52,6 +52,6 @@ class Model extends Core\Model
      */
     public function getAllMetaTags()
     {
-        return $this->db->getConnection()->fetchAll('SELECT uri, keywords, description, robots FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
+        return $this->db->fetchAll('SELECT uri, keywords, description, robots FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
     }
 }

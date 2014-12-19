@@ -136,6 +136,22 @@ class Cache
     }
 
     /**
+     * @return bool
+     */
+    public function deleteAll()
+    {
+        return $this->driver->deleteAll();
+    }
+
+    /**
+     * @return bool
+     */
+    public function flushAll()
+    {
+        return $this->driver->flushAll();
+    }
+
+    /**
      * @return CacheProvider
      */
     public function getDriver()

@@ -124,7 +124,7 @@ class Helpers
         foreach ($tables as $table) {
             // Struktur ausgeben
             if ($exportType === 'complete' || $exportType === 'structure') {
-                $result = $this->db->getConnection()->fetchAssoc('SHOW CREATE TABLE ' . $table);
+                $result = $this->db->fetchAssoc('SHOW CREATE TABLE ' . $table);
                 if (!empty($result)) {
                     $structure .= $withDropTables == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
                     $structure .= $result['Create Table'] . ';' . "\n\n";
@@ -133,7 +133,7 @@ class Helpers
 
             // Datensätze ausgeben
             if ($exportType === 'complete' || $exportType === 'data') {
-                $resultSets = $this->db->getConnection()->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . substr($table, strlen($this->db->getPrefix())));
+                $resultSets = $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . substr($table, strlen($this->db->getPrefix())));
                 if (count($resultSets) > 0) {
                     $fields = '';
                     // Felder der jeweiligen Tabelle auslesen

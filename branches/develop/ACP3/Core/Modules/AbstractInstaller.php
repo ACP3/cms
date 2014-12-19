@@ -497,6 +497,6 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->getConnection()->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', [$moduleName]) == 1;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', [$moduleName]) == 1;
     }
 }
