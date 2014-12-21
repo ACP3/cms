@@ -47,8 +47,6 @@ class Aliases
      */
     public function uriAliasExists($path)
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return isset($this->aliases[$path]) === true && !empty($this->aliases[$path]['alias']);
+        return ($this->getUriAlias($path, true) !== '');
     }
 }

@@ -52,6 +52,6 @@ class Model extends Core\Model
      */
     public function getAllMetaTags()
     {
-        return $this->db->fetchAll('SELECT uri, keywords, description, robots FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
     }
 }
