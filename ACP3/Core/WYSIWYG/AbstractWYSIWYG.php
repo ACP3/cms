@@ -35,7 +35,15 @@ abstract class AbstractWYSIWYG extends ContainerAware
      */
     protected $config = [];
 
+    /**
+     * @param array $params
+     */
     abstract public function setParameters(array $params = []);
 
+    /**
+     * Configures the given WYSIWYG-Editor
+     *
+     * @return string
+     */
     abstract public function display();
 }

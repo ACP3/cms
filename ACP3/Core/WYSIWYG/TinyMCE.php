@@ -9,7 +9,7 @@ namespace ACP3\Core\WYSIWYG;
 class TinyMCE extends AbstractWYSIWYG
 {
     /**
-     * @param array $params
+     * @inheritdoc
      */
     public function setParameters(array $params = [])
     {
@@ -23,7 +23,7 @@ class TinyMCE extends AbstractWYSIWYG
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function display()
     {
@@ -76,6 +76,7 @@ class TinyMCE extends AbstractWYSIWYG
             $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
         }
 
+        /** @var \ACP3\Core\View $view */
         $view = $this->container->get('core.view');
 
         $view->assign('wysiwyg', $wysiwyg);

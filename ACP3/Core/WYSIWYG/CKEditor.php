@@ -9,7 +9,7 @@ namespace ACP3\Core\WYSIWYG;
 class CKEditor extends AbstractWYSIWYG
 {
     /**
-     * @param array $params
+     * @inheritdoc
      */
     public function setParameters(array $params = [])
     {
@@ -23,7 +23,7 @@ class CKEditor extends AbstractWYSIWYG
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function display()
     {
@@ -41,12 +41,16 @@ class CKEditor extends AbstractWYSIWYG
             $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
         }
 
+        /** @var \ACP3\Core\View $view */
         $view = $this->container->get('core.view');
 
         $view->assign('wysiwyg', $wysiwyg);
         return $view->fetchTemplate('system/wysiwyg.tpl');
     }
 
+    /**
+     * @inheritdoc
+     */
     private function _configure()
     {
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';

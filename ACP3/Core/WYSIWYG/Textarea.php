@@ -9,7 +9,7 @@ namespace ACP3\Core\WYSIWYG;
 class Textarea extends AbstractWYSIWYG
 {
     /**
-     * @param array $params
+     * @inheritdoc
      */
     public function setParameters(array $params = [])
     {
@@ -20,7 +20,7 @@ class Textarea extends AbstractWYSIWYG
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function display()
     {
