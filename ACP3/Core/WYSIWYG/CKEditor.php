@@ -50,16 +50,6 @@ class CKEditor extends AbstractWYSIWYG
 
     private function _configure()
     {
-        $filebrowserUri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
-        $uploadUri = ROOT_DIR . 'libraries/kcfinder/upload.php?opener=ckeditor%s&cms=acp3';
-
-        $this->config['filebrowserBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
-        $this->config['filebrowserImageBrowseUrl'] = sprintf($filebrowserUri, '&type=gallery');
-        $this->config['filebrowserFlashBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
-        $this->config['filebrowserUploadUrl'] = sprintf($uploadUri, '&type=files');
-        $this->config['filebrowserImageUploadUrl'] = sprintf($uploadUri, '&type=gallery');
-        $this->config['filebrowserFlashUploadUrl'] = sprintf($uploadUri, '&type=files');
-
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
         $this->config['allowedContent'] = true;
         $this->config['codemirror'] = '@@{ theme: \'default\',
@@ -80,24 +70,35 @@ class CKEditor extends AbstractWYSIWYG
             showUncommentButton: false
         }';
 
-        // Smilies
-        if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic') && $this->container->get('core.modules')->isActive('emoticons') === true) {
-            $this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
-            $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
-            $emoticons = $this->container->get('emoticons.model')->getAll();
-            $c_emoticons = count($emoticons);
+        // Full toolbar
+        if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic')) {
+            $filebrowserUri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
+            $uploadUri = ROOT_DIR . 'libraries/kcfinder/upload.php?opener=ckeditor%s&cms=acp3';
 
-            for ($i = 0; $i < $c_emoticons; ++$i) {
-                $this->config['smiley_images'] .= '\'' . $emoticons[$i]['img'] . '\',';
-                $this->config['smiley_descriptions'] .= '\'' . $emoticons[$i]['description'] . '\',';
+            $this->config['filebrowserBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
+            $this->config['filebrowserImageBrowseUrl'] = sprintf($filebrowserUri, '&type=gallery');
+            $this->config['filebrowserFlashBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
+            $this->config['filebrowserUploadUrl'] = sprintf($uploadUri, '&type=files');
+            $this->config['filebrowserImageUploadUrl'] = sprintf($uploadUri, '&type=gallery');
+            $this->config['filebrowserFlashUploadUrl'] = sprintf($uploadUri, '&type=files');
+
+            // Include emoticons, if available
+            if ($this->container->get('core.modules')->isActive('emoticons') === true) {
+                $this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
+                $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
+                $emoticons = $this->container->get('emoticons.model')->getAll();
+                $c_emoticons = count($emoticons);
+
+                for ($i = 0; $i < $c_emoticons; ++$i) {
+                    $this->config['smiley_images'] .= '\'' . $emoticons[$i]['img'] . '\',';
+                    $this->config['smiley_descriptions'] .= '\'' . $emoticons[$i]['description'] . '\',';
+                }
+
+                $this->config['smiley_images'] = '@@[' . substr($this->config['smiley_images'], 0, -1) . ']';
+                $this->config['smiley_descriptions'] = '@@[' . substr($this->config['smiley_descriptions'], 0, -1) . ']';
             }
-
-            $this->config['smiley_images'] = '@@[' . substr($this->config['smiley_images'], 0, -1) . ']';
-            $this->config['smiley_descriptions'] = '@@[' . substr($this->config['smiley_descriptions'], 0, -1) . ']';
-        }
-
-        // Basic Toolbar erweitern
-        if (isset($this->config['toolbar']) && $this->config['toolbar'] == 'Basic') {
+        } else { // basic toolbar
+            $this->config['extraPlugins'] = 'divarea,codemirror';
             $this->config['toolbar'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
         }
     }
