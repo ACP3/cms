@@ -52,32 +52,33 @@ class CKEditor extends AbstractWYSIWYG
     {
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
         $this->config['allowedContent'] = true;
-        $this->config['codemirror'] = '@@{ theme: \'default\',
-            lineNumbers: true,
-            lineWrapping: true,
-            matchBrackets: true,
-            autoCloseTags: true,
-            autoCloseBrackets: true,
-            enableSearchTools: true,
-            enableCodeFolding: true,
-            enableCodeFormatting: true,
-            autoFormatOnStart: true,
-            autoFormatOnUncomment: true,
-            highlightActiveLine: true,
-            highlightMatches: true,
-            showFormatButton: false,
-            showCommentButton: false,
-            showUncommentButton: false
-        }';
+        $this->config['codemirror'] = [
+            'theme' => 'default',
+            'lineNumbers' => true,
+            'lineWrapping' => true,
+            'matchBrackets' => true,
+            'autoCloseTags' => true,
+            'autoCloseBrackets' => true,
+            'enableSearchTools' => true,
+            'enableCodeFolding' => true,
+            'enableCodeFormatting' => true,
+            'autoFormatOnStart' => true,
+            'autoFormatOnUncomment' => true,
+            'highlightActiveLine' => true,
+            'highlightMatches' => true,
+            'showFormatButton' => false,
+            'showCommentButton' => false,
+            'showUncommentButton' => false
+        ];
 
         // Full toolbar
         if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic')) {
-            $filebrowserUri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
+            $fileBrowserUri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
             $uploadUri = ROOT_DIR . 'libraries/kcfinder/upload.php?opener=ckeditor%s&cms=acp3';
 
-            $this->config['filebrowserBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
-            $this->config['filebrowserImageBrowseUrl'] = sprintf($filebrowserUri, '&type=gallery');
-            $this->config['filebrowserFlashBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
+            $this->config['filebrowserBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
+            $this->config['filebrowserImageBrowseUrl'] = sprintf($fileBrowserUri, '&type=gallery');
+            $this->config['filebrowserFlashBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
             $this->config['filebrowserUploadUrl'] = sprintf($uploadUri, '&type=files');
             $this->config['filebrowserImageUploadUrl'] = sprintf($uploadUri, '&type=gallery');
             $this->config['filebrowserFlashUploadUrl'] = sprintf($uploadUri, '&type=files');
@@ -89,17 +90,22 @@ class CKEditor extends AbstractWYSIWYG
                 $emoticons = $this->container->get('emoticons.model')->getAll();
                 $c_emoticons = count($emoticons);
 
+                $images = $descriptions = [];
                 for ($i = 0; $i < $c_emoticons; ++$i) {
-                    $this->config['smiley_images'] .= '\'' . $emoticons[$i]['img'] . '\',';
-                    $this->config['smiley_descriptions'] .= '\'' . $emoticons[$i]['description'] . '\',';
+                    $images[] = $emoticons[$i]['img'];
+                    $descriptions[] = $emoticons[$i]['description'];
                 }
 
-                $this->config['smiley_images'] = '@@[' . substr($this->config['smiley_images'], 0, -1) . ']';
-                $this->config['smiley_descriptions'] = '@@[' . substr($this->config['smiley_descriptions'], 0, -1) . ']';
+                $this->config['smiley_images'] = [$images];
+                $this->config['smiley_descriptions'] = [$descriptions];
             }
         } else { // basic toolbar
             $this->config['extraPlugins'] = 'divarea,codemirror';
-            $this->config['toolbar'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
+            $this->config['toolbar'] = [
+                [
+                    'Source', '-', 'Undo', 'Redo', '-', 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About'
+                ]
+            ];
         }
     }
 }
