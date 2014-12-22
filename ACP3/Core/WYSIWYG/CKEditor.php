@@ -30,7 +30,6 @@ class CKEditor extends AbstractWYSIWYG
         $this->_configure();
 
         $ckeditor = new CKEditor\Initialize(ROOT_DIR . 'libraries/ckeditor/');
-        $ckeditor->returnOutput = true;
 
         $wysiwyg = [
             'id' => $this->id,

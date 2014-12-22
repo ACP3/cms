@@ -32,12 +32,6 @@ class Initialize
      */
     public $initialized = false;
     /**
-     * Boolean variable indicating whether created code should be printed out or returned by a function.
-     *
-     * @var bool
-     */
-    public $returnOutput = false;
-    /**
      * An array with textarea attributes.
      *
      * @var array
@@ -99,11 +93,6 @@ class Initialize
 
         $out .= $this->script($js);
 
-        if (!$this->returnOutput) {
-            echo $out;
-            $out = "";
-        }
-
         return $out;
     }
 
@@ -130,11 +119,6 @@ class Initialize
             $js .= "CKEDITOR.replace('" . $id . "');";
         }
         $out .= $this->script($js);
-
-        if (!$this->returnOutput) {
-            echo $out;
-            $out = "";
-        }
 
         return $out;
     }
@@ -173,11 +157,6 @@ class Initialize
         }
 
         $out .= $this->script($js);
-
-        if (!$this->returnOutput) {
-            print $out;
-            $out = "";
-        }
 
         return $out;
     }
