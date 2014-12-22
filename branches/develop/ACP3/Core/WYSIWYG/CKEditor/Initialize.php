@@ -1,8 +1,12 @@
 <?php
+
+namespace ACP3\Core\WYSIWYG\CKEditor;
+
 /**
- * Class CKEditor
+ * Class Initialize
+ * @package ACP3\Core\WYSIWYG\CKEditor
  */
-class CKEditor
+class Initialize
 {
     /**
      * The version of %CKEditor.
@@ -13,9 +17,9 @@ class CKEditor
      * URL to the %CKEditor installation directory (absolute or relative to document root).
      * If not set, CKEditor will try to guess it's path.
      *
-     * @var null
+     * @var string
      */
-    public $basePath;
+    public $basePath = '';
     /**
      * An array that holds the global %CKEditor configuration.
      * For the list of available options, see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
@@ -336,6 +340,7 @@ class CKEditor
             return "";
         }
 
+        $this->initialized = true;
         $out = "";
         $ckeditorPath = $this->ckeditorPath();
 
@@ -345,8 +350,6 @@ class CKEditor
         }
 
         $out .= "<script type=\"text/javascript\" src=\"" . $ckeditorPath . 'ckeditor.js?v=' . self::VERSION . "\"></script>\n";
-
-        $this->initialized = true;
 
         return $out;
     }
