@@ -61,15 +61,11 @@ class Initialize
     private $returnedEvents = [];
 
     /**
-     * Main Constructor.
-     *
-     * @param null $basePath
+     * @param $basePath
      */
-    function __construct($basePath = null)
+    function __construct($basePath)
     {
-        if (!empty($basePath)) {
-            $this->basePath = $basePath;
-        }
+        $this->basePath = $basePath;
     }
 
     /**
@@ -291,9 +287,9 @@ class Initialize
                 if (empty($handlers)) {
                     continue;
                 } else if (count($handlers) == 1) {
-                    $_config['on'][$eventName] = '@@' . $handlers[0];
+                    $_config['on'][$eventName] = $handlers[0];
                 } else {
-                    $_config['on'][$eventName] = '@@function (ev){';
+                    $_config['on'][$eventName] = 'function (ev){';
                     foreach ($handlers as $handler => $code) {
                         $_config['on'][$eventName] .= '(' . $code . ')(ev);';
                     }
@@ -342,51 +338,15 @@ class Initialize
 
         $this->initialized = true;
         $out = "";
-        $ckeditorPath = $this->ckeditorPath();
 
         // Skip relative paths...
-        if (strpos($ckeditorPath, '..') !== 0) {
-            $out .= $this->script("window.CKEDITOR_BASEPATH='" . $ckeditorPath . "';");
+        if (strpos($this->basePath, '..') !== 0) {
+            $out .= $this->script("window.CKEDITOR_BASEPATH='" . $this->basePath . "';");
         }
 
-        $out .= "<script type=\"text/javascript\" src=\"" . $ckeditorPath . 'ckeditor.js?v=' . self::VERSION . "\"></script>\n";
+        $out .= "<script type=\"text/javascript\" src=\"" . $this->basePath . 'ckeditor.js?v=' . self::VERSION . "\"></script>\n";
 
         return $out;
-    }
-
-    /**
-     * @return mixed|null|string
-     */
-    private function ckeditorPath()
-    {
-        if (!empty($this->basePath)) {
-            return $this->basePath;
-        }
-
-        /**
-         * The absolute pathname of the currently executing script.
-         * Note: If a script is executed with the CLI, as a relative path, such as file.php or ../file.php,
-         * $_SERVER['SCRIPT_FILENAME'] will contain the relative path specified by the user.
-         */
-        $realPath = isset($_SERVER['SCRIPT_FILENAME']) ? dirname($_SERVER['SCRIPT_FILENAME']) : realpath('./');
-
-        /**
-         * The filename of the currently executing script, relative to the document root.
-         * For instance, $_SERVER['PHP_SELF'] in a script at the address http://example.com/test.php/foo.bar
-         * would be /test.php/foo.bar.
-         */
-        $selfPath = dirname($_SERVER['PHP_SELF']);
-        $file = str_replace("\\", "/", __FILE__);
-
-        if (!$selfPath || !$realPath || !$file) {
-            return "/ckeditor/";
-        }
-
-        $documentRoot = substr($realPath, 0, strlen($realPath) - strlen($selfPath));
-        $fileUrl = substr($file, strlen($documentRoot));
-        $ckeditorUrl = str_replace("ckeditor_php5.php", "", $fileUrl);
-
-        return $ckeditorUrl;
     }
 
     /**
