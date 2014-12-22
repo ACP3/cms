@@ -29,9 +29,7 @@ class CKEditor extends AbstractWYSIWYG
     {
         $this->_configure();
 
-        require_once LIBRARIES_DIR . 'ckeditor/ckeditor.php';
-
-        $ckeditor = new \CKEditor(ROOT_DIR . 'libraries/ckeditor/');
+        $ckeditor = new CKEditor\Initialize(ROOT_DIR . 'libraries/ckeditor/');
         $ckeditor->returnOutput = true;
 
         $wysiwyg = [
@@ -66,25 +64,25 @@ class CKEditor extends AbstractWYSIWYG
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
         $this->config['allowedContent'] = true;
         $this->config['codemirror'] = '@@{ theme: \'default\',
-			lineNumbers: true,
-			lineWrapping: true,
-			matchBrackets: true,
-			autoCloseTags: true,
-			autoCloseBrackets: true,
-			enableSearchTools: true,
-			enableCodeFolding: true,
-			enableCodeFormatting: true,
-			autoFormatOnStart: true,
-			autoFormatOnUncomment: true,
-			highlightActiveLine: true,
-			highlightMatches: true,
-			showFormatButton: false,
-			showCommentButton: false,
-			showUncommentButton: false
-		}';
+            lineNumbers: true,
+            lineWrapping: true,
+            matchBrackets: true,
+            autoCloseTags: true,
+            autoCloseBrackets: true,
+            enableSearchTools: true,
+            enableCodeFolding: true,
+            enableCodeFormatting: true,
+            autoFormatOnStart: true,
+            autoFormatOnUncomment: true,
+            highlightActiveLine: true,
+            highlightMatches: true,
+            showFormatButton: false,
+            showCommentButton: false,
+            showUncommentButton: false
+        }';
 
         // Smilies
-        if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'simple') && $this->container->get('core.modules')->isActive('emoticons') === true) {
+        if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic') && $this->container->get('core.modules')->isActive('emoticons') === true) {
             $this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
             $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
             $emoticons = $this->container->get('emoticons.model')->getAll();
@@ -98,6 +96,7 @@ class CKEditor extends AbstractWYSIWYG
             $this->config['smiley_images'] = '@@[' . substr($this->config['smiley_images'], 0, -1) . ']';
             $this->config['smiley_descriptions'] = '@@[' . substr($this->config['smiley_descriptions'], 0, -1) . ']';
         }
+
         // Basic Toolbar erweitern
         if (isset($this->config['toolbar']) && $this->config['toolbar'] == 'Basic') {
             $this->config['toolbar_Basic'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
