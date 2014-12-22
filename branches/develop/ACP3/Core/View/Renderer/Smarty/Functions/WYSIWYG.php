@@ -38,16 +38,16 @@ class WYSIWYG extends AbstractFunction
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
-        $className = "\\ACP3\\Core\\WYSIWYG\\" . $this->container->get('system.config')->getSettings()['wysiwyg'];
+        $serviceId = 'core.wysiwyg.' . $this->container->get('system.config')->getSettings()['wysiwyg'];
 
-        if (class_exists($className)) {
+        if ($this->container->has($serviceId) === true) {
             /** @var Core\WYSIWYG\AbstractWYSIWYG $wysiwyg */
-            $wysiwyg = new $className();
+            $wysiwyg = $this->container->get($serviceId);
             $wysiwyg->setContainer($this->container);
             $wysiwyg->setParameters($params);
             return $wysiwyg->display();
         } else {
-            throw new \InvalidArgumentException('Can not find wysiwyg service ' . $className);
+            throw new \InvalidArgumentException('Can not find wysiwyg service ' . $serviceId);
         }
     }
 }

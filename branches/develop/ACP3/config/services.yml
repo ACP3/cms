@@ -3,6 +3,7 @@ imports:
   - { resource: cache.yml }
   - { resource: helpers.yml }
   - { resource: validation.yml }
+  - { resource: ../Core/WYSIWYG/config/services.yml }
   - { resource: ../modules/Permissions/config/services.yml }
   - { resource: ../modules/Seo/config/services.yml }
   - { resource: ../modules/System/config/services.yml }

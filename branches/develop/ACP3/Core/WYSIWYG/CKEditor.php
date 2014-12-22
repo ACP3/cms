@@ -9,6 +9,11 @@ namespace ACP3\Core\WYSIWYG;
 class CKEditor extends AbstractWYSIWYG
 {
     /**
+     * @var \ACP3\Core\WYSIWYG\CKEditor\Initialize
+     */
+    private $editor;
+
+    /**
      * @inheritdoc
      */
     public function setParameters(array $params = [])
@@ -29,11 +34,14 @@ class CKEditor extends AbstractWYSIWYG
     {
         $this->_configure();
 
-        $ckeditor = new CKEditor\Initialize(ROOT_DIR . 'libraries/ckeditor/');
+        if (!$this->editor) {
+            $this->editor = new CKEditor\Initialize(ROOT_DIR . 'libraries/ckeditor/');
+            $this->editor->textareaAttributes['class'] = 'form-control';
+        }
 
         $wysiwyg = [
             'id' => $this->id,
-            'editor' => $ckeditor->editor($this->name, $this->id, $this->value, $this->config),
+            'editor' => $this->editor->editor($this->name, $this->id, $this->value, $this->config),
             'advanced' => $this->advanced,
         ];
 
