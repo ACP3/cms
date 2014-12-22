@@ -396,37 +396,6 @@ class Initialize
      */
     private function jsEncode($val)
     {
-        if (is_null($val)) {
-            return 'null';
-        }
-        if (is_bool($val)) {
-            return $val ? 'true' : 'false';
-        }
-        if (is_int($val)) {
-            return $val;
-        }
-        if (is_float($val)) {
-            return str_replace(',', '.', $val);
-        }
-        if (is_array($val) || is_object($val)) {
-            if (is_array($val) && (array_keys($val) === range(0, count($val) - 1))) {
-                return '[' . implode(',', array_map([$this, 'jsEncode'], $val)) . ']';
-            }
-            $temp = [];
-            foreach ($val as $k => $v) {
-                $temp[] = $this->jsEncode("{$k}") . ':' . $this->jsEncode($v);
-            }
-            return '{' . implode(',', $temp) . '}';
-        }
-
-        // String otherwise
-        if (strpos($val, '@@') === 0) {
-            return substr($val, 2);
-        }
-        if (strtoupper(substr($val, 0, 9)) == 'CKEDITOR.') {
-            return $val;
-        }
-
-        return '"' . str_replace(["\\", "/", "\n", "\t", "\r", "\x08", "\x0c", '"'], ['\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'], $val) . '"';
+        return json_encode($val);
     }
 }
