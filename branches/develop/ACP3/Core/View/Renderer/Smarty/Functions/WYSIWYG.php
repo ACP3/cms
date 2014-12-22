@@ -38,8 +38,7 @@ class WYSIWYG extends AbstractFunction
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
-        $settings = $this->container->get('system.config')->getSettings();
-        $className = "\\ACP3\\Core\\WYSIWYG\\" . $settings['wysiwyg'];
+        $className = "\\ACP3\\Core\\WYSIWYG\\" . $this->container->get('system.config')->getSettings()['wysiwyg'];
 
         if (class_exists($className)) {
             /** @var Core\WYSIWYG\AbstractWYSIWYG $wysiwyg */
