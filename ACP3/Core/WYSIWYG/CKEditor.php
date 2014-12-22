@@ -53,7 +53,6 @@ class CKEditor extends AbstractWYSIWYG
         $filebrowserUri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
         $uploadUri = ROOT_DIR . 'libraries/kcfinder/upload.php?opener=ckeditor%s&cms=acp3';
 
-        $this->config = [];
         $this->config['filebrowserBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
         $this->config['filebrowserImageBrowseUrl'] = sprintf($filebrowserUri, '&type=gallery');
         $this->config['filebrowserFlashBrowseUrl'] = sprintf($filebrowserUri, '&type=files');
@@ -99,7 +98,7 @@ class CKEditor extends AbstractWYSIWYG
 
         // Basic Toolbar erweitern
         if (isset($this->config['toolbar']) && $this->config['toolbar'] == 'Basic') {
-            $this->config['toolbar_Basic'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
+            $this->config['toolbar'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
         }
     }
 }
