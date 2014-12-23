@@ -60,7 +60,7 @@ class SEO
     /**
      * @var array
      */
-    protected $aliasCache = [];
+    protected $aliasesCache = [];
     /**
      * @var string
      */
@@ -92,7 +92,7 @@ class SEO
         $this->seoConfig = $seoConfig->getSettings();
         $this->seoModel = $seoModel;
 
-        $this->aliasCache = $this->seoCache->getCache();
+        $this->aliasesCache = $this->seoCache->getCache();
     }
 
     /**
@@ -148,7 +148,7 @@ class SEO
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliasCache[$path]['description']) ? $this->aliasCache[$path]['description'] : '';
+        return !empty($this->aliasesCache[$path]['description']) ? $this->aliasesCache[$path]['description'] : '';
     }
 
     /**
@@ -180,7 +180,7 @@ class SEO
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliasCache[$path]['keywords']) ? $this->aliasCache[$path]['keywords'] : '';
+        return !empty($this->aliasesCache[$path]['keywords']) ? $this->aliasesCache[$path]['keywords'] : '';
     }
 
     /**
@@ -221,10 +221,10 @@ class SEO
         } else {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            if (isset($this->aliasCache[$path]) === false || $this->aliasCache[$path]['robots'] == 0) {
+            if (isset($this->aliasesCache[$path]) === false || $this->aliasesCache[$path]['robots'] == 0) {
                 $robot = $this->seoConfig['robots'];
             } else {
-                $robot = $this->aliasCache[$path]['robots'];
+                $robot = $this->aliasesCache[$path]['robots'];
             }
 
             return strtr($robot, $replace);
@@ -293,7 +293,7 @@ class SEO
             $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->aliases->getUriAlias($path, true);
             $keywords = isset($_POST['seo_keywords']) ? $_POST['seo_keywords'] : $this->getKeywords($path);
             $description = isset($_POST['seo_description']) ? $_POST['seo_description'] : $this->getDescription($path);
-            $robots = isset($this->aliasCache[$path]) === true ? $this->aliasCache[$path]['robots'] : 0;
+            $robots = isset($this->aliasesCache[$path]) === true ? $this->aliasesCache[$path]['robots'] : 0;
         } else {
             $alias = $keywords = $description = '';
             $robots = 0;
