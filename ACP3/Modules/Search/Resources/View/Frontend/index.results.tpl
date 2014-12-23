@@ -23,7 +23,7 @@
                                 </header>
                                 {if !empty($row.text)}
                                     <div class="content">
-                                        {$row.text|truncate:200}
+                                        {$row.text|strip_tags|truncate:200}
                                     </div>
                                 {/if}
                             </div>
