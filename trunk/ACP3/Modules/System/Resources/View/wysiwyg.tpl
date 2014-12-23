@@ -1,4 +1,7 @@
-{$wysiwyg.editor}
+<textarea name="{$wysiwyg.name}" id="{$wysiwyg.id}" cols="60" rows="6" class="form-control">{$wysiwyg.value}</textarea>
+{javascripts}
+    {$wysiwyg.js}
+{/javascripts}
 {if $wysiwyg.advanced === true}
     <div id="page-break-form" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -26,7 +29,7 @@
     {javascripts}
         <script type="text/javascript">
             var wysiwygCallback = function(text) {
-                {$wysiwyg.advanced_replace_content};
+                {$wysiwyg.advanced_replace_content}
             };
         </script>
         {include_js module="system" file="wysiwyg" depends="bootstrap"}

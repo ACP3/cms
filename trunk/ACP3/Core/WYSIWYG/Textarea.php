@@ -2,6 +2,8 @@
 
 namespace ACP3\Core\WYSIWYG;
 
+use ACP3\Core;
+
 /**
  * Implementation of the AbstractWYSIWYG class for a simple textarea
  * @package ACP3\Core\WYSIWYG
@@ -9,7 +11,36 @@ namespace ACP3\Core\WYSIWYG;
 class Textarea extends AbstractWYSIWYG
 {
     /**
-     * @param array $params
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+    /**
+     * @var \ACP3\Modules\Emoticons\Helpers
+     */
+    private $emoticonsHelpers;
+
+    /**
+     * @param \ACP3\Core\Modules $modules
+     */
+    public function __construct(Core\Modules $modules)
+    {
+        $this->modules = $modules;
+    }
+
+    /**
+     * @param $emoticonsHelpers
+     *
+     * @return $this
+     */
+    public function setEmoticonsHelpers(\ACP3\Modules\Emoticons\Helpers $emoticonsHelpers)
+    {
+        $this->emoticonsHelpers = $emoticonsHelpers;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function setParameters(array $params = [])
     {
@@ -20,15 +51,15 @@ class Textarea extends AbstractWYSIWYG
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function display()
     {
         $out = '';
-        if ($this->container->get('core.modules')->isActive('emoticons') === true) {
-            $out .= $this->container->get('emoticons.helpers')->emoticonsList($this->id);
+        if ($this->modules->isActive('emoticons') === true) {
+            $out .= $this->emoticonsHelpers->emoticonsList($this->id);
         }
-        $out .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="50" rows="6" class="span6">' . $this->value . '</textarea>';
+        $out .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="60" rows="6" class="form-control">' . $this->value . '</textarea>';
         return $out;
     }
 }

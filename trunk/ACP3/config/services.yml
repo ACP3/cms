@@ -3,6 +3,7 @@ imports:
   - { resource: cache.yml }
   - { resource: helpers.yml }
   - { resource: validation.yml }
+  - { resource: ../Core/WYSIWYG/config/services.yml }
   - { resource: ../modules/Permissions/config/services.yml }
   - { resource: ../modules/Seo/config/services.yml }
   - { resource: ../modules/System/config/services.yml }
@@ -67,6 +68,8 @@ services:
   core.modules.abstractInstaller:
     abstract: true
     arguments: ['@core.db', '@core.xml', '@permissions.cache.core', '@system.model', '@permissions.model']
+    calls:
+      - ['setContainer', ['@service_container']]
 
   core.modules.controller:
     abstract: true

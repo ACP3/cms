@@ -16,14 +16,12 @@ class Date
      * @var string
      */
     protected $dateFormatLong = '';
-
     /**
      * Kurzes Datumsformat
      *
      * @var string
      */
     protected $dateFormatShort = '';
-
     /**
      * PHP DateTimeZone-Object
      *
@@ -49,11 +47,11 @@ class Date
     protected $systemConfig = [];
 
     /**
-     * @param Auth $auth
-     * @param Lang $lang
-     * @param Forms $formsHelper
+     * @param Auth                 $auth
+     * @param Lang                 $lang
+     * @param Forms                $formsHelper
      * @param Validator\Rules\Date $dateValidator
-     * @param Config $systemConfig
+     * @param Config               $systemConfig
      */
     public function __construct(
         Auth $auth,
@@ -61,7 +59,8 @@ class Date
         Forms $formsHelper,
         Validator\Rules\Date $dateValidator,
         Config $systemConfig
-    ) {
+    )
+    {
         $this->lang = $lang;
         $this->formsHelper = $formsHelper;
         $this->dateValidator = $dateValidator;
@@ -97,6 +96,7 @@ class Date
 
     /**
      * @param $dateFormatLong
+     *
      * @return $this
      */
     public function setDateFormatLong($dateFormatLong)
@@ -116,6 +116,7 @@ class Date
 
     /**
      * @param $dateFormatShort
+     *
      * @return $this
      */
     public function setDateFormatShort($dateFormatShort)
@@ -180,19 +181,19 @@ class Date
     /**
      * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
      *
-     * @param mixed $name
+     * @param mixed    $name
      *    Name des jeweiligen Inputfeldes
-     * @param mixed $value
+     * @param mixed    $value
      *    Der Zeitstempel des jeweiligen Eintrages
-     * @param string $format
+     * @param string   $format
      *    Das anzuzeigende Format im Textfeld
-     * @param array $params
+     * @param array    $params
      *    Dient dem Festlegen von weiteren Parametern
-     * @param integer $range
+     * @param integer  $range
      *    1 = Start- und Enddatum anzeigen
      *    2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
      * @param bool|int $withTime
-     * @param bool $inputFieldOnly
+     * @param bool     $inputFieldOnly
      *
      * @return array
      */
@@ -204,7 +205,8 @@ class Date
         $range = 1,
         $withTime = true,
         $inputFieldOnly = false
-    ) {
+    )
+    {
         $range = (is_array($name) === true && $range === 1);
 
         $datepicker = [
@@ -284,8 +286,8 @@ class Date
      *
      * @param string $time
      * @param string $format
-     * @param bool $toLocalTimeZone
-     * @param bool $isLocalTimeZone
+     * @param bool   $toLocalTimeZone
+     * @param bool   $isLocalTimeZone
      *
      * @return string
      */
@@ -431,7 +433,7 @@ class Date
      * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
      *
      * @param string $value
-     * @param bool $islocalTime
+     * @param bool   $islocalTime
      *
      * @return integer
      */
@@ -453,7 +455,7 @@ class Date
     }
 
     /**
-     * Gibt einen an UTC ausgerichteten Zeitstempelim MySQL DateTime Format zurück
+     * Gibt einen an UTC ausgerichteten Zeitstempel im MySQL DateTime Format zurück
      *
      * @param string $value
      *

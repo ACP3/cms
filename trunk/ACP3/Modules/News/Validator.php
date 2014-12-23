@@ -71,11 +71,8 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $this->errors['text'] = $this->lang->t('news', 'text_to_short');
         }
-        if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
+        if (empty($formData['cat_create']) && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $this->errors['cat'] = $this->lang->t('news', 'select_category');
-        }
-        if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'news') === true) {
-            $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['link_title']) && (empty($formData['uri']) || $this->validate->isNumber($formData['target']) === false)) {
             $this->errors['link'] = $this->lang->t('news', 'complete_hyperlink_statements');

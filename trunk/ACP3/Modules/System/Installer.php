@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 49;
+    const SCHEMA_VERSION = 50;
 
     /**
      * @var array
@@ -49,33 +49,33 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             "CREATE TABLE `{pre}modules` (
-                `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                `name` varchar(100) NOT NULL,
-                `version` tinyint(3) UNSIGNED NOT NULL,
-                `active` tinyint(1) unsigned NOT NULL,
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `name` VARCHAR(100) NOT NULL,
+                `version` TINYINT(3) UNSIGNED NOT NULL,
+                `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}sessions` (
-                `session_id` varchar(32) NOT NULL,
-                `session_starttime` int(10) unsigned NOT NULL,
-                `session_data` text NOT NULL,
+                `session_id` VARCHAR(32) NOT NULL,
+                `session_starttime` INT(10) UNSIGNED NOT NULL,
+                `session_data` TEXT NOT NULL,
                 PRIMARY KEY (`session_id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}settings` (
-                `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `module_id` INT(10) NOT NULL,
                 `name` VARCHAR(40) NOT NULL,
                 `value` TEXT NOT NULL,
                 PRIMARY KEY (`id`), UNIQUE KEY (`module_id`,`name`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             // ACL
             "CREATE TABLE `{pre}acl_privileges` (
-                `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                `key` varchar(100) NOT NULL,
-                `description` varchar(100) NOT NULL,
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `key` VARCHAR(100) NOT NULL,
+                `description` VARCHAR(100) NOT NULL,
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `key` (`key`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE`{pre}acl_resources` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `module_id` int(10) unsigned NOT NULL,
@@ -260,6 +260,28 @@ class Installer extends Modules\AbstractInstaller
                 'ALTER TABLE `{pre}seo` ADD UNIQUE (uri);',
                 'ALTER TABLE `{pre}seo` ADD `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
             ],
+            50 => [
+                function () {
+                    $result = false;
+                    if ($this->container->has('seo.installer') && $this->systemModel->moduleExists('seo') === false) {
+                        /** @var Modules\AbstractInstaller $seoInstaller */
+                        $seoInstaller = $this->container->get('seo.installer');
+                        $result = $seoInstaller->install();
+
+                        if ($result === true) {
+                            $seoModuleId = $this->db->fetchColumn('SELECT id FROM `' . $this->db->getPrefix() . 'modules` WHERE `name` = "seo"');
+                            $queries = [
+                                'DELETE FROM `{pre}settings` WHERE module_id = ' . $seoModuleId . ';',
+                                'UPDATE `{pre}settings` SET `module_id` = ' . $seoModuleId . ', `name` = SUBSTRING(`name`, 5) WHERE module_id = ' . $this->moduleId . ' AND `name` LIKE "seo_%";',
+                            ];
+
+                            $result = $this->executeSqlQueries($queries);
+                        }
+                    }
+
+                    return $result;
+                }
+            ]
         ];
     }
 }

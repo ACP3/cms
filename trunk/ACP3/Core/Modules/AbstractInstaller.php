@@ -5,12 +5,13 @@ namespace ACP3\Core\Modules;
 use ACP3\Core;
 use ACP3\Modules\System;
 use ACP3\Modules\Permissions;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class AbstractInstaller
  * @package ACP3\Core\Modules
  */
-abstract class AbstractInstaller implements InstallerInterface
+abstract class AbstractInstaller extends ContainerAware implements InstallerInterface
 {
     /**
      * Name des Moduls
@@ -60,10 +61,10 @@ abstract class AbstractInstaller implements InstallerInterface
     protected $specialResources = [];
 
     /**
-     * @param Core\DB $db
-     * @param Core\XML $xml
-     * @param Core\Cache $aclCache
-     * @param System\Model $systemModel
+     * @param Core\DB           $db
+     * @param Core\XML          $xml
+     * @param Core\Cache        $aclCache
+     * @param System\Model      $systemModel
      * @param Permissions\Model $permissionsModel
      */
     public function __construct(
@@ -72,7 +73,8 @@ abstract class AbstractInstaller implements InstallerInterface
         Core\Cache $aclCache,
         System\Model $systemModel,
         Permissions\Model $permissionsModel
-    ) {
+    )
+    {
         $this->db = $db;
         $this->xml = $xml;
         $this->aclCache = $aclCache;
@@ -99,22 +101,21 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Methode zum Installieren des Moduls
+     * Installs a module
      *
      * @return boolean
      */
     public function install()
     {
-        $bool1 = $this->executeSqlQueries($this->createTables());
-        $bool2 = $this->addToModulesTable();
-        $bool3 = $this->installSettings($this->settings());
-        $bool4 = $this->addResources();
-
-        return $bool1 && $bool2 && $bool3 && $bool4;
+        return
+            $this->executeSqlQueries($this->createTables()) &&
+            $this->addToModulesTable() &&
+            $this->installSettings($this->settings()) &&
+            $this->addResources();
     }
 
     /**
-     * Führt die in $queries als Array übergebenen SQL-Statements aus
+     * Executes all given SQL queries
      *
      * @param array $queries
      *
@@ -129,7 +130,11 @@ abstract class AbstractInstaller implements InstallerInterface
             $this->db->getConnection()->beginTransaction();
             try {
                 foreach ($queries as $query) {
-                    if (!empty($query)) {
+                    if (is_object($query) && ($query instanceof \Closure)) {
+                        if ($query() === false) {
+                            return false;
+                        }
+                    } elseif (!empty($query)) {
                         $this->db->getConnection()->query(str_replace($search, $replace, $query));
                     }
                 }
@@ -145,7 +150,7 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Fügt ein Modul zur modules DB-Tabelle hinzu
+     * Adds a module to the modules SQL-table
      *
      * @return boolean
      */
@@ -165,7 +170,7 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Installiert die zu einem Module zugehörigen Einstellungen
+     * Installs all module settings
      *
      * @param array $settings
      *
@@ -197,7 +202,7 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Gibt die ID eines Moduls zurück
+     * Returns the module-ID
      *
      * @return integer
      */
@@ -211,7 +216,7 @@ abstract class AbstractInstaller implements InstallerInterface
     }
 
     /**
-     * Setzt die ID eines Moduls
+     * Sets the module-ID
      */
     public function setModuleId()
     {
@@ -455,22 +460,15 @@ abstract class AbstractInstaller implements InstallerInterface
     {
         $result = -1;
         foreach ($schemaUpdates as $newSchemaVersion => $queries) {
-            // Schema-Änderungen nur für neuere Versionen durchführen
-            if ($installedSchemaVersion < $newSchemaVersion && $newSchemaVersion <= static::SCHEMA_VERSION) {
-                // Einzelne Schema-Änderung bei einer Version
-                if (!empty($queries) && is_array($queries) === false) {
-                    $result = $this->executeSqlQueries((array)$queries) === true ? 1 : 0;
-                    if ($result !== 0) {
-                        $this->setNewSchemaVersion($newSchemaVersion);
-                    }
-                } else { // Mehrere Schema-Änderungen bei einer Version
-                    if (!empty($queries) && is_array($queries) === true) {
-                        $result = $this->executeSqlQueries($queries) === true ? 1 : 0;
-                    }
-                    // Falls kein Fehler aufgetreten ist, die Schema Version des Moduls erhöhen
-                    if ($result !== 0) {
-                        $this->setNewSchemaVersion($newSchemaVersion);
-                    }
+            // Do schema updates only, if the current schema version is older then the new one
+            if ($installedSchemaVersion < $newSchemaVersion &&
+                $newSchemaVersion <= static::SCHEMA_VERSION &&
+                !empty($queries)
+            ) {
+                $result = $this->executeSqlQueries((is_array($queries) === false) ? (array)$queries : $queries) === true ? 1 : 0;
+
+                if ($result !== 0) {
+                    $this->setNewSchemaVersion($newSchemaVersion);
                 }
             }
         }
@@ -497,6 +495,6 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE name = ?', [$moduleName]) == 1;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE `name` = ?', [$moduleName]) == 1;
     }
 }
