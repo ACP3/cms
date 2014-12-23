@@ -135,7 +135,7 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
                             return false;
                         }
                     } elseif (!empty($query)) {
-                        $this->db->getConnection()->query(str_replace($search, $replace, $query));
+                        $this->db->getConnection()->query(str_ireplace($search, $replace, $query));
                     }
                 }
                 $this->db->getConnection()->commit();
