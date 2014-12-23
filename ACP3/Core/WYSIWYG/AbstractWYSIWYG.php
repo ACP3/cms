@@ -1,13 +1,11 @@
 <?php
 namespace ACP3\Core\WYSIWYG;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-
 /**
  * Abstract Class for the various WYSIWYG editors
  * @package ACP3\Core\WYSIWYG
  */
-abstract class AbstractWYSIWYG extends ContainerAware
+abstract class AbstractWYSIWYG
 {
     /**
      * ID des WYSIWYG-Editors
@@ -35,7 +33,15 @@ abstract class AbstractWYSIWYG extends ContainerAware
      */
     protected $config = [];
 
+    /**
+     * @param array $params
+     */
     abstract public function setParameters(array $params = []);
 
+    /**
+     * Configures the given WYSIWYG-Editor
+     *
+     * @return string
+     */
     abstract public function display();
 }

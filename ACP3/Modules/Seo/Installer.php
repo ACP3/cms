@@ -91,11 +91,7 @@ class Installer extends Modules\AbstractInstaller
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'admin', 'index', 'settings', '', 7);",
             ],
             4 => [
-                'UPDATE `{pre}settings` SET `name` = "meta_description" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_meta_description";',
-                'UPDATE `{pre}settings` SET `name` = "meta_keywords" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_meta_keywords";',
-                'UPDATE `{pre}settings` SET `name` = "mod_rewrite" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_mod_rewrite";',
-                'UPDATE `{pre}settings` SET `name` = "robots" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_robots";',
-                'UPDATE `{pre}settings` SET `name` = "title" WHERE module_id = ' . $this->getModuleId() . ' AND `name` = "seo_title";',
+                'UPDATE `{pre}settings` SET `name` = SUBSTRING(`name`, 5) WHERE module_id = ' . $this->getModuleId() .' AND `name` LIKE "seo_%";',
             ]
         ];
     }

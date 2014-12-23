@@ -102,8 +102,9 @@ class Helpers
             $this->categoriesCache->setCache($module);
 
             return $result;
+        } else {
+            return $this->categoriesModel->getOneByTitleAndModule($title, $module)['id'];
         }
-        return 0;
     }
 
     /**

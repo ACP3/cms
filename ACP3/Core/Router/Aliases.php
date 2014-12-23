@@ -13,33 +13,33 @@ class Aliases
     /**
      * @var array
      */
-    protected $aliases = [];
+    protected $aliasesCache = [];
 
     /**
      * @param \ACP3\Modules\Seo\Cache $seoCache
      */
     public function __construct(Seo\Cache $seoCache)
     {
-        $this->aliases = $seoCache->getCache();
+        $this->aliasesCache = $seoCache->getCache();
     }
 
     /**
-     * Gibt einen URI-Alias zurück
+     * Returns an uri alias by a given path
      *
      * @param string $path
-     * @param bool   $emptyIsNoResult
+     * @param bool   $emptyOnNoResult
      *
      * @return string
      */
-    public function getUriAlias($path, $emptyIsNoResult = false)
+    public function getUriAlias($path, $emptyOnNoResult = false)
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliases[$path]['alias']) ? $this->aliases[$path]['alias'] : ($emptyIsNoResult === true ? '' : $path);
+        return !empty($this->aliasesCache[$path]['alias']) ? $this->aliasesCache[$path]['alias'] : ($emptyOnNoResult === true ? '' : $path);
     }
 
     /**
-     * Überprüft, ob ein URI-Alias existiert
+     * Checks, whether an uri alias exists
      *
      * @param string $path
      *
@@ -47,8 +47,6 @@ class Aliases
      */
     public function uriAliasExists($path)
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return isset($this->aliases[$path]) === true && !empty($this->aliases[$path]['alias']);
+        return ($this->getUriAlias($path, true) !== '');
     }
 }

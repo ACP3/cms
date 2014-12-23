@@ -84,4 +84,15 @@ class Model extends Core\Model
     {
         return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', [$id]);
     }
+
+    /**
+     * @param $title
+     * @param $module
+     *
+     * @return array
+     */
+    public function getOneByTitleAndModule($title, $module)
+    {
+        return $this->db->fetchAssoc('SELECT c.* FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c JOIN ' . $this->db->getPrefix() . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ?', [$title, $module]);
+    }
 }
