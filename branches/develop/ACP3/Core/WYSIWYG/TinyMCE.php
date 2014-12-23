@@ -6,7 +6,7 @@ namespace ACP3\Core\WYSIWYG;
  * Implementation of the AbstractWYSIWYG class for TinyMCE
  * @package ACP3\Core\WYSIWYG
  */
-class TinyMCE extends AbstractWYSIWYG
+class TinyMCE extends Textarea
 {
     /**
      * @var bool
@@ -17,10 +17,7 @@ class TinyMCE extends AbstractWYSIWYG
      */
     public function setParameters(array $params = [])
     {
-        $this->id = $params['id'];
-        $this->name = $params['name'];
-        $this->value = $params['value'];
-        $this->advanced = isset($params['advanced']) ? (bool)$params['advanced'] : false;
+        parent::setParameters($params);
 
         $this->config['toolbar'] = isset($params['toolbar']) ? $params['toolbar'] : '';
         $this->config['height'] = isset($params['height']) ? $params['height'] . 'px' : '200px';
@@ -42,11 +39,12 @@ class TinyMCE extends AbstractWYSIWYG
         $editor .= '<script type="text/javascript">' . "\n";
         $editor .= 'tinymce.init(' . $this->_configure() . ');' . "\n";
         $editor .= "</script>\n";
-        $editor .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="50" rows="5" class="form-control">' . $this->value . "</textarea>\n";
 
         $wysiwyg = [
             'id' => $this->id,
-            'editor' => $editor,
+            'name' => $this->name,
+            'value' => $this->value,
+            'js' => $editor,
             'advanced' => $this->advanced,
         ];
 
@@ -70,7 +68,7 @@ class TinyMCE extends AbstractWYSIWYG
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
-            'content_css' => $this->container->get('core.router')->route('minify/index/index/group_css/libraries_bootstrap,jquery/', true)
+            'content_css' => $this->container->get('core.assets')->buildMinifyLink('css')
         ];
 
         // Basic editor
