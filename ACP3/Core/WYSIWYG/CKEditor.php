@@ -6,7 +6,7 @@ namespace ACP3\Core\WYSIWYG;
  * Implementation of the AbstractWYSIWYG class for CKEditor
  * @package ACP3\Core\WYSIWYG
  */
-class CKEditor extends AbstractWYSIWYG
+class CKEditor extends Textarea
 {
     /**
      * @var \ACP3\Core\WYSIWYG\CKEditor\Initialize
@@ -18,10 +18,7 @@ class CKEditor extends AbstractWYSIWYG
      */
     public function setParameters(array $params = [])
     {
-        $this->id = $params['id'];
-        $this->name = $params['name'];
-        $this->value = $params['value'];
-        $this->advanced = isset($params['advanced']) ? (bool)$params['advanced'] : false;
+        parent::setParameters($params);
 
         $this->config['toolbar'] = isset($params['toolbar']) && $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
         $this->config['height'] = (isset($params['height']) ? $params['height'] : 250) . 'px';
@@ -34,14 +31,16 @@ class CKEditor extends AbstractWYSIWYG
     {
         $this->_configure();
 
+        // CKEditor is currently not initialized
         if (!$this->editor) {
             $this->editor = new CKEditor\Initialize(ROOT_DIR . 'libraries/ckeditor/');
-            $this->editor->textareaAttributes['class'] = 'form-control';
         }
 
         $wysiwyg = [
             'id' => $this->id,
-            'editor' => $this->editor->editor($this->name, $this->id, $this->value, $this->config),
+            'name' => $this->name,
+            'value' => $this->value,
+            'js' => $this->editor->editor($this->name, $this->config),
             'advanced' => $this->advanced,
         ];
 

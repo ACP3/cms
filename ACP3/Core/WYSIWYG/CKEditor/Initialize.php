@@ -32,12 +32,6 @@ class Initialize
      */
     public $initialized = false;
     /**
-     * An array with textarea attributes.
-     *
-     * @var array
-     */
-    public $textareaAttributes = ["rows" => 8, "cols" => 60];
-    /**
      * An array that holds event listeners.
      *
      * @var array
@@ -63,21 +57,15 @@ class Initialize
     }
 
     /**
-     * @param        $name
-     * @param        $id
-     * @param string $value
-     * @param array  $config
-     * @param array  $events
+     * @param       $name
+     * @param array $config
+     * @param array $events
      *
      * @return string
      */
-    public function editor($name, $id, $value = "", $config = [], $events = [])
+    public function editor($name, $config = [], $events = [])
     {
-        $attr = "";
-        foreach ($this->textareaAttributes as $key => $val) {
-            $attr .= " " . $key . '="' . str_replace('"', '&quot;', $val) . '"';
-        }
-        $out = "<textarea name=\"" . $name . "\" id=\"" . $id . "\"" . $attr . ">" . htmlspecialchars($value) . "</textarea>\n";
+        $out = "";
         if (!$this->initialized) {
             $out .= $this->init();
         }
