@@ -1,7 +1,7 @@
 services:
   files.controller.admin.index:
     class: ACP3\Modules\Files\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@files.model', '@files.cache', '@files.config']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@files.model', '@files.cache', '@files.config', '@files.validator', '@categories.helpers']
 
   files.controller.frontend.index:
     class: ACP3\Modules\Files\Controller\Index

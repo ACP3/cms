@@ -4,6 +4,7 @@ namespace ACP3\Modules\News\Controller\Admin;
 
 use ACP3\Core;
 use ACP3\Modules\Categories;
+use ACP3\Modules\Comments;
 use ACP3\Modules\News;
 
 /**
@@ -33,9 +34,17 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $newsConfig;
     /**
+     * @var \ACP3\Modules\News\Validator
+     */
+    protected $newsValidator;
+    /**
      * @var \ACP3\Modules\Categories\Helpers
      */
     protected $categoriesHelpers;
+    /**
+     * @var \ACP3\Modules\Comments\Helpers
+     */
+    protected $commentsHelpers;
 
     /**
      * @param \ACP3\Core\Context\Admin         $context
@@ -44,6 +53,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\News\Model         $newsModel
      * @param \ACP3\Modules\News\Cache         $newsCache
      * @param \ACP3\Core\Config                $newsConfig
+     * @param \ACP3\Modules\News\Validator     $newsValidator
      * @param \ACP3\Modules\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
@@ -53,6 +63,7 @@ class Index extends Core\Modules\Controller\Admin
         News\Model $newsModel,
         News\Cache $newsCache,
         Core\Config $newsConfig,
+        News\Validator $newsValidator,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);
@@ -62,7 +73,20 @@ class Index extends Core\Modules\Controller\Admin
         $this->newsModel = $newsModel;
         $this->newsCache = $newsCache;
         $this->newsConfig = $newsConfig;
+        $this->newsValidator = $newsValidator;
         $this->categoriesHelpers = $categoriesHelpers;
+    }
+
+    /**
+     * @param \ACP3\Modules\Comments\Helpers $commentsHelpers
+     *
+     * @return $this
+     */
+    public function setCommentsHelpers(Comments\Helpers $commentsHelpers)
+    {
+        $this->commentsHelpers = $commentsHelpers;
+
+        return $this;
     }
 
     public function actionCreate()
@@ -128,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
             foreach ($items as $item) {
                 $bool = $this->newsModel->delete($item);
                 if ($commentsInstalled === true) {
-                    $this->get('comments.helpers')->deleteCommentsByModuleAndResult('news', $item);
+                    $this->commentsHelpers->deleteCommentsByModuleAndResult('news', $item);
                 }
 
                 $cache->delete(News\Cache::CACHE_ID . $item);
@@ -246,7 +270,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData, array $settings)
     {
         try {
-            $this->get('news.validator')->validate($formData);
+            $this->newsValidator->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -256,7 +280,7 @@ class Index extends Core\Modules\Controller\Admin
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'readmore' => $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0,
                 'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
-                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
+                'category_id' => !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
                 'uri' => Core\Functions::strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
                 'link_title' => Core\Functions::strEncode($formData['link_title']),
@@ -290,7 +314,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $settings)
     {
         try {
-            $this->get('news.validator')->validate(
+            $this->newsValidator->validate(
                 $formData,
                 sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id)
             );
@@ -337,8 +361,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _settingsPost(array $formData)
     {
         try {
-            $validator = $this->get('news.validator');
-            $validator->validateSettings($formData, $this->lang);
+            $this->newsValidator->validateSettings($formData, $this->lang);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),

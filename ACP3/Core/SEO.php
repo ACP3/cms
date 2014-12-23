@@ -354,7 +354,7 @@ class SEO
         ];
 
         // Update an existing result
-        if ($this->aliases->uriAliasExists($path) === true) {
+        if ($this->seoModel->uriAliasExists($path) === true) {
             $bool = $this->seoModel->update($values, ['uri' => $path]);
         } else {
             $values['uri'] = $path;
