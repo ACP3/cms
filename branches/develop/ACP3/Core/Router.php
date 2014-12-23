@@ -84,6 +84,9 @@ class Router
 
         if ($path !== '') {
             $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
+            if ($path === 'acp/') {
+                $path = 'acp/acp/index/index/';
+            }
             $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
             $isAdminUrl = preg_match(self::ADMIN_PANEL_PATTERN, $path) === true;
 
