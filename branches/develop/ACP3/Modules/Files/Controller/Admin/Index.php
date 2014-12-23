@@ -32,14 +32,24 @@ class Index extends Core\Modules\Controller\Admin
      * @var Core\Config
      */
     protected $filesConfig;
+    /**
+     * @var \ACP3\Modules\Files\Validator
+     */
+    protected $filesValidator;
+    /**
+     * @var \ACP3\Modules\Categories\Helpers
+     */
+    protected $categoriesHelpers;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Files\Model $filesModel
-     * @param Files\Cache $filesCache
-     * @param Core\Config $filesConfig
+     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Core\Helpers\Secure        $secureHelper
+     * @param \ACP3\Modules\Files\Model        $filesModel
+     * @param \ACP3\Modules\Files\Cache        $filesCache
+     * @param \ACP3\Core\Config                $filesConfig
+     * @param \ACP3\Modules\Files\Validator    $filesValidator
+     * @param \ACP3\Modules\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -47,7 +57,9 @@ class Index extends Core\Modules\Controller\Admin
         Core\Helpers\Secure $secureHelper,
         Files\Model $filesModel,
         Files\Cache $filesCache,
-        Core\Config $filesConfig)
+        Core\Config $filesConfig,
+        Files\Validator $filesValidator,
+        Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);
 
@@ -56,6 +68,8 @@ class Index extends Core\Modules\Controller\Admin
         $this->filesModel = $filesModel;
         $this->filesCache = $filesCache;
         $this->filesConfig = $filesConfig;
+        $this->filesValidator = $filesValidator;
+        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     public function actionCreate()
@@ -73,7 +87,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''));
 
         // Formularelemente
-        $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('files', '', true));
+        $this->view->assign('categories', $this->categoriesHelpers->categoriesList('files', '', true));
 
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $options = [];
@@ -131,39 +145,39 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $dl = $this->filesModel->getOneById((int)$this->request->id);
+        $file = $this->filesModel->getOneById((int)$this->request->id);
 
-        if (empty($dl) === false) {
+        if (empty($file) === false) {
             $settings = $this->filesConfig->getSettings();
 
             if (empty($_POST) === false) {
-                $this->_editPost($_POST, $settings, $dl);
+                $this->_editPost($_POST, $settings, $file);
             }
 
             // Datumsauswahl
-            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$dl['start'], $dl['end']]));
+            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$file['start'], $file['end']]));
 
             $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
-            $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($dl['size'], ' '))));
+            $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($file['size'], ' '))));
 
-            $dl['filesize'] = substr($dl['size'], 0, strpos($dl['size'], ' '));
+            $file['filesize'] = substr($file['size'], 0, strpos($file['size'], ' '));
 
             // Formularelemente
-            $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('files', $dl['category_id'], true));
+            $this->view->assign('categories', $this->categoriesHelpers->categoriesList('files', $file['category_id'], true));
 
             if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = [];
                 $options[0]['name'] = 'comments';
-                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $dl['comments'], 'checked');
+                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $file['comments'], 'checked');
                 $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }
 
             $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
-            $this->view->assign('current_file', $dl['file']);
+            $this->view->assign('current_file', $file['file']);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id)));
-            $this->view->assign('form', array_merge($dl, $_POST));
+            $this->view->assign('form', array_merge($file, $_POST));
 
             $this->secureHelper->generateFormToken($this->request->query);
         } else {
@@ -226,8 +240,7 @@ class Index extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['file_internal']['size'];
             }
 
-            $validator = $this->get('files.validator');
-            $validator->validateCreate($formData, $file);
+            $this->filesValidator->validateCreate($formData, $file);
 
             if (is_array($file) === true) {
                 $upload = new Core\Helpers\Upload('files');
@@ -244,7 +257,7 @@ class Index extends Core\Modules\Controller\Admin
                 'id' => '',
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
-                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
+                'category_id' => !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
                 'file' => $newFile,
                 'size' => $filesize,
                 'title' => Core\Functions::strEncode($formData['title']),
@@ -292,13 +305,12 @@ class Index extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['file_internal']['size'];
             }
 
-            $validator = $this->get('files.validator');
-            $validator->validateEdit($formData, $file);
+            $this->filesValidator->validateEdit($formData, $file);
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
-                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
+                'category_id' => !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
@@ -357,8 +369,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _settingsPost(array $formData)
     {
         try {
-            $validator = $this->get('files.validator');
-            $validator->validateSettings($formData);
+            $this->filesValidator->validateSettings($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),

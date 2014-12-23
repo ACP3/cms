@@ -86,11 +86,8 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $this->errors['text'] = $this->lang->t('files', 'description_to_short');
         }
-        if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
+        if (empty($formData['cat_create']) && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $this->errors['cat'] = $this->lang->t('files', 'select_category');
-        }
-        if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'files') === true) {
-            $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias']) === true) {
             $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
@@ -127,11 +124,8 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $this->errors['text'] = $this->lang->t('files', 'description_to_short');
         }
-        if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
+        if (empty($formData['cat_create']) && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $this->errors['cat'] = $this->lang->t('files', 'select_category');
-        }
-        if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'files') === true) {
-            $this->errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true) {
             $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
