@@ -22,11 +22,16 @@ class CKEditor extends Textarea
      * @var \ACP3\Modules\Emoticons\Model
      */
     private $emoticonsModel;
-    /**
-     * @var \ACP3\Core\WYSIWYG\CKEditor\Initialize
-     */
-    private $editor;
 
+    /**
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\View    $view
+     */
     public function __construct(
         Core\Modules $modules,
         Core\View $view)
@@ -63,18 +68,11 @@ class CKEditor extends Textarea
      */
     public function display()
     {
-        $this->_configure();
-
-        // CKEditor is currently not initialized
-        if (!$this->editor) {
-            $this->editor = new CKEditor\Initialize(ROOT_DIR . 'libraries/ckeditor/');
-        }
-
         $wysiwyg = [
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'js' => $this->editor->editor($this->name, $this->config),
+            'js' => $this->_editor(),
             'advanced' => $this->advanced,
         ];
 
@@ -87,7 +85,9 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @inheritdoc
+     * Configures the CKEditor instance
+     *
+     * @return string
      */
     private function _configure()
     {
@@ -148,5 +148,68 @@ class CKEditor extends Textarea
                 ]
             ];
         }
+
+        return json_encode($this->config);
+    }
+
+    /**
+     * @return string
+     */
+    private function _editor()
+    {
+        $out = $this->_init();
+
+        $_config = $this->_configure();
+
+        if (!empty($_config)) {
+            $js = "CKEDITOR.replace('" . $this->id . "', " . $_config . ");";
+        } else {
+            $js = "CKEDITOR.replace('" . $this->id . "');";
+        }
+
+        $out .= $this->_script($js);
+
+        return $out;
+    }
+
+    /**
+     * Prints javascript code.
+     *
+     * @param $js
+     *
+     * @return string
+     */
+    private function _script($js)
+    {
+        $out = "<script type=\"text/javascript\">";
+        $out .= $js;
+        $out .= "</script>\n";
+
+        return $out;
+    }
+
+    /**
+     * @return string
+     */
+    private function _init()
+    {
+        if ($this->initialized === true) {
+            return "";
+        }
+
+        $this->initialized = true;
+        $basePath = ROOT_DIR . 'libraries/ckeditor/';
+        $out = "";
+
+        // Skip relative paths...
+        if (strpos($basePath, '..') !== 0) {
+            $out .= $this->_script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
+        }
+
+        $info = simplexml_load_file(LIBRARIES_DIR . 'ckeditor/info.xml');
+
+        $out .= "<script type=\"text/javascript\" src=\"" . $basePath . 'ckeditor.js?v=' . ((string) $info->version) . "\"></script>\n";
+
+        return $out;
     }
 }
