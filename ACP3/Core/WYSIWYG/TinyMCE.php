@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3\Core\WYSIWYG;
+use ACP3\Core;
 
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
@@ -9,9 +10,30 @@ namespace ACP3\Core\WYSIWYG;
 class TinyMCE extends Textarea
 {
     /**
+     * @var \ACP3\Core\Assets
+     */
+    private $assets;
+    /**
+     * @var \ACP3\Core\View
+     */
+    private $view;
+    /**
      * @var bool
      */
     private $initialized = false;
+
+    /**
+     * @param \ACP3\Core\Assets $assets
+     * @param \ACP3\Core\View   $view
+     */
+    public function __construct(
+        Core\Assets $assets,
+        Core\View $view
+    ) {
+        $this->assets = $assets;
+        $this->view = $view;
+    }
+
     /**
      * @inheritdoc
      */
@@ -52,11 +74,8 @@ class TinyMCE extends Textarea
             $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
         }
 
-        /** @var \ACP3\Core\View $view */
-        $view = $this->container->get('core.view');
-
-        $view->assign('wysiwyg', $wysiwyg);
-        return $view->fetchTemplate('system/wysiwyg.tpl');
+        $this->view->assign('wysiwyg', $wysiwyg);
+        return $this->view->fetchTemplate('system/wysiwyg.tpl');
     }
 
     /**
@@ -68,7 +87,7 @@ class TinyMCE extends Textarea
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
-            'content_css' => $this->container->get('core.assets')->buildMinifyLink('css')
+            'content_css' => $this->assets->buildMinifyLink('css')
         ];
 
         // Basic editor
