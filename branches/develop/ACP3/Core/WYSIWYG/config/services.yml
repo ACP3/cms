@@ -1,18 +1,16 @@
 services:
-  core.wysiwyg.abstract:
-    abstract: true
-    class: ACP3\Core\WYSIWYG\AbstractWYSIWYG
-    calls:
-      - ['setContainer', ['@service_container']]
-
   core.wysiwyg.ckeditor:
     class: ACP3\Core\WYSIWYG\CKEditor
-    parent: core.wysiwyg.abstract
+    arguments: ['@core.modules', '@core.view']
+    calls:
+      - ['setEmoticonsModel', ['@?emoticons.model']]
 
   core.wysiwyg.textarea:
     class: ACP3\Core\WYSIWYG\Textarea
-    parent: core.wysiwyg.abstract
+    arguments: ['@core.modules']
+    calls:
+      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   core.wysiwyg.tinymce:
     class: ACP3\Core\WYSIWYG\TinyMCE
-    parent: core.wysiwyg.abstract
+    arguments: ['@core.assets', '@core.view']

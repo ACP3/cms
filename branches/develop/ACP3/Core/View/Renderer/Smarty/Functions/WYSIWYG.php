@@ -43,7 +43,6 @@ class WYSIWYG extends AbstractFunction
         if ($this->container->has($serviceId) === true) {
             /** @var Core\WYSIWYG\AbstractWYSIWYG $wysiwyg */
             $wysiwyg = $this->container->get($serviceId);
-            $wysiwyg->setContainer($this->container);
             $wysiwyg->setParameters($params);
             return $wysiwyg->display();
         } else {

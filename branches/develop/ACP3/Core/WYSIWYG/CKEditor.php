@@ -2,6 +2,8 @@
 
 namespace ACP3\Core\WYSIWYG;
 
+use ACP3\Core;
+
 /**
  * Implementation of the AbstractWYSIWYG class for CKEditor
  * @package ACP3\Core\WYSIWYG
@@ -9,9 +11,41 @@ namespace ACP3\Core\WYSIWYG;
 class CKEditor extends Textarea
 {
     /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+    /**
+     * @var \ACP3\Core\View
+     */
+    private $view;
+    /**
+     * @var \ACP3\Modules\Emoticons\Model
+     */
+    private $emoticonsModel;
+    /**
      * @var \ACP3\Core\WYSIWYG\CKEditor\Initialize
      */
     private $editor;
+
+    public function __construct(
+        Core\Modules $modules,
+        Core\View $view)
+    {
+        $this->modules = $modules;
+        $this->view = $view;
+    }
+
+    /**
+     * @param \ACP3\Modules\Emoticons\Model $emoticonsModel
+     *
+     * @return $this
+     */
+    public function setEmoticonsModel(\ACP3\Modules\Emoticons\Model $emoticonsModel)
+    {
+        $this->emoticonsModel = $emoticonsModel;
+
+        return $this;
+    }
 
     /**
      * @inheritdoc
@@ -48,11 +82,8 @@ class CKEditor extends Textarea
             $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
         }
 
-        /** @var \ACP3\Core\View $view */
-        $view = $this->container->get('core.view');
-
-        $view->assign('wysiwyg', $wysiwyg);
-        return $view->fetchTemplate('system/wysiwyg.tpl');
+        $this->view->assign('wysiwyg', $wysiwyg);
+        return $this->view->fetchTemplate('system/wysiwyg.tpl');
     }
 
     /**
@@ -94,10 +125,10 @@ class CKEditor extends Textarea
             $this->config['filebrowserFlashUploadUrl'] = sprintf($uploadUri, '&type=files');
 
             // Include emoticons, if available
-            if ($this->container->get('core.modules')->isActive('emoticons') === true) {
+            if ($this->modules->isActive('emoticons') === true) {
                 $this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
                 $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
-                $emoticons = $this->container->get('emoticons.model')->getAll();
+                $emoticons = $this->emoticonsModel->getAll();
                 $c_emoticons = count($emoticons);
 
                 $images = $descriptions = [];
