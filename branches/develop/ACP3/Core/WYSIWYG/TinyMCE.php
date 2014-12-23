@@ -19,8 +19,8 @@ class TinyMCE extends Textarea
     {
         parent::setParameters($params);
 
-        $this->config['toolbar'] = isset($params['toolbar']) ? $params['toolbar'] : '';
-        $this->config['height'] = isset($params['height']) ? $params['height'] . 'px' : '200px';
+        $this->config['toolbar'] = (isset($params['toolbar'])) ? $params['toolbar'] : '';
+        $this->config['height'] = ((isset($params['height'])) ? $params['height'] : 250) . 'px';
     }
 
     /**
