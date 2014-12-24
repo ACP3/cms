@@ -55,7 +55,7 @@ class IncludeJs extends AbstractFunction
             $key = $params['module'] . '/' . $params['file'];
             if (isset($this->alreadyIncluded[$key]) === false) {
                 if (!empty($params['depends'])) {
-                    $this->assets->enableJsLibraries(explode(',', $params['depends']));
+                    $this->assets->enableLibraries(explode(',', $params['depends']));
                 }
 
                 $this->alreadyIncluded[$key] = true;
