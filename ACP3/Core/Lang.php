@@ -8,7 +8,7 @@ namespace ACP3\Core;
 class Lang
 {
     /**
-     * @var Cache
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
     /**

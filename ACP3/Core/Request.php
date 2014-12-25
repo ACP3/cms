@@ -8,6 +8,16 @@ namespace ACP3\Core;
 class Request
 {
     const ADMIN_PANEL_PATTERN = '=^acp/=';
+
+    /**
+     * @var \ACP3\Core\DB
+     */
+    protected $db;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+
     /**
      * Die komplette übergebene URL
      *
@@ -19,20 +29,20 @@ class Request
      */
     public $originalQuery = '';
     /**
-     * @var DB
-     */
-    protected $db;
-    /**
-     * @var Modules
-     */
-    protected $modules;
-    /**
      * Array, welches die URI Parameter enthält
      *
      * @var array
      * @access protected
      */
     protected $params = [];
+    /**
+     * @var string
+     */
+    private $protocol = '';
+    /**
+     * @var string
+     */
+    private $hostname = '';
 
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
@@ -49,6 +59,7 @@ class Request
         $this->db = $db;
         $this->modules = $modules;
 
+        $this->_setBaseUrl();
         $this->preprocessUriQuery();
 
         $settings = $systemConfig->getSettings();
@@ -61,6 +72,32 @@ class Request
         $this->_checkForUriAlias();
         $this->setUriParameters();
     }
+
+    /**
+     * Sets the base url (Protocol + Hostname)
+     */
+    protected function _setBaseUrl()
+    {
+        $this->protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
+        $this->hostname = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * @return string
+     */
+    public function getProtocol()
+    {
+        return $this->protocol;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHostname()
+    {
+        return $this->hostname;
+    }
+
 
     /**
      * Grundlegende Verarbeitung der URI-Query
