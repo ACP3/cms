@@ -97,7 +97,7 @@ services:
 
   core.router:
     class: ACP3\Core\Router
-    arguments: ['@core.router.aliases', '@seo.config']
+    arguments: ['@core.router.aliases', '@core.request', '@seo.config']
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
@@ -113,7 +113,6 @@ services:
 
   core.view:
     class: ACP3\Core\View
-    arguments: ['@core.router']
     calls:
       - ['setContainer', ['@service_container']]
 

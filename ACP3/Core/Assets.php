@@ -27,42 +27,52 @@ class Assets
     protected $systemConfig = [];
 
     /**
-     * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
+     * Legt fest, welche Bibliotheken beim Seitenaufruf geladen werden sollen
      * @var array
      */
-    protected $jsLibraries = [
-        'datatables' => [
+    protected $libraries = [
+        'moment' => [
             'enabled' => false,
-            'dependencies' => ['jquery']
+            'js' => 'moment.min.js'
         ],
-        'datetimepicker' => [
-            'enabled' => false,
-            'dependencies' => ['jquery', 'moment']
-        ],
-        'bootbox' => [
-            'enabled' => false,
-            'dependencies' => ['bootstrap']
-        ],
-        'bootstrap' => [
-            'enabled' => false,
-            'dependencies' => ['jquery']
+        'jquery' => [
+            'enabled' => true,
+            'js' => 'jquery.min.js'
         ],
         'fancybox' => [
             'enabled' => false,
-            'dependencies' => ['jquery']
+            'dependencies' => ['jquery'],
+            'css' => 'jquery.fancybox.css',
+            'js' => 'jquery.fancybox.min.js'
         ],
-        'jquery' => [
-            'enabled' => true
-        ],
-        'moment' => [
+        'bootstrap' => [
             'enabled' => false,
-            'dependencies' => []
+            'dependencies' => ['jquery'],
+            'css' => 'bootstrap.min.css',
+            'js' => 'bootstrap.min.js'
+        ],
+        'datatables' => [
+            'enabled' => false,
+            'dependencies' => ['bootstrap'],
+            'css' => 'dataTables.bootstrap.css',
+            'js' => 'jquery.datatables.min.js'
+        ],
+        'bootbox' => [
+            'enabled' => false,
+            'dependencies' => ['bootstrap'],
+            'js' => 'bootbox.min.js'
+        ],
+        'datetimepicker' => [
+            'enabled' => false,
+            'dependencies' => ['jquery', 'moment'],
+            'css' => 'bootstrap-datetimepicker.css',
+            'js' => 'bootstrap-datetimepicker.min.js'
         ],
     ];
     /**
      * @var string
      */
-    protected $jsLibrariesCache = '';
+    protected $librariesCache = '';
     /**
      * @var string
      */
@@ -77,9 +87,10 @@ class Assets
     protected $designXml;
 
     /**
-     * @param Modules $modules
-     * @param Router $router
-     * @param ThemeResolver $themeResolver
+     * @param \ACP3\Core\Modules              $modules
+     * @param \ACP3\Core\Router               $router
+     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
+     * @param \ACP3\Core\Config               $systemConfig
      */
     public function __construct(
         Modules $modules,
@@ -103,23 +114,24 @@ class Assets
         $this->designXml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
 
         if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
-            $this->enableJsLibraries(['bootstrap']);
+            $this->enableLibraries(['bootstrap']);
         }
     }
 
     /**
-     *
-     * @param string $libraries
-     * @param string $layout
+     * @param $layout
      *
      * @return array
      */
-    public function includeCssFiles($libraries, $layout)
+    public function includeCssFiles($layout)
     {
         $css = [];
 
-        if (in_array('bootstrap', $libraries)) {
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'bootstrap.min.css');
+        // At first, load the library stylesheets
+        foreach($this->libraries as $library) {
+            if ($library['enabled'] === true && isset($library['css']) === true) {
+                $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', $library['css']);
+            }
         }
 
         if (isset($this->designXml->css)) {
@@ -128,24 +140,12 @@ class Assets
             }
         }
 
-        // Stylesheets der Bibliotheken zuerst laden,
-        // damit deren Styles überschrieben werden können
-        if (in_array('datetimepicker', $libraries)) {
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'bootstrap-datetimepicker.css');
-        }
-        if (in_array('fancybox', $libraries)) {
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'jquery.fancybox.css');
-        }
-        if (in_array('datatables', $libraries)) {
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'dataTables.bootstrap.css');
-        }
-
         // General system styles
         $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'style.css');
         // Stylesheet of the current theme
         $css[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.css');
 
-        // Stylesheets der Module
+        // Module stylesheets
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $module) {
             $modulePath = $module['dir'] . '/Resources/Assets/';
@@ -166,38 +166,17 @@ class Assets
     }
 
     /**
-     *
-     * @param string $libraries
-     * @param string $layout
+     * @param $layout
      *
      * @return array
      */
-    public function includeJsFiles($libraries, $layout)
+    public function includeJsFiles($layout)
     {
         $scripts = [];
-        if (in_array('jquery', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.min.js');
-        }
-
-        if (in_array('bootstrap', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootstrap.min.js');
-        }
-
-        // JS-Libraries to include
-        if (in_array('bootbox', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootbox.min.js');
-        }
-        if (in_array('moment', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'moment.min.js');
-        }
-        if (in_array('datetimepicker', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'bootstrap-datetimepicker.min.js');
-        }
-        if (in_array('fancybox', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.fancybox.min.js');
-        }
-        if (in_array('datatables', $libraries)) {
-            $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', 'jquery.datatables.min.js');
+        foreach($this->libraries as $library) {
+            if ($library['enabled'] === true && isset($library['js']) === true) {
+                $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', $library['js']);
+            }
         }
 
         // Include additional js files from the design
@@ -214,22 +193,22 @@ class Assets
     }
 
     /**
-     * Aktiviert einzelne JavaScript Bibliotheken
+     * Aktiviert einzelne Frontend Bibliotheken
      *
      * @param array $libraries
      * @return $this
      */
-    public function enableJsLibraries(array $libraries)
+    public function enableLibraries(array $libraries)
     {
         foreach ($libraries as $library) {
-            if (array_key_exists($library, $this->jsLibraries) === true) {
+            if (array_key_exists($library, $this->libraries) === true) {
                 // Resolve javascript library dependencies recursively
-                if (!empty($this->jsLibraries[$library]['dependencies'])) {
-                    $this->enableJsLibraries($this->jsLibraries[$library]['dependencies']);
+                if (!empty($this->libraries[$library]['dependencies'])) {
+                    $this->enableLibraries($this->libraries[$library]['dependencies']);
                 }
 
                 // Enabled the javascript library
-                $this->jsLibraries[$library]['enabled'] = true;
+                $this->libraries[$library]['enabled'] = true;
             }
         }
 
@@ -264,15 +243,15 @@ class Assets
      */
     private function _getJsLibrariesCache()
     {
-        if (empty($this->jsLibrariesCache)) {
-            ksort($this->jsLibraries);
-            foreach ($this->jsLibraries as $library => $values) {
+        if (empty($this->librariesCache)) {
+            ksort($this->libraries);
+            foreach ($this->libraries as $library => $values) {
                 if ($values['enabled'] === true) {
-                    $this->jsLibrariesCache .= $library . ',';
+                    $this->librariesCache .= $library . ',';
                 }
             }
         }
 
-        return $this->jsLibrariesCache;
+        return $this->librariesCache;
     }
 }

@@ -39,6 +39,6 @@ class JsLibraries extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $this->assets->enableJsLibraries(explode(',', $params['enable']));
+        $this->assets->enableLibraries(explode(',', $params['enable']));
     }
 }
