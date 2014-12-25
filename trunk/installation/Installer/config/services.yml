@@ -46,6 +46,7 @@ services:
 
   core.router:
     class: ACP3\Installer\Core\Router
+    arguments: ['@core.request']
 
   core.validator.rules.date:
     class: ACP3\Core\Validator\Rules\Date

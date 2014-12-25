@@ -62,7 +62,7 @@ class Redirect
      */
     private function _redirect($path, $movedPermanently)
     {
-        $path = $this->router->getProtocol() . $this->router->getHostname() . $this->router->route($path);
+        $path = $this->router->route($path, true);
 
         if ($this->request->getIsAjax() === true) {
             $this->_ajax($path);

@@ -34,13 +34,15 @@ class Index extends Core\Modules\Controller
             $libraries = !empty($this->request->libraries) ? explode(',', $this->request->libraries) : [];
             $layout = isset($this->request->layout) && !preg_match('=/=', $this->request->layout) ? $this->request->layout : 'layout';
 
+            $this->assets->enableLibraries($libraries);
+
             $options = [];
             switch ($this->request->group) {
                 case 'css':
-                    $files = $this->assets->includeCssFiles($libraries, $layout);
+                    $files = $this->assets->includeCssFiles($layout);
                     break;
                 case 'js':
-                    $files = $this->assets->includeJsFiles($libraries, $layout);
+                    $files = $this->assets->includeJsFiles($layout);
                     break;
                 default:
                     $files = [];

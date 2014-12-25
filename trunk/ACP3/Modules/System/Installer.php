@@ -54,20 +54,20 @@ class Installer extends Modules\AbstractInstaller
                 `version` TINYINT(3) UNSIGNED NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {ENGINE} {CHARSET};",
+            ) {engine} {charset};",
             "CREATE TABLE `{pre}sessions` (
                 `session_id` VARCHAR(32) NOT NULL,
                 `session_starttime` INT(10) UNSIGNED NOT NULL,
                 `session_data` TEXT NOT NULL,
                 PRIMARY KEY (`session_id`)
-            ) {ENGINE} {CHARSET};",
+            ) {engine} {charset};",
             "CREATE TABLE `{pre}settings` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `module_id` INT(10) NOT NULL,
                 `name` VARCHAR(40) NOT NULL,
                 `value` TEXT NOT NULL,
                 PRIMARY KEY (`id`), UNIQUE KEY (`module_id`,`name`)
-            ) {ENGINE} {CHARSET};",
+            ) {engine} {charset};",
             // ACL
             "CREATE TABLE `{pre}acl_privileges` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -75,7 +75,7 @@ class Installer extends Modules\AbstractInstaller
                 `description` VARCHAR(100) NOT NULL,
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `key` (`key`)
-            ) {ENGINE} {CHARSET};",
+            ) {engine} {charset};",
             "CREATE TABLE`{pre}acl_resources` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `module_id` int(10) unsigned NOT NULL,

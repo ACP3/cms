@@ -9,9 +9,17 @@ use ACP3\Core;
  */
 class Router extends Core\Router
 {
-    public function __construct()
+    /**
+     * @var \ACP3\Installer\Core\Request
+     */
+    protected $request;
+
+    /**
+     * @param \ACP3\Installer\Core\Request $request
+     */
+    public function __construct(Request $request)
     {
-        $this->_setBaseUrl();
+        $this->request = $request;
     }
 
     /**
@@ -35,8 +43,8 @@ class Router extends Core\Router
         $prefix = '';
         // Append the current hostname to the URL
         if ($absolute === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->getProtocol();
-            $prefix .= $this->getHostname();
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getProtocol();
+            $prefix .= $this->request->getHostname();
         }
 
         $prefix.= PHP_SELF . '/';

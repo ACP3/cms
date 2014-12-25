@@ -55,7 +55,7 @@ class IncludeJs extends AbstractFunction
             $key = $params['module'] . '/' . $params['file'];
             if (isset($this->alreadyIncluded[$key]) === false) {
                 if (!empty($params['depends'])) {
-                    $this->assets->enableJsLibraries(explode(',', $params['depends']));
+                    $this->assets->enableLibraries(explode(',', $params['depends']));
                 }
 
                 $this->alreadyIncluded[$key] = true;
@@ -65,7 +65,13 @@ class IncludeJs extends AbstractFunction
                 $file = $params['file'];
 
                 $path = $this->themeResolver->getStaticAssetPath($module . '/Resources/Assets/', $module . '/', 'js', $file . '.js');
-                return sprintf($script, ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1));
+
+                if (strpos($path, '/ACP3/Modules/') !== false) {
+                    $path = ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1);
+                } else {
+                    $path = ROOT_DIR . substr($path, strlen(ACP3_ROOT_DIR));
+                }
+                return sprintf($script, $path);
             }
             return '';
         }
