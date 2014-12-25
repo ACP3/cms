@@ -15,6 +15,7 @@ class Request extends Core\Request
      */
     public function __construct($defaultPath = '')
     {
+        $this->_setBaseUrl();
         $this->preprocessUriQuery();
 
         // Set the user defined homepage of the website
