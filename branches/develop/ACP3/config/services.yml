@@ -63,7 +63,7 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@core.lang', '@core.xml', '@system.cache.core.modules', '@system.model']
+    arguments: ['@service_container', '@core.lang', '@core.xml', '@system.cache.core.modules', '@system.model']
 
   core.modules.abstractInstaller:
     abstract: true

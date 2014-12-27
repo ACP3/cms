@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Modules\System;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class Modules
@@ -10,19 +11,23 @@ use ACP3\Modules\System;
 class Modules
 {
     /**
-     * @var Lang
+     * @var \Symfony\Component\DependencyInjection\Container
+     */
+    protected $container;
+    /**
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var XML
+     * @var \ACP3\Core\XML
      */
     protected $xml;
     /**
-     * @var Cache
+     * @var \ACP3\Core\Cache
      */
     protected $cache;
     /**
-     * @var System\Model
+     * @var \ACP3\Modules\System\Model
      */
     protected $systemModel;
     /**
@@ -35,18 +40,21 @@ class Modules
     private $allModules = [];
 
     /**
-     * @param Lang         $lang
-     * @param XML          $xml
-     * @param Cache        $modulesCache
-     * @param System\Model $systemModel
+     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param \ACP3\Core\Lang                                  $lang
+     * @param \ACP3\Core\XML                                   $xml
+     * @param \ACP3\Core\Cache                                 $modulesCache
+     * @param \ACP3\Modules\System\Model                       $systemModel
      */
     public function __construct(
+        Container $container,
         Lang $lang,
         XML $xml,
         Cache $modulesCache,
         System\Model $systemModel
     )
     {
+        $this->container = $container;
         $this->lang = $lang;
         $this->xml = $xml;
         $this->cache = $modulesCache;
@@ -63,23 +71,23 @@ class Modules
     public function actionExists($path)
     {
         $pathArray = array_map(function ($value) {
-            return str_replace(' ', '', ucwords(strtolower(str_replace('_', ' ', $value))));
+            return str_replace(' ', '', strtolower(str_replace('_', ' ', $value)));
         }, explode('/', $path));
 
         if (empty($pathArray[2]) === true) {
-            $pathArray[2] = 'Index';
+            $pathArray[2] = 'index';
         }
         if (empty($pathArray[3]) === true) {
-            $pathArray[3] = 'Index';
+            $pathArray[3] = 'index';
         }
 
-        if ($pathArray[0] !== 'Frontend') {
-            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[0]\\$pathArray[2]";
-        } else {
-            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[2]";
+        $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2];
+
+        if ($this->container->has($serviceId)) {
+            return method_exists($this->container->get($serviceId), 'action' . $pathArray[3]);
         }
 
-        return method_exists($className, 'action' . $pathArray[3]);
+        return false;
     }
 
     /**
