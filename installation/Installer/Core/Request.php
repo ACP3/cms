@@ -16,7 +16,7 @@ class Request extends Core\Request
     public function __construct($defaultPath = '')
     {
         $this->_setBaseUrl();
-        $this->preprocessUriQuery();
+        $this->processQuery();
 
         // Set the user defined homepage of the website
         if ($this->query === '/' && $defaultPath !== '') {
@@ -27,9 +27,9 @@ class Request extends Core\Request
     }
 
     /**
-     * Grundlegende Verarbeitung der URI-Query
+     * @inheritdoc
      */
-    protected function preprocessUriQuery()
+    public function processQuery()
     {
         $this->originalQuery = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
         $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
