@@ -38,7 +38,7 @@ class Application
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
         $phpSelf = dirname(PHP_SELF);
         define('ROOT_DIR', substr($phpSelf !== '/' ? $phpSelf . '/' : '/', 0, -13));
-        define('INSTALLER_ROOT_DIR', $phpSelf !== '/' ? $phpSelf . '/' : '/');
+        define('INSTALLER_ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
         define('MODULES_DIR', ACP3_DIR . 'Modules/');

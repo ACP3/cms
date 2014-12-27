@@ -2,7 +2,7 @@
 
 {block CONTENT}
     {if !is_array($page)}
-        {$page}
+        {$page|rewrite_uri}
     {else}
         {$page.toc}
         {$page.text|rewrite_uri}
