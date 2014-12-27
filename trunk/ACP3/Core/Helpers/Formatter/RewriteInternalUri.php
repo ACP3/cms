@@ -49,7 +49,7 @@ class RewriteInternalUri
     {
         $rootDir = str_replace('/', '\/', ROOT_DIR);
         $host = $_SERVER['HTTP_HOST'];
-        return preg_replace_callback('/<a href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/', [$this, "_rewriteInternalUriCallback"], $text);
+        return preg_replace_callback('/<a(.*)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i', [$this, "_rewriteInternalUriCallback"], $text);
     }
 
     /**
@@ -61,10 +61,10 @@ class RewriteInternalUri
      */
     private function _rewriteInternalUriCallback($matches)
     {
-        if ($this->aliasesValidator->uriAliasExists($matches[6]) === true) {
+        if ($this->aliasesValidator->uriAliasExists($matches[7]) === true) {
             return $matches[0];
         } else {
-            $uriArray = explode('/', $matches[6]);
+            $uriArray = explode('/', $matches[7]);
             $path = 'frontend/' . $uriArray[0];
             if (!empty($uriArray[1])) {
                 $path .= '/' . $uriArray[1];
@@ -72,9 +72,12 @@ class RewriteInternalUri
             if (!empty($uriArray[2])) {
                 $path .= '/' . $uriArray[2];
             }
+            if (!empty($uriArray[3])) {
+                $path .= '/' . $uriArray[3];
+            }
 
-            if ($this->modules->actionExists($path)) {
-                return '<a href="' . $this->router->route($matches[6]) . '"';
+            if ($this->modules->actionExists($path) === true) {
+                return '<a' . $matches[1] . 'href="' . $this->router->route($matches[7]) . '"';
             } else {
                 return $matches[0];
             }

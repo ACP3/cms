@@ -4,10 +4,10 @@ imports:
   - { resource: helpers.yml }
   - { resource: validation.yml }
   - { resource: ../Core/WYSIWYG/config/services.yml }
-  - { resource: ../modules/Permissions/config/services.yml }
-  - { resource: ../modules/Seo/config/services.yml }
-  - { resource: ../modules/System/config/services.yml }
-  - { resource: ../modules/Users/config/services.yml }
+  - { resource: ../Modules/Permissions/config/services.yml }
+  - { resource: ../Modules/Seo/config/services.yml }
+  - { resource: ../Modules/System/config/services.yml }
+  - { resource: ../Modules/Users/config/services.yml }
 
 services:
   core.acl:
@@ -63,7 +63,7 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@core.lang', '@core.xml', '@system.cache.core.modules', '@system.model']
+    arguments: ['@service_container', '@core.lang', '@core.xml', '@system.cache.core.modules', '@system.model']
 
   core.modules.abstractInstaller:
     abstract: true
