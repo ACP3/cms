@@ -11,11 +11,11 @@ use ACP3\Modules\Newsletter;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Captcha
+     * @var \ACP3\Core\Validator\Rules\Captcha
      */
     protected $captchaValidator;
     /**
-     * @var Core\ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
     /**
@@ -31,24 +31,23 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var Model
+     * @var \ACP3\Modules\Guestbook\Model
      */
     protected $guestbookModel;
     /**
-     * @var Newsletter\Model
+     * @var \ACP3\Modules\Newsletter\Model
      */
     protected $newsletterModel;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\ACL $acl
-     * @param Core\Auth $auth
-     * @param Core\Date $date
-     * @param Core\Modules $modules
-     * @param Model $guestbookModel
-     * @param Newsletter\Model $newsletterModel
+     * @param \ACP3\Core\Lang                    $lang
+     * @param \ACP3\Core\Validator\Rules\Misc    $validate
+     * @param \ACP3\Core\Validator\Rules\Captcha $captchaValidator
+     * @param \ACP3\Core\ACL                     $acl
+     * @param \ACP3\Core\Auth                    $auth
+     * @param \ACP3\Core\Date                    $date
+     * @param \ACP3\Core\Modules                 $modules
+     * @param \ACP3\Modules\Guestbook\Model      $guestbookModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -58,9 +57,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Auth $auth,
         Core\Date $date,
         Core\Modules $modules,
-        Model $guestbookModel,
-        Newsletter\Model $newsletterModel
-    ) {
+        Model $guestbookModel)
+    {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
@@ -69,12 +67,24 @@ class Validator extends Core\Validator\AbstractValidator
         $this->date = $date;
         $this->modules = $modules;
         $this->guestbookModel = $guestbookModel;
+    }
+
+    /**
+     * @param \ACP3\Modules\Newsletter\Model $newsletterModel
+     *
+     * @return $this
+     */
+    public function setNewsletterModel(Newsletter\Model $newsletterModel)
+    {
         $this->newsletterModel = $newsletterModel;
+
+        return $this;
     }
 
     /**
      * @param array $formData
-     * @param $newsletterAccess
+     * @param       $newsletterAccess
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -118,6 +128,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      * @param array $settings
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -141,6 +152,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
