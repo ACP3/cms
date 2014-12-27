@@ -93,7 +93,7 @@ services:
 
   core.request:
     class: ACP3\Core\Request
-    arguments: ['@core.db', '@core.modules', '@system.config']
+    arguments: ['@core.modules', '@system.config', '@seo.model']
 
   core.router:
     class: ACP3\Core\Router
