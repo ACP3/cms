@@ -72,6 +72,9 @@ class RewriteInternalUri
             if (!empty($uriArray[2])) {
                 $path .= '/' . $uriArray[2];
             }
+            if (!empty($uriArray[3])) {
+                $path .= '/' . $uriArray[3];
+            }
 
             if ($this->modules->actionExists($path) === true) {
                 return '<a' . $matches[1] . 'href="' . $this->router->route($matches[7]) . '"';
