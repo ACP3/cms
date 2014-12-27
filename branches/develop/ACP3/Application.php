@@ -203,7 +203,11 @@ class Application
     {
         $this->_checkForMaintenanceMode();
 
+        /** @var \ACP3\Core\Request $request */
         $request = $this->container->get('core.request');
+        $request->processQuery();
+
+        /** @var \ACP3\Core\Redirect $redirect */
         $redirect = $this->container->get('core.redirect');
 
         try {

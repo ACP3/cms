@@ -16,6 +16,10 @@ class Request extends \StdClass
      */
     protected $modules;
     /**
+     * @var \ACP3\Core\Config
+     */
+    protected $systemConfig;
+    /**
      * @var \ACP3\Modules\Seo\Model
      */
     protected $seoModel;
@@ -64,20 +68,10 @@ class Request extends \StdClass
     )
     {
         $this->modules = $modules;
+        $this->systemConfig = $systemConfig;
         $this->seoModel = $seoModel;
 
         $this->_setBaseUrl();
-        $this->preprocessUriQuery();
-
-        $settings = $systemConfig->getSettings();
-
-        // Set the user defined homepage of the website
-        if ($this->query === '/' && $settings['homepage'] !== '') {
-            $this->query = $settings['homepage'];
-        }
-
-        $this->_checkForUriAlias();
-        $this->setUriParameters();
     }
 
     /**
@@ -109,7 +103,7 @@ class Request extends \StdClass
     /**
      * Grundlegende Verarbeitung der URI-Query
      */
-    protected function preprocessUriQuery()
+    public function processQuery()
     {
         $this->originalQuery = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
         $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
@@ -123,7 +117,18 @@ class Request extends \StdClass
             $this->query = substr($this->query, 4);
         } else {
             $this->area = 'frontend';
+
+            $homepage = $this->systemConfig->getSettings()['homepage'];
+
+            // Set the user defined homepage of the website
+            if ($this->query === '/' && $homepage !== '') {
+                $this->query = $homepage;
+            }
+
+            $this->_checkForUriAlias();
         }
+
+        $this->setUriParameters();
 
         return;
     }
@@ -133,13 +138,20 @@ class Request extends \StdClass
      */
     protected function _checkForUriAlias()
     {
-        if (strpos($this->query, 'minify') !== 0 && $this->area !== 'admin') {
+        if (strpos($this->query, 'minify') !== 0) {
             $probableQuery = $this->query;
             // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
             if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
                 $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+                if (isset($query[1]) === false) {
+                    $query[1] = 'index';
+                }
+                if (isset($query[2]) === false) {
+                    $query[2] = 'index';
+                }
+
                 // Keine entsprechende Module-Action gefunden -> muss Alias sein
-                if ($this->modules->actionExists($this->area . '/' . $query[0] . '/' . $query[1]) === false) {
+                if ($this->modules->actionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
                     $length = 0;
                     foreach ($query as $row) {
                         if (strpos($row, '_') === false) {
