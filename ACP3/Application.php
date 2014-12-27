@@ -68,8 +68,7 @@ class Application
     public function defineDirConstants()
     {
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-        $phpSelf = dirname(PHP_SELF);
-        define('ROOT_DIR', $phpSelf !== '/' ? $phpSelf . '/' : '/');
+        define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
         define('HOST_NAME', 'http://' . $_SERVER['HTTP_HOST']);
         define('ROOT_DIR_ABSOLUTE', HOST_NAME . ROOT_DIR);
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');

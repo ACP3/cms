@@ -54,4 +54,14 @@ class Model extends Core\Model
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
     }
+
+    /**
+     * @param $alias
+     *
+     * @return bool|string
+     */
+    public function getUriByAlias($alias)
+    {
+        return $this->db->fetchColumn('SELECT uri FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', [$alias]);
+    }
 }
