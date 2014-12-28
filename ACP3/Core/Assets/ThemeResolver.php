@@ -11,11 +11,11 @@ use ACP3\Modules\Minify;
 class ThemeResolver
 {
     /**
-     * @var Core\XML
+     * @var \ACP3\Core\XML
      */
     protected $xml;
     /**
-     * @var Minify\Cache
+     * @var \ACP3\Modules\Minify\Cache
      */
     protected $minifyCache;
     /**
@@ -36,12 +36,14 @@ class ThemeResolver
     protected $designAssetsPath = DESIGN_PATH_INTERNAL;
 
     /**
-     * @param Minify\Cache $minifyCache
+     * @param \ACP3\Core\XML             $xml
+     * @param \ACP3\Modules\Minify\Cache $minifyCache
      */
     public function __construct(
         Core\XML $xml,
         Minify\Cache $minifyCache
-    ) {
+    )
+    {
         $this->xml = $xml;
         $this->minifyCache = $minifyCache;
         $this->cachedPaths = $minifyCache->getCache();
@@ -82,9 +84,9 @@ class ThemeResolver
         // Return early, if the path has already been cached
         if (isset($this->cachedPaths[$systemAssetPath])) {
             return $this->cachedPaths[$systemAssetPath];
-        } else {
-            return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
         }
+
+        return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
     }
 
     /**
@@ -92,6 +94,7 @@ class ThemeResolver
      * @param $designPath
      * @param $dir
      * @param $file
+     *
      * @return string
      */
     private function _resolveAssetPath($modulePath, $designPath, $dir, $file)
@@ -122,32 +125,31 @@ class ThemeResolver
 
     /**
      * @param $template
+     *
      * @return string
      */
     public function resolveTemplatePath($template)
     {
         $modulesPath = '';
 
-        // If an template with directory is given, uppercase the first letter
-        if (strpos($template, '/') !== false) {
-            $template = ucfirst($template);
-
-            // Pfad zerlegen
-            $fragments = explode('/', $template);
+        // A path without any slash was given -> has to be the layout file of the current design
+        if (strpos($template, '/') === false) {
+            return $this->getStaticAssetPath($modulesPath, '', '', $template);
+        } else {
+            // Split the template path in its components
+            $fragments = explode('/', ucfirst($template));
 
             if (isset($fragments[2])) {
                 $fragments[1] = ucfirst($fragments[1]);
             }
-            $modulesPath .= $fragments[0] . '/Resources/View/' . $fragments[1];
+            $modulesPath .= $fragments[0] . '/Resources/';
+            $designPath = $fragments[0];
+            $template = $fragments[1];
             if (isset($fragments[2])) {
-                $modulesPath .= '/' . $fragments[2];
+                $template .= '/' . $fragments[2];
             }
 
-            $asset = $this->getStaticAssetPath($modulesPath, $template);
-        } else {
-            $asset = $this->getStaticAssetPath($modulesPath, '', '', $template);
+            return $this->getStaticAssetPath($modulesPath, $designPath, 'View', $template);
         }
-
-        return $asset;
     }
 }
