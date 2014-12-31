@@ -3,7 +3,9 @@
 namespace ACP3\Modules\Comments\Controller;
 
 use ACP3\Core;
+use ACP3\Modules\Captcha;
 use ACP3\Modules\Comments;
+use ACP3\Modules\Emoticons;
 
 /**
  * Class Index
@@ -16,13 +18,33 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var Core\Pagination
+     * @var \ACP3\Core\Pagination
      */
     protected $pagination;
     /**
-     * @var Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var \ACP3\Modules\Comments\Model
+     */
+    protected $commentsModel;
+    /**
+     * @var \ACP3\Modules\Comments\Validator
+     */
+    protected $commentsValidator;
+    /**
+     * @var array
+     */
+    protected $commentsSettings;
+    /**
+     * @var \ACP3\Modules\Emoticons\Helpers
+     */
+    protected $emoticonsHelpers;
+    /**
+     * @var \ACP3\Modules\Captcha\Helpers
+     */
+    protected $captchaHelpers;
     /**
      * @var string
      */
@@ -32,31 +54,25 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $entryId;
     /**
-     * @var Comments\Model
-     */
-    protected $commentsModel;
-    /**
-     * @var array
-     */
-    protected $commentsSettings;
-    /**
      * @var bool
      */
     private $emoticonsActive;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date             $date
-     * @param Core\Pagination       $pagination
-     * @param Comments\Model        $commentsModel
-     * @param Core\Config           $commentsConfig
-     * @param Core\Helpers\Secure   $secureHelper
+     * @param \ACP3\Core\Context\Frontend      $context
+     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Core\Pagination            $pagination
+     * @param \ACP3\Modules\Comments\Model     $commentsModel
+     * @param \ACP3\Modules\Comments\Validator $commentsValidator
+     * @param \ACP3\Core\Config                $commentsConfig
+     * @param \ACP3\Core\Helpers\Secure        $secureHelper
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Pagination $pagination,
         Comments\Model $commentsModel,
+        Comments\Validator $commentsValidator,
         Core\Config $commentsConfig,
         Core\Helpers\Secure $secureHelper)
     {
@@ -65,10 +81,35 @@ class Index extends Core\Modules\Controller\Frontend
         $this->date = $date;
         $this->pagination = $pagination;
         $this->commentsModel = $commentsModel;
+        $this->commentsValidator = $commentsValidator;
         $this->commentsSettings = $commentsConfig->getSettings();
         $this->secureHelper = $secureHelper;
 
-        $this->emoticonsActive = ($this->commentsSettings['emoticons'] == 1 && $this->modules->isActive('emoticons'));
+        $this->emoticonsActive = ($this->commentsSettings['emoticons'] == 1);
+    }
+
+    /**
+     * @param \ACP3\Modules\Emoticons\Helpers $emoticonsHelpers
+     *
+     * @return $this
+     */
+    public function setEmoticonsHelpers(Emoticons\Helpers $emoticonsHelpers)
+    {
+        $this->emoticonsHelpers = $emoticonsHelpers;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\Captcha\Helpers $captchaHelpers
+     *
+     * @return $this
+     */
+    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
+    {
+        $this->captchaHelpers = $captchaHelpers;
+
+        return $this;
     }
 
     /**
@@ -111,8 +152,8 @@ class Index extends Core\Modules\Controller\Frontend
                     $comments[$i]['user_id'] = 0;
                 }
                 $comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
-                if ($this->emoticonsActive === true) {
-                    $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
+                if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
+                    $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
                 }
             }
             $this->view->assign('comments', $comments);
@@ -133,9 +174,9 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         // Emoticons einbinden, falls diese aktiv sind
-        if ($this->emoticonsActive === true) {
+        if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
             // Emoticons im Formular anzeigen
-            $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
+            $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
         }
 
         $defaults = [
@@ -156,7 +197,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->view->assign('form', array_merge($defaults, $_POST));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
+            $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         $this->secureHelper->generateFormToken($this->request->query);
@@ -172,7 +213,7 @@ class Index extends Core\Modules\Controller\Frontend
         try {
             $ip = $_SERVER['REMOTE_ADDR'];
 
-            $this->get('comments.validator')->validateCreate($formData, $ip);
+            $this->commentsValidator->validateCreate($formData, $ip);
 
             $insertValues = [
                 'id' => '',
