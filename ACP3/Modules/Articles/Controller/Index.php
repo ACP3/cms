@@ -16,29 +16,35 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var Core\Pagination
+     * @var \ACP3\Core\Pagination
      */
     protected $pagination;
     /**
-     * @var Articles\Model
+     * @var \ACP3\Core\Helpers\TableOfContents
+     */
+    private $toc;
+    /**
+     * @var \ACP3\Modules\Articles\Model
      */
     protected $articlesModel;
     /**
-     * @var Articles\Cache
+     * @var \ACP3\Modules\Articles\Cache
      */
     protected $articlesCache;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date $date
-     * @param Core\Pagination $pagination
-     * @param Articles\Model $articlesModel
-     * @param Articles\Cache $articlesCache
+     * @param \ACP3\Core\Context\Frontend        $context
+     * @param \ACP3\Core\Date                    $date
+     * @param \ACP3\Core\Pagination              $pagination
+     * @param \ACP3\Core\Helpers\TableOfContents $toc
+     * @param \ACP3\Modules\Articles\Model       $articlesModel
+     * @param \ACP3\Modules\Articles\Cache       $articlesCache
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Pagination $pagination,
+        Core\Helpers\TableOfContents $toc,
         Articles\Model $articlesModel,
         Articles\Cache $articlesCache)
     {
@@ -46,6 +52,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->date = $date;
         $this->pagination = $pagination;
+        $this->toc = $toc;
         $this->articlesModel = $articlesModel;
         $this->articlesCache = $articlesCache;
     }
@@ -73,8 +80,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 
-            $toc = $this->get('core.helpers.toc');
-            $this->view->assign('page', $toc->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages()));
+            $this->view->assign('page', $this->toc->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages()));
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
