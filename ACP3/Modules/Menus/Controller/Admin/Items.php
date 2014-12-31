@@ -3,7 +3,7 @@
 namespace ACP3\Modules\Menus\Controller\Admin;
 
 use ACP3\Core;
-use ACP3\Modules\Articles\Helpers;
+use ACP3\Modules\Articles;
 use ACP3\Modules\Menus;
 
 /**
@@ -17,7 +17,7 @@ class Items extends Core\Modules\Controller\Admin
      */
     protected $aliases;
     /**
-     * @var Core\DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
@@ -25,21 +25,35 @@ class Items extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Menus\Model
+     * @var \ACP3\Modules\Menus\Model
      */
     protected $menusModel;
     /**
-     * @var Menus\Cache
+     * @var \ACP3\Modules\Menus\Cache
      */
     protected $menusCache;
+    /**
+     * @var \ACP3\Modules\Menus\Helpers
+     */
+    protected $menusHelpers;
+    /**
+     * @var \ACP3\Modules\Menus\Validator
+     */
+    protected $menusValidator;
+    /**
+     * @var \ACP3\Modules\Articles\Helpers
+     */
+    protected $articlesHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin  $context
-     * @param \ACP3\Core\Router\Aliases $aliases
-     * @param \ACP3\Core\DB             $db
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\Menus\Model $menusModel
-     * @param \ACP3\Modules\Menus\Cache $menusCache
+     * @param \ACP3\Core\Context\Admin      $context
+     * @param \ACP3\Core\Router\Aliases     $aliases
+     * @param \ACP3\Core\DB                 $db
+     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Modules\Menus\Model     $menusModel
+     * @param \ACP3\Modules\Menus\Cache     $menusCache
+     * @param \ACP3\Modules\Menus\Helpers   $menusHelpers
+     * @param \ACP3\Modules\Menus\Validator $menusValidator
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -47,7 +61,9 @@ class Items extends Core\Modules\Controller\Admin
         Core\DB $db,
         Core\Helpers\Secure $secureHelper,
         Menus\Model $menusModel,
-        Menus\Cache $menusCache)
+        Menus\Cache $menusCache,
+        Menus\Helpers $menusHelpers,
+        Menus\Validator $menusValidator)
     {
         parent::__construct($context);
 
@@ -56,6 +72,20 @@ class Items extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
+        $this->menusHelpers = $menusHelpers;
+        $this->menusValidator = $menusValidator;
+    }
+
+    /**
+     * @param \ACP3\Modules\Articles\Helpers $articlesHelpers
+     *
+     * @return $this
+     */
+    public function setArticlesHelpers(Articles\Helpers $articlesHelpers)
+    {
+        $this->articlesHelpers = $articlesHelpers;
+
+        return $this;
     }
 
     public function actionCreate()
@@ -78,7 +108,7 @@ class Items extends Core\Modules\Controller\Admin
         $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $values_mode, $lang_mode));
 
         // Menus
-        $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown());
+        $this->view->assign('blocks', $this->menusHelpers->menusDropdown());
 
         // Module
         $modules = $this->modules->getActiveModules();
@@ -95,8 +125,8 @@ class Items extends Core\Modules\Controller\Admin
         $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, 1, 'checked'));
 
-        if ($this->modules->isActive('articles') === true) {
-            $this->view->assign('articles', $this->get('articles.helpers')->articlesList());
+        if ($this->articlesHelpers) {
+            $this->view->assign('articles', $this->articlesHelpers->articlesList());
         }
 
         $defaults = [
@@ -105,7 +135,7 @@ class Items extends Core\Modules\Controller\Admin
         ];
 
         // Daten an Smarty übergeben
-        $this->view->assign('pages_list', $this->get('menus.helpers')->menuItemsList());
+        $this->view->assign('pages_list', $this->menusHelpers->menuItemsList());
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
         $this->view->assign('form', array_merge($defaults, $_POST));
 
@@ -161,7 +191,7 @@ class Items extends Core\Modules\Controller\Admin
             $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $modeValues, $modeLang, $menuItem['mode']));
 
             // Block
-            $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown($menuItem['block_id']));
+            $this->view->assign('blocks', $this->menusHelpers->menusDropdown($menuItem['block_id']));
 
             // Module
             $modules = $this->modules->getAllModules();
@@ -178,17 +208,17 @@ class Items extends Core\Modules\Controller\Admin
             $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
             $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, $menuItem['display'], 'checked'));
 
-            if ($this->modules->isActive('articles') === true) {
+            if ($this->articlesHelpers) {
                 $matches = [];
                 if (!empty($_POST) === false && $menuItem['mode'] == 4) {
                     preg_match_all(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }
 
-                $this->view->assign('articles', $this->get('articles.helpers')->articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
+                $this->view->assign('articles', $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
             }
 
             // Daten an Smarty übergeben
-            $this->view->assign('pages_list', $this->get('menus.helpers')->menuItemsList($menuItem['parent_id'], $menuItem['left_id'], $menuItem['right_id']));
+            $this->view->assign('pages_list', $this->menusHelpers->menuItemsList($menuItem['parent_id'], $menuItem['left_id'], $menuItem['right_id']));
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
             $this->view->assign('form', array_merge($menuItem, $_POST));
 
@@ -218,11 +248,7 @@ class Items extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('menus.validator');
-            if ($this->modules->isActive('articles') === true) {
-                $validator->setArticlesHelpers($this->get('articles.helpers'));
-            }
-            $validator->validateItem($formData);
+            $this->menusValidator->validateItem($formData);
 
             $insertValues = [
                 'id' => '',
@@ -231,7 +257,7 @@ class Items extends Core\Modules\Controller\Admin
                 'parent_id' => (int)$formData['parent'],
                 'display' => $formData['display'],
                 'title' => Core\Functions::strEncode($formData['title']),
-                'uri' => $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']),
+                'uri' => $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']),
                 'target' => $formData['display'] == 0 ? 1 : $formData['target'],
             ];
 
@@ -278,15 +304,11 @@ class Items extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $menuItem)
     {
         try {
-            $validator = $this->get('menus.validator');
-            if ($this->modules->isActive('articles') === true) {
-                $validator->setArticlesHelpers($this->get('articles.helpers'));
-            }
-            $validator->validateItem($formData);
+            $this->menusValidator->validateItem($formData);
 
             // Vorgenommene Änderungen am Datensatz anwenden
             $mode = ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
-            $uriType = $formData['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri'];
+            $uriType = $formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri'];
 
             $updateValues = [
                 'mode' => $mode,

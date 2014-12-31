@@ -79,7 +79,8 @@ table .sub-table-header span, table .sub-table-header div {
     margin: 0 auto 10px;
 }
 
-.dataset-box .navbar-header h2 {
+.dataset-box .navbar-brand {
+    height: auto;
     margin: 0;
 }
 
