@@ -4,6 +4,7 @@ namespace ACP3\Modules\Comments\Controller\Admin;
 
 use ACP3\Core;
 use ACP3\Modules\Comments;
+use ACP3\Modules\Emoticons;
 use ACP3\Modules\System;
 
 /**
@@ -13,9 +14,13 @@ use ACP3\Modules\System;
 class Details extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Comments\Model
+     * @var \ACP3\Modules\Comments\Model
      */
     protected $commentsModel;
+    /**
+     * @var \ACP3\Modules\Comments\Validator
+     */
+    protected $commentsValidator;
     /**
      * @var \ACP3\Core\Config
      */
@@ -28,17 +33,23 @@ class Details extends Core\Modules\Controller\Admin
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var \ACP3\Modules\Emoticons\Helpers
+     */
+    protected $emoticonsHelpers;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Comments\Model $commentsModel
-     * @param Core\Config $commentsConfig
-     * @param System\Model $systemModel
-     * @param Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Modules\Comments\Model     $commentsModel
+     * @param \ACP3\Modules\Comments\Validator $commentsValidator
+     * @param \ACP3\Core\Config                $commentsConfig
+     * @param \ACP3\Modules\System\Model       $systemModel
+     * @param \ACP3\Core\Helpers\Secure        $secureHelper
      */
     public function __construct(
         Core\Context\Admin $context,
         Comments\Model $commentsModel,
+        Comments\Validator $commentsValidator,
         Core\Config $commentsConfig,
         System\Model $systemModel,
         Core\Helpers\Secure $secureHelper)
@@ -46,9 +57,22 @@ class Details extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->commentsModel = $commentsModel;
+        $this->commentsValidator = $commentsValidator;
         $this->commentsConfig = $commentsConfig;
         $this->systemModel = $systemModel;
         $this->secureHelper = $secureHelper;
+    }
+
+    /**
+     * @param \ACP3\Modules\Emoticons\Helpers $emoticonsHelpers
+     *
+     * @return $this
+     */
+    public function setEmoticonsHelpers(Emoticons\Helpers $emoticonsHelpers)
+    {
+        $this->emoticonsHelpers = $emoticonsHelpers;
+
+        return $this;
     }
 
     public function actionDelete()
@@ -80,9 +104,9 @@ class Details extends Core\Modules\Controller\Admin
                 $this->_editPost($_POST, $comment);
             }
 
-            if ($this->modules->isActive('emoticons') === true) {
+            if ($this->emoticonsHelpers) {
                 // Emoticons im Formular anzeigen
-                $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
+                $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
             }
 
             $this->view->assign('form', array_merge($comment, $_POST));
@@ -120,14 +144,14 @@ class Details extends Core\Modules\Controller\Admin
                 $settings = $this->commentsConfig->getSettings();
 
                 // Emoticons einbinden
-                $emoticonsActive = ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
+                $emoticonsActive = ($settings['emoticons'] == 1 && $this->emoticonsHelpers);
 
                 for ($i = 0; $i < $c_comments; ++$i) {
                     if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
                         $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
                     }
                     if ($emoticonsActive === true) {
-                        $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
+                        $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
                     }
                 }
                 $this->view->assign('comments', $comments);
@@ -143,8 +167,7 @@ class Details extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $comment)
     {
         try {
-            $validator = $this->get('comments.validator');
-            $validator->validateEdit($formData);
+            $this->commentsValidator->validateEdit($formData);
 
             $updateValues = [];
             $updateValues['message'] = Core\Functions::strEncode($formData['message']);
