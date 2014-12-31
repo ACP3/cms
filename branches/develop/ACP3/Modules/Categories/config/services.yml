@@ -1,7 +1,7 @@
 services:
   categories.controller.admin.index:
     class: ACP3\Modules\Categories\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@categories.model', '@categories.config', '@categories.cache', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@categories.model', '@categories.config', '@categories.cache', '@categories.validator', '@core.helpers.secure']
 
   categories.config:
     class: ACP3\Core\Config
