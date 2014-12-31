@@ -14,9 +14,9 @@ class Helpers
      */
     protected $modules;
     /**
-     * @var Model
+     * @var \ACP3\Modules\Comments\Model
      */
-    protected $comentsModel;
+    protected $commentsModel;
 
     /**
      * @param \ACP3\Core\Modules           $modules
@@ -27,7 +27,7 @@ class Helpers
         Model $commentsModel)
     {
         $this->modules = $modules;
-        $this->comentsModel = $commentsModel;
+        $this->commentsModel = $commentsModel;
     }
 
     /**
@@ -40,7 +40,7 @@ class Helpers
      */
     public function commentsCount($moduleName, $resultId)
     {
-        return $this->comentsModel->countAllByModule($this->modules->getModuleId($moduleName), $resultId);
+        return $this->commentsModel->countAllByModule($this->modules->getModuleId($moduleName), $resultId);
     }
 
     /**
@@ -51,6 +51,6 @@ class Helpers
      */
     public function deleteCommentsByModuleAndResult($moduleId, $resultId)
     {
-        return $this->comentsModel->delete(['module_id' => $moduleId, 'entry_id' => $resultId]);
+        return $this->commentsModel->delete(['module_id' => $moduleId, 'entry_id' => $resultId]);
     }
 }
