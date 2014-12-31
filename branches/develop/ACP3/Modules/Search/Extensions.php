@@ -36,7 +36,7 @@ class Extensions
     protected $time;
 
     /**
-     * @var Container
+     * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
     /**

@@ -11,22 +11,22 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var Core\ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
     /**
-     * @var Core\Helpers\Forms
+     * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
 
     /**
-     * @param Core\ACL $acl
-     * @param Core\Modules $modules
-     * @param Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\ACL           $acl
+     * @param \ACP3\Core\Modules       $modules
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      */
     public function __construct(
         Core\ACL $acl,

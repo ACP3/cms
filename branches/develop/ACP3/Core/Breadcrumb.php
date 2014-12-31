@@ -3,8 +3,7 @@ namespace ACP3\Core;
 
 /**
  * Generates the breadcrumb and page title
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class Breadcrumb
 {
@@ -13,7 +12,6 @@ class Breadcrumb
      * welche sich aus der Navigationsstruktur der Website ergeben
      *
      * @var array
-     * @access private
      */
     protected $stepsFromDb = [];
     /**
@@ -21,7 +19,6 @@ class Breadcrumb
      * welche von den Modulen festgelegt werden
      *
      * @var array
-     * @access private
      */
     protected $stepsFromModules = [];
 
@@ -58,6 +55,15 @@ class Breadcrumb
      */
     protected $seoConfig = [];
 
+    /**
+     * @param \ACP3\Core\DB      $db
+     * @param \ACP3\Core\Lang    $lang
+     * @param \ACP3\Core\Request $request
+     * @param \ACP3\Core\Router  $router
+     * @param \ACP3\Core\Config  $seoConfig
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function __construct(
         DB $db,
         Lang $lang,

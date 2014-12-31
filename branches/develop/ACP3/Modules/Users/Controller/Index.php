@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Users\Controller;
 
 use ACP3\Core;
+use ACP3\Modules\Captcha;
 use ACP3\Modules\Users;
 use ACP3\Modules\Permissions;
 
@@ -13,33 +14,45 @@ use ACP3\Modules\Permissions;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
-     * @var Core\Pagination
+     * @var \ACP3\Core\Pagination
      */
     protected $pagination;
     /**
-     * @var Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
     /**
-     * @var Users\Model
+     * @var \ACP3\Modules\Users\Model
      */
     protected $usersModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Modules\Users\Validator
+     */
+    protected $usersValidator;
+    /**
+     * @var \ACP3\Core\Config
      */
     protected $usersConfig;
     /**
-     * @var Permissions\Model
+     * @var \ACP3\Modules\Permissions\Model
      */
     protected $permissionsModel;
     /**
      * @var \ACP3\Core\Config
      */
     protected $seoConfig;
+    /**
+     * @var \ACP3\Core\Helpers\SendEmail
+     */
+    protected $sendEmail;
+    /**
+     * @var \ACP3\Modules\Captcha\Helpers
+     */
+    protected $captchaHelpers;
 
     /**
      * @param \ACP3\Core\Context\Frontend     $context
@@ -47,9 +60,11 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Pagination           $pagination
      * @param \ACP3\Core\Helpers\Secure       $secureHelper
      * @param \ACP3\Modules\Users\Model       $usersModel
+     * @param \ACP3\Modules\Users\Validator   $usersValidator
      * @param \ACP3\Core\Config               $usersConfig
      * @param \ACP3\Modules\Permissions\Model $permissionsModel
      * @param \ACP3\Core\Config               $seoConfig
+     * @param \ACP3\Core\Helpers\SendEmail    $sendEmail
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -57,9 +72,11 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
+        Users\Validator $usersValidator,
         Core\Config $usersConfig,
         Permissions\Model $permissionsModel,
-        Core\Config $seoConfig)
+        Core\Config $seoConfig,
+        Core\Helpers\SendEmail $sendEmail)
     {
         parent::__construct($context);
 
@@ -67,9 +84,23 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
+        $this->usersValidator = $usersValidator;
         $this->usersConfig = $usersConfig;
         $this->permissionsModel = $permissionsModel;
         $this->seoConfig = $seoConfig;
+        $this->sendEmail = $sendEmail;
+    }
+
+    /**
+     * @param \ACP3\Modules\Captcha\Helpers $captchaHelprs
+     *
+     * @return $this
+     */
+    public function setCaptchaHelpers(Captcha\Helpers $captchaHelprs)
+    {
+        $this->captchaHelpers = $captchaHelprs;
+
+        return $this;
     }
 
     public function actionForgotPwd()
@@ -84,7 +115,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('form', array_merge(['nick_mail' => ''], $_POST));
 
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-                $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
+                $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
             $this->secureHelper->generateFormToken($this->request->query);
@@ -125,8 +156,7 @@ class Index extends Core\Modules\Controller\Frontend
                     $this->redirect()->toNewPage(ROOT_DIR);
                 }
             } else {
-                $alerts = $this->get('core.helpers.alerts');
-                $this->view->assign('error_msg', $alerts->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
+                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
             }
         }
     }
@@ -166,7 +196,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('form', array_merge($defaults, $_POST));
 
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-                $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
+                $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
             $this->secureHelper->generateFormToken($this->request->query);
@@ -191,8 +221,7 @@ class Index extends Core\Modules\Controller\Frontend
     private function _forgotPasswordPost(array $formData)
     {
         try {
-            $validator = $this->get('users.validator');
-            $validator->validateForgotPassword($formData);
+            $this->usersValidator->validateForgotPassword($formData);
 
             // Neues Passwort und neuen Zufallsschlüssel erstellen
             $newPassword = $this->secureHelper->salt(8);
@@ -214,7 +243,7 @@ class Index extends Core\Modules\Controller\Frontend
             $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
             $settings = $this->usersConfig->getSettings();
-            $mailIsSent = $this->get('core.helpers.sendEmail')->execute(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
+            $mailIsSent = $this->sendEmail->execute(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
             // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
             if ($mailIsSent === true) {
@@ -239,8 +268,7 @@ class Index extends Core\Modules\Controller\Frontend
     private function _registerPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('users.validator');
-            $validator->validateRegistration($formData);
+            $this->usersValidator->validateRegistration($formData);
 
             $systemSettings = $this->systemConfig->getSettings();
             $seoSettings = $this->seoConfig->getSettings();
@@ -257,7 +285,7 @@ class Index extends Core\Modules\Controller\Frontend
                 [$formData['nickname'], $formData['mail'], $formData['pwd'], $seoSettings['title'], $host],
                 $this->lang->t('users', 'register_mail_message')
             );
-            $mailIsSent = $this->get('core.helpers.sendEmail')->execute('', $formData['mail'], $settings['mail'], $subject, $body);
+            $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
             $salt = $this->secureHelper->salt(12);
             $insertValues = [

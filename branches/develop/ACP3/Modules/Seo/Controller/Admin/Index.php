@@ -20,27 +20,33 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $seoCache;
     /**
-     * @var Core\Config
+     * @var \ACP3\Core\Config
      */
     protected $seoConfig;
     /**
-     * @var Seo\Model
+     * @var \ACP3\Modules\Seo\Model
      */
     protected $seoModel;
+    /**
+     * @var \ACP3\Modules\Seo\Validator
+     */
+    protected $seoValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin  $context
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\Seo\Cache   $seoCache
-     * @param \ACP3\Core\Config         $seoConfig
-     * @param \ACP3\Modules\Seo\Model   $seoModel
+     * @param \ACP3\Core\Context\Admin    $context
+     * @param \ACP3\Core\Helpers\Secure   $secureHelper
+     * @param \ACP3\Modules\Seo\Cache     $seoCache
+     * @param \ACP3\Core\Config           $seoConfig
+     * @param \ACP3\Modules\Seo\Model     $seoModel
+     * @param \ACP3\Modules\Seo\Validator $seoValidator
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
         Seo\Cache $seoCache,
         Core\Config $seoConfig,
-        Seo\Model $seoModel)
+        Seo\Model $seoModel,
+        Seo\Validator $seoValidator)
     {
         parent::__construct($context);
 
@@ -48,6 +54,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->seoCache = $seoCache;
         $this->seoConfig = $seoConfig;
         $this->seoModel = $seoModel;
+        $this->seoValidator = $seoValidator;
     }
 
     public function actionCreate()
@@ -74,7 +81,7 @@ class Index extends Core\Modules\Controller\Admin
                 $bool = $this->seoModel->delete($item);
             }
 
-            $this->seo->setCache();
+            $this->seoCache->setCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/seo');
         } elseif (is_string($items)) {
@@ -126,7 +133,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $this->get('seo.validator')->validate($formData);
+            $this->seoValidator->validate($formData);
 
             $bool = $this->seo->insertUriAlias(
                 $formData['uri'],
@@ -153,7 +160,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, $path)
     {
         try {
-            $this->get('seo.validator')->validate($formData, $path);
+            $this->seoValidator->validate($formData, $path);
 
             $updateValues = [
                 'uri' => $formData['uri'],
@@ -209,7 +216,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _settingsPost(array $formData)
     {
         try {
-            $this->get('seo.validator')->validateSettings($formData);
+            $this->seoValidator->validateSettings($formData);
 
             // Config aktualisieren
             $data = [

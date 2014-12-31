@@ -15,18 +15,39 @@ class Index extends Core\Modules\Controller\Frontend
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var \ACP3\Modules\Search\Helpers
+     */
+    protected $searchHelpers;
+    /**
+     * @var \ACP3\Modules\Search\Validator
+     */
+    protected $searchValidator;
+    /**
+     * @var \ACP3\Modules\Search\Extensions
+     */
+    protected $searchExtensions;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Context\Frontend     $context
+     * @param \ACP3\Core\Helpers\Secure       $secureHelper
+     * @param \ACP3\Modules\Search\Helpers    $searchHelpers
+     * @param \ACP3\Modules\Search\Validator  $searchValidator
+     * @param \ACP3\Modules\Search\Extensions $searchExtensions
      */
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Helpers\Secure $secureHelper)
+        Core\Helpers\Secure $secureHelper,
+        Search\Helpers $searchHelpers,
+        Search\Validator $searchValidator,
+        Search\Extensions $searchExtensions)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
+        $this->searchHelpers = $searchHelpers;
+        $this->searchValidator = $searchValidator;
+        $this->searchExtensions = $searchExtensions;
     }
 
     public function actionIndex()
@@ -37,7 +58,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge(['search_term' => ''], $_POST));
 
-        $this->view->assign('search_mods', $this->get('search.helpers')->getModules());
+        $this->view->assign('search_mods', $this->searchHelpers->getModules());
 
         // Zu durchsuchende Bereiche
         $langSearchAreas = [
@@ -69,15 +90,14 @@ class Index extends Core\Modules\Controller\Frontend
         $searchResults = [];
         foreach ($modules as $module) {
             $action = $module . 'Search';
-            if (method_exists($this->get('search.extensions'), $action) &&
+            if (method_exists($this->searchExtensions, $action) &&
                 $this->acl->hasPermission('frontend/' . $module) === true
             ) {
-                $results = $this->get('search.extensions');
-                $results
+                $this->searchExtensions
                     ->setArea($area)
                     ->setSort($sort)
                     ->setSearchTerm($searchTerm);
-                $searchResults = array_merge($searchResults, $results->$action());
+                $searchResults = array_merge($searchResults, $this->searchExtensions->$action());
             }
         }
         if (!empty($searchResults)) {
@@ -96,8 +116,7 @@ class Index extends Core\Modules\Controller\Frontend
     private function _indexPost(array $formData)
     {
         try {
-            $validator = $this->get('search.validator');
-            $validator->validate($formData);
+            $this->searchValidator->validate($formData);
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
