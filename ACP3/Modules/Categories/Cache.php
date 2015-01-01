@@ -7,16 +7,12 @@ use ACP3\Core;
  * Class Cache
  * @package ACP3\Modules\Categories
  */
-class Cache
+class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
      * @var Model
      */
     protected $categoriesModel;
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    protected $cache;
 
     /**
      * @param Core\Cache $cache
@@ -26,8 +22,9 @@ class Cache
         Core\Cache $cache,
         Model $categoriesModel
     ) {
+        parent::__construct($cache);
+
         $this->categoriesModel = $categoriesModel;
-        $this->cache = $cache;
     }
 
     /**

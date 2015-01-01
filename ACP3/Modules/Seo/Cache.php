@@ -7,26 +7,23 @@ use ACP3\Core;
  * Class Cache
  * @package ACP3\Modules\Seo
  */
-class Cache
+class Cache extends Core\Modules\AbstractCacheStorage
 {
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    protected $seoCache;
     /**
      * @var \ACP3\Modules\Seo\Model
      */
     protected $seoModel;
 
     /**
-     * @param \ACP3\Core\Cache        $seoCache
+     * @param \ACP3\Core\Cache        $cache
      * @param \ACP3\Modules\Seo\Model $seoModel
      */
     public function __construct(
-        Core\Cache $seoCache,
+        Core\Cache $cache,
         Model $seoModel)
     {
-        $this->seoCache = $seoCache;
+        parent::__construct($cache);
+
         $this->seoModel = $seoModel;
     }
 
@@ -37,11 +34,11 @@ class Cache
      */
     public function getCache()
     {
-        if ($this->seoCache->contains('seo') === false) {
+        if ($this->cache->contains('seo') === false) {
             $this->setCache();
         }
 
-        return $this->seoCache->fetch('seo');
+        return $this->cache->fetch('seo');
     }
 
     /**
@@ -64,6 +61,6 @@ class Cache
             ];
         }
 
-        return $this->seoCache->save('seo', $data);
+        return $this->cache->save('seo', $data);
     }
 }

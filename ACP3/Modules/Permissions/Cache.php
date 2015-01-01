@@ -7,16 +7,12 @@ use ACP3\Core;
  * Class Cache
  * @package ACP3\Modules\Permissions
  */
-class Cache
+class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID_RESOURCES = 'resources';
     const CACHE_ID_ROLES = 'roles';
     const CACHE_ID_RULES = 'rules_';
 
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    protected $cache;
     /**
      * @var Model
      */
@@ -30,7 +26,8 @@ class Cache
         Core\Cache $cache,
         Model $permissionsModel
     ) {
-        $this->cache = $cache;
+        parent::__construct($cache);
+
         $this->permissionsModel = $permissionsModel;
     }
 
@@ -156,7 +153,7 @@ class Cache
                 'id' => $rules[$i]['privilege_id'],
                 'description' => $rules[$i]['description'],
                 'permission' => $rules[$i]['permission'],
-                'access' => $rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->_getPermissionValue($key, $rules[$i]['role_id']) == 1) ? true : false,
+                'access' => ($rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->_getPermissionValue($key, $rules[$i]['role_id']) == 1)),
             ];
         }
 

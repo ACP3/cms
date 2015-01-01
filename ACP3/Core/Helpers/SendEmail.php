@@ -10,12 +10,12 @@ use ACP3\Core;
 class SendEmail
 {
     /**
-     * @var Core\Mailer
+     * @var \ACP3\Core\Mailer
      */
     protected $mailer;
 
     /**
-     * @param Core\Mailer $mailer
+     * @param \ACP3\Core\Mailer $mailer
      */
     public function __construct(Core\Mailer $mailer)
     {

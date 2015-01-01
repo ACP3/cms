@@ -65,13 +65,18 @@
 }
 
 /* Datensätze */
-table .sub-table-header {
+.table .sub-table-header {
     background: #f6f6f6;
     line-height: 26px;
     font-weight: bold;
 }
 
-table .sub-table-header span, table .sub-table-header div {
+.table .sub-table-header.has-buttons {
+    line-height: 30px;
+}
+
+.table .sub-table-header span,
+.table .sub-table-header div {
     font-weight: normal;
 }
 
@@ -79,8 +84,15 @@ table .sub-table-header span, table .sub-table-header div {
     margin: 0 auto 10px;
 }
 
-.dataset-box .navbar-header h2 {
+.dataset-box .navbar-brand {
+    height: auto;
     margin: 0;
+}
+
+.dataset-box small.navbar-text,
+.dataset-box .small.navbar-text {
+    margin-top: 17px;
+    margin-bottom: 16px;
 }
 
 .dataset-box .content {

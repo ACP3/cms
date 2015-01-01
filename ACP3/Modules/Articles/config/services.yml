@@ -1,14 +1,14 @@
 services:
   articles.controller.admin.index:
     class: ACP3\Modules\Articles\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.db', '@articles.model', '@articles.cache', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@core.date', '@core.db', '@articles.model', '@articles.cache', '@articles.validator', '@core.helpers.secure']
     calls:
       - ['setMenusCache', ['@?menus.cache']]
       - ['setMenusModel', ['@?menus.model']]
 
   articles.controller.frontend.index:
     class: ACP3\Modules\Articles\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@articles.model', '@articles.cache']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.toc', '@articles.model', '@articles.cache']
 
   articles.controller.sidebar.index:
     class: ACP3\Modules\Articles\Controller\Sidebar\Index

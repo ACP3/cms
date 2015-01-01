@@ -12,23 +12,30 @@ use ACP3\Modules\Contact;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
+     * @var \ACP3\Modules\Contact\Validator
+     */
+    protected $contactValidator;
+    /**
      * @var \ACP3\Core\Config
      */
     protected $contactConfig;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Core\Config $contactConfig
+     * @param \ACP3\Core\Context\Admin        $context
+     * @param \ACP3\Core\Helpers\Secure       $secureHelper
+     * @param \ACP3\Modules\Contact\Validator $contactValidator
+     * @param \ACP3\Core\Config               $contactConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
+        Contact\Validator $contactValidator,
         Core\Config $contactConfig)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
+        $this->contactValidator = $contactValidator;
         $this->contactConfig = $contactConfig;
     }
 
@@ -51,8 +58,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _indexPost(array $formData)
     {
         try {
-            $validator = $this->get('contact.validator');
-            $validator->validateSettings($formData);
+            $this->contactValidator->validateSettings($formData);
 
             $data = [
                 'address' => Core\Functions::strEncode($formData['address'], true),

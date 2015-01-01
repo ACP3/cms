@@ -10,7 +10,7 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var Core\Auth
+     * @var \ACP3\Core\Auth
      */
     protected $auth;
     /**
@@ -18,24 +18,24 @@ class Helpers
      */
     protected $secureHelper;
     /**
-     * @var Core\Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
     /**
-     * @var Core\Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var Core\View
+     * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * @param Core\Auth $auth
-     * @param Core\Request $request
-     * @param Core\Router $router
-     * @param Core\View $view
-     * @param Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Auth           $auth
+     * @param \ACP3\Core\Request        $request
+     * @param \ACP3\Core\Router         $router
+     * @param \ACP3\Core\View           $view
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
      */
     public function __construct(
         Core\Auth $auth,

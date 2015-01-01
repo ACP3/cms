@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Newsletter\Controller;
 
 use ACP3\Core;
+use ACP3\Modules\Captcha;
 use ACP3\Modules\Newsletter;
 
 /**
@@ -12,42 +13,71 @@ use ACP3\Modules\Newsletter;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
     /**
-     * @var Newsletter\Model
+     * @var \ACP3\Modules\Newsletter\Helpers
+     */
+    protected $newsletterHelpers;
+    /**
+     * @var \ACP3\Modules\Newsletter\Model
      */
     protected $newsletterModel;
+    /**
+     * @var \ACP3\Modules\Newsletter\Validator
+     */
+    protected $newsletterValidator;
+    /**
+     * @var \ACP3\Modules\Captcha\Helpers
+     */
+    protected $captchaHelpers;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Newsletter\Model $newsletterModel
+     * @param \ACP3\Core\Context\Frontend        $context
+     * @param \ACP3\Core\Helpers\Secure          $secureHelper
+     * @param \ACP3\Modules\Newsletter\Helpers   $newsletterHelpers
+     * @param \ACP3\Modules\Newsletter\Model     $newsletterModel
+     * @param \ACP3\Modules\Newsletter\Validator $newsletterValidator
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Helpers\Secure $secureHelper,
-        Newsletter\Model $newsletterModel)
+        Newsletter\Helpers $newsletterHelpers,
+        Newsletter\Model $newsletterModel,
+        Newsletter\Validator $newsletterValidator)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
+        $this->newsletterHelpers = $newsletterHelpers;
         $this->newsletterModel = $newsletterModel;
+        $this->newsletterValidator = $newsletterValidator;
+    }
+
+    /**
+     * @param \ACP3\Modules\Captcha\Helpers $captchaHelpers
+     *
+     * @return $this
+     */
+    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
+    {
+        $this->captchaHelpers = $captchaHelpers;
+
+        return $this;
     }
 
     public function actionActivate()
     {
         try {
             $mail = $hash = '';
-            if ($this->get('core.validator.rules.misc')->email($this->request->mail) && $this->get('core.validator.rules.misc')->isMD5($this->request->hash)) {
+            if ($this->get('core.validator.rules.misc')->email($this->request->mail) &&
+                $this->get('core.validator.rules.misc')->isMD5($this->request->hash)) {
                 $mail = $this->request->mail;
                 $hash = $this->request->hash;
             }
 
-            /** @var \ACP3\Modules\Newsletter\Validator $validator */
-            $validator = $this->get('newsletter.validator');
-            $validator->validateActivate($mail, $hash);
+            $this->newsletterValidator->validateActivate($mail, $hash);
 
             $bool = $this->newsletterModel->update(['hash' => ''], ['mail' => $mail, 'hash' => $hash], Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
@@ -74,7 +104,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->view->assign('actions', $this->get('core.helpers.forms')->selectGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $field_value, 'checked'));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
+            $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         $this->secureHelper->generateFormToken($this->request->query);
@@ -87,19 +117,18 @@ class Index extends Core\Modules\Controller\Frontend
     private function _indexPost(array $formData)
     {
         try {
-            $validator = $this->get('newsletter.validator');
             switch ($this->request->action) {
                 case 'subscribe':
-                    $validator->validateSubscribe($formData);
+                    $this->newsletterValidator->validateSubscribe($formData);
 
-                    $bool = $this->get('newsletter.helpers')->subscribeToNewsletter($formData['mail']);
+                    $bool = $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
                     $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                     break;
                 case 'unsubscribe':
-                    $validator->validateUnsubscribe($formData);
+                    $this->newsletterValidator->validateUnsubscribe($formData);
 
                     $bool = $this->newsletterModel->delete($formData['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 

@@ -11,15 +11,15 @@ use ACP3\Modules\Articles;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Router\Aliases
+     * @var \ACP3\Core\Validator\Rules\Router\Aliases
      */
     protected $aliasesValidator;
     /**
-     * @var Core\Validator\Rules\Router
+     * @var \ACP3\Core\Validator\Rules\Router
      */
     protected $routerValidator;
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
     /**
@@ -27,21 +27,21 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $request;
     /**
-     * @var Model
+     * @var \ACP3\Modules\Menus\Model
      */
-    protected $menuModel;
+    protected $menusModel;
     /**
      * @var Articles\Helpers
      */
     protected $articlesHelpers;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
-     * @param Core\Validator\Rules\Router $routerValidator
-     * @param Core\Modules $modules
-     * @param Model $menuModel
+     * @param \ACP3\Core\Lang                           $lang
+     * @param \ACP3\Core\Validator\Rules\Misc           $validate
+     * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasesValidator
+     * @param \ACP3\Core\Validator\Rules\Router         $routerValidator
+     * @param \ACP3\Core\Modules                        $modules
+     * @param \ACP3\Modules\Menus\Model                 $menusModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -49,14 +49,14 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
-        Model $menuModel
+        Model $menusModel
     ) {
         parent::__construct($lang, $validate);
 
         $this->aliasesValidator = $aliasesValidator;
         $this->routerValidator = $routerValidator;
         $this->modules = $modules;
-        $this->menuModel = $menuModel;
+        $this->menusModel = $menusModel;
     }
 
     /**
@@ -84,7 +84,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
             $this->errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
         }
-        if (!isset($this->errors) && $this->menuModel->menuExistsByName($formData['index_name'], $menuId) === true) {
+        if (!isset($this->errors) && $this->menusModel->menuExistsByName($formData['index_name'], $menuId) === true) {
             $this->errors['index-name'] = $this->lang->t('menus', 'index_name_unique');
         }
         if (strlen($formData['title']) < 3) {
@@ -118,7 +118,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === true) {
             // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-            $parentBlock = $this->menuModel->getMenuItemBlockIdById($formData['parent']);
+            $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent']);
             if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
                 $this->errors['parent'] = $this->lang->t('menus', 'superior_page_not_allowed');
             }

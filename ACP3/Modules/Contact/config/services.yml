@@ -1,11 +1,13 @@
 services:
   contact.controller.admin.index:
     class: ACP3\Modules\Contact\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.helpers.secure', '@contact.config']
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@contact.validator', '@contact.config']
 
   contact.controller.frontend.index:
     class: ACP3\Modules\Contact\Controller\Index
-    arguments: ['@core.context.frontend', '@core.helpers.secure', '@contact.config', '@seo.config']
+    arguments: ['@core.context.frontend', '@core.helpers.secure', '@core.helpers.sendEmail', '@contact.validator', '@contact.config', '@seo.config']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   contact.controller.sidebar.index:
     class: ACP3\Modules\Contact\Controller\Sidebar\Index

@@ -12,34 +12,40 @@ use ACP3\Modules\Users;
 class Account extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
-     * @var Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
     /**
-     * @var Users\Model
+     * @var \ACP3\Modules\Users\Model
      */
     protected $usersModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Modules\Users\Validator
+     */
+    protected $usersValidator;
+    /**
+     * @var \ACP3\Core\Config
      */
     protected $usersConfig;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Users\Model $usersModel
-     * @param Core\Config $usersConfig
+     * @param \ACP3\Core\Context\Frontend   $context
+     * @param \ACP3\Core\Date               $date
+     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Modules\Users\Model     $usersModel
+     * @param \ACP3\Modules\Users\Validator $usersValidator
+     * @param \ACP3\Core\Config             $usersConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
+        Users\Validator $usersValidator,
         Core\Config $usersConfig)
     {
         parent::__construct($context);
@@ -47,6 +53,7 @@ class Account extends Core\Modules\Controller\Frontend
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
+        $this->usersValidator = $usersValidator;
         $this->usersConfig = $usersConfig;
     }
 
@@ -177,8 +184,7 @@ class Account extends Core\Modules\Controller\Frontend
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('users.validator');
-            $validator->validateEditProfile($formData);
+            $this->usersValidator->validateEditProfile($formData);
 
             $updateValues = [
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
@@ -223,8 +229,7 @@ class Account extends Core\Modules\Controller\Frontend
     private function _settingsPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('users.validator');
-            $validator->validateUserSettings($formData, $settings);
+            $this->usersValidator->validateUserSettings($formData, $settings);
 
             $updateValues = [
                 'mail_display' => (int)$formData['mail_display'],

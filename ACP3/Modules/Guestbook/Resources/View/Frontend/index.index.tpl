@@ -23,7 +23,7 @@
             <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
                 <header class="navbar navbar-default">
                     <div class="navbar-header">
-                        <strong class="navbar-brand">
+                        <strong class="navbar-text">
                             {if !empty($row.user_id) && !empty($row.user_id_real)}
                                 <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
                             {else}
@@ -31,9 +31,7 @@
                             {/if}
                         </strong>
                     </div>
-                    <small class="navbar-text pull-right">
-                        <time datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
-                    </small>
+                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
                 </header>
                 <div class="content">
                     <div class="pull-right">

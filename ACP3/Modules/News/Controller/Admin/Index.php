@@ -146,16 +146,14 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->request->action === 'confirmed') {
             $bool = false;
-            $commentsInstalled = $this->modules->isInstalled('comments');
-            $cache = $this->get('news.cache.core');
 
             foreach ($items as $item) {
                 $bool = $this->newsModel->delete($item);
-                if ($commentsInstalled === true) {
+                if ($this->commentsHelpers) {
                     $this->commentsHelpers->deleteCommentsByModuleAndResult('news', $item);
                 }
 
-                $cache->delete(News\Cache::CACHE_ID . $item);
+                $this->newsCache->getCacheDriver()->delete(News\Cache::CACHE_ID . $item);
                 $this->seo->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
             }
 

@@ -23,24 +23,31 @@ class Index extends Core\Modules\Controller\Admin
      * @var Polls\Model
      */
     protected $pollsModel;
+    /**
+     * @var \ACP3\Modules\Polls\Validator
+     */
+    protected $pollsValidator;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Polls\Model $pollsModel
+     * @param \ACP3\Core\Context\Admin      $context
+     * @param \ACP3\Core\Date               $date
+     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Modules\Polls\Model     $pollsModel
+     * @param \ACP3\Modules\Polls\Validator $pollsValidator
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
-        Polls\Model $pollsModel)
+        Polls\Model $pollsModel,
+        Polls\Validator $pollsValidator)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->pollsModel = $pollsModel;
+        $this->pollsValidator = $pollsValidator;
     }
 
     public function actionCreate()
@@ -180,8 +187,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('polls.validator');
-            $validator->validateCreate($formData);
+            $this->pollsValidator->validateCreate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -224,8 +230,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $validator = $this->get('polls.validator');
-            $validator->validateEdit($formData);
+            $this->pollsValidator->validateEdit($formData);
 
             // Frage aktualisieren
             $updateValues = [

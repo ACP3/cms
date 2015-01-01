@@ -12,7 +12,7 @@ use ACP3\Modules\Menus;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
@@ -20,34 +20,48 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Menus\Model
+     * @var \ACP3\Modules\Menus\Helpers
+     */
+    protected $menusHelpers;
+    /**
+     * @var \ACP3\Modules\Menus\Model
      */
     protected $menusModel;
     /**
-     * @var Menus\Cache
+     * @var \ACP3\Modules\Menus\Cache
      */
     protected $menusCache;
+    /**
+     * @var \ACP3\Modules\Menus\Validator
+     */
+    protected $menusValidator;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\DB $db
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Menus\Model $menusModel
-     * @param Menus\Cache $menusCache
+     * @param \ACP3\Core\Context\Admin      $context
+     * @param \ACP3\Core\DB                 $db
+     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Modules\Menus\Helpers   $menusHelpers
+     * @param \ACP3\Modules\Menus\Model     $menusModel
+     * @param \ACP3\Modules\Menus\Cache     $menusCache
+     * @param \ACP3\Modules\Menus\Validator $menusValidator
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\DB $db,
         Core\Helpers\Secure $secureHelper,
+        Menus\Helpers $menusHelpers,
         Menus\Model $menusModel,
-        Menus\Cache $menusCache)
+        Menus\Cache $menusCache,
+        Menus\Validator $menusValidator)
     {
         parent::__construct($context);
 
         $this->db = $db;
         $this->secureHelper = $secureHelper;
+        $this->menusHelpers = $menusHelpers;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
+        $this->menusValidator = $menusValidator;
     }
 
     public function actionCreate()
@@ -68,7 +82,6 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $cache = $this->get('menus.cache.core');
 
             foreach ($items as $item) {
                 if (!empty($item) && $this->menusModel->menuExists($item) === true) {
@@ -80,7 +93,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $block = $this->menusModel->getMenuNameById($item);
                     $bool = $this->menusModel->delete($item);
-                    $cache->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
+                    $this->menusCache->getCacheDriver()->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
                 }
             }
 
@@ -123,7 +136,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('can_edit', $this->acl->hasPermission('admin/menus/index/edit'));
             $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
 
-            $pagesList = $this->get('menus.helpers')->menuItemsList();
+            $pagesList = $this->menusHelpers->menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {
                 if (isset($pagesList[$menus[$i]['index_name']]) === false) {
                     $pagesList[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
@@ -141,7 +154,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $this->get('menus.validator')->validate($formData);
+            $this->menusValidator->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -167,7 +180,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $this->get('menus.validator')->validate($formData, (int) $this->request->id);
+            $this->menusValidator->validate($formData, (int) $this->request->id);
 
             $updateValues = [
                 'index_name' => $formData['index_name'],

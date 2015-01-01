@@ -12,19 +12,15 @@ use ACP3\Modules\Gallery;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
-     * @var Gallery\Model
+     * @var \ACP3\Modules\Gallery\Model
      */
     protected $galleryModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Core\Config
      */
     protected $galleryConfig;
 

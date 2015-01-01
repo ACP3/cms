@@ -12,7 +12,7 @@ use ACP3\Modules\System;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -20,26 +20,32 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var System\Model
+     * @var \ACP3\Modules\System\Model
      */
     protected $systemModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Modules\System\Validator
+     */
+    protected $systemValidator;
+    /**
+     * @var \ACP3\Core\Config
      */
     protected $systemConfig;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param System\Model $systemModel
-     * @param Core\Config $systemConfig
+     * @param \ACP3\Core\Context\Admin       $context
+     * @param \ACP3\Core\Date                $date
+     * @param \ACP3\Core\Helpers\Secure      $secureHelper
+     * @param \ACP3\Modules\System\Model     $systemModel
+     * @param \ACP3\Modules\System\Validator $systemValidator
+     * @param \ACP3\Core\Config              $systemConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         System\Model $systemModel,
+        System\Validator $systemValidator,
         Core\Config $systemConfig)
     {
         parent::__construct($context);
@@ -47,6 +53,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->systemModel = $systemModel;
+        $this->systemValidator = $systemValidator;
         $this->systemConfig = $systemConfig;
     }
 
@@ -121,7 +128,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _configurationPost(array $formData)
     {
         try {
-            $this->get('system.validator')->validateSettings($formData);
+            $this->systemValidator->validateSettings($formData);
 
             // Config aktualisieren
             $data = [

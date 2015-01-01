@@ -26,9 +26,7 @@
                     <div class="navbar-header">
                         <h2 class="navbar-brand"><a href="{uri args="news/index/details/id_`$row.id`"}">{$row.title}</a></h2>
                     </div>
-                    <small class="navbar-text pull-right">
-                        <time datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
-                    </small>
+                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
                 </header>
                 <div class="content">
                     {$row.text|rewrite_uri}
