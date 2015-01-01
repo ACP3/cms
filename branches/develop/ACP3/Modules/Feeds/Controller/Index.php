@@ -62,12 +62,11 @@ class Index extends Core\Modules\Controller\Frontend
         if ($this->acl->hasPermission('frontend/' . $this->request->feed) === true &&
             method_exists($this->feedsExtensions, $action) === true
         ) {
-            $settings = $this->feedsConfig->getSettings();
-
-            $this->feedsExtensions->$action();
+            $items = $this->feedsExtensions->$action();
+            $this->view->assign($items);
 
             $this->setContentType('text/xml');
-            $this->setTemplate($settings['feed_type']);
+            $this->setTemplate($this->feedsConfig->getSettings()['feed_type']);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
