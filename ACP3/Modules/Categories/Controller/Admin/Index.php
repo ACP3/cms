@@ -147,7 +147,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->get('categories.cache.core')->getDriver()->deleteAll();
+            $this->categoriesCache->getCacheDriver()->deleteAll();
 
             if ($isInUse === true) {
                 $text = $this->lang->t('categories', 'category_is_in_use');

@@ -7,21 +7,17 @@ use ACP3\Core;
  * Class Cache
  * @package ACP3\Modules\Menus
  */
-class Cache
+class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'items';
     const CACHE_ID_VISIBLE = 'visible_items_';
 
     /**
-     * @var Core\Cache
-     */
-    protected $cache;
-    /**
      * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var Model
+     * @var \ACP3\Modules\Menus\Model
      */
     protected $menuModel;
 
@@ -35,7 +31,8 @@ class Cache
         Core\Lang $lang,
         Model $menuModel
     ) {
-        $this->cache = $cache;
+        parent::__construct($cache);
+
         $this->lang = $lang;
         $this->menuModel = $menuModel;
     }

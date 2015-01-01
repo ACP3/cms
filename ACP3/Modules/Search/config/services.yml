@@ -9,7 +9,7 @@ services:
 
   search.helpers:
     class: ACP3\Modules\Search\Helpers
-    arguments: ['@core.acl', '@core.modules', '@core.helpers.forms']
+    arguments: ['@core.acl', '@core.modules', '@core.helpers.forms', '@search.extensions']
 
   search.validator:
     class: ACP3\Modules\Search\Validator
@@ -17,7 +17,11 @@ services:
 
   search.extensions:
     class: ACP3\Modules\Search\Extensions
-    arguments: ['@service_container', '@core.date', '@core.lang', '@core.router']
+    arguments: ['@core.date', '@core.lang', '@core.router']
+    calls:
+      - ['setArticlesModel', ['@?articles.model']]
+      - ['setFilesModel', ['@?files.model']]
+      - ['setNewsModel', ['@?news.model']]
 
   search.installer:
     class: ACP3\Modules\Search\Installer

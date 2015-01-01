@@ -12,23 +12,23 @@ use ACP3\Modules\Gallery;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
-     * @var Core\Pagination
+     * @var \ACP3\Core\Pagination
      */
     protected $pagination;
     /**
-     * @var Gallery\Model
+     * @var \ACP3\Modules\Gallery\Model
      */
     protected $galleryModel;
     /**
-     * @var Gallery\Cache
+     * @var \ACP3\Modules\Gallery\Cache
      */
     protected $galleryCache;
     /**
-     * @var Core\Config
+     * @var \ACP3\Core\Config
      */
     protected $galleryConfig;
     /**

@@ -3,7 +3,9 @@
 namespace ACP3\Modules\Search;
 
 use ACP3\Core;
-use Symfony\Component\DependencyInjection\Container;
+use ACP3\Modules\Articles;
+use ACP3\Modules\Files;
+use ACP3\Modules\News;
 
 /**
  * Class Extensions
@@ -36,10 +38,6 @@ class Extensions
     protected $time;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
-     */
-    protected $container;
-    /**
      * @var \ACP3\Core\Lang
      */
     protected $lang;
@@ -47,24 +45,69 @@ class Extensions
      * @var \ACP3\Core\Router
      */
     protected $router;
+    /**
+     * @var \ACP3\Modules\Articles\Model
+     */
+    protected $articlesModel;
+    /**
+     * @var \ACP3\Modules\Files\Model
+     */
+    protected $filesModel;
+    /**
+     * @var \ACP3\Modules\News\Model
+     */
+    protected $newsModel;
 
     /**
-     * @param Container $container
      * @param Core\Date $date
      * @param Core\Lang $lang
      * @param Core\Router $router
      */
     public function __construct(
-        Container $container,
         Core\Date $date,
         Core\Lang $lang,
         Core\Router $router
     ) {
-        $this->container = $container;
         $this->lang = $lang;
         $this->router = $router;
 
         $this->time = $date->getCurrentDateTime();
+    }
+
+    /**
+     * @param \ACP3\Modules\Articles\Model $articlesModel
+     *
+     * @return $this
+     */
+    public function setArticlesModel(Articles\Model $articlesModel)
+    {
+        $this->articlesModel = $articlesModel;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\Files\Model $filesModel
+     *
+     * @return $this
+     */
+    public function setFilesModel(Files\Model $filesModel)
+    {
+        $this->filesModel = $filesModel;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\News\Model $newsModel
+     *
+     * @return $this
+     */
+    public function setNewsModel(News\Model $newsModel)
+    {
+        $this->newsModel = $newsModel;
+
+        return $this;
     }
 
     /**
@@ -108,30 +151,34 @@ class Extensions
      */
     public function articlesSearch()
     {
-        switch ($this->area) {
-            case 'title':
-                $fields = 'title';
-                break;
-            case 'content':
-                $fields = 'text';
-                break;
-            default:
-                $fields = 'title, text';
-        }
-
-        $results = $this->container->get('articles.model')->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
-        $c_results = count($results);
         $searchResults = [];
 
-        if ($c_results > 0) {
-            $name = $this->lang->t('articles', 'articles');
-            $searchResults[$name]['dir'] = 'articles';
-            for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i] = $results[$i];
+        if ($this->filesModel) {
+            switch ($this->area) {
+                case 'title':
+                    $fields = 'title';
+                    break;
+                case 'content':
+                    $fields = 'text';
+                    break;
+                default:
+                    $fields = 'title, text';
+            }
 
-                $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('articles/index/details/id_' . $results[$i]['id']);
+            $results = $this->articlesModel->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
+            $c_results = count($results);
+
+            if ($c_results > 0) {
+                $name = $this->lang->t('articles', 'articles');
+                $searchResults[$name]['dir'] = 'articles';
+                for ($i = 0; $i < $c_results; ++$i) {
+                    $searchResults[$name]['results'][$i] = $results[$i];
+
+                    $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('articles/index/details/id_' . $results[$i]['id']);
+                }
             }
         }
+
         return $searchResults;
     }
 
@@ -140,30 +187,34 @@ class Extensions
      */
     public function filesSearch()
     {
-        switch ($this->area) {
-            case 'title':
-                $fields = 'title, file';
-                break;
-            case 'content':
-                $fields = 'text';
-                break;
-            default:
-                $fields = 'title, file, text';
-        }
-
-        $results = $this->container->get('files.model')->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
-        $c_results = count($results);
         $searchResults = [];
 
-        if ($c_results > 0) {
-            $name = $this->lang->t('files', 'files');
-            $searchResults[$name]['dir'] = 'files';
-            for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i] = $results[$i];
+        if ($this->filesModel) {
+            switch ($this->area) {
+                case 'title':
+                    $fields = 'title, file';
+                    break;
+                case 'content':
+                    $fields = 'text';
+                    break;
+                default:
+                    $fields = 'title, file, text';
+            }
 
-                $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('files/index/details/id_' . $results[$i]['id']);
+            $results = $this->filesModel->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
+            $c_results = count($results);
+
+            if ($c_results > 0) {
+                $name = $this->lang->t('files', 'files');
+                $searchResults[$name]['dir'] = 'files';
+                for ($i = 0; $i < $c_results; ++$i) {
+                    $searchResults[$name]['results'][$i] = $results[$i];
+
+                    $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('files/index/details/id_' . $results[$i]['id']);
+                }
             }
         }
+
         return $searchResults;
     }
 
@@ -172,30 +223,34 @@ class Extensions
      */
     public function newsSearch()
     {
-        switch ($this->area) {
-            case 'title':
-                $fields = 'title';
-                break;
-            case 'content':
-                $fields = 'text';
-                break;
-            default:
-                $fields = 'title, text';
-        }
-
-        $results = $this->container->get('news.model')->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
-        $c_results = count($results);
         $searchResults = [];
 
-        if ($c_results > 0) {
-            $name = $this->lang->t('news', 'news');
-            $searchResults[$name]['dir'] = 'news';
-            for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i] = $results[$i];
+        if ($this->newsModel) {
+            switch ($this->area) {
+                case 'title':
+                    $fields = 'title';
+                    break;
+                case 'content':
+                    $fields = 'text';
+                    break;
+                default:
+                    $fields = 'title, text';
+            }
 
-                $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('news/index/details/id_' . $results[$i]['id']);
+            $results = $this->newsModel->getAllSearchResults($fields, $this->searchTerm, $this->sort, $this->time);
+            $c_results = count($results);
+
+            if ($c_results > 0) {
+                $name = $this->lang->t('news', 'news');
+                $searchResults[$name]['dir'] = 'news';
+                for ($i = 0; $i < $c_results; ++$i) {
+                    $searchResults[$name]['results'][$i] = $results[$i];
+
+                    $searchResults[$name]['results'][$i]['hyperlink'] = $this->router->route('news/index/details/id_' . $results[$i]['id']);
+                }
             }
         }
+
         return $searchResults;
     }
 }

@@ -7,15 +7,11 @@ use ACP3\Core;
  * Class Cache
  * @package ACP3\Modules\Emoticons
  */
-class Cache
+class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'list';
     /**
-     * @var \ACP3\Core\Cache
-     */
-    protected $cache;
-    /**
-     * @var Model
+     * @var \ACP3\Modules\Emoticons\Model
      */
     protected $emoticonsModel;
 
@@ -27,7 +23,8 @@ class Cache
         Core\Cache $cache,
         Model $emoticonsModel
     ) {
-        $this->cache = $cache;
+        parent::__construct($cache);
+
         $this->emoticonsModel = $emoticonsModel;
     }
 

@@ -1,11 +1,17 @@
 services:
   guestbook.controller.admin.index:
     class: ACP3\Modules\Guestbook\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@guestbook.model', '@guestbook.config']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@guestbook.model', '@guestbook.validator', '@guestbook.config']
+    calls:
+      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   guestbook.controller.frontend.index:
     class: ACP3\Modules\Guestbook\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@guestbook.model', '@guestbook.config', '@seo.config']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@guestbook.model', '@guestbook.validator', '@guestbook.config', '@seo.config']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
+      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+      - ['setNewsletterHelpers', ['@?newsletter.helpers']]
 
   guestbook.cache.core:
     class: ACP3\Core\Cache

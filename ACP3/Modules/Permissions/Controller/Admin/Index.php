@@ -12,7 +12,7 @@ use ACP3\Modules\Permissions;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
@@ -20,27 +20,33 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Permissions\Model
+     * @var \ACP3\Modules\Permissions\Model
      */
     protected $permissionsModel;
     /**
-     * @var Permissions\Cache
+     * @var \ACP3\Modules\Permissions\Cache
      */
     protected $permissionsCache;
+    /**
+     * @var \ACP3\Modules\Permissions\Validator
+     */
+    protected $permissionsValidator;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\DB $db
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Permissions\Model $permissionsModel
-     * @param Permissions\Cache $permissionsCache
+     * @param \ACP3\Core\Context\Admin            $context
+     * @param \ACP3\Core\DB                       $db
+     * @param \ACP3\Core\Helpers\Secure           $secureHelper
+     * @param \ACP3\Modules\Permissions\Model     $permissionsModel
+     * @param \ACP3\Modules\Permissions\Cache     $permissionsCache
+     * @param \ACP3\Modules\Permissions\Validator $permissionsValidator
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\DB $db,
         Core\Helpers\Secure $secureHelper,
         Permissions\Model $permissionsModel,
-        Permissions\Cache $permissionsCache)
+        Permissions\Cache $permissionsCache,
+        Permissions\Validator $permissionsValidator)
     {
         parent::__construct($context);
 
@@ -48,6 +54,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
+        $this->permissionsValidator = $permissionsValidator;
     }
 
     public function actionCreate()
@@ -113,7 +120,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->get('permissions.cache.core')->getDriver()->deleteAll();
+            $this->permissionsCache->getCacheDriver()->deleteAll();
 
             if ($levelUndeletable === true) {
                 $text = $this->lang->t('permissions', 'role_undeletable');
@@ -209,7 +216,7 @@ class Index extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             $nestedSet->order($this->request->id, $this->request->action);
 
-            $this->get('permissions.cache.core')->getDriver()->deleteAll();
+            $this->permissionsCache->getCacheDriver()->deleteAll();
 
             $this->redirect()->temporary('acp/permissions');
         } else {
@@ -224,7 +231,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $this->get('permissions.validator')->validate($formData);
+            $this->permissionsValidator->validate($formData);
 
             $this->db->getConnection()->beginTransaction();
 
@@ -272,7 +279,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $this->get('permissions.validator')->validate(
+            $this->permissionsValidator->validate(
                 $formData,
                 (int) $this->request->id
             );
@@ -301,7 +308,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->db->getConnection()->commit();
 
-            $this->get('permissions.cache.core')->getDriver()->deleteAll();
+            $this->permissionsCache->getCacheDriver()->deleteAll();
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

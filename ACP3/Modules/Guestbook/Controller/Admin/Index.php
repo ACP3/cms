@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Guestbook\Controller\Admin;
 
 use ACP3\Core;
+use ACP3\Modules\Emoticons;
 use ACP3\Modules\Guestbook;
 
 /**
@@ -12,7 +13,7 @@ use ACP3\Modules\Guestbook;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -20,26 +21,36 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Guestbook\Model
+     * @var \ACP3\Modules\Guestbook\Model
      */
     protected $guestbookModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Modules\Guestbook\Validator
+     */
+    protected $guestbookValidator;
+    /**
+     * @var \ACP3\Core\Config
      */
     protected $guestbookConfig;
+    /**
+     * @var \ACP3\Modules\Emoticons\Helpers
+     */
+    protected $emoticonsHelpers;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Guestbook\Model $guestbookModel
-     * @param Core\Config $guestbookConfig
+     * @param \ACP3\Core\Context\Admin          $context
+     * @param \ACP3\Core\Date                   $date
+     * @param \ACP3\Core\Helpers\Secure         $secureHelper
+     * @param \ACP3\Modules\Guestbook\Model     $guestbookModel
+     * @param \ACP3\Modules\Guestbook\Validator $guestbookValidator
+     * @param \ACP3\Core\Config                 $guestbookConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel,
+        Guestbook\Validator $guestbookValidator,
         Core\Config $guestbookConfig)
     {
         parent::__construct($context);
@@ -47,7 +58,20 @@ class Index extends Core\Modules\Controller\Admin
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
+        $this->guestbookValidator = $guestbookValidator;
         $this->guestbookConfig = $guestbookConfig;
+    }
+
+    /**
+     * @param \ACP3\Modules\Emoticons\Helpers $emoticonsHelpers
+     *
+     * @return $this
+     */
+    public function setEmoticonsHelpers(Emoticons\Helpers $emoticonsHelpers)
+    {
+        $this->emoticonsHelpers = $emoticonsHelpers;
+
+        return $this;
     }
 
     public function actionDelete()
@@ -76,9 +100,9 @@ class Index extends Core\Modules\Controller\Admin
                 $this->_editPost($_POST, $settings);
             }
 
-            if ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true) {
+            if ($settings['emoticons'] == 1 && $this->emoticonsHelpers) {
                 // Emoticons im Formular anzeigen
-                $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
+                $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
             }
 
             if ($settings['notify'] == 2) {
@@ -116,8 +140,8 @@ class Index extends Core\Modules\Controller\Admin
             $emoticonsActive = ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
 
             for ($i = 0; $i < $c_guestbook; ++$i) {
-                if ($emoticonsActive === true) {
-                    $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
+                if ($emoticonsActive === true && $this->emoticonsHelpers) {
+                    $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($guestbook[$i]['message']);
                 }
             }
             $this->view->assign('guestbook', $guestbook);
@@ -169,8 +193,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('guestbook.validator');
-            $validator->validateEdit($formData, $settings);
+            $this->guestbookValidator->validateEdit($formData, $settings);
 
             $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),
@@ -196,8 +219,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _settingsPost(array $formData)
     {
         try {
-            $validator = $this->get('guestbook.validator');
-            $validator->validateSettings($formData);
+            $this->guestbookValidator->validateSettings($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
