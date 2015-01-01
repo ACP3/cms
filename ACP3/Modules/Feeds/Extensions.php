@@ -21,10 +21,6 @@ class Extensions
      */
     protected $router;
     /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
      * @var Core\Helpers\StringFormatter
      */
     protected $formatter;
@@ -40,18 +36,16 @@ class Extensions
     /**
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Router                  $router
-     * @param \ACP3\Core\View                    $view
      * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(
         Core\Date $date,
         Core\Router $router,
-        Core\View $view,
         Core\Helpers\StringFormatter $stringFormatter
-    ) {
+    )
+    {
         $this->date = $date;
         $this->router = $router;
-        $this->view = $view;
         $this->formatter = $stringFormatter;
     }
 
@@ -79,39 +73,49 @@ class Extensions
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function newsFeed()
     {
+        $items = [];
         if ($this->newsModel) {
             $results = $this->newsModel->getAll($this->date->getCurrentDateTime(), 10);
             $c_results = count($results);
 
             for ($i = 0; $i < $c_results; ++$i) {
-                $params = [
+                $items[] = [
                     'title' => $results[$i]['title'],
                     'date' => $this->date->timestamp($results[$i]['start']),
                     'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
                     'link' => $this->router->route('news/index/details/id_' . $results[$i]['id'], true)
                 ];
-                $this->view->assign($params);
             }
         }
+
+        return $items;
     }
 
+    /**
+     * @return array
+     */
     public function filesFeed()
     {
+        $items = [];
         if ($this->filesModel) {
             $results = $this->filesModel->getAll($this->date->getCurrentDateTime(), 10);
             $c_results = count($results);
 
             for ($i = 0; $i < $c_results; ++$i) {
-                $params = [
+                $items[] = [
                     'title' => $results[$i]['title'],
                     'date' => $this->date->timestamp($results[$i]['start']),
                     'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
                     'link' => $this->router->route('files/index/details/id_' . $results[$i]['id'], true)
                 ];
-                $this->view->assign($params);
             }
         }
+
+        return $items;
     }
 }

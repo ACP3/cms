@@ -21,7 +21,7 @@ services:
 
   feeds.extensions:
     class: ACP3\Modules\Feeds\Extensions
-    arguments: ['@core.date', '@core.router', '@core.view', '@core.helpers.stringFormatter']
+    arguments: ['@core.date', '@core.router', '@core.helpers.stringFormatter']
     calls:
       - ['setFilesModel', ['@?files.model']]
       - ['setNewsModel', ['@?news.model']]
