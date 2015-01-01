@@ -170,7 +170,7 @@
         <item key="mailer_type">Mailertyp</item>
         <item key="mailer_type_php_mail">PHP Mail</item>
         <item key="mailer_type_smtp">SMTP</item>
-        <item key="maintenance">Warnung</item>
+        <item key="maintenance">Wartung</item>
         <item key="maintenance_message_to_short">Die Wartungsnachricht sollte mindestens 3 Zeichen lanng sein.</item>
         <item key="maintenance_mode">In Wartungsmodus versetzen</item>
         <item key="maintenance_msg">Wartungsnachricht</item>

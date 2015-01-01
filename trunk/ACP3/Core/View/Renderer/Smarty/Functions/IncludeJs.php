@@ -64,7 +64,7 @@ class IncludeJs extends AbstractFunction
                 $module = ucfirst($params['module']);
                 $file = $params['file'];
 
-                $path = $this->themeResolver->getStaticAssetPath($module . '/Resources/Assets/', $module . '/', 'js', $file . '.js');
+                $path = $this->themeResolver->getStaticAssetPath($module . '/Resources/', $module . '/', 'Assets/js', $file . '.js');
 
                 if (strpos($path, '/ACP3/Modules/') !== false) {
                     $path = ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1);

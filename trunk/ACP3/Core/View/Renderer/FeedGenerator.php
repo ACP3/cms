@@ -1,12 +1,13 @@
 <?php
 
 namespace ACP3\Core\View\Renderer;
+use ACP3\Core\View\AbstractRenderer;
 
 /**
  * Renderer for the output of RSS and ATOM newsfeeds
  * @package ACP3\Core\View\Renderer
  */
-class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
+class FeedGenerator extends AbstractRenderer
 {
     /**
      * @var \FeedWriter\Feed
@@ -57,21 +58,29 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
     }
 
     /**
-     * @param      $name
+     * @param      $items
      * @param null $value
      */
-    public function assign($name, $value = null)
+    public function assign($items, $value = null)
     {
-        if (is_array($name) === true) {
-            $item = $this->renderer->createNewItem();
-            $item->setTitle($name['title']);
-            $item->setDate($name['date']);
-            $item->setDescription($name['description']);
-            $item->setLink($name['link']);
-            if ($this->config['feed_type'] !== 'ATOM') {
-                $item->addElement('guid', $name['link'], ['isPermaLink' => 'true']);
+        if (is_array($items) === true && !empty($items)) {
+            // Check for a multidimensional array
+            if (isset($items[0]) === true) {
+                foreach ($items as $row) {
+                    $this->assign($row);
+                }
+            } else { // Single item
+                /** @var \FeedWriter\Item $item */
+                $item = $this->renderer->createNewItem();
+                $item->setTitle($items['title']);
+                $item->setDate($items['date']);
+                $item->setDescription($items['description']);
+                $item->setLink($items['link']);
+                if ($this->config['feed_type'] !== 'ATOM') {
+                    $item->addElement('guid', $items['link'], ['isPermaLink' => 'true']);
+                }
+                $this->renderer->addItem($item);
             }
-            $this->renderer->addItem($item);
         }
     }
 

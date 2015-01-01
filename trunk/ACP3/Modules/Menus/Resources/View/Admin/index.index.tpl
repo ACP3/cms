@@ -40,7 +40,7 @@
                 <tbody>
                 {foreach $pages_list as $block => $values}
                     <tr>
-                        <td class="sub-table-header" colspan="{$colspan}">
+                        <td class="sub-table-header{if $can_edit || $can_delete} has-buttons{/if}" colspan="{$colspan}">
                             {$values.title} <span>({lang t="menus|index_name2"} {$block})</span>
                             {if $can_delete || $can_edit}
                                 <div class="btn-group pull-right">
@@ -52,7 +52,7 @@
                                     {/if}
                                     {if $can_delete}
                                         <a href="{uri args="acp/menus/index/delete/entries_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_delete"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            <i class="glyphicon glyphicon-remove"></i>
+                                            <i class="glyphicon glyphicon-remove text-danger"></i>
                                             {lang t="system|delete"}
                                         </a>
                                     {/if}

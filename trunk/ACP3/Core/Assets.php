@@ -76,7 +76,7 @@ class Assets
     /**
      * @var string
      */
-    protected $systemAssetsModulePath = 'System/Resources/Assets/';
+    protected $systemAssetsModulePath = 'System/Resources/';
     /**
      * @var string
      */
@@ -107,7 +107,7 @@ class Assets
     }
 
     /**
-     * Checks, whether the current design should use bootstrap or not
+     * Checks, whether the current design uses Twitter Bootstrap or not
      */
     private function _checkBootstrap()
     {
@@ -130,7 +130,7 @@ class Assets
         // At first, load the library stylesheets
         foreach($this->libraries as $library) {
             if ($library['enabled'] === true && isset($library['css']) === true) {
-                $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', $library['css']);
+                $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', $library['css']);
             }
         }
 
@@ -141,23 +141,23 @@ class Assets
         }
 
         // General system styles
-        $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'css', 'style.css');
+        $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', 'style.css');
         // Stylesheet of the current theme
         $css[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.css');
 
         // Module stylesheets
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $module) {
-            $modulePath = $module['dir'] . '/Resources/Assets/';
+            $modulePath = $module['dir'] . '/Resources/';
             $designPath = $module['dir'] . '/';
-            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'css', 'style.css')) &&
+            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'style.css')) &&
                 $module['dir'] !== 'System'
             ) {
                 $css[] = $stylesheet;
             }
 
             // Append custom styles to the default module styling
-            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'css', 'append.css'))) {
+            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'append.css'))) {
                 $css[] = $stylesheet;
             }
         }
@@ -175,7 +175,7 @@ class Assets
         $scripts = [];
         foreach($this->libraries as $library) {
             if ($library['enabled'] === true && isset($library['js']) === true) {
-                $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'js/libs', $library['js']);
+                $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/js/libs', $library['js']);
             }
         }
 

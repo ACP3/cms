@@ -13,45 +13,46 @@ use ACP3\Modules\Menus;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
-     * @var Core\DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
-     * @var Articles\Model
+     * @var \ACP3\Modules\Articles\Model
      */
     protected $articlesModel;
     /**
-     * @var Articles\Cache
+     * @var \ACP3\Modules\Articles\Cache
      */
     protected $articlesCache;
+    /**
+     * @var \ACP3\Modules\Articles\Validator
+     */
+    protected $articlesValidator;
     /**
      * @var \ACP3\Modules\Menus\Model
      */
     protected $menusModel;
     /**
-     * @var Menus\Cache
+     * @var \ACP3\Modules\Menus\Cache
      */
     protected $menusCache;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
-    /**
-     * @var bool
-     */
-    protected $menusActive;
 
     /**
-     * @param \ACP3\Core\Context\Admin     $context
-     * @param \ACP3\Core\Date              $date
-     * @param \ACP3\Core\DB                $db
-     * @param \ACP3\Modules\Articles\Model $articlesModel
-     * @param \ACP3\Modules\Articles\Cache $articlesCache
-     * @param \ACP3\Core\Helpers\Secure    $secureHelper
+     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Core\DB                    $db
+     * @param \ACP3\Modules\Articles\Model     $articlesModel
+     * @param \ACP3\Modules\Articles\Cache     $articlesCache
+     * @param \ACP3\Modules\Articles\Validator $articlesValidator
+     * @param \ACP3\Core\Helpers\Secure        $secureHelper
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -59,6 +60,7 @@ class Index extends Core\Modules\Controller\Admin
         Core\DB $db,
         Articles\Model $articlesModel,
         Articles\Cache $articlesCache,
+        Articles\Validator $articlesValidator,
         Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
@@ -67,9 +69,8 @@ class Index extends Core\Modules\Controller\Admin
         $this->db = $db;
         $this->articlesModel = $articlesModel;
         $this->articlesCache = $articlesCache;
+        $this->articlesValidator = $articlesValidator;
         $this->secureHelper = $secureHelper;
-
-        $this->menusActive = $this->modules->isActive('menus');
     }
 
     /**
@@ -135,7 +136,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $this->get('articles.validator')->validate($formData);
+            $this->articlesValidator->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -192,21 +193,20 @@ class Index extends Core\Modules\Controller\Admin
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
 
-            $cache = $this->get('articles.cache.core');
             foreach ($items as $item) {
                 $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
                 $bool = $this->articlesModel->delete($item);
 
-                if ($this->menusActive === true) {
+                if ($this->menusModel) {
                     $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
                 }
 
-                $cache->delete(Articles\Cache::CACHE_ID . $item);
+                $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
                 $this->seo->deleteUriAlias($uri);
             }
 
-            if ($this->menusActive === true) {
+            if ($this->menusCache) {
                 $this->menusCache->setMenuItemsCache();
             }
 
@@ -244,7 +244,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $this->get('articles.validator')->validate(
+            $this->articlesValidator->validate(
                 $formData,
                 sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id)
             );
@@ -270,7 +270,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->articlesCache->setCache($this->request->id);
 
             // Aliase in der Navigation aktualisieren
-            if ($this->menusActive === true) {
+            if ($this->menusCache) {
                 $this->menusCache->setMenuItemsCache();
             }
 

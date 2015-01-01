@@ -17,9 +17,7 @@
                             {/if}
                         </strong>
                     </div>
-                    <small class="navbar-text pull-right">
-                        <time datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
-                    </small>
+                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
                 </header>
                 <div class="content">
                     {$row.message|nl2p}

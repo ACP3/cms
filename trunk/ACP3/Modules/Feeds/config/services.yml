@@ -1,7 +1,7 @@
 services:
   feeds.controller.admin.index:
     class: ACP3\Modules\Feeds\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.helpers.secure', '@feeds.config']
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@feeds.validator', '@feeds.config']
 
   feeds.controller.frontend.index:
     class: ACP3\Modules\Feeds\Controller\Index
@@ -21,7 +21,10 @@ services:
 
   feeds.extensions:
     class: ACP3\Modules\Feeds\Extensions
-    arguments: ['@service_container', '@core.date', '@core.router', '@core.view', '@core.helpers.stringFormatter']
+    arguments: ['@core.date', '@core.router', '@core.helpers.stringFormatter']
+    calls:
+      - ['setFilesModel', ['@?files.model']]
+      - ['setNewsModel', ['@?news.model']]
 
   feeds.installer:
     class: ACP3\Modules\Feeds\Installer

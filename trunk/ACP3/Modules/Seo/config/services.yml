@@ -1,7 +1,7 @@
 services:
   seo.controller.admin.index:
     class: ACP3\Modules\Seo\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.helpers.secure', '@seo.cache', '@seo.config', '@seo.model']
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@seo.cache', '@seo.config', '@seo.model', '@seo.validator']
 
   seo.cache:
     class: ACP3\Modules\Seo\Cache

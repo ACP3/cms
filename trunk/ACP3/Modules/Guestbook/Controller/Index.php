@@ -3,7 +3,10 @@
 namespace ACP3\Modules\Guestbook\Controller;
 
 use ACP3\Core;
+use ACP3\Modules\Captcha;
+use ACP3\Modules\Emoticons;
 use ACP3\Modules\Guestbook;
+use ACP3\Modules\Newsletter;
 
 /**
  * Class Index
@@ -12,21 +15,25 @@ use ACP3\Modules\Guestbook;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
-     * @var Core\Pagination
+     * @var \ACP3\Core\Pagination
      */
     protected $pagination;
     /**
-     * @var Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
     /**
-     * @var Guestbook\Model
+     * @var \ACP3\Modules\Guestbook\Model
      */
     protected $guestbookModel;
+    /**
+     * @var \ACP3\Modules\Guestbook\Validator
+     */
+    protected $guestbookValidator;
     /**
      * @var array
      */
@@ -35,6 +42,18 @@ class Index extends Core\Modules\Controller\Frontend
      * @var \ACP3\Core\Config
      */
     protected $seoConfig;
+    /**
+     * @var \ACP3\Modules\Captcha\Helpers
+     */
+    protected $captchaHelpers;
+    /**
+     * @var \ACP3\Modules\Emoticons\Helpers
+     */
+    protected $emoticonsHelpers;
+    /**
+     * @var \ACP3\Modules\Newsletter\Helpers
+     */
+    protected $newsletterHelpers;
     /**
      * @var bool
      */
@@ -45,13 +64,14 @@ class Index extends Core\Modules\Controller\Frontend
     private $newsletterActive;
 
     /**
-     * @param \ACP3\Core\Context\Frontend   $context
-     * @param \ACP3\Core\Date               $date
-     * @param \ACP3\Core\Pagination         $pagination
-     * @param \ACP3\Core\Helpers\Secure     $secureHelper
-     * @param \ACP3\Modules\Guestbook\Model $guestbookModel
-     * @param \ACP3\Core\Config             $guestbookConfig
-     * @param \ACP3\Core\Config             $seoConfig
+     * @param \ACP3\Core\Context\Frontend       $context
+     * @param \ACP3\Core\Date                   $date
+     * @param \ACP3\Core\Pagination             $pagination
+     * @param \ACP3\Core\Helpers\Secure         $secureHelper
+     * @param \ACP3\Modules\Guestbook\Model     $guestbookModel
+     * @param \ACP3\Modules\Guestbook\Validator $guestbookValidator
+     * @param \ACP3\Core\Config                 $guestbookConfig
+     * @param \ACP3\Core\Config                 $seoConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -59,6 +79,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel,
+        Guestbook\Validator $guestbookValidator,
         Core\Config $guestbookConfig,
         Core\Config $seoConfig)
     {
@@ -68,11 +89,48 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
+        $this->guestbookValidator = $guestbookValidator;
         $this->guestbookSettings = $guestbookConfig->getSettings();
         $this->seoConfig = $seoConfig;
 
-        $this->emoticonsActive = ($this->guestbookSettings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
-        $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1 && $this->acl->hasPermission('frontend/newsletter') === true);
+        $this->emoticonsActive = ($this->guestbookSettings['emoticons'] == 1);
+        $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1);
+    }
+
+    /**
+     * @param \ACP3\Modules\Captcha\Helpers $captchaHelpers
+     *
+     * @return $this
+     */
+    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
+    {
+        $this->captchaHelpers = $captchaHelpers;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\Emoticons\Helpers $emoticonsHelpers
+     *
+     * @return $this
+     */
+    public function setEmoticonsHelpers(Emoticons\Helpers $emoticonsHelpers)
+    {
+        $this->emoticonsHelpers = $emoticonsHelpers;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\Newsletter\Helpers $newsletterHelpers
+     *
+     * @return $this
+     */
+    public function setNewsletterHelpers(Newsletter\Helpers $newsletterHelpers)
+    {
+        $this->newsletterHelpers = $newsletterHelpers;
+
+        return $this;
     }
 
     public function actionCreate()
@@ -82,12 +140,12 @@ class Index extends Core\Modules\Controller\Frontend
         }
 
         // Emoticons einbinden
-        if ($this->emoticonsActive === true) {
-            $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
+        if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
+            $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
         }
 
         // In Newsletter integrieren
-        if ($this->newsletterActive === true) {
+        if ($this->newsletterActive === true && $this->newsletterHelpers) {
             $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
             $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->seoConfig->getSettings()['title']));
         }
@@ -117,7 +175,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->view->assign('form', array_merge($defaults, $_POST));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
+            $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         $this->secureHelper->generateFormToken($this->request->query);
@@ -136,8 +194,8 @@ class Index extends Core\Modules\Controller\Frontend
 
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
-                if ($this->emoticonsActive === true) {
-                    $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
+                if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
+                    $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($guestbook[$i]['message']);
                 }
                 $guestbook[$i]['website'] = strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'];
                 if (!empty($guestbook[$i]['website']) && (bool)preg_match('=^http(s)?://=', $guestbook[$i]['website']) === false) {
@@ -157,8 +215,7 @@ class Index extends Core\Modules\Controller\Frontend
     private function _createPost(array $formData)
     {
         try {
-            $validator = $this->get('guestbook.validator');
-            $validator->validateCreate($formData, $this->newsletterActive);
+            $this->guestbookValidator->validateCreate($formData, $this->newsletterActive);
 
             $insertValues = [
                 'id' => '',
@@ -174,18 +231,30 @@ class Index extends Core\Modules\Controller\Frontend
 
             $lastId = $this->guestbookModel->insert($insertValues);
 
-            // E-Mail-Benachrichtigung bei neuem Eintrag der hinterlegten
-            // E-Mail-Adresse zusenden
+            // Send the notification E-mail if configured
             if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
-                $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-                $fullPath = $host . $this->router->route('guestbook') . '#gb-entry-' . $lastId;
-                $body = sprintf($this->guestbookSettings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
-                $this->get('core.helpers.sendEmail')->execute('', $this->guestbookSettings['notify_email'], $this->guestbookSettings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
+                $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $lastId;
+                $body = sprintf(
+                    $this->guestbookSettings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'),
+                    $this->router->route('', true),
+                    $fullPath
+                );
+                $this->get('core.helpers.sendEmail')->execute(
+                    '',
+                    $this->guestbookSettings['notify_email'],
+                    $this->guestbookSettings['notify_email'],
+                    $this->lang->t('guestbook', 'notification_email_subject'),
+                    $body
+                );
             }
 
             // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-            if ($this->newsletterActive === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
-                $this->get('newsletter.helpers')->subscribeToNewsletter($formData['mail']);
+            if ($this->newsletterActive === true &&
+                $this->newsletterHelpers &&
+                isset($formData['subscribe_newsletter']) &&
+                $formData['subscribe_newsletter'] == 1
+            ) {
+                $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
             }
 
             $this->secureHelper->unsetFormToken($this->request->query);

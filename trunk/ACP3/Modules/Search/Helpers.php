@@ -11,31 +11,38 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var Core\ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
     /**
-     * @var Core\Helpers\Forms
+     * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Modules\Search\Extensions
+     */
+    protected $searchExtensions;
 
     /**
-     * @param Core\ACL $acl
-     * @param Core\Modules $modules
-     * @param Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\ACL                  $acl
+     * @param \ACP3\Core\Modules              $modules
+     * @param \ACP3\Core\Helpers\Forms        $formsHelper
+     * @param \ACP3\Modules\Search\Extensions $searchExtensions
      */
     public function __construct(
         Core\ACL $acl,
         Core\Modules $modules,
-        Core\Helpers\Forms $formsHelper
+        Core\Helpers\Forms $formsHelper,
+        Extensions $searchExtensions
     ) {
         $this->acl = $acl;
         $this->modules = $modules;
         $this->formsHelper = $formsHelper;
+        $this->searchExtensions = $searchExtensions;
     }
 
     /**
@@ -45,8 +52,7 @@ class Helpers
      */
     public function getModules()
     {
-        $className = "\\ACP3\\Modules\\Search\\Extensions";
-        $modules = get_class_methods($className);
+        $modules = get_class_methods($this->searchExtensions);
         $searchModules = [];
 
         foreach ($modules as $module) {

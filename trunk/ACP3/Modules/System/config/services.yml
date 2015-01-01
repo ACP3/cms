@@ -5,11 +5,11 @@ services:
 
   system.controller.admin.index:
     class: ACP3\Modules\System\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@system.model', '@system.config']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@system.model', '@system.validator', '@system.config']
 
   system.controller.admin.maintenance:
     class: ACP3\Modules\System\Controller\Admin\Maintenance
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@system.model']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@system.helpers', '@system.model', '@system.validator']
 
   system.cache.core:
     class: ACP3\Core\Cache

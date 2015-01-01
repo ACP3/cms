@@ -16,9 +16,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var Comments\Model
+     * @var \ACP3\Modules\Comments\Model
      */
     protected $commentsModel;
+    /**
+     * @var \ACP3\Modules\Comments\Validator
+     */
+    protected $commentsValidator;
     /**
      * @var \ACP3\Core\Config
      */
@@ -29,16 +33,18 @@ class Index extends Core\Modules\Controller\Admin
     protected $secureHelper;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Comments\Model $commentsModel
-     * @param Core\Config $commentsConfig
-     * @param Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Modules\Comments\Model     $commentsModel
+     * @param \ACP3\Modules\Comments\Validator $commentsValidator
+     * @param \ACP3\Core\Config                $commentsConfig
+     * @param \ACP3\Core\Helpers\Secure        $secureHelper
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Comments\Model $commentsModel,
+        Comments\Validator $commentsValidator,
         Core\Config $commentsConfig,
         Core\Helpers\Secure $secureHelper)
     {
@@ -46,6 +52,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->date = $date;
         $this->commentsModel = $commentsModel;
+        $this->commentsValidator = $commentsValidator;
         $this->commentsConfig = $commentsConfig;
         $this->secureHelper = $secureHelper;
     }
@@ -115,8 +122,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _settingsPost(array $formData)
     {
         try {
-            $validator = $this->get('comments.validator');
-            $validator->validateSettings($formData);
+            $this->commentsValidator->validateSettings($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),

@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Newsletter\Controller\Sidebar;
 
 use ACP3\Core;
+use ACP3\Modules\Captcha;
 
 /**
  * Class Index
@@ -14,6 +15,10 @@ class Index extends Core\Modules\Controller
      * @var Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var \ACP3\Modules\Captcha\Helpers
+     */
+    protected $captchaHelpers;
 
     /**
      * @param Core\Context $context
@@ -29,12 +34,24 @@ class Index extends Core\Modules\Controller
     }
 
     /**
+     * @param \ACP3\Modules\Captcha\Helpers $captchaHelpers
+     *
+     * @return $this
+     */
+    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
+    {
+        $this->captchaHelpers = $captchaHelpers;
+
+        return $this;
+    }
+
+    /**
      * @param string $template
      */
     public function actionIndex($template = '')
     {
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha(3, 'captcha', true, 'newsletter'));
+            $this->view->assign('captcha', $this->captchaHelpers->captcha(3, 'captcha', true, 'newsletter'));
         }
 
         $this->secureHelper->generateFormToken('newsletter/index/index');
