@@ -89,6 +89,12 @@
     margin: 0;
 }
 
+.dataset-box small.navbar-text,
+.dataset-box .small.navbar-text {
+    margin-top: 17px;
+    margin-bottom: 16px;
+}
+
 .dataset-box .content {
     margin: -8px 20px 10px;
 }

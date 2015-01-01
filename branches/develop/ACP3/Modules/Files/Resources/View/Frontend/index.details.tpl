@@ -7,9 +7,7 @@
                 <div class="navbar-header">
                     <h2 class="navbar-brand">{$file.title}</h2>
                 </div>
-                <small class="navbar-text pull-right">
-                    <time datetime="{date_format date=$file.start format="c"}">{date_format date=$file.start format=$dateformat}</time>
-                </small>
+                <time class="navbar-text small pull-right" datetime="{date_format date=$file.start format="c"}">{date_format date=$file.start format=$dateformat}</time>
             </header>
             <div class="content">
                 {$file.text}
