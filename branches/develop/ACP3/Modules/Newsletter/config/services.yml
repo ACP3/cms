@@ -5,7 +5,7 @@ services:
 
   newsletter.controller.admin.index:
     class: ACP3\Modules\Newsletter\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@newsletter.model', '@newsletter.config', '@newsletter.helpers']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@newsletter.model', '@newsletter.validator', '@newsletter.config', '@newsletter.helpers']
 
   newsletter.controller.frontend.archive:
     class: ACP3\Modules\Newsletter\Controller\Archive
@@ -13,11 +13,15 @@ services:
 
   newsletter.controller.frontend.index:
     class: ACP3\Modules\Newsletter\Controller\Index
-    arguments: ['@core.context.frontend', '@core.helpers.secure', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.helpers.secure', '@newsletter.helpers', '@newsletter.model', '@newsletter.validator']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   newsletter.controller.sidebar.index:
     class: ACP3\Modules\Newsletter\Controller\Sidebar\Index
     arguments: ['@core.context', '@core.helpers.secure']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   newsletter.cache.core:
     class: ACP3\Core\Cache

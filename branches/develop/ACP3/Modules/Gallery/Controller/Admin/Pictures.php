@@ -12,7 +12,7 @@ use ACP3\Modules\Gallery;
 class Pictures extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -20,29 +20,50 @@ class Pictures extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Core\Helpers\Sort
+     * @var \ACP3\Core\Helpers\Sort
      */
     protected $sortHelper;
     /**
-     * @var Gallery\Model
+     * @var \ACP3\Modules\Gallery\Helpers
+     */
+    protected $galleryHelpers;
+    /**
+     * @var \ACP3\Modules\Gallery\Model
      */
     protected $galleryModel;
     /**
-     * @var Gallery\Cache
+     * @var \ACP3\Modules\Gallery\Cache
      */
     protected $galleryCache;
     /**
-     * @var Core\Config
+     * @var \ACP3\Modules\Gallery\Validator
+     */
+    protected $galleryValidator;
+    /**
+     * @var \ACP3\Core\Config
      */
     protected $galleryConfig;
 
+    /**
+     * @param \ACP3\Core\Context\Admin        $context
+     * @param \ACP3\Core\Date                 $date
+     * @param \ACP3\Core\Helpers\Secure       $secureHelper
+     * @param \ACP3\Core\Helpers\Sort         $sortHelper
+     * @param \ACP3\Modules\Gallery\Helpers   $galleryHelpers
+     * @param \ACP3\Modules\Gallery\Model     $galleryModel
+     * @param \ACP3\Modules\Gallery\Cache     $galleryCache
+     * @param \ACP3\Modules\Gallery\Validator $galleryValidator
+     * @param \ACP3\Core\Config               $galleryConfig
+     */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Sort $sortHelper,
-        Gallery\Model $guestbookModel,
+        Gallery\Helpers $galleryHelpers,
+        Gallery\Model $galleryModel,
         Gallery\Cache $galleryCache,
+        Gallery\Validator $galleryValidator,
         Core\Config $galleryConfig)
     {
         parent::__construct($context);
@@ -50,8 +71,10 @@ class Pictures extends Core\Modules\Controller\Admin
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->sortHelper = $sortHelper;
-        $this->galleryModel = $guestbookModel;
+        $this->galleryHelpers = $galleryHelpers;
+        $this->galleryModel = $galleryModel;
         $this->galleryCache = $galleryCache;
+        $this->galleryValidator = $galleryValidator;
         $this->galleryConfig = $galleryConfig;
     }
 
@@ -98,7 +121,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     // Datei ebenfalls löschen
                     $picture = $this->galleryModel->getPictureById($item);
                     $this->galleryModel->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
-                    $this->get('gallery.helpers')->removePicture($picture['file']);
+                    $this->galleryHelpers->removePicture($picture['file']);
 
                     $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
                     $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
@@ -178,8 +201,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $file['name'] = $_FILES['file']['name'];
             $file['size'] = $_FILES['file']['size'];
 
-            $validator = $this->get('gallery.validator');
-            $validator->validateCreatePicture($file, $settings);
+            $this->galleryValidator->validateCreatePicture($file, $settings);
 
             $upload = new Core\Helpers\Upload('gallery');
             $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -195,7 +217,7 @@ class Pictures extends Core\Modules\Controller\Admin
             ];
 
             $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
-            $bool2 = $this->get('gallery.helpers')->generatePictureAlias($lastId);
+            $bool2 = $this->galleryHelpers->generatePictureAlias($lastId);
 
             $this->galleryCache->setCache($this->request->id);
 
@@ -224,8 +246,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['file']['size'];
             }
 
-            $validator = $this->get('gallery.validator');
-            $validator->validateEditPicture($file, $settings);
+            $this->galleryValidator->validateEditPicture($file, $settings);
 
             $updateValues = [
                 'description' => Core\Functions::strEncode($formData['description'], true),
@@ -237,7 +258,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
                 $oldFile = $this->galleryModel->getFileById($this->request->id);
 
-                $this->get('gallery.helpers')->removePicture($oldFile);
+                $this->galleryHelpers->removePicture($oldFile);
 
                 $updateValues = array_merge($updateValues, ['file' => $result['name']]);
             }

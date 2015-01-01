@@ -12,7 +12,7 @@ use ACP3\Modules\Gallery;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -20,33 +20,54 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Gallery\Model
+     * @var \ACP3\Modules\Gallery\Cache
+     */
+    protected $galleryCache;
+    /**
+     * @var \ACP3\Modules\Gallery\Helpers
+     */
+    protected $galleryHelpers;
+    /**
+     * @var \ACP3\Modules\Gallery\Model
      */
     protected $galleryModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Modules\Gallery\Validator
+     */
+    protected $galleryValidator;
+    /**
+     * @var \ACP3\Core\Config
      */
     protected $galleryConfig;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Gallery\Model $galleryModel
-     * @param Core\Config $galleryConfig
+     * @param \ACP3\Core\Context\Admin        $context
+     * @param \ACP3\Core\Date                 $date
+     * @param \ACP3\Core\Helpers\Secure       $secureHelper
+     * @param \ACP3\Modules\Gallery\Cache     $galleryCache
+     * @param \ACP3\Modules\Gallery\Helpers   $galleryHelpers
+     * @param \ACP3\Modules\Gallery\Model     $galleryModel
+     * @param \ACP3\Modules\Gallery\Validator $galleryValidator
+     * @param \ACP3\Core\Config               $galleryConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
+        Gallery\Cache $galleryCache,
+        Gallery\Helpers $galleryHelpers,
         Gallery\Model $galleryModel,
+        Gallery\Validator $galleryValidator,
         Core\Config $galleryConfig)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->secureHelper = $secureHelper;
+        $this->galleryCache = $galleryCache;
+        $this->galleryHelpers = $galleryHelpers;
         $this->galleryModel = $galleryModel;
+        $this->galleryValidator = $galleryValidator;
         $this->galleryConfig = $galleryConfig;
     }
 
@@ -76,20 +97,18 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = $bool2 = false;
 
-            $cache = $this->get('gallery.cache.core');
-
             foreach ($items as $item) {
                 if (!empty($item) && $this->galleryModel->galleryExists($item) === true) {
                     // Hochgeladene Bilder löschen
                     $pictures = $this->galleryModel->getPicturesByGalleryId($item);
                     foreach ($pictures as $row) {
-                        $this->get('gallery.helpers')->removePicture($row['file']);
+                        $this->galleryHelpers->removePicture($row['file']);
                     }
 
                     // Galerie Cache löschen
-                    $cache->delete(Gallery\Cache::CACHE_ID . $item);
+                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
                     $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
-                    $this->get('gallery.helpers')->deletePictureAliases($item);
+                    $this->galleryHelpers->deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
                     $bool = $this->galleryModel->delete($item);
@@ -197,7 +216,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData)
     {
         try {
-            $this->get('gallery.validator')->validate($formData);
+            $this->galleryValidator->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -233,7 +252,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData)
     {
         try {
-            $this->get('gallery.validator')->validate(
+            $this->galleryValidator->validate(
                 $formData,
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id)
             );
@@ -254,7 +273,7 @@ class Index extends Core\Modules\Controller\Admin
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
-            $this->get('gallery.helpers')->generatePictureAliases($this->request->id);
+            $this->galleryHelpers->generatePictureAliases($this->request->id);
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
@@ -273,8 +292,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _settingsPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('gallery.validator');
-            $validator->validateSettings($formData);
+            $this->galleryValidator->validateSettings($formData);
 
             $data = [
                 'width' => (int)$formData['width'],

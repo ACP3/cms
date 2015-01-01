@@ -7,13 +7,9 @@ use ACP3\Core;
  * Class Cache
  * @package ACP3\Modules\News
  */
-class Cache
+class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'details_id_';
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    protected $cache;
     /**
      * @var Model
      */
@@ -27,8 +23,9 @@ class Cache
         Core\Cache $cache,
         Model $newsModel
     ) {
+        parent::__construct($cache);
+
         $this->newsModel = $newsModel;
-        $this->cache = $cache;
     }
 
     /**

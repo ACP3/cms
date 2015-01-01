@@ -12,7 +12,7 @@ use ACP3\Modules\Newsletter;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -20,31 +20,37 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Newsletter\Model
+     * @var \ACP3\Modules\Newsletter\Model
      */
     protected $newsletterModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Modules\Newsletter\Validator
+     */
+    protected $newsletterValidator;
+    /**
+     * @var \ACP3\Core\Config
      */
     protected $newsletterConfig;
     /**
-     * @var Newsletter\Helpers
+     * @var \ACP3\Modules\Newsletter\Helpers
      */
     protected $newsletterHelpers;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Date $date
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Newsletter\Model $newsletterModel
-     * @param Core\Config $newsletterConfig
-     * @param Newsletter\Helpers $newsletterHelpers
+     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\Date                    $date
+     * @param \ACP3\Core\Helpers\Secure          $secureHelper
+     * @param \ACP3\Modules\Newsletter\Model     $newsletterModel
+     * @param \ACP3\Modules\Newsletter\Validator $newsletterValidator
+     * @param \ACP3\Core\Config                  $newsletterConfig
+     * @param \ACP3\Modules\Newsletter\Helpers   $newsletterHelpers
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         Newsletter\Model $newsletterModel,
+        Newsletter\Validator $newsletterValidator,
         Core\Config $newsletterConfig,
         Newsletter\Helpers $newsletterHelpers)
     {
@@ -53,6 +59,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->newsletterModel = $newsletterModel;
+        $this->newsletterValidator = $newsletterValidator;
         $this->newsletterConfig = $newsletterConfig;
         $this->newsletterHelpers = $newsletterHelpers;
     }
@@ -192,8 +199,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _createPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('newsletter.validator');
-            $validator->validate($formData);
+            $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
             $insertValues = [
@@ -238,8 +244,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _editPost(array $formData, array $settings)
     {
         try {
-            $validator = $this->get('newsletter.validator');
-            $validator->validate($formData);
+            $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
             $updateValues = [
@@ -281,8 +286,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _settingsPost(array $formData)
     {
         try {
-            $validator = $this->get('newsletter.validator');
-            $validator->validateSettings($formData);
+            $this->newsletterValidator->validateSettings($formData);
 
             $data = [
                 'mail' => $formData['mail'],

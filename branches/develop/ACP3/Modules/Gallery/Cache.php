@@ -7,16 +7,12 @@ use ACP3\Core;
  * Class Cache
  * @package ACP3\Modules\Gallery
  */
-class Cache
+class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
      * @var string
      */
     const CACHE_ID = 'pics_id_';
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    protected $cache;
     /**
      * @var Model
      */
@@ -36,7 +32,8 @@ class Cache
         Model $galleryModel,
         Core\Config $galleryConfig
     ) {
-        $this->cache = $cache;
+        parent::__construct($cache);
+
         $this->galleryModel = $galleryModel;
         $this->galleryConfig = $galleryConfig;
     }

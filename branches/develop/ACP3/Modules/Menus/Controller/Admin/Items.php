@@ -101,7 +101,7 @@ class Items extends Core\Modules\Controller\Admin
             $this->lang->t('menus', 'dynamic_page'),
             $this->lang->t('menus', 'hyperlink')
         ];
-        if ($this->modules->isActive('articles')) {
+        if ($this->articlesHelpers) {
             $values_mode[] = 4;
             $lang_mode[] = $this->lang->t('menus', 'article');
         }
@@ -184,7 +184,7 @@ class Items extends Core\Modules\Controller\Admin
                 $this->lang->t('menus', 'dynamic_page'),
                 $this->lang->t('menus', 'hyperlink')
             ];
-            if ($this->modules->isActive('articles')) {
+            if ($this->articlesHelpers) {
                 $modeValues[] = 4;
                 $modeLang[] = $this->lang->t('menus', 'article');
             }

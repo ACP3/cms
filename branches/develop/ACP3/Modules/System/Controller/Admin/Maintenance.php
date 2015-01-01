@@ -13,7 +13,7 @@ use ACP3\Modules\System;
 class Maintenance extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
@@ -21,27 +21,41 @@ class Maintenance extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var System\Model
+     * @var \ACP3\Modules\System\Helpers
+     */
+    protected $systemHelpers;
+    /**
+     * @var \ACP3\Modules\System\Model
      */
     protected $systemModel;
+    /**
+     * @var \ACP3\Modules\System\Validator
+     */
+    protected $systemValidator;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\DB $db
-     * @param Core\Helpers\Secure $secureHelper
-     * @param System\Model $systemModel
+     * @param \ACP3\Core\Context\Admin       $context
+     * @param \ACP3\Core\DB                  $db
+     * @param \ACP3\Core\Helpers\Secure      $secureHelper
+     * @param \ACP3\Modules\System\Helpers   $systemHelpers
+     * @param \ACP3\Modules\System\Model     $systemModel
+     * @param \ACP3\Modules\System\Validator $systemValidator
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\DB $db,
         Core\Helpers\Secure $secureHelper,
-        System\Model $systemModel)
+        System\Helpers $systemHelpers,
+        System\Model $systemModel,
+        System\Validator $systemValidator)
     {
         parent::__construct($context);
 
         $this->db = $db;
         $this->secureHelper = $secureHelper;
+        $this->systemHelpers = $systemHelpers;
         $this->systemModel = $systemModel;
+        $this->systemValidator = $systemValidator;
     }
 
     public function actionIndex()
@@ -128,12 +142,11 @@ class Maintenance extends Core\Modules\Controller\Admin
     private function _sqlExportPost(array $formData)
     {
         try {
-            $validator = $this->get('system.validator');
-            $validator->validateSqlExport($formData);
+            $this->systemValidator->validateSqlExport($formData);
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $export = $this->get('system.helpers')->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
+            $export = $this->systemHelpers->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
 
             // Als Datei ausgeben
             if ($formData['output'] === 'file') {
@@ -168,7 +181,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['file']['size'];
             }
 
-            $this->get('system.validator')->validateSqlImport($formData, $file);
+            $this->systemValidator->validateSqlImport($formData, $file);
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

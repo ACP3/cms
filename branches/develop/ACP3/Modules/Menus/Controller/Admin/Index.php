@@ -20,6 +20,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
+     * @var \ACP3\Modules\Menus\Helpers
+     */
+    protected $menusHelpers;
+    /**
      * @var \ACP3\Modules\Menus\Model
      */
     protected $menusModel;
@@ -36,6 +40,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Context\Admin      $context
      * @param \ACP3\Core\DB                 $db
      * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Modules\Menus\Helpers   $menusHelpers
      * @param \ACP3\Modules\Menus\Model     $menusModel
      * @param \ACP3\Modules\Menus\Cache     $menusCache
      * @param \ACP3\Modules\Menus\Validator $menusValidator
@@ -44,6 +49,7 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\DB $db,
         Core\Helpers\Secure $secureHelper,
+        Menus\Helpers $menusHelpers,
         Menus\Model $menusModel,
         Menus\Cache $menusCache,
         Menus\Validator $menusValidator)
@@ -52,6 +58,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->db = $db;
         $this->secureHelper = $secureHelper;
+        $this->menusHelpers = $menusHelpers;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
         $this->menusValidator = $menusValidator;
@@ -75,7 +82,6 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $cache = $this->get('menus.cache.core');
 
             foreach ($items as $item) {
                 if (!empty($item) && $this->menusModel->menuExists($item) === true) {
@@ -87,7 +93,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $block = $this->menusModel->getMenuNameById($item);
                     $bool = $this->menusModel->delete($item);
-                    $cache->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
+                    $this->menusCache->getCacheDriver()->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
                 }
             }
 
@@ -130,7 +136,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('can_edit', $this->acl->hasPermission('admin/menus/index/edit'));
             $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
 
-            $pagesList = $this->get('menus.helpers')->menuItemsList();
+            $pagesList = $this->menusHelpers->menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {
                 if (isset($pagesList[$menus[$i]['index_name']]) === false) {
                     $pagesList[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];

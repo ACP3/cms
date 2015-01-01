@@ -4,6 +4,7 @@ namespace ACP3\Modules\Files\Controller\Admin;
 
 use ACP3\Core;
 use ACP3\Modules\Categories;
+use ACP3\Modules\Comments;
 use ACP3\Modules\Files;
 
 /**
@@ -40,6 +41,10 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Modules\Categories\Helpers
      */
     protected $categoriesHelpers;
+    /**
+     * @var \ACP3\Modules\Comments\Helpers
+     */
+    protected $commentsHelpers;
 
     /**
      * @param \ACP3\Core\Context\Admin         $context
@@ -70,6 +75,18 @@ class Index extends Core\Modules\Controller\Admin
         $this->filesConfig = $filesConfig;
         $this->filesValidator = $filesValidator;
         $this->categoriesHelpers = $categoriesHelpers;
+    }
+
+    /**
+     * @param \ACP3\Modules\Comments\Helpers $commentsHelpers
+     *
+     * @return $this
+     */
+    public function setCommentsHelpers(Comments\Helpers $commentsHelpers)
+    {
+        $this->commentsHelpers = $commentsHelpers;
+
+        return $this;
     }
 
     public function actionCreate()
@@ -120,19 +137,17 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->request->action === 'confirmed') {
             $bool = false;
-            $commentsInstalled = $this->modules->isInstalled('comments');
 
-            $cache = $this->get('files.cache.core');
             $upload = new Core\Helpers\Upload('files');
             foreach ($items as $item) {
                 if (!empty($item)) {
                     $upload->removeUploadedFile($this->filesModel->getFileById($item)); // Datei ebenfalls löschen
                     $bool = $this->filesModel->delete($item);
-                    if ($commentsInstalled === true) {
-                        $this->get('comments.helpers')->deleteCommentsByModuleAndResult('files', $item);
+                    if ($this->commentsHelpers) {
+                        $this->commentsHelpers->deleteCommentsByModuleAndResult('files', $item);
                     }
 
-                    $cache->delete(Files\Cache::CACHE_ID);
+                    $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
                     $this->seo->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                 }
             }
@@ -212,7 +227,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $settings = $this->filesConfig->getSettings();
 
-        if ($this->modules->isActive('comments') === true) {
+        if ($this->commentsHelpers) {
             $lang_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
             $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', [1, 0], $lang_comments, $settings['comments'], 'checked'));
         }

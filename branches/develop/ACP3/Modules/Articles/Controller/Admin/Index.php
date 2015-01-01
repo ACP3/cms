@@ -193,7 +193,6 @@ class Index extends Core\Modules\Controller\Admin
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
 
-            $cache = $this->get('articles.cache.core');
             foreach ($items as $item) {
                 $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
@@ -203,7 +202,7 @@ class Index extends Core\Modules\Controller\Admin
                     $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
                 }
 
-                $cache->delete(Articles\Cache::CACHE_ID . $item);
+                $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
                 $this->seo->deleteUriAlias($uri);
             }
 
