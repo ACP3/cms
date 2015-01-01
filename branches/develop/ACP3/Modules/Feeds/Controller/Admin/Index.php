@@ -12,27 +12,34 @@ use ACP3\Modules\Feeds;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var \ACP3\Modules\Feeds\Validator
+     */
+    protected $feedsValidator;
     /**
      * @var \ACP3\Core\Config
      */
     protected $feedsConfig;
 
     /**
-     * @param Core\Context\Admin $context
-     * @param Core\Helpers\Secure $secureHelper
-     * @param Core\Config $feedsConfig
+     * @param \ACP3\Core\Context\Admin      $context
+     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Modules\Feeds\Validator $feedsValidator
+     * @param \ACP3\Core\Config             $feedsConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
+        Feeds\Validator $feedsValidator,
         Core\Config $feedsConfig)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
+        $this->feedsValidator = $feedsValidator;
         $this->feedsConfig = $feedsConfig;
     }
 
@@ -62,8 +69,7 @@ class Index extends Core\Modules\Controller\Admin
     private function _indexPost(array $formData)
     {
         try {
-            $validator = $this->get('feeds.validator');
-            $validator->validateSettings($formData);
+            $this->feedsValidator->validateSettings($formData);
 
             $data = [
                 'feed_image' => Core\Functions::strEncode($formData['feed_image']),
