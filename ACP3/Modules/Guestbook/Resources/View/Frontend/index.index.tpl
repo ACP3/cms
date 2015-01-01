@@ -23,7 +23,7 @@
             <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
                 <header class="navbar navbar-default">
                     <div class="navbar-header">
-                        <strong class="navbar-brand">
+                        <strong class="navbar-text">
                             {if !empty($row.user_id) && !empty($row.user_id_real)}
                                 <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
                             {else}
