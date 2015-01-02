@@ -1,0 +1,6 @@
+imports:
+  - { resource: ../Blocks/config/services.yml }
+  - { resource: ../Filters/config/services.yml }
+  - { resource: ../Functions/config/services.yml }
+  - { resource: ../Modifiers/config/services.yml }
+  - { resource: ../Resources/config/services.yml }

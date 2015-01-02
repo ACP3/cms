@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Modules\Menus;
+
 /**
  * Generates the breadcrumb and page title
  * @package ACP3\Core
@@ -54,9 +56,12 @@ class Breadcrumb
      * @var array
      */
     protected $seoConfig = [];
+    /**
+     * @var \ACP3\Modules\Menus\Model
+     */
+    protected $menusModel;
 
     /**
-     * @param \ACP3\Core\DB      $db
      * @param \ACP3\Core\Lang    $lang
      * @param \ACP3\Core\Request $request
      * @param \ACP3\Core\Router  $router
@@ -65,7 +70,6 @@ class Breadcrumb
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __construct(
-        DB $db,
         Lang $lang,
         Request $request,
         Router $router,
@@ -76,17 +80,34 @@ class Breadcrumb
         $this->request = $request;
         $this->router = $router;
         $this->seoConfig = $seoConfig->getSettings();
+    }
 
-        // Frontendbereich
-        if ($request->mod !== 'minify' && $request->area !== 'admin') {
+    /**
+     * @param \ACP3\Modules\Menus\Model $menusModel
+     *
+     * @return $this
+     */
+    public function setMenusModel(Menus\Model $menusModel)
+    {
+        $this->menusModel = $menusModel;
+
+        return $this;
+    }
+
+    /**
+     * Initializes and pre populates the breadcrumb
+     */
+    public function prePopulate()
+    {
+        if ($this->request->mod !== 'minify' && $this->request->area !== 'admin' && $this->menusModel) {
             $in = [
-                $request->query,
-                $request->getUriWithoutPages(),
-                $request->mod . '/' . $request->controller . '/' . $request->file . '/',
-                $request->mod . '/' . $request->controller . '/',
-                $request->mod
+                $this->request->query,
+                $this->request->getUriWithoutPages(),
+                $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
+                $this->request->mod . '/' . $this->request->controller . '/',
+                $this->request->mod
             ];
-            $items = $db->getConnection()->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . $db->getPrefix() . 'menu_items AS c, ' . $db->getPrefix() . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', [$in], [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetchAll();
+            $items = $this->menusModel->getMenuItemsByUri($in);
             $c_items = count($items);
 
             // Dynamische Seite (ACP3 intern)
@@ -149,11 +170,11 @@ class Breadcrumb
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @param bool $dbSteps
+     * @param bool   $dbSteps
      *
      * @return $this
      */
-    public function replaceAnchestor($title, $path = '', $dbSteps = false)
+    public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
         if ($dbSteps === true) {
             $index = count($this->stepsFromDb) - (!empty($this->stepsFromDb) ? 1 : 0);
@@ -169,47 +190,62 @@ class Breadcrumb
     }
 
     /**
-     * Gibt je nach Modus entweder die Brotkrümelspur oder den Seitentitel aus
+     * Returns the breadcrumb
      *
-     * @param int $mode
-     *  1 = Brotkrümelspur ausgeben
-     *  2 = Nur Seitentitel ausgeben
-     *  3 = Seitentitel mit eventuellen Prefixes und Postfixes ausgeben
-     *
-     * @return string
+     * @return array
      */
-    public function output($mode = 1)
+    public function getBreadcrumb()
     {
         if (empty($this->breadcrumbCache)) {
             $this->_setBreadcrumbCache();
         }
 
-        // Just return the breadcrumb
-        if ($mode === 1) {
-            return $this->breadcrumbCache;
-        } else { // Just return the title
-            // The last index of the breadcrumb is the page title
-            $title = $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
-            if ($mode === 3) {
-                $separator = ' ' . $this->title['separator'] . ' ';
-                if (!empty($this->title['prefix'])) {
-                    $title = $this->title['prefix'] . $separator . $title;
-                }
-                if (!empty($this->title['postfix'])) {
-                    $title .= $separator . $this->title['postfix'];
-                }
-                $title .= ' | ' . $this->seoConfig['title'];
-            }
-            return $title;
-        }
+        return $this->breadcrumbCache;
     }
 
     /**
+     * Returns the site title
+     *
+     * @return string
+     */
+    public function getSiteTitle()
+    {
+        return $this->seoConfig['title'];
+    }
+
+    /**
+     * Returns the title of the current page
+     *
      * @return string
      */
     public function getPageTitle()
     {
-        return $this->seoConfig['title'];
+        if (empty($this->breadcrumbCache)) {
+            $this->_setBreadcrumbCache();
+        }
+
+        return $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
+    }
+
+    /**
+     * Returns the title of the current page + the site title
+     *
+     * @return string
+     */
+    public function getSiteAndPageTitle()
+    {
+        $title = $this->getPageTitle();
+
+        $separator = ' ' . $this->title['separator'] . ' ';
+        if (!empty($this->title['prefix'])) {
+            $title = $this->title['prefix'] . $separator . $title;
+        }
+        if (!empty($this->title['postfix'])) {
+            $title .= $separator . $this->title['postfix'];
+        }
+        $title .= ' | ' . $this->getSiteTitle();
+
+        return $title;
     }
 
     /**
