@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Abstract Class for the various renderers
+ * @package ACP3\Core\View
  */
 abstract class AbstractRenderer extends ContainerAware implements RendererInterface
 {
