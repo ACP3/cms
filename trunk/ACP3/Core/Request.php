@@ -46,6 +46,10 @@ class Request extends \StdClass
      */
     protected $isAjax;
     /**
+     * @var bool
+     */
+    protected $isHomepage;
+    /**
      * @var string
      */
     protected $protocol = '';
@@ -277,6 +281,18 @@ class Request extends \StdClass
         }
 
         return $this->isAjax;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsHomepage()
+    {
+        if ($this->isHomepage === null) {
+            $this->isHomepage = ($this->query === $this->systemConfig->getSettings()['homepage']);
+        }
+
+        return $this->isHomepage;
     }
 
     /**

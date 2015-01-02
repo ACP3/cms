@@ -73,7 +73,7 @@ abstract class Frontend extends Core\Modules\Controller
         $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
         $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
         $this->view->assign('IN_ADM', $this->request->area === 'admin');
-        $this->view->assign('IS_HOMEPAGE', $this->router->route($this->request->query) === $this->router->route($this->systemConfig->getSettings()['homepage']));
+        $this->view->assign('IS_HOMEPAGE', $this->request->getIsHomepage());
         $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 
         $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
