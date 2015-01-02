@@ -9,6 +9,7 @@ use Monolog\ErrorHandler;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Patchwork\Utf8;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -143,6 +144,10 @@ class Application
      */
     public function initializeClasses()
     {
+        Utf8\Bootup::initAll(); // Enables the portablity layer and configures PHP for UTF-8
+        Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
+        Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
+
         $file = CACHE_DIR . 'sql/container.php';
 
         if (is_file($file) && (!defined('DEBUG') || DEBUG === false)) {
