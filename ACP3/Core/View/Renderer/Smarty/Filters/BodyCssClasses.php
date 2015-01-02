@@ -12,7 +12,7 @@ class BodyCssClasses extends AbstractFilter
     /**
      * @var string
      */
-    protected $filterType = 'pre';
+    protected $filterType = 'output';
 
     /**
      * @var \ACP3\Core\Breadcrumb
@@ -49,29 +49,30 @@ class BodyCssClasses extends AbstractFilter
     {
         if (strpos($tpl_output, '<body') !== false) {
             if ($this->cssClassCache === '') {
-                $pageTitle = \Patchwork\Utf8::toAscii(
-                    html_entity_decode(
-                        str_replace(
-                            ' ',
-                            '-',
-                            strtolower($this->breadcrumb->getPageTitle())
-                        ),
-                        ENT_QUOTES,
-                        'UTF-8'
-                    )
-                );
                 $pieces = [
                     $this->request->mod,
-                    $this->request->mod . '-' . $this->request->controller . '-' . $this->request->file,
-                    $this->request->mod . '-' . $this->request->controller . '-' . $pageTitle
+                    $this->request->mod . '-' . $this->request->controller . '-' . $this->request->file
                 ];
-
-                if ($this->request->area === 'admin') {
-                    $pieces[] = 'in-admin';
-                }
 
                 if ($this->request->getIsHomepage() === true) {
                     $pieces[] = 'is-homepage';
+                } else {
+                    $pageTitle = \Patchwork\Utf8::toAscii(
+                        html_entity_decode(
+                            str_replace(
+                                ' ',
+                                '-',
+                                strtolower($this->breadcrumb->getPageTitle())
+                            ),
+                            ENT_QUOTES,
+                            'UTF-8'
+                        )
+                    );
+                    $pieces[] = $this->request->mod . '-' . $this->request->controller . '-' . $pageTitle;
+                }
+
+                if ($this->request->area === 'admin') {
+                    $pieces[] = 'in-admin';
                 }
 
                 $this->cssClassCache = 'class="' . implode(' ', $pieces) . '"';
