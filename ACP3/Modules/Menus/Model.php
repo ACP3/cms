@@ -14,6 +14,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function menuExists($id)
@@ -22,8 +23,9 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $indexName
+     * @param     $indexName
      * @param int $id
+     *
      * @return bool
      */
     public function menuExistsByName($indexName, $id = 0)
@@ -34,6 +36,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function menuItemExists($id)
@@ -43,6 +46,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -52,6 +56,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneMenuItemById($id)
@@ -61,6 +66,7 @@ class Model extends Core\Model
 
     /**
      * @param $blockId
+     *
      * @return array
      */
     public function getAllItemsByBlockId($blockId)
@@ -70,6 +76,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function getMenuNameById($id)
@@ -79,6 +86,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function getMenuItemUriById($id)
@@ -88,6 +96,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function getMenuItemBlockIdById($id)
@@ -97,6 +106,7 @@ class Model extends Core\Model
 
     /**
      * @param $uri
+     *
      * @return mixed
      */
     public function getMenuItemIdByUri($uri)
@@ -107,6 +117,7 @@ class Model extends Core\Model
     /**
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAllMenus($limitStart = '', $resultsPerPage = '')
@@ -118,13 +129,14 @@ class Model extends Core\Model
     /**
      * @return array
      */
-    public function getAllMenuitems()
+    public function getAllMenuItems()
     {
         return $this->db->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS p, ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
     }
 
     /**
      * @param $blockName
+     *
      * @return array
      */
     public function getVisibleMenuItemsByBlockName($blockName)
@@ -135,11 +147,23 @@ class Model extends Core\Model
     /**
      * @param $menu
      * @param $uris
+     *
      * @return mixed
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getLeftIdByUris($menu, $uris)
     {
-        return $this->db->getConnection()->executeQuery('SELECT m.left_id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS m JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', [$menu, $uris], [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN);
+        return $this->db->executeQuery('SELECT m.left_id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS m JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', [$menu, $uris], [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN);
+    }
+
+    /**
+     * @param $in
+     *
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getMenuItemsByUri(array $in)
+    {
+        return $this->db->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS c, ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', [$in], [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetchAll();
     }
 }

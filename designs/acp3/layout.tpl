@@ -9,7 +9,9 @@
 
     <body>
     <div class="container-fluid">
-        <h1 id="logo" class="hidden-xs"><a href="{uri args=""}">{$PAGE_TITLE}</a></h1>
+        <h1 id="logo" class="hidden-xs">
+            <a href="{uri args=""}">{site_title}</a>
+        </h1>
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -19,7 +21,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">{$PAGE_TITLE}</a>
+                    <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">{site_title}</a>
                 </div>
                 <div id="navbar-collapse" class="collapse navbar-collapse">
                     {navbar block="main"}
@@ -44,7 +46,7 @@
                         {include file="asset:system/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
                     {/block}
                 </div>
-                <h2>{$TITLE}</h2>
+                <h2>{page_title}</h2>
                 {block CONTENT}{/block}
             </main>
             <div class="col-md-2 hidden-xs hidden-sm">

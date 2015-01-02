@@ -159,7 +159,7 @@ class Application
             $this->container = new ContainerBuilder();
             $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
             $loader->load(ACP3_DIR . 'config/services.yml');
-            $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
+            $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
             // Try to get all available services
             /** @var Modules $modules */

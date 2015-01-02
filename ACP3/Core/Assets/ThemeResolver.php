@@ -81,7 +81,7 @@ class ThemeResolver
 
         $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
 
-        // Return early, if the path has already been cached
+        // Return early, if the path has been already cached
         if (isset($this->cachedPaths[$systemAssetPath])) {
             return $this->cachedPaths[$systemAssetPath];
         }
