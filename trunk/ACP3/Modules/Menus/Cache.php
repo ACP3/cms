@@ -58,7 +58,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function setMenuItemsCache()
     {
-        $items = $this->menuModel->getAllMenuitems();
+        $items = $this->menuModel->getAllMenuItems();
         $c_items = count($items);
 
         if ($c_items > 0) {

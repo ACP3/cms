@@ -50,16 +50,19 @@ abstract class Frontend extends Core\Modules\Controller
      */
     public function preDispatch()
     {
-        // Aktuelle Datensatzposition bestimmen
-        if (!defined('POS')) {
-            define('POS', (int)$this->request->page >= 1 ? (int)($this->request->page - 1) * $this->auth->entries : 0);
-        }
-
         $path = $this->request->area . '/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
 
         if ($this->acl->hasPermission($path) === false) {
             throw new Core\Exceptions\AccessForbidden();
         }
+
+        // Get the current resultset position
+        if (!defined('POS')) {
+            define('POS', (int)$this->request->page >= 1 ? (int)($this->request->page - 1) * $this->auth->entries : 0);
+        }
+
+        // Initialize the breadcrumb
+        $this->breadcrumb->prePopulate();
 
         $this->view->assign('PHP_SELF', PHP_SELF);
         $this->view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
@@ -95,10 +98,7 @@ abstract class Frontend extends Core\Modules\Controller
                     $this->setTemplate($this->request->mod . '/' . ucfirst($this->request->area) . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
                 }
 
-                $this->view->assign('PAGE_TITLE', $this->breadcrumb->getPageTitle());
-                $this->view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
-                $this->view->assign('TITLE', $this->breadcrumb->output(2));
-                $this->view->assign('BREADCRUMB', $this->breadcrumb->output());
+                $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
                 $this->view->assign('META', $this->seo->getMetaTags());
 
                 $this->view->displayTemplate($this->getTemplate());

@@ -78,7 +78,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->articlesModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) === true) {
             $article = $this->articlesCache->getCache($this->request->id);
 
-            $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
+            $this->breadcrumb->replaceAncestor($article['title'], 0, true);
 
             $this->view->assign('page', $this->toc->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages()));
         } else {

@@ -28,7 +28,9 @@ services:
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@core.db', '@core.lang', '@core.request', '@core.router', '@seo.config']
+    arguments: ['@core.lang', '@core.request', '@core.router', '@seo.config']
+    calls:
+      - ['setMenusModel', ['@?menus.model']]
 
   core.context:
     class : ACP3\Core\Context
