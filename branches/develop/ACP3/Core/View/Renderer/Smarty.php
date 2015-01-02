@@ -2,7 +2,6 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Core\View\AbstractRenderer;
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter;
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;

@@ -1,6 +1,6 @@
 <?php
 
-namespace ACP3\Core\View;
+namespace ACP3\Core\View\Renderer;
 
 /**
  * Interface RendererInterface

@@ -1,7 +1,6 @@
 <?php
 
 namespace ACP3\Core\View\Renderer;
-use ACP3\Core\View\AbstractRenderer;
 
 /**
  * Renderer for the output of RSS and ATOM News feeds
