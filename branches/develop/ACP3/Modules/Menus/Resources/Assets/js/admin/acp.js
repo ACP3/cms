@@ -15,9 +15,10 @@ $(document).ready(function () {
         }
     });
 
-    var currentMode = $('#mode').val();
+    var $mode = $('#mode'),
+        currentMode = $mode.val();
     // Seitentyp
-    $('#mode').change(function () {
+    $mode.change(function () {
         var mode = $(this).val();
 
         // SEO Tab bei einem externen Hyperlink deaktivieren
@@ -36,8 +37,9 @@ $(document).ready(function () {
 
             // Modul im Dropdown-Menü selektieren, falls zuvor als Modus eine dynamische Seite aktiv war
             if (currentMode == 2) {
-                var match = $('#link-uri').val().match(/^([a-z\d_\-]+)\/([a-z\d_\-]+\/)+$/);
-                if (!$('#link-uri').val().match(/^articles\/details\/id_(\d+)\/$/) && match[1] != null && $('#module option[value="' + match[1] + '"]').length > 0) {
+                var $link = $('#link-uri'),
+                    match = $link.val().match(/^([a-z\d_\-]+)\/([a-z\d_\-]+\/)+$/);
+                if (!$link.val().match(/^articles\/details\/id_(\d+)\/$/) && match[1] != null && $('#module').find('option[value="' + match[1] + '"]').length > 0) {
                     $('#link-module').val(match[1]);
                 }
             }
@@ -70,27 +72,35 @@ $(document).ready(function () {
     }).change();
 
     $('#link-uri').blur(function () {
-        var match = $(this).val().match(/^articles\/details\/id_(\d+)\/$/);
-        if (match[1] !== null && $('#articles option[value="' + match[1] + '"]').length > 0) {
+        var match = $(this).val().match(/^articles\/index\/details\/id_(\d+)\/$/);
+        if (match[1] !== null && $('#articles').find('option[value="' + match[1] + '"]').length > 0) {
             $('#mode').val(4).change();
             $('#link-articles').val(match[1]);
         }
     });
 
+    var $parent = $('#parent');
+
     // Nur die dem Block zugehörigen übergeordneten Seiten anzeigen
-    $('#parent optgroup').hide();
+    $parent.find('optgroup').hide();
 
-    var def_block = $('#block-id option:selected').index() || 0;
+    var $blockId = $('#block-id'),
+        defaultBlock = $blockId.find('option:selected').index() || 0;
 
-    $('#block-id').change(function () {
-        var block = $('#block-id option:selected').eq(0).text();
-        $('#parent optgroup:not([label=\'' + block + '\'])').hide();
-        $('#parent optgroup[label=\'' + block + '\']').show();
+    $blockId.change(function () {
+        var blockName = $blockId.find('option:selected').eq(0).text();
 
-        $('#block-id option').each(function () {
-            if ($(this).is(':selected') && $('#block-id option').index(this) !== def_block) {
-                $('#parent optgroup option:selected').removeAttr('selected');
+        $parent.find('optgroup:not([label="' + blockName + '"])')
+            .prop('disabled', true)
+            .hide();
+        $parent.find('optgroup[label="' + blockName + '"]')
+            .removeProp('disabled')
+            .show();
+
+        $blockId.find('option').each(function (index) {
+            if ($(this).is(':selected') && index !== defaultBlock) {
+                $parent.find('optgroup option:selected').removeAttr('selected');
             }
         });
-    }).change();
+    }).triggerHandler('change');
 });

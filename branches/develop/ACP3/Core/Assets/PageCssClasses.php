@@ -72,15 +72,19 @@ class PageCssClasses
     public function getDetails()
     {
         if ($this->details === null) {
-            $pageTitle = \Patchwork\Utf8::toAscii(
-                html_entity_decode(
-                    str_replace(
-                        ' ',
-                        '-',
-                        strtolower($this->breadcrumb->getPageTitle())
-                    ),
-                    ENT_QUOTES,
-                    'UTF-8'
+            $pageTitle = preg_replace(
+                '=[^a-z0-9\-]=',
+                '',
+                \Patchwork\Utf8::toAscii(
+                    html_entity_decode(
+                        str_replace(
+                            ' ',
+                            '-',
+                            strtolower($this->breadcrumb->getPageTitle())
+                        ),
+                        ENT_QUOTES,
+                        'UTF-8'
+                    )
                 )
             );
             $this->details = $this->request->mod . '-' . $this->request->controller . '-' . $pageTitle;
