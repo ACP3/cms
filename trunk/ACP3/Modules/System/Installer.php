@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 50;
+    const SCHEMA_VERSION = 51;
 
     /**
      * @var array
@@ -28,6 +28,7 @@ class Installer extends Modules\AbstractInstaller
                 'configuration' => 7,
             ],
             'Maintenance' => [
+                'cache' => 7,
                 'sql_export' => 7,
                 'sql_import' => 7,
             ]
@@ -281,6 +282,9 @@ class Installer extends Modules\AbstractInstaller
 
                     return $result;
                 }
+            ],
+            51 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'admin', 'maintenance', 'cache', '', 7);",
             ]
         ];
     }
