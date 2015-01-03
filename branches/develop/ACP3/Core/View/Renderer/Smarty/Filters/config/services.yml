@@ -1,8 +1,4 @@
 services:
-  smarty.filter.body_css_classes:
-    class: ACP3\Core\View\Renderer\Smarty\Filters\BodyCssClasses
-    arguments: ['@core.breadcrumb', '@core.request']
-
   smarty.filter.move_to_bottom:
     class: ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom
     arguments: ['@core.assets', '@core.request']
@@ -10,3 +6,7 @@ services:
   smarty.filter.move_to_head:
     class: ACP3\Core\View\Renderer\Smarty\Filters\MoveToHead
     arguments: ['@core.assets']
+
+  smarty.filter.page_css_classes:
+    class: ACP3\Core\View\Renderer\Smarty\Filters\PageCssClasses
+    arguments: ['@core.assets.pageCssClasses', '@core.request']

@@ -4,10 +4,10 @@ namespace ACP3\Core\View\Renderer\Smarty\Filters;
 use ACP3\Core;
 
 /**
- * Class BodyCssClasses
+ * Class PageCssClasses
  * @package ACP3\Core\View\Renderer\Smarty\Filters
  */
-class BodyCssClasses extends AbstractFilter
+class PageCssClasses extends AbstractFilter
 {
     /**
      * @var string
@@ -15,9 +15,9 @@ class BodyCssClasses extends AbstractFilter
     protected $filterType = 'output';
 
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Assets\PageCssClasses
      */
-    protected $breadcrumb;
+    protected $pageCssClasses;
     /**
      * @var \ACP3\Core\Request
      */
@@ -28,14 +28,14 @@ class BodyCssClasses extends AbstractFilter
     protected $cssClassCache = '';
 
     /**
-     * @param \ACP3\Core\Breadcrumb $breadcrumb
-     * @param \ACP3\Core\Request    $request
+     * @param \ACP3\Core\Assets\PageCssClasses $pageCssClasses
+     * @param \ACP3\Core\Request               $request
      */
     public function __construct(
-        Core\Breadcrumb $breadcrumb,
+        Core\Assets\PageCssClasses $pageCssClasses,
         Core\Request $request)
     {
-        $this->breadcrumb = $breadcrumb;
+        $this->pageCssClasses = $pageCssClasses;
         $this->request = $request;
     }
 
@@ -50,29 +50,16 @@ class BodyCssClasses extends AbstractFilter
         if (strpos($tpl_output, '<body') !== false) {
             if ($this->cssClassCache === '') {
                 $pieces = [
-                    $this->request->mod,
-                    $this->request->mod . '-' . $this->request->controller . '-' . $this->request->file
+                    $this->pageCssClasses->getModule(),
+                    $this->pageCssClasses->getControllerAction()
                 ];
-
-                if ($this->request->getIsHomepage() === true) {
-                    $pieces[] = 'is-homepage';
-                } else {
-                    $pageTitle = \Patchwork\Utf8::toAscii(
-                        html_entity_decode(
-                            str_replace(
-                                ' ',
-                                '-',
-                                strtolower($this->breadcrumb->getPageTitle())
-                            ),
-                            ENT_QUOTES,
-                            'UTF-8'
-                        )
-                    );
-                    $pieces[] = $this->request->mod . '-' . $this->request->controller . '-' . $pageTitle;
-                }
 
                 if ($this->request->area === 'admin') {
                     $pieces[] = 'in-admin';
+                } elseif ($this->request->getIsHomepage() === true) {
+                    $pieces[] = 'is-homepage';
+                } else {
+                    $pieces[] = $this->pageCssClasses->getDetails();
                 }
 
                 $this->cssClassCache = 'class="' . implode(' ', $pieces) . '"';
