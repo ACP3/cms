@@ -58,6 +58,37 @@ class Maintenance extends Core\Modules\Controller\Admin
         $this->systemValidator = $systemValidator;
     }
 
+    public function actionCache()
+    {
+        if (isset($this->request->action)) {
+            $result = false;
+            switch ($this->request->action) {
+                case 'general':
+                    $result = Core\Cache::purge(CACHE_DIR . 'sql');
+                    $text = $this->lang->t('system', $result === true ? 'cache_type_general_delete_success' : 'cache_type_general_delete_success');
+                    break;
+                case 'images':
+                    $result = Core\Cache::purge(CACHE_DIR . 'images');
+                    $text = $this->lang->t('system', $result === true ? 'cache_type_images_delete_success' : 'cache_type_images_delete_success');
+                    break;
+                case 'minify':
+                    $result = Core\Cache::purge(CACHE_DIR . 'minify');
+                    $text = $this->lang->t('system', $result === true ? 'cache_type_minify_delete_success' : 'cache_type_minify_delete_success');
+                    break;
+                case 'templates':
+                    $result = (Core\Cache::purge(CACHE_DIR . 'tpl_compiled') && Core\Cache::purge(CACHE_DIR . 'tpl_cached'));
+                    $text = $this->lang->t('system', $result === true ? 'cache_type_templates_delete_success' : 'cache_type_templates_delete_success');
+                    break;
+                default:
+                    $text = $this->lang->t('system', 'cache_type_not_found');
+            }
+
+            $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
+        }
+
+        return;
+    }
+
     public function actionIndex()
     {
         return;
