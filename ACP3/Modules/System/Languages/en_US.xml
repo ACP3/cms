@@ -18,6 +18,7 @@
         <item key="admin_extensions_index">Extensions</item>
         <item key="admin_extensions_modules">Modules</item>
         <item key="admin_index_configuration">Configuration</item>
+        <item key="admin_maintenance_cache">Cache-Management</item>
         <item key="admin_maintenance_index">Maintenance</item>
         <item key="admin_maintenance_sql_export">SQL table export</item>
         <item key="admin_maintenance_sql_import">SQL table import</item>
@@ -26,7 +27,21 @@
         <item key="author">Author</item>
         <item key="back">Back</item>
         <item key="cache_images">Cache pictures</item>
+        <item key="cache_type_general">General Modules-Cache (Modules, Database queries, paths to static ressources)</item>
+        <item key="cache_type_general_delete_error">While emptying the Modules-Cache an error has occurred.</item>
+        <item key="cache_type_general_delete_success">The Modules-Cache has been successfully emptied.</item>
+        <item key="cache_type_images">Cached images</item>
+        <item key="cache_type_images_delete_error">While emptying the Image-Cache an error has occurred.</item>
+        <item key="cache_type_images_delete_success">The Image-Cache has been successfully emptied.</item>
+        <item key="cache_type_minify">Cached Stylesheets and JavaScript files</item>
+        <item key="cache_type_minify_delete_error">While emptying the Stylesheets and JavaScript files cache an error has occurred.</item>
+        <item key="cache_type_minify_delete_success">The Stylesheets and JavaScript files cache has been successfully emptied.</item>
+        <item key="cache_type_not_found">The requested cache type could not be found.</item>
+        <item key="cache_type_templates">Cached Smarty-Templates</item>
+        <item key="cache_type_templates_delete_error">While emptying the Templates-Cache an error has occurred.</item>
+        <item key="cache_type_templates_delete_success">The Templates-Cache has been successfully emptied.</item>
         <item key="cancel">Cancel</item>
+        <item key="close_window">Close window</item>
         <item key="complete_export">Complete</item>
         <item key="configuration">Configuration</item>
         <item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
@@ -34,7 +49,6 @@
         <item key="confirm_delete">Do you really want to delete the marked entries?</item>
         <item key="confirm_delete_multiple">Do you really want to delete the {items} selected entries?</item>
         <item key="confirm_delete_single">Do you really want to delete the selected entry?</item>
-        <item key="close_window">Close window</item>
         <item key="create_error">While creating the entry an error has occured.</item>
         <item key="create_success">The entry has been successfully created.</item>
         <item key="critical_error_occurred_see_log">A critical error has occurred. For further details please see the log files.</item>
@@ -96,6 +110,7 @@
         <item key="date_wednesday">Wednesday</item>
         <item key="day">Day</item>
         <item key="delete">Delete</item>
+        <item key="delete_caches_description">On this page you can refresh the automatically generated caches of the ACP3.</item>
         <item key="delete_error">While deleting the marked entries an error has occured.</item>
         <item key="delete_marked">Delete marked entries</item>
         <item key="delete_success">The marked entries have been successfully deleted.</item>
@@ -189,8 +204,7 @@
         <item key="mod_uninstallation_success">The module has been successfully uninstalled.</item>
         <item key="module">Module</item>
         <item key="module_already_installed">The module is already installed!</item>
-        <item key="module_disable_not_possible">This module can not be disabled, because the following modules would otherwise cease to function: %s
-        </item>
+        <item key="module_disable_not_possible">This module can not be disabled, because the following modules would otherwise cease to function: %s</item>
         <item key="module_installer_not_found">Unfortunately, this module does not have an installer!</item>
         <item key="module_name">Module name</item>
         <item key="modules">Modules</item>
@@ -207,8 +221,7 @@
         <item key="no_entries">There are no entries available.</item>
         <item key="no_entries_selected">Please select the entries that should be deleted.</item>
         <item key="no_entries_short">No entries available.</item>
-        <item key="no_modules_available_for_installation">Currently there are no new modules available for installation!
-        </item>
+        <item key="no_modules_available_for_installation">Currently there are no new modules available for installation!</item>
         <item key="order">Order</item>
         <item key="order_error">While editing the order an error has occured.</item>
         <item key="order_success">The order has been successfully edited.</item>
@@ -220,8 +233,7 @@
         <item key="page_x">Page %d</item>
         <item key="pagination">Pagination</item>
         <item key="performance">Performance</item>
-        <item key="php_date_function">
-            <![CDATA[see <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a> function of PHP.]]></item>
+        <item key="php_date_function"><![CDATA[see <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a> function of PHP.]]></item>
         <item key="pls_select">Please select</item>
         <item key="previous">Previous</item>
         <item key="previous_page">Previous page</item>
@@ -229,6 +241,7 @@
         <item key="protected_module_description">Protected module can't be disabled or uninstalled.</item>
         <item key="publication_period">Publication period</item>
         <item key="records_per_page">Records per page</item>
+        <item key="refresh">Refresh</item>
         <item key="reset">Reset</item>
         <item key="result">Result</item>
         <item key="select_cache_images">Please select whether you want to cache pictures.</item>
@@ -263,12 +276,9 @@
         <item key="time_zone">Time zone</item>
         <item key="title">Title</item>
         <item key="title_for_toc">Title for table of contents</item>
+        <item key="title_to_short">Please type in a title.</item>
         <item key="toc_page">Page %d</item>
         <item key="toggle_navigation">Toggle Navigation</item>
-        <item key="title_to_short">Please type in a title.</item>
-        <item key="type_in_additional_javascript_files">Some of the specified javascript files could not be found.</item>
-        <item key="type_in_additional_stylesheets">Some of the specified stylesheets could not be found.</item>
-        <item key="type_in_date_format">Please type in a date format.</item>
         <item key="type_in_flood_barrier">Please enter the number in seconds a user can not submit posts.</item>
         <item key="type_in_long_date_format">Please type in the long date format.</item>
         <item key="type_in_mailer_smtp_host">Please type in the hostname of the SMTP server.</item>
