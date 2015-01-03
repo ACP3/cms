@@ -2,7 +2,7 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\View\AbstractRenderer;
+use ACP3\Core\View\Renderer\AbstractRenderer;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**

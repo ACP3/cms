@@ -2,7 +2,6 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Core\View\AbstractRenderer;
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter;
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
@@ -38,8 +37,7 @@ class Smarty extends AbstractRenderer
     }
 
     /**
-     * @param      $name
-     * @param null $value
+     * @inheritdoc
      */
     public function assign($name, $value = null)
     {
@@ -64,15 +62,19 @@ class Smarty extends AbstractRenderer
         return $this->renderer->fetch($template, $cache_id, $compile_id, $parent, $display);
     }
 
+    /**
+     * @param      $template
+     * @param null $cache_id
+     * @param null $compile_id
+     * @param null $parent
+     */
     public function display($template, $cache_id = null, $compile_id = null, $parent = null)
     {
         $this->renderer->display($template, $cache_id, $compile_id, $parent);
     }
 
     /**
-     * @param $template
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function templateExists($template)
     {

@@ -1,10 +1,9 @@
 <?php
 
 namespace ACP3\Core\View\Renderer;
-use ACP3\Core\View\AbstractRenderer;
 
 /**
- * Renderer for the output of RSS and ATOM newsfeeds
+ * Renderer for the output of RSS and ATOM News feeds
  * @package ACP3\Core\View\Renderer
  */
 class FeedGenerator extends AbstractRenderer
@@ -103,9 +102,7 @@ class FeedGenerator extends AbstractRenderer
     }
 
     /**
-     * @param $template
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function templateExists($template)
     {
