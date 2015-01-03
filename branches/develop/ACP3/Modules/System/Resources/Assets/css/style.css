@@ -120,7 +120,7 @@
     display: block;
 }
 
-/* Inhaltsverzeichnis */
+/* Table of contents */
 #toc {
     width: 20%;
     margin: 5px 10px 10px 0;
@@ -196,4 +196,9 @@
 /* Inline validation errors */
 .validation-failed {
     margin: 15px 0 0;
+}
+
+/* Cache management */
+.cache-type {
+    line-height: 34px;
 }
