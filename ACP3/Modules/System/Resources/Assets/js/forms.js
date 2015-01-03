@@ -79,21 +79,35 @@ jQuery.fn.formSubmit = function (customFormData) {
                     if (data.redirect_url) {
                         window.location.href = data.redirect_url;
                     } else {
-                        if (data.success === false) {
+                        var $content = $('#content'),
+                            offsetTop = $content.offset().top;
+
+                        // Scroll to the beginning of the content area, if the current viewport is near the bottom
+                        if ($(document).scrollTop() > offsetTop) {
+                            $('html, body').animate(
+                                {
+                                    scrollTop: offsetTop
+                                },
+                                'fast'
+                            );
+                        }
+
+                        if (data.success === false) { // An error has occurred
                             $('#error-box').remove();
                             var $modalBody = $form.find('.modal-body');
                             // Place the error messages inside the modal body for a better styling
-                            if ($modalBody.length > 0 && $modalBody.is(':visible')) {
-                                $(data.content).hide().prependTo($modalBody).fadeIn();
-                            } else {
-                                $(data.content).hide().prependTo($form).fadeIn();
-                            }
-                        } else {
-                            $('#content').html(data);
+                            $(data.content)
+                                .hide()
+                                .prependTo(($modalBody.length > 0 && $modalBody.is(':visible')) ? $modalBody : $form)
+                                .fadeIn();
+                        } else { // The request was successful
+                            $content.html(data);
                         }
                     }
                 } catch (err) {
-                    console.log(err.message);
+                    if (typeof console !== "undefined") {
+                        console.log(err.message);
+                    }
                 }
             },
             complete: function () {
