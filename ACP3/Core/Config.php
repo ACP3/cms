@@ -21,6 +21,10 @@ class Config
      * @var string
      */
     protected $module = '';
+    /**
+     * @var array
+     */
+    protected $settings = [];
 
     /**
      * @param Cache $moduleCache
@@ -96,10 +100,14 @@ class Config
      */
     public function getSettings()
     {
-        if ($this->moduleCache->contains('settings') === false) {
-            $this->setCache();
+        if ($this->settings === []) {
+            if ($this->moduleCache->contains('settings') === false) {
+                $this->setCache();
+            }
+
+            $this->settings = $this->moduleCache->fetch('settings');
         }
 
-        return $this->moduleCache->fetch('settings');
+        return $this->settings;
     }
 }
