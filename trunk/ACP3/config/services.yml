@@ -18,13 +18,17 @@ services:
     class: ACP3\Core\Assets
     arguments: ['@core.modules', '@core.router', '@core.assets.themeResolver', '@system.config']
 
-  core.auth:
-    class: ACP3\Core\Auth
-    arguments: ['@core.session', '@core.helpers.secure', '@system.config', '@users.config', '@users.model']
-
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver
     arguments: ['@core.xml', '@minify.cache']
+
+  core.assets.pageCssClasses:
+    class: ACP3\Core\Assets\PageCssClasses
+    arguments: ['@core.breadcrumb', '@core.request']
+
+  core.auth:
+    class: ACP3\Core\Auth
+    arguments: ['@core.session', '@core.helpers.secure', '@system.config', '@users.config', '@users.model']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb

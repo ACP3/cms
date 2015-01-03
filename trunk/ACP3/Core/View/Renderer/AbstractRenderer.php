@@ -1,11 +1,12 @@
 <?php
 
-namespace ACP3\Core\View;
+namespace ACP3\Core\View\Renderer;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Abstract Class for the various renderers
+ * @package ACP3\Core\View
  */
 abstract class AbstractRenderer extends ContainerAware implements RendererInterface
 {

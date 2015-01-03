@@ -43,6 +43,10 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Mark
     arguments: ['@core.lang']
 
+  smarty.plugin.page_css_classes:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\PageCssClasses
+    arguments: ['@core.assets.pageCssClasses']
+
   smarty.plugin.page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageTitle
     arguments: ['@core.breadcrumb']
