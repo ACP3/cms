@@ -10,11 +10,11 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\ACL
+     * @var \ACP3\Core\Validator\Rules\ACL
      */
     protected $aclValidator;
     /**
-     * @var Core\Validator\Rules\Router
+     * @var \ACP3\Core\Validator\Rules\Router
      */
     protected $routerValidator;
     /**
@@ -22,17 +22,17 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var Model
+     * @var \ACP3\Modules\Permissions\Model
      */
     protected $permissionsModel;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\ACL $aclValidator
-     * @param Core\Validator\Rules\Router $routerValidator
-     * @param Core\Modules $modules
-     * @param Model $permissionsModel
+     * @param \ACP3\Core\Lang                   $lang
+     * @param \ACP3\Core\Validator\Rules\Misc   $validate
+     * @param \ACP3\Core\Validator\Rules\ACL    $aclValidator
+     * @param \ACP3\Core\Validator\Rules\Router $routerValidator
+     * @param \ACP3\Core\Modules                $modules
+     * @param \ACP3\Modules\Permissions\Model   $permissionsModel
      */
     public function __construct(
         Core\Lang $lang,

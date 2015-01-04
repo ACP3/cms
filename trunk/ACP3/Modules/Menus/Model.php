@@ -65,6 +65,16 @@ class Model extends Core\Model
     }
 
     /**
+     * @param $uri
+     *
+     * @return mixed
+     */
+    public function getOneMenuItemUri($uri)
+    {
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ITEMS . ' WHERE uri = ?', [$uri]);
+    }
+
+    /**
      * @param $blockId
      *
      * @return array

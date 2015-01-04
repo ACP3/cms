@@ -31,47 +31,7 @@
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="block-id" class="col-sm-2 control-label">{lang t="menus|menu_bar"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="block_id" id="block-id">
-                                {foreach $blocks as $row}
-                                    <option value="{$row.id}"{$row.selected}>{$row.title}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="parent" class="col-sm-2 control-label">{lang t="menus|superior_page"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="parent" id="parent">
-                                <option value="">{lang t="menus|no_superior_page"}</option>
-                                {foreach $pages_list as $blocks}
-                                    <optgroup label="{$blocks.title}">
-                                        {foreach $blocks.items as $row}
-                                            <option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
-                                        {/foreach}
-                                    </optgroup>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="{$display.0.id}" class="col-sm-2 control-label">{lang t="menus|display_item"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $display as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="display" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
+                    {include file="asset:menus/create_menu_item.tpl"}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div id="module-container" class="form-group">
