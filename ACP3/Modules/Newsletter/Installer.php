@@ -95,10 +95,10 @@ class Installer extends Modules\AbstractInstaller
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
             ],
             34 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",
             ],
             35 => [
-                "DELETE FROM `{pre}acl_resources` WHERE module_id = '" . $this->getModuleId() . "' AND page = 'archive';",
+                "DELETE FROM `{pre}acl_resources` WHERE module_id = '" . $this->getModuleId() . "' AND `page` = 'archive';",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'list_archive', '', 1);",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'details', '', 1);",
             ],
@@ -109,26 +109,26 @@ class Installer extends Modules\AbstractInstaller
                 "ALTER TABLE `{pre}newsletters` ADD `html` TINYINT(1) NOT NULL;",
             ],
             38 => [
-                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "newsletter/", "newsletter/index/") WHERE uri LIKE "newsletter/%";',
+                'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "newsletter/", "newsletter/index/") WHERE `uri` LIKE "newsletter/%";',
             ],
             39 => [
-                'UPDATE `{pre}acl_resources` SET controller = "accounts" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_account%";',
-                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_accounts", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_accounts";',
-                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_account", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_account";',
-                'UPDATE `{pre}acl_resources` SET controller = "archive", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "index_archive";',
-                'UPDATE `{pre}acl_resources` SET controller = "archive" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "details";',
+                'UPDATE `{pre}acl_resources` SET `controller` = "accounts" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` LIKE "%_account%";',
+                'UPDATE `{pre}acl_resources` SET `page` = REPLACE(`page`, "_accounts", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` LIKE "%_accounts";',
+                'UPDATE `{pre}acl_resources` SET `page` = REPLACE(`page`, "_account", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` LIKE "%_account";',
+                'UPDATE `{pre}acl_resources` SET `controller` = "archive", `page` = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` = "index_archive";',
+                'UPDATE `{pre}acl_resources` SET `controller` = "archive" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` = "details";',
             ],
             40 => [
-                'UPDATE `{pre}acl_resources` SET controller = "accounts" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "admin" AND page = "activate";',
+                'UPDATE `{pre}acl_resources` SET `controller` = "accounts" WHERE `module_id` = ' . $this->getModuleId() . ' AND `area` = "admin" AND `page` = "activate";',
             ],
             41 => [
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list/", "newsletter/index/index/") WHERE uri LIKE "newsletter/list/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list_archive/", "newsletter/archive/index/") WHERE uri LIKE "newsletter/list_archive/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/details/", "newsletter/archive/details/") WHERE uri LIKE "newsletter/details/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "newsletter/list/", "newsletter/index/index/") WHERE `uri` LIKE "newsletter/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "newsletter/list_archive/", "newsletter/archive/index/") WHERE `uri` LIKE "newsletter/list_archive/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "newsletter/details/", "newsletter/archive/details/") WHERE `uri` LIKE "newsletter/details/%";' : '',
             ],
             42 => [
-                'UPDATE `{pre}acl_resources` SET area = "frontend", controller = "archive", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "list_archive";',
-                'UPDATE `{pre}acl_resources` SET area = "frontend" WHERE `module_id` = ' . $this->getModuleId() . ' AND controller="archive" AND page = "details";',
+                'UPDATE `{pre}acl_resources` SET `area` = "frontend", `controller` = "archive", `page` = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` = "list_archive";',
+                'UPDATE `{pre}acl_resources` SET `area` = "frontend" WHERE `module_id` = ' . $this->getModuleId() . ' AND `controller` = "archive" AND `page` = "details";',
             ],
             43 => [
                 'CREATE TABLE `{pre}newsletter_queue` (

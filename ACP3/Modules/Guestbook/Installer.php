@@ -66,11 +66,11 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             31 => [
-                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "guestbook/", "guestbook/index/") WHERE uri LIKE "guestbook/%";',
+                'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "guestbook/", "guestbook/index/") WHERE `uri` LIKE "guestbook/%";',
             ],
             32 => [
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/list/", "guestbook/index/index/") WHERE uri LIKE "guestbook/list/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "guestbook/create/", "guestbook/index/create/") WHERE uri LIKE "guestbook/create/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "guestbook/list/", "guestbook/index/index/") WHERE `uri` LIKE "guestbook/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "guestbook/create/", "guestbook/index/create/") WHERE `uri` LIKE "guestbook/create/%";' : '',
             ]
         ];
     }
