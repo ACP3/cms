@@ -19,7 +19,7 @@ services:
 
   menus.helpers:
     class: ACP3\Modules\Menus\Helpers
-    arguments: ['@core.helpers.forms', '@menus.model', '@menus.cache']
+    arguments: ['@core.db', '@core.lang', '@core.helpers.forms', '@menus.model', '@menus.cache']
 
   menus.model:
     class: ACP3\Modules\Menus\Model

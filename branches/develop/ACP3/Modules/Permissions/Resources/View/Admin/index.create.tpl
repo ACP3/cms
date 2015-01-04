@@ -21,9 +21,9 @@
                     </div>
                     {if isset($parent)}
                         <div class="form-group">
-                            <label for="parent" class="col-sm-2 control-label">{lang t="permissions|superior_role"}</label>
+                            <label for="parent-id" class="col-sm-2 control-label">{lang t="permissions|superior_role"}</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="parent" id="parent">
+                                <select class="form-control" name="parent_id" id="parent-id">
                                     {foreach $parent as $row}
                                         <option value="{$row.id}"{$row.selected}>{$row.name}</option>
                                     {/foreach}
