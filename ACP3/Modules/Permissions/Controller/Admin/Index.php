@@ -238,11 +238,11 @@ class Index extends Core\Modules\Controller\Admin
             $insertValues = [
                 'id' => '',
                 'name' => Core\Functions::strEncode($formData['name']),
-                'parent_id' => $formData['parent'],
+                'parent_id' => $formData['parent_id'],
             ];
 
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $bool = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
+            $bool = $nestedSet->insertNode((int)$formData['parent_id'], $insertValues);
             $roleId = $this->db->getConnection()->lastInsertId();
 
             foreach ($formData['privileges'] as $moduleId => $privileges) {
@@ -286,10 +286,10 @@ class Index extends Core\Modules\Controller\Admin
 
             $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),
-                'parent_id' => $this->request->id == 1 ? 0 : $formData['parent'],
+                'parent_id' => $this->request->id == 1 ? 0 : $formData['parent_id'],
             ];
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$formData['parent'], 0, $updateValues);
+            $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$formData['parent_id'], 0, $updateValues);
 
             $this->db->getConnection()->beginTransaction();
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten

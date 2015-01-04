@@ -16,10 +16,7 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Core\Date
      */
     protected $date;
-    /**
-     * @var \ACP3\Core\DB
-     */
-    protected $db;
+
     /**
      * @var \ACP3\Modules\Articles\Model
      */
@@ -33,13 +30,17 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $articlesValidator;
     /**
-     * @var \ACP3\Modules\Menus\Model
-     */
-    protected $menusModel;
-    /**
      * @var \ACP3\Modules\Menus\Cache
      */
     protected $menusCache;
+    /**
+     * @var \ACP3\Modules\Menus\Helpers
+     */
+    protected $menusHelpers;
+    /**
+     * @var \ACP3\Modules\Menus\Model
+     */
+    protected $menusModel;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -48,7 +49,6 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param \ACP3\Core\Context\Admin         $context
      * @param \ACP3\Core\Date                  $date
-     * @param \ACP3\Core\DB                    $db
      * @param \ACP3\Modules\Articles\Model     $articlesModel
      * @param \ACP3\Modules\Articles\Cache     $articlesCache
      * @param \ACP3\Modules\Articles\Validator $articlesValidator
@@ -57,7 +57,6 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        Core\DB $db,
         Articles\Model $articlesModel,
         Articles\Cache $articlesCache,
         Articles\Validator $articlesValidator,
@@ -66,7 +65,6 @@ class Index extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->date = $date;
-        $this->db = $db;
         $this->articlesModel = $articlesModel;
         $this->articlesCache = $articlesCache;
         $this->articlesValidator = $articlesValidator;
@@ -81,6 +79,18 @@ class Index extends Core\Modules\Controller\Admin
     public function setMenusCache(Menus\Cache $menusCache)
     {
         $this->menusCache = $menusCache;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\Menus\Helpers $menusHelpers
+     *
+     * @return $this
+     */
+    public function setMenusHelpers(Menus\Helpers $menusHelpers)
+    {
+        $this->menusHelpers = $menusHelpers;
 
         return $this;
     }
@@ -107,13 +117,9 @@ class Index extends Core\Modules\Controller\Admin
             $lang_options = [$this->lang->t('articles', 'create_menu_item')];
             $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', [1], $lang_options, 0, 'checked'));
 
-            // Block
-            $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown());
-
-            $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, 1, 'checked'));
-
-            $this->view->assign('pages_list', $this->get('menus.helpers')->menuItemsList());
+            if ($this->menusHelpers) {
+                $this->view->assign($this->menusHelpers->createMenuItemFormFields());
+            }
         }
 
         $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
@@ -156,20 +162,22 @@ class Index extends Core\Modules\Controller\Admin
                 (int)$formData['seo_robots']
             );
 
-            if (isset($formData['create']) === true && $this->acl->hasPermission('admin/menus/items/create') === true) {
-                $insertValues = [
-                    'id' => '',
+            if ($lastId !== false && $this->acl->hasPermission('admin/menus/items/create') === true) {
+                $data = [
                     'mode' => 4,
                     'block_id' => $formData['block_id'],
-                    'parent_id' => (int)$formData['parent'],
+                    'parent_id' => (int)$formData['parent_id'],
                     'display' => $formData['display'],
                     'title' => Core\Functions::strEncode($formData['title']),
                     'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
-                    'target' => 1,
+                    'target' => 1
                 ];
 
-                $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-                $lastId = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
+                $this->menusHelpers->manageMenuItem(
+                    sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+                    isset($formData['create']) === true,
+                    $data
+                );
 
                 $this->menusCache->setMenuItemsCache();
             }
@@ -191,15 +199,13 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->request->action === 'confirmed') {
             $bool = false;
 
-            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-
             foreach ($items as $item) {
                 $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
                 $bool = $this->articlesModel->delete($item);
 
-                if ($this->menusModel) {
-                    $nestedSet->deleteNode($this->menusModel->getMenuItemIdByUri($uri));
+                if ($this->menusHelpers) {
+                    $this->menusHelpers->manageMenuItem($uri, false);
                 }
 
                 $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
@@ -223,6 +229,26 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($article) === false) {
             if (empty($_POST) === false) {
                 $this->_editPost($_POST);
+            }
+
+            if ($this->acl->hasPermission('admin/menus/items/create') === true &&
+                $this->menusHelpers &&
+                $this->menusModel
+            ) {
+                $menuItem = $this->menusModel->getOneMenuItemUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id));
+
+                $lang_options = [$this->lang->t('articles', 'create_menu_item')];
+                $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', [1], $lang_options, !empty($menuItem) ? 1 : 0, 'checked'));
+
+                $this->view->assign(
+                    $this->menusHelpers->createMenuItemFormFields(
+                        $menuItem['block_id'],
+                        $menuItem['parent_id'],
+                        $menuItem['left_id'],
+                        $menuItem['right_id'],
+                        $menuItem['display']
+                    )
+                );
             }
 
             // Datumsauswahl
@@ -269,8 +295,27 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->articlesCache->setCache($this->request->id);
 
-            // Aliase in der Navigation aktualisieren
+            // Check, if the Menus module is available
             if ($this->menusCache) {
+                if ($this->acl->hasPermission('admin/menus/items/create') === true) {
+                    $data = [
+                        'mode' => 4,
+                        'block_id' => $formData['block_id'],
+                        'parent_id' => (int)$formData['parent_id'],
+                        'display' => $formData['display'],
+                        'title' => Core\Functions::strEncode($formData['title']),
+                        'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
+                        'target' => 1
+                    ];
+
+                    $this->menusHelpers->manageMenuItem(
+                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
+                        isset($formData['create']) === true,
+                        $data
+                    );
+                }
+
+                // Refresh the menu items cache
                 $this->menusCache->setMenuItemsCache();
             }
 

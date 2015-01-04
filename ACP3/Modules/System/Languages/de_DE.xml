@@ -27,7 +27,7 @@
         <item key="author">Autor</item>
         <item key="back">Zurück</item>
         <item key="cache_images">Bilder cachen</item>
-        <item key="cache_type_general">Allgemeiner Modul-Cache (Module, Datenbankabfragen, Pfade zu statische Resourcen)</item>
+        <item key="cache_type_general">Allgemeiner Modul-Cache (Module, Datenbankabfragen, Pfade zu statischen Resourcen)</item>
         <item key="cache_type_general_delete_error">Beim leeren des Modul-Caches ist ein Fehler aufgetreten.</item>
         <item key="cache_type_general_delete_success">Der Modul-Cache wurde erfolgreich geleert.</item>
         <item key="cache_type_images">Zwischengespeicherte Bilder</item>
