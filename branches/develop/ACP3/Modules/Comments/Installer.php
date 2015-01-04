@@ -60,16 +60,16 @@ class Installer extends Modules\AbstractInstaller
         return [
             31 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'acp_list_comments', '', 3);",
-                "UPDATE `{pre}acl_resources` SET page = 'acp_delete' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete_comments_per_module';",
+                "UPDATE `{pre}acl_resources` SET `page` = 'acp_delete' WHERE `module_id` = " . $this->getModuleId() . " AND `page` = 'acp_delete_comments_per_module';",
             ],
             32 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'list', '', 1);",
             ],
             33 => [
-                'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_comments";',
-                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_comments", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_comments";',
-                'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "edit";',
+                'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` LIKE "%_comments";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_comments", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` LIKE "%_comments";',
+                'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` = "edit";',
             ]
         ];
     }
