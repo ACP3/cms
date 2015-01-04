@@ -82,14 +82,14 @@ class Validator extends Core\Validator\AbstractValidator
                 if ($this->validate->isNumber($formData['block_id']) === false) {
                     $this->errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
                 }
-                if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === false) {
-                    $this->errors['parent'] = $this->lang->t('menus', 'select_superior_page');
+                if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === false) {
+                    $this->errors['parent-id'] = $this->lang->t('menus', 'select_superior_page');
                 }
-                if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === true) {
+                if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === true) {
                     // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-                    $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent']);
+                    $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent_id']);
                     if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
-                        $this->errors['parent'] = $this->lang->t('menus', 'superior_page_not_allowed');
+                        $this->errors['parent_id'] = $this->lang->t('menus', 'superior_page_not_allowed');
                     }
                 }
                 if ($formData['display'] != 0 && $formData['display'] != 1) {

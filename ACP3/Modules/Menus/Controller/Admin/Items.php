@@ -107,9 +107,6 @@ class Items extends Core\Modules\Controller\Admin
         }
         $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $values_mode, $lang_mode));
 
-        // Menus
-        $this->view->assign('blocks', $this->menusHelpers->menusDropdown());
-
         // Module
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $row) {
@@ -122,9 +119,6 @@ class Items extends Core\Modules\Controller\Admin
         $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
         $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target));
 
-        $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, 1, 'checked'));
-
         if ($this->articlesHelpers) {
             $this->view->assign('articles', $this->articlesHelpers->articlesList());
         }
@@ -134,8 +128,7 @@ class Items extends Core\Modules\Controller\Admin
             'uri' => '',
         ];
 
-        // Daten an Smarty übergeben
-        $this->view->assign('pages_list', $this->menusHelpers->menuItemsList());
+        $this->view->assign($this->menusHelpers->createMenuItemFormFields());
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
         $this->view->assign('form', array_merge($defaults, $_POST));
 
@@ -190,9 +183,6 @@ class Items extends Core\Modules\Controller\Admin
             }
             $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $modeValues, $modeLang, $menuItem['mode']));
 
-            // Block
-            $this->view->assign('blocks', $this->menusHelpers->menusDropdown($menuItem['block_id']));
-
             // Module
             $modules = $this->modules->getAllModules();
             foreach ($modules as $row) {
@@ -205,9 +195,6 @@ class Items extends Core\Modules\Controller\Admin
             $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
             $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target, $menuItem['target']));
 
-            $lang_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('display', $this->get('core.helpers.forms')->selectGenerator('display', [1, 0], $lang_display, $menuItem['display'], 'checked'));
-
             if ($this->articlesHelpers) {
                 $matches = [];
                 if (!empty($_POST) === false && $menuItem['mode'] == 4) {
@@ -217,8 +204,15 @@ class Items extends Core\Modules\Controller\Admin
                 $this->view->assign('articles', $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
             }
 
-            // Daten an Smarty übergeben
-            $this->view->assign('pages_list', $this->menusHelpers->menuItemsList($menuItem['parent_id'], $menuItem['left_id'], $menuItem['right_id']));
+            $this->view->assign(
+                $this->menusHelpers->createMenuItemFormFields(
+                    $menuItem['block_id'],
+                    $menuItem['parent_id'],
+                    $menuItem['left_id'],
+                    $menuItem['right_id'],
+                    $menuItem['display']
+                )
+            );
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
             $this->view->assign('form', array_merge($menuItem, $_POST));
 
@@ -254,7 +248,7 @@ class Items extends Core\Modules\Controller\Admin
                 'id' => '',
                 'mode' => ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'],
                 'block_id' => (int)$formData['block_id'],
-                'parent_id' => (int)$formData['parent'],
+                'parent_id' => (int)$formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => Core\Functions::strEncode($formData['title']),
                 'uri' => $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']),
@@ -262,7 +256,7 @@ class Items extends Core\Modules\Controller\Admin
             ];
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $bool = $nestedSet->insertNode((int)$formData['parent'], $insertValues);
+            $bool = $nestedSet->insertNode((int)$formData['parent_id'], $insertValues);
 
             // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
             if ($formData['mode'] != 3) {
@@ -313,7 +307,7 @@ class Items extends Core\Modules\Controller\Admin
             $updateValues = [
                 'mode' => $mode,
                 'block_id' => $formData['block_id'],
-                'parent_id' => $formData['parent'],
+                'parent_id' => $formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => Core\Functions::strEncode($formData['title']),
                 'uri' => $formData['mode'] == 1 ? $formData['module'] : $uriType,
@@ -321,7 +315,7 @@ class Items extends Core\Modules\Controller\Admin
             ];
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $bool = $nestedSet->editNode($this->request->id, (int)$formData['parent'], (int)$formData['block_id'], $updateValues);
+            $bool = $nestedSet->editNode($this->request->id, (int)$formData['parent_id'], (int)$formData['block_id'], $updateValues);
 
             // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
             if ($formData['mode'] != 3) {

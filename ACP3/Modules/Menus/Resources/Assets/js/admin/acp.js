@@ -5,6 +5,7 @@ $(document).ready(function () {
     var link = $('#link-container');
     var articles = $('#articles-container');
     var target = $('#target-container');
+    var articlesPattern = /^articles\/index\/details\/id_(\d+)\/$/;
 
     // Wenn Menüpunkt nicht angezeigt werden soll, Linkziel verstecken
     $('input[name="display"]').change(function () {
@@ -39,7 +40,7 @@ $(document).ready(function () {
             if (currentMode == 2) {
                 var $link = $('#link-uri'),
                     match = $link.val().match(/^([a-z\d_\-]+)\/([a-z\d_\-]+\/)+$/);
-                if (!$link.val().match(/^articles\/details\/id_(\d+)\/$/) && match[1] != null && $('#module').find('option[value="' + match[1] + '"]').length > 0) {
+                if (!$link.val().match(articlesPattern) && match[1] != null && $('#module').find('option[value="' + match[1] + '"]').length > 0) {
                     $('#link-module').val(match[1]);
                 }
             }
@@ -72,35 +73,10 @@ $(document).ready(function () {
     }).change();
 
     $('#link-uri').blur(function () {
-        var match = $(this).val().match(/^articles\/index\/details\/id_(\d+)\/$/);
+        var match = $(this).val().match(articlesPattern);
         if (match[1] !== null && $('#articles').find('option[value="' + match[1] + '"]').length > 0) {
             $('#mode').val(4).change();
             $('#link-articles').val(match[1]);
         }
     });
-
-    var $parent = $('#parent');
-
-    // Nur die dem Block zugehörigen übergeordneten Seiten anzeigen
-    $parent.find('optgroup').hide();
-
-    var $blockId = $('#block-id'),
-        defaultBlock = $blockId.find('option:selected').index() || 0;
-
-    $blockId.change(function () {
-        var blockName = $blockId.find('option:selected').eq(0).text();
-
-        $parent.find('optgroup:not([label="' + blockName + '"])')
-            .prop('disabled', true)
-            .hide();
-        $parent.find('optgroup[label="' + blockName + '"]')
-            .removeProp('disabled')
-            .show();
-
-        $blockId.find('option').each(function (index) {
-            if ($(this).is(':selected') && index !== defaultBlock) {
-                $parent.find('optgroup option:selected').removeAttr('selected');
-            }
-        });
-    }).triggerHandler('change');
 });
