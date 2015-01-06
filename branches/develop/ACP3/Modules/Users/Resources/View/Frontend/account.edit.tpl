@@ -119,7 +119,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="users/home"}" class="btn btn-default">{lang t="system|cancel"}</a>
+                <a href="{uri args="users/account"}" class="btn btn-default">{lang t="system|cancel"}</a>
                 {$form_token}
             </div>
         </div>
