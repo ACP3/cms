@@ -10,6 +10,10 @@ use ACP3\Core\Assets\ThemeResolver;
 class Assets
 {
     /**
+     * @var Cache
+     */
+    protected $minifyCache;
+    /**
      * @var \ACP3\Core\Modules
      */
     protected $modules;
@@ -87,20 +91,24 @@ class Assets
     protected $designXml;
 
     /**
-     * @param \ACP3\Core\Modules              $modules
-     * @param \ACP3\Core\Router               $router
-     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
-     * @param \ACP3\Core\Config               $systemConfig
+     * @param Cache $minifyCache
+     * @param Modules $modules
+     * @param Router $router
+     * @param ThemeResolver $themeResolver
+     * @param Config $systemConfig
      */
     public function __construct(
+        Cache $minifyCache,
         Modules $modules,
         Router $router,
         ThemeResolver $themeResolver,
         Config $systemConfig
-    ) {
+    )
+    {
         $this->modules = $modules;
         $this->router = $router;
         $this->themeResolver = $themeResolver;
+        $this->minifyCache = $minifyCache;
         $this->systemConfig = $systemConfig->getSettings();
 
         $this->_checkBootstrap();
@@ -119,50 +127,71 @@ class Assets
     }
 
     /**
+     * @return array
+     */
+    protected function getEnabledLibraries()
+    {
+        return array_filter($this->libraries, function ($var) {
+            return $var['enabled'];
+        });
+    }
+
+    /**
      * @param $layout
      *
      * @return array
      */
     public function includeCssFiles($layout)
     {
-        $css = [];
+        $enabledLibraries = $this->getEnabledLibraries();
 
-        // At first, load the library stylesheets
-        foreach($this->libraries as $library) {
-            if ($library['enabled'] === true && isset($library['css']) === true) {
-                $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', $library['css']);
+        $cacheId = $this->systemConfig['design'] . '_';
+        $cacheId .= 'css_';
+        $cacheId .= implode('_', array_keys($enabledLibraries));
+
+        if ($this->minifyCache->contains($cacheId) === false) {
+            $css = [];
+
+            // At first, load the library stylesheets
+            foreach ($enabledLibraries as $library) {
+                if (isset($library['css']) === true) {
+                    $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', $library['css']);
+                }
             }
+
+            if (isset($this->designXml->css)) {
+                foreach ($this->designXml->css->item as $file) {
+                    $css[] = $this->themeResolver->getStaticAssetPath('', '', 'css', trim($file));
+                }
+            }
+
+            // General system styles
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', 'style.css');
+            // Stylesheet of the current theme
+            $css[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.css');
+
+            // Module stylesheets
+            $modules = $this->modules->getActiveModules();
+            foreach ($modules as $module) {
+                $modulePath = $module['dir'] . '/Resources/';
+                $designPath = $module['dir'] . '/';
+                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'style.css')) &&
+                    $module['dir'] !== 'System'
+                ) {
+                    $css[] = $stylesheet;
+                }
+
+                // Append custom styles to the default module styling
+                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'append.css'))) {
+                    $css[] = $stylesheet;
+                }
+            }
+
+            $this->minifyCache->save($cacheId, $css);
         }
 
-        if (isset($this->designXml->css)) {
-            foreach ($this->designXml->css->item as $file) {
-                $css[] = $this->themeResolver->getStaticAssetPath('', '', 'css', trim($file));
-            }
-        }
 
-        // General system styles
-        $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', 'style.css');
-        // Stylesheet of the current theme
-        $css[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.css');
-
-        // Module stylesheets
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $module) {
-            $modulePath = $module['dir'] . '/Resources/';
-            $designPath = $module['dir'] . '/';
-            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'style.css')) &&
-                $module['dir'] !== 'System'
-            ) {
-                $css[] = $stylesheet;
-            }
-
-            // Append custom styles to the default module styling
-            if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'append.css'))) {
-                $css[] = $stylesheet;
-            }
-        }
-
-        return $css;
+        return $this->minifyCache->fetch($cacheId);
     }
 
     /**
@@ -172,24 +201,35 @@ class Assets
      */
     public function includeJsFiles($layout)
     {
-        $scripts = [];
-        foreach($this->libraries as $library) {
-            if ($library['enabled'] === true && isset($library['js']) === true) {
-                $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/js/libs', $library['js']);
+        $enabledLibraries = $this->getEnabledLibraries();
+
+        $cacheId = $this->systemConfig['design'] . '_';
+        $cacheId .= 'js_';
+        $cacheId .= implode('_', array_keys($enabledLibraries));
+
+        if ($this->minifyCache->contains($cacheId) === false) {
+            $scripts = [];
+            foreach ($enabledLibraries as $library) {
+                if (isset($library['js']) === true) {
+                    $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/js/libs', $library['js']);
+                }
             }
+
+            // Include additional js files from the design
+            if (isset($this->designXml->js)) {
+                foreach ($this->designXml->js->item as $js) {
+                    $scripts[] = $this->themeResolver->getStaticAssetPath('', '', 'js', $js);
+                }
+            }
+
+            // Include general js file of the layout
+            $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
+
+            $this->minifyCache->save($cacheId, $scripts);
         }
 
-        // Include additional js files from the design
-        if (isset($this->designXml->js)) {
-            foreach ($this->designXml->js->item as $js) {
-                $scripts[] = $this->themeResolver->getStaticAssetPath('', '', 'js', $js);
-            }
-        }
+        return $this->minifyCache->fetch($cacheId);
 
-        // Include general js file of the layout
-        $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
-
-        return $scripts;
     }
 
     /**
