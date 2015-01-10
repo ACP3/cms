@@ -49,7 +49,7 @@ class RewriteInternalUri
     {
         $rootDir = str_replace('/', '\/', ROOT_DIR);
         $host = $_SERVER['HTTP_HOST'];
-        return preg_replace_callback('/<a(.*)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i', [$this, "_rewriteInternalUriCallback"], $text);
+        return preg_replace_callback('/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i', [$this, "_rewriteInternalUriCallback"], $text);
     }
 
     /**
