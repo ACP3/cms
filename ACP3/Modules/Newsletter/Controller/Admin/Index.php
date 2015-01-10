@@ -106,6 +106,8 @@ class Index extends Core\Modules\Controller\Admin
         $newsletter = $this->newsletterModel->getOneById($this->request->id);
 
         if (empty($newsletter) === false) {
+            $this->breadcrumb->setTitlePostfix($newsletter['title']);
+
             $settings = $this->newsletterConfig->getSettings();
 
             if (empty($_POST) === false) {

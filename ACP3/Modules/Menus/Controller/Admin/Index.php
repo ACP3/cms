@@ -110,6 +110,8 @@ class Index extends Core\Modules\Controller\Admin
         $menu = $this->menusModel->getOneById($this->request->id);
 
         if (empty($menu) === false) {
+            $this->breadcrumb->setTitlePostfix($menu['title']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST);
             }

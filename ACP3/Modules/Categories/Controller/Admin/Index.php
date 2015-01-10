@@ -167,6 +167,8 @@ class Index extends Core\Modules\Controller\Admin
         $category = $this->categoriesModel->getOneById($this->request->id);
 
         if (empty($category) === false) {
+            $this->breadcrumb->setTitlePostfix($category['title']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $category);
             }

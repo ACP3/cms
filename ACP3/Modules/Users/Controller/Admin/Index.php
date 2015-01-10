@@ -216,6 +216,8 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
             $user = $this->auth->getUserInfo($this->request->id);
 
+            $this->breadcrumb->setTitlePostfix($user['nickname']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST);
             }
@@ -286,21 +288,21 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->view->assign('countries', $countries_select);
 
-            $lang_mail_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('mail_display', $this->formsHelpers->selectGenerator('mail_display', [1, 0], $lang_mail_display, $user['mail_display'], 'checked'));
+            $lang_mailDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('mail_display', $this->formsHelpers->selectGenerator('mail_display', [1, 0], $lang_mailDisplay, $user['mail_display'], 'checked'));
 
-            $lang_address_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('address_display', $this->formsHelpers->selectGenerator('address_display', [1, 0], $lang_address_display, $user['address_display'], 'checked'));
+            $lang_addressDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('address_display', $this->formsHelpers->selectGenerator('address_display', [1, 0], $lang_addressDisplay, $user['address_display'], 'checked'));
 
-            $lang_country_display = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('country_display', $this->formsHelpers->selectGenerator('country_display', [1, 0], $lang_country_display, $user['country_display'], 'checked'));
+            $lang_countryDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+            $this->view->assign('country_display', $this->formsHelpers->selectGenerator('country_display', [1, 0], $lang_countryDisplay, $user['country_display'], 'checked'));
 
-            $lang_birthday_display = [
+            $lang_birthdayDisplay = [
                 $this->lang->t('users', 'birthday_hide'),
                 $this->lang->t('users', 'birthday_display_completely'),
                 $this->lang->t('users', 'birthday_hide_year')
             ];
-            $this->view->assign('birthday_display', $this->formsHelpers->selectGenerator('birthday_display', [0, 1, 2], $lang_birthday_display, $user['birthday_display'], 'checked'));
+            $this->view->assign('birthday_display', $this->formsHelpers->selectGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $user['birthday_display'], 'checked'));
 
             $this->view->assign('form', array_merge($user, $_POST));
 

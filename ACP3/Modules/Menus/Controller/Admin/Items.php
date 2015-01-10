@@ -162,6 +162,8 @@ class Items extends Core\Modules\Controller\Admin
         $menuItem = $this->menusModel->getOneMenuItemById($this->request->id);
 
         if (empty($menuItem) === false) {
+            $this->breadcrumb->setTitlePostfix($menuItem['title']);
+
             $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->aliases->getUriAlias($menuItem['uri'], true) : '';
             $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
