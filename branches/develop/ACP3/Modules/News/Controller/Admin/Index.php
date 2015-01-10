@@ -168,6 +168,8 @@ class Index extends Core\Modules\Controller\Admin
         $news = $this->newsModel->getOneById((int)$this->request->id);
 
         if (empty($news) === false) {
+            $this->breadcrumb->setTitlePostfix($news['title']);
+
             $settings = $this->newsConfig->getSettings();
 
             if (empty($_POST) === false) {

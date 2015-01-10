@@ -110,7 +110,7 @@ class Breadcrumb
             $items = $this->menusModel->getMenuItemsByUri($in);
             $c_items = count($items);
 
-            // Dynamische Seite (ACP3 intern)
+            // Populate the breadcrumb with internal pages
             for ($i = 0; $i < $c_items; ++$i) {
                 $this->_appendFromDB($items[$i]['title'], $items[$i]['uri']);
             }
@@ -148,6 +148,14 @@ class Breadcrumb
         $this->title['separator'] = $value;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitleSeparator()
+    {
+        return ' ' . $this->title['separator'] . ' ';
     }
 
     /**
@@ -253,14 +261,14 @@ class Breadcrumb
      */
     private function _setBreadcrumbCache()
     {
-        // Brotkrümelspur für das Admin-Panel
+        // Breadcrumb of the admin panel
         if ($this->request->area === 'admin') {
             $this->_setBreadcrumbCacheForAdmin();
         } else { // Breadcrumb for frontend requests
             $this->_setBreadcrumbCacheForFrontend();
         }
 
-        // Letzte Brotkrume markieren
+        // Mark the last breadcrumb
         $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
     }
 
@@ -272,7 +280,12 @@ class Breadcrumb
         $module = $this->request->mod;
 
         if ($module !== 'acp') {
-            $this->setTitlePostfix($this->lang->t('system', 'acp'));
+            // An postfix for the page title has been already set
+            if (!empty($this->title['postfix'])) {
+                $this->setTitlePostfix($this->title['postfix'] . $this->getTitleSeparator() . $this->lang->t('system', 'acp'));
+            } else {
+                $this->setTitlePostfix($this->lang->t('system', 'acp'));
+            }
         }
 
         // No breadcrumb is set yet

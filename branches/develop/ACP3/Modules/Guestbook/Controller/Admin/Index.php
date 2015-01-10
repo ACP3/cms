@@ -96,6 +96,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($guestbook) === false) {
             $settings = $this->guestbookConfig->getSettings();
 
+            $this->breadcrumb->setTitlePostfix($guestbook['name']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $settings);
             }

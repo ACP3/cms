@@ -129,7 +129,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->id)));
 
-            $this->breadcrumb->append($gallery['title']);
+            $this->breadcrumb->setTitlePostfix($gallery['title']);
 
             if (empty($_POST) === false) {
                 $this->_editPost($_POST);
