@@ -122,7 +122,11 @@ class Index extends Core\Modules\Controller\Frontend
             $formData['message'] = Core\Functions::strEncode($formData['message'], true);
 
             $subject = sprintf($this->lang->t('contact', 'contact_subject'), $seoSettings['title']);
-            $body = str_replace(['{name}', '{mail}', '{message}', '\n'], [$formData['name'], $formData['mail'], $formData['message'], "\n"], $this->lang->t('contact', 'contact_body'));
+            $body = str_replace(
+                ['{name}', '{mail}', '{message}', '\n'],
+                [$formData['name'], $formData['mail'], $formData['message'], "\n"],
+                $this->lang->t('contact', 'contact_body')
+            );
             $bool = $this->sendEmailHelper->execute('', $settings['mail'], $formData['mail'], $subject, $body);
 
             // Nachrichtenkopie an Absender senden
@@ -134,7 +138,10 @@ class Index extends Core\Modules\Controller\Frontend
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'), $this->router->route('contact')));
+            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'),
+                $this->router->route('contact')
+            ));
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'contact');
         } catch (Core\Exceptions\ValidationFailed $e) {
