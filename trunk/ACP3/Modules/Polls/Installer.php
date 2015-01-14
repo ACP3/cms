@@ -83,12 +83,12 @@ class Installer extends Modules\AbstractInstaller
                 "ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {charset} NOT NULL",
             ],
             32 => [
-                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "polls/", "polls/index/") WHERE uri LIKE "polls/%";',
+                'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "polls/", "polls/index/") WHERE `uri` LIKE "polls/%";',
             ],
             33 => [
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/list/", "polls/index/index/") WHERE uri LIKE "polls/list/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/vote/", "polls/index/vote/") WHERE uri LIKE "polls/vote/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "polls/result/", "polls/index/result/") WHERE uri LIKE "polls/result/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "polls/list/", "polls/index/index/") WHERE `uri` LIKE "polls/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "polls/vote/", "polls/index/vote/") WHERE `uri` LIKE "polls/vote/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "polls/result/", "polls/index/result/") WHERE `uri` LIKE "polls/result/%";' : '',
             ]
         ];
     }

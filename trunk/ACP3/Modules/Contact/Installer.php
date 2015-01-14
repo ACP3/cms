@@ -61,20 +61,20 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             31 => [
-                "UPDATE `{pre}acl_resources` SET privilege_id = 7 WHERE page = 'acp_list' AND module_id = " . $this->getModuleId() . ";"
+                "UPDATE `{pre}acl_resources` SET privilege_id = 7 WHERE `page` = 'acp_list' AND `module_id` = " . $this->getModuleId() . ";"
             ],
             32 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
             ],
             33 => [
-                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "contact/", "contact/index/") WHERE uri LIKE "contact/%";',
+                'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "contact/", "contact/index/") WHERE `uri` LIKE "contact/%";',
             ],
             34 => [
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/index/" WHERE uri = "contact/list/";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/imprint/" WHERE uri = "contact/imprint/";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri` = "contact/index/index/" WHERE `uri` = "contact/list/";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri` = "contact/index/imprint/" WHERE `uri` = "contact/imprint/";' : '',
             ],
             35 => [
-                'UPDATE `{pre}seo` SET uri = "contact/index/index/" WHERE uri = "contact/index/list/";',
+                'UPDATE `{pre}seo` SET `uri` = "contact/index/index/" WHERE `uri` = "contact/index/list/";',
             ]
         ];
     }

@@ -79,7 +79,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             31 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",
             ]
         ];
     }

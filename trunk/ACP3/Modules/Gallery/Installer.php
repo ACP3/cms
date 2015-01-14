@@ -82,20 +82,20 @@ class Installer extends Modules\AbstractInstaller
                 "ALTER TABLE `{pre}gallery` CHANGE `name` `title` VARCHAR(120) {charset} NOT NULL;",
             ],
             32 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",
             ],
             33 => [
-                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "gallery/", "gallery/index/") WHERE uri LIKE "gallery/%";',
+                'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "gallery/", "gallery/index/") WHERE `uri` LIKE "gallery/%";',
             ],
             34 => [
-                'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
-                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_picture", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
-                'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "order";',
+                'UPDATE `{pre}acl_resources` SET `controller` = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` LIKE "%_picture";',
+                'UPDATE `{pre}acl_resources` SET `page` = REPLACE(`page`, "_picture", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` LIKE "%_picture";',
+                'UPDATE `{pre}acl_resources` SET `controller` = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND `page` = "order";',
             ],
             35 => [
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/list/", "gallery/index/index/") WHERE uri LIKE "gallery/list/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/pics/", "gallery/index/pics/") WHERE uri LIKE "gallery/pics/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/details/", "gallery/index/details/") WHERE uri LIKE "gallery/details/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "gallery/list/", "gallery/index/index/") WHERE `uri` LIKE "gallery/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "gallery/pics/", "gallery/index/pics/") WHERE `uri` LIKE "gallery/pics/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "gallery/details/", "gallery/index/details/") WHERE `uri` LIKE "gallery/details/%";' : '',
             ]
         ];
     }
