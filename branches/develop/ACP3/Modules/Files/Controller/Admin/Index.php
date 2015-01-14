@@ -335,7 +335,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
 
             // Falls eine neue Datei angegeben wurde, Änderungen durchführen
-            if (isset($file)) {
+            if (!empty($file)) {
                 $upload = new Core\Helpers\Upload('files');
 
                 if (is_array($file) === true) {
