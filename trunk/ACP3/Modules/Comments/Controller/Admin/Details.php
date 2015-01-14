@@ -98,7 +98,8 @@ class Details extends Core\Modules\Controller\Admin
         if (empty($comment) === false) {
             $this->breadcrumb
                 ->append($this->lang->t($comment['module'], $comment['module']), 'acp/comments/details/index/id_' . $comment['module_id'])
-                ->append($this->lang->t('comments', 'admin_details_edit'));
+                ->append($this->lang->t('comments', 'admin_details_edit'))
+                ->setTitlePostfix($comment['name']);
 
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $comment);

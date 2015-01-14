@@ -94,6 +94,8 @@ class Index extends Core\Modules\Controller\Admin
         $seo = $this->seoModel->getOneById((int)$this->request->id);
 
         if (empty($seo) === false) {
+            $this->breadcrumb->setTitlePostfix($seo['alias']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $seo['uri']);
             }

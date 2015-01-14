@@ -139,6 +139,8 @@ class Index extends Core\Modules\Controller\Admin
         $role = $this->permissionsModel->getRoleById((int)$this->request->id);
 
         if (!empty($role)) {
+            $this->breadcrumb->setTitlePostfix($role['name']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST);
             }

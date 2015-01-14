@@ -109,6 +109,8 @@ class Index extends Core\Modules\Controller\Admin
         $poll = $this->pollsModel->getOneById($this->request->id);
 
         if (empty($poll) === false) {
+            $this->breadcrumb->setTitlePostfix($poll['title']);
+
             if (isset($_POST['submit']) === true) {
                 $this->_editPost($_POST);
             }
