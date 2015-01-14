@@ -21,7 +21,7 @@
         <item key="search_options">Suchoptionen</item>
         <item key="search_results">Suchergebnisse</item>
         <item key="search_term">Suchbegriff</item>
-        <item key="search_term_to_short">Der Suchbegriff sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="search_term_to_short">Der Suchbegriff sollte mindestens 4 Zeichen lang sein.</item>
         <item key="sort_hits">Reihenfolge der Treffer</item>
         <item key="submit_search">Suche starten</item>
         <item key="title_and_content">Titel und Inhalt</item>

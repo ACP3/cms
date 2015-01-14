@@ -6,7 +6,7 @@
     {foreach $search_mods as $row}
         <input type="hidden" name="mods[]" value="{$row.dir}">
     {/foreach}
-    <input type="hidden" name="area" value="2">
+    <input type="hidden" name="area" value="title_content">
     <input type="hidden" name="sort" value="asc">
     {$form_token}
 </form>
