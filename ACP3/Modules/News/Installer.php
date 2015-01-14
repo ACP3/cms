@@ -44,7 +44,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             "DROP TABLE `{pre}news`;",
-            "DELETE FROM `{pre}categories` WHERE module_id = " . $this->getModuleId() . ";"
+            "DELETE FROM `{pre}categories` WHERE `module_id` = " . $this->getModuleId() . ";"
         ];
     }
 
@@ -73,16 +73,16 @@ class Installer extends Modules\AbstractInstaller
                 "ALTER TABLE `{pre}news` CHANGE `headline` `title` VARCHAR(120) {charset} NOT NULL",
             ],
             32 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/feeds\";",
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"extensions/search\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"extensions/feeds\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",
             ],
             33 => [
-                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "news/", "news/index/") WHERE uri LIKE "news/%";',
+                'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "news/", "news/index/") WHERE `uri` LIKE "news/%";',
             ],
             34 => [
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "news/list/", "news/index/index/") WHERE uri LIKE "news/list/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "news/details/", "news/index/details/") WHERE uri LIKE "news/details/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "news/list/", "news/index/index/") WHERE `uri` LIKE "news/list/%";' : '',
+                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "news/details/", "news/index/details/") WHERE `uri` LIKE "news/details/%";' : '',
             ]
         ];
     }
