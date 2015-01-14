@@ -128,7 +128,7 @@ class TableOfContents
             foreach ($pages as $page) {
                 $pageNumber = $i + 1;
                 if ($titlesFromDb === false) {
-                    $attributes = self::_getHtmlAttributes($page);
+                    $attributes = $this->_getHtmlAttributes($page);
                     $toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
                 } else {
                     $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);

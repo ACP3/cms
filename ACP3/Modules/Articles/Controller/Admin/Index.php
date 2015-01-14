@@ -227,6 +227,8 @@ class Index extends Core\Modules\Controller\Admin
         $article = $this->articlesModel->getOneById($this->request->id);
 
         if (empty($article) === false) {
+            $this->breadcrumb->setTitlePostfix($article['title']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST);
             }

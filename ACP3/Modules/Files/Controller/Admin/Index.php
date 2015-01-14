@@ -165,6 +165,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($file) === false) {
             $settings = $this->filesConfig->getSettings();
 
+            $this->breadcrumb->setTitlePostfix($file['title']);
+
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $settings, $file);
             }

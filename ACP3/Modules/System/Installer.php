@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 51;
+    const SCHEMA_VERSION = 52;
 
     /**
      * @var array
@@ -243,18 +243,18 @@ class Installer extends Modules\AbstractInstaller
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'cache_driver', 'PhpFile');",
             ],
             45 => [
-                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND `name` = \"seo_aliases\";",
+                'DELETE FROM `{pre}settings` WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "seo_aliases";',
             ],
             46 => [
-                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND `name` = \"icons_path\";",
+                'DELETE FROM `{pre}settings` WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "icons_path";',
             ],
             47 => [
-                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND `name` = \"extra_css\";",
-                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND `name` = \"extra_js\";",
+                'DELETE FROM `{pre}settings` WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "extra_css";',
+                'DELETE FROM `{pre}settings` WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "extra_js";',
             ],
             48 => [
-                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND `name` = \"cache_driver\";",
-                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND `name` = \"version\";",
+                'DELETE FROM `{pre}settings` WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "cache_driver";',
+                'DELETE FROM `{pre}settings` WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "version";',
             ],
             49 => [
                 'ALTER TABLE `{pre}seo` DROP INDEX `PRIMARY`;',
@@ -263,14 +263,14 @@ class Installer extends Modules\AbstractInstaller
             ],
             50 => [
                 function () {
-                    $result = false;
+                    $result = true;
                     if ($this->container->has('seo.installer') && $this->systemModel->moduleExists('seo') === false) {
                         /** @var Modules\AbstractInstaller $seoInstaller */
                         $seoInstaller = $this->container->get('seo.installer');
                         $result = $seoInstaller->install();
 
                         if ($result === true) {
-                            $seoModuleId = $this->db->fetchColumn('SELECT id FROM `' . $this->db->getPrefix() . 'modules` WHERE `name` = "seo"');
+                            $seoModuleId = $this->db->fetchColumn('SELECT `id` FROM `' . $this->db->getPrefix() . 'modules` WHERE `name` = "seo"');
                             $queries = [
                                 'DELETE FROM `{pre}settings` WHERE module_id = ' . $seoModuleId . ';',
                                 'UPDATE `{pre}settings` SET `module_id` = ' . $seoModuleId . ', `name` = SUBSTRING(`name`, 5) WHERE module_id = ' . $this->moduleId . ' AND `name` LIKE "seo_%";',
@@ -285,7 +285,19 @@ class Installer extends Modules\AbstractInstaller
             ],
             51 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'admin', 'maintenance', 'cache', '', 7);",
-            ]
+            ],
+            52 => [
+                function () {
+                    $result = true;
+                    if ($this->container->has('minify.installer') && $this->systemModel->moduleExists('minify') === false) {
+                        /** @var Modules\AbstractInstaller $minifyInstaller */
+                        $minifyInstaller = $this->container->get('minify.installer');
+                        return $minifyInstaller->install();
+                    }
+
+                    return $result;
+                }
+            ],
         ];
     }
 }
