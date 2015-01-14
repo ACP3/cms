@@ -19,7 +19,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $this->errors = [];
-        if (strlen($formData['search_term']) < 3) {
+        if (strlen($formData['search_term']) < 4) {
             $this->errors['search-term'] = $this->lang->t('search', 'search_term_to_short');
         }
         if (empty($formData['mods'])) {

@@ -19,7 +19,7 @@
         <item key="search_options">Search options</item>
         <item key="search_results">Search results</item>
         <item key="search_term">Search term</item>
-        <item key="search_term_to_short">The search term should be at least 3 characters long.</item>
+        <item key="search_term_to_short">The search term should be at least 4 characters long.</item>
         <item key="sort_hits">Order of hits</item>
         <item key="submit_search">Start search</item>
         <item key="title_and_content">Title and content</item>
