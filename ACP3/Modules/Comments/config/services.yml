@@ -13,6 +13,7 @@ services:
     class: ACP3\Modules\Comments\Controller\Index
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@comments.config', '@core.helpers.secure']
     calls:
+      - ['setContainer', ['@service_container']]
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 

@@ -61,15 +61,24 @@ class RedirectMessages
      *
      * @param $success
      * @param $text
-     * @param $path
+     * @param string|null $path
      */
-    public function setMessage($success, $text, $path)
+    public function setMessage($success, $text, $path = null)
     {
-        if (empty($text) === false && empty($path) === false) {
+        if (empty($text) === false) {
             $_SESSION['redirect_message'] = [
                 'success' => is_int($success) ? true : (bool)$success,
                 'text' => $text
             ];
+
+            // If no path has been given, guess it automatically
+            if ($path === null) {
+                if ($this->request->area === 'admin') {
+                    $path.= 'acp/';
+                }
+
+                $path.= $this->request->mod . '/' . $this->request->controller;
+            }
 
             $this->redirect->temporary($path);
         }

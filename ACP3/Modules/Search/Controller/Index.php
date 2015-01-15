@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->_displaySearchResults($formData['mods'], Core\Functions::strEncode($formData['search_term']), $formData['area'], strtoupper($formData['sort']));
             return;
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'search');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }

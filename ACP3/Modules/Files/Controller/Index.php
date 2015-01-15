@@ -97,7 +97,7 @@ class Index extends Core\Modules\Controller\Frontend
                 // Brotkrümelspur
                 $this->breadcrumb
                     ->append($this->lang->t('files', 'files'), 'files')
-                    ->append($file['category_title'], 'files/files/cat_' . $file['category_id'])
+                    ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
                     ->append($file['title']);
 
                 $settings = $this->filesConfig->getSettings();
