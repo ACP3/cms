@@ -13,7 +13,7 @@ use ACP3\Modules\Permissions;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'files';
-    const SCHEMA_VERSION = 34;
+    const SCHEMA_VERSION = 35;
 
     /**
      * @inheritdoc
@@ -28,7 +28,7 @@ class Installer extends Modules\AbstractInstaller
                 `category_id` INT(10) UNSIGNED NOT NULL,
                 `file` VARCHAR(120) NOT NULL,
                 `size` VARCHAR(20) NOT NULL,
-                `title` VARCHAR(120) NOT NULL,
+                `title` VARCHAR(255) NOT NULL,
                 `text` TEXT NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
@@ -81,6 +81,9 @@ class Installer extends Modules\AbstractInstaller
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "files/list/", "files/index/index/") WHERE `uri` LIKE "files/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "files/files/", "files/index/files/") WHERE `uri` LIKE "files/files/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "files/details/", "files/index/details/") WHERE `uri` LIKE "files/details/%";' : '',
+            ],
+            35 => [
+                "ALTER TABLE `{pre}files` CHANGE `title` `title` VARCHAR(255) NOT NULL;",
             ]
         ];
     }

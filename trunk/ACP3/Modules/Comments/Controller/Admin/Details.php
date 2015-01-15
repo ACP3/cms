@@ -77,15 +77,30 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/comments/details/delete', 'acp/comments');
+        $items = $this->_deleteItem(null, 'acp/comments');
 
         if ($this->request->action === 'confirmed') {
             $bool = false;
+
+            // Get the module-ID of the first item
+            $moduleId = 0;
+            if (isset($items[0])) {
+                $comment = $this->commentsModel->getOneById($items[0]);
+                if (!empty($comment)) {
+                    $moduleId = $comment['module_id'];
+                }
+            }
+
             foreach ($items as $item) {
                 $bool = $this->commentsModel->delete($item);
             }
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+            // If there are no comments for the given module, redirect to the general comments admin panel page
+            if ($this->commentsModel->countAll($moduleId) == 0) {
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+            } else {
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments/details/index/id_' . $moduleId);
+            }
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -182,7 +197,7 @@ class Details extends Core\Modules\Controller\Admin
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments/details/index/id_' . $comment['module_id']);
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
