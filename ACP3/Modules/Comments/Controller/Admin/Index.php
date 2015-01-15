@@ -59,7 +59,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/comments/index/delete', 'acp/comments');
+        $items = $this->_deleteItem();
 
         if ($this->request->action === 'confirmed') {
             $bool = false;
@@ -67,7 +67,7 @@ class Index extends Core\Modules\Controller\Admin
                 $bool = $this->commentsModel->delete($item, 'module_id');
             }
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -132,9 +132,9 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }

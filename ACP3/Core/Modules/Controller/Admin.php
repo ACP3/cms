@@ -46,12 +46,12 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     /**
      * Little helper function for deleting an result set
      *
-     * @param string $moduleConfirmUrl
-     * @param string $moduleIndexUrl
+     * @param string|null $moduleConfirmUrl
+     * @param string|null $moduleIndexUrl
      *
      * @return array
      */
-    protected function _deleteItem($moduleConfirmUrl = '', $moduleIndexUrl = '')
+    protected function _deleteItem($moduleConfirmUrl = null, $moduleIndexUrl = null)
     {
         if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
             $entries = $_POST['entries'];
@@ -73,6 +73,14 @@ abstract class Admin extends Core\Modules\Controller\Frontend
                 'action' => 'confirmed',
                 'entries' => $entries
             ];
+
+            if ($moduleConfirmUrl === null) {
+                $moduleConfirmUrl = 'acp/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
+            }
+
+            if ($moduleIndexUrl === null) {
+                $moduleIndexUrl = 'acp/' . $this->request->mod . '/' . $this->request->controller;
+            }
 
             $confirmationText = count($entries) == 1 ? $this->lang->t('system', 'confirm_delete_single') : str_replace('{items}', count($entries), $this->lang->t('system', 'confirm_delete_multiple'));
 

@@ -173,7 +173,7 @@ class Account extends Core\Modules\Controller\Frontend
             ];
             $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         }
 
         $user = $this->usersModel->getOneById($this->auth->getUserId());
@@ -218,9 +218,9 @@ class Account extends Core\Modules\Controller\Frontend
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
@@ -251,9 +251,9 @@ class Account extends Core\Modules\Controller\Frontend
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/account');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }

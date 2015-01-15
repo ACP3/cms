@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/menus/index/delete', 'acp/menus');
+        $items = $this->_deleteItem();
 
         if ($this->request->action === 'confirmed') {
             $bool = false;
@@ -99,7 +99,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->menusCache->setMenuItemsCache();
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -168,9 +168,9 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/menus');
+            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
@@ -195,9 +195,9 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }

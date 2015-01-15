@@ -103,7 +103,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/permissions/index/delete', 'acp/permissions');
+        $items = $this->_deleteItem();
 
         if ($this->request->action === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
@@ -128,7 +128,7 @@ class Index extends Core\Modules\Controller\Admin
                 $text = $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error');
             }
 
-            $this->redirectMessages()->setMessage($bool && $bool2 && $bool3, $text, 'acp/permissions');
+            $this->redirectMessages()->setMessage($bool && $bool2 && $bool3, $text);
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -266,9 +266,9 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
@@ -314,9 +314,9 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions');
+            $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
