@@ -137,7 +137,7 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/menus/items/delete', 'acp/menus');
+        $items = $this->_deleteItem(null, 'acp/menus');
 
         if ($this->request->action === 'confirmed') {
             $bool = false;

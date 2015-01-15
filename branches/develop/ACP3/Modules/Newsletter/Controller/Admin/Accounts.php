@@ -36,12 +36,12 @@ class Accounts extends Core\Modules\Controller\Admin
             $bool = $this->newsletterModel->update(['hash' => ''], $this->request->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 
-        $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter/accounts');
+        $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
     }
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/newsletter/accounts/delete', 'acp/newsletter/accounts');
+        $items = $this->_deleteItem();
 
         if ($this->request->action === 'confirmed') {
             $bool = false;
@@ -49,7 +49,7 @@ class Accounts extends Core\Modules\Controller\Admin
                 $bool = $this->newsletterModel->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
             }
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/accounts');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }

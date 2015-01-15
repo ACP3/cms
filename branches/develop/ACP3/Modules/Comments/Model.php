@@ -14,6 +14,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function resultExists($id)
@@ -23,15 +24,31 @@ class Model extends Core\Model
 
     /**
      * @param $moduleId
+     *
      * @return bool
      */
-    public function resultsExist($moduleId)
+    public function resultsExistByModuleId($moduleId)
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE module_id = ?', [$moduleId]) > 0;
     }
 
     /**
+     * @param int $moduleId
+     *
+     * @return bool
+     */
+    public function countAll($moduleId = 0)
+    {
+        if ($moduleId === 0) {
+            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME);
+        }
+
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE module_id = ?', [$moduleId]);
+    }
+
+    /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -41,18 +58,20 @@ class Model extends Core\Model
 
     /**
      * @param $ipAddress
+     *
      * @return mixed
      */
     public function getLastDateFromIp($ipAddress)
     {
-        return $this->db->fetchColumn('SELECT MAX(date) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE ip = ?', [$ipAddress]);
+        return $this->db->fetchColumn('SELECT MAX(`date`) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE ip = ?', [$ipAddress]);
     }
 
     /**
-     * @param $moduleId
-     * @param $resultId
+     * @param        $moduleId
+     * @param        $resultId
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAllByModule($moduleId, $resultId, $limitStart = '', $resultsPerPage = '')
@@ -64,6 +83,7 @@ class Model extends Core\Model
     /**
      * @param $moduleId
      * @param $resultId
+     *
      * @return mixed
      */
     public function countAllByModule($moduleId, $resultId)
@@ -73,6 +93,7 @@ class Model extends Core\Model
 
     /**
      * @param $moduleId
+     *
      * @return array
      */
     public function getAllByModuleInAcp($moduleId)
