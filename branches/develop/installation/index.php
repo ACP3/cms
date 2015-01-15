@@ -12,4 +12,4 @@ define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../') . '/');
 require ACP3_ROOT_DIR . 'installation/Installer/Application.php';
 
 $application = new \ACP3\Installer\Application();
-$application->runInstaller();
+$application->run();
