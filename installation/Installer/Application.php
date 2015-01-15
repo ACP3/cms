@@ -22,9 +22,14 @@ class Application
     /**
      * run() method of the installer
      */
-    public function runInstaller()
+    public function run()
     {
         $this->defineDirConstants();
+
+        if (defined('IN_UPDATER') && IN_UPDATER === true) {
+            $this->startupChecks();
+        }
+
         $this->includeAutoLoader();
         $this->initializeClasses();
         $this->outputPage();
@@ -52,7 +57,7 @@ class Application
         define('INSTALLER_CLASSES_DIR', INSTALLER_ACP3_DIR . 'Core/');
         define('INSTALLATION_DIR', ACP3_ROOT_DIR . 'installation/');
 
-        // Pfade zum Theme setzen
+        // Set theme paths
         define('DESIGN_PATH', INSTALLATION_DIR . 'design/');
         define('DESIGN_PATH_INTERNAL', INSTALLATION_DIR . 'design/');
     }
@@ -93,7 +98,7 @@ class Application
             }
         }
 
-        // When in updater context, also include "Normal" module services
+        // When in updater context, also include "normal" module services
         if (defined('IN_UPDATER') === true) {
             $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
             foreach ($modules as $module) {
@@ -110,7 +115,7 @@ class Application
     }
 
     /**
-     * Gibt die Seite aus
+     * Outputs the requested page
      */
     public function outputPage()
     {
@@ -131,19 +136,7 @@ class Application
     }
 
     /**
-     * run() method of the database updater
-     */
-    public function runUpdater()
-    {
-        $this->defineDirConstants();
-        $this->startupChecks();
-        $this->includeAutoLoader();
-        $this->initializeClasses();
-        $this->outputPage();
-    }
-
-    /**
-     * Überprüft, ob die config.php existiert
+     * Checks, whether the config.yml exists
      */
     public function startupChecks()
     {
