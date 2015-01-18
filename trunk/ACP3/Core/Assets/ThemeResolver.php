@@ -2,7 +2,6 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core;
-use ACP3\Modules\Minify;
 
 /**
  * Class ThemeResolver
@@ -15,9 +14,9 @@ class ThemeResolver
      */
     protected $xml;
     /**
-     * @var \ACP3\Modules\Minify\Cache
+     * @var \ACP3\Core\Assets\Cache
      */
-    protected $minifyCache;
+    protected $resourcesCache;
     /**
      * @var array
      */
@@ -37,16 +36,16 @@ class ThemeResolver
 
     /**
      * @param \ACP3\Core\XML             $xml
-     * @param \ACP3\Modules\Minify\Cache $minifyCache
+     * @param \ACP3\Core\Assets\Cache $resourcesCache
      */
     public function __construct(
         Core\XML $xml,
-        Minify\Cache $minifyCache
+        Core\Assets\Cache $resourcesCache
     )
     {
         $this->xml = $xml;
-        $this->minifyCache = $minifyCache;
-        $this->cachedPaths = $minifyCache->getCache();
+        $this->resourcesCache = $resourcesCache;
+        $this->cachedPaths = $resourcesCache->getCache();
     }
 
     /**
@@ -55,7 +54,7 @@ class ThemeResolver
     public function __destruct()
     {
         if ($this->newAssetPathsAdded === true) {
-            $this->minifyCache->setCache($this->cachedPaths);
+            $this->resourcesCache->setCache($this->cachedPaths);
         }
     }
 

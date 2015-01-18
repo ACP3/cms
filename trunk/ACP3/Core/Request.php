@@ -142,38 +142,36 @@ class Request extends \StdClass
      */
     protected function _checkForUriAlias()
     {
-        if (strpos($this->query, 'minify') !== 0) {
-            $probableQuery = $this->query;
-            // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
-            if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
-                $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
-                if (isset($query[1]) === false) {
-                    $query[1] = 'index';
-                }
-                if (isset($query[2]) === false) {
-                    $query[2] = 'index';
-                }
+        $probableQuery = $this->query;
+        // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+            $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+            if (isset($query[1]) === false) {
+                $query[1] = 'index';
+            }
+            if (isset($query[2]) === false) {
+                $query[2] = 'index';
+            }
 
-                // Keine entsprechende Module-Action gefunden -> muss Alias sein
-                if ($this->modules->actionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
-                    $length = 0;
-                    foreach ($query as $row) {
-                        if (strpos($row, '_') === false) {
-                            $length += strlen($row) + 1;
-                        } else {
-                            break;
-                        }
+            // Keine entsprechende Module-Action gefunden -> muss Alias sein
+            if ($this->modules->actionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
+                $length = 0;
+                foreach ($query as $row) {
+                    if (strpos($row, '_') === false) {
+                        $length += strlen($row) + 1;
+                    } else {
+                        break;
                     }
-                    $params = substr($this->query, $length);
-                    $probableQuery = substr($this->query, 0, $length);
                 }
+                $params = substr($this->query, $length);
+                $probableQuery = substr($this->query, 0, $length);
             }
+        }
 
-            // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-            $alias = $this->seoModel->getUriByAlias(substr($probableQuery, 0, -1));
-            if (!empty($alias)) {
-                $this->query = $alias . (!empty($params) ? $params : '');
-            }
+        // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
+        $alias = $this->seoModel->getUriByAlias(substr($probableQuery, 0, -1));
+        if (!empty($alias)) {
+            $this->query = $alias . (!empty($params) ? $params : '');
         }
 
         return;
