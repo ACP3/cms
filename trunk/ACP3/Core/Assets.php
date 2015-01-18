@@ -91,11 +91,11 @@ class Assets
     protected $designXml;
 
     /**
-     * @param Cache $minifyCache
-     * @param Modules $modules
-     * @param Router $router
+     * @param Cache         $minifyCache
+     * @param Modules       $modules
+     * @param Router        $router
      * @param ThemeResolver $themeResolver
-     * @param Config $systemConfig
+     * @param Config        $systemConfig
      */
     public function __construct(
         Cache $minifyCache,
@@ -127,34 +127,22 @@ class Assets
     }
 
     /**
-     * @return array
-     */
-    protected function getEnabledLibraries()
-    {
-        return array_filter($this->libraries, function ($var) {
-            return $var['enabled'];
-        });
-    }
-
-    /**
      * @param $layout
      *
      * @return array
      */
     public function includeCssFiles($layout)
     {
-        $enabledLibraries = $this->getEnabledLibraries();
-
         $cacheId = $this->systemConfig['design'] . '_';
         $cacheId .= 'css_';
-        $cacheId .= implode('_', array_keys($enabledLibraries));
+        $cacheId .= $this->_getJsLibrariesCache();
 
         if ($this->minifyCache->contains($cacheId) === false) {
             $css = [];
 
             // At first, load the library stylesheets
-            foreach ($enabledLibraries as $library) {
-                if (isset($library['css']) === true) {
+            foreach ($this->libraries as $library) {
+                if ($library['enabled'] === true && isset($library['css']) === true) {
                     $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', $library['css']);
                 }
             }
@@ -201,16 +189,14 @@ class Assets
      */
     public function includeJsFiles($layout)
     {
-        $enabledLibraries = $this->getEnabledLibraries();
-
         $cacheId = $this->systemConfig['design'] . '_';
         $cacheId .= 'js_';
-        $cacheId .= implode('_', array_keys($enabledLibraries));
+        $cacheId .= $this->_getJsLibrariesCache();
 
         if ($this->minifyCache->contains($cacheId) === false) {
             $scripts = [];
-            foreach ($enabledLibraries as $library) {
-                if (isset($library['js']) === true) {
+            foreach ($this->libraries as $library) {
+                if ($library['enabled'] === true && isset($library['js']) === true) {
                     $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/js/libs', $library['js']);
                 }
             }
@@ -236,6 +222,7 @@ class Assets
      * Aktiviert einzelne Frontend Bibliotheken
      *
      * @param array $libraries
+     *
      * @return $this
      */
     public function enableLibraries(array $libraries)
@@ -263,19 +250,40 @@ class Assets
      *
      * @return string
      */
-    public function buildMinifyLink($group, $layout = '')
+    public function buildMinifyLink($group, $layout = 'layout')
     {
-        if (!empty($layout)) {
-            $layout = '/layout_' . $layout;
+        $filename = $this->systemConfig['design'];
+        $filename .= '_' . $layout;
+        $filename .= '_' . $this->_getJsLibrariesCache();
+
+        $path = 'assets/' . md5($filename) . '.' . $group;
+
+        // Generate the minified StyleSheet and/or the JavaScript file
+        if (is_file(UPLOADS_DIR . $path) === false || defined('DEBUG') && DEBUG === true) {
+            switch ($group) {
+                case 'css':
+                    $files = $this->includeCssFiles($layout);
+                    break;
+                case 'js':
+                    $files = $this->includeJsFiles($layout);
+                    break;
+                default:
+                    $files = [];
+            }
+
+            $files = array_filter($files, function ($var) {
+                return !empty($var);
+            });
+
+            $options = [];
+            $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];
+
+            $content = \Minify::combine($files, $options);
+
+            file_put_contents(UPLOADS_DIR . $path, $content, LOCK_EX);
         }
 
-        $libraries = $this->_getJsLibrariesCache();
-
-        if ($libraries !== '') {
-            $libraries = '/libraries_' . substr($libraries, 0, -1);
-        }
-
-        return $this->router->route('minify/index/index/group_' . $group . '/design_' . $this->systemConfig['design'] . $layout . $libraries);
+        return ROOT_DIR . 'uploads/' . $path;
     }
 
     /**
@@ -284,7 +292,6 @@ class Assets
     private function _getJsLibrariesCache()
     {
         if (empty($this->librariesCache)) {
-            ksort($this->libraries);
             foreach ($this->libraries as $library => $values) {
                 if ($values['enabled'] === true) {
                     $this->librariesCache .= $library . ',';
