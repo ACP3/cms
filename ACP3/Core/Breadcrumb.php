@@ -99,7 +99,7 @@ class Breadcrumb
      */
     public function prePopulate()
     {
-        if ($this->request->mod !== 'minify' && $this->request->area !== 'admin' && $this->menusModel) {
+        if ($this->request->area !== 'admin' && $this->menusModel) {
             $in = [
                 $this->request->query,
                 $this->request->getUriWithoutPages(),

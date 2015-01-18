@@ -100,6 +100,6 @@ class Index extends Core\Modules\Controller
     {
         Cache::purge(CACHE_DIR . 'sql');
         Cache::purge(CACHE_DIR . 'tpl_compiled');
-        Cache::purge(CACHE_DIR . 'minify');
+        Cache::purge(UPLOADS_DIR . 'assets');
     }
 }
