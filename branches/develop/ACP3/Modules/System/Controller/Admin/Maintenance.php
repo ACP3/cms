@@ -72,7 +72,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                     $text = $this->lang->t('system', $result === true ? 'cache_type_images_delete_success' : 'cache_type_images_delete_success');
                     break;
                 case 'minify':
-                    $result = Core\Cache::purge(CACHE_DIR . 'minify');
+                    $result = Core\Cache::purge(UPLOADS_DIR . 'assets');
                     $text = $this->lang->t('system', $result === true ? 'cache_type_minify_delete_success' : 'cache_type_minify_delete_success');
                     break;
                 case 'templates':
@@ -237,10 +237,10 @@ class Maintenance extends Core\Modules\Controller\Admin
             $this->view->assign('sql_queries', $sqlQueries);
 
             Core\Cache::purge(CACHE_DIR . 'images');
-            Core\Cache::purge(CACHE_DIR . 'minify');
             Core\Cache::purge(CACHE_DIR . 'sql');
             Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
             Core\Cache::purge(CACHE_DIR . 'tpl_cached');
+            Core\Cache::purge(UPLOADS_DIR . 'assets');
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/maintenance/sql_import');
         } catch (Core\Exceptions\ValidationFailed $e) {
