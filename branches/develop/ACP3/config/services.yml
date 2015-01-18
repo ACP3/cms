@@ -16,11 +16,15 @@ services:
 
   core.assets:
     class: ACP3\Core\Assets
-    arguments: ['@minify.cache.core', '@core.modules', '@core.router', '@core.assets.themeResolver', '@system.config']
+    arguments: ['@assets.cache.core', '@core.modules', '@core.router', '@core.assets.themeResolver', '@system.config']
+
+  core.assets.cache:
+    class: ACP3\Core\Assets\Cache
+    arguments: ['@assets.cache.core']
 
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver
-    arguments: ['@core.xml', '@minify.cache']
+    arguments: ['@core.xml', '@core.assets.cache']
 
   core.assets.pageCssClasses:
     class: ACP3\Core\Assets\PageCssClasses
@@ -134,3 +138,8 @@ services:
 
   core.xml:
     class: ACP3\Core\XML
+
+  assets.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'assets']
+
