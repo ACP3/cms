@@ -19,7 +19,9 @@ class FrontController extends \ACP3\Core\FrontController
      */
     protected $container;
 
-
+    /**
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->request = $container->get('core.request');

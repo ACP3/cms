@@ -67,7 +67,7 @@ class Context
     }
 
     /**
-     * @return View
+     * @return \ACP3\Core\View
      */
     public function getView()
     {
