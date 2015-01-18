@@ -1,22 +1,22 @@
 <?php
-namespace ACP3\Modules\Minify;
+namespace ACP3\Core\Assets;
 
 use ACP3\Core;
 
 /**
  * Class Cache
- * @package ACP3\Modules\Minify
+ * @package ACP3\Core\Assets
  */
 class Cache
 {
-    const CACHE_ID = 'assets';
+    const CACHE_ID = 'resources';
     /**
      * @var \ACP3\Core\Cache
      */
     protected $cache;
 
     /**
-     * @param Core\Cache $cache
+     * @param \ACP3\Core\Cache $cache
      */
     public function __construct(Core\Cache $cache)
     {

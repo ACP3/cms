@@ -12,7 +12,7 @@ class Assets
     /**
      * @var Cache
      */
-    protected $minifyCache;
+    protected $assetsCache;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -89,16 +89,20 @@ class Assets
      * @var \SimpleXMLElement
      */
     protected $designXml;
+    /**
+     * @var int
+     */
+    protected $currentTime = 0;
 
     /**
-     * @param Cache         $minifyCache
+     * @param Cache         $assetsCache
      * @param Modules       $modules
      * @param Router        $router
      * @param ThemeResolver $themeResolver
      * @param Config        $systemConfig
      */
     public function __construct(
-        Cache $minifyCache,
+        Cache $assetsCache,
         Modules $modules,
         Router $router,
         ThemeResolver $themeResolver,
@@ -108,8 +112,10 @@ class Assets
         $this->modules = $modules;
         $this->router = $router;
         $this->themeResolver = $themeResolver;
-        $this->minifyCache = $minifyCache;
+        $this->assetsCache = $assetsCache;
         $this->systemConfig = $systemConfig->getSettings();
+
+        $this->currentTime = time();
 
         $this->_checkBootstrap();
     }
@@ -137,7 +143,7 @@ class Assets
         $cacheId .= 'css_';
         $cacheId .= $this->_getJsLibrariesCache();
 
-        if ($this->minifyCache->contains($cacheId) === false) {
+        if ($this->assetsCache->contains($cacheId) === false) {
             $css = [];
 
             // At first, load the library stylesheets
@@ -175,11 +181,11 @@ class Assets
                 }
             }
 
-            $this->minifyCache->save($cacheId, $css);
+            $this->assetsCache->save($cacheId, $css);
         }
 
 
-        return $this->minifyCache->fetch($cacheId);
+        return $this->assetsCache->fetch($cacheId);
     }
 
     /**
@@ -193,7 +199,7 @@ class Assets
         $cacheId .= 'js_';
         $cacheId .= $this->_getJsLibrariesCache();
 
-        if ($this->minifyCache->contains($cacheId) === false) {
+        if ($this->assetsCache->contains($cacheId) === false) {
             $scripts = [];
             foreach ($this->libraries as $library) {
                 if ($library['enabled'] === true && isset($library['js']) === true) {
@@ -211,10 +217,10 @@ class Assets
             // Include general js file of the layout
             $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
 
-            $this->minifyCache->save($cacheId, $scripts);
+            $this->assetsCache->save($cacheId, $scripts);
         }
 
-        return $this->minifyCache->fetch($cacheId);
+        return $this->assetsCache->fetch($cacheId);
 
     }
 
@@ -252,14 +258,22 @@ class Assets
      */
     public function buildMinifyLink($group, $layout = 'layout')
     {
-        $filename = $this->systemConfig['design'];
-        $filename .= '_' . $layout;
-        $filename .= '_' . $this->_getJsLibrariesCache();
+        $debug = (defined('DEBUG') && DEBUG === true);
+        $filenameHash = $this->getFilenameHash($group, $layout);
 
-        $path = 'assets/' . md5($filename) . '.' . $group;
+        $cacheKey = 'last-generated-' . $filenameHash;
+        if (false === ($lastGenerated = $this->assetsCache->fetch($cacheKey))) {
+            $lastGenerated = $this->currentTime;
+        }
 
-        // Generate the minified StyleSheet and/or the JavaScript file
-        if (is_file(UPLOADS_DIR . $path) === false || defined('DEBUG') && DEBUG === true) {
+        if ($debug === true) {
+            $path = 'assets/' . $filenameHash . '.' . $group;
+        } else {
+            $path = 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $group;
+        }
+
+        // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
+        if (is_file(UPLOADS_DIR . $path) === false || $debug === true) {
             switch ($group) {
                 case 'css':
                     $files = $this->includeCssFiles($layout);
@@ -280,10 +294,31 @@ class Assets
 
             $content = \Minify::combine($files, $options);
 
+            // Write the contents of the file to the uploads folder
             file_put_contents(UPLOADS_DIR . $path, $content, LOCK_EX);
+
+            // Save the time of the generation if the requested file
+            $this->assetsCache->save($cacheKey, $this->currentTime);
         }
 
-        return ROOT_DIR . 'uploads/' . $path;
+        return ROOT_DIR . 'uploads/' . $path . ($debug === true ? '?v=' . $this->currentTime : '');
+    }
+
+    /**
+     * @param $group
+     * @param $layout
+     *
+     * @return string
+     */
+    private function getFilenameHash($group, $layout)
+    {
+        $filename = $this->systemConfig['design'];
+        $filename .= '_' . $layout;
+        $filename .= '_' . $this->_getJsLibrariesCache();
+        $filename .= '_' . $group;
+
+        return md5($filename);
+
     }
 
     /**
