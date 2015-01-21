@@ -20,7 +20,7 @@
         "mibe/feedwriter": "1.0.1",
         "monolog/monolog": "1.11.*",
         "mrclay/minify": "dev-master",
-        "patchwork/utf8": "~1.1",
+        "patchwork/utf8": "~1.2",
         "phpmailer/phpmailer": "5.2.*",
         "smarty/smarty": "~3.1",
         "symfony/config": "2.6.*",
