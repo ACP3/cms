@@ -10,27 +10,27 @@ use ACP3\Core;
 class CheckAccess extends AbstractFunction
 {
     /**
-     * @var Core\ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
     /**
-     * @var Core\Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var Core\Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var Icon
+     * @var \ACP3\Core\View\Renderer\Smarty\Functions\Icon
      */
     protected $icon;
 
     /**
-     * @param Core\ACL $acl
-     * @param Core\Lang $lang
-     * @param Core\Router $router
-     * @param Icon $icon
+     * @param \ACP3\Core\ACL                                 $acl
+     * @param \ACP3\Core\Lang                                $lang
+     * @param \ACP3\Core\Router                              $router
+     * @param \ACP3\Core\View\Renderer\Smarty\Functions\Icon $icon
      */
     public function __construct(
         Core\ACL $acl,
