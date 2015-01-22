@@ -351,7 +351,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('datatable_config', $config);
 
             for ($i = 0; $i < $c_users; ++$i) {
-                $users[$i]['roles'] = implode(', ', $this->acl->getUserRoles($users[$i]['id'], 2));
+                $users[$i]['roles'] = implode(', ', $this->acl->getUserRolesByName($users[$i]['id']));
             }
             $this->view->assign('users', $users);
             $this->view->assign('can_delete', $canDelete);
