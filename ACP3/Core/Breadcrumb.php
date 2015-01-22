@@ -79,7 +79,7 @@ class Breadcrumb
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
-        $this->seoConfig = $seoConfig->getSettings();
+        $this->seoConfig = $seoConfig;
     }
 
     /**
@@ -218,7 +218,7 @@ class Breadcrumb
      */
     public function getSiteTitle()
     {
-        return $this->seoConfig['title'];
+        return $this->seoConfig->getSettings()['title'];
     }
 
     /**

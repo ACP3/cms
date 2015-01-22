@@ -27,9 +27,9 @@ class SEO
      */
     protected $formsHelper;
     /**
-     * @var array
+     * @var \ACP3\Core\Config
      */
-    protected $seoConfig = [];
+    protected $seoConfig;
     /**
      * @var \ACP3\Modules\Seo\Cache
      */
@@ -58,9 +58,9 @@ class SEO
      */
     protected $canonical = '';
     /**
-     * @var array
+     * @var null|array
      */
-    protected $aliasesCache = [];
+    protected $aliasesCache = null;
     /**
      * @var string
      */
@@ -89,10 +89,8 @@ class SEO
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
         $this->seoCache = $seoCache;
-        $this->seoConfig = $seoConfig->getSettings();
+        $this->seoConfig = $seoConfig;
         $this->seoModel = $seoModel;
-
-        $this->aliasesCache = $this->seoCache->getCache();
     }
 
     /**
@@ -127,12 +125,12 @@ class SEO
             $description = $this->getDescription($this->request->mod);
         }
         if (empty($description)) {
-            $description = $this->seoConfig['meta_description'];
+            $description = $this->seoConfig->getSettings()['meta_description'];
         }
 
         $postfix = '';
         if (!empty($description) && !empty($this->metaDescriptionPostfix)) {
-            $postfix.= ' - ' . $this->metaDescriptionPostfix;
+            $postfix .= ' - ' . $this->metaDescriptionPostfix;
         }
 
         return $description . $postfix;
@@ -142,13 +140,12 @@ class SEO
      * Gibt die Beschreibung der Seite zurück
      *
      * @param string $path
+     *
      * @return string
      */
     public function getDescription($path)
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return !empty($this->aliasesCache[$path]['description']) ? $this->aliasesCache[$path]['description'] : '';
+        return $this->getSeoInformation($path, 'description');
     }
 
     /**
@@ -167,20 +164,38 @@ class SEO
             $keywords = $this->getKeywords($this->request->mod);
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->seoConfig['meta_keywords']);
+        return strtolower(!empty($keywords) ? $keywords : $this->seoConfig->getSettings()['meta_keywords']);
     }
 
     /**
      * Gibt die Schlüsselwörter der Seite zurück
      *
      * @param string $path
+     *
      * @return string
      */
     public function getKeywords($path)
     {
+        return $this->getSeoInformation($path, 'keywords');
+    }
+
+    /**
+     * @param        $path
+     * @param        $key
+     * @param string $defaultValue
+     *
+     * @return string
+     */
+    protected function getSeoInformation($path, $key, $defaultValue = '')
+    {
+        // Lazy load the cache
+        if ($this->aliasesCache === null) {
+            $this->aliasesCache = $this->seoCache->getCache();
+        }
+
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliasesCache[$path]['keywords']) ? $this->aliasesCache[$path]['keywords'] : '';
+        return !empty($this->aliasesCache[$path][$key]) ? $this->aliasesCache[$path][$key] : $defaultValue;
     }
 
     /**
@@ -204,7 +219,9 @@ class SEO
 
     /**
      * Gibt die jeweilige Einstellung für den Robots-Metatag zurück
+     *
      * @param string $path
+     *
      * @return string
      */
     public function getRobotsSetting($path = '')
@@ -217,14 +234,12 @@ class SEO
         ];
 
         if ($path === '') {
-            return strtr($this->seoConfig['robots'], $replace);
+            return strtr($this->seoConfig->getSettings()['robots'], $replace);
         } else {
-            $path .= !preg_match('/\/$/', $path) ? '/' : '';
+            $robot = $this->getSeoInformation($path, 'robots', 0);
 
-            if (isset($this->aliasesCache[$path]) === false || $this->aliasesCache[$path]['robots'] == 0) {
-                $robot = $this->seoConfig['robots'];
-            } else {
-                $robot = $this->aliasesCache[$path]['robots'];
+            if ($robot == 0) {
+                $robot = $this->seoConfig->getSettings()['robots'];
             }
 
             return strtr($robot, $replace);
@@ -233,6 +248,7 @@ class SEO
 
     /**
      * @param $string
+     *
      * @return $this
      */
     public function setDescriptionPostfix($string)
@@ -244,7 +260,9 @@ class SEO
 
     /**
      * Setzt die kanonische URI
+     *
      * @param $path
+     *
      * @return $this
      */
     public function setCanonicalUri($path)
@@ -256,7 +274,9 @@ class SEO
 
     /**
      * Setzt die nächste Seite
+     *
      * @param $path
+     *
      * @return $this
      */
     public function setNextPage($path)
@@ -268,7 +288,9 @@ class SEO
 
     /**
      * Setzt die vorherige Seite
+     *
      * @param $path
+     *
      * @return $this
      */
     public function setPreviousPage($path)
@@ -293,7 +315,7 @@ class SEO
             $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->aliases->getUriAlias($path, true);
             $keywords = isset($_POST['seo_keywords']) ? $_POST['seo_keywords'] : $this->getKeywords($path);
             $description = isset($_POST['seo_description']) ? $_POST['seo_description'] : $this->getDescription($path);
-            $robots = isset($this->aliasesCache[$path]) === true ? $this->aliasesCache[$path]['robots'] : 0;
+            $robots = $this->getSeoInformation($path, 'robots', 0);
         } else {
             $alias = $keywords = $description = '';
             $robots = 0;
@@ -363,6 +385,4 @@ class SEO
 
         return $bool !== false && $this->seoCache->setCache() !== false;
     }
-
-
 }

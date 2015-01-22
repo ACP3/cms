@@ -25,7 +25,7 @@ class Modules
     /**
      * @var \ACP3\Core\Cache
      */
-    protected $cache;
+    protected $modulesCache;
     /**
      * @var \ACP3\Modules\System\Model
      */
@@ -57,7 +57,7 @@ class Modules
         $this->container = $container;
         $this->lang = $lang;
         $this->xml = $xml;
-        $this->cache = $modulesCache;
+        $this->modulesCache = $modulesCache;
         $this->systemModel = $systemModel;
     }
 
@@ -116,10 +116,10 @@ class Modules
         $module = strtolower($module);
         if (empty($this->parseModules)) {
             $filename = $this->_getCacheKey();
-            if ($this->cache->contains($filename) === false) {
+            if ($this->modulesCache->contains($filename) === false) {
                 $this->setModulesCache();
             }
-            $this->parseModules = $this->cache->fetch($filename);
+            $this->parseModules = $this->modulesCache->fetch($filename);
         }
         return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : [];
     }
@@ -175,7 +175,7 @@ class Modules
             }
         }
 
-        $this->cache->save($this->_getCacheKey(), $infos);
+        $this->modulesCache->save($this->_getCacheKey(), $infos);
     }
 
     /**

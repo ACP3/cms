@@ -16,17 +16,17 @@ class MoveToBottom extends AbstractFilter
     protected $filterType = 'output';
 
     /**
-     * @var Assets
+     * @var \ACP3\Core\Assets
      */
     protected $assets;
     /**
-     * @var Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
 
     /**
-     * @param Assets $assets
-     * @param Request $request
+     * @param \ACP3\Core\Assets  $assets
+     * @param \ACP3\Core\Request $request
      */
     public function __construct(
         Assets $assets,
