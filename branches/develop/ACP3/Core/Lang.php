@@ -8,9 +8,17 @@ namespace ACP3\Core;
 class Lang
 {
     /**
+     * @var \ACP3\Core\Auth
+     */
+    protected $auth;
+    /**
      * @var \ACP3\Core\Cache
      */
     protected $cache;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $systemConfig;
     /**
      * Die zur Zeit eingestellte Sprache
      *
@@ -31,20 +39,18 @@ class Lang
     protected $buffer = [];
 
     /**
-     * @param Auth $auth
-     * @param Cache $langCache
-     * @param Config $systemConfig
+     * @param \ACP3\Core\Auth   $auth
+     * @param \ACP3\Core\Cache  $langCache
+     * @param \ACP3\Core\Config $systemConfig
      */
     public function __construct(
         Auth $auth,
         Cache $langCache,
         Config $systemConfig
     ) {
-        $lang = $auth->getUserLanguage();
-        $this->lang = $this->languagePackExists($lang) === true ? $lang : $systemConfig->getSettings()['lang'];
-        $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
-
+        $this->auth = $auth;
         $this->cache = $langCache;
+        $this->systemConfig = $systemConfig;
     }
 
     /**
@@ -358,6 +364,11 @@ class Lang
      */
     public function getLanguage()
     {
+        if ($this->lang === '') {
+            $lang = $this->auth->getUserLanguage();
+            $this->lang = $this->languagePackExists($lang) === true ? $lang : $this->systemConfig->getSettings()['lang'];
+        }
+
         return $this->lang;
     }
 
@@ -366,7 +377,7 @@ class Lang
      */
     public function getLanguage2Characters()
     {
-        return $this->lang2Characters;
+        return substr($this->getLanguage(), 0, strpos($this->getLanguage(), '_'));
     }
 
     /**
@@ -407,11 +418,11 @@ class Lang
      */
     protected function getLanguageCache()
     {
-        if ($this->cache->contains($this->lang) === false) {
+        if ($this->cache->contains($this->getLanguage()) === false) {
             $this->setLanguageCache();
         }
 
-        return $this->cache->fetch($this->lang);
+        return $this->cache->fetch($this->getLanguage());
     }
 
     /**
@@ -424,7 +435,7 @@ class Lang
         $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
 
         foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';
+            $path = MODULES_DIR . $module . '/Languages/' . $this->getLanguage() . '.xml';
             if (is_file($path) === true) {
                 $xml = simplexml_load_file($path);
                 if (isset($data['info']['direction']) === false) {
@@ -440,7 +451,7 @@ class Lang
 
         $this->buffer = [];
 
-        return $this->cache->save($this->lang, $data);
+        return $this->cache->save($this->getLanguage(), $data);
     }
 
     /**
@@ -470,7 +481,7 @@ class Lang
     public function getLanguages($currentLanguage = '')
     {
         if (empty($currentLanguage)) {
-            $currentLanguage = $this->lang;
+            $currentLanguage = $this->getLanguage();
         }
 
         if (empty($this->languages)) {

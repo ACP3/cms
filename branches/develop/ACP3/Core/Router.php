@@ -22,9 +22,9 @@ class Router
      */
     protected $request;
     /**
-     * @var array
+     * @var \ACP3\Core\Config
      */
-    protected $seoConfig = [];
+    protected $seoConfig;
 
     /**
      * @param \ACP3\Core\Router\Aliases $aliases
@@ -38,7 +38,7 @@ class Router
     ) {
         $this->aliases = $aliases;
         $this->request = $request;
-        $this->seoConfig = $seoConfig->getSettings();
+        $this->seoConfig = $seoConfig;
     }
 
     /**
@@ -91,7 +91,7 @@ class Router
         }
 
         // Check, whether to use urls with mod_rewrite or not
-        if ((bool)$this->seoConfig['mod_rewrite'] === false ||
+        if ((bool)$this->seoConfig->getSettings()['mod_rewrite'] === false ||
             $isAdminUrl === true ||
             (defined('DEBUG') && DEBUG === true)
         ) {

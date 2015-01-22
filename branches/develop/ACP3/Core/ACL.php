@@ -46,25 +46,46 @@ class ACL
     protected $resources = [];
 
     /**
-     * @param Auth $auth
-     * @param Modules $modules
-     * @param Permissions\Model $permissionsModel
-     * @param Permissions\Cache $permissionsCache
+     * @param \ACP3\Core\Auth                 $auth
+     * @param \ACP3\Core\Modules              $modules
+     * @param \ACP3\Modules\Permissions\Model $permissionsModel
+     * @param \ACP3\Modules\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Auth $auth,
         Modules $modules,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache
-    ) {
+    )
+    {
         $this->auth = $auth;
         $this->modules = $modules;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
+    }
 
-        $this->userRoles = $this->getUserRoles($auth->getUserId());
-        $this->resources = $this->getResources();
-        $this->privileges = $this->getRules($this->userRoles);
+    /**
+     * Initializes the user roles
+     */
+    private function initUserRoles()
+    {
+        if ($this->userRoles === []) {
+            $this->userRoles = $this->getUserRoles($this->auth->getUserId());
+        }
+    }
+
+    /**
+     * Initializes the available user privileges
+     */
+    protected function getPrivileges()
+    {
+        if ($this->privileges === []) {
+            $this->initUserRoles();
+
+            $this->privileges = $this->getRules($this->userRoles);
+        }
+
+        return $this->privileges;
     }
 
     /**
@@ -72,22 +93,38 @@ class ACL
      *
      * @param integer $userId
      *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
-     * @param integer $mode
-     *    1 = IDs der Rollen ausgeben
-     *    2 = Namen der Rollen ausgeben
      *
      * @return array
      */
-    public function getUserRoles($userId, $mode = 1)
+    public function getUserRoles($userId)
     {
-        $field = $mode === 2 ? 'r.name' : 'r.id';
-        $key = substr($field, 2);
+        if (isset($this->userRoles[$userId]) === false) {
+            $userRoles = $this->permissionsModel->getRolesByUserId($userId);
+            $c_userRoles = count($userRoles);
+
+            for ($i = 0; $i < $c_userRoles; ++$i) {
+                $this->userRoles[$userId][] = $userRoles[$i]['id'];
+            }
+        }
+        return $this->userRoles[$userId];
+    }
+
+    /**
+     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
+     *
+     * @param integer $userId
+     *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
+     *
+     * @return array
+     */
+    public function getUserRolesByName($userId)
+    {
         $userRoles = $this->permissionsModel->getRolesByUserId($userId);
         $c_userRoles = count($userRoles);
         $roles = [];
 
         for ($i = 0; $i < $c_userRoles; ++$i) {
-            $roles[] = $userRoles[$i][$key];
+            $roles[] = $userRoles[$i]['name'];
         }
         return $roles;
     }
@@ -99,7 +136,11 @@ class ACL
      */
     public function getResources()
     {
-        return $this->permissionsCache->getResourcesCache();
+        if ($this->resources === []) {
+            $this->resources = $this->permissionsCache->getResourcesCache();
+        }
+
+        return $this->resources;
     }
 
     /**
@@ -144,6 +185,8 @@ class ACL
      */
     public function userHasRole($roleId)
     {
+        $this->initUserRoles();
+
         return in_array($roleId, $this->userRoles);
     }
 
@@ -172,9 +215,9 @@ class ACL
         // At least allow users to access the login page
         if ($area === 'frontend' && $resource === 'users/index/login/') {
             return true;
-        } elseif (isset($this->resources[$area][$resource])) {
+        } elseif (isset($this->getResources()[$area][$resource])) {
             $module = $resourceArray[1];
-            $key = $this->resources[$area][$resource]['key'];
+            $key = $this->getResources()[$area][$resource]['key'];
             return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
         }
         return false;
@@ -192,8 +235,8 @@ class ACL
     public function userHasPrivilege($module, $key)
     {
         $key = strtolower($key);
-        if (isset($this->privileges[$module][$key])) {
-            return $this->privileges[$module][$key]['access'];
+        if (isset($this->getPrivileges()[$module][$key])) {
+            return $this->getPrivileges()[$module][$key]['access'];
         }
         return false;
     }
