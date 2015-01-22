@@ -10,6 +10,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Patchwork\Utf8;
+use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -144,31 +145,22 @@ class Application
      */
     public function initializeClasses()
     {
-        Utf8\Bootup::initAll(); // Enables the portablity layer and configures PHP for UTF-8
+        Utf8\Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8
         Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
         Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
         $file = CACHE_DIR . 'sql/container.php';
+        $containerConfigCache = new ConfigCache($file, (defined('DEBUG') && DEBUG === true));
 
-        if (is_file($file) && (!defined('DEBUG') || DEBUG === false)) {
-            require_once $file;
-            $this->container = new \ACP3ServiceContainer();
-
-            // Load system settings
-            $this->systemSettings = $this->container->get('system.config')->getSettings();
-
-            $this->_setThemeConstants();
-
-            $this->container->get('core.view')->setRenderer('smarty');
-        } else {
-            $this->container = new ContainerBuilder();
-            $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
+        if (!$containerConfigCache->isFresh()) {
+            $containerBuilder = new ContainerBuilder();
+            $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
             $loader->load(ACP3_DIR . 'config/services.yml');
             $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
             // Try to get all available services
             /** @var Modules $modules */
-            $modules = $this->container->get('core.modules');
+            $modules = $containerBuilder->get('core.modules');
             $activeModules = $modules->getActiveModules();
             foreach ($activeModules as $module) {
                 $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
@@ -177,18 +169,24 @@ class Application
                 }
             }
 
-            // Load system settings
-            $this->systemSettings = $this->container->get('system.config')->getSettings();
+            $containerBuilder->compile();
 
-            $this->_setThemeConstants();
-
-            $this->container->get('core.view')->setRenderer('smarty');
-
-            $this->container->compile();
-
-            $dumper = new PhpDumper($this->container);
-            file_put_contents($file, $dumper->dump(['class' => 'ACP3ServiceContainer']));
+            $dumper = new PhpDumper($containerBuilder);
+            $containerConfigCache->write(
+                $dumper->dump(['class' => 'ACP3ServiceContainer']),
+                $containerBuilder->getResources()
+            );
         }
+
+        require_once $file;
+        $this->container = new \ACP3ServiceContainer();
+
+        // Load system settings
+        $this->systemSettings = $this->container->get('system.config')->getSettings();
+
+        $this->_setThemeConstants();
+
+        $this->container->get('core.view')->setRenderer('smarty');
     }
 
     /**
