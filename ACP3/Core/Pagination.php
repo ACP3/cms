@@ -3,10 +3,14 @@ namespace ACP3\Core;
 
 use ACP3\Core\Validator\Rules\Misc;
 
+/**
+ * Class Pagination
+ * @package ACP3\Core
+ */
 class Pagination
 {
     /**
-     * @var Auth
+     * @var \ACP3\Core\Auth
      */
     protected $auth;
     /**
@@ -14,27 +18,27 @@ class Pagination
      */
     protected $breadcrumb;
     /**
-     * @var Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var SEO
+     * @var \ACP3\Core\SEO
      */
     protected $seo;
     /**
-     * @var Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
     /**
-     * @var Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var View
+     * @var \ACP3\Core\View
      */
     protected $view;
     /**
-     * @var Misc
+     * @var \ACP3\Core\Validator\Rules\Misc
      */
     protected $miscValidator;
     /**

@@ -10,23 +10,22 @@ use ACP3\Core;
 class RewriteInternalUri
 {
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
-
     /**
-     * @var Core\Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var Core\Validator\Rules\Router\Aliases
+     * @var \ACP3\Core\Validator\Rules\Router\Aliases
      */
     protected $aliasesValidator;
 
     /**
-     * @param Core\Modules $modules
-     * @param Core\Router $router
-     * @param Core\Validator\Rules\Router\Aliases $aliasValidator
+     * @param \ACP3\Core\Modules                        $modules
+     * @param \ACP3\Core\Router                         $router
+     * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasValidator
      */
     public function __construct(
         Core\Modules $modules,

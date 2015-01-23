@@ -56,40 +56,25 @@ class Mailer
      */
     private $phpMailer;
     /**
-     * @var View
+     * @var \ACP3\Core\View
      */
     private $view;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    private $systemConfig;
 
     /**
-     * Initializes PHPMailer and sets the basic configuration parameters
-     * @param View $view
-     * @param Config $systemConfig
+     * @param \ACP3\Core\View   $view
+     * @param \ACP3\Core\Config $systemConfig
      */
     public function __construct(
         View $view,
         Config $systemConfig
-    ) {
+    )
+    {
         $this->view = $view;
-        $this->phpMailer = new \PHPMailer(true);
-
-        $settings = $systemConfig->getSettings();
-
-        if (strtolower($settings['mailer_type']) === 'smtp') {
-            $this->phpMailer->set('Mailer', 'smtp');
-            $this->phpMailer->Host = $settings['mailer_smtp_host'];
-            $this->phpMailer->Port = $settings['mailer_smtp_port'];
-            $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls']) ? $settings['mailer_smtp_security'] : '';
-            if ((bool)$settings['mailer_smtp_auth'] === true) {
-                $this->phpMailer->SMTPAuth = true;
-                $this->phpMailer->Username = $settings['mailer_smtp_user'];
-                $this->phpMailer->Password = $settings['mailer_smtp_password'];
-            }
-        } else {
-            $this->phpMailer->set('Mailer', 'mail');
-        }
-        $this->phpMailer->CharSet = 'UTF-8';
-        $this->phpMailer->Encoding = '8bit';
-        $this->phpMailer->WordWrap = 76;
+        $this->systemConfig = $systemConfig;
     }
 
     /**
@@ -220,6 +205,8 @@ class Mailer
     public function send()
     {
         try {
+            $this->configure();
+
             $this->phpMailer->Subject = $this->subject;
 
             if (is_array($this->from) === true) {
@@ -379,7 +366,7 @@ class Mailer
      *
      * @param        $email
      * @param string $name
-     * @param bool $bcc
+     * @param bool   $bcc
      *
      * @return $this
      */
@@ -434,6 +421,39 @@ class Mailer
 
         $this->phpMailer->clearAllRecipients();
         $this->phpMailer->clearAttachments();
+
+        return $this;
+    }
+
+    /**
+     * Initializes PHPMailer and sets the basic configuration parameters
+     *
+     * @return $this
+     */
+    private function configure()
+    {
+        if ($this->phpMailer === null) {
+            $this->phpMailer = new \PHPMailer(true);
+
+            $settings = $this->systemConfig->getSettings();
+
+            if (strtolower($settings['mailer_type']) === 'smtp') {
+                $this->phpMailer->set('Mailer', 'smtp');
+                $this->phpMailer->Host = $settings['mailer_smtp_host'];
+                $this->phpMailer->Port = $settings['mailer_smtp_port'];
+                $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls']) ? $settings['mailer_smtp_security'] : '';
+                if ((bool)$settings['mailer_smtp_auth'] === true) {
+                    $this->phpMailer->SMTPAuth = true;
+                    $this->phpMailer->Username = $settings['mailer_smtp_user'];
+                    $this->phpMailer->Password = $settings['mailer_smtp_password'];
+                }
+            } else {
+                $this->phpMailer->set('Mailer', 'mail');
+            }
+            $this->phpMailer->CharSet = 'UTF-8';
+            $this->phpMailer->Encoding = '8bit';
+            $this->phpMailer->WordWrap = 76;
+        }
 
         return $this;
     }

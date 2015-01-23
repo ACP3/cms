@@ -10,12 +10,12 @@ use ACP3\Core;
 class Lang extends AbstractFunction
 {
     /**
-     * @var Core\Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
 
     /**
-     * @param Core\Lang $lang
+     * @param \ACP3\Core\Lang $lang
      */
     public function __construct(Core\Lang $lang)
     {

@@ -5,6 +5,7 @@ namespace ACP3\Core;
 /**
  * Sessionklasse
  * Diese ist zuständig für das Sessionhandling in der Datenbank
+ *
  * @package ACP3\Core
  */
 class Session
@@ -13,33 +14,29 @@ class Session
      * Name der Session
      */
     const SESSION_NAME = 'ACP3_SID';
-
     /**
      * Name des XSRF-Token
      */
     const XSRF_TOKEN_NAME = 'security_token';
-
     /**
      * Zeit, bis Session ungültig wird
      *
      * @var integer
      */
     public $expireTime = 1800;
-
     /**
      * Wahrscheinlichkeit, dass Session Garbage Collector anspringt
      *
      * @var integer
      */
     public $gcProbability = 10;
-
     /**
-     * @var DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
 
     /**
-     * @param DB $db
+     * @param \ACP3\Core\DB $db
      */
     public function __construct(DB $db)
     {

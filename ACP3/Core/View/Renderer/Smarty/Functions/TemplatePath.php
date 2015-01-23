@@ -10,12 +10,12 @@ use ACP3\Core;
 class TemplatePath extends AbstractFunction
 {
     /**
-     * @var Core\Assets\ThemeResolver
+     * @var \ACP3\Core\Assets\ThemeResolver
      */
     protected $themeResolver;
 
     /**
-     * @param Core\Assets\ThemeResolver $themeResolver
+     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
      */
     public function __construct(Core\Assets\ThemeResolver $themeResolver)
     {

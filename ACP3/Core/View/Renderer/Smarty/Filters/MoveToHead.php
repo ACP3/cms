@@ -15,12 +15,12 @@ class MoveToHead extends AbstractFilter
     protected $filterType = 'output';
 
     /**
-     * @var Assets
+     * @var \ACP3\Core\Assets
      */
     protected $assets;
 
     /**
-     * @param Assets $assets
+     * @param \ACP3\Core\Assets $assets
      */
     public function __construct(Assets $assets)
     {
