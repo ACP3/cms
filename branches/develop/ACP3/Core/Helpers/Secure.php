@@ -10,12 +10,12 @@ use ACP3\Core;
 class Secure
 {
     /**
-     * @var Core\View
+     * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * @param Core\View $view
+     * @param \ACP3\Core\View $view
      */
     public function __construct(Core\View $view)
     {

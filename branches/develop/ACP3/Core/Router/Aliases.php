@@ -13,14 +13,14 @@ class Aliases
     /**
      * @var array
      */
-    protected $aliasesCache = [];
+    protected $seoCache = [];
 
     /**
      * @param \ACP3\Modules\Seo\Cache $seoCache
      */
     public function __construct(Seo\Cache $seoCache)
     {
-        $this->aliasesCache = $seoCache->getCache();
+        $this->seoCache = $seoCache->getCache();
     }
 
     /**
@@ -35,7 +35,7 @@ class Aliases
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliasesCache[$path]['alias']) ? $this->aliasesCache[$path]['alias'] : ($emptyOnNoResult === true ? '' : $path);
+        return !empty($this->seoCache[$path]['alias']) ? $this->seoCache[$path]['alias'] : ($emptyOnNoResult === true ? '' : $path);
     }
 
     /**

@@ -10,11 +10,11 @@ use ACP3\Core;
 class IncludeJs extends AbstractFunction
 {
     /**
-     * @var Core\Assets
+     * @var \ACP3\Core\Assets
      */
     protected $assets;
     /**
-     * @var Core\Assets\ThemeResolver
+     * @var \ACP3\Core\Assets\ThemeResolver
      */
     protected $themeResolver;
     /**
@@ -23,8 +23,8 @@ class IncludeJs extends AbstractFunction
     protected $alreadyIncluded = [];
 
     /**
-     * @param Core\Assets $assets
-     * @param Core\Assets\ThemeResolver $themeResolver
+     * @param \ACP3\Core\Assets               $assets
+     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
      */
     public function __construct(
         Core\Assets $assets,

@@ -10,7 +10,7 @@ use ACP3\Core;
 class JsLibraries extends AbstractFunction
 {
     /**
-     * @var Core\Assets
+     * @var \ACP3\Core\Assets
      */
     protected $assets;
     /**
@@ -19,7 +19,7 @@ class JsLibraries extends AbstractFunction
     protected $alreadyIncluded = [];
 
     /**
-     * @param Core\Assets $assets
+     * @param \ACP3\Core\Assets $assets
      */
     public function __construct(Core\Assets $assets)
     {

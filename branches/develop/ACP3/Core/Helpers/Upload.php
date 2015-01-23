@@ -14,6 +14,9 @@ class Upload
      */
     private $directory = '';
 
+    /**
+     * @param $directory
+     */
     public function __construct($directory)
     {
         $this->directory = $directory;

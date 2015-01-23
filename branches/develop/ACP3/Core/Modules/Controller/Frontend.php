@@ -11,7 +11,7 @@ use ACP3\Core;
 abstract class Frontend extends Core\Modules\Controller
 {
     /**
-     * @var Core\Assets
+     * @var \ACP3\Core\Assets
      */
     protected $assets;
     /**
@@ -34,7 +34,7 @@ abstract class Frontend extends Core\Modules\Controller
     protected $contentType = 'Content-Type: text/html; charset=UTF-8';
 
     /**
-     * @param Core\Context\Frontend $frontendContext
+     * @param \ACP3\Core\Context\Frontend $frontendContext
      */
     public function __construct(Core\Context\Frontend $frontendContext)
     {

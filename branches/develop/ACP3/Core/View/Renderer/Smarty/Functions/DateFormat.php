@@ -15,7 +15,7 @@ class DateFormat extends AbstractFunction
     protected $date;
 
     /**
-     * @param Date $date
+     * @param \ACP3\Core\Date $date
      */
     public function __construct(Date $date)
     {

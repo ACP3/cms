@@ -19,7 +19,7 @@ class View extends ContainerAware
     /**
      * Gets the renderer
      *
-     * @return object
+     * @return AbstractRenderer
      */
     public function getRenderer()
     {

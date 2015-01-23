@@ -11,20 +11,15 @@ use Symfony\Component\DependencyInjection\Container;
 class FrontController extends \ACP3\Core\FrontController
 {
     /**
-     * @var Request
-     */
-    protected $request;
-    /**
-     * @var Container
+     * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
 
     /**
-     * @param Container $container
+     * @param \Symfony\Component\DependencyInjection\Container $container
      */
     public function __construct(Container $container)
     {
-        $this->request = $container->get('core.request');
         $this->container = $container;
     }
 
@@ -37,8 +32,10 @@ class FrontController extends \ACP3\Core\FrontController
      */
     public function dispatch($serviceId = '', $action = '', array $arguments = [])
     {
+        $request = $this->container->get('core.request');
+
         if (empty($serviceId)) {
-            $serviceId = $this->request->mod . '.controller.' . $this->request->area . '.' . $this->request->controller;
+            $serviceId = $request->mod . '.controller.' . $request->area . '.' . $request->controller;
         }
 
         if ($this->container->has($serviceId)) {
@@ -46,7 +43,7 @@ class FrontController extends \ACP3\Core\FrontController
             $controller = $this->container->get($serviceId);
 
             if (empty($action)) {
-                $action = $this->request->file;
+                $action = $request->file;
             }
 
             $action = 'action' . str_replace('_', '', $action);

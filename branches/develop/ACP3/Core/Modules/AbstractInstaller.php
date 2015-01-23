@@ -26,15 +26,15 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
     const SCHEMA_VERSION = 0;
 
     /**
-     * @var Core\DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
     /**
-     * @var Core\XML
+     * @var \ACP3\Core\XML
      */
     protected $xml;
     /**
-     * @var Core\Cache
+     * @var \ACP3\Core\Cache
      */
     protected $aclCache;
     /**
@@ -61,11 +61,11 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
     protected $specialResources = [];
 
     /**
-     * @param Core\DB           $db
-     * @param Core\XML          $xml
-     * @param Core\Cache        $aclCache
-     * @param System\Model      $systemModel
-     * @param Permissions\Model $permissionsModel
+     * @param \ACP3\Core\DB                   $db
+     * @param \ACP3\Core\XML                  $xml
+     * @param \ACP3\Core\Cache                $aclCache
+     * @param \ACP3\Modules\System\Model      $systemModel
+     * @param \ACP3\Modules\Permissions\Model $permissionsModel
      */
     public function __construct(
         Core\DB $db,

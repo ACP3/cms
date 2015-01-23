@@ -10,22 +10,22 @@ use ACP3\Core;
 class RedirectMessages
 {
     /**
-     * @var Core\Request
+     * @var \ACP3\Core\Request
      */
     private $request;
     /**
-     * @var Core\Redirect
+     * @var \ACP3\Core\Redirect
      */
     private $redirect;
     /**
-     * @var Core\View
+     * @var \ACP3\Core\View
      */
     private $view;
 
     /**
-     * @param Core\Redirect $redirect
-     * @param Core\Request $request
-     * @param Core\View $view
+     * @param \ACP3\Core\Redirect $redirect
+     * @param \ACP3\Core\Request  $request
+     * @param \ACP3\Core\View     $view
      */
     public function __construct(
         Core\Redirect $redirect,

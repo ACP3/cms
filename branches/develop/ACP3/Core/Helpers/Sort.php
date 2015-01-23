@@ -10,12 +10,12 @@ use ACP3\Core\DB;
 class Sort
 {
     /**
-     * @var DB
+     * @var \ACP3\Core\DB
      */
     protected $db;
 
     /**
-     * @param DB $db
+     * @param \ACP3\Core\DB $db
      */
     public function __construct(DB $db)
     {

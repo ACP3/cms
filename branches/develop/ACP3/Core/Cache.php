@@ -20,8 +20,8 @@ class Cache
     protected $driver;
 
     /**
-     * @param Container $container
-     * @param $namespace
+     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param                                                  $namespace
      * @throws \InvalidArgumentException
      */
     public function __construct(
