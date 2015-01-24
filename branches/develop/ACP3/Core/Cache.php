@@ -11,13 +11,21 @@ use Symfony\Component\DependencyInjection\Container;
 class Cache
 {
     /**
+     * @var \Symfony\Component\DependencyInjection\Container
+     */
+    protected $container;
+    /**
      * @var string
      */
     protected $namespace = '';
     /**
-     * @var CacheProvider
+     * @return \Doctrine\Common\Cache\CacheProvider
      */
     protected $driver;
+    /**
+     * @var array
+     */
+    protected $retrievedCacheData = [];
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
@@ -28,32 +36,8 @@ class Cache
         Container $container,
         $namespace
     ) {
+        $this->container = $container;
         $this->namespace = $namespace;
-
-        if ($container->hasParameter('cache_driver')) {
-            $driverName = $container->getParameter('cache_driver');
-        } else {
-            $driverName = 'Array';
-        }
-
-        // If debug mode is enabled, override the cache driver configuration
-        if (defined('DEBUG') && DEBUG === true) {
-            $driverName = 'Array';
-        }
-
-        $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
-        if (class_exists($cacheDriverPath)) {
-            if ($driverName === 'PhpFile') {
-                $cacheDir = CACHE_DIR . 'sql/';
-                $this->driver = new $cacheDriverPath($cacheDir);
-            } else {
-                $this->driver = new $cacheDriverPath();
-            }
-
-            $this->driver->setNamespace($namespace);
-        } else {
-            throw new \InvalidArgumentException(sprintf('Could not find the requested cache driver "%s"!', $cacheDriverPath));
-        }
     }
 
     /**
@@ -100,7 +84,11 @@ class Cache
      */
     public function fetch($id)
     {
-        return $this->driver->fetch($id);
+        if (isset($this->retrievedCacheData[$id]) === false) {
+            $this->retrievedCacheData[$id] = $this->getDriver()->fetch($id);
+        }
+
+        return $this->retrievedCacheData[$id];
     }
 
     /**
@@ -110,7 +98,7 @@ class Cache
      */
     public function contains($id)
     {
-        return $this->driver->contains($id);
+        return isset($this->retrievedCacheData[$id]) === true || $this->getDriver()->contains($id);
     }
 
     /**
@@ -122,7 +110,9 @@ class Cache
      */
     public function save($id, $data, $lifetime = 0)
     {
-        return $this->driver->save($id, $data, $lifetime);
+        $this->retrievedCacheData[$id] = $data;
+
+        return $this->getDriver()->save($id, $data, $lifetime);
     }
 
     /**
@@ -132,7 +122,9 @@ class Cache
      */
     public function delete($id)
     {
-        return $this->driver->delete($id);
+        unset($this->retrievedCacheData[$id]);
+
+        return $this->getDriver()->delete($id);
     }
 
     /**
@@ -140,7 +132,7 @@ class Cache
      */
     public function deleteAll()
     {
-        return $this->driver->deleteAll();
+        return $this->getDriver()->deleteAll();
     }
 
     /**
@@ -148,14 +140,42 @@ class Cache
      */
     public function flushAll()
     {
-        return $this->driver->flushAll();
+        return $this->getDriver()->flushAll();
     }
 
     /**
-     * @return CacheProvider
+     * @return \Doctrine\Common\Cache\CacheProvider
      */
     public function getDriver()
     {
+        // Init the cache driver
+        if ($this->driver === null) {
+            if ($this->container->hasParameter('cache_driver')) {
+                $driverName = $this->container->getParameter('cache_driver');
+            } else {
+                $driverName = 'Array';
+            }
+
+            // If debug mode is enabled, override the cache driver configuration
+            if (defined('DEBUG') && DEBUG === true) {
+                $driverName = 'Array';
+            }
+
+            $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
+            if (class_exists($cacheDriverPath)) {
+                if ($driverName === 'PhpFile') {
+                    $cacheDir = CACHE_DIR . 'sql/';
+                    $this->driver = new $cacheDriverPath($cacheDir);
+                } else {
+                    $this->driver = new $cacheDriverPath();
+                }
+
+                $this->driver->setNamespace($this->namespace);
+            } else {
+                throw new \InvalidArgumentException(sprintf('Could not find the requested cache driver "%s"!', $cacheDriverPath));
+            }
+        }
+
         return $this->driver;
     }
 }
