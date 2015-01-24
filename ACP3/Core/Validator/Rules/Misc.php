@@ -11,12 +11,12 @@ use ACP3\Core\Request;
 class Misc
 {
     /**
-     * @var Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
 
     /**
-     * @param Request $request
+     * @param \ACP3\Core\Request $request
      */
     public function __construct(Request $request)
     {

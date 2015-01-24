@@ -225,7 +225,7 @@ class Index extends Core\Modules\Controller\Admin
             // Zugriffslevel holen
             $roles = $this->acl->getAllRoles();
             $c_roles = count($roles);
-            $userRoles = $this->acl->getUserRoles($this->request->id);
+            $userRoles = $this->acl->getUserRoleIds($this->request->id);
             for ($i = 0; $i < $c_roles; ++$i) {
                 $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
                 $roles[$i]['selected'] = $this->formsHelpers->selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $userRoles) ? $roles[$i]['id'] : '');
@@ -351,7 +351,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('datatable_config', $config);
 
             for ($i = 0; $i < $c_users; ++$i) {
-                $users[$i]['roles'] = implode(', ', $this->acl->getUserRolesByName($users[$i]['id']));
+                $users[$i]['roles'] = implode(', ', $this->acl->getUserRoleNames($users[$i]['id']));
             }
             $this->view->assign('users', $users);
             $this->view->assign('can_delete', $canDelete);

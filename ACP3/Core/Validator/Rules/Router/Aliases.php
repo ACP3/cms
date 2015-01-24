@@ -11,7 +11,7 @@ use ACP3\Modules\Seo;
 class Aliases
 {
     /**
-     * @var Core\Validator\Rules\Router
+     * @var \ACP3\Core\Validator\Rules\Router
      */
     protected $routerValidator;
     /**

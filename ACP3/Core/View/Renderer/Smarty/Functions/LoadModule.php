@@ -12,12 +12,12 @@ use Symfony\Component\DependencyInjection\Container;
 class LoadModule extends AbstractFunction
 {
     /**
-     * @var Container
+     * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
 
     /**
-     * @param Container $container
+     * @param \Symfony\Component\DependencyInjection\Container $container
      */
     public function __construct(Container $container)
     {

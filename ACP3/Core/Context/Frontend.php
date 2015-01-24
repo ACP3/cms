@@ -10,7 +10,7 @@ use ACP3\Core;
 class Frontend extends Core\Context
 {
     /**
-     * @var Core\Assets
+     * @var \ACP3\Core\Assets
      */
     protected $assets;
     /**

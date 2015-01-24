@@ -20,7 +20,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     protected $validate;
 
     /**
-     * @param Core\Context\Admin $adminContext
+     * @param \ACP3\Core\Context\Admin $adminContext
      */
     public function __construct(Core\Context\Admin $adminContext)
     {

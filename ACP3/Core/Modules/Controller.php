@@ -11,7 +11,7 @@ use ACP3\Core;
 abstract class Controller
 {
     /**
-     * @var Core\ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
     /**
@@ -43,7 +43,7 @@ abstract class Controller
      */
     protected $view;
     /**
-     * @var Core\Config
+     * @var \ACP3\Core\Config
      */
     protected $systemConfig;
     /**

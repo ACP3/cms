@@ -12,7 +12,7 @@ use Doctrine\DBAL\Cache\QueryCacheProfile;
 class DB
 {
     /**
-     * @var DBAL\Connection
+     * @var \Doctrine\DBAL\Connection
      */
     protected $connection;
     /**

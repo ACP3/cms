@@ -10,7 +10,7 @@ use ACP3\Core;
 class Asset extends AbstractResource
 {
     /**
-     * @var Core\Assets\ThemeResolver
+     * @var \ACP3\Core\Assets\ThemeResolver
      */
     protected $themeResolver;
     /**
@@ -19,7 +19,7 @@ class Asset extends AbstractResource
     protected $resourceName = 'asset';
 
     /**
-     * @param Core\Assets\ThemeResolver $themeResolver
+     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
      */
     public function __construct(Core\Assets\ThemeResolver $themeResolver)
     {

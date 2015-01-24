@@ -10,10 +10,13 @@ use ACP3\Core;
 class ACL
 {
     /**
-     * @var Core\ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
 
+    /**
+     * @param \ACP3\Core\ACL $acl
+     */
     public function __construct(Core\ACL $acl)
     {
         $this->acl = $acl;

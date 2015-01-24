@@ -5,31 +5,31 @@ namespace ACP3\Core;
  * Klasse zum Erstellen, Bearbeiten, Löschen und
  * Umsortieren von Knoten in einem Nested Set Baum
  *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class NestedSet
 {
     /**
      * Der Tabellenname
+     *
      * @var string
      */
     protected $tableName;
-
     /**
      * Legt fest, ob das Block-Management aktiv ist oder nicht
-     * @var boolean
+     *
+     * @var bool
      */
     protected $enableBlocks;
-
     /**
-     * @var DB
+     * @var \Doctrine\DBAL\Connection
      */
     protected $db;
 
     /**
-     * @param DB $db
-     * @param $tableName
-     * @param bool $enableBlocks
+     * @param \ACP3\Core\DB $db
+     * @param               $tableName
+     * @param bool          $enableBlocks
      */
     public function __construct(
         DB $db,

@@ -3,31 +3,26 @@ namespace ACP3\Core;
 
 use Symfony\Component\DependencyInjection\Container;
 
+/**
+ * Class FrontController
+ * @package ACP3\Core
+ */
 class FrontController
 {
     /**
-     * @var Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
     /**
-     * @var Redirect
-     */
-    protected $redirect;
-    /**
-     * @var Router\Aliases
-     */
-    protected $routerAliases;
-    /**
-     * @var Container
+     * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
 
-
+    /**
+     * @param \Symfony\Component\DependencyInjection\Container $container
+     */
     public function __construct(Container $container)
     {
-        $this->request = $container->get('core.request');
-        $this->redirect = $container->get('core.redirect');
-        $this->routerAliases = $container->get('core.router.aliases');
         $this->container = $container;
     }
 
@@ -40,10 +35,12 @@ class FrontController
      */
     public function dispatch($serviceId = '', $action = '', array $arguments = [])
     {
-        $this->_checkForUriAlias();
+        $request = $this->container->get('core.request');
+
+        $this->_checkForUriAlias($request);
 
         if (empty($serviceId)) {
-            $serviceId = $this->request->mod . '.controller.' . $this->request->area . '.' . $this->request->controller;
+            $serviceId = $request->mod . '.controller.' . $request->area . '.' . $request->controller;
         }
 
         if ($this->container->has($serviceId)) {
@@ -51,7 +48,7 @@ class FrontController
             $controller = $this->container->get($serviceId);
 
             if (empty($action)) {
-                $action = $this->request->file;
+                $action = $request->file;
             }
 
             $action = 'action' . str_replace('_', '', $action);
@@ -79,20 +76,20 @@ class FrontController
      * Überprüft die URI auf einen möglichen URI-Alias und
      * macht im Erfolgsfall einen Redirect darauf
      *
-     * @return void
+     * @param \ACP3\Core\Request $request
      */
-    private function _checkForUriAlias()
+    private function _checkForUriAlias(Request $request)
     {
-        // Nur ausführen, falls URI-Aliase aktiviert sind
-        if ($this->request->area !== 'admin') {
+        // Nur ausführen, falls URI-Aliase verfügbar sind
+        if ($request->area !== 'admin') {
+            $routerAliases = $this->container->get('core.router.aliases');
+
             // Falls für Query ein Alias existiert, zu diesem weiterleiten
-            if ($this->routerAliases->uriAliasExists($this->request->query) === true &&
-                $this->request->originalQuery !== $this->routerAliases->getUriAlias($this->request->query) . '/'
+            if ($routerAliases->uriAliasExists($request->query) === true &&
+                $request->originalQuery !== $routerAliases->getUriAlias($request->query) . '/'
             ) {
-                $this->redirect->permanent($this->request->query); // URI-Alias wird von Router::route() erzeugt
+                $this->container->get('core.redirect')->permanent($request->query); // URI-Alias wird von Router::route() erzeugt
             }
         }
-
-        return;
     }
 }

@@ -11,19 +11,19 @@ use ACP3\Core\Router\Aliases;
 class SEO
 {
     /**
-     * @var Router\Aliases
+     * @var \ACP3\Core\Router\Aliases
      */
     protected $aliases;
     /**
-     * @var Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
     /**
-     * @var Forms
+     * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
     /**

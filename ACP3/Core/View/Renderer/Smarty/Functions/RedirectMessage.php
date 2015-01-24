@@ -10,12 +10,12 @@ use ACP3\Core;
 class RedirectMessage extends AbstractFunction
 {
     /**
-     * @var Core\Helpers\RedirectMessages
+     * @var \ACP3\Core\Helpers\RedirectMessages
      */
     protected $redirectMessages;
 
     /**
-     * @param Core\Helpers\RedirectMessages $redirectMessages
+     * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(Core\Helpers\RedirectMessages $redirectMessages)
     {
