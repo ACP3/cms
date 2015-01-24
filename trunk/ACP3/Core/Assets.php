@@ -10,7 +10,7 @@ use ACP3\Core\Assets\ThemeResolver;
 class Assets
 {
     /**
-     * @var Cache
+     * @var \ACP3\Core\Cache
      */
     protected $assetsCache;
     /**
@@ -18,17 +18,17 @@ class Assets
      */
     protected $modules;
     /**
-     * @var Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var ThemeResolver
+     * @var \ACP3\Core\Assets\ThemeResolver
      */
     protected $themeResolver;
     /**
-     * @var array
+     * @var \ACP3\Core\Config
      */
-    protected $systemConfig = [];
+    protected $systemConfig;
 
     /**
      * Legt fest, welche Bibliotheken beim Seitenaufruf geladen werden sollen
@@ -113,7 +113,7 @@ class Assets
         $this->router = $router;
         $this->themeResolver = $themeResolver;
         $this->assetsCache = $assetsCache;
-        $this->systemConfig = $systemConfig->getSettings();
+        $this->systemConfig = $systemConfig;
 
         $this->currentTime = time();
 
@@ -139,7 +139,7 @@ class Assets
      */
     public function includeCssFiles($layout)
     {
-        $cacheId = $this->systemConfig['design'] . '_';
+        $cacheId = $this->systemConfig->getSettings()['design'] . '_';
         $cacheId .= 'css_';
         $cacheId .= $this->_getJsLibrariesCache();
 
@@ -195,7 +195,7 @@ class Assets
      */
     public function includeJsFiles($layout)
     {
-        $cacheId = $this->systemConfig['design'] . '_';
+        $cacheId = $this->systemConfig->getSettings()['design'] . '_';
         $cacheId .= 'js_';
         $cacheId .= $this->_getJsLibrariesCache();
 
@@ -221,7 +221,6 @@ class Assets
         }
 
         return $this->assetsCache->fetch($cacheId);
-
     }
 
     /**
@@ -312,7 +311,7 @@ class Assets
      */
     private function getFilenameHash($group, $layout)
     {
-        $filename = $this->systemConfig['design'];
+        $filename = $this->systemConfig->getSettings()['design'];
         $filename .= '_' . $layout;
         $filename .= '_' . $this->_getJsLibrariesCache();
         $filename .= '_' . $group;

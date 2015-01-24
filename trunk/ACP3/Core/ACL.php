@@ -65,24 +65,12 @@ class ACL
     }
 
     /**
-     * Initializes the user roles
-     */
-    private function initUserRoles()
-    {
-        if ($this->userRoles === []) {
-            $this->userRoles = $this->getUserRoles($this->auth->getUserId());
-        }
-    }
-
-    /**
      * Initializes the available user privileges
      */
     protected function getPrivileges()
     {
         if ($this->privileges === []) {
-            $this->initUserRoles();
-
-            $this->privileges = $this->getRules($this->userRoles);
+            $this->privileges = $this->getRules($this->getUserRoleIds($this->auth->getUserId()));
         }
 
         return $this->privileges;
@@ -96,7 +84,7 @@ class ACL
      *
      * @return array
      */
-    public function getUserRoles($userId)
+    public function getUserRoleIds($userId)
     {
         if (isset($this->userRoles[$userId]) === false) {
             $userRoles = $this->permissionsModel->getRolesByUserId($userId);
@@ -117,7 +105,7 @@ class ACL
      *
      * @return array
      */
-    public function getUserRolesByName($userId)
+    public function getUserRoleNames($userId)
     {
         $userRoles = $this->permissionsModel->getRolesByUserId($userId);
         $c_userRoles = count($userRoles);
@@ -185,9 +173,7 @@ class ACL
      */
     public function userHasRole($roleId)
     {
-        $this->initUserRoles();
-
-        return in_array($roleId, $this->userRoles);
+        return in_array($roleId, $this->getUserRoleIds($this->auth->getUserId()));
     }
 
     /**

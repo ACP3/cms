@@ -10,14 +10,18 @@ use ACP3\Core;
 class Captcha
 {
     /**
-     * @var Core\Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
     /**
-     * @var Core\Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
 
+    /**
+     * @param \ACP3\Core\Request $request
+     * @param \ACP3\Core\Router  $router
+     */
     public function __construct(
         Core\Request $request,
         Core\Router $router

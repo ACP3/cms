@@ -10,12 +10,12 @@ use ACP3\Core\Helpers\StringFormatter;
 class Nl2p extends AbstractModifier
 {
     /**
-     * @var StringFormatter
+     * @var \ACP3\Core\Helpers\StringFormatter
      */
     protected $stringFormatter;
 
     /**
-     * @param StringFormatter $stringFormatter
+     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(StringFormatter $stringFormatter)
     {

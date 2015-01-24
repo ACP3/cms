@@ -42,9 +42,9 @@ class Date
      */
     protected $dateValidator;
     /**
-     * @var array
+     * @var \ACP3\Core\Config
      */
-    protected $systemConfig = [];
+    protected $systemConfig;
 
     /**
      * @param Auth                 $auth
@@ -64,24 +64,26 @@ class Date
         $this->lang = $lang;
         $this->formsHelper = $formsHelper;
         $this->dateValidator = $dateValidator;
-        $this->systemConfig = $systemConfig->getSettings();
+        $this->systemConfig = $systemConfig;
 
         $this->_setFormatAndTimeZone($auth->getUserInfo());
     }
 
     /**
-     * @param $settings
+     * @param $userInfo
      */
-    protected function _setFormatAndTimeZone($settings)
+    protected function _setFormatAndTimeZone($userInfo)
     {
-        if (!empty($settings)) {
+        if (!empty($userInfo)) {
+            $this->dateFormatLong = $userInfo['date_format_long'];
+            $this->dateFormatShort = $userInfo['date_format_short'];
+            $timeZone = $userInfo['time_zone'];
+        } else {
+            $settings = $this->systemConfig->getSettings();
+
             $this->dateFormatLong = $settings['date_format_long'];
             $this->dateFormatShort = $settings['date_format_short'];
-            $timeZone = $settings['time_zone'];
-        } else {
-            $this->dateFormatLong = $this->systemConfig['date_format_long'];
-            $this->dateFormatShort = $this->systemConfig['date_format_short'];
-            $timeZone = $this->systemConfig['date_time_zone'];
+            $timeZone = $settings['date_time_zone'];
         }
         $this->dateTimeZone = new \DateTimeZone($timeZone);
     }

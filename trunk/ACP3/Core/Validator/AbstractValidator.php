@@ -23,8 +23,8 @@ class AbstractValidator
     protected $errors = [];
 
     /**
-     * @param Core\Lang $lang
-     * @param Rules\Misc $validate
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(
         Core\Lang $lang,

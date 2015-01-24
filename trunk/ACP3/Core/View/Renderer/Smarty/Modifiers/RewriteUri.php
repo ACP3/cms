@@ -10,12 +10,12 @@ use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 class RewriteUri extends AbstractModifier
 {
     /**
-     * @var RewriteInternalUri
+     * @var \ACP3\Core\Helpers\Formatter\RewriteInternalUri
      */
     protected $rewriteInternalUri;
 
     /**
-     * @param RewriteInternalUri $rewriteInternalUri
+     * @param \ACP3\Core\Helpers\Formatter\RewriteInternalUri $rewriteInternalUri
      */
     public function __construct(RewriteInternalUri $rewriteInternalUri)
     {

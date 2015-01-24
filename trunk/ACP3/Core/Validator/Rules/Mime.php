@@ -15,7 +15,7 @@ class Mime
     protected $validate;
 
     /**
-     * @param Misc $validate
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(Core\Validator\Rules\Misc $validate)
     {
