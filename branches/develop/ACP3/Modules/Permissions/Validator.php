@@ -69,8 +69,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
             $this->errors['privileges'] = $this->lang->t('permissions', 'no_privilege_selected');
-        }
-        if (!empty($formData['privileges']) && $this->aclValidator->aclPrivilegesExist($formData['privileges']) === false) {
+        } elseif ($this->aclValidator->aclPrivilegesExist($formData['privileges']) === false) {
             $this->errors['privileges'] = $this->lang->t('permissions', 'invalid_privileges');
         }
 
@@ -96,13 +95,12 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['controller'])) {
             $this->errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
         }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->routerValidator->isInternalURI($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
+        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->routerValidator->isInternalURI(strtolower($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/')) === false) {
             $this->errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
         }
         if (empty($formData['privileges']) || $this->validate->isNumber($formData['privileges']) === false) {
             $this->errors['privileges'] = $this->lang->t('permissions', 'select_privilege');
-        }
-        if ($this->validate->isNumber($formData['privileges']) && $this->permissionsModel->resourceExists($formData['privileges']) === false) {
+        } elseif ($this->permissionsModel->privilegeExists($formData['privileges']) === false) {
             $this->errors['privileges'] = $this->lang->t('permissions', 'privilege_does_not_exist');
         }
 
