@@ -49,6 +49,15 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     * @return bool
+     */
+    public function privilegeExists($id)
+    {
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_PRIVILEGES . ' WHERE id = :id', ['id' => $id]) > 0;
+    }
+
+    /**
+     * @param $id
      * @return array
      */
     public function getRoleById($id)
