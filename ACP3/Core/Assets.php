@@ -260,8 +260,9 @@ class Assets
         $debug = (defined('DEBUG') && DEBUG === true);
         $filenameHash = $this->getFilenameHash($group, $layout);
 
-        $cacheKey = 'last-generated-' . $filenameHash;
-        if (false === ($lastGenerated = $this->assetsCache->fetch($cacheKey))) {
+        $cacheId = 'last-generated-' . $filenameHash;
+
+        if (false === ($lastGenerated = $this->assetsCache->fetch($cacheId))) {
             $lastGenerated = $this->currentTime;
         }
 
@@ -297,10 +298,10 @@ class Assets
             file_put_contents(UPLOADS_DIR . $path, $content, LOCK_EX);
 
             // Save the time of the generation if the requested file
-            $this->assetsCache->save($cacheKey, $this->currentTime);
+            $this->assetsCache->save($cacheId, $lastGenerated);
         }
 
-        return ROOT_DIR . 'uploads/' . $path . ($debug === true ? '?v=' . $this->currentTime : '');
+        return ROOT_DIR . 'uploads/' . $path . ($debug === true ? '?v=' . $lastGenerated : '');
     }
 
     /**

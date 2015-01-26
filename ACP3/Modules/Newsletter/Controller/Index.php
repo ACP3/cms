@@ -130,7 +130,7 @@ class Index extends Core\Modules\Controller\Frontend
                 case 'unsubscribe':
                     $this->newsletterValidator->validateUnsubscribe($formData);
 
-                    $bool = $this->newsletterModel->delete($formData['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
+                    $bool = $this->newsletterModel->delete(['mail' => $_POST['mail']], '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
                     $this->secureHelper->unsetFormToken($this->request->query);
 
