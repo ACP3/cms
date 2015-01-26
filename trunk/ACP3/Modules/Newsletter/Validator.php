@@ -82,8 +82,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->errors = [];
         if ($this->validate->email($formData['mail']) === false) {
             $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-        }
-        if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === true) {
+        } elseif ($this->newsletterModel->accountExists($formData['mail']) === true) {
             $this->errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
@@ -104,13 +103,12 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->errors = [];
         if ($this->validate->email($formData['mail']) === false) {
-            $this->errors[] = $this->lang->t('system', 'wrong_email_format');
-        }
-        if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === false) {
-            $this->errors[] = $this->lang->t('newsletter', 'account_not_exists');
+            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+        } elseif ($this->newsletterModel->accountExists($formData['mail']) === false) {
+            $this->errors['mail'] = $this->lang->t('newsletter', 'account_not_exists');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
-            $this->errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
+            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
         $this->_checkForFailedValidation();
