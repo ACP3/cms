@@ -419,8 +419,10 @@ class Mailer
         $this->attachments = [];
         $this->template = '';
 
-        $this->phpMailer->clearAllRecipients();
-        $this->phpMailer->clearAttachments();
+        if ($this->phpMailer) {
+            $this->phpMailer->clearAllRecipients();
+            $this->phpMailer->clearAttachments();
+        }
 
         return $this;
     }
