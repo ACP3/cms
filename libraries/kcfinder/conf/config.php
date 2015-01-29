@@ -1,16 +1,16 @@
 <?php
 
 /** This file is part of KCFinder project
-  *
-  *      @desc Base configuration file
-  *   @package KCFinder
-  *   @version 3.10
-  *    @author Pavel Tzonkov <sunhater@sunhater.com>
-  * @copyright 2010-2014 KCFinder Project
-  *   @license http://opensource.org/licenses/GPL-3.0 GPLv3
-  *   @license http://opensource.org/licenses/LGPL-3.0 LGPLv3
-  *      @link http://kcfinder.sunhater.com
-  */
+ *
+ *      @desc Base configuration file
+ *   @package KCFinder
+ *   @version 3.10
+ *    @author Pavel Tzonkov <sunhater@sunhater.com>
+ * @copyright 2010-2014 KCFinder Project
+ *   @license http://opensource.org/licenses/GPL-3.0 GPLv3
+ *   @license http://opensource.org/licenses/LGPL-3.0 LGPLv3
+ *      @link http://kcfinder.sunhater.com
+ */
 
 /* IMPORTANT!!! Do not comment or remove uncommented settings in this file
    even if you are using session configuration.
@@ -20,37 +20,39 @@ $dirname = dirname($_SERVER['PHP_SELF']);
 $dirname = $dirname != '/' ? $dirname . '/' : '/';
 $dirname = str_replace('/libraries/kcfinder/', '', $dirname);
 $hostname = 'http://' . $_SERVER['HTTP_HOST'];
-$uploadDir = $hostname . $dirname . '/uploads/';
+$uploadURL = $hostname . $dirname . '/uploads/';
+$uploadDir = realpath(__DIR__ . '/../../../') . '/uploads/';
+$thumbsDir = "cache/images/kcfinder";
 
-$_CONFIG = array(
+$_CONFIG = [
 
 
 // GENERAL SETTINGS
 
     'disabled' => true,
-    'uploadURL' => $uploadDir,
-    'uploadDir' => "",
+    'uploadURL' => $uploadURL,
+    'uploadDir' => $uploadDir,
     'theme' => "default",
 
-    'types' => array(
+    'types' => [
 
-    // (F)CKEditor types
+        // (F)CKEditor types
         'files'   =>  "",
         'flash'   =>  "swf",
         'gallery' => "*img",
 
-    // TinyMCE types
+        // TinyMCE types
         'file'    =>  "",
         'media'   =>  "swf flv avi mpg mpeg qt mov wmv asf rm",
         'image'   =>  "*img",
-    ),
+    ],
 
 
 // IMAGE SETTINGS
 
     'imageDriversPriority' => "imagick gmagick gd",
     'jpegQuality' => 90,
-    'thumbsDir' => "cache/images/kcfinder",
+    'thumbsDir' => $thumbsDir,
 
     'maxImageWidth' => 0,
     'maxImageHeight' => 0,
@@ -73,37 +75,37 @@ $_CONFIG = array(
     'dirPerms' => 0755,
     'filePerms' => 0644,
 
-    'access' => array(
+    'access' => [
 
-        'files' => array(
+        'files' => [
             'upload' => true,
             'delete' => true,
             'copy'   => true,
             'move'   => true,
             'rename' => true
-        ),
+        ],
 
-        'dirs' => array(
+        'dirs' => [
             'create' => true,
             'delete' => true,
             'rename' => true
-        )
-    ),
+        ]
+    ],
 
     'deniedExts' => "exe com msi bat cgi pl php phps phtml php3 php4 php5 php6 py pyc pyo pcgi pcgi3 pcgi4 pcgi5 pchi6",
 
 
 // MISC SETTINGS
 
-    'filenameChangeChars' => array(/*
+    'filenameChangeChars' => [/*
         ' ' => "_",
         ':' => "."
-    */),
+    */],
 
-    'dirnameChangeChars' => array(/*
+    'dirnameChangeChars' => [/*
         ' ' => "_",
         ':' => "."
-    */),
+    */],
 
     'mime_magic' => "",
 
@@ -127,6 +129,6 @@ $_CONFIG = array(
     //'_cssMinCmd' => "java -jar /path/to/yuicompressor.jar --type css {file}",
     //'_jsMinCmd' => "java -jar /path/to/yuicompressor.jar --type js {file}",
 
-);
+];
 
 ?>
