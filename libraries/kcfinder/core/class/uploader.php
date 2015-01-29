@@ -105,7 +105,7 @@ class uploader {
 
 		// LINKING UPLOADED FILE
         if (count($_FILES))
-            $this->file = &$_FILES[key($_FILES)];
+            $this->file = $_FILES['upload'];
 
         // LOAD DEFAULT CONFIGURATION
         require "conf/config.php";
