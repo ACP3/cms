@@ -12,10 +12,6 @@ use ACP3\Modules\Search;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    protected $secureHelper;
-    /**
      * @var \ACP3\Modules\Search\Helpers
      */
     protected $searchHelpers;
@@ -30,21 +26,18 @@ class Index extends Core\Modules\Controller\Frontend
 
     /**
      * @param \ACP3\Core\Context\Frontend     $context
-     * @param \ACP3\Core\Helpers\Secure       $secureHelper
      * @param \ACP3\Modules\Search\Helpers    $searchHelpers
      * @param \ACP3\Modules\Search\Validator  $searchValidator
      * @param \ACP3\Modules\Search\Extensions $searchExtensions
      */
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Helpers\Secure $secureHelper,
         Search\Helpers $searchHelpers,
         Search\Validator $searchValidator,
         Search\Extensions $searchExtensions)
     {
         parent::__construct($context);
 
-        $this->secureHelper = $secureHelper;
         $this->searchHelpers = $searchHelpers;
         $this->searchValidator = $searchValidator;
         $this->searchExtensions = $searchExtensions;
@@ -52,8 +45,10 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        if (empty($_POST) === false) {
-            $this->_indexPost($_POST);
+        if (empty($_POST) === false || isset($this->request->q)) {
+            $this->_indexPost(
+                (empty($_POST) === false) ? $_POST : ['search_term' => $this->request->q]
+            );
         }
 
         $this->view->assign('form', array_merge(['search_term' => ''], $_POST));
@@ -71,8 +66,6 @@ class Index extends Core\Modules\Controller\Frontend
         // Treffer sortieren
         $langSortHits = [$this->lang->t('search', 'asc'), $this->lang->t('search', 'desc')];
         $this->view->assign('sort_hits', $this->get('core.helpers.forms')->selectGenerator('sort', ['asc', 'desc'], $langSortHits, 'asc', 'checked'));
-
-        $this->secureHelper->generateFormToken($this->request->query);
     }
 
     /**
@@ -116,14 +109,31 @@ class Index extends Core\Modules\Controller\Frontend
     private function _indexPost(array $formData)
     {
         try {
+            if (isset($formData['search_term']) === true) {
+                if (isset($formData['mods']) === false) {
+                    $modules = $this->searchHelpers->getModules();
+
+                    $formData['mods'] = [];
+                    foreach ($modules as $row) {
+                        $formData['mods'][] = $row['dir'];
+                    }
+                }
+                if (isset($formData['area']) === false) {
+                    $formData['area'] = 'title_content';
+                }
+                if (isset($formData['sort']) === false) {
+                    $formData['sort'] = 'asc';
+                }
+            }
+
             $this->searchValidator->validate($formData);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
-
-            $this->_displaySearchResults($formData['mods'], Core\Functions::strEncode($formData['search_term']), $formData['area'], strtoupper($formData['sort']));
-            return;
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
+            $this->_displaySearchResults(
+                $formData['mods'],
+                Core\Functions::strEncode($formData['search_term']),
+                $formData['area'],
+                strtoupper($formData['sort'])
+            );
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
