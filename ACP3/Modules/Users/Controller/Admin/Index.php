@@ -448,7 +448,7 @@ class Index extends Core\Modules\Controller\Admin
                 'entries' => (int)$formData['entries'],
             ];
 
-            $this->permissionsModel->delete(['user_id' => $this->request->id], Permissions\Model::TABLE_NAME_USER_ROLES);
+            $this->permissionsModel->delete($this->request->id, 'user_id', Permissions\Model::TABLE_NAME_USER_ROLES);
             foreach ($formData['roles'] as $row) {
                 $this->permissionsModel->insert(['user_id' => $this->request->id, 'role_id' => $row], Permissions\Model::TABLE_NAME_USER_ROLES);
             }
