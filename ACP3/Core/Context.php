@@ -8,47 +8,47 @@ namespace ACP3\Core;
 class Context
 {
     /**
-     * @var ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
     /**
-     * @var Auth
+     * @var \ACP3\Core\Auth
      */
     protected $auth;
     /**
-     * @var Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
     /**
-     * @var Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
     /**
-     * @var Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var View
+     * @var \ACP3\Core\View
      */
     protected $view;
     /**
-     * @var Config
+     * @var \ACP3\Core\Config
      */
-    protected $systemConfig;
+    protected $config;
 
     /**
-     * @param ACL $acl
-     * @param Auth $auth
-     * @param Lang $lang
-     * @param Modules $modules
-     * @param Request $request
-     * @param Router $router
-     * @param View $view
-     * @param Config $systemConfig
+     * @param \ACP3\Core\ACL     $acl
+     * @param \ACP3\Core\Auth    $auth
+     * @param \ACP3\Core\Lang    $lang
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Request $request
+     * @param \ACP3\Core\Router  $router
+     * @param \ACP3\Core\View    $view
+     * @param \ACP3\Core\Config  $config
      */
     public function __construct(
         ACL $acl,
@@ -58,7 +58,7 @@ class Context
         Request $request,
         Router $router,
         View $view,
-        Config $systemConfig
+        Config $config
     ) {
         $this->acl = $acl;
         $this->auth = $auth;
@@ -67,7 +67,7 @@ class Context
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
-        $this->systemConfig = $systemConfig;
+        $this->config = $config;
     }
 
     /**
@@ -127,10 +127,10 @@ class Context
     }
 
     /**
-     * @return Config
+     * @return \ACP3\Core\Config
      */
-    public function getSystemConfig()
+    public function getConfig()
     {
-        return $this->systemConfig;
+        return $this->config;
     }
 }

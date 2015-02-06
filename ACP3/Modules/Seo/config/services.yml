@@ -1,7 +1,7 @@
 services:
   seo.controller.admin.index:
     class: ACP3\Modules\Seo\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.helpers.secure', '@seo.cache', '@seo.config', '@seo.model', '@seo.validator']
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@seo.cache', '@seo.model', '@seo.validator']
 
   seo.cache:
     class: ACP3\Modules\Seo\Cache
@@ -10,10 +10,6 @@ services:
   seo.cache.core:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'seo']
-
-  seo.config:
-    class: ACP3\Core\Config
-    arguments: ['@seo.cache.core', '@system.model', 'seo']
 
   seo.model:
     class: ACP3\Modules\Seo\Model

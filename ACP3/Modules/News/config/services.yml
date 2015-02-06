@@ -1,17 +1,17 @@
 services:
   news.controller.admin.index:
     class: ACP3\Modules\News\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@news.model', '@news.cache', '@news.config', '@news.validator', '@categories.helpers']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@news.model', '@news.cache', '@news.validator', '@categories.helpers']
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.frontend.index:
     class: ACP3\Modules\News\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@news.model', '@news.cache', '@news.config', '@categories.helpers', '@categories.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@news.model', '@news.cache', '@categories.helpers', '@categories.model']
 
   news.controller.sidebar.index:
     class: ACP3\Modules\News\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.date', '@news.model', '@news.config']
+    arguments: ['@core.context', '@core.date', '@news.model']
 
   news.cache:
     class: ACP3\Modules\News\Cache
@@ -20,10 +20,6 @@ services:
   news.cache.core:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'news']
-
-  news.config:
-    class: ACP3\Core\Config
-    arguments: ['@news.cache.core', '@system.model', 'news']
 
   news.model:
     class: ACP3\Modules\News\Model

@@ -22,10 +22,6 @@ class Details extends Core\Modules\Controller\Admin
      */
     protected $commentsValidator;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $commentsConfig;
-    /**
      * @var \ACP3\Modules\System\Model
      */
     protected $systemModel;
@@ -42,7 +38,6 @@ class Details extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Context\Admin         $context
      * @param \ACP3\Modules\Comments\Model     $commentsModel
      * @param \ACP3\Modules\Comments\Validator $commentsValidator
-     * @param \ACP3\Core\Config                $commentsConfig
      * @param \ACP3\Modules\System\Model       $systemModel
      * @param \ACP3\Core\Helpers\Secure        $secureHelper
      */
@@ -50,7 +45,6 @@ class Details extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
-        Core\Config $commentsConfig,
         System\Model $systemModel,
         Core\Helpers\Secure $secureHelper)
     {
@@ -58,7 +52,6 @@ class Details extends Core\Modules\Controller\Admin
 
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
-        $this->commentsConfig = $commentsConfig;
         $this->systemModel = $systemModel;
         $this->secureHelper = $secureHelper;
     }
@@ -157,7 +150,7 @@ class Details extends Core\Modules\Controller\Admin
                 ];
                 $this->view->assign('datatable_config', $config);
 
-                $settings = $this->commentsConfig->getSettings();
+                $settings = $this->config->getSettings('comments');
 
                 // Emoticons einbinden
                 $emoticonsActive = ($settings['emoticons'] == 1 && $this->emoticonsHelpers);

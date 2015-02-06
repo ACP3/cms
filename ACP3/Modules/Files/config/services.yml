@@ -1,17 +1,17 @@
 services:
   files.controller.admin.index:
     class: ACP3\Modules\Files\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@files.model', '@files.cache', '@files.config', '@files.validator', '@categories.helpers']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@files.model', '@files.cache', '@files.validator', '@categories.helpers']
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   files.controller.frontend.index:
     class: ACP3\Modules\Files\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@files.model', '@files.cache', '@files.config', '@categories.model']
+    arguments: ['@core.context.frontend', '@core.date', '@files.model', '@files.cache', '@categories.model']
 
   files.controller.sidebar.index:
     class: ACP3\Modules\Files\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.date', '@files.model', '@files.config']
+    arguments: ['@core.context', '@core.date', '@files.model']
 
   files.cache:
     class: ACP3\Modules\Files\Cache
@@ -20,10 +20,6 @@ services:
   files.cache.core:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'files']
-
-  files.config:
-    class: ACP3\Core\Config
-    arguments: ['@files.cache.core', '@system.model', 'files']
 
   files.model:
     class: ACP3\Modules\Files\Model

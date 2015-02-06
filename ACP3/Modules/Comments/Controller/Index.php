@@ -34,10 +34,6 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $commentsValidator;
     /**
-     * @var array
-     */
-    protected $commentsSettings;
-    /**
      * @var \ACP3\Modules\Emoticons\Helpers
      */
     protected $emoticonsHelpers;
@@ -57,6 +53,10 @@ class Index extends Core\Modules\Controller\Frontend
      * @var bool
      */
     private $emoticonsActive;
+    /**
+     * @var array
+     */
+    protected $commentsSettings;
 
     /**
      * @param \ACP3\Core\Context\Frontend      $context
@@ -64,7 +64,6 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Pagination            $pagination
      * @param \ACP3\Modules\Comments\Model     $commentsModel
      * @param \ACP3\Modules\Comments\Validator $commentsValidator
-     * @param \ACP3\Core\Config                $commentsConfig
      * @param \ACP3\Core\Helpers\Secure        $secureHelper
      */
     public function __construct(
@@ -73,7 +72,6 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
-        Core\Config $commentsConfig,
         Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
@@ -82,7 +80,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
-        $this->commentsSettings = $commentsConfig->getSettings();
+        $this->commentsSettings = $this->config->getSettings('comments');
         $this->secureHelper = $secureHelper;
 
         $this->emoticonsActive = ($this->commentsSettings['emoticons'] == 1);

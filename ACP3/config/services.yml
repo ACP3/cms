@@ -16,7 +16,7 @@ services:
 
   core.assets:
     class: ACP3\Core\Assets
-    arguments: ['@assets.cache.core', '@core.modules', '@core.router', '@core.assets.themeResolver', '@system.config']
+    arguments: ['@assets.cache.core', '@core.modules', '@core.router', '@core.assets.themeResolver', '@core.config']
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
@@ -32,17 +32,21 @@ services:
 
   core.auth:
     class: ACP3\Core\Auth
-    arguments: ['@core.session', '@core.helpers.secure', '@system.config', '@users.config', '@users.model']
+    arguments: ['@core.session', '@core.helpers.secure', '@core.config', '@users.model']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@core.lang', '@core.request', '@core.router', '@seo.config']
+    arguments: ['@core.lang', '@core.request', '@core.router', '@core.config']
     calls:
       - ['setMenusModel', ['@?menus.model']]
 
+  core.config:
+    class: ACP3\Core\Config
+    arguments: ['@system.cache.core', '@system.model']
+
   core.context:
     class : ACP3\Core\Context
-    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@system.config']
+    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
@@ -54,7 +58,7 @@ services:
 
   core.date:
     class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date', '@system.config']
+    arguments: ['@core.auth', '@core.lang', '@core.helpers.forms', '@core.validator.rules.date', '@core.config']
 
   core.db:
     class: ACP3\Core\DB
@@ -65,11 +69,11 @@ services:
 
   core.lang:
     class: ACP3\Core\Lang
-    arguments: ['@core.auth', '@system.cache.core.lang', '@system.config']
+    arguments: ['@core.auth', '@system.cache.core.lang', '@core.config']
 
   core.mailer:
     class: ACP3\Core\Mailer
-    arguments: ['@core.view', '@system.config']
+    arguments: ['@core.view', '@core.config']
 
   core.modules:
     class: ACP3\Core\Modules
@@ -103,11 +107,11 @@ services:
 
   core.request:
     class: ACP3\Core\Request
-    arguments: ['@core.modules', '@system.config', '@seo.model']
+    arguments: ['@core.modules', '@core.config', '@seo.model']
 
   core.router:
     class: ACP3\Core\Router
-    arguments: ['@core.router.aliases', '@core.request', '@seo.config']
+    arguments: ['@core.router.aliases', '@core.request', '@core.config']
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
@@ -115,7 +119,7 @@ services:
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@seo.config', '@seo.model']
+    arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@core.config', '@seo.model']
 
   core.session:
     class: ACP3\Core\Session

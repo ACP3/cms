@@ -41,21 +41,21 @@ class Breadcrumb
     protected $breadcrumbCache = [];
 
     /**
-     * @var Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var Request
+     * @var \ACP3\Core\Request
      */
     protected $request;
     /**
-     * @var Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var array
+     * @var \ACP3\Core\Config
      */
-    protected $seoConfig = [];
+    protected $seoConfig;
     /**
      * @var \ACP3\Modules\Menus\Model
      */
@@ -65,21 +65,19 @@ class Breadcrumb
      * @param \ACP3\Core\Lang    $lang
      * @param \ACP3\Core\Request $request
      * @param \ACP3\Core\Router  $router
-     * @param \ACP3\Core\Config  $seoConfig
-     *
-     * @throws \Doctrine\DBAL\DBALException
+     * @param \ACP3\Core\Config  $config
      */
     public function __construct(
         Lang $lang,
         Request $request,
         Router $router,
-        Config $seoConfig
+        Config $config
     )
     {
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
-        $this->seoConfig = $seoConfig;
+        $this->seoConfig = $config;
     }
 
     /**
@@ -218,7 +216,7 @@ class Breadcrumb
      */
     public function getSiteTitle()
     {
-        return $this->seoConfig->getSettings()['title'];
+        return $this->seoConfig->getSettings('seo')['title'];
     }
 
     /**

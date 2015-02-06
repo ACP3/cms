@@ -39,10 +39,6 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $guestbookSettings;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $seoConfig;
-    /**
      * @var \ACP3\Modules\Captcha\Helpers
      */
     protected $captchaHelpers;
@@ -70,8 +66,6 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Helpers\Secure         $secureHelper
      * @param \ACP3\Modules\Guestbook\Model     $guestbookModel
      * @param \ACP3\Modules\Guestbook\Validator $guestbookValidator
-     * @param \ACP3\Core\Config                 $guestbookConfig
-     * @param \ACP3\Core\Config                 $seoConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -79,9 +73,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel,
-        Guestbook\Validator $guestbookValidator,
-        Core\Config $guestbookConfig,
-        Core\Config $seoConfig)
+        Guestbook\Validator $guestbookValidator)
     {
         parent::__construct($context);
 
@@ -90,8 +82,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
         $this->guestbookValidator = $guestbookValidator;
-        $this->guestbookSettings = $guestbookConfig->getSettings();
-        $this->seoConfig = $seoConfig;
+        $this->guestbookSettings = $this->config->getSettings('guestbook');
 
         $this->emoticonsActive = ($this->guestbookSettings['emoticons'] == 1);
         $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1);
@@ -147,7 +138,7 @@ class Index extends Core\Modules\Controller\Frontend
         // In Newsletter integrieren
         if ($this->newsletterActive === true && $this->newsletterHelpers) {
             $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
-            $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->seoConfig->getSettings()['title']));
+            $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->config->getSettings('seo')['title']));
         }
 
         $defaults = [

@@ -12,21 +12,11 @@ use ACP3\Modules\Users;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var Core\Config
+     * @param \ACP3\Core\Context $context
      */
-    protected $usersConfig;
-
-    /**
-     * @param Core\Context $context
-     * @param Core\Config $usersConfig
-     */
-    public function __construct(
-        Core\Context $context,
-        Core\Config $usersConfig)
+    public function __construct(Core\Context $context)
     {
         parent::__construct($context);
-
-        $this->usersConfig = $usersConfig;
     }
 
     /**
@@ -37,7 +27,7 @@ class Index extends Core\Modules\Controller
         if ($this->auth->isUser() === false) {
             $currentPage = base64_encode(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->query);
 
-            $settings = $this->usersConfig->getSettings();
+            $settings = $this->config->getSettings('users');
 
             $this->view->assign('enable_registration', $settings['enable_registration']);
             $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);

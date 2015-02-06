@@ -18,36 +18,30 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
-     * @var Files\Model
+     * @var \ACP3\Modules\Files\Model
      */
     protected $filesModel;
     /**
-     * @var Files\Cache
+     * @var \ACP3\Modules\Files\Cache
      */
     protected $filesCache;
-    /**
-     * @var Core\Config
-     */
-    protected $filesConfig;
     /**
      * @var \ACP3\Modules\Categories\Model
      */
     protected $categoriesModel;
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date $date
-     * @param Files\Model $filesModel
-     * @param Files\Cache $filesCache
-     * @param Core\Config $filesConfig
-     * @param Categories\Model $categoriesModel
+     * @param \ACP3\Core\Context\Frontend    $context
+     * @param \ACP3\Core\Date                $date
+     * @param \ACP3\Modules\Files\Model      $filesModel
+     * @param \ACP3\Modules\Files\Cache      $filesCache
+     * @param \ACP3\Modules\Categories\Model $categoriesModel
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Files\Model $filesModel,
         Files\Cache $filesCache,
-        Core\Config $filesConfig,
         Categories\Model $categoriesModel)
     {
         parent::__construct($context);
@@ -55,7 +49,6 @@ class Index extends Core\Modules\Controller\Frontend
         $this->date = $date;
         $this->filesModel = $filesModel;
         $this->filesCache = $filesCache;
-        $this->filesConfig = $filesConfig;
         $this->categoriesModel = $categoriesModel;
     }
 
@@ -100,7 +93,7 @@ class Index extends Core\Modules\Controller\Frontend
                     ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
                     ->append($file['title']);
 
-                $settings = $this->filesConfig->getSettings();
+                $settings = $this->config->getSettings('files');
 
                 $this->view->assign('file', $file);
                 $this->view->assign('dateformat', $settings['dateformat']);
@@ -127,7 +120,7 @@ class Index extends Core\Modules\Controller\Frontend
                 ->append($this->lang->t('files', 'files'), 'files')
                 ->append($category['title']);
 
-            $settings = $this->filesConfig->getSettings();
+            $settings = $this->config->getSettings('files');
 
             $this->view->assign('dateformat', $settings['dateformat']);
             $this->view->assign('files', $this->filesModel->getAllByCategoryId($this->request->cat, $this->date->getCurrentDateTime()));

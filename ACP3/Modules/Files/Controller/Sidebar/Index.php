@@ -17,31 +17,24 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var Files\Model
+     * @var \ACP3\Modules\Files\Model
      */
     protected $filesModel;
-    /**
-     * @var Core\Config
-     */
-    protected $filesConfig;
 
     /**
-     * @param Core\Context $context
-     * @param Core\Date $date
-     * @param Files\Model $filesModel
-     * @param Core\Config $filesConfig
+     * @param \ACP3\Core\Context        $context
+     * @param \ACP3\Core\Date           $date
+     * @param \ACP3\Modules\Files\Model $filesModel
      */
     public function __construct(
         Core\Context $context,
         Core\Date $date,
-        Files\Model $filesModel,
-        Core\Config $filesConfig)
+        Files\Model $filesModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->filesModel = $filesModel;
-        $this->filesConfig = $filesConfig;
     }
 
     /**
@@ -50,7 +43,7 @@ class Index extends Core\Modules\Controller
      */
     public function actionIndex($categoryId = 0, $template = '')
     {
-        $settings = $this->filesConfig->getSettings();
+        $settings = $this->config->getSettings('files');
 
         if (!empty($categoryId)) {
             $categories = $this->filesModel->getAllByCategoryId((int) $categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);

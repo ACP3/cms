@@ -14,28 +14,28 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     const CACHE_ID = 'pics_id_';
     /**
-     * @var Model
+     * @var \ACP3\Modules\Gallery\Model
      */
     protected $galleryModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Core\Config
      */
-    protected $galleryConfig;
+    protected $config;
 
     /**
      * @param Core\Cache $cache
      * @param Model $galleryModel
-     * @param Core\Config $galleryConfig
+     * @param Core\Config $config
      */
     public function __construct(
         Core\Cache $cache,
         Model $galleryModel,
-        Core\Config $galleryConfig
+        Core\Config $config
     ) {
         parent::__construct($cache);
 
         $this->galleryModel = $galleryModel;
-        $this->galleryConfig = $galleryConfig;
+        $this->config = $config;
     }
 
     /**
@@ -68,7 +68,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $pictures = $this->galleryModel->getPicturesByGalleryId($id);
         $c_pictures = count($pictures);
 
-        $settings = $this->galleryConfig->getSettings();
+        $settings = $this->config->getSettings('gallery');
 
         for ($i = 0; $i < $c_pictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];

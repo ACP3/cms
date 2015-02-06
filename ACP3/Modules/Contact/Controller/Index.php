@@ -25,14 +25,6 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $contactValidator;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $contactConfig;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $seoConfig;
-    /**
      * @var \ACP3\Modules\Captcha\Helpers
      */
     protected $captchaHelpers;
@@ -42,24 +34,18 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Helpers\Secure       $secureHelper
      * @param \ACP3\Core\Helpers\SendEmail    $sendEmailHelper
      * @param \ACP3\Modules\Contact\Validator $contactValidator
-     * @param \ACP3\Core\Config               $contactConfig
-     * @param \ACP3\Core\Config               $seoConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
-        Contact\Validator $contactValidator,
-        Core\Config $contactConfig,
-        Core\Config $seoConfig)
+        Contact\Validator $contactValidator)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
         $this->sendEmailHelper = $sendEmailHelper;
         $this->contactValidator = $contactValidator;
-        $this->contactConfig = $contactConfig;
-        $this->seoConfig = $seoConfig;
     }
 
     /**
@@ -114,8 +100,8 @@ class Index extends Core\Modules\Controller\Frontend
     private function _indexPost(array $formData)
     {
         try {
-            $seoSettings = $this->seoConfig->getSettings();
-            $settings = $this->contactConfig->getSettings();
+            $seoSettings = $this->config->getSettings('seo');
+            $settings = $this->config->getSettings('contact');
 
             $this->contactValidator->validate($formData);
 
@@ -151,7 +137,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionImprint()
     {
-        $this->view->assign('imprint', $this->contactConfig->getSettings());
+        $this->view->assign('imprint', $this->config->getSettings('contact'));
         $this->view->assign('powered_by', sprintf($this->lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" target="_blank">ACP3</a>'));
     }
 }

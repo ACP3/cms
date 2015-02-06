@@ -27,10 +27,6 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Modules\System\Validator
      */
     protected $systemValidator;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $systemConfig;
 
     /**
      * @param \ACP3\Core\Context\Admin       $context
@@ -38,15 +34,13 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Helpers\Secure      $secureHelper
      * @param \ACP3\Modules\System\Model     $systemModel
      * @param \ACP3\Modules\System\Validator $systemValidator
-     * @param \ACP3\Core\Config              $systemConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         System\Model $systemModel,
-        System\Validator $systemValidator,
-        Core\Config $systemConfig)
+        System\Validator $systemValidator)
     {
         parent::__construct($context);
 
@@ -54,7 +48,6 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->systemModel = $systemModel;
         $this->systemValidator = $systemValidator;
-        $this->systemConfig = $systemConfig;
     }
 
     public function actionConfiguration()
@@ -63,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_configurationPost($_POST);
         }
 
-        $systemSettings = $this->systemConfig->getSettings();
+        $systemSettings = $this->config->getSettings('system');
 
         $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']));
 
@@ -153,7 +146,7 @@ class Index extends Core\Modules\Controller\Admin
                 'wysiwyg' => $formData['wysiwyg']
             ];
 
-            $bool = $this->systemConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'system');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

@@ -19,28 +19,21 @@ class Index extends Core\Modules\Controller
      * @var News\Model
      */
     protected $newsModel;
-    /**
-     * @var Core\Config
-     */
-    protected $newsConfig;
 
     /**
-     * @param Core\Context $context
-     * @param Core\Date $date
-     * @param News\Model $newsModel
-     * @param Core\Config $newsConfig
+     * @param \ACP3\Core\Context       $context
+     * @param \ACP3\Core\Date          $date
+     * @param \ACP3\Modules\News\Model $newsModel
      */
     public function __construct(
         Core\Context $context,
         Core\Date $date,
-        News\Model $newsModel,
-        Core\Config $newsConfig)
+        News\Model $newsModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->newsModel = $newsModel;
-        $this->newsConfig = $newsConfig;
     }
 
     /**
@@ -49,7 +42,7 @@ class Index extends Core\Modules\Controller
      */
     public function actionIndex($categoryId = 0, $template = '')
     {
-        $settings = $this->newsConfig->getSettings();
+        $settings = $this->config->getSettings('news');
 
         if (!empty($categoryId)) {
             $news = $this->newsModel->getAllByCategoryId((int) $categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
