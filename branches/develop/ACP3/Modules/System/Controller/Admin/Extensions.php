@@ -13,17 +13,13 @@ use ACP3\Modules\System;
 class Extensions extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\XML
+     * @var \ACP3\Core\XML
      */
     protected $xml;
     /**
-     * @var System\Model
+     * @var \ACP3\Modules\System\Model
      */
     protected $systemModel;
-    /**
-     * @var Core\Config
-     */
-    protected $systemConfig;
     /**
      * @var \ACP3\Modules\System\Helpers
      */
@@ -37,7 +33,6 @@ class Extensions extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Context\Admin        $context
      * @param \ACP3\Core\XML                  $xml
      * @param \ACP3\Modules\System\Model      $systemModel
-     * @param \ACP3\Core\Config               $systemConfig
      * @param \ACP3\Modules\System\Helpers    $systemHelpers
      * @param \ACP3\Modules\Permissions\Cache $permissionsCache
      */
@@ -45,7 +40,6 @@ class Extensions extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\XML $xml,
         System\Model $systemModel,
-        Core\Config $systemConfig,
         System\Helpers $systemHelpers,
         Permissions\Cache $permissionsCache)
     {
@@ -53,7 +47,6 @@ class Extensions extends Core\Modules\Controller\Admin
 
         $this->xml = $xml;
         $this->systemModel = $systemModel;
-        $this->systemConfig = $systemConfig;
         $this->systemHelpers = $systemHelpers;
         $this->permissionsCache = $permissionsCache;
     }
@@ -71,7 +64,7 @@ class Extensions extends Core\Modules\Controller\Admin
                 $designInfo = $this->xml->parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
                 if (!empty($designInfo)) {
                     $designs[$i] = $designInfo;
-                    $designs[$i]['selected'] = $this->systemConfig->getSettings()['design'] === $directories[$i] ? 1 : 0;
+                    $designs[$i]['selected'] = $this->config->getSettings('system')['design'] === $directories[$i] ? 1 : 0;
                     $designs[$i]['dir'] = $directories[$i];
                 }
             }
@@ -89,7 +82,7 @@ class Extensions extends Core\Modules\Controller\Admin
         if ((bool)preg_match('=/=', $design) === false &&
             is_file(ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml') === true
         ) {
-            $bool = $this->systemConfig->setSettings(['design' => $design]);
+            $bool = $this->config->setSettings(['design' => $design], 'system');
 
             // Template Cache leeren
             Core\Cache::purge(CACHE_DIR . 'tpl_compiled');

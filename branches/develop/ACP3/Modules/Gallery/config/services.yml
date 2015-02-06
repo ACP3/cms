@@ -1,31 +1,27 @@
 services:
   gallery.controller.admin.index:
     class: ACP3\Modules\Gallery\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@gallery.cache', '@gallery.helpers', '@gallery.model', '@gallery.validator', '@gallery.config']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@gallery.cache', '@gallery.helpers', '@gallery.model', '@gallery.validator']
 
   gallery.controller.admin.pictures:
     class: ACP3\Modules\Gallery\Controller\Admin\Pictures
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.sort', '@gallery.helpers', '@gallery.model', '@gallery.cache', '@gallery.validator', '@gallery.config']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.sort', '@gallery.helpers', '@gallery.model', '@gallery.cache', '@gallery.validator']
 
   gallery.controller.frontend.index:
     class: ACP3\Modules\Gallery\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@gallery.model', '@gallery.cache', '@gallery.config']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@gallery.model', '@gallery.cache']
 
   gallery.controller.sidebar.index:
     class: ACP3\Modules\Gallery\Controller\Sidebar\Index
-    arguments: ['@core.context', '@core.date', '@gallery.model', '@gallery.config']
+    arguments: ['@core.context', '@core.date', '@gallery.model']
 
   gallery.cache:
     class: ACP3\Modules\Gallery\Cache
-    arguments: ['@gallery.cache.core', '@gallery.model', '@gallery.config']
+    arguments: ['@gallery.cache.core', '@gallery.model', '@core.config']
 
   gallery.cache.core:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'gallery']
-
-  gallery.config:
-    class: ACP3\Core\Config
-    arguments: ['@gallery.cache.core', '@system.model', 'gallery']
 
   gallery.model:
     class: ACP3\Modules\Gallery\Model

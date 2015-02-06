@@ -11,57 +11,50 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var Core\Lang
+     * @var \ACP3\Core\Lang
      */
     protected $lang;
     /**
-     * @var Core\Mailer
+     * @var \ACP3\Core\Mailer
      */
     protected $mailer;
     /**
-     * @var Core\Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
     /**
-     * @var Core\Helpers\StringFormatter
+     * @var \ACP3\Core\Helpers\StringFormatter
      */
     protected $stringFormatter;
     /**
-     * @var Core\Config
-     */
-    protected $seoConfig;
-    /**
-     * @var Model
+     * @var \ACP3\Modules\Newsletter\Model
      */
     protected $newsletterModel;
     /**
-     * @var Core\Config
+     * @var \ACP3\Core\Config
      */
-    protected $newsletterConfig;
+    protected $config;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Mailer $mailer
-     * @param Core\Router $router
-     * @param Core\Helpers\StringFormatter $stringFormatter
-     * @param Core\Config $seoConfig
-     * @param Core\Config $newsletterConfig
-     * @param Model $newsletterModel
+     * @param \ACP3\Core\Lang                    $lang
+     * @param \ACP3\Core\Mailer                  $mailer
+     * @param \ACP3\Core\Router                  $router
+     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
+     * @param \ACP3\Core\Config                  $config
+     * @param \ACP3\Modules\Newsletter\Model     $newsletterModel
      */
     public function __construct(
         Core\Lang $lang,
         Core\Mailer $mailer,
         Core\Router $router,
         Core\Helpers\StringFormatter $stringFormatter,
-        Core\Config $seoConfig,
-        Core\Config $newsletterConfig,
+        Core\Config $config,
         Model $newsletterModel) {
         $this->lang = $lang;
         $this->mailer = $mailer;
         $this->router = $router;
         $this->stringFormatter = $stringFormatter;
-        $this->seoConfig = $seoConfig;
-        $this->newsletterConfig = $newsletterConfig;
+        $this->config = $config;
         $this->newsletterModel = $newsletterModel;
     }
 
@@ -76,12 +69,12 @@ class Helpers
      */
     public function sendNewsletter($newsletterId, $recipients, $bcc = false)
     {
-        $settings = $this->newsletterConfig->getSettings();
+        $settings = $this->config->getSettings('newsletter');
 
         $newsletter = $this->newsletterModel->getOneById($newsletterId);
         $from = [
             'email' => $settings['mail'],
-            'name' => $this->seoConfig->getSettings()['title']
+            'name' => $this->config->getSettings('seo')['title']
         ];
 
         $this->mailer
@@ -118,8 +111,8 @@ class Helpers
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
         $url = 'http://' . $host . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
-        $seoSettings = $this->seoConfig->getSettings();
-        $settings = $this->newsletterConfig->getSettings();
+        $seoSettings = $this->config->getSettings('seo');
+        $settings = $this->config->getSettings('newsletter');
 
         $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), $seoSettings['title']);
         $body = str_replace('{host}', $host, $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";

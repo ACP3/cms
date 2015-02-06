@@ -20,10 +20,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $seoConfig;
-    /**
      * @var \ACP3\Modules\Seo\Model
      */
     protected $seoModel;
@@ -36,7 +32,6 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Context\Admin    $context
      * @param \ACP3\Core\Helpers\Secure   $secureHelper
      * @param \ACP3\Modules\Seo\Cache     $seoCache
-     * @param \ACP3\Core\Config           $seoConfig
      * @param \ACP3\Modules\Seo\Model     $seoModel
      * @param \ACP3\Modules\Seo\Validator $seoValidator
      */
@@ -44,7 +39,6 @@ class Index extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
         Seo\Cache $seoCache,
-        Core\Config $seoConfig,
         Seo\Model $seoModel,
         Seo\Validator $seoValidator)
     {
@@ -52,7 +46,6 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->secureHelper = $secureHelper;
         $this->seoCache = $seoCache;
-        $this->seoConfig = $seoConfig;
         $this->seoModel = $seoModel;
         $this->seoValidator = $seoValidator;
     }
@@ -192,7 +185,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $seoSettings = $this->seoConfig->getSettings();
+        $seoSettings = $this->config->getSettings('seo');
 
         // Robots
         $lang_robots = [
@@ -229,7 +222,7 @@ class Index extends Core\Modules\Controller\Admin
                 'title' => Core\Functions::strEncode($formData['title']),
             ];
 
-            $bool = $this->seoConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'seo');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

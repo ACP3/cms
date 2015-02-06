@@ -49,11 +49,11 @@ class Auth
      */
     protected $userInfo = [];
     /**
-     * @var Session
+     * @var \ACP3\Core\Session
      */
     protected $session;
     /**
-     * @var Config
+     * @var \ACP3\Core\Config
      */
     protected $usersConfig;
     /**
@@ -61,33 +61,26 @@ class Auth
      */
     protected $usersModel;
     /**
-     * @var Secure
+     * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
 
     /**
-     * @param Session $session
-     * @param Secure $secureHelper
-     * @param Config $systemConfig
-     * @param Config $usersConfig
-     * @param Users\Model $usersModel
+     * @param \ACP3\Core\Session        $session
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Config         $config
+     * @param \ACP3\Modules\Users\Model $usersModel
      */
     public function __construct(
         Session $session,
         Secure $secureHelper,
-        Config $systemConfig,
-        Config $usersConfig,
+        Config $config,
         Users\Model $usersModel
     ) {
         $this->session = $session;
         $this->secureHelper = $secureHelper;
-        $this->usersConfig = $usersConfig;
+        $this->config = $config;
         $this->usersModel = $usersModel;
-
-        $settings = $systemConfig->getSettings();
-
-        $this->entries = $settings['entries'];
-        $this->language = $settings['lang'];
 
         $this->authenticate();
     }
@@ -98,6 +91,11 @@ class Auth
      */
     protected function authenticate()
     {
+        $settings = $this->config->getSettings('system');
+
+        $this->entries = $settings['entries'];
+        $this->language = $settings['lang'];
+
         if (isset($_COOKIE[self::COOKIE_NAME])) {
             $cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
             $cookieData = explode('|', $cookie);
@@ -110,7 +108,7 @@ class Auth
                     $this->userId = (int)$user['id'];
                     $this->superUser = (bool)$user['super_user'];
 
-                    $settings = $this->usersConfig->getSettings();
+                    $settings = $this->config->getSettings('users');
 
                     if ($settings['entries_override'] == 1 && $user['entries'] > 0) {
                         $this->entries = (int)$user['entries'];

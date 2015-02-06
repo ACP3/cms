@@ -29,7 +29,7 @@ class SEO
     /**
      * @var \ACP3\Core\Config
      */
-    protected $seoConfig;
+    protected $config;
     /**
      * @var \ACP3\Modules\Seo\Cache
      */
@@ -72,7 +72,7 @@ class SEO
      * @param \ACP3\Core\Router\Aliases $aliases
      * @param \ACP3\Core\Helpers\Forms  $formsHelper
      * @param \ACP3\Modules\Seo\Cache   $seoCache
-     * @param \ACP3\Core\Config         $seoConfig
+     * @param \ACP3\Core\Config         $config
      * @param \ACP3\Modules\Seo\Model   $seoModel
      */
     public function __construct(
@@ -81,7 +81,7 @@ class SEO
         Aliases $aliases,
         Forms $formsHelper,
         \ACP3\Modules\Seo\Cache $seoCache,
-        Config $seoConfig,
+        Config $config,
         \ACP3\Modules\Seo\Model $seoModel)
     {
         $this->lang = $lang;
@@ -89,7 +89,7 @@ class SEO
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
         $this->seoCache = $seoCache;
-        $this->seoConfig = $seoConfig;
+        $this->config = $config;
         $this->seoModel = $seoModel;
     }
 
@@ -125,7 +125,7 @@ class SEO
             $description = $this->getDescription($this->request->mod);
         }
         if (empty($description)) {
-            $description = $this->seoConfig->getSettings()['meta_description'];
+            $description = $this->config->getSettings('seo')['meta_description'];
         }
 
         $postfix = '';
@@ -164,7 +164,7 @@ class SEO
             $keywords = $this->getKeywords($this->request->mod);
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->seoConfig->getSettings()['meta_keywords']);
+        return strtolower(!empty($keywords) ? $keywords : $this->config->getSettings('seo')['meta_keywords']);
     }
 
     /**
@@ -234,12 +234,12 @@ class SEO
         ];
 
         if ($path === '') {
-            return strtr($this->seoConfig->getSettings()['robots'], $replace);
+            return strtr($this->config->getSettings('seo')['robots'], $replace);
         } else {
             $robot = $this->getSeoInformation($path, 'robots', 0);
 
             if ($robot == 0) {
-                $robot = $this->seoConfig->getSettings()['robots'];
+                $robot = $this->config->getSettings('seo')['robots'];
             }
 
             return strtr($robot, $replace);

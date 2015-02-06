@@ -28,7 +28,7 @@ class Assets
     /**
      * @var \ACP3\Core\Config
      */
-    protected $systemConfig;
+    protected $config;
 
     /**
      * Legt fest, welche Bibliotheken beim Seitenaufruf geladen werden sollen
@@ -99,21 +99,21 @@ class Assets
      * @param Modules       $modules
      * @param Router        $router
      * @param ThemeResolver $themeResolver
-     * @param Config        $systemConfig
+     * @param Config        $config
      */
     public function __construct(
         Cache $assetsCache,
         Modules $modules,
         Router $router,
         ThemeResolver $themeResolver,
-        Config $systemConfig
+        Config $config
     )
     {
         $this->modules = $modules;
         $this->router = $router;
         $this->themeResolver = $themeResolver;
         $this->assetsCache = $assetsCache;
-        $this->systemConfig = $systemConfig;
+        $this->config = $config;
 
         $this->currentTime = time();
 
@@ -139,7 +139,7 @@ class Assets
      */
     public function includeCssFiles($layout)
     {
-        $cacheId = $this->systemConfig->getSettings()['design'] . '_';
+        $cacheId = $this->config->getSettings('system')['design'] . '_';
         $cacheId .= 'css_';
         $cacheId .= $this->_getJsLibrariesCache();
 
@@ -195,7 +195,7 @@ class Assets
      */
     public function includeJsFiles($layout)
     {
-        $cacheId = $this->systemConfig->getSettings()['design'] . '_';
+        $cacheId = $this->config->getSettings('system')['design'] . '_';
         $cacheId .= 'js_';
         $cacheId .= $this->_getJsLibrariesCache();
 
@@ -312,7 +312,7 @@ class Assets
      */
     private function getFilenameHash($group, $layout)
     {
-        $filename = $this->systemConfig->getSettings()['design'];
+        $filename = $this->config->getSettings('system')['design'];
         $filename .= '_' . $layout;
         $filename .= '_' . $this->_getJsLibrariesCache();
         $filename .= '_' . $group;

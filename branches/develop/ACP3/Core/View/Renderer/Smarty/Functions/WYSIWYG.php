@@ -38,7 +38,7 @@ class WYSIWYG extends AbstractFunction
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
-        $serviceId = 'core.wysiwyg.' . $this->container->get('system.config')->getSettings()['wysiwyg'];
+        $serviceId = 'core.wysiwyg.' . $this->container->get('core.config')->getSettings('system')['wysiwyg'];
 
         if ($this->container->has($serviceId) === true) {
             /** @var Core\WYSIWYG\AbstractWYSIWYG $wysiwyg */

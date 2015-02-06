@@ -29,10 +29,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $guestbookValidator;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $guestbookConfig;
-    /**
      * @var \ACP3\Modules\Emoticons\Helpers
      */
     protected $emoticonsHelpers;
@@ -43,15 +39,13 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Helpers\Secure         $secureHelper
      * @param \ACP3\Modules\Guestbook\Model     $guestbookModel
      * @param \ACP3\Modules\Guestbook\Validator $guestbookValidator
-     * @param \ACP3\Core\Config                 $guestbookConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         Guestbook\Model $guestbookModel,
-        Guestbook\Validator $guestbookValidator,
-        Core\Config $guestbookConfig)
+        Guestbook\Validator $guestbookValidator)
     {
         parent::__construct($context);
 
@@ -59,7 +53,6 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->guestbookModel = $guestbookModel;
         $this->guestbookValidator = $guestbookValidator;
-        $this->guestbookConfig = $guestbookConfig;
     }
 
     /**
@@ -94,7 +87,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $guestbook = $this->guestbookModel->getOneById($this->request->id);
         if (empty($guestbook) === false) {
-            $settings = $this->guestbookConfig->getSettings();
+            $settings = $this->config->getSettings('guestbook');
 
             $this->breadcrumb->setTitlePostfix($guestbook['name']);
 
@@ -136,7 +129,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $this->view->assign('datatable_config', $config);
 
-            $settings = $this->guestbookConfig->getSettings();
+            $settings = $this->config->getSettings('guestbook');
 
             // Emoticons einbinden
             $emoticonsActive = ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
@@ -157,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $settings = $this->guestbookConfig->getSettings();
+        $settings = $this->config->getSettings('guestbook');
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
@@ -231,7 +224,7 @@ class Index extends Core\Modules\Controller\Admin
                 'emoticons' => $formData['emoticons'],
                 'newsletter_integration' => $formData['newsletter_integration'],
             ];
-            $bool = $this->guestbookConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'guestbook');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

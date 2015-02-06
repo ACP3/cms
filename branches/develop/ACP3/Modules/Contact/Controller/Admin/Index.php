@@ -12,31 +12,28 @@ use ACP3\Modules\Contact;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var \ACP3\Modules\Contact\Validator
      */
     protected $contactValidator;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $contactConfig;
 
     /**
      * @param \ACP3\Core\Context\Admin        $context
      * @param \ACP3\Core\Helpers\Secure       $secureHelper
      * @param \ACP3\Modules\Contact\Validator $contactValidator
-     * @param \ACP3\Core\Config               $contactConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
-        Contact\Validator $contactValidator,
-        Core\Config $contactConfig)
+        Contact\Validator $contactValidator)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
         $this->contactValidator = $contactValidator;
-        $this->contactConfig = $contactConfig;
     }
 
     public function actionIndex()
@@ -45,7 +42,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_indexPost($_POST);
         }
 
-        $settings = $this->contactConfig->getSettings();
+        $settings = $this->config->getSettings('contact');
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
@@ -68,7 +65,7 @@ class Index extends Core\Modules\Controller\Admin
                 'disclaimer' => Core\Functions::strEncode($formData['disclaimer'], true),
             ];
 
-            $bool = $this->contactConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'contact');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

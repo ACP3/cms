@@ -55,7 +55,6 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Pagination            $pagination
      * @param \ACP3\Modules\News\Model         $newsModel
      * @param \ACP3\Modules\News\Cache         $newsCache
-     * @param \ACP3\Core\Config                $newsConfig
      * @param \ACP3\Modules\Categories\Helpers $categoriesHelpers
      * @param \ACP3\Modules\Categories\Model   $categoriesModel
      */
@@ -65,7 +64,6 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         News\Model $newsModel,
         News\Cache $newsCache,
-        Core\Config $newsConfig,
         Categories\Helpers $categoriesHelpers,
         Categories\Model $categoriesModel)
     {
@@ -75,7 +73,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->newsModel = $newsModel;
         $this->newsCache = $newsCache;
-        $this->newsSettings = $newsConfig->getSettings();
+        $this->newsSettings = $this->config->getSettings('news');
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoriesModel = $categoriesModel;
 

@@ -15,6 +15,10 @@ services:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'acl']
 
+  permissions.helpers:
+    class: ACP3\Modules\Permissions\Helpers
+    arguments: ['@permissions.model']
+
   permissions.model:
     class: ACP3\Modules\Permissions\Model
     arguments: ['@core.db']

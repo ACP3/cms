@@ -45,7 +45,7 @@ abstract class Controller
     /**
      * @var \ACP3\Core\Config
      */
-    protected $systemConfig;
+    protected $config;
     /**
      * Nichts ausgeben
      */
@@ -81,7 +81,7 @@ abstract class Controller
         $this->router = $context->getRouter();
         $this->view = $context->getView();
         $this->modules = $context->getModules();
-        $this->systemConfig = $context->getSystemConfig();
+        $this->config = $context->getConfig();
     }
 
     /**

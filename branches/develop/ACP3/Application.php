@@ -182,7 +182,7 @@ class Application
         $this->container = new \ACP3ServiceContainer();
 
         // Load system settings
-        $this->systemSettings = $this->container->get('system.config')->getSettings();
+        $this->systemSettings = $this->container->get('core.config')->getSettings('system');
 
         $this->_setThemeConstants();
 

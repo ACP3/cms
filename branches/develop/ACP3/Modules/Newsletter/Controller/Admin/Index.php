@@ -28,10 +28,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $newsletterValidator;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $newsletterConfig;
-    /**
      * @var \ACP3\Modules\Newsletter\Helpers
      */
     protected $newsletterHelpers;
@@ -42,7 +38,6 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Helpers\Secure          $secureHelper
      * @param \ACP3\Modules\Newsletter\Model     $newsletterModel
      * @param \ACP3\Modules\Newsletter\Validator $newsletterValidator
-     * @param \ACP3\Core\Config                  $newsletterConfig
      * @param \ACP3\Modules\Newsletter\Helpers   $newsletterHelpers
      */
     public function __construct(
@@ -51,7 +46,6 @@ class Index extends Core\Modules\Controller\Admin
         Core\Helpers\Secure $secureHelper,
         Newsletter\Model $newsletterModel,
         Newsletter\Validator $newsletterValidator,
-        Core\Config $newsletterConfig,
         Newsletter\Helpers $newsletterHelpers)
     {
         parent::__construct($context);
@@ -60,13 +54,12 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->newsletterModel = $newsletterModel;
         $this->newsletterValidator = $newsletterValidator;
-        $this->newsletterConfig = $newsletterConfig;
         $this->newsletterHelpers = $newsletterHelpers;
     }
 
     public function actionCreate()
     {
-        $settings = $this->newsletterConfig->getSettings();
+        $settings = $this->config->getSettings('newsletter');
 
         if (empty($_POST) === false) {
             $this->_createPost($_POST, $settings);
@@ -108,7 +101,7 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($newsletter) === false) {
             $this->breadcrumb->setTitlePostfix($newsletter['title']);
 
-            $settings = $this->newsletterConfig->getSettings();
+            $settings = $this->config->getSettings('newsletter');
 
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $settings);
@@ -181,7 +174,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $settings = $this->newsletterConfig->getSettings();
+        $settings = $this->config->getSettings('newsletter');
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
@@ -296,7 +289,7 @@ class Index extends Core\Modules\Controller\Admin
                 'html' => (int)$formData['html']
             ];
 
-            $bool = $this->newsletterConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'newsletter');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

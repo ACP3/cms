@@ -35,10 +35,6 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Modules\Gallery\Validator
      */
     protected $galleryValidator;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $galleryConfig;
 
     /**
      * @param \ACP3\Core\Context\Admin        $context
@@ -48,7 +44,6 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\Gallery\Helpers   $galleryHelpers
      * @param \ACP3\Modules\Gallery\Model     $galleryModel
      * @param \ACP3\Modules\Gallery\Validator $galleryValidator
-     * @param \ACP3\Core\Config               $galleryConfig
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -57,8 +52,7 @@ class Index extends Core\Modules\Controller\Admin
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model $galleryModel,
-        Gallery\Validator $galleryValidator,
-        Core\Config $galleryConfig)
+        Gallery\Validator $galleryValidator)
     {
         parent::__construct($context);
 
@@ -68,7 +62,6 @@ class Index extends Core\Modules\Controller\Admin
         $this->galleryHelpers = $galleryHelpers;
         $this->galleryModel = $galleryModel;
         $this->galleryValidator = $galleryValidator;
-        $this->galleryConfig = $galleryConfig;
     }
 
     public function actionCreate()
@@ -187,7 +180,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        $settings = $this->galleryConfig->getSettings();
+        $settings = $this->config->getSettings('gallery');
 
         if (empty($_POST) === false) {
             $this->_settingsPost($_POST, $settings);
@@ -310,7 +303,7 @@ class Index extends Core\Modules\Controller\Admin
                 $data['comments'] = (int)$formData['comments'];
             }
 
-            $bool = $this->galleryConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'gallery');
 
             // Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
             if ($formData['thumbwidth'] !== $settings['thumbwidth'] || $formData['thumbheight'] !== $settings['thumbheight'] ||

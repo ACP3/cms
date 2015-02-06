@@ -1,19 +1,11 @@
 services:
   feeds.controller.admin.index:
     class: ACP3\Modules\Feeds\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.helpers.secure', '@feeds.validator', '@feeds.config']
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@feeds.validator']
 
   feeds.controller.frontend.index:
     class: ACP3\Modules\Feeds\Controller\Index
-    arguments: ['@core.context.frontend', '@feeds.config', '@feeds.extensions', '@seo.config']
-
-  feeds.cache.core:
-    class: ACP3\Core\Cache
-    arguments: ['@service_container', 'feeds']
-
-  feeds.config:
-    class: ACP3\Core\Config
-    arguments: ['@feeds.cache.core', '@system.model', 'feeds']
+    arguments: ['@core.context.frontend', '@feeds.extensions']
 
   feeds.validator:
     class: ACP3\Modules\Feeds\Validator

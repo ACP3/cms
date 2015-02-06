@@ -18,7 +18,7 @@ class Request extends \StdClass
     /**
      * @var \ACP3\Core\Config
      */
-    protected $systemConfig;
+    protected $config;
     /**
      * @var \ACP3\Modules\Seo\Model
      */
@@ -62,17 +62,17 @@ class Request extends \StdClass
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      *
      * @param \ACP3\Core\Modules      $modules
-     * @param \ACP3\Core\Config       $systemConfig
+     * @param \ACP3\Core\Config       $config
      * @param \ACP3\Modules\Seo\Model $seoModel
      */
     public function __construct(
         Modules $modules,
-        Config $systemConfig,
+        Config $config,
         Seo\Model $seoModel
     )
     {
         $this->modules = $modules;
-        $this->systemConfig = $systemConfig;
+        $this->config = $config;
         $this->seoModel = $seoModel;
 
         $this->_setBaseUrl();
@@ -122,7 +122,7 @@ class Request extends \StdClass
         } else {
             $this->area = 'frontend';
 
-            $homepage = $this->systemConfig->getSettings()['homepage'];
+            $homepage = $this->config->getSettings('system')['homepage'];
 
             // Set the user defined homepage of the website
             if ($this->query === '/' && $homepage !== '') {
@@ -287,7 +287,7 @@ class Request extends \StdClass
     public function getIsHomepage()
     {
         if ($this->isHomepage === null) {
-            $this->isHomepage = ($this->query === $this->systemConfig->getSettings()['homepage']);
+            $this->isHomepage = ($this->query === $this->config->getSettings('system')['homepage']);
         }
 
         return $this->isHomepage;

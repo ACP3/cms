@@ -28,29 +28,23 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $galleryConfig;
-    /**
      * @var array
      */
-    protected $settings;
+    protected $settings = [];
 
     /**
-     * @param Core\Context\Frontend $context
-     * @param Core\Date $date
-     * @param Core\Pagination $pagination
-     * @param Gallery\Model $galleryModel
-     * @param Gallery\Cache $galleryCache
-     * @param Core\Config $galleryConfig
+     * @param \ACP3\Core\Context\Frontend $context
+     * @param \ACP3\Core\Date             $date
+     * @param \ACP3\Core\Pagination       $pagination
+     * @param \ACP3\Modules\Gallery\Model $galleryModel
+     * @param \ACP3\Modules\Gallery\Cache $galleryCache
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Pagination $pagination,
         Gallery\Model $galleryModel,
-        Gallery\Cache $galleryCache,
-        Core\Config $galleryConfig)
+        Gallery\Cache $galleryCache)
     {
         parent::__construct($context);
 
@@ -58,14 +52,13 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->galleryModel = $galleryModel;
         $this->galleryCache = $galleryCache;
-        $this->galleryConfig = $galleryConfig;
     }
 
     public function preDispatch()
     {
         parent::preDispatch();
         
-        $this->settings = $this->galleryConfig->getSettings();
+        $this->settings = $this->config->getSettings('gallery');
     }
 
     public function actionDetails()
@@ -139,7 +132,7 @@ class Index extends Core\Modules\Controller\Frontend
             $action = $this->request->action === 'thumb' ? 'thumb' : '';
 
             $options = [
-                'enable_cache' => $this->systemConfig->getSettings()['cache_images'] == 1,
+                'enable_cache' => $this->config->getSettings('system')['cache_images'] == 1,
                 'cache_prefix' => 'gallery_' . $action,
                 'max_width' => $this->settings[$action . 'width'],
                 'max_height' => $this->settings[$action . 'height'],
