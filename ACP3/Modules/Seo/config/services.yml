@@ -5,11 +5,7 @@ services:
 
   seo.cache:
     class: ACP3\Modules\Seo\Cache
-    arguments: ['@seo.cache.core', '@seo.model']
-
-  seo.cache.core:
-    class: ACP3\Core\Cache
-    arguments: ['@service_container', 'seo']
+    arguments: ['@core.cache.system', '@seo.model']
 
   seo.model:
     class: ACP3\Modules\Seo\Model
