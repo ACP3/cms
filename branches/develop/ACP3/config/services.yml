@@ -16,11 +16,11 @@ services:
 
   core.assets:
     class: ACP3\Core\Assets
-    arguments: ['@assets.cache.core', '@core.modules', '@core.router', '@core.assets.themeResolver', '@core.config']
+    arguments: ['@core.cache.system', '@core.modules', '@core.router', '@core.assets.themeResolver', '@core.config']
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
-    arguments: ['@assets.cache.core']
+    arguments: ['@core.cache.system']
 
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver
@@ -40,9 +40,13 @@ services:
     calls:
       - ['setMenusModel', ['@?menus.model']]
 
+  core.cache.system:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'system']
+
   core.config:
     class: ACP3\Core\Config
-    arguments: ['@system.cache.core', '@system.model']
+    arguments: ['@core.cache.system', '@system.model']
 
   core.context:
     class : ACP3\Core\Context
@@ -69,7 +73,7 @@ services:
 
   core.lang:
     class: ACP3\Core\Lang
-    arguments: ['@core.auth', '@system.cache.core.lang', '@core.config']
+    arguments: ['@core.auth', '@core.cache.system', '@core.config']
 
   core.mailer:
     class: ACP3\Core\Mailer
@@ -77,11 +81,11 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@service_container', '@core.lang', '@core.xml', '@system.cache.core.modules', '@system.model']
+    arguments: ['@service_container', '@core.lang', '@core.xml', '@core.cache.system', '@system.model']
 
   core.modules.abstractInstaller:
     abstract: true
-    arguments: ['@core.db', '@core.xml', '@permissions.cache.core', '@system.model', '@permissions.model']
+    arguments: ['@core.db', '@core.xml', '@core.cache.system', '@system.model', '@permissions.model']
     calls:
       - ['setContainer', ['@service_container']]
 
@@ -142,8 +146,3 @@ services:
 
   core.xml:
     class: ACP3\Core\XML
-
-  assets.cache.core:
-    class: ACP3\Core\Cache
-    arguments: ['@service_container', 'assets']
-

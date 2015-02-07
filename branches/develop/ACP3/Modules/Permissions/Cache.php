@@ -9,9 +9,9 @@ use ACP3\Core;
  */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
-    const CACHE_ID_RESOURCES = 'resources';
-    const CACHE_ID_ROLES = 'roles';
-    const CACHE_ID_RULES = 'rules_';
+    const CACHE_ID_RESOURCES = 'acl_resources';
+    const CACHE_ID_ROLES = 'acl_roles';
+    const CACHE_ID_RULES = 'acl_rules_';
 
     /**
      * @var Model

@@ -206,6 +206,8 @@ class ACL
             $key = $this->getResources()[$area][$resource]['key'];
             return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
         }
+
+        exit;
         return false;
     }
 
@@ -244,6 +246,7 @@ class ACL
                 return $this->canAccessResource($path);
             }
         }
+
         return 0;
     }
 }
