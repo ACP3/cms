@@ -27,10 +27,6 @@ class Account extends Core\Modules\Controller\Frontend
      * @var \ACP3\Modules\Users\Validator
      */
     protected $usersValidator;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $usersConfig;
 
     /**
      * @param \ACP3\Core\Context\Frontend   $context
@@ -38,15 +34,13 @@ class Account extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Helpers\Secure     $secureHelper
      * @param \ACP3\Modules\Users\Model     $usersModel
      * @param \ACP3\Modules\Users\Validator $usersValidator
-     * @param \ACP3\Core\Config             $usersConfig
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
-        Users\Validator $usersValidator,
-        Core\Config $usersConfig)
+        Users\Validator $usersValidator)
     {
         parent::__construct($context);
 
@@ -54,7 +48,6 @@ class Account extends Core\Modules\Controller\Frontend
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
         $this->usersValidator = $usersValidator;
-        $this->usersConfig = $usersConfig;
     }
 
     public function preDispatch()
@@ -124,7 +117,7 @@ class Account extends Core\Modules\Controller\Frontend
 
     public function actionSettings()
     {
-        $settings = $this->usersConfig->getSettings();
+        $settings = $this->config->getSettings('users');
 
         if (empty($_POST) === false) {
             $this->_settingsPost($_POST, $settings);

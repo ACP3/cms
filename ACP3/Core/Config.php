@@ -10,48 +10,43 @@ use ACP3\Modules\System;
 class Config
 {
     /**
-     * @var System\Model
+     * @var \ACP3\Modules\System\Model
      */
     protected $systemModel;
     /**
-     * @var Cache
+     * @var \ACP3\Core\Cache
      */
-    protected $moduleCache;
-    /**
-     * @var string
-     */
-    protected $module = '';
+    protected $coreCache;
     /**
      * @var array
      */
     protected $settings = [];
 
     /**
-     * @param Cache $moduleCache
-     * @param System\Model $systemModel
-     * @param $module
+     * @param \ACP3\Core\Cache           $coreCache
+     * @param \ACP3\Modules\System\Model $systemModel
      */
     public function __construct(
-        Cache $moduleCache,
-        System\Model $systemModel,
-        $module
-    ) {
-        $this->moduleCache = $moduleCache;
+        Cache $coreCache,
+        System\Model $systemModel
+    )
+    {
+        $this->coreCache = $coreCache;
         $this->systemModel = $systemModel;
-        $this->module = strtolower($module);
     }
 
     /**
      * Erstellt/Verändert die Konfigurationsdateien für die Module
      *
-     * @param array $data
+     * @param array  $data
+     * @param string $module
      *
-     * @return boolean
+     * @return bool
      */
-    public function setSettings($data)
+    public function setSettings($data, $module)
     {
         $bool = $bool2 = false;
-        $moduleId = $this->systemModel->getModuleId($this->module);
+        $moduleId = $this->systemModel->getModuleId($module);
         if (!empty($moduleId)) {
             foreach ($data as $key => $value) {
                 $updateValues = [
@@ -72,42 +67,43 @@ class Config
     /**
      * Setzt den Cache für die Einstellungen eines Moduls
      *
-     * @return boolean
+     * @return bool
      */
     protected function setCache()
     {
-        $settings = $this->systemModel->getSettingsByModuleName($this->module);
-        $c_settings = count($settings);
+        $settings = $this->systemModel->getAllModuleSettings();
 
         $data = [];
-        for ($i = 0; $i < $c_settings; ++$i) {
-            if (is_int($settings[$i]['value'])) {
-                $data[$settings[$i]['name']] = (int)$settings[$i]['value'];
-            } elseif (is_float($settings[$i]['value'])) {
-                $data[$settings[$i]['name']] = (float)$settings[$i]['value'];
+        foreach ($settings as $setting) {
+            if (is_int($setting['value'])) {
+                $data[$setting['module_name']][$setting['name']] = (int)$setting['value'];
+            } elseif (is_float($setting['value'])) {
+                $data[$setting['module_name']][$setting['name']] = (float)$setting['value'];
             } else {
-                $data[$settings[$i]['name']] = $settings[$i]['value'];
+                $data[$setting['module_name']][$setting['name']] = $setting['value'];
             }
         }
 
-        return $this->moduleCache->save('settings', $data);
+        return $this->coreCache->save('settings', $data);
     }
 
     /**
      * Gibt den Inhalt der Konfigurationsdateien der Module aus
      *
+     * @param $module
+     *
      * @return array
      */
-    public function getSettings()
+    public function getSettings($module)
     {
         if ($this->settings === []) {
-            if ($this->moduleCache->contains('settings') === false) {
+            if ($this->coreCache->contains('settings') === false) {
                 $this->setCache();
             }
 
-            $this->settings = $this->moduleCache->fetch('settings');
+            $this->settings = $this->coreCache->fetch('settings');
         }
 
-        return $this->settings;
+        return isset($this->settings[$module]) ? $this->settings[$module] : [];
     }
 }

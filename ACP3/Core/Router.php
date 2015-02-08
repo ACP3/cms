@@ -24,25 +24,25 @@ class Router
     /**
      * @var \ACP3\Core\Config
      */
-    protected $seoConfig;
+    protected $config;
 
     /**
      * @param \ACP3\Core\Router\Aliases $aliases
      * @param \ACP3\Core\Request        $request
-     * @param \ACP3\Core\Config         $seoConfig
+     * @param \ACP3\Core\Config         $config
      */
     public function __construct(
         Aliases $aliases,
         Request $request,
-        Config $seoConfig
+        Config $config
     ) {
         $this->aliases = $aliases;
         $this->request = $request;
-        $this->seoConfig = $seoConfig;
+        $this->config = $config;
     }
 
     /**
-     * Generiert die ACP3 internen Hyperlinks
+     * Generates the internal ACP3 hyperlinks
      *
      * @param $path
      * @param bool $absolute
@@ -91,7 +91,7 @@ class Router
         }
 
         // Check, whether to use urls with mod_rewrite or not
-        if ((bool)$this->seoConfig->getSettings()['mod_rewrite'] === false ||
+        if ((bool)$this->config->getSettings('seo')['mod_rewrite'] === false ||
             $isAdminUrl === true ||
             (defined('DEBUG') && DEBUG === true)
         ) {

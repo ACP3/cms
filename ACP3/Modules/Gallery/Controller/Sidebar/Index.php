@@ -19,33 +19,26 @@ class Index extends Core\Modules\Controller
      * @var \ACP3\Modules\Gallery\Model
      */
     protected $galleryModel;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $galleryConfig;
 
     /**
-     * @param Core\Context $context
-     * @param Core\Date $date
-     * @param Gallery\Model $galleryModel
-     * @param Core\Config $galleryConfig
+     * @param \ACP3\Core\Context          $context
+     * @param \ACP3\Core\Date             $date
+     * @param \ACP3\Modules\Gallery\Model $galleryModel
      */
     public function __construct(
         Core\Context $context,
         Core\Date $date,
-        Gallery\Model $galleryModel,
-        Core\Config $galleryConfig)
+        Gallery\Model $galleryModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->galleryModel = $galleryModel;
-        $this->galleryConfig = $galleryConfig;
     }
 
     public function actionIndex()
     {
-        $settings = $this->galleryConfig->getSettings();
+        $settings = $this->config->getSettings('gallery');
 
         $this->view->assign('sidebar_galleries', $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
 

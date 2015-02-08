@@ -33,19 +33,18 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $usersValidator;
     /**
-     * @var \ACP3\Modules\Permissions\Model
+     * @var \ACP3\Modules\Permissions\Helpers
      */
-    protected $permissionsModel;
+    protected $permissionsHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin        $context
-     * @param \ACP3\Core\Date                 $date
-     * @param \ACP3\Core\Helpers\Secure       $secureHelper
-     * @param \ACP3\Core\Helpers\Forms        $formsHelpers
-     * @param \ACP3\Modules\Users\Model       $usersModel
-     * @param \ACP3\Modules\Users\Validator   $usersValidator
-     * @param \ACP3\Core\Config               $usersConfig
-     * @param \ACP3\Modules\Permissions\Model $permissionsModel
+     * @param \ACP3\Core\Context\Admin          $context
+     * @param \ACP3\Core\Date                   $date
+     * @param \ACP3\Core\Helpers\Secure         $secureHelper
+     * @param \ACP3\Core\Helpers\Forms          $formsHelpers
+     * @param \ACP3\Modules\Users\Model         $usersModel
+     * @param \ACP3\Modules\Users\Validator     $usersValidator
+     * @param \ACP3\Modules\Permissions\Helpers $permissionsHelpers
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -54,8 +53,7 @@ class Index extends Core\Modules\Controller\Admin
         Core\Helpers\Forms $formsHelpers,
         Users\Model $usersModel,
         Users\Validator $usersValidator,
-        Core\Config $usersConfig,
-        Permissions\Model $permissionsModel)
+        Permissions\Helpers $permissionsHelpers)
     {
         parent::__construct($context);
 
@@ -64,8 +62,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->formsHelpers = $formsHelpers;
         $this->usersModel = $usersModel;
         $this->usersValidator = $usersValidator;
-        $this->usersConfig = $usersConfig;
-        $this->permissionsModel = $permissionsModel;
+        $this->permissionsHelpers = $permissionsHelpers;
     }
 
     public function actionCreate()
@@ -74,7 +71,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $systemSettings = $this->systemConfig->getSettings();
+        $systemSettings = $this->config->getSettings('system');
 
         // Zugriffslevel holen
         $roles = $this->acl->getAllRoles();
@@ -318,7 +315,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $settings = $this->usersConfig->getSettings();
+        $settings = $this->config->getSettings('users');
 
         $lang_languages = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('languages', $this->formsHelpers->selectGenerator('language_override', [1, 0], $lang_languages, $settings['language_override'], 'checked'));
@@ -400,9 +397,8 @@ class Index extends Core\Modules\Controller\Admin
             ];
 
             $lastId = $this->usersModel->insert($insertValues);
-            foreach ($formData['roles'] as $row) {
-                $this->permissionsModel->insert(['user_id' => $lastId, 'role_id' => $row], Permissions\Model::TABLE_NAME_USER_ROLES);
-            }
+
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
 
             $this->secureHelpers->unsetFormToken($this->request->query);
 
@@ -448,10 +444,7 @@ class Index extends Core\Modules\Controller\Admin
                 'entries' => (int)$formData['entries'],
             ];
 
-            $this->permissionsModel->delete(['user_id' => $this->request->id], Permissions\Model::TABLE_NAME_USER_ROLES);
-            foreach ($formData['roles'] as $row) {
-                $this->permissionsModel->insert(['user_id' => $this->request->id, 'role_id' => $row], Permissions\Model::TABLE_NAME_USER_ROLES);
-            }
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], (int) $this->request->id);
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
@@ -492,7 +485,7 @@ class Index extends Core\Modules\Controller\Admin
                 'language_override' => $formData['language_override'],
                 'mail' => $formData['mail']
             ];
-            $bool = $this->usersConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'users');
 
             $this->secureHelpers->unsetFormToken($this->request->query);
 

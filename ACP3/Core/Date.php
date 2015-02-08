@@ -44,27 +44,27 @@ class Date
     /**
      * @var \ACP3\Core\Config
      */
-    protected $systemConfig;
+    protected $config;
 
     /**
-     * @param Auth                 $auth
-     * @param Lang                 $lang
-     * @param Forms                $formsHelper
-     * @param Validator\Rules\Date $dateValidator
-     * @param Config               $systemConfig
+     * @param \ACP3\Core\Auth                 $auth
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Helpers\Forms        $formsHelper
+     * @param \ACP3\Core\Validator\Rules\Date $dateValidator
+     * @param \ACP3\Core\Config               $config
      */
     public function __construct(
         Auth $auth,
         Lang $lang,
         Forms $formsHelper,
         Validator\Rules\Date $dateValidator,
-        Config $systemConfig
+        Config $config
     )
     {
         $this->lang = $lang;
         $this->formsHelper = $formsHelper;
         $this->dateValidator = $dateValidator;
-        $this->systemConfig = $systemConfig;
+        $this->config = $config;
 
         $this->_setFormatAndTimeZone($auth->getUserInfo());
     }
@@ -79,7 +79,7 @@ class Date
             $this->dateFormatShort = $userInfo['date_format_short'];
             $timeZone = $userInfo['time_zone'];
         } else {
-            $settings = $this->systemConfig->getSettings();
+            $settings = $this->config->getSettings('system');
 
             $this->dateFormatLong = $settings['date_format_long'];
             $this->dateFormatShort = $settings['date_format_short'];

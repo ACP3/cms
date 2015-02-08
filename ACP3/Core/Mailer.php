@@ -62,19 +62,19 @@ class Mailer
     /**
      * @var \ACP3\Core\Config
      */
-    private $systemConfig;
+    private $config;
 
     /**
      * @param \ACP3\Core\View   $view
-     * @param \ACP3\Core\Config $systemConfig
+     * @param \ACP3\Core\Config $config
      */
     public function __construct(
         View $view,
-        Config $systemConfig
+        Config $config
     )
     {
         $this->view = $view;
-        $this->systemConfig = $systemConfig;
+        $this->config = $config;
     }
 
     /**
@@ -437,7 +437,7 @@ class Mailer
         if ($this->phpMailer === null) {
             $this->phpMailer = new \PHPMailer(true);
 
-            $settings = $this->systemConfig->getSettings();
+            $settings = $this->config->getSettings('system');
 
             if (strtolower($settings['mailer_type']) === 'smtp') {
                 $this->phpMailer->set('Mailer', 'smtp');

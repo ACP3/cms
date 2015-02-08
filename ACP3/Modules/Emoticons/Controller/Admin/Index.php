@@ -24,10 +24,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $emoticonsValidator;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $emoticonsConfig;
-    /**
      * @var \ACP3\Modules\Emoticons\Cache
      */
     protected $emoticonsCache;
@@ -37,7 +33,6 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Helpers\Secure         $secureHelper
      * @param \ACP3\Modules\Emoticons\Model     $emoticonsModel
      * @param \ACP3\Modules\Emoticons\Validator $emoticonsValidator
-     * @param \ACP3\Core\Config                 $emoticonsConfig
      * @param \ACP3\Modules\Emoticons\Cache     $emoticonsCache
      */
     public function __construct(
@@ -45,7 +40,6 @@ class Index extends Core\Modules\Controller\Admin
         Core\Helpers\Secure $secureHelper,
         Emoticons\Model $emoticonsModel,
         Emoticons\Validator $emoticonsValidator,
-        Core\Config $emoticonsConfig,
         Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($context);
@@ -53,7 +47,6 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->emoticonsModel = $emoticonsModel;
         $this->emoticonsValidator = $emoticonsValidator;
-        $this->emoticonsConfig = $emoticonsConfig;
         $this->emoticonsCache = $emoticonsCache;
     }
 
@@ -81,7 +74,7 @@ class Index extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['picture']['size'];
             }
 
-            $this->emoticonsValidator->validateCreate($formData, $file, $this->emoticonsConfig->getSettings());
+            $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
 
             $upload = new Core\Helpers\Upload('emoticons');
             $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -163,7 +156,7 @@ class Index extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['picture']['size'];
             }
 
-            $this->emoticonsValidator->validateEdit($formData, $file, $this->emoticonsConfig->getSettings());
+            $this->emoticonsValidator->validateEdit($formData, $file, $this->config->getSettings('emoticons'));
 
             $updateValues = [
                 'code' => Core\Functions::strEncode($formData['code']),
@@ -216,7 +209,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $this->view->assign('form', array_merge($this->emoticonsConfig->getSettings(), $_POST));
+        $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $_POST));
 
         $this->secureHelper->generateFormToken($this->request->query);
     }
@@ -234,7 +227,7 @@ class Index extends Core\Modules\Controller\Admin
                 'height' => (int)$formData['height'],
                 'filesize' => (int)$formData['filesize'],
             ];
-            $bool = $this->emoticonsConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'emoticons');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

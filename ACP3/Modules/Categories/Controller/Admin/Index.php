@@ -16,10 +16,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $categoriesModel;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $categoriesConfig;
-    /**
      * @var \ACP3\Modules\Categories\Cache
      */
     protected $categoriesCache;
@@ -35,7 +31,6 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param \ACP3\Core\Context\Admin           $context
      * @param \ACP3\Modules\Categories\Model     $categoriesModel
-     * @param \ACP3\Core\Config                  $categoriesConfig
      * @param \ACP3\Modules\Categories\Cache     $categoriesCache
      * @param \ACP3\Modules\Categories\Validator $categoriesValidator
      * @param \ACP3\Core\Helpers\Secure          $secureHelper
@@ -43,7 +38,6 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Categories\Model $categoriesModel,
-        Core\Config $categoriesConfig,
         Categories\Cache $categoriesCache,
         Categories\Validator $categoriesValidator,
         Core\Helpers\Secure $secureHelper)
@@ -51,7 +45,6 @@ class Index extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->categoriesModel = $categoriesModel;
-        $this->categoriesConfig = $categoriesConfig;
         $this->categoriesCache = $categoriesCache;
         $this->categoriesValidator = $categoriesValidator;
         $this->secureHelper = $secureHelper;
@@ -91,7 +84,7 @@ class Index extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['picture']['size'];
             }
 
-            $this->categoriesValidator->validate($formData, $file, $this->categoriesConfig->getSettings());
+            $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
 
             $moduleInfo = $this->modules->getModuleInfo($formData['module']);
             $insertValues = [
@@ -195,7 +188,7 @@ class Index extends Core\Modules\Controller\Admin
                 $file['size'] = $_FILES['picture']['size'];
             }
 
-            $this->categoriesValidator->validate($formData, $file, $this->categoriesConfig->getSettings(), $this->request->id);
+            $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $this->request->id);
 
             $updateValues = [
                 'title' => Core\Functions::strEncode($formData['title']),
@@ -252,7 +245,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $settings = $this->categoriesConfig->getSettings();
+        $settings = $this->config->getSettings('categories');
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
@@ -272,7 +265,7 @@ class Index extends Core\Modules\Controller\Admin
                 'height' => (int)$formData['height'],
                 'filesize' => (int)$formData['filesize'],
             ];
-            $bool = $this->categoriesConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'categories');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

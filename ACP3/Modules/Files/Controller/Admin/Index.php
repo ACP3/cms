@@ -14,7 +14,7 @@ use ACP3\Modules\Files;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -22,17 +22,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var Files\Model
+     * @var \ACP3\Modules\Files\Model
      */
     protected $filesModel;
     /**
-     * @var Files\Cache
+     * @var \ACP3\Modules\Files\Cache
      */
     protected $filesCache;
-    /**
-     * @var Core\Config
-     */
-    protected $filesConfig;
     /**
      * @var \ACP3\Modules\Files\Validator
      */
@@ -52,7 +48,6 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Helpers\Secure        $secureHelper
      * @param \ACP3\Modules\Files\Model        $filesModel
      * @param \ACP3\Modules\Files\Cache        $filesCache
-     * @param \ACP3\Core\Config                $filesConfig
      * @param \ACP3\Modules\Files\Validator    $filesValidator
      * @param \ACP3\Modules\Categories\Helpers $categoriesHelpers
      */
@@ -62,7 +57,6 @@ class Index extends Core\Modules\Controller\Admin
         Core\Helpers\Secure $secureHelper,
         Files\Model $filesModel,
         Files\Cache $filesCache,
-        Core\Config $filesConfig,
         Files\Validator $filesValidator,
         Categories\Helpers $categoriesHelpers)
     {
@@ -72,7 +66,6 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->filesModel = $filesModel;
         $this->filesCache = $filesCache;
-        $this->filesConfig = $filesConfig;
         $this->filesValidator = $filesValidator;
         $this->categoriesHelpers = $categoriesHelpers;
     }
@@ -91,7 +84,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        $settings = $this->filesConfig->getSettings();
+        $settings = $this->config->getSettings('files');
 
         if (empty($_POST) === false) {
             $this->_createPost($_POST, $settings);
@@ -163,7 +156,7 @@ class Index extends Core\Modules\Controller\Admin
         $file = $this->filesModel->getOneById((int)$this->request->id);
 
         if (empty($file) === false) {
-            $settings = $this->filesConfig->getSettings();
+            $settings = $this->config->getSettings('files');
 
             $this->breadcrumb->setTitlePostfix($file['title']);
 
@@ -227,7 +220,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $settings = $this->filesConfig->getSettings();
+        $settings = $this->config->getSettings('files');
 
         if ($this->commentsHelpers) {
             $lang_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
@@ -393,7 +386,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sidebar' => (int)$formData['sidebar'],
                 'comments' => $formData['comments']
             ];
-            $bool = $this->filesConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'files');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

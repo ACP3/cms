@@ -14,7 +14,7 @@ use ACP3\Modules\News;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -22,17 +22,13 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $secureHelper;
     /**
-     * @var News\Model
+     * @var \ACP3\Modules\News\Model
      */
     protected $newsModel;
     /**
-     * @var News\Cache
+     * @var \ACP3\Modules\News\Cache
      */
     protected $newsCache;
-    /**
-     * @var Core\Config
-     */
-    protected $newsConfig;
     /**
      * @var \ACP3\Modules\News\Validator
      */
@@ -52,7 +48,6 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Helpers\Secure        $secureHelper
      * @param \ACP3\Modules\News\Model         $newsModel
      * @param \ACP3\Modules\News\Cache         $newsCache
-     * @param \ACP3\Core\Config                $newsConfig
      * @param \ACP3\Modules\News\Validator     $newsValidator
      * @param \ACP3\Modules\Categories\Helpers $categoriesHelpers
      */
@@ -62,7 +57,6 @@ class Index extends Core\Modules\Controller\Admin
         Core\Helpers\Secure $secureHelper,
         News\Model $newsModel,
         News\Cache $newsCache,
-        Core\Config $newsConfig,
         News\Validator $newsValidator,
         Categories\Helpers $categoriesHelpers)
     {
@@ -72,7 +66,6 @@ class Index extends Core\Modules\Controller\Admin
         $this->secureHelper = $secureHelper;
         $this->newsModel = $newsModel;
         $this->newsCache = $newsCache;
-        $this->newsConfig = $newsConfig;
         $this->newsValidator = $newsValidator;
         $this->categoriesHelpers = $categoriesHelpers;
     }
@@ -91,7 +84,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        $settings = $this->newsConfig->getSettings();
+        $settings = $this->config->getSettings('news');
 
         if (empty($_POST) === false) {
             $this->_createPost($_POST, $settings);
@@ -170,7 +163,7 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($news) === false) {
             $this->breadcrumb->setTitlePostfix($news['title']);
 
-            $settings = $this->newsConfig->getSettings();
+            $settings = $this->config->getSettings('news');
 
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $settings);
@@ -241,7 +234,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $settings = $this->newsConfig->getSettings();
+        $settings = $this->config->getSettings('news');
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
@@ -371,7 +364,7 @@ class Index extends Core\Modules\Controller\Admin
                 'category_in_breadcrumb' => $formData['category_in_breadcrumb'],
                 'comments' => $formData['comments'],
             ];
-            $bool = $this->newsConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'news');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

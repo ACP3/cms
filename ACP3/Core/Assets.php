@@ -12,7 +12,7 @@ class Assets
     /**
      * @var \ACP3\Core\Cache
      */
-    protected $assetsCache;
+    protected $systemCache;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -28,7 +28,7 @@ class Assets
     /**
      * @var \ACP3\Core\Config
      */
-    protected $systemConfig;
+    protected $config;
 
     /**
      * Legt fest, welche Bibliotheken beim Seitenaufruf geladen werden sollen
@@ -99,21 +99,21 @@ class Assets
      * @param Modules       $modules
      * @param Router        $router
      * @param ThemeResolver $themeResolver
-     * @param Config        $systemConfig
+     * @param Config        $config
      */
     public function __construct(
         Cache $assetsCache,
         Modules $modules,
         Router $router,
         ThemeResolver $themeResolver,
-        Config $systemConfig
+        Config $config
     )
     {
         $this->modules = $modules;
         $this->router = $router;
         $this->themeResolver = $themeResolver;
-        $this->assetsCache = $assetsCache;
-        $this->systemConfig = $systemConfig;
+        $this->systemCache = $assetsCache;
+        $this->config = $config;
 
         $this->currentTime = time();
 
@@ -139,11 +139,12 @@ class Assets
      */
     public function includeCssFiles($layout)
     {
-        $cacheId = $this->systemConfig->getSettings()['design'] . '_';
+        $cacheId = 'assets_';
+        $cacheId .= $this->config->getSettings('system')['design'] . '_';
         $cacheId .= 'css_';
         $cacheId .= $this->_getJsLibrariesCache();
 
-        if ($this->assetsCache->contains($cacheId) === false) {
+        if ($this->systemCache->contains($cacheId) === false) {
             $css = [];
 
             // At first, load the library stylesheets
@@ -181,11 +182,11 @@ class Assets
                 }
             }
 
-            $this->assetsCache->save($cacheId, $css);
+            $this->systemCache->save($cacheId, $css);
         }
 
 
-        return $this->assetsCache->fetch($cacheId);
+        return $this->systemCache->fetch($cacheId);
     }
 
     /**
@@ -195,11 +196,12 @@ class Assets
      */
     public function includeJsFiles($layout)
     {
-        $cacheId = $this->systemConfig->getSettings()['design'] . '_';
+        $cacheId = 'assets_';
+        $cacheId .= $this->config->getSettings('system')['design'] . '_';
         $cacheId .= 'js_';
         $cacheId .= $this->_getJsLibrariesCache();
 
-        if ($this->assetsCache->contains($cacheId) === false) {
+        if ($this->systemCache->contains($cacheId) === false) {
             $scripts = [];
             foreach ($this->libraries as $library) {
                 if ($library['enabled'] === true && isset($library['js']) === true) {
@@ -217,10 +219,10 @@ class Assets
             // Include general js file of the layout
             $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
 
-            $this->assetsCache->save($cacheId, $scripts);
+            $this->systemCache->save($cacheId, $scripts);
         }
 
-        return $this->assetsCache->fetch($cacheId);
+        return $this->systemCache->fetch($cacheId);
     }
 
     /**
@@ -260,9 +262,9 @@ class Assets
         $debug = (defined('DEBUG') && DEBUG === true);
         $filenameHash = $this->getFilenameHash($group, $layout);
 
-        $cacheId = 'last-generated-' . $filenameHash;
+        $cacheId = 'assets-last-generated-' . $filenameHash;
 
-        if (false === ($lastGenerated = $this->assetsCache->fetch($cacheId))) {
+        if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
             $lastGenerated = $this->currentTime;
         }
 
@@ -298,7 +300,7 @@ class Assets
             file_put_contents(UPLOADS_DIR . $path, $content, LOCK_EX);
 
             // Save the time of the generation if the requested file
-            $this->assetsCache->save($cacheId, $lastGenerated);
+            $this->systemCache->save($cacheId, $lastGenerated);
         }
 
         return ROOT_DIR . 'uploads/' . $path . ($debug === true ? '?v=' . $lastGenerated : '');
@@ -312,7 +314,7 @@ class Assets
      */
     private function getFilenameHash($group, $layout)
     {
-        $filename = $this->systemConfig->getSettings()['design'];
+        $filename = $this->config->getSettings('system')['design'];
         $filename .= '_' . $layout;
         $filename .= '_' . $this->_getJsLibrariesCache();
         $filename .= '_' . $group;
