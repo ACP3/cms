@@ -18,7 +18,7 @@ class Lang
     /**
      * @var \ACP3\Core\Config
      */
-    protected $systemConfig;
+    protected $config;
     /**
      * Die zur Zeit eingestellte Sprache
      *
@@ -41,16 +41,16 @@ class Lang
     /**
      * @param \ACP3\Core\Auth   $auth
      * @param \ACP3\Core\Cache  $langCache
-     * @param \ACP3\Core\Config $systemConfig
+     * @param \ACP3\Core\Config $config
      */
     public function __construct(
         Auth $auth,
         Cache $langCache,
-        Config $systemConfig
+        Config $config
     ) {
         $this->auth = $auth;
         $this->cache = $langCache;
-        $this->systemConfig = $systemConfig;
+        $this->config = $config;
     }
 
     /**
@@ -366,7 +366,7 @@ class Lang
     {
         if ($this->lang === '') {
             $lang = $this->auth->getUserLanguage();
-            $this->lang = $this->languagePackExists($lang) === true ? $lang : $this->systemConfig->getSettings()['lang'];
+            $this->lang = $this->languagePackExists($lang) === true ? $lang : $this->config->getSettings('system')['lang'];
         }
 
         return $this->lang;

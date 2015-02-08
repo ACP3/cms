@@ -24,7 +24,7 @@ class Smarty extends AbstractRenderer
      */
     public function configure(array $params = [])
     {
-        $settings = $this->container->get('system.config')->getSettings();
+        $settings = $this->container->get('core.config')->getSettings('system');
 
         $this->renderer = new \Smarty();
         $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;

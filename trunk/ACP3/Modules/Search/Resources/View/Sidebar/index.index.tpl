@@ -8,5 +8,4 @@
     {/foreach}
     <input type="hidden" name="area" value="title_content">
     <input type="hidden" name="sort" value="asc">
-    {$form_token}
 </form>

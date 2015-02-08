@@ -39,10 +39,6 @@ class Pictures extends Core\Modules\Controller\Admin
      * @var \ACP3\Modules\Gallery\Validator
      */
     protected $galleryValidator;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $galleryConfig;
 
     /**
      * @param \ACP3\Core\Context\Admin        $context
@@ -53,7 +49,6 @@ class Pictures extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\Gallery\Model     $galleryModel
      * @param \ACP3\Modules\Gallery\Cache     $galleryCache
      * @param \ACP3\Modules\Gallery\Validator $galleryValidator
-     * @param \ACP3\Core\Config               $galleryConfig
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -63,8 +58,7 @@ class Pictures extends Core\Modules\Controller\Admin
         Gallery\Helpers $galleryHelpers,
         Gallery\Model $galleryModel,
         Gallery\Cache $galleryCache,
-        Gallery\Validator $galleryValidator,
-        Core\Config $galleryConfig)
+        Gallery\Validator $galleryValidator)
     {
         parent::__construct($context);
 
@@ -75,7 +69,6 @@ class Pictures extends Core\Modules\Controller\Admin
         $this->galleryModel = $galleryModel;
         $this->galleryCache = $galleryCache;
         $this->galleryValidator = $galleryValidator;
-        $this->galleryConfig = $galleryConfig;
     }
 
     public function actionCreate()
@@ -87,7 +80,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 ->append($gallery, 'acp/gallery/index/edit/id_' . $this->request->id)
                 ->append($this->lang->t('gallery', 'admin_pictures_create'));
 
-            $settings = $this->galleryConfig->getSettings();
+            $settings = $this->config->getSettings('gallery');
 
             if (empty($_POST) === false) {
                 $this->_createPost($_POST, $settings);
@@ -146,7 +139,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 ->append($this->lang->t('gallery', 'admin_pictures_edit'))
                 ->setTitlePostfix($picture['title'] . $this->breadcrumb->getTitleSeparator() . sprintf($this->lang->t('gallery', 'picture_x'), $picture['pic']));
 
-            $settings = $this->galleryConfig->getSettings();
+            $settings = $this->config->getSettings('gallery');
 
             if (empty($_POST) === false) {
                 $this->_editPost($_POST, $settings, $picture);

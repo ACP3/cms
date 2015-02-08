@@ -1,29 +1,21 @@
 services:
   comments.controller.admin.details:
     class: ACP3\Modules\Comments\Controller\Admin\Details
-    arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@comments.config', '@system.model', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@system.model', '@core.helpers.secure']
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.admin.index:
     class: ACP3\Modules\Comments\Controller\Admin\Index
-    arguments: ['@core.context.admin', '@core.date', '@comments.model', '@comments.validator', '@comments.config', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@core.date', '@comments.model', '@comments.validator', '@core.helpers.secure']
 
   comments.controller.frontend.index:
     class: ACP3\Modules\Comments\Controller\Index
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@comments.config', '@core.helpers.secure']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@core.helpers.secure']
     calls:
       - ['setContainer', ['@service_container']]
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
-
-  comments.cache.core:
-    class: ACP3\Core\Cache
-    arguments: ['@service_container', 'comments']
-
-  comments.config:
-    class: ACP3\Core\Config
-    arguments: ['@comments.cache.core', '@system.model', 'comments']
 
   comments.helpers:
     class: ACP3\Modules\Comments\Helpers

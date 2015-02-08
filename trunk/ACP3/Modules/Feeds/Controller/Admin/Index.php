@@ -19,28 +19,21 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Modules\Feeds\Validator
      */
     protected $feedsValidator;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $feedsConfig;
 
     /**
      * @param \ACP3\Core\Context\Admin      $context
      * @param \ACP3\Core\Helpers\Secure     $secureHelper
      * @param \ACP3\Modules\Feeds\Validator $feedsValidator
-     * @param \ACP3\Core\Config             $feedsConfig
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Helpers\Secure $secureHelper,
-        Feeds\Validator $feedsValidator,
-        Core\Config $feedsConfig)
+        Feeds\Validator $feedsValidator)
     {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;
         $this->feedsValidator = $feedsValidator;
-        $this->feedsConfig = $feedsConfig;
     }
 
     public function actionIndex()
@@ -49,7 +42,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_indexPost($_POST);
         }
 
-        $settings = $this->feedsConfig->getSettings();
+        $settings = $this->config->getSettings('feeds');
 
         $feedType = [
             'RSS 1.0',
@@ -76,7 +69,7 @@ class Index extends Core\Modules\Controller\Admin
                 'feed_type' => $formData['feed_type']
             ];
 
-            $bool = $this->feedsConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'feeds');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

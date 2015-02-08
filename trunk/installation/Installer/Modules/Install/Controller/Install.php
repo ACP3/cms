@@ -235,19 +235,26 @@ class Install extends AbstractController
             'lang' => LANG
         ];
 
-        $configSystem = $this->get('system.config');
-        $configSystem->setSettings($systemSettings);
+        $this->get('core.config')->setSettings($systemSettings, 'system');
 
-        $configSeo = $this->get('seo.config');
-        $configSeo->setSettings(['title' => !empty($formData['title']) ? $formData['title'] : 'ACP3']);
+        $this->get('core.config')->setSettings(
+            ['title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'],
+            'seo'
+        );
 
-        $configUsers = $this->get('users.config');
-        $configUsers->setSettings(['mail' => $formData['mail']]);
+        $this->get('core.config')->setSettings(
+            ['mail' => $formData['mail']],
+            'users'
+        );
 
-        $configContact = $this->get('contact.config');
-        $configContact->setSettings(['mail' => $formData['mail'], 'disclaimer' => $this->lang->t('install', 'disclaimer')]);
+        $this->get('core.config')->setSettings(
+            ['mail' => $formData['mail'], 'disclaimer' => $this->lang->t('install', 'disclaimer')],
+            'contact'
+        );
 
-        $configNewsletter = $this->get('newsletter.config');
-        $configNewsletter->setSettings(['mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')]);
+        $this->get('core.config')->setSettings(
+            ['mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')],
+            'newsletter'
+        );
     }
 }

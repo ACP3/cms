@@ -34,17 +34,9 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $usersValidator;
     /**
-     * @var \ACP3\Core\Config
+     * @var \ACP3\Modules\Permissions\Helpers
      */
-    protected $usersConfig;
-    /**
-     * @var \ACP3\Modules\Permissions\Model
-     */
-    protected $permissionsModel;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $seoConfig;
+    protected $permissionsHelpers;
     /**
      * @var \ACP3\Core\Helpers\SendEmail
      */
@@ -55,16 +47,14 @@ class Index extends Core\Modules\Controller\Frontend
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Frontend     $context
-     * @param \ACP3\Core\Date                 $date
-     * @param \ACP3\Core\Pagination           $pagination
-     * @param \ACP3\Core\Helpers\Secure       $secureHelper
-     * @param \ACP3\Modules\Users\Model       $usersModel
-     * @param \ACP3\Modules\Users\Validator   $usersValidator
-     * @param \ACP3\Core\Config               $usersConfig
-     * @param \ACP3\Modules\Permissions\Model $permissionsModel
-     * @param \ACP3\Core\Config               $seoConfig
-     * @param \ACP3\Core\Helpers\SendEmail    $sendEmail
+     * @param \ACP3\Core\Context\Frontend       $context
+     * @param \ACP3\Core\Date                   $date
+     * @param \ACP3\Core\Pagination             $pagination
+     * @param \ACP3\Core\Helpers\Secure         $secureHelper
+     * @param \ACP3\Modules\Users\Model         $usersModel
+     * @param \ACP3\Modules\Users\Validator     $usersValidator
+     * @param \ACP3\Modules\Permissions\Helpers $permissionsHelpers
+     * @param \ACP3\Core\Helpers\SendEmail      $sendEmail
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -73,9 +63,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
         Users\Validator $usersValidator,
-        Core\Config $usersConfig,
-        Permissions\Model $permissionsModel,
-        Core\Config $seoConfig,
+        Permissions\Helpers $permissionsHelpers,
         Core\Helpers\SendEmail $sendEmail)
     {
         parent::__construct($context);
@@ -85,9 +73,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
         $this->usersValidator = $usersValidator;
-        $this->usersConfig = $usersConfig;
-        $this->permissionsModel = $permissionsModel;
-        $this->seoConfig = $seoConfig;
+        $this->permissionsHelpers = $permissionsHelpers;
         $this->sendEmail = $sendEmail;
     }
 
@@ -177,7 +163,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionRegister()
     {
-        $settings = $this->usersConfig->getSettings();
+        $settings = $this->config->getSettings('users');
 
         if ($this->auth->isUser() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
@@ -234,7 +220,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $user = $this->usersModel->getOneByNickname($formData['nick_mail']);
             }
 
-            $seoSettings = $this->seoConfig->getSettings();
+            $seoSettings = $this->config->getSettings('seo');
 
             // E-Mail mit dem neuen Passwort versenden
             $subject = str_replace(['{title}', '{host}'], [$seoSettings['title'], $host], $this->lang->t('users', 'forgot_pwd_mail_subject'));
@@ -242,7 +228,7 @@ class Index extends Core\Modules\Controller\Frontend
             $replace = [$user['nickname'], $user['mail'], $newPassword, $seoSettings['title'], $host];
             $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
-            $settings = $this->usersConfig->getSettings();
+            $settings = $this->config->getSettings('users');
             $mailIsSent = $this->sendEmail->execute(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
             // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
@@ -270,8 +256,8 @@ class Index extends Core\Modules\Controller\Frontend
         try {
             $this->usersValidator->validateRegistration($formData);
 
-            $systemSettings = $this->systemConfig->getSettings();
-            $seoSettings = $this->seoConfig->getSettings();
+            $systemSettings = $this->config->getSettings('system');
+            $seoSettings = $this->config->getSettings('seo');
 
             // E-Mail mit den Accountdaten zusenden
             $host = htmlentities($_SERVER['HTTP_HOST']);
@@ -302,7 +288,7 @@ class Index extends Core\Modules\Controller\Frontend
             ];
 
             $lastId = $this->usersModel->insert($insertValues);
-            $bool2 = $this->permissionsModel->insert(['user_id' => $lastId, 'role_id' => 2], Permissions\Model::TABLE_NAME_USER_ROLES);
+            $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
             $this->secureHelper->unsetFormToken($this->request->query);
 

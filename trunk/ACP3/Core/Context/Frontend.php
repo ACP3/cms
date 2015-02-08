@@ -42,7 +42,7 @@ class Frontend extends Core\Context
             $context->getRequest(),
             $context->getRouter(),
             $context->getView(),
-            $context->getSystemConfig()
+            $context->getConfig()
         );
 
         $this->assets = $assets;

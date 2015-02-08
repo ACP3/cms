@@ -29,7 +29,7 @@ class SEO
     /**
      * @var \ACP3\Core\Config
      */
-    protected $seoConfig;
+    protected $config;
     /**
      * @var \ACP3\Modules\Seo\Cache
      */
@@ -40,23 +40,17 @@ class SEO
     protected $seoModel;
 
     /**
-     * Gibt die nächste Seite an
-     *
      * @var string
      */
     protected $nextPage = '';
     /**
-     * Gibt die vorherige Seite an
-     *
      * @var string
      */
     protected $previousPage = '';
     /**
-     * Kanonische URL
-     *
      * @var string
      */
-    protected $canonical = '';
+    protected $canonicalUrl = '';
     /**
      * @var null|array
      */
@@ -72,7 +66,7 @@ class SEO
      * @param \ACP3\Core\Router\Aliases $aliases
      * @param \ACP3\Core\Helpers\Forms  $formsHelper
      * @param \ACP3\Modules\Seo\Cache   $seoCache
-     * @param \ACP3\Core\Config         $seoConfig
+     * @param \ACP3\Core\Config         $config
      * @param \ACP3\Modules\Seo\Model   $seoModel
      */
     public function __construct(
@@ -81,7 +75,7 @@ class SEO
         Aliases $aliases,
         Forms $formsHelper,
         \ACP3\Modules\Seo\Cache $seoCache,
-        Config $seoConfig,
+        Config $config,
         \ACP3\Modules\Seo\Model $seoModel)
     {
         $this->lang = $lang;
@@ -89,12 +83,12 @@ class SEO
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
         $this->seoCache = $seoCache;
-        $this->seoConfig = $seoConfig;
+        $this->config = $config;
         $this->seoModel = $seoModel;
     }
 
     /**
-     * Gibt die für die jeweilige Seite gesetzten Metatags zurück
+     * Returns the meta tags of the current page
      *
      * @return string
      */
@@ -106,12 +100,12 @@ class SEO
             'robots' => $this->request->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
-            'canonical' => $this->canonical,
+            'canonical' => $this->canonicalUrl,
         ];
     }
 
     /**
-     * Gibt die Beschreibung der aktuell angezeigten Seite zurück
+     * Returns the SEO description of the current page
      *
      * @return string
      */
@@ -125,7 +119,7 @@ class SEO
             $description = $this->getDescription($this->request->mod);
         }
         if (empty($description)) {
-            $description = $this->seoConfig->getSettings()['meta_description'];
+            $description = $this->config->getSettings('seo')['meta_description'];
         }
 
         $postfix = '';
@@ -137,7 +131,7 @@ class SEO
     }
 
     /**
-     * Gibt die Beschreibung der Seite zurück
+     * Returns the SEO description of the given page
      *
      * @param string $path
      *
@@ -149,8 +143,7 @@ class SEO
     }
 
     /**
-     * Gibt die Keywords der aktuell angezeigten Seite oder der
-     * Elternseite zurück
+     * Returns the SEO keywords of the current page
      *
      * @return string
      */
@@ -164,11 +157,11 @@ class SEO
             $keywords = $this->getKeywords($this->request->mod);
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->seoConfig->getSettings()['meta_keywords']);
+        return strtolower(!empty($keywords) ? $keywords : $this->config->getSettings('seo')['meta_keywords']);
     }
 
     /**
-     * Gibt die Schlüsselwörter der Seite zurück
+     * Returns the SEO keywords of the given page
      *
      * @param string $path
      *
@@ -199,8 +192,7 @@ class SEO
     }
 
     /**
-     * Gibt den Robots-Metatag der aktuell angezeigten Seite oder der
-     * Elternseite zurück
+     * Returns the SEO robots setting for the current page
      *
      * @return string
      */
@@ -218,7 +210,7 @@ class SEO
     }
 
     /**
-     * Gibt die jeweilige Einstellung für den Robots-Metatag zurück
+     * Returns the SEO robots settings for the given page
      *
      * @param string $path
      *
@@ -234,12 +226,12 @@ class SEO
         ];
 
         if ($path === '') {
-            return strtr($this->seoConfig->getSettings()['robots'], $replace);
+            return strtr($this->config->getSettings('seo')['robots'], $replace);
         } else {
             $robot = $this->getSeoInformation($path, 'robots', 0);
 
             if ($robot == 0) {
-                $robot = $this->seoConfig->getSettings()['robots'];
+                $robot = $this->config->getSettings('seo')['robots'];
             }
 
             return strtr($robot, $replace);
@@ -247,6 +239,8 @@ class SEO
     }
 
     /**
+     * Sets a SEO description postfix for te current page
+     *
      * @param $string
      *
      * @return $this
@@ -259,7 +253,7 @@ class SEO
     }
 
     /**
-     * Setzt die kanonische URI
+     * Sets the canonical URL for the current page
      *
      * @param $path
      *
@@ -267,13 +261,13 @@ class SEO
      */
     public function setCanonicalUri($path)
     {
-        $this->canonical = $path;
+        $this->canonicalUrl = $path;
 
         return $this;
     }
 
     /**
-     * Setzt die nächste Seite
+     * Sets the next page (useful for pagination)
      *
      * @param $path
      *
@@ -287,7 +281,7 @@ class SEO
     }
 
     /**
-     * Setzt die vorherige Seite
+     * Sets the previous page (useful for pagination)
      *
      * @param $path
      *
@@ -301,7 +295,7 @@ class SEO
     }
 
     /**
-     * Gibt die Formularfelder für die Suchmaschinenoptimierung aus
+     * Returns the SEO form fields
      *
      * @param string $path
      *
@@ -338,7 +332,7 @@ class SEO
     }
 
     /**
-     * Löscht einen URI-Alias
+     * Deletes the given URL alias
      *
      * @param string $path
      *
@@ -353,7 +347,7 @@ class SEO
     }
 
     /**
-     * Trägt einen URI-Alias in die Datenbank ein bzw. aktualisiert den Eintrag
+     * Inserts/Updates a given URL alias
      *
      * @param string $path
      * @param string $alias

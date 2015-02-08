@@ -22,15 +22,25 @@ class Model extends Core\Model
 
     /**
      * @param $moduleName
+     *
      * @return mixed
      */
     public function getModuleId($moduleName)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$moduleName]);
+        return $this->db->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllModuleSettings()
+    {
+        return $this->db->fetchAll('SELECT m.name AS module_name, s.name, s.value FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SETTINGS . ' AS s JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS m ON(m.id = s.module_id) ORDER BY s.module_id');
     }
 
     /**
      * @param $moduleName
+     *
      * @return array
      */
     public function getSettingsByModuleName($moduleName)
@@ -40,33 +50,37 @@ class Model extends Core\Model
 
     /**
      * @param $moduleName
+     *
      * @return mixed
      */
     public function getModuleSchemaVersion($moduleName)
     {
-        return $this->db->fetchColumn('SELECT version FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$moduleName]);
+        return $this->db->fetchColumn('SELECT version FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]);
     }
 
     /**
      * @param $moduleName
+     *
      * @return bool
      */
     public function moduleExists($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$moduleName]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]) > 0;
     }
 
     /**
      * @param $moduleName
+     *
      * @return array
      */
     public function getInfoByModuleName($moduleName)
     {
-        return $this->db->fetchAssoc('SELECT id, version, active FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$moduleName]);
+        return $this->db->fetchAssoc('SELECT id, version, active FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]);
     }
 
     /**
      * @param $moduleId
+     *
      * @return mixed
      */
     public function getModuleNameById($moduleId)

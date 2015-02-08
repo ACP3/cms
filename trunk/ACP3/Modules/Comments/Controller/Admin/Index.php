@@ -24,10 +24,6 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $commentsValidator;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $commentsConfig;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -37,7 +33,6 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Core\Date                  $date
      * @param \ACP3\Modules\Comments\Model     $commentsModel
      * @param \ACP3\Modules\Comments\Validator $commentsValidator
-     * @param \ACP3\Core\Config                $commentsConfig
      * @param \ACP3\Core\Helpers\Secure        $secureHelper
      */
     public function __construct(
@@ -45,7 +40,6 @@ class Index extends Core\Modules\Controller\Admin
         Core\Date $date,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
-        Core\Config $commentsConfig,
         Core\Helpers\Secure $secureHelper)
     {
         parent::__construct($context);
@@ -53,7 +47,6 @@ class Index extends Core\Modules\Controller\Admin
         $this->date = $date;
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
-        $this->commentsConfig = $commentsConfig;
         $this->secureHelper = $secureHelper;
     }
 
@@ -103,7 +96,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $settings = $this->commentsConfig->getSettings();
+        $settings = $this->config->getSettings('comments');
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
@@ -128,7 +121,7 @@ class Index extends Core\Modules\Controller\Admin
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
                 'emoticons' => $formData['emoticons'],
             ];
-            $bool = $this->commentsConfig->setSettings($data);
+            $bool = $this->config->setSettings($data, 'comments');
 
             $this->secureHelper->unsetFormToken($this->request->query);
 
