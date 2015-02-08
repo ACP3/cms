@@ -207,7 +207,6 @@ class ACL
             return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
         }
 
-        exit;
         return false;
     }
 
