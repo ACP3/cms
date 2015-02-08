@@ -25,7 +25,7 @@ class Request extends \StdClass
     protected $seoModel;
 
     /**
-     * Die komplette übergebene URL
+     * Holds the trimmed query
      *
      * @var string
      */
@@ -35,7 +35,7 @@ class Request extends \StdClass
      */
     public $originalQuery = '';
     /**
-     * Array, welches die URI Parameter enthält
+     * Holds all given query parameters
      *
      * @var array
      * @access protected
@@ -59,8 +59,6 @@ class Request extends \StdClass
     protected $hostname = '';
 
     /**
-     * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
-     *
      * @param \ACP3\Core\Modules      $modules
      * @param \ACP3\Core\Config       $config
      * @param \ACP3\Modules\Seo\Model $seoModel
@@ -88,6 +86,8 @@ class Request extends \StdClass
     }
 
     /**
+     * Returns the used protocol of the current request
+     *
      * @return string
      */
     public function getProtocol()
@@ -96,6 +96,8 @@ class Request extends \StdClass
     }
 
     /**
+     * Returns the hostname of the current request
+     *
      * @return string
      */
     public function getHostname()
@@ -105,7 +107,7 @@ class Request extends \StdClass
 
 
     /**
-     * Grundlegende Verarbeitung der URI-Query
+     * Processes the URL of the current request
      */
     public function processQuery()
     {
@@ -114,7 +116,7 @@ class Request extends \StdClass
 
         $this->query = $this->originalQuery;
 
-        // Definieren, dass man sich im Administrationsbereich befindet
+        // It's an request for the admin panel page
         if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
             $this->area = 'admin';
             // strip "acp/"
@@ -143,6 +145,7 @@ class Request extends \StdClass
     protected function _checkForUriAlias()
     {
         $probableQuery = $this->query;
+
         // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
         if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
             $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
