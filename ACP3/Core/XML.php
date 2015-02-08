@@ -4,25 +4,26 @@ namespace ACP3\Core;
 use ACP3\Application;
 
 /**
- * Parst XML Dateien, z.B. die diversen info.xml bzw. module.xml Dateien
+ * Parses XML files
+ *
  * @package ACP3\Core
  */
 class XML
 {
     /**
-     * Cache für bereits ausgelesene XML-Dateien
+     * Cache for already parsed XML files
      *
      * @var array
      */
     protected $info = [];
 
     /**
-     * Parst die angeforderte XML Datei
+     * Parses the given XML file and returns it as an array
      *
      * @param string $path
      * @param string $xpath
      *
-     * @return mixed
+     * @return array
      */
     public function parseXmlFile($path, $xpath)
     {

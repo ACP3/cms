@@ -59,7 +59,7 @@ class View extends ContainerAware
     }
 
     /**
-     * Fetches a templates and returns its contents
+     * Fetches a template and returns its contents
      *
      * @param string $template
      * @param mixed $cacheId
@@ -76,7 +76,7 @@ class View extends ContainerAware
     }
 
     /**
-     * Checks, whether a templates exists or not
+     * Checks, whether a template exists or not
      *
      * @param string $template
      *

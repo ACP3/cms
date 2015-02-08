@@ -42,7 +42,7 @@ class Router
     }
 
     /**
-     * Generiert die ACP3 internen Hyperlinks
+     * Generates the internal ACP3 hyperlinks
      *
      * @param $path
      * @param bool $absolute

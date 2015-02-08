@@ -3,6 +3,7 @@ namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Router\Aliases;
+use ACP3\Modules;
 
 /**
  * Class SEO
@@ -31,32 +32,26 @@ class SEO
      */
     protected $config;
     /**
-     * @var \ACP3\Modules\Seo\Cache
+     * @var Modules\Seo\Cache
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Modules\Seo\Model
+     * @var Modules\Seo\Model
      */
     protected $seoModel;
 
     /**
-     * Gibt die nächste Seite an
-     *
      * @var string
      */
     protected $nextPage = '';
     /**
-     * Gibt die vorherige Seite an
-     *
      * @var string
      */
     protected $previousPage = '';
     /**
-     * Kanonische URL
-     *
      * @var string
      */
-    protected $canonical = '';
+    protected $canonicalUrl = '';
     /**
      * @var null|array
      */
@@ -80,9 +75,9 @@ class SEO
         Request $request,
         Aliases $aliases,
         Forms $formsHelper,
-        \ACP3\Modules\Seo\Cache $seoCache,
+        Modules\Seo\Cache $seoCache,
         Config $config,
-        \ACP3\Modules\Seo\Model $seoModel)
+        Modules\Seo\Model $seoModel)
     {
         $this->lang = $lang;
         $this->request = $request;
@@ -94,7 +89,7 @@ class SEO
     }
 
     /**
-     * Gibt die für die jeweilige Seite gesetzten Metatags zurück
+     * Returns the meta tags of the current page
      *
      * @return string
      */
@@ -106,12 +101,12 @@ class SEO
             'robots' => $this->request->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
-            'canonical' => $this->canonical,
+            'canonical' => $this->canonicalUrl,
         ];
     }
 
     /**
-     * Gibt die Beschreibung der aktuell angezeigten Seite zurück
+     * Returns the SEO description of the current page
      *
      * @return string
      */
@@ -137,7 +132,7 @@ class SEO
     }
 
     /**
-     * Gibt die Beschreibung der Seite zurück
+     * Returns the SEO description of the given page
      *
      * @param string $path
      *
@@ -149,8 +144,7 @@ class SEO
     }
 
     /**
-     * Gibt die Keywords der aktuell angezeigten Seite oder der
-     * Elternseite zurück
+     * Returns the SEO keywords of the current page
      *
      * @return string
      */
@@ -168,7 +162,7 @@ class SEO
     }
 
     /**
-     * Gibt die Schlüsselwörter der Seite zurück
+     * Returns the SEO keywords of the given page
      *
      * @param string $path
      *
@@ -199,8 +193,7 @@ class SEO
     }
 
     /**
-     * Gibt den Robots-Metatag der aktuell angezeigten Seite oder der
-     * Elternseite zurück
+     * Returns the SEO robots setting for the current page
      *
      * @return string
      */
@@ -218,7 +211,7 @@ class SEO
     }
 
     /**
-     * Gibt die jeweilige Einstellung für den Robots-Metatag zurück
+     * Returns the SEO robots settings for the given page
      *
      * @param string $path
      *
@@ -247,6 +240,8 @@ class SEO
     }
 
     /**
+     * Sets a SEO description postfix for te current page
+     *
      * @param $string
      *
      * @return $this
@@ -259,7 +254,7 @@ class SEO
     }
 
     /**
-     * Setzt die kanonische URI
+     * Sets the canonical URL for the current page
      *
      * @param $path
      *
@@ -267,13 +262,13 @@ class SEO
      */
     public function setCanonicalUri($path)
     {
-        $this->canonical = $path;
+        $this->canonicalUrl = $path;
 
         return $this;
     }
 
     /**
-     * Setzt die nächste Seite
+     * Sets the next page (useful for pagination)
      *
      * @param $path
      *
@@ -287,7 +282,7 @@ class SEO
     }
 
     /**
-     * Setzt die vorherige Seite
+     * Sets the previous page (useful for pagination)
      *
      * @param $path
      *
@@ -301,7 +296,7 @@ class SEO
     }
 
     /**
-     * Gibt die Formularfelder für die Suchmaschinenoptimierung aus
+     * Returns the SEO form fields
      *
      * @param string $path
      *
@@ -338,7 +333,7 @@ class SEO
     }
 
     /**
-     * Löscht einen URI-Alias
+     * Deletes the given URL alias
      *
      * @param string $path
      *
@@ -353,7 +348,7 @@ class SEO
     }
 
     /**
-     * Trägt einen URI-Alias in die Datenbank ein bzw. aktualisiert den Eintrag
+     * Inserts/Updates a given URL alias
      *
      * @param string $path
      * @param string $alias
