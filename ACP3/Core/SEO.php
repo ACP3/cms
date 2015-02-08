@@ -3,7 +3,6 @@ namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Router\Aliases;
-use ACP3\Modules;
 
 /**
  * Class SEO
@@ -32,11 +31,11 @@ class SEO
      */
     protected $config;
     /**
-     * @var Modules\Seo\Cache
+     * @var \ACP3\Modules\Seo\Cache
      */
     protected $seoCache;
     /**
-     * @var Modules\Seo\Model
+     * @var \ACP3\Modules\Seo\Model
      */
     protected $seoModel;
 
@@ -75,9 +74,9 @@ class SEO
         Request $request,
         Aliases $aliases,
         Forms $formsHelper,
-        Modules\Seo\Cache $seoCache,
+        \ACP3\Modules\Seo\Cache $seoCache,
         Config $config,
-        Modules\Seo\Model $seoModel)
+        \ACP3\Modules\Seo\Model $seoModel)
     {
         $this->lang = $lang;
         $this->request = $request;
