@@ -104,4 +104,27 @@ class Model extends Core\Model
         $period = ' AND ' . $this->_getPeriod();
         return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY start ' . $sort . ', end ' . $sort . ', id ' . $sort, ['time' => $time]);
     }
+
+    /**
+     * @param $categoryId
+     * @param $time
+     *
+     * @return mixed
+     */
+    public function getLatestByCategoryId($categoryId, $time)
+    {
+        $period = ' AND ' . $this->_getPeriod();
+
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE category_id = :category_id ' . $period . ' ORDER BY start DESC LIMIT 1', ['category_id' => $categoryId, 'time' => $time]);
+    }
+
+    /**
+     * @param $time
+     *
+     * @return mixed
+     */
+    public function getLatest($time)
+    {
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE ' . $this->_getPeriod() . ' ORDER BY start DESC LIMIT 1', ['time' => $time]);
+    }
 }
