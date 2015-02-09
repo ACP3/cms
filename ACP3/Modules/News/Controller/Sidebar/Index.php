@@ -45,7 +45,7 @@ class Index extends Core\Modules\Controller
         $settings = $this->config->getSettings('news');
 
         if (!empty($categoryId)) {
-            $news = $this->newsModel->getAllByCategoryId((int) $categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
+            $news = $this->newsModel->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
         } else {
             $news = $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
@@ -53,5 +53,24 @@ class Index extends Core\Modules\Controller
         $this->view->assign('dateformat', $settings['dateformat']);
 
         $this->setTemplate($template !== '' ? $template : 'News/Sidebar/index.index.tpl');
+    }
+
+    /**
+     * @param int $categoryId
+     */
+    public function actionLatest($categoryId = 0)
+    {
+        $settings = $this->config->getSettings('news');
+
+        if (!empty($categoryId)) {
+            $news = $this->newsModel->getLatestByCategoryId((int)$categoryId, $this->date->getCurrentDateTime());
+        } else {
+            $news = $this->newsModel->getLatest($this->date->getCurrentDateTime());
+        }
+
+        $this->view->assign('sidebar_news_latest', $news);
+        $this->view->assign('dateformat', $settings['dateformat']);
+
+        $this->setTemplate('News/Sidebar/index.latest.tpl');
     }
 }
