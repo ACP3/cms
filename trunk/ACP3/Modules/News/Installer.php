@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'news';
-    const SCHEMA_VERSION = 34;
+    const SCHEMA_VERSION = 35;
 
     /**
      * @inheritdoc
@@ -83,6 +83,9 @@ class Installer extends Modules\AbstractInstaller
             34 => [
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "news/list/", "news/index/index/") WHERE `uri` LIKE "news/list/%";' : '',
                 $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "news/details/", "news/index/details/") WHERE `uri` LIKE "news/details/%";' : '',
+            ],
+            35 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar', 'index', 'latest', '', 1);",
             ]
         ];
     }
