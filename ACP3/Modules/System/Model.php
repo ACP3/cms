@@ -1,11 +1,11 @@
 <?php
-namespace ACP3\Modules\System;
+namespace ACP3\Modules\ACP3\System;
 
 use ACP3\Core;
 
 /**
  * Class Model
- * @package ACP3\Modules\System
+ * @package ACP3\Modules\ACP3\System
  */
 class Model extends Core\Model
 {
@@ -27,7 +27,7 @@ class Model extends Core\Model
      */
     public function getModuleId($moduleName)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]);
+        return $this->db->fetchColumn('SELECT `id` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]);
     }
 
     /**
@@ -55,7 +55,7 @@ class Model extends Core\Model
      */
     public function getModuleSchemaVersion($moduleName)
     {
-        return $this->db->fetchColumn('SELECT version FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]);
+        return $this->db->fetchColumn('SELECT `version` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]);
     }
 
     /**
@@ -65,7 +65,7 @@ class Model extends Core\Model
      */
     public function moduleExists($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]) > 0;
     }
 
     /**
@@ -75,7 +75,7 @@ class Model extends Core\Model
      */
     public function getInfoByModuleName($moduleName)
     {
-        return $this->db->fetchAssoc('SELECT id, version, active FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$moduleName]);
+        return $this->db->fetchAssoc('SELECT `id`, `version`, `active` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]);
     }
 
     /**
@@ -85,6 +85,6 @@ class Model extends Core\Model
      */
     public function getModuleNameById($moduleId)
     {
-        return $this->db->fetchColumn('SELECT name FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$moduleId]);
+        return $this->db->fetchColumn('SELECT `name` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `id` = ?', [$moduleId]);
     }
 }
