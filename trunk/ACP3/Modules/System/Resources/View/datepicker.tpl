@@ -5,7 +5,10 @@
     {if $datepicker.input_only}
         <div class="row" data-datepicker-range='{$datepicker.range_json}'>
             <div class="col-sm-6">
-                <div class="input-group date" id="{$datepicker.id_start}">
+                <div class="input-group date"
+                     id="{$datepicker.id_start}"
+                     data-date-format="{$datepicker.params.format}"
+                     data-date-picktime="{$datepicker.with_time}">
                     <input class="form-control"
                            type="text"
                            id="{$datepicker.id_start}-input"
@@ -13,16 +16,17 @@
                            value="{$datepicker.value_start}"
                            maxlength="{$datepicker.length}"
                            title="{lang t="system|start_date"}"
-                           required
-                           data-date-format="{$datepicker.params.format}"
-                           data-date-picktime="{$datepicker.with_time}">
+                           required>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="input-group date" id="{$datepicker.id_end}">
+                <div class="input-group date"
+                     id="{$datepicker.id_end}"
+                     data-date-format="{$datepicker.params.format}"
+                     data-date-picktime="{$datepicker.with_time}">
                     <input class="form-control"
                            type="text"
                            id="{$datepicker.id_end}-input"
@@ -30,8 +34,7 @@
                            value="{$datepicker.value_end}"
                            maxlength="{$datepicker.length}"
                            title="{lang t="system|end_date"}"
-                           required data-date-format="{$datepicker.params.format}"
-                           data-date-picktime="{$datepicker.with_time}">
+                           required>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -45,7 +48,10 @@
             <div class="col-sm-10">
                 <div class="row" data-datepicker-range='{$datepicker.range_json}'>
                     <div class="col-sm-6">
-                        <div class="input-group date" id="{$datepicker.id_start}">
+                        <div class="input-group date"
+                             id="{$datepicker.id_start}"
+                             data-date-format="{$datepicker.params.format}"
+                             data-date-picktime="{$datepicker.with_time}">
                             <input class="form-control"
                                    type="text"
                                    id="{$datepicker.id_start}-input"
@@ -53,16 +59,17 @@
                                    value="{$datepicker.value_start}"
                                    maxlength="{$datepicker.length}"
                                    title="{lang t="system|start_date"}"
-                                   required
-                                   data-date-format="{$datepicker.params.format}"
-                                   data-date-picktime="{$datepicker.with_time}">
+                                   required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="input-group date" id="{$datepicker.id_end}">
+                        <div class="input-group date"
+                             id="{$datepicker.id_end}"
+                             data-date-format="{$datepicker.params.format}"
+                             data-date-picktime="{$datepicker.with_time}">
                             <input class="form-control"
                                    type="text"
                                    id="{$datepicker.id_end}-input"
@@ -70,8 +77,7 @@
                                    value="{$datepicker.value_end}"
                                    maxlength="{$datepicker.length}"
                                    title="{lang t="system|end_date"}"
-                                   required data-date-format="{$datepicker.params.format}"
-                                   data-date-picktime="{$datepicker.with_time}">
+                                   required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -86,15 +92,15 @@
     {if $datepicker.input_only}
         <div class="input-group date"
              id="{$datepicker.id}"
-             data-datepicker="#{$datepicker.id}">
+             data-datepicker="#{$datepicker.id}"
+             data-date-format="{$datepicker.params.format}"
+             data-date-picktime="{$datepicker.with_time}">
             <input class="form-control"
                    type="text"
                    name="{$datepicker.name}"
                    id="{$datepicker.id}-input"
                    value="{$datepicker.value}"
-                   maxlength="{$datepicker.length}"
-                   data-date-format="{$datepicker.params.format}"
-                   data-date-picktime="{$datepicker.with_time}">
+                   maxlength="{$datepicker.length}">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -105,15 +111,15 @@
             <div class="col-sm-10">
                 <div class="input-group date"
                      id="{$datepicker.id}"
-                     data-datepicker="#{$datepicker.id}">
+                     data-datepicker="#{$datepicker.id}"
+                     data-date-format="{$datepicker.params.format}"
+                     data-date-picktime="{$datepicker.with_time}">
                     <input class="form-control"
                            type="text"
                            name="{$datepicker.name}"
                            id="{$datepicker.id}-input"
                            value="{$datepicker.value}"
-                           maxlength="{$datepicker.length}"
-                           data-date-format="{$datepicker.params.format}"
-                           data-date-picktime="{$datepicker.with_time}">
+                           maxlength="{$datepicker.length}">
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
