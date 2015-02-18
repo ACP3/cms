@@ -1,11 +1,11 @@
 <?php
-namespace ACP3\Modules\ACP3\System;
+namespace ACP3\Modules\System;
 
 use ACP3\Core;
 
 /**
  * Class Model
- * @package ACP3\Modules\ACP3\System
+ * @package ACP3\Modules\System
  */
 class Model extends Core\Model
 {
@@ -17,7 +17,7 @@ class Model extends Core\Model
      */
     public function getSchemaTables()
     {
-        return $this->db->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', ['BASE TABLE', $this->db->getName()]);
+        return $this->db->fetchAll('SELECT `TABLE_NAME` FROM information_schema.TABLES WHERE `TABLE_TYPE` = ? AND `TABLE_SCHEMA` = ?', ['BASE TABLE', $this->db->getName()]);
     }
 
     /**
