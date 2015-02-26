@@ -5,23 +5,24 @@
  */
 jQuery.fn.formSubmit = function (customFormData) {
     /**
-     * Display a loading layer
+     * Displays a loading layer
      * @private
      */
     function _showLoadingLayer($form) {
-        var $body = $('body'),
-            loadingText = $form.data('ajax-form-loading-text') || '',
-            $loadingLayer = $('#loading-layer'),
-            documentHeight = $body.outerHeight(true);
+        var $loadingLayer = $('#loading-layer');
 
         if ($loadingLayer.length === 0) {
-            $('<div id="loading-layer" style="height: ' + documentHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>').appendTo($body);
+            var $body = $('body'),
+                loadingText = $form.data('ajax-form-loading-text') || '',
+                windowHeight = $(window).outerHeight(true),
+                html = '<div id="loading-layer" style="height: ' + windowHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
 
-            $loadingLayer = $('#loading-layer');
+            $(html).appendTo($body);
+
+            $loadingLayer = $($loadingLayer.selector);
 
             $loadingLayer.show();
-            var windowHeight = $(window).outerHeight(true),
-                $heading = $loadingLayer.find('h1'),
+            var $heading = $loadingLayer.find('h1'),
                 headingHeight = $heading.height();
 
             $heading.css({
