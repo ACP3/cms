@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'contact';
-    const SCHEMA_VERSION = 35;
+    const SCHEMA_VERSION = 36;
 
     /**
      * @var array
@@ -51,6 +51,7 @@ class Installer extends Modules\AbstractInstaller
             'fax' => '',
             'mail' => '',
             'telephone' => '',
+            'vat_id' => ''
         ];
     }
 
@@ -75,6 +76,9 @@ class Installer extends Modules\AbstractInstaller
             ],
             35 => [
                 'UPDATE `{pre}seo` SET `uri` = "contact/index/index/" WHERE `uri` = "contact/index/list/";',
+            ],
+            36 => [
+                'INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ("", ' . $this->getModuleId(). ', "vat_id", "");'
             ]
         ];
     }

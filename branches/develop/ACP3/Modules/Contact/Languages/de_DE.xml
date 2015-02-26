@@ -10,7 +10,7 @@
         <item key="contact">Kontakt</item>
         <item key="contact_body">{name} ({mail}) hat folgende Nachricht hinterlassen:
 
-            {message}
+{message}
         </item>
         <item key="contact_information">Kontakt Daten</item>
         <item key="contact_subject">Kontaktformular "%s".</item>
@@ -25,9 +25,10 @@
         <item key="send_mail_success">Die E-Mail wurde erfolgreich versendet.</item>
         <item key="sender_body">Sie haben folgende Nachricht auf der Website "%1$s" hinterlassen:
 
-            %2$s
+%2$s
         </item>
         <item key="sender_subject">Ihre Nachricht an "%s".</item>
         <item key="telephone">Telefonnummer</item>
+        <item key="vat_id">Umsatzsteuer-Identifikationsnummer</item>
     </keys>
 </language>

@@ -63,6 +63,7 @@ class Index extends Core\Modules\Controller\Admin
                 'telephone' => Core\Functions::strEncode($formData['telephone']),
                 'fax' => Core\Functions::strEncode($formData['fax']),
                 'disclaimer' => Core\Functions::strEncode($formData['disclaimer'], true),
+                'vat_id' => Core\Functions::strEncode($formData['vat_id'], true),
             ];
 
             $bool = $this->config->setSettings($data, 'contact');

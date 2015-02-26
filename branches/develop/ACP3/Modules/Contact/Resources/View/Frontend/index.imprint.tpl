@@ -18,6 +18,10 @@
             <dt>{lang t="contact|fax"}</dt>
             <dd>{$imprint.fax}</dd>
         {/if}
+        {if !empty($imprint.vat_id)}
+            <dt>{lang t="contact|vat_id"}</dt>
+            <dd>{$imprint.vat_id}</dd>
+        {/if}
         {if !empty($imprint.disclaimer)}
             <dt>{lang t="contact|disclaimer"}</dt>
             <dd>{$imprint.disclaimer|rewrite_uri}</dd>

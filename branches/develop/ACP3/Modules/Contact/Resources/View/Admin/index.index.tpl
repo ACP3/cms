@@ -28,7 +28,15 @@
             <label for="fax" class="col-sm-2 control-label">{lang t="contact|fax"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="tel" name="fax" id="fax" value="{$form.fax}" maxlength="120"></div>
+                <input class="form-control" type="tel" name="fax" id="fax" value="{$form.fax}" maxlength="120">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="vat-id" class="col-sm-2 control-label">{lang t="contact|vat_id"}</label>
+
+            <div class="col-sm-10">
+                <input class="form-control" type="text" name="vat_id" id="vat-id" value="{$form.vat_id}" maxlength="120">
+            </div>
         </div>
         <div class="form-group">
             <label for="disclaimer" class="col-sm-2 control-label">{lang t="contact|disclaimer"}</label>

@@ -10,7 +10,7 @@
         <item key="contact">Contact</item>
         <item key="contact_body">{name} ({mail}) has left the following message:
 
-            {message}
+{message}
         </item>
         <item key="contact_information">Contact statements</item>
         <item key="contact_subject">Contact form on "%s".</item>
@@ -25,9 +25,10 @@
         <item key="send_mail_success">The E-mail has been successfully sent.</item>
         <item key="sender_body">You have left the following message on the site "%1$s":
 
-            %2$s
+%2$s
         </item>
         <item key="sender_subject">Your message on "%s".</item>
         <item key="telephone">Telephone number</item>
+        <item key="vat_id">Value Added Tax Identification Number</item>
     </keys>
 </language>
