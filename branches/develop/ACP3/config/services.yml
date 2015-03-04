@@ -36,7 +36,7 @@ services:
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@core.lang', '@core.request', '@core.router', '@core.config']
+    arguments: ['@service_container', '@core.lang', '@core.request', '@core.router', '@core.config']
     calls:
       - ['setMenusModel', ['@?menus.model']]
 
