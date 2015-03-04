@@ -1,0 +1,34 @@
+services:
+  files.controller.admin.index:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@files.model', '@files.cache', '@files.validator', '@categories.helpers']
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.controller.frontend.index:
+    class: ACP3\Modules\ACP3\Files\Controller\Index
+    arguments: ['@core.context.frontend', '@core.date', '@files.model', '@files.cache', '@categories.model']
+
+  files.controller.sidebar.index:
+    class: ACP3\Modules\ACP3\Files\Controller\Sidebar\Index
+    arguments: ['@core.context', '@core.date', '@files.model']
+
+  files.cache:
+    class: ACP3\Modules\ACP3\Files\Cache
+    arguments: ['@files.cache.core', '@files.model']
+
+  files.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'files']
+
+  files.model:
+    class: ACP3\Modules\ACP3\Files\Model
+    arguments: ['@core.db']
+
+  files.validator:
+    class: ACP3\Modules\ACP3\Files\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@categories.helpers']
+
+  files.installer:
+    class: ACP3\Modules\ACP3\Files\Installer
+    parent: core.modules.abstractInstaller

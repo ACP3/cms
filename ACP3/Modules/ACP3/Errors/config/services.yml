@@ -1,0 +1,8 @@
+services:
+  errors.controller.frontend.index:
+    class: ACP3\Modules\ACP3\Errors\Controller\Index
+    parent: core.modules.controller.frontend
+
+  errors.installer:
+    class: ACP3\Modules\ACP3\Errors\Installer
+    parent: core.modules.abstractInstaller

@@ -1,0 +1,28 @@
+services:
+  search.controller.frontend.index:
+    class: ACP3\Modules\ACP3\Search\Controller\Index
+    arguments: ['@core.context.frontend', '@search.helpers', '@search.validator', '@search.extensions']
+
+  search.controller.sidebar.index:
+    class: ACP3\Modules\ACP3\Search\Controller\Sidebar\Index
+    arguments: ['@core.context', '@search.helpers']
+
+  search.helpers:
+    class: ACP3\Modules\ACP3\Search\Helpers
+    arguments: ['@core.acl', '@core.modules', '@core.helpers.forms', '@search.extensions']
+
+  search.validator:
+    class: ACP3\Modules\ACP3\Search\Validator
+    parent: core.validator.abstract
+
+  search.extensions:
+    class: ACP3\Modules\ACP3\Search\Extensions
+    arguments: ['@core.date', '@core.lang', '@core.router']
+    calls:
+      - ['setArticlesModel', ['@?articles.model']]
+      - ['setFilesModel', ['@?files.model']]
+      - ['setNewsModel', ['@?news.model']]
+
+  search.installer:
+    class: ACP3\Modules\ACP3\Search\Installer
+    parent: core.modules.abstractInstaller

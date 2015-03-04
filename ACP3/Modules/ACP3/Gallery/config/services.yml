@@ -1,0 +1,40 @@
+services:
+  gallery.controller.admin.index:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@gallery.cache', '@gallery.helpers', '@gallery.model', '@gallery.validator']
+
+  gallery.controller.admin.pictures:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.sort', '@gallery.helpers', '@gallery.model', '@gallery.cache', '@gallery.validator']
+
+  gallery.controller.frontend.index:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Index
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@gallery.model', '@gallery.cache']
+
+  gallery.controller.sidebar.index:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Sidebar\Index
+    arguments: ['@core.context', '@core.date', '@gallery.model']
+
+  gallery.cache:
+    class: ACP3\Modules\ACP3\Gallery\Cache
+    arguments: ['@gallery.cache.core', '@gallery.model', '@core.config']
+
+  gallery.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'gallery']
+
+  gallery.model:
+    class: ACP3\Modules\ACP3\Gallery\Model
+    arguments: ['@core.db']
+
+  gallery.helpers:
+    class: ACP3\Modules\ACP3\Gallery\Helpers
+    arguments: ['@core.router.aliases', '@core.seo', '@gallery.model']
+
+  gallery.validator:
+    class: ACP3\Modules\ACP3\Gallery\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.modules']
+
+  gallery.installer:
+    class: ACP3\Modules\ACP3\Gallery\Installer
+    parent: core.modules.abstractInstaller

@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Modules\Menus;
+use ACP3\Modules\ACP3\Menus;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -62,7 +62,7 @@ class Breadcrumb
      */
     protected $seoConfig;
     /**
-     * @var \ACP3\Modules\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model
      */
     protected $menusModel;
 
@@ -89,7 +89,7 @@ class Breadcrumb
     }
 
     /**
-     * @param \ACP3\Modules\Menus\Model $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
      *
      * @return $this
      */

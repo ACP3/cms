@@ -7,12 +7,12 @@
         <title>{$TITLE} | {$PAGE_TITLE}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{$INSTALLER_ROOT_DIR}design/style.css">
-        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/js/libs/jquery.min.js"></script>
-        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/js/libs/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/jquery.min.js"></script>
+        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/bootstrap.min.js"></script>
         <!--[if lt IE 9]>
-        <script src="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/js/libs/html5shiv.js"></script>
+        <script src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/html5shiv.js"></script>
         <![endif]-->
     </head>
 

@@ -75,7 +75,7 @@ class Application
         define('ROOT_DIR_ABSOLUTE', HOST_NAME . ROOT_DIR);
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
-        define('MODULES_DIR', ACP3_DIR . 'Modules/');
+        define('MODULES_DIR', ACP3_DIR . 'Modules/ACP3/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('VENDOR_DIR', ACP3_ROOT_DIR . 'vendor/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
@@ -183,6 +183,8 @@ class Application
 
         // Load system settings
         $this->systemSettings = $this->container->get('core.config')->getSettings('system');
+
+        $this->container->get('core.auth')->authenticate();
 
         $this->_setThemeConstants();
 
