@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Modules\Menus;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Generates the breadcrumb and page title
@@ -41,6 +42,10 @@ class Breadcrumb
     protected $breadcrumbCache = [];
 
     /**
+     * @var \Symfony\Component\DependencyInjection\Container
+     */
+    protected $container;
+    /**
      * @var \ACP3\Core\Lang
      */
     protected $lang;
@@ -62,18 +67,21 @@ class Breadcrumb
     protected $menusModel;
 
     /**
-     * @param \ACP3\Core\Lang    $lang
-     * @param \ACP3\Core\Request $request
-     * @param \ACP3\Core\Router  $router
-     * @param \ACP3\Core\Config  $config
+     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param \ACP3\Core\Lang                                  $lang
+     * @param \ACP3\Core\Request                               $request
+     * @param \ACP3\Core\Router                                $router
+     * @param \ACP3\Core\Config                                $config
      */
     public function __construct(
+        Container $container,
         Lang $lang,
         Request $request,
         Router $router,
         Config $config
     )
     {
+        $this->container = $container;
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
@@ -298,8 +306,9 @@ class Breadcrumb
             if ($module !== 'acp') {
                 $this->append($this->lang->t($module, $module), 'acp/' . $module);
 
+                $serviceId = $module . '.controller.admin.' . $controller;
                 if ($controller !== 'index' &&
-                    method_exists("\\ACP3\\Modules\\" . ucfirst($module) . "\\Controller\\Admin\\" . ucfirst($controller), 'actionIndex')
+                    method_exists($this->container->get($serviceId), 'actionIndex')
                 ) {
                     $this->append($this->lang->t($module, $languageKeyIndex), 'acp/' . $module . '/' . $controller);
                 }
@@ -385,8 +394,10 @@ class Breadcrumb
             if ($module !== 'errors') {
                 $this->append($this->lang->t($module, $module), $module);
             }
+
+            $serviceId = $module . '.controller.frontend.' . $controller;
             if ($controller !== 'index' &&
-                method_exists("\\ACP3\\Modules\\" . ucfirst($module) . "\\Controller\\" . ucfirst($controller), 'actionIndex')
+                method_exists($this->container->get($serviceId), 'actionIndex')
             ) {
                 $this->append($this->lang->t($module, $languageKeyIndex), $module . '/' . $controller);
             }

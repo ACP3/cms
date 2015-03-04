@@ -242,7 +242,7 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
 
         foreach ($controllers as $controller) {
             if (is_file($path . $controller) === true) {
-                $this->_insertAclResources($dir, substr($controller, 0, -4));
+                $this->_insertAclResources($dir, substr($controller, 0, -4), 'frontend');
             } elseif (is_dir($path . $controller) === true) {
                 $subModuleControllers = array_diff(scandir($path . $controller), ['.', '..']);
 
@@ -267,18 +267,14 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
     /**
      * Inserts a new resource into the database
      *
-     * @param        $module
-     * @param        $controller
+     * @param string $module
+     * @param string $controller
      * @param string $area
      */
-    protected function _insertAclResources($module, $controller, $area = '')
+    protected function _insertAclResources($module, $controller, $area)
     {
-        if (!empty($area)) {
-            $className = "\\ACP3\\Modules\\$module\\Controller\\$area\\$controller";
-        } else {
-            $className = "\\ACP3\\Modules\\$module\\Controller\\$controller";
-        }
-        $actions = get_class_methods($className);
+        $controllerService = $module . '.controller.' . $area . '.' . $controller;
+        $actions = get_class_methods($this->container->get($controllerService));
 
         foreach ($actions as $action) {
             // Only add the actual module actions (methods which begin with "action")
@@ -495,6 +491,6 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE `name` = ?', [$moduleName]) == 1;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . System\Model::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]) == 1;
     }
 }
