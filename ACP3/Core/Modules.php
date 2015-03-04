@@ -153,7 +153,7 @@ class Modules
             $moduleInfo = $this->_setModuleInfo($dir);
 
             if (!empty($moduleInfo)) {
-                $infos += $moduleInfo;
+                $infos[strtolower($dir)] = $moduleInfo;
             }
         }
 
@@ -176,20 +176,18 @@ class Modules
                 $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
 
                 return [
-                    $moduleName => [
-                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                        'dir' => $moduleDirectory,
-                        'installed' => (!empty($moduleInfoDb)),
-                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
-                        'author' => $moduleInfo['author'],
-                        'version' => $moduleInfo['version'],
-                        'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
-                        'categories' => isset($moduleInfo['categories']),
-                        'protected' => isset($moduleInfo['protected']),
-                        'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
-                    ]
+                    'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+                    'dir' => $moduleDirectory,
+                    'installed' => (!empty($moduleInfoDb)),
+                    'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
+                    'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                    'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
+                    'author' => $moduleInfo['author'],
+                    'version' => $moduleInfo['version'],
+                    'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
+                    'categories' => isset($moduleInfo['categories']),
+                    'protected' => isset($moduleInfo['protected']),
+                    'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
                 ];
             }
         }
