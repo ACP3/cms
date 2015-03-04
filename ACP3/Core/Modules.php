@@ -44,7 +44,7 @@ class Modules
      * @param \ACP3\Core\Lang                                  $lang
      * @param \ACP3\Core\XML                                   $xml
      * @param \ACP3\Core\Cache                                 $modulesCache
-     * @param \ACP3\Modules\ACP3\System\Model                       $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model                  $systemModel
      */
     public function __construct(
         Container $container,
@@ -150,16 +150,35 @@ class Modules
         $infos = [];
         $dirs = array_diff(scandir(MODULES_DIR), ['.', '..']);
         foreach ($dirs as $dir) {
-            $path = MODULES_DIR . '/' . $dir . '/config/module.xml';
-            if (is_file($path) === true) {
-                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
+            $moduleInfo = $this->_setModuleInfo($dir);
 
-                if (!empty($moduleInfo)) {
-                    $moduleName = strtolower($dir);
-                    $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
-                    $infos[$moduleName] = [
+            if (!empty($moduleInfo)) {
+                $infos += $moduleInfo;
+            }
+        }
+
+        $this->modulesCache->save($this->_getCacheKey(), $infos);
+    }
+
+    /**
+     * @param $moduleDirectory
+     *
+     * @return array
+     */
+    protected function _setModuleInfo($moduleDirectory)
+    {
+        $path = MODULES_DIR . '/' . $moduleDirectory . '/config/module.xml';
+        if (is_file($path) === true) {
+            $moduleInfo = $this->xml->parseXmlFile($path, 'info');
+
+            if (!empty($moduleInfo)) {
+                $moduleName = strtolower($moduleDirectory);
+                $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
+
+                return [
+                    $moduleName => [
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                        'dir' => $dir,
+                        'dir' => $moduleDirectory,
                         'installed' => (!empty($moduleInfoDb)),
                         'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
@@ -169,13 +188,13 @@ class Modules
                         'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
                         'categories' => isset($moduleInfo['categories']),
                         'protected' => isset($moduleInfo['protected']),
-                    ];
-                    $infos[$moduleName]['dependencies'] = array_values($this->xml->parseXmlFile($path, 'info/dependencies'));
-                }
+                        'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
+                    ]
+                ];
             }
         }
 
-        $this->modulesCache->save($this->_getCacheKey(), $infos);
+        return [];
     }
 
     /**
