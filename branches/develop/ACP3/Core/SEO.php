@@ -31,11 +31,11 @@ class SEO
      */
     protected $config;
     /**
-     * @var \ACP3\Modules\Seo\Cache
+     * @var \ACP3\Modules\ACP3\Seo\Cache
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Modules\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model
      */
     protected $seoModel;
 
@@ -65,18 +65,18 @@ class SEO
      * @param \ACP3\Core\Request        $request
      * @param \ACP3\Core\Router\Aliases $aliases
      * @param \ACP3\Core\Helpers\Forms  $formsHelper
-     * @param \ACP3\Modules\Seo\Cache   $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Cache   $seoCache
      * @param \ACP3\Core\Config         $config
-     * @param \ACP3\Modules\Seo\Model   $seoModel
+     * @param \ACP3\Modules\ACP3\Seo\Model   $seoModel
      */
     public function __construct(
         Lang $lang,
         Request $request,
         Aliases $aliases,
         Forms $formsHelper,
-        \ACP3\Modules\Seo\Cache $seoCache,
+        \ACP3\Modules\ACP3\Seo\Cache $seoCache,
         Config $config,
-        \ACP3\Modules\Seo\Model $seoModel)
+        \ACP3\Modules\ACP3\Seo\Model $seoModel)
     {
         $this->lang = $lang;
         $this->request = $request;

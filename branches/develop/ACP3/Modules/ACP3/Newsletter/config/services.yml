@@ -1,0 +1,40 @@
+services:
+  newsletter.controller.admin.accounts:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts
+    arguments: ['@core.context.admin', '@newsletter.model']
+
+  newsletter.controller.admin.index:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@newsletter.model', '@newsletter.validator', '@newsletter.helpers']
+
+  newsletter.controller.frontend.archive:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Archive
+    arguments: ['@core.context.frontend', '@core.pagination', '@newsletter.model']
+
+  newsletter.controller.frontend.index:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Index
+    arguments: ['@core.context.frontend', '@core.helpers.secure', '@newsletter.helpers', '@newsletter.model', '@newsletter.validator']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
+
+  newsletter.controller.sidebar.index:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index
+    arguments: ['@core.context', '@core.helpers.secure']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
+
+  newsletter.model:
+    class: ACP3\Modules\ACP3\Newsletter\Model
+    arguments: ['@core.db']
+
+  newsletter.helpers:
+    class: ACP3\Modules\ACP3\Newsletter\Helpers
+    arguments: ['@core.lang', '@core.mailer', '@core.router', '@core.helpers.stringFormatter', '@core.config', '@newsletter.model']
+
+  newsletter.validator:
+    class: ACP3\Modules\ACP3\Newsletter\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@newsletter.model']
+
+  newsletter.installer:
+    class: ACP3\Modules\ACP3\Newsletter\Installer
+    parent: core.modules.abstractInstaller

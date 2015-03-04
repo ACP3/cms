@@ -15,7 +15,7 @@ class Textarea extends AbstractWYSIWYG
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\Emoticons\Helpers
+     * @var \ACP3\Modules\ACP3\Emoticons\Helpers
      */
     private $emoticonsHelpers;
 
@@ -32,7 +32,7 @@ class Textarea extends AbstractWYSIWYG
      *
      * @return $this
      */
-    public function setEmoticonsHelpers(\ACP3\Modules\Emoticons\Helpers $emoticonsHelpers)
+    public function setEmoticonsHelpers(\ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelpers)
     {
         $this->emoticonsHelpers = $emoticonsHelpers;
 

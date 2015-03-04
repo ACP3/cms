@@ -2,7 +2,7 @@
 namespace ACP3\Core\Router;
 
 use ACP3\Core;
-use ACP3\Modules\Seo;
+use ACP3\Modules\ACP3\Seo;
 
 /**
  * Class Aliases
@@ -11,16 +11,20 @@ use ACP3\Modules\Seo;
 class Aliases
 {
     /**
+     * @var \ACP3\Modules\ACP3\Seo\Cache
+     */
+    protected $seoCache;
+    /**
      * @var array
      */
-    protected $seoCache = [];
+    protected $aliasesCache = [];
 
     /**
-     * @param \ACP3\Modules\Seo\Cache $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
      */
     public function __construct(Seo\Cache $seoCache)
     {
-        $this->seoCache = $seoCache->getCache();
+        $this->seoCache = $seoCache;
     }
 
     /**
@@ -33,9 +37,13 @@ class Aliases
      */
     public function getUriAlias($path, $emptyOnNoResult = false)
     {
+        if ($this->aliasesCache === []) {
+            $this->aliasesCache = $this->seoCache->getCache();
+        }
+
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->seoCache[$path]['alias']) ? $this->seoCache[$path]['alias'] : ($emptyOnNoResult === true ? '' : $path);
+        return !empty($this->aliasesCache[$path]['alias']) ? $this->aliasesCache[$path]['alias'] : ($emptyOnNoResult === true ? '' : $path);
     }
 
     /**

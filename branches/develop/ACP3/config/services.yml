@@ -4,10 +4,10 @@ imports:
   - { resource: helpers.yml }
   - { resource: validation.yml }
   - { resource: ../Core/WYSIWYG/config/services.yml }
-  - { resource: ../Modules/Permissions/config/services.yml }
-  - { resource: ../Modules/Seo/config/services.yml }
-  - { resource: ../Modules/System/config/services.yml }
-  - { resource: ../Modules/Users/config/services.yml }
+  - { resource: ../Modules/ACP3/Permissions/config/services.yml }
+  - { resource: ../Modules/ACP3/Seo/config/services.yml }
+  - { resource: ../Modules/ACP3/System/config/services.yml }
+  - { resource: ../Modules/ACP3/Users/config/services.yml }
 
 services:
   core.acl:

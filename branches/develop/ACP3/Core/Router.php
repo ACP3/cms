@@ -3,7 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Router\Aliases;
-use ACP3\Modules\System;
+use ACP3\Modules\ACP3\System;
 
 /**
  * Class Router

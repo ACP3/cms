@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Modules\System;
+use ACP3\Modules\ACP3\System;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -27,7 +27,7 @@ class Modules
      */
     protected $modulesCache;
     /**
-     * @var \ACP3\Modules\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model
      */
     protected $systemModel;
     /**
@@ -44,7 +44,7 @@ class Modules
      * @param \ACP3\Core\Lang                                  $lang
      * @param \ACP3\Core\XML                                   $xml
      * @param \ACP3\Core\Cache                                 $modulesCache
-     * @param \ACP3\Modules\System\Model                       $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model                       $systemModel
      */
     public function __construct(
         Container $container,

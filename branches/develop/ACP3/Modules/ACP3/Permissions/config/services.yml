@@ -1,0 +1,28 @@
+services:
+  permissions.controller.admin.index:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@permissions.model', '@permissions.cache', '@permissions.validator']
+
+  permissions.controller.admin.resources:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@permissions.model', '@permissions.cache', '@permissions.validator']
+
+  permissions.cache:
+    class: ACP3\Modules\ACP3\Permissions\Cache
+    arguments: ['@core.cache.system', '@permissions.model']
+
+  permissions.helpers:
+    class: ACP3\Modules\ACP3\Permissions\Helpers
+    arguments: ['@permissions.model']
+
+  permissions.model:
+    class: ACP3\Modules\ACP3\Permissions\Model
+    arguments: ['@core.db']
+
+  permissions.validator:
+    class: ACP3\Modules\ACP3\Permissions\Validator
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.router', '@core.modules', '@permissions.model']
+
+  permissions.installer:
+    class: ACP3\Modules\ACP3\Permissions\Installer
+    parent: core.modules.abstractInstaller

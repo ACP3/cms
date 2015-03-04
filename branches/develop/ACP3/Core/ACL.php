@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Modules\Permissions;
+use ACP3\Modules\ACP3\Permissions;
 
 /**
  * Access control lists
@@ -48,8 +48,8 @@ class ACL
     /**
      * @param \ACP3\Core\Auth                 $auth
      * @param \ACP3\Core\Modules              $modules
-     * @param \ACP3\Modules\Permissions\Model $permissionsModel
-     * @param \ACP3\Modules\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Auth $auth,

@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Modules\Seo;
+use ACP3\Modules\ACP3\Seo;
 
 /**
  * Class Request
@@ -20,7 +20,7 @@ class Request extends \StdClass
      */
     protected $config;
     /**
-     * @var \ACP3\Modules\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model
      */
     protected $seoModel;
 
@@ -61,7 +61,7 @@ class Request extends \StdClass
     /**
      * @param \ACP3\Core\Modules      $modules
      * @param \ACP3\Core\Config       $config
-     * @param \ACP3\Modules\Seo\Model $seoModel
+     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
      */
     public function __construct(
         Modules $modules,

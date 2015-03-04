@@ -3,8 +3,8 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
-use ACP3\Modules\System;
-use ACP3\Modules\Permissions;
+use ACP3\Modules\ACP3\System;
+use ACP3\Modules\ACP3\Permissions;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
@@ -38,11 +38,11 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      */
     protected $aclCache;
     /**
-     * @var \ACP3\Modules\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model
      */
     protected $systemModel;
     /**
-     * @var \ACP3\Modules\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model
      */
     protected $permissionsModel;
     /**
@@ -64,8 +64,8 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      * @param \ACP3\Core\DB                   $db
      * @param \ACP3\Core\XML                  $xml
      * @param \ACP3\Core\Cache                $aclCache
-     * @param \ACP3\Modules\System\Model      $systemModel
-     * @param \ACP3\Modules\Permissions\Model $permissionsModel
+     * @param \ACP3\Modules\ACP3\System\Model      $systemModel
+     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
      */
     public function __construct(
         Core\DB $db,
