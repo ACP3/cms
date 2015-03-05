@@ -37,6 +37,10 @@ class Lang
      * @var array
      */
     protected $buffer = [];
+    /**
+     * @var array
+     */
+    protected $moduleNamespaces = [];
 
     /**
      * @param \ACP3\Core\Auth   $auth
@@ -47,7 +51,8 @@ class Lang
         Auth $auth,
         Cache $langCache,
         Config $config
-    ) {
+    )
+    {
         $this->auth = $auth;
         $this->cache = $langCache;
         $this->config = $config;
@@ -57,11 +62,12 @@ class Lang
      * Überprüft, ob das angegebene Sprachpaket existiert
      *
      * @param string $lang
+     *
      * @return boolean
      */
     public static function languagePackExists($lang)
     {
-        return !preg_match('=/=', $lang) && is_file(MODULES_DIR . 'System/Languages/' . $lang . '.xml') === true;
+        return !preg_match('=/=', $lang) && is_file(MODULES_DIR . 'ACP3/System/Languages/' . $lang . '.xml') === true;
     }
 
     /**
@@ -327,33 +333,34 @@ class Lang
      */
     final public static function parseAcceptLanguage()
     {
-        $langs = [];
+        $languages = [];
 
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $matches = [];
             preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
 
             if (!empty($matches[1])) {
-                $langs = array_combine($matches[1], $matches[4]);
+                $languages = array_combine($matches[1], $matches[4]);
 
                 // Für Einträge ohne q-Faktor, Wert auf 1 setzen
-                foreach ($langs as $lang => $val) {
+                foreach ($languages as $lang => $val) {
                     if ($val === '') {
-                        $langs[$lang] = 1;
+                        $languages[$lang] = 1;
                     }
                 }
 
                 // Liste nach Sprachpräferenz sortieren
-                arsort($langs, SORT_NUMERIC);
+                arsort($languages, SORT_NUMERIC);
             }
         }
 
         // Über die Sprachen iterieren und das passende Sprachpaket auswählen
-        foreach ($langs as $lang => $val) {
+        foreach ($languages as $lang => $val) {
             if (self::languagePackExists($lang) === true) {
                 return $lang;
             }
         }
+
         return 'en_US';
     }
 
@@ -426,25 +433,45 @@ class Lang
     }
 
     /**
+     * @return array
+     */
+    protected function _getModuleNamespaces()
+    {
+        if ($this->moduleNamespaces === []) {
+            $this->moduleNamespaces = array_merge(
+                ['ACP3'],
+                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
+                ['Custom']
+            );
+        }
+
+        return $this->moduleNamespaces;
+    }
+
+    /**
      * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
      */
     public function setLanguageCache()
     {
         $data = [];
 
-        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
+        foreach ($this->_getModuleNamespaces() as $namespace) {
+            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
 
-        foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/Languages/' . $this->getLanguage() . '.xml';
-            if (is_file($path) === true) {
-                $xml = simplexml_load_file($path);
-                if (isset($data['info']['direction']) === false) {
-                    $data['info']['direction'] = (string)$xml->info->direction;
-                }
+            if (!empty($namespaceModules)) {
+                foreach ($namespaceModules as $module) {
+                    $path = MODULES_DIR . $namespace . '/' . $module . '/Languages/' . $this->getLanguage() . '.xml';
+                    if (is_file($path) === true) {
+                        $xml = simplexml_load_file($path);
+                        if (isset($data['info']['direction']) === false) {
+                            $data['info']['direction'] = (string)$xml->info->direction;
+                        }
 
-                // Über die einzelnen Sprachstrings iterieren
-                foreach ($xml->keys->item as $item) {
-                    $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
+                        // Über die einzelnen Sprachstrings iterieren
+                        foreach ($xml->keys->item as $item) {
+                            $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
+                        }
+                    }
                 }
             }
         }
@@ -518,23 +545,19 @@ class Lang
      */
     protected function _setLanguagesCache()
     {
-        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
         $languages = [];
 
-        foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/Languages/';
-            if (is_dir($path) === true) {
-                $moduleLanguages = array_diff(scandir($path), ['.', '..']);
+        foreach ($this->_getModuleNamespaces() as $namespace) {
+            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
 
-                foreach ($moduleLanguages as $language) {
-                    if (is_file($path . $language) === true) {
-                        $xml = simplexml_load_file($path . $language);
-                        $languageIso = substr($language, 0, -4);
-                        if (!empty($xml) && isset($languages[$languageIso]) === false) {
-                            $languages[$languageIso] = [
-                                'iso' => $languageIso,
-                                'name' => (string)$xml->info->name
-                            ];
+            if (!empty($namespaceModules)) {
+                foreach ($namespaceModules as $module) {
+                    $path = MODULES_DIR . $namespace . '/' . $module . '/Languages/';
+                    if (is_dir($path) === true) {
+                        $languagePacks = $this->_registerLanguagePacks($path);
+
+                        if (!empty($languagePacks)) {
+                            $languages += $languagePacks;
                         }
                     }
                 }
@@ -542,5 +565,31 @@ class Lang
         }
 
         return $this->cache->save('languages', $languages);
+    }
+
+    /**
+     * @param $path
+     *
+     * @return array
+     */
+    protected function _registerLanguagePacks($path)
+    {
+        $languagePacks = [];
+        $moduleLanguages = array_diff(scandir($path), ['.', '..']);
+
+        foreach ($moduleLanguages as $language) {
+            if (is_file($path . $language) === true) {
+                $xml = simplexml_load_file($path . $language);
+                $languageIso = substr($language, 0, -4);
+                if (!empty($xml) && isset($languagePacks[$languageIso]) === false) {
+                    $languagePacks[$languageIso] = [
+                        'iso' => $languageIso,
+                        'name' => (string)$xml->info->name
+                    ];
+                }
+            }
+        }
+
+        return $languagePacks;
     }
 }

@@ -44,7 +44,7 @@ class Robots extends AbstractModifier
     /**
      * @return array
      */
-    private function _setReplaceParams()
+    protected function _setReplaceParams()
     {
         return [
             sprintf($this->lang->t('seo', 'robots_use_system_default'), $this->seo->getRobotsSetting()),

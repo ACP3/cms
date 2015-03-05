@@ -118,7 +118,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _configurationPost(array $formData)
+    protected function _configurationPost(array $formData)
     {
         try {
             $this->systemValidator->validateSettings($formData);

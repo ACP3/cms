@@ -170,7 +170,7 @@ class Maintenance extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _sqlExportPost(array $formData)
+    protected function _sqlExportPost(array $formData)
     {
         try {
             $this->systemValidator->validateSqlExport($formData);
@@ -202,7 +202,7 @@ class Maintenance extends Core\Modules\Controller\Admin
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function _sqlImportPost(array $formData)
+    protected function _sqlImportPost(array $formData)
     {
         try {
             $file = [];

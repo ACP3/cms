@@ -47,7 +47,7 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @var bool
      */
-    private $commentsActive;
+    protected $commentsActive;
 
     /**
      * @param \ACP3\Core\Context\Frontend           $context

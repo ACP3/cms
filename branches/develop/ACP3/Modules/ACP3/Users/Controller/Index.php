@@ -204,7 +204,7 @@ class Index extends Core\Modules\Controller\Frontend
         }
     }
 
-    private function _forgotPasswordPost(array $formData)
+    protected function _forgotPasswordPost(array $formData)
     {
         try {
             $this->usersValidator->validateForgotPassword($formData);
@@ -251,7 +251,7 @@ class Index extends Core\Modules\Controller\Frontend
         }
     }
 
-    private function _registerPost(array $formData, array $settings)
+    protected function _registerPost(array $formData, array $settings)
     {
         try {
             $this->usersValidator->validateRegistration($formData);

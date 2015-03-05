@@ -187,7 +187,7 @@ class Pictures extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $settings
      */
-    private function _createPost(array $formData, array $settings)
+    protected function _createPost(array $formData, array $settings)
     {
         try {
             $file = [];
@@ -230,7 +230,7 @@ class Pictures extends Core\Modules\Controller\Admin
      * @param array $settings
      * @param array $picture
      */
-    private function _editPost(array $formData, array $settings, array $picture)
+    protected function _editPost(array $formData, array $settings, array $picture)
     {
         try {
             $file = [];

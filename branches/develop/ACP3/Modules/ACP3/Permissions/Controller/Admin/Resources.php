@@ -141,7 +141,7 @@ class Resources extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $this->permissionsValidator->validateResource($formData);
@@ -173,7 +173,7 @@ class Resources extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _editPost(array $formData)
+    protected function _editPost(array $formData)
     {
         try {
             $this->permissionsValidator->validateResource($formData);

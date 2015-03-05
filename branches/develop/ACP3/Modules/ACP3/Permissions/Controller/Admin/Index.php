@@ -230,7 +230,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $this->permissionsValidator->validate($formData);
@@ -278,7 +278,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    private function _editPost(array $formData)
+    protected function _editPost(array $formData)
     {
         try {
             $this->permissionsValidator->validate(

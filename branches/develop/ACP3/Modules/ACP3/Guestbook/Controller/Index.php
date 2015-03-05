@@ -53,11 +53,11 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @var bool
      */
-    private $emoticonsActive;
+    protected $emoticonsActive;
     /**
      * @var bool
      */
-    private $newsletterActive;
+    protected $newsletterActive;
 
     /**
      * @param \ACP3\Core\Context\Frontend            $context
@@ -208,7 +208,7 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @param array $formData
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $this->guestbookValidator->validateCreate($formData, $this->newsletterActive);

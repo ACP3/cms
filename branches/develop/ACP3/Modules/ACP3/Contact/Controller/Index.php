@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @param array $formData
      */
-    private function _indexPost(array $formData)
+    protected function _indexPost(array $formData)
     {
         try {
             $seoSettings = $this->config->getSettings('seo');

@@ -260,7 +260,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $settings
      */
-    private function _createPost(array $formData, array $settings)
+    protected function _createPost(array $formData, array $settings)
     {
         try {
             $this->newsValidator->validate($formData);
@@ -304,7 +304,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $settings
      */
-    private function _editPost(array $formData, array $settings)
+    protected function _editPost(array $formData, array $settings)
     {
         try {
             $this->newsValidator->validate(
@@ -351,7 +351,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _settingsPost(array $formData)
+    protected function _settingsPost(array $formData)
     {
         try {
             $this->newsValidator->validateSettings($formData, $this->lang);

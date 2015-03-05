@@ -185,7 +185,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $settings
      */
-    private function _editPost(array $formData, array $settings)
+    protected function _editPost(array $formData, array $settings)
     {
         try {
             $this->guestbookValidator->validateEdit($formData, $settings);
@@ -211,7 +211,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _settingsPost(array $formData)
+    protected function _settingsPost(array $formData)
     {
         try {
             $this->guestbookValidator->validateSettings($formData);

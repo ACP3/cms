@@ -38,6 +38,10 @@ class Modules
      * @var array
      */
     private $allModules = [];
+    /**
+     * @var array
+     */
+    private $moduleNamespaces = [];
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
@@ -131,7 +135,8 @@ class Modules
      */
     public function getModuleId($module)
     {
-        return $this->getModuleInfo($module)['id'];
+        $info = $this->getModuleInfo($module);
+        return !empty($info) ? $info['id'] : 0;
     }
 
     /**
@@ -143,21 +148,60 @@ class Modules
     }
 
     /**
+     * @return array
+     */
+    public function getModuleNamespaces()
+    {
+        if ($this->moduleNamespaces === []) {
+            $this->moduleNamespaces = array_merge(
+                ['ACP3'],
+                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
+                ['Custom']
+            );
+        }
+
+        return $this->moduleNamespaces;
+    }
+
+    /**
      * Setzt den Cache für alle vorliegenden Modulinformationen
      */
     public function setModulesCache()
     {
         $infos = [];
-        $dirs = array_diff(scandir(MODULES_DIR), ['.', '..']);
-        foreach ($dirs as $dir) {
-            $moduleInfo = $this->_setModuleInfo($dir);
 
-            if (!empty($moduleInfo)) {
-                $infos[strtolower($dir)] = $moduleInfo;
-            }
+        // 1. fetch all core modules
+        // 2. Fetch all 3rd party modules
+        // 3. Fetch all local module customizations
+        foreach ($this->getModuleNamespaces() as $namespace) {
+            $infos += $this->_fetchModulesInNamespaces($namespace);
         }
 
         $this->modulesCache->save($this->_getCacheKey(), $infos);
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @return array
+     */
+    protected function _fetchModulesInNamespaces($namespace)
+    {
+        $infos = [];
+
+        $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+
+        if (!empty($modules)) {
+            foreach ($modules as $module) {
+                $moduleInfo = $this->_fetchModuleInfo($module);
+
+                if (!empty($moduleInfo)) {
+                    $infos[strtolower($module)] = $moduleInfo;
+                }
+            }
+        }
+
+        return $infos;
     }
 
     /**
@@ -165,30 +209,33 @@ class Modules
      *
      * @return array
      */
-    protected function _setModuleInfo($moduleDirectory)
+    protected function _fetchModuleInfo($moduleDirectory)
     {
-        $path = MODULES_DIR . '/' . $moduleDirectory . '/config/module.xml';
-        if (is_file($path) === true) {
-            $moduleInfo = $this->xml->parseXmlFile($path, 'info');
+        $namespaces = array_reverse($this->getModuleNamespaces()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        foreach ($namespaces as $namespace) {
+            $path = MODULES_DIR . $namespace . '/' . $moduleDirectory . '/config/module.xml';
+            if (is_file($path) === true) {
+                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
 
-            if (!empty($moduleInfo)) {
-                $moduleName = strtolower($moduleDirectory);
-                $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
+                if (!empty($moduleInfo)) {
+                    $moduleName = strtolower($moduleDirectory);
+                    $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
 
-                return [
-                    'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                    'dir' => $moduleDirectory,
-                    'installed' => (!empty($moduleInfoDb)),
-                    'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                    'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                    'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
-                    'author' => $moduleInfo['author'],
-                    'version' => $moduleInfo['version'],
-                    'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
-                    'categories' => isset($moduleInfo['categories']),
-                    'protected' => isset($moduleInfo['protected']),
-                    'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
-                ];
+                    return [
+                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+                        'dir' => $moduleDirectory,
+                        'installed' => (!empty($moduleInfoDb)),
+                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
+                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                        'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
+                        'author' => $moduleInfo['author'],
+                        'version' => $moduleInfo['version'],
+                        'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
+                        'categories' => isset($moduleInfo['categories']),
+                        'protected' => isset($moduleInfo['protected']),
+                        'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
+                    ];
+                }
             }
         }
 
@@ -254,13 +301,16 @@ class Modules
     public function getAllModules()
     {
         if (empty($this->allModules)) {
-            $dir = array_diff(scandir(MODULES_DIR), ['.', '..']);
-            foreach ($dir as $module) {
-                $info = $this->getModuleInfo($module);
-                if (!empty($info)) {
-                    $this->allModules[$info['name']] = $info;
+            foreach ($this->getModuleNamespaces() as $namespace) {
+                $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+                foreach ($modules as $module) {
+                    $info = $this->getModuleInfo($module);
+                    if (!empty($info)) {
+                        $this->allModules[$info['name']] = $info;
+                    }
                 }
             }
+
             ksort($this->allModules);
         }
 

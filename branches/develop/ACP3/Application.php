@@ -75,7 +75,7 @@ class Application
         define('ROOT_DIR_ABSOLUTE', HOST_NAME . ROOT_DIR);
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
-        define('MODULES_DIR', ACP3_DIR . 'Modules/ACP3/');
+        define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('VENDOR_DIR', ACP3_ROOT_DIR . 'vendor/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
@@ -162,10 +162,15 @@ class Application
             /** @var Modules $modules */
             $modules = $containerBuilder->get('core.modules');
             $activeModules = $modules->getActiveModules();
+            $moduleNamespaces = $modules->getModuleNamespaces();
+
             foreach ($activeModules as $module) {
-                $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
-                if (is_file($path)) {
-                    $loader->load($path);
+                foreach ($moduleNamespaces as $namespace) {
+                    $path = MODULES_DIR . $namespace . '/' . $module['dir'] . '/config/services.yml';
+
+                    if (is_file($path)) {
+                        $loader->load($path);
+                    }
                 }
             }
 

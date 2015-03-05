@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Frontend
      * @param array $formData
      * @param $time
      */
-    private function _votePost(array $formData, $time)
+    protected function _votePost(array $formData, $time)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
         $answers = $formData['answer'];

@@ -64,7 +64,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $file = [];
@@ -146,7 +146,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $emoticon
      */
-    private function _editPost(array $formData, array $emoticon)
+    protected function _editPost(array $formData, array $emoticon)
     {
         try {
             $file = [];
@@ -217,7 +217,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _settingsPost(array $formData)
+    protected function _settingsPost(array $formData)
     {
         try {
             $this->emoticonsValidator->validateSettings($formData);

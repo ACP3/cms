@@ -98,7 +98,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    private function _processNavbar(
+    protected function _processNavbar(
         $menu,
         $useBootstrap = true,
         $class = '',
@@ -191,7 +191,7 @@ class Navbar extends AbstractFunction
      *
      * @return int
      */
-    private function _selectMenuItem($menu)
+    protected function _selectMenuItem($menu)
     {
         // Selektion nur vornehmen, wenn man sich im Frontend befindet
         if ($this->request->area !== 'admin') {
