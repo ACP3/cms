@@ -1,22 +1,30 @@
+parameters:
+  search.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Index'
+  search.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Sidebar\Index'
+  search.extensions.fqdn: 'ACP3\Modules\ACP3\Search\Extensions'
+  search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
+  search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validator'
+  search.installer.fqdn: 'ACP3\Modules\ACP3\Search\Installer'
+
 services:
   search.controller.frontend.index:
-    class: ACP3\Modules\ACP3\Search\Controller\Index
+    class: %search.controller.frontend.index.fqdn%
     arguments: ['@core.context.frontend', '@search.helpers', '@search.validator', '@search.extensions']
 
   search.controller.sidebar.index:
-    class: ACP3\Modules\ACP3\Search\Controller\Sidebar\Index
+    class: %search.controller.sidebar.index.fqdn%
     arguments: ['@core.context', '@search.helpers']
 
   search.helpers:
-    class: ACP3\Modules\ACP3\Search\Helpers
+    class: %search.helpers.fqdn%
     arguments: ['@core.acl', '@core.modules', '@core.helpers.forms', '@search.extensions']
 
   search.validator:
-    class: ACP3\Modules\ACP3\Search\Validator
+    class: %search.validator.fqdn%
     parent: core.validator.abstract
 
   search.extensions:
-    class: ACP3\Modules\ACP3\Search\Extensions
+    class: %search.extensions.fqdn%
     arguments: ['@core.date', '@core.lang', '@core.router']
     calls:
       - ['setArticlesModel', ['@?articles.model']]
@@ -24,5 +32,5 @@ services:
       - ['setNewsModel', ['@?news.model']]
 
   search.installer:
-    class: ACP3\Modules\ACP3\Search\Installer
+    class: %search.installer.fqdn%
     parent: core.modules.abstractInstaller
