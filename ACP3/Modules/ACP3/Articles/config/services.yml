@@ -1,6 +1,16 @@
+parameters:
+  articles.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index'
+  articles.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Index'
+  articles.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index'
+  articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
+  articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
+  articles.model.fqdn: 'ACP3\Modules\ACP3\Articles\Model'
+  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validator'
+  articles.installer.fqdn: 'ACP3\Modules\ACP3\Articles\Installer'
+
 services:
   articles.controller.admin.index:
-    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index
+    class: %articles.controller.admin.index.fqdn%
     arguments: ['@core.context.admin', '@core.date', '@articles.model', '@articles.cache', '@articles.validator', '@core.helpers.secure']
     calls:
       - ['setMenusCache', ['@?menus.cache']]
@@ -8,15 +18,15 @@ services:
       - ['setMenusModel', ['@?menus.model']]
 
   articles.controller.frontend.index:
-    class: ACP3\Modules\ACP3\Articles\Controller\Index
+    class: %articles.controller.frontend.index.fqdn%
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.toc', '@articles.model', '@articles.cache']
 
   articles.controller.sidebar.index:
-    class: ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index
+    class: %articles.controller.sidebar.index.fqdn%
     arguments: ['@core.context', '@core.date', '@articles.model', '@articles.cache']
 
   articles.cache:
-    class: ACP3\Modules\ACP3\Articles\Cache
+    class: %articles.cache.fqdn%
     arguments: ['@articles.cache.core', '@articles.model']
 
   articles.cache.core:
@@ -24,19 +34,19 @@ services:
     arguments: ['@service_container', 'articles']
 
   articles.helpers:
-    class: ACP3\Modules\ACP3\Articles\Helpers
+    class: %articles.helpers.fqdn%
     arguments: ['@core.helpers.forms', '@articles.model']
 
   articles.model:
-    class: ACP3\Modules\ACP3\Articles\Model
+    class: %articles.model.fqdn%
     arguments: ['@core.db']
 
   articles.validator:
-    class: ACP3\Modules\ACP3\Articles\Validator
+    class: %articles.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl']
     calls:
       - ['setMenusModel', ['@?menus.model']]
 
   articles.installer:
-    class: ACP3\Modules\ACP3\Articles\Installer
+    class: %articles.installer.fqdn%
     parent: core.modules.abstractInstaller
