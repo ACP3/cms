@@ -1,8 +1,12 @@
+parameters:
+  errors.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Errors\Controller\Index'
+  errors.installer.fqdn: 'ACP3\Modules\ACP3\Errors\Installer'
+
 services:
   errors.controller.frontend.index:
-    class: ACP3\Modules\ACP3\Errors\Controller\Index
+    class: %errors.controller.frontend.index.fqdn%
     parent: core.modules.controller.frontend
 
   errors.installer:
-    class: ACP3\Modules\ACP3\Errors\Installer
+    class: %errors.installer.fqdn%
     parent: core.modules.abstractInstaller

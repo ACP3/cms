@@ -1,16 +1,25 @@
+parameters:
+  comments.controller.admin.details.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Details'
+  comments.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Index'
+  comments.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Index'
+  comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
+  comments.model.fqdn: 'ACP3\Modules\ACP3\Comments\Model'
+  comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validator'
+  comments.installer.fqdn: 'ACP3\Modules\ACP3\Comments\Installer'
+
 services:
   comments.controller.admin.details:
-    class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details
+    class: %comments.controller.admin.details.fqdn%
     arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@system.model', '@core.helpers.secure']
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.admin.index:
-    class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index
+    class: %comments.controller.admin.index.fqdn%
     arguments: ['@core.context.admin', '@core.date', '@comments.model', '@comments.validator', '@core.helpers.secure']
 
   comments.controller.frontend.index:
-    class: ACP3\Modules\ACP3\Comments\Controller\Index
+    class: %comments.controller.frontend.index.fqdn%
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@core.helpers.secure']
     calls:
       - ['setContainer', ['@service_container']]
@@ -18,17 +27,17 @@ services:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.helpers:
-    class: ACP3\Modules\ACP3\Comments\Helpers
+    class: %comments.helpers.fqdn%
     arguments: ['@core.modules', '@comments.model']
 
   comments.model:
-    class: ACP3\Modules\ACP3\Comments\Model
+    class: %comments.model.fqdn%
     arguments: ['@core.db']
 
   comments.validator:
-    class: ACP3\Modules\ACP3\Comments\Validator
+    class: %comments.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@core.date', '@core.modules', '@comments.model']
 
   comments.installer:
-    class: ACP3\Modules\ACP3\Comments\Installer
+    class: %comments.installer.fqdn%
     parent: core.modules.abstractInstaller

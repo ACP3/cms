@@ -1,16 +1,26 @@
+parameters:
+  menus.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Index'
+  menus.controller.admin.items.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Items'
+  menus.cache.fqdn: 'ACP3\Modules\ACP3\Menus\Cache'
+  menus.helpers.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers'
+  menus.model.fqdn: 'ACP3\Modules\ACP3\Menus\Model'
+  menus.validator.fqdn: 'ACP3\Modules\ACP3\Menus\Validator'
+  menus.installer.fqdn: 'ACP3\Modules\ACP3\Menus\Installer'
+  smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\View\Renderer\Smarty\Functions\Navbar'
+
 services:
   menus.controller.admin.index:
-    class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index
+    class: %menus.controller.admin.index.fqdn%
     arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.helpers', '@menus.model', '@menus.cache', '@menus.validator']
 
   menus.controller.admin.items:
-    class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items
+    class: %menus.controller.admin.items.fqdn%
     arguments: ['@core.context.admin', '@core.router.aliases', '@core.db', '@core.helpers.secure', '@menus.model', '@menus.cache', '@menus.helpers', '@menus.validator']
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.cache:
-    class: ACP3\Modules\ACP3\Menus\Cache
+    class: %menus.cache.fqdn%
     arguments: ['@menus.cache.core', '@core.lang', '@menus.model']
 
   menus.cache.core:
@@ -18,23 +28,23 @@ services:
     arguments: ['@service_container', 'menus']
 
   menus.helpers:
-    class: ACP3\Modules\ACP3\Menus\Helpers
+    class: %menus.helpers.fqdn%
     arguments: ['@core.db', '@core.lang', '@core.helpers.forms', '@menus.model', '@menus.cache']
 
   menus.model:
-    class: ACP3\Modules\ACP3\Menus\Model
+    class: %menus.model.fqdn%
     arguments: ['@core.db']
 
   menus.validator:
-    class: ACP3\Modules\ACP3\Menus\Validator
+    class: %menus.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.router', '@core.modules', '@menus.model']
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.installer:
-    class: ACP3\Modules\ACP3\Menus\Installer
+    class: %menus.installer.fqdn%
     parent: core.modules.abstractInstaller
 
   smarty.plugin.navbar:
-    class: ACP3\Modules\ACP3\Menus\View\Renderer\Smarty\Functions\Navbar
+    class: %smarty.plugin.navbar.fqdn%
     arguments: ['@core.request', '@core.router', '@menus.model', '@menus.cache']

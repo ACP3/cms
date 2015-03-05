@@ -1,30 +1,39 @@
+parameters:
+  users.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Admin\Index'
+  users.controller.frontend.account.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Account'
+  users.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Index'
+  users.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index'
+  users.model.fqdn: 'ACP3\Modules\ACP3\Users\Model'
+  users.validator.fqdn: 'ACP3\Modules\ACP3\Users\Validator'
+  users.installer.fqdn: 'ACP3\Modules\ACP3\Users\Installer'
+
 services:
   users.controller.admin.index:
-    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index
+    class: %users.controller.admin.index.fqdn%
     arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.forms', '@users.model', '@users.validator', '@permissions.helpers']
 
   users.controller.frontend.account:
-    class: ACP3\Modules\ACP3\Users\Controller\Account
+    class: %users.controller.frontend.account.fqdn%
     arguments: ['@core.context.frontend', '@core.date', '@core.helpers.secure', '@users.model', '@users.validator']
 
   users.controller.frontend.index:
-    class: ACP3\Modules\ACP3\Users\Controller\Index
+    class: %users.controller.frontend.index.fqdn%
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@users.model', '@users.validator', '@permissions.helpers', '@core.helpers.sendEmail']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   users.controller.sidebar.index:
-    class: ACP3\Modules\ACP3\Users\Controller\Sidebar\Index
+    class: %users.controller.sidebar.index.fqdn%
     arguments: ['@core.context']
 
   users.model:
-    class: ACP3\Modules\ACP3\Users\Model
+    class: %users.model.fqdn%
     arguments: ['@core.db']
 
   users.validator:
-    class: ACP3\Modules\ACP3\Users\Validator
+    class: %users.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.captcha', '@core.validator.rules.date', '@core.acl', '@core.auth', '@users.model']
 
   users.installer:
-    class: ACP3\Modules\ACP3\Users\Installer
+    class: %users.installer.fqdn%
     parent: core.modules.abstractInstaller

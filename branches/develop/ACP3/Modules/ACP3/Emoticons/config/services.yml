@@ -1,14 +1,22 @@
+parameters:
+  emoticons.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index'
+  emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
+  emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
+  emoticons.model.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model'
+  emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validator'
+  emoticons.installer.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer'
+
 services:
   emoticons.controller.admin.index:
-    class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index
+    class: %emoticons.controller.admin.index.fqdn%
     arguments: ['@core.context.admin', '@core.helpers.secure', '@emoticons.model', '@emoticons.validator', '@emoticons.cache']
 
   emoticons.model:
-    class: ACP3\Modules\ACP3\Emoticons\Model
+    class: %emoticons.model.fqdn%
     arguments: ['@core.db']
 
   emoticons.cache:
-    class: ACP3\Modules\ACP3\Emoticons\Cache
+    class: %emoticons.cache.fqdn%
     arguments: ['@emoticons.cache.core', '@emoticons.model']
 
   emoticons.cache.core:
@@ -16,13 +24,13 @@ services:
     arguments: ['@service_container', 'emoticons']
 
   emoticons.helpers:
-    class: ACP3\Modules\ACP3\Emoticons\Helpers
+    class: %emoticons.helpers.fqdn%
     arguments: ['@core.view', '@emoticons.cache']
 
   emoticons.validator:
-    class: ACP3\Modules\ACP3\Emoticons\Validator
+    class: %emoticons.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime']
 
   emoticons.installer:
-    class: ACP3\Modules\ACP3\Emoticons\Installer
+    class: %emoticons.installer.fqdn%
     parent: core.modules.abstractInstaller
