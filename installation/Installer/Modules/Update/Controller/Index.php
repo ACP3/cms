@@ -35,6 +35,7 @@ class Index extends Core\Modules\Controller
     private function _indexPost()
     {
         $results = [];
+
         // Zuerst die wichtigen System-Module aktualisieren...
         $coreModules = ['system', 'permissions', 'users'];
         foreach ($coreModules as $row) {
@@ -42,10 +43,12 @@ class Index extends Core\Modules\Controller
         }
 
         // ...danach die Restlichen
-        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
-        foreach ($modules as $row) {
-            if (in_array(strtolower($row), $coreModules) === false) {
-                $results[$row] = $this->_returnUpdateModuleResult($row);
+        foreach ($this->modules->getModuleNamespaces() as $namespace) {
+            $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+            foreach ($modules as $row) {
+                if (in_array(strtolower($row), $coreModules) === false) {
+                    $results[$row] = $this->_returnUpdateModuleResult($row);
+                }
             }
         }
 

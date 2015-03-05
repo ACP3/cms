@@ -162,10 +162,15 @@ class Application
             /** @var Modules $modules */
             $modules = $containerBuilder->get('core.modules');
             $activeModules = $modules->getActiveModules();
+            $moduleNamespaces = $modules->getModuleNamespaces();
+
             foreach ($activeModules as $module) {
-                $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
-                if (is_file($path)) {
-                    $loader->load($path);
+                foreach ($moduleNamespaces as $namespace) {
+                    $path = MODULES_DIR . $namespace . '/' . $module['dir'] . '/config/services.yml';
+
+                    if (is_file($path)) {
+                        $loader->load($path);
+                    }
                 }
             }
 
@@ -183,6 +188,8 @@ class Application
 
         // Load system settings
         $this->systemSettings = $this->container->get('core.config')->getSettings('system');
+
+        $this->container->get('core.auth')->authenticate();
 
         $this->_setThemeConstants();
 

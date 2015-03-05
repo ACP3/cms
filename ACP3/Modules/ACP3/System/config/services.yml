@@ -1,0 +1,37 @@
+parameters:
+  system.controller.admin.extensions.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Extensions'
+  system.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Index'
+  system.controller.admin.maintenance.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance'
+  system.helpers.fqdn: 'ACP3\Modules\ACP3\System\Helpers'
+  system.model.fqdn: 'ACP3\Modules\ACP3\System\Model'
+  system.validator.fqdn: 'ACP3\Modules\ACP3\System\Validator'
+  system.installer.fqdn: 'ACP3\Modules\ACP3\System\Installer'
+
+services:
+  system.controller.admin.extensions:
+    class: %system.controller.admin.extensions.fqdn%
+    arguments: ['@core.context.admin', '@core.xml', '@system.model', '@system.helpers', '@permissions.cache']
+
+  system.controller.admin.index:
+    class: %system.controller.admin.index.fqdn%
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@system.model', '@system.validator']
+
+  system.controller.admin.maintenance:
+    class: %system.controller.admin.maintenance.fqdn%
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@system.helpers', '@system.model', '@system.validator']
+
+  system.model:
+    class: %system.model.fqdn%
+    arguments: ['@core.db']
+
+  system.helpers:
+    class: %system.helpers.fqdn%
+    arguments: ['@core.db', '@core.modules']
+
+  system.validator:
+    class: %system.validator.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.validator.rules.router']
+
+  system.installer:
+    class: %system.installer.fqdn%
+    parent: core.modules.abstractInstaller

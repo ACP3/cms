@@ -19,7 +19,7 @@ class CKEditor extends Textarea
      */
     private $view;
     /**
-     * @var \ACP3\Modules\Emoticons\Model
+     * @var \ACP3\Modules\ACP3\Emoticons\Model
      */
     private $emoticonsModel;
 
@@ -41,11 +41,11 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @param \ACP3\Modules\Emoticons\Model $emoticonsModel
+     * @param \ACP3\Modules\ACP3\Emoticons\Model $emoticonsModel
      *
      * @return $this
      */
-    public function setEmoticonsModel(\ACP3\Modules\Emoticons\Model $emoticonsModel)
+    public function setEmoticonsModel(\ACP3\Modules\ACP3\Emoticons\Model $emoticonsModel)
     {
         $this->emoticonsModel = $emoticonsModel;
 

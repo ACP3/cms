@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Modules\System;
+use ACP3\Modules\ACP3\System;
 
 /**
  * Manages the various module settings
@@ -10,7 +10,7 @@ use ACP3\Modules\System;
 class Config
 {
     /**
-     * @var \ACP3\Modules\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model
      */
     protected $systemModel;
     /**
@@ -24,7 +24,7 @@ class Config
 
     /**
      * @param \ACP3\Core\Cache           $coreCache
-     * @param \ACP3\Modules\System\Model $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model $systemModel
      */
     public function __construct(
         Cache $coreCache,
