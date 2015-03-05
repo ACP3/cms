@@ -52,7 +52,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _indexPost(array $formData)
+    protected function _indexPost(array $formData)
     {
         try {
             $this->contactValidator->validateSettings($formData);

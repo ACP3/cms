@@ -125,7 +125,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $this->seoValidator->validate($formData);
@@ -152,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param $path
      */
-    private function _editPost(array $formData, $path)
+    protected function _editPost(array $formData, $path)
     {
         try {
             $this->seoValidator->validate($formData, $path);
@@ -208,7 +208,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _settingsPost(array $formData)
+    protected function _settingsPost(array $formData)
     {
         try {
             $this->seoValidator->validateSettings($formData);

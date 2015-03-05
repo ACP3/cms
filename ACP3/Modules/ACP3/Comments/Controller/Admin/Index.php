@@ -112,7 +112,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _settingsPost(array $formData)
+    protected function _settingsPost(array $formData)
     {
         try {
             $this->commentsValidator->validateSettings($formData);

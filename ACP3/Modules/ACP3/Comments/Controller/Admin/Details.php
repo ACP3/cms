@@ -173,7 +173,7 @@ class Details extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $comment
      */
-    private function _editPost(array $formData, array $comment)
+    protected function _editPost(array $formData, array $comment)
     {
         try {
             $this->commentsValidator->validateEdit($formData);

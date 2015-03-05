@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @var \ACP3\Core\Helpers\TableOfContents
      */
-    private $toc;
+    protected $toc;
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model
      */

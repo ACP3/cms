@@ -174,7 +174,7 @@ class Account extends Core\Modules\Controller\Frontend
         $this->view->assign('draft', $user['draft']);
     }
 
-    private function _editPost(array $formData)
+    protected function _editPost(array $formData)
     {
         try {
             $this->usersValidator->validateEditProfile($formData);
@@ -219,7 +219,7 @@ class Account extends Core\Modules\Controller\Frontend
         }
     }
 
-    private function _settingsPost(array $formData, array $settings)
+    protected function _settingsPost(array $formData, array $settings)
     {
         try {
             $this->usersValidator->validateUserSettings($formData, $settings);

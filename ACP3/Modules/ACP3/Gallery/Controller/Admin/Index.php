@@ -140,7 +140,7 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
-    private function _actionEditPictures()
+    protected function _actionEditPictures()
     {
         $pictures = $this->galleryModel->getPicturesByGalleryId((int)$this->request->id);
         $c_pictures = count($pictures);
@@ -206,7 +206,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $this->galleryValidator->validate($formData);
@@ -242,7 +242,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _editPost(array $formData)
+    protected function _editPost(array $formData)
     {
         try {
             $this->galleryValidator->validate(
@@ -282,7 +282,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $settings
      */
-    private function _settingsPost(array $formData, array $settings)
+    protected function _settingsPost(array $formData, array $settings)
     {
         try {
             $this->galleryValidator->validateSettings($formData);

@@ -235,22 +235,12 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      */
     public function addResources($mode = 1)
     {
-        $moduleName = static::MODULE_NAME;
-        $dir = ucfirst($moduleName);
-        $path = MODULES_DIR . $dir . '/Controller/';
-        $controllers = array_diff(scandir($path), ['.', '..']);
+        $serviceIds = $this->container->getServiceIds();
 
-        foreach ($controllers as $controller) {
-            if (is_file($path . $controller) === true) {
-                $this->_insertAclResources($dir, substr($controller, 0, -4), 'frontend');
-            } elseif (is_dir($path . $controller) === true) {
-                $subModuleControllers = array_diff(scandir($path . $controller), ['.', '..']);
-
-                foreach ($subModuleControllers as $subController) {
-                    if (is_file($path . $controller . '/' . $subController) === true) {
-                        $this->_insertAclResources($dir, substr($subController, 0, -4), $controller);
-                    }
-                }
+        foreach ($serviceIds as $serviceId) {
+            if (strpos($serviceId, static::MODULE_NAME . '.controller.') !== false) {
+                list($module, $unused, $area, $controller) = explode('.', $serviceId);
+                $this->_insertAclResources($module, $controller, $area);
             }
         }
 

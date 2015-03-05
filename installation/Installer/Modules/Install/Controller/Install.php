@@ -145,9 +145,9 @@ class Install extends AbstractController
             }
         }
 
-        $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
+        $modules = array_diff(scandir(MODULES_DIR . 'ACP3/'), ['.', '..']);
         foreach ($modules as $module) {
-            $path = MODULES_DIR . $module . '/config/services.yml';
+            $path = MODULES_DIR . 'ACP3/' . $module . '/config/services.yml';
             if (is_file($path) === true) {
                 $loader->load($path);
             }
@@ -176,7 +176,7 @@ class Install extends AbstractController
 
         // Install "normal" modules
         if ($bool === true) {
-            $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
+            $modules = array_diff(scandir(MODULES_DIR . 'ACP3/'), ['.', '..']);
 
             foreach ($modules as $module) {
                 $module = strtolower($module);

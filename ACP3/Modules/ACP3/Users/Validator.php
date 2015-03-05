@@ -179,7 +179,7 @@ class Validator extends Core\Validator\AbstractValidator
      *
      * @return boolean
      */
-    private function _gender($var)
+    protected function _gender($var)
     {
         return $var == 1 || $var == 2 || $var == 3;
     }
@@ -191,7 +191,7 @@ class Validator extends Core\Validator\AbstractValidator
      *
      * @return boolean
      */
-    private function _icq($var)
+    protected function _icq($var)
     {
         return (bool)preg_match('/^(\d{6,9})$/', $var);
     }

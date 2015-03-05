@@ -23,13 +23,14 @@ class Helpers
     protected $modules;
 
     /**
-     * @param Core\DB $db
+     * @param Core\DB      $db
      * @param Core\Modules $modules
      */
     public function __construct(
         Core\DB $db,
         Core\Modules $modules
-    ) {
+    )
+    {
         $this->db = $db;
         $this->modules = $modules;
     }
@@ -38,6 +39,7 @@ class Helpers
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
      *
      * @param Core\Modules\AbstractInstaller $moduleInstaller
+     *
      * @return array
      */
     public function checkInstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
@@ -95,15 +97,15 @@ class Helpers
         $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
         // Try to get all available services
-        if ($allModules === true) {
-            $modules = $this->modules->getAllModules();
-        } else {
-            $modules = $this->modules->getInstalledModules();
-        }
+        $modules = ($allModules === true) ? $this->modules->getAllModules() : $this->modules->getInstalledModules();
+        $moduleNamespaces = $this->modules->getModuleNamespaces();
+
         foreach ($modules as $module) {
-            $path = MODULES_DIR . $module['dir'] . '/config/services.yml';
-            if (is_file($path)) {
-                $loader->load($path);
+            foreach ($moduleNamespaces as $namespace) {
+                $path = MODULES_DIR . $namespace . '/' . $module['dir'] . '/config/services.yml';
+                if (is_file($path)) {
+                    $loader->load($path);
+                }
             }
         }
 
@@ -114,8 +116,9 @@ class Helpers
 
     /**
      * @param array $tables
-     * @param $exportType
-     * @param $withDropTables
+     * @param       $exportType
+     * @param       $withDropTables
+     *
      * @return string
      */
     public function exportDatabase(array $tables, $exportType, $withDropTables)

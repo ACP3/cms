@@ -15,7 +15,7 @@ class Model extends Core\Model
     /**
      * @return string
      */
-    private function _getPeriod()
+    protected function _getPeriod()
     {
         return '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
     }

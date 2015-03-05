@@ -358,7 +358,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param $formData
      */
-    private function _createPost($formData)
+    protected function _createPost($formData)
     {
         try {
             $this->usersValidator->validate($formData);
@@ -413,7 +413,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _editPost(array $formData)
+    protected function _editPost(array $formData)
     {
         try {
             $this->usersValidator->validate($formData, (int) $this->request->id);
@@ -474,7 +474,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _settingsPost(array $formData)
+    protected function _settingsPost(array $formData)
     {
         try {
             $this->usersValidator->validateSettings($formData);

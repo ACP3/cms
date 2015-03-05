@@ -52,19 +52,19 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @var bool
      */
-    private $emoticonsActive;
+    protected $emoticonsActive;
     /**
      * @var array
      */
     protected $commentsSettings;
 
     /**
-     * @param \ACP3\Core\Context\Frontend      $context
-     * @param \ACP3\Core\Date                  $date
-     * @param \ACP3\Core\Pagination            $pagination
+     * @param \ACP3\Core\Context\Frontend           $context
+     * @param \ACP3\Core\Date                       $date
+     * @param \ACP3\Core\Pagination                 $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model     $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validator $commentsValidator
-     * @param \ACP3\Core\Helpers\Secure        $secureHelper
+     * @param \ACP3\Core\Helpers\Secure             $secureHelper
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -80,9 +80,14 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
-        $this->commentsSettings = $this->config->getSettings('comments');
         $this->secureHelper = $secureHelper;
+    }
 
+    public function preDispatch()
+    {
+        parent::preDispatch();
+
+        $this->commentsSettings = $this->config->getSettings('comments');
         $this->emoticonsActive = ($this->commentsSettings['emoticons'] == 1);
     }
 
@@ -206,7 +211,7 @@ class Index extends Core\Modules\Controller\Frontend
     /**
      * @param array $formData
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $ip = $_SERVER['REMOTE_ADDR'];

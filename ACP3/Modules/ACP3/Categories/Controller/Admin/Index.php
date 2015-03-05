@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _createPost(array $formData)
+    protected function _createPost(array $formData)
     {
         try {
             $file = [];
@@ -178,7 +178,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param array $formData
      * @param array $category
      */
-    private function _editPost(array $formData, array $category)
+    protected function _editPost(array $formData, array $category)
     {
         try {
             $file = [];
@@ -255,7 +255,7 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @param array $formData
      */
-    private function _settingsPost(array $formData)
+    protected function _settingsPost(array $formData)
     {
         try {
             $this->categoriesValidator->validateSettings($formData, $this->lang);

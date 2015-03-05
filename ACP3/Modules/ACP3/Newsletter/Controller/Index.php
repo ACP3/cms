@@ -114,7 +114,7 @@ class Index extends Core\Modules\Controller\Frontend
      * @param array $formData
      * @throws Core\Exceptions\ResultNotExists
      */
-    private function _indexPost(array $formData)
+    protected function _indexPost(array $formData)
     {
         try {
             switch ($this->request->action) {
