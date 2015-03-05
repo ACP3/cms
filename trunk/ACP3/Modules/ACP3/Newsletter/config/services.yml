@@ -1,0 +1,51 @@
+parameters:
+  newsletter.controller.admin.accounts.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts'
+  newsletter.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index'
+  newsletter.controller.frontend.archive.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Archive'
+  newsletter.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Index'
+  newsletter.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index'
+  newsletter.helpers.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helpers'
+  newsletter.model.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model'
+  newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validator'
+  newsletter.installer.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer'
+
+services:
+  newsletter.controller.admin.accounts:
+    class: %newsletter.controller.admin.accounts.fqdn%
+    arguments: ['@core.context.admin', '@newsletter.model']
+
+  newsletter.controller.admin.index:
+    class: %newsletter.controller.admin.index.fqdn%
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@newsletter.model', '@newsletter.validator', '@newsletter.helpers']
+
+  newsletter.controller.frontend.archive:
+    class: %newsletter.controller.frontend.archive.fqdn%
+    arguments: ['@core.context.frontend', '@core.pagination', '@newsletter.model']
+
+  newsletter.controller.frontend.index:
+    class: %newsletter.controller.frontend.index.fqdn%
+    arguments: ['@core.context.frontend', '@core.helpers.secure', '@newsletter.helpers', '@newsletter.model', '@newsletter.validator']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
+
+  newsletter.controller.sidebar.index:
+    class: %newsletter.controller.sidebar.index.fqdn%
+    arguments: ['@core.context', '@core.helpers.secure']
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
+
+  newsletter.model:
+    class: %newsletter.model.fqdn%
+    arguments: ['@core.db']
+
+  newsletter.helpers:
+    class: %newsletter.helpers.fqdn%
+    arguments: ['@core.lang', '@core.mailer', '@core.router', '@core.helpers.stringFormatter', '@core.config', '@newsletter.model']
+
+  newsletter.validator:
+    class: %newsletter.validator.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@newsletter.model']
+
+  newsletter.installer:
+    class: %newsletter.installer.fqdn%
+    parent: core.modules.abstractInstaller

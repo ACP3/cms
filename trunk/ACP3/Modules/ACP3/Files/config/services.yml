@@ -1,0 +1,43 @@
+parameters:
+  files.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index'
+  files.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Index'
+  files.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Sidebar\Index'
+  files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
+  files.model.fqdn: 'ACP3\Modules\ACP3\Files\Model'
+  files.validator.fqdn: 'ACP3\Modules\ACP3\Files\Validator'
+  files.installer.fqdn: 'ACP3\Modules\ACP3\Files\Installer'
+
+services:
+  files.controller.admin.index:
+    class: %files.controller.admin.index.fqdn%
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@files.model', '@files.cache', '@files.validator', '@categories.helpers']
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.controller.frontend.index:
+    class: %files.controller.frontend.index.fqdn%
+    arguments: ['@core.context.frontend', '@core.date', '@files.model', '@files.cache', '@categories.model']
+
+  files.controller.sidebar.index:
+    class: %files.controller.sidebar.index.fqdn%
+    arguments: ['@core.context', '@core.date', '@files.model']
+
+  files.cache:
+    class: %files.cache.fqdn%
+    arguments: ['@files.cache.core', '@files.model']
+
+  files.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'files']
+
+  files.model:
+    class: %files.model.fqdn%
+    arguments: ['@core.db']
+
+  files.validator:
+    class: %files.validator.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@categories.helpers']
+
+  files.installer:
+    class: %files.installer.fqdn%
+    parent: core.modules.abstractInstaller

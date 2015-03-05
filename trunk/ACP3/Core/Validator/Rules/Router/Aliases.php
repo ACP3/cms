@@ -2,7 +2,7 @@
 namespace ACP3\Core\Validator\Rules\Router;
 
 use ACP3\Core;
-use ACP3\Modules\Seo;
+use ACP3\Modules\ACP3\Seo;
 
 /**
  * Class Aliases
@@ -15,13 +15,13 @@ class Aliases
      */
     protected $routerValidator;
     /**
-     * @var \ACP3\Modules\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model
      */
     protected $seoModel;
 
     /**
      * @param \ACP3\Core\Validator\Rules\Router $routerValidator
-     * @param \ACP3\Modules\Seo\Model           $seoModel
+     * @param \ACP3\Modules\ACP3\Seo\Model           $seoModel
      */
     public function __construct(
         Core\Validator\Rules\Router $routerValidator,

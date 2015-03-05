@@ -33,6 +33,10 @@ class ThemeResolver
      * @var string
      */
     protected $designAssetsPath = DESIGN_PATH_INTERNAL;
+    /**
+     * @var array
+     */
+    protected $moduleNamespaces = [];
 
     /**
      * @param \ACP3\Core\XML             $xml
@@ -59,6 +63,22 @@ class ThemeResolver
     }
 
     /**
+     * @return array
+     */
+    protected function _getModuleNamespaces()
+    {
+        if ($this->moduleNamespaces === []) {
+            $this->moduleNamespaces = array_merge(
+                ['ACP3'],
+                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
+                ['Custom']
+            );
+        }
+
+        return $this->moduleNamespaces;
+    }
+
+    /**
      * @param $modulePath
      * @param $designPath
      * @param $dir
@@ -78,14 +98,14 @@ class ThemeResolver
             $dir .= '/';
         }
 
-        $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
+            $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
 
-        // Return early, if the path has been already cached
-        if (isset($this->cachedPaths[$systemAssetPath])) {
-            return $this->cachedPaths[$systemAssetPath];
-        }
+            // Return early, if the path has been already cached
+            if (isset($this->cachedPaths[$systemAssetPath])) {
+                return $this->cachedPaths[$systemAssetPath];
+            }
 
-        return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
+            return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
     }
 
     /**
@@ -99,23 +119,32 @@ class ThemeResolver
     private function _resolveAssetPath($modulePath, $designPath, $dir, $file)
     {
         $assetPath = '';
-        $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
         $designAssetPath = $this->designAssetsPath . $designPath . $dir . $file;
 
+        // A theme has overridden a static asset of a module
         if (is_file($designAssetPath) === true) {
             $assetPath = $designAssetPath;
         } else {
             $designInfo = $this->xml->parseXmlFile($this->designAssetsPath . '/info.xml', '/design');
 
+            // Recursively iterate over the nested themes
             if (!empty($designInfo['parent'])) {
                 $this->designAssetsPath = ACP3_ROOT_DIR . 'designs/' . $designInfo['parent'];
                 $assetPath = $this->getStaticAssetPath($modulePath, $designPath, $dir, $file);
                 $this->designAssetsPath = DESIGN_PATH_INTERNAL;
-            } elseif (is_file($systemAssetPath) === true) {
-                $assetPath = $systemAssetPath;
+            }
+
+            // No overrides have been found -> iterate over all possible module namespaces
+            foreach (array_reverse($this->_getModuleNamespaces()) as $namespace) {
+                $moduleAssetPath = $this->modulesAssetsPath . $namespace . '/' . $modulePath . $dir . $file;
+                if (is_file($moduleAssetPath) === true) {
+                    $assetPath = $moduleAssetPath;
+                    break;
+                }
             }
         }
 
+        $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
         $this->cachedPaths[$systemAssetPath] = $assetPath;
         $this->newAssetPathsAdded = true;
 

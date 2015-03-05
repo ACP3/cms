@@ -3,8 +3,8 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
-use ACP3\Modules\System;
-use ACP3\Modules\Permissions;
+use ACP3\Modules\ACP3\System;
+use ACP3\Modules\ACP3\Permissions;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
@@ -38,11 +38,11 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      */
     protected $aclCache;
     /**
-     * @var \ACP3\Modules\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model
      */
     protected $systemModel;
     /**
-     * @var \ACP3\Modules\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model
      */
     protected $permissionsModel;
     /**
@@ -64,8 +64,8 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      * @param \ACP3\Core\DB                   $db
      * @param \ACP3\Core\XML                  $xml
      * @param \ACP3\Core\Cache                $aclCache
-     * @param \ACP3\Modules\System\Model      $systemModel
-     * @param \ACP3\Modules\Permissions\Model $permissionsModel
+     * @param \ACP3\Modules\ACP3\System\Model      $systemModel
+     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
      */
     public function __construct(
         Core\DB $db,
@@ -235,22 +235,12 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      */
     public function addResources($mode = 1)
     {
-        $moduleName = static::MODULE_NAME;
-        $dir = ucfirst($moduleName);
-        $path = MODULES_DIR . $dir . '/Controller/';
-        $controllers = array_diff(scandir($path), ['.', '..']);
+        $serviceIds = $this->container->getServiceIds();
 
-        foreach ($controllers as $controller) {
-            if (is_file($path . $controller) === true) {
-                $this->_insertAclResources($dir, substr($controller, 0, -4));
-            } elseif (is_dir($path . $controller) === true) {
-                $subModuleControllers = array_diff(scandir($path . $controller), ['.', '..']);
-
-                foreach ($subModuleControllers as $subController) {
-                    if (is_file($path . $controller . '/' . $subController) === true) {
-                        $this->_insertAclResources($dir, substr($subController, 0, -4), $controller);
-                    }
-                }
+        foreach ($serviceIds as $serviceId) {
+            if (strpos($serviceId, static::MODULE_NAME . '.controller.') !== false) {
+                list($module, $unused, $area, $controller) = explode('.', $serviceId);
+                $this->_insertAclResources($module, $controller, $area);
             }
         }
 
@@ -267,18 +257,14 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
     /**
      * Inserts a new resource into the database
      *
-     * @param        $module
-     * @param        $controller
+     * @param string $module
+     * @param string $controller
      * @param string $area
      */
-    protected function _insertAclResources($module, $controller, $area = '')
+    protected function _insertAclResources($module, $controller, $area)
     {
-        if (!empty($area)) {
-            $className = "\\ACP3\\Modules\\$module\\Controller\\$area\\$controller";
-        } else {
-            $className = "\\ACP3\\Modules\\$module\\Controller\\$controller";
-        }
-        $actions = get_class_methods($className);
+        $controllerService = $module . '.controller.' . $area . '.' . $controller;
+        $actions = get_class_methods($this->container->get($controllerService));
 
         foreach ($actions as $action) {
             // Only add the actual module actions (methods which begin with "action")
@@ -495,6 +481,6 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . 'modules WHERE `name` = ?', [$moduleName]) == 1;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . System\Model::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]) == 1;
     }
 }

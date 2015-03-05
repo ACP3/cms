@@ -2,7 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Secure;
-use ACP3\Modules\Users;
+use ACP3\Modules\ACP3\Users;
 
 /**
  * Class Auth
@@ -57,7 +57,7 @@ class Auth
      */
     protected $usersConfig;
     /**
-     * @var \ACP3\Modules\Users\Model
+     * @var \ACP3\Modules\ACP3\Users\Model
      */
     protected $usersModel;
     /**
@@ -69,7 +69,7 @@ class Auth
      * @param \ACP3\Core\Session        $session
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Config         $config
-     * @param \ACP3\Modules\Users\Model $usersModel
+     * @param \ACP3\Modules\ACP3\Users\Model $usersModel
      */
     public function __construct(
         Session $session,
@@ -81,15 +81,13 @@ class Auth
         $this->secureHelper = $secureHelper;
         $this->config = $config;
         $this->usersModel = $usersModel;
-
-        $this->authenticate();
     }
 
     /**
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
      * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
      */
-    protected function authenticate()
+    public function authenticate()
     {
         $settings = $this->config->getSettings('system');
 

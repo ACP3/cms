@@ -100,11 +100,15 @@ class Application
 
         // When in updater context, also include "normal" module services
         if (defined('IN_UPDATER') === true) {
-            $modules = array_diff(scandir(MODULES_DIR), ['.', '..']);
-            foreach ($modules as $module) {
-                $path = MODULES_DIR . $module . '/config/services.yml';
-                if (is_file($path) === true) {
-                    $loader->load($path);
+            $moduleNamespaces = $this->container->get('core.modules')->getModuleNamespaces();
+
+            foreach ($moduleNamespaces as $namespace) {
+                $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+                foreach ($namespaceModules as $module) {
+                    $path = MODULES_DIR . $namespace . '/' . $module . '/config/services.yml';
+                    if (is_file($path) === true) {
+                        $loader->load($path);
+                    }
                 }
             }
         }
