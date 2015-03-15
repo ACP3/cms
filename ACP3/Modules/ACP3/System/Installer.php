@@ -160,7 +160,7 @@ class Installer extends Modules\AbstractInstaller
             'mailer_type' => 'mail',
             'maintenance_mode' => false,
             'maintenance_message' => '',
-            'wysiwyg' => 'CKEditor'
+            'wysiwyg' => 'core.wysiwyg.ckeditor'
         ];
     }
 
