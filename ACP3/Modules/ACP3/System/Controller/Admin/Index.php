@@ -60,18 +60,20 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']));
 
-        // WYSIWYG-Editoren
-        $editors = array_diff(scandir(CLASSES_DIR . 'WYSIWYG'), ['.', '..', 'AbstractWYSIWYG.php']);
+        // WYSIWYG editors
+        $services = $this->container->getServiceIds();
         $wysiwyg = [];
+        foreach ($services as $service) {
+            if (strpos($service, 'core.wysiwyg') === 0) {
+                $editor = $this->container->get($service);
 
-        foreach ($editors as $editor) {
-            $editor = substr($editor, 0, strrpos($editor, '.php'));
-            if (!empty($editor)) {
-                $wysiwyg[] = [
-                    'value' => $editor,
-                    'selected' => $this->get('core.helpers.forms')->selectEntry('wysiwyg', $editor, $systemSettings['wysiwyg']),
-                    'lang' => $editor
-                ];
+                if ($editor instanceof Core\WYSIWYG\AbstractWYSIWYG) {
+                    $wysiwyg[] = [
+                        'value' => $service,
+                        'selected' => $this->get('core.helpers.forms')->selectEntry('wysiwyg', $service, $systemSettings['wysiwyg']),
+                        'lang' => $editor->getFriendlyName()
+                    ];
+                }
             }
         }
         $this->view->assign('wysiwyg', $wysiwyg);

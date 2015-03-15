@@ -38,15 +38,20 @@ class WYSIWYG extends AbstractFunction
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
-        $serviceId = 'core.wysiwyg.' . $this->container->get('core.config')->getSettings('system')['wysiwyg'];
+        $serviceId = $this->container->get('core.config')->getSettings('system')['wysiwyg'];
 
         if ($this->container->has($serviceId) === true) {
             /** @var Core\WYSIWYG\AbstractWYSIWYG $wysiwyg */
             $wysiwyg = $this->container->get($serviceId);
-            $wysiwyg->setParameters($params);
-            return $wysiwyg->display();
-        } else {
-            throw new \InvalidArgumentException('Can not find wysiwyg service ' . $serviceId);
+
+            if ($wysiwyg instanceof Core\WYSIWYG\AbstractWYSIWYG) {
+                $wysiwyg->setParameters($params);
+                return $wysiwyg->display();
+            }
+
+            throw new \InvalidArgumentException(get_class($wysiwyg) . ' has to extend the AbstractWYSIWYG class');
         }
+
+        throw new \InvalidArgumentException('Can not find wysiwyg service ' . $serviceId);
     }
 }

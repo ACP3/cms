@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\System;
 
 use ACP3\Core;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class Validator
@@ -21,26 +22,33 @@ class Validator extends Core\Validator\AbstractValidator
      * @var Core\Validator\Rules\Router
      */
     protected $routerValidator;
+    /**
+     * @var \Symfony\Component\DependencyInjection\Container
+     */
+    protected $container;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Date $dateValidator
-     * @param Core\Validator\Rules\Mime $mimeValidator
-     * @param Core\Validator\Rules\Router $routerValidator
+     * @param \ACP3\Core\Lang                                  $lang
+     * @param \ACP3\Core\Validator\Rules\Misc                  $validate
+     * @param \ACP3\Core\Validator\Rules\Date                  $dateValidator
+     * @param \ACP3\Core\Validator\Rules\Mime                  $mimeValidator
+     * @param \ACP3\Core\Validator\Rules\Router                $routerValidator
+     * @param \Symfony\Component\DependencyInjection\Container $container
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Date $dateValidator,
         Core\Validator\Rules\Mime $mimeValidator,
-        Core\Validator\Rules\Router $routerValidator
+        Core\Validator\Rules\Router $routerValidator,
+        Container $container
     ) {
         parent::__construct($lang, $validate);
 
         $this->dateValidator = $dateValidator;
         $this->mimeValidator = $mimeValidator;
         $this->routerValidator = $routerValidator;
+        $this->container = $container;
     }
 
     /**
@@ -62,7 +70,9 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->validate->isNumber($formData['flood']) === false) {
             $this->errors['flood'] = $this->lang->t('system', 'type_in_flood_barrier');
         }
-        if (preg_match('=/=', $formData['wysiwyg']) || is_file(CLASSES_DIR . 'WYSIWYG/' . $formData['wysiwyg'] . '.php') === false) {
+        if (empty($formData['wysiwyg']) ||
+            !$this->container->has($formData['wysiwyg']) ||
+            !($this->container->get($formData['wysiwyg']) instanceof Core\WYSIWYG\AbstractWYSIWYG)) {
             $this->errors['wysiwyg'] = $this->lang->t('system', 'select_editor');
         }
         if ($this->lang->languagePackExists($formData['language']) === false) {

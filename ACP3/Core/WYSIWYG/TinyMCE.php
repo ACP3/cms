@@ -37,6 +37,14 @@ class TinyMCE extends Textarea
     /**
      * @inheritdoc
      */
+    public function getFriendlyName()
+    {
+        return 'TinyMCE';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function setParameters(array $params = [])
     {
         parent::setParameters($params);

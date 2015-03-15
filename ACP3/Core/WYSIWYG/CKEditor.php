@@ -41,6 +41,14 @@ class CKEditor extends Textarea
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getFriendlyName()
+    {
+        return 'CKEditor';
+    }
+
+    /**
      * @param \ACP3\Modules\ACP3\Emoticons\Model $emoticonsModel
      *
      * @return $this
@@ -208,7 +216,7 @@ class CKEditor extends Textarea
 
         $info = simplexml_load_file(LIBRARIES_DIR . 'ckeditor/info.xml');
 
-        $out .= "<script type=\"text/javascript\" src=\"" . $basePath . 'ckeditor.js?v=' . ((string) $info->version) . "\"></script>\n";
+        $out .= "<script type=\"text/javascript\" src=\"" . $basePath . 'ckeditor.js?v=' . ((string)$info->version) . "\"></script>\n";
 
         return $out;
     }

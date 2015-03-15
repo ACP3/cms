@@ -247,7 +247,7 @@
         <item key="select_cache_images">Bitte wählen Sie aus, ob Bilder gecached werden sollen.</item>
         <item key="select_date">Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages.</item>
         <item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll.</item>
-        <item key="select_editor">Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen.</item>
+        <item key="select_editor">Bitte wählen Sie aus, mit welchem Editor Sie Ihre Einträge erstellen wollen.</item>
         <item key="select_export_type">Bitte wählen Sie die Exportart aus.</item>
         <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
         <item key="select_menu_item">Bitte wählen Sie einen der oben stehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.</item>

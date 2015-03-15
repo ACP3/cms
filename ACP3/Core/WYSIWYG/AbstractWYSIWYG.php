@@ -44,4 +44,11 @@ abstract class AbstractWYSIWYG
      * @return string
      */
     abstract public function display();
+
+    /**
+     * Returns the name of the WYSIWYG Editor
+     *
+     * @return string
+     */
+    abstract public function getFriendlyName();
 }

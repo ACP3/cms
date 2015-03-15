@@ -28,6 +28,14 @@ class Textarea extends AbstractWYSIWYG
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getFriendlyName()
+    {
+        return 'Textarea';
+    }
+
+    /**
      * @param $emoticonsHelpers
      *
      * @return $this

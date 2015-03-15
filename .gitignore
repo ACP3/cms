@@ -9,3 +9,5 @@
 /uploads/files/*
 /uploads/gallery/*
 /uploads/logs/*
+
+!.gitignore

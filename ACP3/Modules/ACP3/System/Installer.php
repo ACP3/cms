@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 53;
+    const SCHEMA_VERSION = 54;
 
     /**
      * @var array
@@ -313,6 +313,11 @@ class Installer extends Modules\AbstractInstaller
 
                     return $result;
                 }
+            ],
+            54 => [
+                'UPDATE `{pre}settings` SET `value` = "core.wyiswyg.ckeditor" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "CKEditor";',
+                'UPDATE `{pre}settings` SET `value` = "core.wyiswyg.textarea" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "Textarea";',
+                'UPDATE `{pre}settings` SET `value` = "core.wyiswyg.tinymce" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "TinyMCE";',
             ]
         ];
     }
