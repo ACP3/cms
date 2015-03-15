@@ -1,0 +1,3 @@
+[submodule "ACP3/Modules/ACP3/Acp"]
+	path = ACP3/Modules/ACP3/Acp
+	url = https://github.com/ACP3/module-acp.git
