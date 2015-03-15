@@ -16,6 +16,7 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Core\Date
      */
     protected $date;
+
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model
      */
@@ -304,7 +305,7 @@ class Index extends Core\Modules\Controller\Admin
                         'block_id' => $formData['block_id'],
                         'parent_id' => (int)$formData['parent_id'],
                         'display' => $formData['display'],
-                        'title' => $formData['title'],
+                        'title' => Core\Functions::strEncode($formData['title']),
                         'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
                         'target' => 1
                     ];
