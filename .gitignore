@@ -1,0 +1,11 @@
+/.idea
+/vendor
+/uploads/cache/images/*
+/uploads/cache/sql/*
+/uploads/cache/tpl_cached/*
+/uploads/cache/tpl_compiled/*
+/uploads/assets/*
+/uploads/categories/*
+/uploads/files/*
+/uploads/gallery/*
+/uploads/logs/*
