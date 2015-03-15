@@ -168,7 +168,7 @@ class Index extends Core\Modules\Controller\Admin
                     'block_id' => $formData['block_id'],
                     'parent_id' => (int)$formData['parent_id'],
                     'display' => $formData['display'],
-                    'title' => Core\Functions::strEncode($formData['title']),
+                    'title' => $formData['title'],
                     'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                     'target' => 1
                 ];
