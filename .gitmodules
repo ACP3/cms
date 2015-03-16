@@ -61,3 +61,6 @@
 [submodule "ACP3/Modules/ACP3/Users"]
 	path = ACP3/Modules/ACP3/Users
 	url = https://github.com/ACP3/module-users.git
+[submodule "ACP3/Modules/ACP3/WYSIWYGTinyMCE"]
+	path = ACP3/Modules/ACP3/WYSIWYGTinyMCE
+	url = https://github.com/ACP3/module-wysiwyg-tinymce.git

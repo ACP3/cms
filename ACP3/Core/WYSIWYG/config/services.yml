@@ -10,7 +10,3 @@ services:
     arguments: ['@core.modules']
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
-
-  core.wysiwyg.tinymce:
-    class: ACP3\Core\WYSIWYG\TinyMCE
-    arguments: ['@core.assets', '@core.view']
