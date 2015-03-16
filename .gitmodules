@@ -1,3 +1,63 @@
 [submodule "ACP3/Modules/ACP3/Acp"]
 	path = ACP3/Modules/ACP3/Acp
 	url = https://github.com/ACP3/module-acp.git
+[submodule "ACP3/Modules/ACP3/Articles"]
+	path = ACP3/Modules/ACP3/Articles
+	url = https://github.com/ACP3/module-articles.git
+[submodule "ACP3/Modules/ACP3/Captcha"]
+	path = ACP3/Modules/ACP3/Captcha
+	url = https://github.com/ACP3/module-captcha.git
+[submodule "ACP3/Modules/ACP3/Categories"]
+	path = ACP3/Modules/ACP3/Categories
+	url = https://github.com/ACP3/module-categories.git
+[submodule "ACP3/Modules/ACP3/Comments"]
+	path = ACP3/Modules/ACP3/Comments
+	url = https://github.com/ACP3/module-comments.git
+[submodule "ACP3/Modules/ACP3/Contact"]
+	path = ACP3/Modules/ACP3/Contact
+	url = https://github.com/ACP3/module-contact.git
+[submodule "ACP3/Modules/ACP3/Emoticons"]
+	path = ACP3/Modules/ACP3/Emoticons
+	url = https://github.com/ACP3/module-emoticons.git
+[submodule "ACP3/Modules/ACP3/Errors"]
+	path = ACP3/Modules/ACP3/Errors
+	url = https://github.com/ACP3/module-errors.git
+[submodule "ACP3/Modules/ACP3/Feeds"]
+	path = ACP3/Modules/ACP3/Feeds
+	url = https://github.com/ACP3/module-feeds.git
+[submodule "ACP3/Modules/ACP3/Files"]
+	path = ACP3/Modules/ACP3/Files
+	url = https://github.com/ACP3/module-files.git
+[submodule "ACP3/Modules/ACP3/Gallery"]
+	path = ACP3/Modules/ACP3/Gallery
+	url = https://github.com/ACP3/module-gallery.git
+[submodule "ACP3/Modules/ACP3/Guestbook"]
+	path = ACP3/Modules/ACP3/Guestbook
+	url = https://github.com/ACP3/module-guestbook.git
+[submodule "ACP3/Modules/ACP3/Menus"]
+	path = ACP3/Modules/ACP3/Menus
+	url = https://github.com/ACP3/module-menus.git
+[submodule "ACP3/Modules/ACP3/News"]
+	path = ACP3/Modules/ACP3/News
+	url = https://github.com/ACP3/module-news.git
+[submodule "ACP3/Modules/ACP3/Newsletter"]
+	path = ACP3/Modules/ACP3/Newsletter
+	url = https://github.com/ACP3/module-newsletter.git
+[submodule "ACP3/Modules/ACP3/Permissions"]
+	path = ACP3/Modules/ACP3/Permissions
+	url = https://github.com/ACP3/module-permissions.git
+[submodule "ACP3/Modules/ACP3/Polls"]
+	path = ACP3/Modules/ACP3/Polls
+	url = https://github.com/ACP3/module-polls.git
+[submodule "ACP3/Modules/ACP3/Search"]
+	path = ACP3/Modules/ACP3/Search
+	url = https://github.com/ACP3/module-search.git
+[submodule "ACP3/Modules/ACP3/Seo"]
+	path = ACP3/Modules/ACP3/Seo
+	url = https://github.com/ACP3/module-seo.git
+[submodule "ACP3/Modules/ACP3/System"]
+	path = ACP3/Modules/ACP3/System
+	url = https://github.com/ACP3/module-system.git
+[submodule "ACP3/Modules/ACP3/Users"]
+	path = ACP3/Modules/ACP3/Users
+	url = https://github.com/ACP3/module-users.git
