@@ -1,10 +1,10 @@
 {
-    "name": "acp3/module-acp",
+    "name": "acp3/module-system",
     "type": "acp3-module",
     "require": {
         "acp3/composer-installer": "*"
     },
     "extra": {
-        "installer-name": "ACP3/Acp"
+        "installer-name": "ACP3/System"
     }
 }
