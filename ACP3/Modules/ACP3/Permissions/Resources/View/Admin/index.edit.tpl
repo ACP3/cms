@@ -1,1 +1,0 @@
-{extends file="asset:permissions/admin/index.create.tpl"}
