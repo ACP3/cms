@@ -1,10 +1,4 @@
 services:
-  core.wysiwyg.ckeditor:
-    class: ACP3\Core\WYSIWYG\CKEditor
-    arguments: ['@core.modules', '@core.view']
-    calls:
-      - ['setEmoticonsModel', ['@?emoticons.model']]
-
   core.wysiwyg.textarea:
     class: ACP3\Core\WYSIWYG\Textarea
     arguments: ['@core.modules']

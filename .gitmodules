@@ -64,3 +64,6 @@
 [submodule "ACP3/Modules/ACP3/WYSIWYGTinyMCE"]
 	path = ACP3/Modules/ACP3/WYSIWYGTinyMCE
 	url = https://github.com/ACP3/module-wysiwyg-tinymce.git
+[submodule "ACP3/Modules/ACP3/WYSIWYGCKEditor"]
+	path = ACP3/Modules/ACP3/WYSIWYGCKEditor
+	url = https://github.com/ACP3/module-wysiwyg-ckeditor.git
