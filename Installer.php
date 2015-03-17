@@ -315,9 +315,9 @@ class Installer extends Modules\AbstractInstaller
                 }
             ],
             54 => [
-                'UPDATE `{pre}settings` SET `value` = "core.wyiswyg.ckeditor" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "CKEditor";',
-                'UPDATE `{pre}settings` SET `value` = "core.wyiswyg.textarea" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "Textarea";',
-                'UPDATE `{pre}settings` SET `value` = "core.wyiswyg.tinymce" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "TinyMCE";',
+                'UPDATE `{pre}settings` SET `value` = "core.wysiwyg.ckeditor" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "CKEditor";',
+                'UPDATE `{pre}settings` SET `value` = "core.wysiwyg.textarea" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "Textarea";',
+                'UPDATE `{pre}settings` SET `value` = "core.wysiwyg.tinymce" WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` = "wysiwyg" AND `value` = "TinyMCE";',
             ]
         ];
     }
