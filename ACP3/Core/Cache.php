@@ -52,7 +52,7 @@ class Cache
             return @unlink($dir);
         }
 
-        $files = array_diff(scandir($dir), ['.', '..']);
+        $files = array_diff(scandir($dir), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
         foreach ($files as $file) {
             $path = "$dir/$file";
 
