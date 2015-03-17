@@ -37,6 +37,7 @@
     "acp3/module-emoticons": "dev-master",
     "acp3/module-errors": "dev-master",
     "acp3/module-feeds": "dev-master",
+    "acp3/module-filemanager": "dev-master",
     "acp3/module-files": "dev-master",
     "acp3/module-gallery": "dev-master",
     "acp3/module-guestbook": "dev-master",
@@ -51,5 +52,5 @@
     "acp3/module-users": "dev-master",
     "acp3/module-wysiwyg-ckeditor": "dev-master",
     "acp3/module-wysiwyg-tinymce": "dev-master"
-    }
+  }
 }

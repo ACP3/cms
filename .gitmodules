@@ -67,3 +67,6 @@
 [submodule "ACP3/Modules/ACP3/WYSIWYGCKEditor"]
 	path = ACP3/Modules/ACP3/WYSIWYGCKEditor
 	url = https://github.com/ACP3/module-wysiwyg-ckeditor.git
+[submodule "ACP3/Modules/ACP3/Filemanager"]
+	path = ACP3/Modules/ACP3/Filemanager
+	url = https://github.com/ACP3/module-filemanager.git

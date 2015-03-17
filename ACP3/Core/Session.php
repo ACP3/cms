@@ -109,6 +109,29 @@ class Session
     }
 
     /**
+     * @param $key
+     *
+     * @return mixed|null
+     */
+    public function getParameter($key)
+    {
+        return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setParameter($key, $value)
+    {
+        $_SESSION[$key] = $value;
+
+        return $this;
+    }
+
+    /**
      * Reads a session from the database
      *
      * @param integer $sessionId
