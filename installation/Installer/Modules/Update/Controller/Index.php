@@ -44,7 +44,7 @@ class Index extends Core\Modules\Controller
 
         // ...danach die Restlichen
         foreach ($this->modules->getModuleNamespaces() as $namespace) {
-            $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+            $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
             foreach ($modules as $row) {
                 if (in_array(strtolower($row), $coreModules) === false) {
                     $results[$row] = $this->_returnUpdateModuleResult($row);

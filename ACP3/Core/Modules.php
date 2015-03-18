@@ -302,7 +302,7 @@ class Modules
     {
         if (empty($this->allModules)) {
             foreach ($this->getModuleNamespaces() as $namespace) {
-                $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+                $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
                 foreach ($modules as $module) {
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
