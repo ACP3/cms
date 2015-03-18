@@ -456,7 +456,7 @@ class Lang
         $data = [];
 
         foreach ($this->_getModuleNamespaces() as $namespace) {
-            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
 
             if (!empty($namespaceModules)) {
                 foreach ($namespaceModules as $module) {
