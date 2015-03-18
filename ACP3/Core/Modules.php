@@ -189,7 +189,7 @@ class Modules
     {
         $infos = [];
 
-        $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+        $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
 
         if (!empty($modules)) {
             foreach ($modules as $module) {
