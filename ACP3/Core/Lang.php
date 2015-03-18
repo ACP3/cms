@@ -548,7 +548,7 @@ class Lang
         $languages = [];
 
         foreach ($this->_getModuleNamespaces() as $namespace) {
-            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
 
             if (!empty($namespaceModules)) {
                 foreach ($namespaceModules as $module) {
@@ -575,7 +575,7 @@ class Lang
     protected function _registerLanguagePacks($path)
     {
         $languagePacks = [];
-        $moduleLanguages = array_diff(scandir($path), ['.', '..']);
+        $moduleLanguages = array_diff(scandir($path), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
 
         foreach ($moduleLanguages as $language) {
             if (is_file($path . $language) === true) {
