@@ -1,0 +1,66 @@
+parameters:
+  default_request: 'install'
+
+services:
+  core.context.install:
+    class: ACP3\Installer\Core\Context
+    arguments: ['@core.lang', '@core.request', '@core.router', '@core.view']
+
+  core.date:
+    class: ACP3\Installer\Core\Date
+    arguments: ['@core.lang', '@core.helpers.forms', '@core.validator.rules.date']
+
+  core.helpers.alerts:
+    class: ACP3\Installer\Core\Helpers\Alerts
+    arguments: ['@core.request', '@core.view', '@core.helpers.output']
+
+  core.helpers.forms:
+    class: ACP3\Core\Helpers\Forms
+
+  core.helpers.output:
+    class: ACP3\Core\Helpers\Output
+
+  core.helpers.redirect:
+    class: ACP3\Core\Helpers\RedirectMessages
+    arguments: ['@core.redirect', '@core.request', '@core.view']
+
+  core.helpers.secure:
+    class: ACP3\Core\Helpers\Secure
+    arguments: ['@core.view']
+
+  core.lang:
+    class: ACP3\Installer\Core\Lang
+    arguments: ['en_US']
+
+  core.modules.controller.install:
+    abstract: true
+    arguments: ['@core.context.install']
+
+  core.redirect:
+    class: ACP3\Core\Redirect
+    arguments: ['@core.request', '@core.router']
+
+  core.request:
+    class: ACP3\Installer\Core\Request
+    arguments: [%default_request%]
+
+  core.router:
+    class: ACP3\Installer\Core\Router
+    arguments: ['@core.request']
+
+  core.validator.rules.date:
+    class: ACP3\Core\Validator\Rules\Date
+
+  core.validator.rules.misc:
+    class: ACP3\Core\Validator\Rules\Misc
+    arguments: ['@core.request']
+
+  core.view:
+    class: ACP3\Core\View
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.view.renderer.smarty:
+    class: ACP3\Installer\Core\View\Renderer\Smarty
+    calls:
+      - ['setContainer', ['@service_container']]
