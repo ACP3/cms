@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Neuen Artikel erstellen</item>
+        <item key="admin_index_delete">Artikel löschen</item>
+        <item key="admin_index_edit">Artikel bearbeiten</item>
+        <item key="articles">Artikel</item>
+        <item key="create_menu_item">Menüpunkt erstellen</item>
+        <item key="latest_articles">Neueste Artikel</item>
+        <item key="mod_description">Dieses Modul verwaltet die Artikel.</item>
+        <item key="page_statements">Seitenangaben</item>
+        <item key="select_create_menu_item">Bitte wählen Sie aus, ob für diesen Artikel ein Menüpunkt erstellt werden soll oder nicht.</item>
+        <item key="text">Text</item>
+        <item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="title">Titel</item>
+        <item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
+    </keys>
+</language>
