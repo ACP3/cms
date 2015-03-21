@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="asc">Aufsteigend</item>
+        <item key="content_only">Nur Inhalt</item>
+        <item key="desc">Absteigend</item>
+        <item key="mod_description">Mit diesem Modul können andere Module durchsucht werden.</item>
+        <item key="no_area_selected">Bitte geben Sie an, welche Bereiche der Einträge durchsucht werden sollen.</item>
+        <item key="no_sorting_selected">Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden sollen.
+        </item>
+        <item key="no_module_selected">Bitte wählen Sie mindestens ein Modul aus, welches durchsucht werden soll.</item>
+        <item key="no_search_results">
+            <![CDATA[Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden.]]></item>
+        <item key="search">Suche</item>
+        <item key="search_after_areas">Zu durchsuchende Bereiche</item>
+        <item key="search_after_modules">Zu durchsuchende Module</item>
+        <item key="search_options">Suchoptionen</item>
+        <item key="search_results">Suchergebnisse</item>
+        <item key="search_term">Suchbegriff</item>
+        <item key="search_term_to_short">Der Suchbegriff sollte mindestens 4 Zeichen lang sein.</item>
+        <item key="sort_hits">Reihenfolge der Treffer</item>
+        <item key="submit_search">Suche starten</item>
+        <item key="title_and_content">Titel und Inhalt</item>
+        <item key="title_only">Nur Titel</item>
+    </keys>
+</language>
