@@ -1,0 +1,90 @@
+#loading-layer {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    display: none;
+    z-index: 999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#loading-layer h1 {
+    width: 100%;
+    margin: 0;
+    font-size: 26px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(350deg);
+    }
+}
+
+@-moz-keyframes rotate {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(350deg);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(350deg);
+    }
+}
+
+#loading-layer .glyphicon {
+    margin-bottom: 10px;
+    display: block;
+    -webkit-animation: rotate 2s linear infinite;
+    -moz-animation: rotate 2s linear infinite;
+    -o-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+}
+
+ul.unstyled,
+ol.unstyled {
+    padding-left: 20px;
+}
+
+p {
+    text-align: justify;
+}
+
+.tab-content > .tab-pane {
+    padding-top: 15px;
+}
+
+/* Layout */
+#logo {
+    width: 222px;
+    height: 89px;
+    margin: 10px 20px;
+    background: url('img/logo.png') no-repeat;
+    text-indent: -9999px;
+}
+
+#content {
+    margin: 0 20px;
+    display: block;
+}
+
+.licence {
+    width: 80%;
+    height: 400px;
+    margin: 0 auto 20px;
+    padding: 10px;
+    overflow: auto;
+}
