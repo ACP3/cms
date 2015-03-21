@@ -1,0 +1,11 @@
+{
+  "name": "acp3/module-wysiwyg-tinymce",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*",
+    "tinymce/tinymce": "4.1.9"
+  },
+  "extra": {
+    "installer-name": "ACP3/WYSIWYGTinyMCE"
+  }
+}
