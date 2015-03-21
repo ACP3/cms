@@ -1,0 +1,36 @@
+parameters:
+  categories.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index'
+  categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
+  categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
+  categories.model.fqdn: 'ACP3\Modules\ACP3\Categories\Model'
+  categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validator'
+  categories.installer.fqdn: 'ACP3\Modules\ACP3\Categories\Installer'
+
+services:
+  categories.controller.admin.index:
+    class: %categories.controller.admin.index.fqdn%
+    arguments: ['@core.context.admin', '@categories.model', '@categories.cache', '@categories.validator', '@core.helpers.secure']
+
+  categories.model:
+    class: %categories.model.fqdn%
+    arguments: ['@core.db']
+
+  categories.cache:
+    class: %categories.cache.fqdn%
+    arguments: ['@categories.cache.core', '@categories.model']
+
+  categories.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'categories']
+
+  categories.helpers:
+    class: %categories.helpers.fqdn%
+    arguments: ['@core.acl', '@core.lang', '@core.modules', '@core.view', '@core.helpers.forms', '@categories.cache', '@categories.model']
+
+  categories.validator:
+    class: %categories.validator.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime', '@categories.helpers', '@categories.model']
+
+  categories.installer:
+    class: %categories.installer.fqdn%
+    parent: core.modules.abstractInstaller
