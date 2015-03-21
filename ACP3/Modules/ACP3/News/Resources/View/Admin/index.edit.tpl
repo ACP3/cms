@@ -1,0 +1,1 @@
+{extends file="asset:news/admin/index.create.tpl"}
