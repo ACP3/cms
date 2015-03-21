@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="filemanager">File Manager</item>
+        <item key="mod_description">This module enables the usage of a file manager.</item>
+    </keys>
+</language>

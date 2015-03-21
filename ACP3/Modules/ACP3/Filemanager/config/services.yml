@@ -1,0 +1,11 @@
+parameters:
+  filemanager.installer.fqdn: 'ACP3\Modules\ACP3\Filemanager\Installer'
+  filemanager.helpers.fqdn: 'ACP3\Modules\ACP3\Filemanager\Helpers'
+
+services:
+  filemanager.installer:
+    class: %filemanager.installer.fqdn%
+    parent: core.modules.abstractInstaller
+
+  filemanager.helpers:
+    class: %filemanager.helpers.fqdn%

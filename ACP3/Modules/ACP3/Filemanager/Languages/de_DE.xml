@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="filemanager">Datei Manager</item>
+        <item key="mod_description">Dieses Modul ermöglicht die Nutzung eines Datei Managers.</item>
+    </keys>
+</language>
