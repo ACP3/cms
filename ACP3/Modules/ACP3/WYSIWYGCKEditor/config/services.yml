@@ -1,0 +1,15 @@
+parameters:
+  wysiwygckeditor.installer.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer'
+  core.wysiwyg.ckeditor.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\WYSIWYG\CKEditor'
+
+services:
+  wysiwygckeditor.installer:
+    class: %wysiwygckeditor.installer.fqdn%
+    parent: core.modules.abstractInstaller
+
+  core.wysiwyg.ckeditor:
+    class: %core.wysiwyg.ckeditor.fqdn%
+    arguments: ['@core.modules', '@core.view']
+    calls:
+      - ['setEmoticonsModel', ['@?emoticons.model']]
+      - ['setFilemanagerHelpers', ['@?filemanager.helpers']]
