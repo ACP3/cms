@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Neue Fotogalerie erstellen</item>
+        <item key="admin_index_delete">Fotogalerien löschen</item>
+        <item key="admin_index_edit">Fotogalerie bearbeiten</item>
+        <item key="admin_index_settings">Einstellungen</item>
+        <item key="admin_pictures_create">Bild hinzufügen</item>
+        <item key="admin_pictures_delete">Bilder löschen</item>
+        <item key="admin_pictures_edit">Bild bearbeiten</item>
+        <item key="details">Bilddetails</item>
+        <item key="filename">Dateiname</item>
+        <item key="gallery">Fotogalerien</item>
+        <item key="image_dimensions">Bildabmessungen</item>
+        <item key="image_filesize">Maximale Dateigröße des Bildes</item>
+        <item key="image_height">Maximal anzuzeigende Bildhöhe</item>
+        <item key="image_width">Maximal anzuzeigende Bildbreite</item>
+        <item key="invalid_image_filesize_entered">Bitte geben Sie die maximale Dateigröße des Bildes in Byte an.</item>
+        <item key="invalid_image_height_entered">Bitte geben Sie die maximale Bildhöhe in Pixel an.</item>
+        <item key="invalid_image_selected">Entweder haben Sie ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß.</item>
+        <item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an.</item>
+        <item key="latest_galleries">Aktuelle Fotogalerien</item>
+        <item key="max_image_height">Maximale Bildhöhe</item>
+        <item key="max_image_width">Maximale Bildbreite</item>
+        <item key="mod_description">Mit diesem Modul können die Fotogalerien verwaltet werden.</item>
+        <item key="next_image">Nächstes Bild</item>
+        <item key="no_picture_selected">Bitte wählen Sie ein Bild aus.</item>
+        <item key="no_pictures">Zu dieser Fotogalerie wurden noch keine Bilder hinzugefügt.</item>
+        <item key="frontend_index_pics">Bilder</item>
+        <item key="picture">Bild</item>
+        <item key="picture_index">Bildübersicht</item>
+        <item key="picture_information">Bild Informationen</item>
+        <item key="picture_x">Bild %d</item>
+        <item key="pictures">Bilder</item>
+        <item key="previous_image">Vorheriges Bild</item>
+        <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Bildern zugelassen werden sollen oder nicht.</item>
+        <item key="select_new_picture">Neues Bild auswählen</item>
+        <item key="select_picture">Bild auswählen</item>
+        <item key="select_use_overlay">Bitte wählen Sie aus, ob für die Bildpräsentation das Bildoverlay eingesetzt werden soll oder nicht.
+        </item>
+        <item key="thumb_image_height">Maximal anzuzeigende Höhe der Vorschaubilder</item>
+        <item key="thumb_image_width">Maximal anzuzeigende Breite der Vorschaubilder</item>
+        <item key="title">Titel</item>
+        <item key="type_in_gallery_title">Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="use_overlay">Bildoverlay verwenden</item>
+        <item key="use_overlay_description">Wenn das Bildoverlay aktiv ist, können keine Kommentare zu Bildern abgegeben werden.
+        </item>
+    </keys>
+</language>
