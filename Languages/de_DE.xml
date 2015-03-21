@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Emoticon hinzufügen</item>
+        <item key="admin_index_delete">Emoticon löschen</item>
+        <item key="admin_index_edit">Emoticon bearbeiten</item>
+        <item key="admin_index_settings">Einstellungen</item>
+        <item key="code">Code</item>
+        <item key="emoticons">Emoticons</item>
+        <item key="image_filesize">Maximale Dateigröße des Bildes</item>
+        <item key="image_height">Maximale Bildhöhe</item>
+        <item key="image_width">Maximale Bildbreite</item>
+        <item key="invalid_image_filesize_entered">Bitte geben Sie die maximale Dateigröße des Bildes in Byte an.</item>
+        <item key="invalid_image_height_entered">Bitte geben Sie die maximale Bildhöhe in Pixel an.</item>
+        <item key="invalid_image_selected">Entweder haben Sie ein unerlaubtes Dateiformat verwendet oder das Bild ist zu
+            breit, zu hoch oder zu groß.
+        </item>
+        <item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an.</item>
+        <item key="mod_description">Mit diesem Modul können Emoticons z.B. in Kommentare eingefügt werden.</item>
+        <item key="picture">Bild</item>
+        <item key="replace_picture">Bild ersetzen</item>
+        <item key="type_in_code">Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll.</item>
+        <item key="type_in_description">Bitte geben Sie zum Code eine kurze Beschreibung an.</item>
+    </keys>
+</language>
