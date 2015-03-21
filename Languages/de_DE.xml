@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_delete">Kommentare löschen</item>
+        <item key="admin_index_settings">Einstellungen</item>
+        <item key="admin_details_delete">Kommentare löschen</item>
+        <item key="admin_details_edit">Kommentar bearbeiten</item>
+        <item key="admin_details_index">Kommentare</item>
+        <item key="allow_emoticons">Emoticons erlauben</item>
+        <item key="comments">Kommentare</item>
+        <item key="comments_count">Kommentar Anzahl</item>
+        <item key="ip">IP Adresse</item>
+        <item key="mod_description">Mit diesem Modul können Kommentare für andere Module erstellt werden.</item>
+        <item key="module_doesnt_exist">Entweder existiert das ausgewählte Modul nicht oder es ist zur Zeit deaktiviert.
+        </item>
+        <item key="module">Modul</item>
+        <item key="select_emoticons">Bitte wählen Sie aus, ob Emoticons verwendet werden dürfen oder nicht.</item>
+        <item key="show_comments">Kommentare anzeigen</item>
+    </keys>
+</language>
