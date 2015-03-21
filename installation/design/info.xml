@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<design>
-    <name>ACP3 Installer</name>
-    <description>Design of the ACP3 4.0 Installer.</description>
-    <author>Tino Goratsch</author>
-    <version core="true"/>
-    <use_bootstrap>true</use_bootstrap>
-</design>
