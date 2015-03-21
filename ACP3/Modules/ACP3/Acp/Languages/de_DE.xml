@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="access_to_modules">Sie haben Zugriff auf folgende Module:</item>
+        <item key="acp">Administration</item>
+        <item key="mod_description">Die Startseite der Administrationsoberfläche.</item>
+    </keys>
+</language>
