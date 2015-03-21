@@ -1,5 +1,5 @@
 /.idea
-/vendor
+/ACP3/config/config.yml
 /uploads/cache/images/*
 /uploads/cache/sql/*
 /uploads/cache/tpl_cached/*
@@ -9,5 +9,6 @@
 /uploads/files/*
 /uploads/gallery/*
 /uploads/logs/*
+/vendor
 
 !.gitignore
