@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Create new gallery</item>
+        <item key="admin_index_delete">Delete galleries</item>
+        <item key="admin_index_edit">Edit gallery</item>
+        <item key="admin_index_settings">Settings</item>
+        <item key="admin_pictures_create">Add picture</item>
+        <item key="admin_pictures_delete">Delete pictures</item>
+        <item key="admin_pictures_edit">Edit picture</item>
+        <item key="details">Picture details</item>
+        <item key="filename">Filename</item>
+        <item key="gallery">Gallery</item>
+        <item key="image_dimensions">Image dimensions</item>
+        <item key="image_filesize">Maximum image filesize</item>
+        <item key="image_height">Maximum image height to be displayed</item>
+        <item key="image_width">Maximum image width to be displayed</item>
+        <item key="invalid_image_filesize_entered">Please type in the maximum image filesize in bytes.</item>
+        <item key="invalid_image_height_entered">Please type in the maximum image height in pixels.</item>
+        <item key="invalid_image_selected">Either you used an illegal file format or the image is too wide, too high or too large.</item>
+        <item key="invalid_image_width_entered">Please type in the maximum image width in pixels.</item>
+        <item key="latest_galleries">Latest galleries</item>
+        <item key="max_image_height">Maximum image height</item>
+        <item key="max_image_width">Maximum image width</item>
+        <item key="mod_description">With this module you can administer the galleries.</item>
+        <item key="next_image">Next image</item>
+        <item key="no_picture_selected">Please select a picture</item>
+        <item key="no_pictures">In this gallery no pictures have been added.</item>
+        <item key="frontend_index_pics">Pictures</item>
+        <item key="picture">Picture</item>
+        <item key="picture_index">Picture overview</item>
+        <item key="picture_information">Picture information</item>
+        <item key="picture_x">Picture %d</item>
+        <item key="pictures">Pictures</item>
+        <item key="previous_image">Previous image</item>
+        <item key="select_allow_comments">Please select whether you to allow users to comment pictures.</item>
+        <item key="select_new_picture">Select a new picture</item>
+        <item key="select_picture">Select picture</item>
+        <item key="select_use_overlay">Please select whether use want to use the image overlay or not.</item>
+        <item key="thumb_image_height">Maximum thumb image height to be displayed.</item>
+        <item key="thumb_image_width">Maximum thumb image width to be displayed.</item>
+        <item key="title">Title</item>
+        <item key="type_in_gallery_title">The name of the gallery should be at least 3 characters long.</item>
+        <item key="use_overlay">Use image overlay</item>
+        <item key="use_overlay_description">If the image overlay is active, it's not possible to view and post comments.
+        </item>
+    </keys>
+</language>

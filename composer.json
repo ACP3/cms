@@ -1,0 +1,10 @@
+{
+    "name": "acp3/module-gallery",
+    "type": "acp3-module",
+    "require": {
+        "acp3/composer-installer": "*"
+    },
+    "extra": {
+        "installer-name": "ACP3/Gallery"
+    }
+}

@@ -1,0 +1,51 @@
+parameters:
+  gallery.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Index'
+  gallery.controller.admin.pictures.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures'
+  gallery.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Index'
+  gallery.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Sidebar\Index'
+  gallery.cache.fqdn: 'ACP3\Modules\ACP3\Gallery\Cache'
+  gallery.helpers.fqdn: 'ACP3\Modules\ACP3\Gallery\Helpers'
+  gallery.model.fqdn: 'ACP3\Modules\ACP3\Gallery\Model'
+  gallery.validator.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator'
+  gallery.installer.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer'
+
+services:
+  gallery.controller.admin.index:
+    class: %gallery.controller.admin.index.fqdn%
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@gallery.cache', '@gallery.helpers', '@gallery.model', '@gallery.validator']
+
+  gallery.controller.admin.pictures:
+    class: %gallery.controller.admin.pictures.fqdn%
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.sort', '@gallery.helpers', '@gallery.model', '@gallery.cache', '@gallery.validator']
+
+  gallery.controller.frontend.index:
+    class: %gallery.controller.frontend.index.fqdn%
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@gallery.model', '@gallery.cache']
+
+  gallery.controller.sidebar.index:
+    class: %gallery.controller.sidebar.index.fqdn%
+    arguments: ['@core.context', '@core.date', '@gallery.model']
+
+  gallery.cache:
+    class: %gallery.cache.fqdn%
+    arguments: ['@gallery.cache.core', '@gallery.model', '@core.config']
+
+  gallery.cache.core:
+    class: ACP3\Core\Cache
+    arguments: ['@service_container', 'gallery']
+
+  gallery.model:
+    class: %gallery.model.fqdn%
+    arguments: ['@core.db']
+
+  gallery.helpers:
+    class: %gallery.helpers.fqdn%
+    arguments: ['@core.router.aliases', '@core.seo', '@gallery.model']
+
+  gallery.validator:
+    class: %gallery.validator.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.modules']
+
+  gallery.installer:
+    class: %gallery.installer.fqdn%
+    parent: core.modules.abstractInstaller
