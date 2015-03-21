@@ -1,0 +1,11 @@
+{
+  "name": "acp3/module-wysiwyg-ckeditor",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*",
+    "ckeditor/ckeditor": "4.4.7"
+  },
+  "extra": {
+    "installer-name": "ACP3/WYSIWYGCKEditor"
+  }
+}

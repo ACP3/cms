@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="wysiwygckeditor">CKEditor (WYSIWYG-Editor)</item>
+        <item key="mod_description">Dieses Modul ermöglicht die Nutzung des CKEditor WYSIWYG-Editors.</item>
+    </keys>
+</language>
