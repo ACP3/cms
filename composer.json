@@ -1,0 +1,11 @@
+{
+    "name": "acp3/module-files",
+    "type": "acp3-module",
+    "require": {
+      "acp3/composer-installer": "*",
+      "acp3/module-categories": "dev-master"
+    },
+    "extra": {
+        "installer-name": "ACP3/Files"
+    }
+}
