@@ -1,0 +1,11 @@
+{
+    "name": "acp3/module-menus",
+    "type": "acp3-module",
+	"licence": "GPL-2.0+",
+    "require": {
+        "acp3/composer-installer": "*"
+    },
+    "extra": {
+        "installer-name": "ACP3/Menus"
+    }
+}
