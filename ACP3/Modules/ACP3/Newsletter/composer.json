@@ -1,0 +1,10 @@
+{
+    "name": "acp3/module-newsletter",
+    "type": "acp3-module",
+    "require": {
+        "acp3/composer-installer": "*"
+    },
+    "extra": {
+        "installer-name": "ACP3/Newsletter"
+    }
+}
