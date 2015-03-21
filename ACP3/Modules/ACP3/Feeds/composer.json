@@ -1,0 +1,15 @@
+{
+  "name": "acp3/module-feeds",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*",
+    "mibe/feedwriter": "1.0.1"
+  },
+  "suggest": {
+    "acp3/module-files": "Makes it possible to show feeds for the Downloads module.",
+    "acp3/module-news": "Makes it possible to show feeds for the News module."
+  },
+  "extra": {
+    "installer-name": "ACP3/Feeds"
+  }
+}

@@ -1,0 +1,35 @@
+parameters:
+  feeds.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Admin\Index'
+  feeds.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Index'
+  feeds.extensions.fqdn: 'ACP3\Modules\ACP3\Feeds\Extensions'
+  feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validator'
+  feeds.installer.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer'
+
+services:
+  feeds.controller.admin.index:
+    class: %feeds.controller.admin.index.fqdn%
+    arguments: ['@core.context.admin', '@core.helpers.secure', '@feeds.validator']
+
+  feeds.controller.frontend.index:
+    class: %feeds.controller.frontend.index.fqdn%
+    arguments: ['@core.context.frontend', '@feeds.extensions']
+
+  feeds.validator:
+    class: %feeds.validator.fqdn%
+    parent: core.validator.abstract
+
+  feeds.extensions:
+    class: %feeds.extensions.fqdn%
+    arguments: ['@core.date', '@core.router', '@core.helpers.stringFormatter']
+    calls:
+      - ['setFilesModel', ['@?files.model']]
+      - ['setNewsModel', ['@?news.model']]
+
+  feeds.installer:
+    class: %feeds.installer.fqdn%
+    parent: core.modules.abstractInstaller
+
+  core.view.renderer.feedgenerator:
+    class: ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
+    calls:
+      - ['setContainer', ['@service_container']]
