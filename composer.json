@@ -1,0 +1,15 @@
+{
+  "name": "acp3/module-search",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*"
+  },
+  "suggest": {
+    "acp3/module-articles": "Makes it possible to search through Articles.",
+    "acp3/module-files": "Makes it possible to search through the Downloads.",
+    "acp3/module-news": "Makes it possible to search through the News."
+  },
+  "extra": {
+    "installer-name": "ACP3/Search"
+  }
+}
