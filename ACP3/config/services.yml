@@ -139,10 +139,5 @@ services:
     calls:
       - ['setContainer', ['@service_container']]
 
-  core.view.renderer.feedgenerator:
-    class: ACP3\Core\View\Renderer\FeedGenerator
-    calls:
-      - ['setContainer', ['@service_container']]
-
   core.xml:
     class: ACP3\Core\XML
