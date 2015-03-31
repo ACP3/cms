@@ -646,21 +646,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ACP3/setup.git",
-                "reference": "dc98e135c3d531e755a635ff8025942adb80b2ce"
+                "reference": "75d224aa2e7205226151b7c9c50cbe235058ad22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/setup/zipball/dc98e135c3d531e755a635ff8025942adb80b2ce",
-                "reference": "dc98e135c3d531e755a635ff8025942adb80b2ce",
+                "url": "https://api.github.com/repos/ACP3/setup/zipball/75d224aa2e7205226151b7c9c50cbe235058ad22",
+                "reference": "75d224aa2e7205226151b7c9c50cbe235058ad22",
                 "shasum": ""
             },
             "require": {
                 "acp3/composer-installer": "*"
             },
             "type": "acp3-core",
+            "extra": {
+                "installer-name": "installation"
+            },
             "autoload": {
                 "psr-4": {
-                    "ACP3\\Installer\\": "./installation/Installer"
+                    "ACP3\\Installer\\": "/installation/Installer"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -670,7 +673,7 @@
                     "email": "mail@acp3-cms.net"
                 }
             ],
-            "time": "2015-03-30 16:05:20"
+            "time": "2015-03-31 10:08:23"
         },
         {
             "name": "ckeditor/ckeditor",
