@@ -383,9 +383,13 @@ class Index extends Core\Modules\Controller\Admin
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar'],
-                'comments' => $formData['comments']
+                'sidebar' => (int)$formData['sidebar']
             ];
+
+            if ($this->commentsHelpers) {
+                $data['comments'] = $formData['comments'];
+            }
+
             $bool = $this->config->setSettings($data, 'files');
 
             $this->secureHelper->unsetFormToken($this->request->query);

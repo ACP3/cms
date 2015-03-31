@@ -362,8 +362,12 @@ class Index extends Core\Modules\Controller\Admin
                 'readmore' => $formData['readmore'],
                 'readmore_chars' => (int)$formData['readmore_chars'],
                 'category_in_breadcrumb' => $formData['category_in_breadcrumb'],
-                'comments' => $formData['comments'],
             ];
+
+            if ($this->commentsHelpers) {
+                $data['comments'] = $formData['comments'];
+            }
+
             $bool = $this->config->setSettings($data, 'news');
 
             $this->secureHelper->unsetFormToken($this->request->query);
