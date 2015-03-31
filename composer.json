@@ -49,6 +49,7 @@
     "acp3/module-system": "dev-master",
     "acp3/module-users": "dev-master",
     "acp3/module-wysiwyg-ckeditor": "dev-master",
-    "acp3/module-wysiwyg-tinymce": "dev-master"
+    "acp3/module-wysiwyg-tinymce": "dev-master",
+    "acp3/setup": "dev-master"
   }
 }

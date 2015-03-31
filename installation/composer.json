@@ -9,7 +9,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "ACP3\\Installer\\": "./installation/Installer"
+      "ACP3\\Installer\\": "/installation/Installer"
     }
   },
   "require": {
