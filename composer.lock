@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a0023bc3545412dba249f1a50a13571a",
+    "hash": "baca897d5fec92d4cc8119af771fa086",
     "packages": [
         {
             "name": "acp3/composer-installer",
@@ -300,12 +300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ACP3/module-files.git",
-                "reference": "d4ff7597de08d190bb09d6576f50dc63635a011d"
+                "reference": "d2885510670ec3f1633db5463db16a19261f08b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-files/zipball/d4ff7597de08d190bb09d6576f50dc63635a011d",
-                "reference": "d4ff7597de08d190bb09d6576f50dc63635a011d",
+                "url": "https://api.github.com/repos/ACP3/module-files/zipball/d2885510670ec3f1633db5463db16a19261f08b0",
+                "reference": "d2885510670ec3f1633db5463db16a19261f08b0",
                 "shasum": ""
             },
             "require": {
@@ -317,7 +317,7 @@
                 "installer-name": "ACP3/Files"
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2015-03-16 19:39:41"
+            "time": "2015-03-31 10:43:22"
         },
         {
             "name": "acp3/module-gallery",
@@ -397,12 +397,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ACP3/module-news.git",
-                "reference": "f84dd52fffbc70ec7c8e7a35c8eda6a71403c7c0"
+                "reference": "11bd03ac148e83811a18caad51bb06f3b02dde46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-news/zipball/f84dd52fffbc70ec7c8e7a35c8eda6a71403c7c0",
-                "reference": "f84dd52fffbc70ec7c8e7a35c8eda6a71403c7c0",
+                "url": "https://api.github.com/repos/ACP3/module-news/zipball/11bd03ac148e83811a18caad51bb06f3b02dde46",
+                "reference": "11bd03ac148e83811a18caad51bb06f3b02dde46",
                 "shasum": ""
             },
             "require": {
@@ -414,7 +414,7 @@
                 "installer-name": "ACP3/News"
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2015-03-16 19:39:32"
+            "time": "2015-03-31 10:43:22"
         },
         {
             "name": "acp3/module-newsletter",
