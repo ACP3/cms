@@ -140,7 +140,7 @@ class CKEditor extends Textarea
 
         // Full toolbar
         if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic')) {
-            $this->config['extraPlugins'] = 'dialogadvtab,bidi,colorbutton,colordialog,templates,div,find,flash,font,forms,iframe,indentblock,smiley,justify,language,liststyle,newpage,pagebreak,preview,print,save,selectall,showblocks,oembed,divarea,codemirror';
+            $this->config['extraPlugins'] = 'oembed,divarea,codemirror';
 
             if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
                 // Set paths to the KCFinder
