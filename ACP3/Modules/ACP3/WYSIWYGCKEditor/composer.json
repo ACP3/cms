@@ -3,7 +3,7 @@
   "type": "acp3-module",
   "require": {
     "acp3/composer-installer": "*",
-    "ckeditor/ckeditor": "full/4.4.7"
+    "ckeditor/ckeditor": "dev-full/stable"
   },
   "extra": {
     "installer-name": "ACP3/WYSIWYGCKEditor"
