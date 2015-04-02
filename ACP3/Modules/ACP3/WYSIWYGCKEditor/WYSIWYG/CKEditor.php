@@ -140,7 +140,7 @@ class CKEditor extends Textarea
 
         // Full toolbar
         if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic')) {
-            $this->config['extraPlugins'] = 'oembed,divarea,codemirror';
+            $this->config['extraPlugins'] = 'codemirror,divarea,lineutils,oembed,widget';
 
             if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
                 // Set paths to the KCFinder
@@ -215,7 +215,9 @@ class CKEditor extends Textarea
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('lineutils', '" . $ckeditorPluginsDir . "lineutils/');\n";
         $js .= "CKEDITOR.plugins.addExternal('oembed', '" . $ckeditorPluginsDir . "oembed/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('widget', '" . $ckeditorPluginsDir . "widget/');\n";
 
         $_config = $this->_configure();
         if (!empty($_config)) {
