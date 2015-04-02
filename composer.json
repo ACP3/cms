@@ -1,6 +1,7 @@
 {
   "name": "acp3/acp3",
   "description": "ACP3 is a highly customizable and easy to use web content management system based on PHP5 and MySQL.",
+  "license": "GPL-2.0+",
   "authors": [
     {
       "name": "Tino Goratsch",
