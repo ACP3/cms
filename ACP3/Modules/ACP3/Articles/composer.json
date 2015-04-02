@@ -1,11 +1,13 @@
 {
-    "name": "acp3/module-articles",
-    "type": "acp3-module",
-    "require": {
-        "acp3/composer-installer": "*",
-        "acp3/module-system": "dev-master"
-    },
-    "extra": {
-        "installer-name": "ACP3/Articles"
-    }
+  "name": "acp3/module-articles",
+  "description": "Provides the articles module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*",
+    "acp3/module-system": "dev-master"
+  },
+  "extra": {
+    "installer-name": "ACP3/Articles"
+  }
 }

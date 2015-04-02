@@ -1,10 +1,12 @@
 {
-    "name": "acp3/module-guestbook",
-    "type": "acp3-module",
-    "require": {
-        "acp3/composer-installer": "*"
-    },
-    "extra": {
-        "installer-name": "ACP3/Guestbook"
-    }
+  "name": "acp3/module-guestbook",
+  "description": "Provides the guestbook module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*"
+  },
+  "extra": {
+    "installer-name": "ACP3/Guestbook"
+  }
 }

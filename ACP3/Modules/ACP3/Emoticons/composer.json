@@ -1,10 +1,12 @@
 {
-    "name": "acp3/module-emoticons",
-    "type": "acp3-module",
-    "require": {
-        "acp3/composer-installer": "*"
-    },
-    "extra": {
-        "installer-name": "ACP3/Emoticons"
-    }
+  "name": "acp3/module-emoticons",
+  "description": "Provides the emoticons module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*"
+  },
+  "extra": {
+    "installer-name": "ACP3/Emoticons"
+  }
 }

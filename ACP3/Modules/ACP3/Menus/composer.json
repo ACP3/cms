@@ -1,11 +1,12 @@
 {
-    "name": "acp3/module-menus",
-    "type": "acp3-module",
-	"licence": "GPL-2.0+",
-    "require": {
-        "acp3/composer-installer": "*"
-    },
-    "extra": {
-        "installer-name": "ACP3/Menus"
-    }
+  "name": "acp3/module-menus",
+  "description": "Provides the menus module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*"
+  },
+  "extra": {
+    "installer-name": "ACP3/Menus"
+  }
 }

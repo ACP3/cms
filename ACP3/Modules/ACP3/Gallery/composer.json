@@ -1,10 +1,12 @@
 {
-    "name": "acp3/module-gallery",
-    "type": "acp3-module",
-    "require": {
-        "acp3/composer-installer": "*"
-    },
-    "extra": {
-        "installer-name": "ACP3/Gallery"
-    }
+  "name": "acp3/module-gallery",
+  "description": "Provides the gallery module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*"
+  },
+  "extra": {
+    "installer-name": "ACP3/Gallery"
+  }
 }

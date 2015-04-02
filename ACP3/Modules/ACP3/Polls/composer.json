@@ -1,10 +1,12 @@
 {
-    "name": "acp3/module-polls",
-    "type": "acp3-module",
-    "require": {
-        "acp3/composer-installer": "*"
-    },
-    "extra": {
-        "installer-name": "ACP3/Polls"
-    }
+  "name": "acp3/module-polls",
+  "description": "Provides the polls module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "require": {
+    "acp3/composer-installer": "*"
+  },
+  "extra": {
+    "installer-name": "ACP3/Polls"
+  }
 }

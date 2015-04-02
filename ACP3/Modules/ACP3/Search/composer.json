@@ -1,5 +1,7 @@
 {
   "name": "acp3/module-search",
+  "description": "Provides the search module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
   "type": "acp3-module",
   "require": {
     "acp3/composer-installer": "*"

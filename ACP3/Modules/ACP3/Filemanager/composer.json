@@ -1,7 +1,8 @@
 {
   "name": "acp3/module-filemanager",
+  "description": "Provides the filemanager module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
   "type": "acp3-module",
-  "licence": "GPL-2.0+",
   "require": {
     "acp3/composer-installer": "*"
   },
