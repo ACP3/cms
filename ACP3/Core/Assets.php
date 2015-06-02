@@ -9,6 +9,10 @@ use ACP3\Core\Assets\ThemeResolver;
  */
 class Assets
 {
+    const ASSETS_PATH_CSS = 'Assets/css';
+    const ASSETS_PATH_JS = 'Assets/js';
+    const ASSETS_PATH_JS_LIBS = 'Assets/js/libs';
+
     /**
      * @var \ACP3\Core\Cache
      */
@@ -139,10 +143,7 @@ class Assets
      */
     public function includeCssFiles($layout)
     {
-        $cacheId = 'assets_';
-        $cacheId .= $this->config->getSettings('system')['design'] . '_';
-        $cacheId .= 'css_';
-        $cacheId .= $this->_getJsLibrariesCache();
+        $cacheId = $this->_buildCacheId('css');
 
         if ($this->systemCache->contains($cacheId) === false) {
             $css = [];
@@ -150,34 +151,34 @@ class Assets
             // At first, load the library stylesheets
             foreach ($this->libraries as $library) {
                 if ($library['enabled'] === true && isset($library['css']) === true) {
-                    $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', $library['css']);
+                    $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, $library['css']);
                 }
             }
 
             if (isset($this->designXml->css)) {
                 foreach ($this->designXml->css->item as $file) {
-                    $css[] = $this->themeResolver->getStaticAssetPath('', '', 'css', trim($file));
+                    $css[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, trim($file));
                 }
             }
 
             // General system styles
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/css', 'style.css');
+            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, 'style.css');
             // Stylesheet of the current theme
-            $css[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.css');
+            $css[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, $layout . '.css');
 
             // Module stylesheets
             $modules = $this->modules->getActiveModules();
             foreach ($modules as $module) {
                 $modulePath = $module['dir'] . '/Resources/';
                 $designPath = $module['dir'] . '/';
-                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'style.css')) &&
+                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'style.css')) &&
                     $module['dir'] !== 'System'
                 ) {
                     $css[] = $stylesheet;
                 }
 
                 // Append custom styles to the default module styling
-                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, 'Assets/css', 'append.css'))) {
+                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'append.css'))) {
                     $css[] = $stylesheet;
                 }
             }
@@ -196,28 +197,25 @@ class Assets
      */
     public function includeJsFiles($layout)
     {
-        $cacheId = 'assets_';
-        $cacheId .= $this->config->getSettings('system')['design'] . '_';
-        $cacheId .= 'js_';
-        $cacheId .= $this->_getJsLibrariesCache();
+        $cacheId = $this->_buildCacheId('js');
 
         if ($this->systemCache->contains($cacheId) === false) {
             $scripts = [];
             foreach ($this->libraries as $library) {
                 if ($library['enabled'] === true && isset($library['js']) === true) {
-                    $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, 'Assets/js/libs', $library['js']);
+                    $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_JS_LIBS, $library['js']);
                 }
             }
 
             // Include additional js files from the design
             if (isset($this->designXml->js)) {
                 foreach ($this->designXml->js->item as $js) {
-                    $scripts[] = $this->themeResolver->getStaticAssetPath('', '', 'js', $js);
+                    $scripts[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $js);
                 }
             }
 
             // Include general js file of the layout
-            $scripts[] = $this->themeResolver->getStaticAssetPath('', '', '', $layout . '.js');
+            $scripts[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
 
             $this->systemCache->save($cacheId, $scripts);
         }
@@ -337,5 +335,19 @@ class Assets
         }
 
         return $this->librariesCache;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
+    private function _buildCacheId($type)
+    {
+        $cacheId = 'assets_';
+        $cacheId .= $this->config->getSettings('system')['design'] . '_';
+        $cacheId .= $type . '_';
+        $cacheId .= $this->_getJsLibrariesCache();
+        return $cacheId;
     }
 }
