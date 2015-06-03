@@ -1,4 +1,8 @@
 services:
+  core.helpers.view.checkAccess:
+    class: ACP3\Core\Helpers\View\CheckAccess
+    arguments: ['@core.acl', '@core.lang', '@core.router', '@core.view']
+
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
     arguments: ['@core.request', '@core.view', '@core.helpers.output']

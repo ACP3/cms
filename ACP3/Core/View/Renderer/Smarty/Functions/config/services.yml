@@ -1,7 +1,7 @@
 services:
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess
-    arguments: ['@core.acl', '@core.lang', '@core.router', '@smarty.plugin.icon']
+    arguments: ['@core.helpers.view.checkAccess']
 
   smarty.plugin.date_format:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateFormat
@@ -18,10 +18,6 @@ services:
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\Functions\HasPermission
     arguments: ['@core.acl']
-
-  smarty.plugin.icon:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Icon
-    arguments: ['@core.assets.themeResolver', '@core.validator.rules.misc']
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
