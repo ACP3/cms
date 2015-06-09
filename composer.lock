@@ -627,12 +627,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ACP3/module-system.git",
-                "reference": "eae56a0f291620c76154cd0ec0b16e3495d50059"
+                "reference": "3903292560a0d96f2cefb0fd3dc5bc8bc5f9cf47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-system/zipball/eae56a0f291620c76154cd0ec0b16e3495d50059",
-                "reference": "eae56a0f291620c76154cd0ec0b16e3495d50059",
+                "url": "https://api.github.com/repos/ACP3/module-system/zipball/3903292560a0d96f2cefb0fd3dc5bc8bc5f9cf47",
+                "reference": "3903292560a0d96f2cefb0fd3dc5bc8bc5f9cf47",
                 "shasum": ""
             },
             "require": {
@@ -647,7 +647,7 @@
                 "GPL-2.0+"
             ],
             "description": "Provides the system module for the ACP3 CMS.",
-            "time": "2015-04-19 20:38:34"
+            "time": "2015-06-03 20:40:36"
         },
         {
             "name": "acp3/module-users",

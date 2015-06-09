@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core;
 
-use Doctrine\Common\Cache\CacheProvider;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
