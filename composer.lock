@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "86b98e6315bf7aa3e1f1ca4f31c361bf",
+    "hash": "2c47ef7df62680d63f0e44707e2b58d3",
     "packages": [
         {
             "name": "acp3/composer-installer",
@@ -47,6 +47,40 @@
             ],
             "description": "Adds a custom installer to Composer so that it can install ACP3 modules into the right location.",
             "time": "2015-03-21 20:27:18"
+        },
+        {
+            "name": "acp3/core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ACP3/core.git",
+                "reference": "3cc1bead00de0a4a5f01db84774d4ccf1dad34c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ACP3/core/zipball/3cc1bead00de0a4a5f01db84774d4ccf1dad34c5",
+                "reference": "3cc1bead00de0a4a5f01db84774d4ccf1dad34c5",
+                "shasum": ""
+            },
+            "require": {
+                "acp3/composer-installer": "*"
+            },
+            "type": "acp3-core",
+            "extra": {
+                "installer-name": "ACP3/Core"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Tino Goratsch",
+                    "email": "mail@acp3-cms.net"
+                }
+            ],
+            "description": "Provides the core components of the ACP3 CMS.",
+            "time": "2015-06-10 19:49:05"
         },
         {
             "name": "acp3/module-acp",
@@ -746,7 +780,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/setup/zipball/4ac251edb511d11391ce075764fc6ff7fb42be14",
+                "url": "https://api.github.com/repos/ACP3/setup/zipball/26d9a69b902ea98c2a1be236b66194561cf28350",
                 "reference": "4ac251edb511d11391ce075764fc6ff7fb42be14",
                 "shasum": ""
             },
@@ -2100,6 +2134,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "mrclay/minify": 20,
+        "acp3/core": 20,
         "acp3/module-acp": 20,
         "acp3/module-articles": 20,
         "acp3/module-captcha": 20,
