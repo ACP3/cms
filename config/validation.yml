@@ -1,0 +1,31 @@
+services:
+  core.validator.abstract:
+    abstract: true
+    arguments: ['@core.lang', '@core.validator.rules.misc']
+
+  core.validator.rules.acl:
+    class: ACP3\Core\Validator\Rules\ACL
+    arguments: ['@core.acl']
+
+  core.validator.rules.captcha:
+    class: ACP3\Core\Validator\Rules\Captcha
+    arguments: ['@core.request', '@core.router']
+
+  core.validator.rules.date:
+    class: ACP3\Core\Validator\Rules\Date
+    arguments: ['@core.validator.rules.misc']
+
+  core.validator.rules.mime:
+    class: ACP3\Core\Validator\Rules\Mime
+    arguments: ['@core.validator.rules.misc']
+
+  core.validator.rules.misc:
+    class: ACP3\Core\Validator\Rules\Misc
+    arguments: ['@core.request']
+
+  core.validator.rules.router:
+    class: ACP3\Core\Validator\Rules\Router
+
+  core.validator.rules.router.aliases:
+    class: ACP3\Core\Validator\Rules\Router\Aliases
+    arguments: ['@core.validator.rules.router', '@seo.model']
