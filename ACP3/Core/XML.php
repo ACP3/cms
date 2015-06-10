@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Application;
-
 /**
  * Parses XML files
  *

@@ -1,5 +1,5 @@
 /.idea
-/ACP3/config/config.yml
+/ACP3/config.yml
 /uploads/cache/images/*
 /uploads/cache/sql/*
 /uploads/cache/tpl_cached/*

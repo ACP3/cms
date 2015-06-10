@@ -2,5 +2,5 @@ parameters:
   default_request: 'update'
 
 imports:
-  - { resource: ../../ACP3/config/services.yml }
+  - { resource: ../../../ACP3/Core/config/services.yml }
   - { resource: services.yml }

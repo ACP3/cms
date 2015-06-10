@@ -11,5 +11,5 @@ define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../') . '/');
 
 require '../vendor/autoload.php';
 
-$application = new \ACP3\Installer\Application();
+$application = new \ACP3\Installer\Core\Application();
 $application->run();

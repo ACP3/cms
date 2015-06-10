@@ -1,10 +1,10 @@
 <?php
 
-namespace ACP3;
+namespace ACP3\Core;
 
-use ACP3\Core\FrontController;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\Controller;
+use ACP3\Core\Logger as ACP3Logger;
 use Monolog\ErrorHandler;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -57,7 +57,7 @@ class Application
         date_default_timezone_set('UTC');
 
         // DB-Config des ACP3 laden
-        $path = ACP3_DIR . 'config/config.yml';
+        $path = ACP3_DIR . 'config.yml';
         if (is_file($path) === false || filesize($path) === 0) {
             exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
         }
@@ -145,7 +145,7 @@ class Application
         if (!$containerConfigCache->isFresh()) {
             $containerBuilder = new ContainerBuilder();
             $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
-            $loader->load(ACP3_DIR . 'config/services.yml');
+            $loader->load(CLASSES_DIR . 'config/services.yml');
             $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
             // Try to get all available services
@@ -213,22 +213,22 @@ class Application
         try {
             $frontController = new FrontController($this->container);
             $frontController->dispatch();
-        } catch (Core\Exceptions\ResultNotExists $e) {
+        } catch (Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
-                Core\Logger::error('404', $e);
+                ACP3Logger::error('404', $e);
             } else {
-                Core\Logger::error('404', 'Could not find any results for request: ' . $request->query);
+                ACP3Logger::error('404', 'Could not find any results for request: ' . $request->query);
             }
 
             $redirect->temporary('errors/index/404');
-        } catch (Core\Exceptions\UnauthorizedAccess $e) {
+        } catch (Exceptions\UnauthorizedAccess $e) {
             $redirectUri = base64_encode($request->originalQuery);
             $redirect->temporary('users/index/login/redirect_' . $redirectUri);
-        } catch (Core\Exceptions\AccessForbidden $e) {
+        } catch (Exceptions\AccessForbidden $e) {
             $redirect->temporary('errors/index/403');
-        } catch (Core\Exceptions\ControllerActionNotFound $e) {
-            Core\Logger::error('404', 'Request: ' . $request->query);
-            Core\Logger::error('404', $e);
+        } catch (Exceptions\ControllerActionNotFound $e) {
+            ACP3Logger::error('404', 'Request: ' . $request->query);
+            ACP3Logger::error('404', $e);
 
             if (defined('DEBUG') && DEBUG === true) {
                 $errorMessage = $e->getMessage();
@@ -237,7 +237,7 @@ class Application
                 $redirect->temporary('errors/index/404');
             }
         } catch (\Exception $e) {
-            Core\Logger::error('exception', $e);
+            ACP3Logger::error('exception', $e);
 
             if (defined('DEBUG') && DEBUG === true) {
                 $errorMessage = $e->getMessage();

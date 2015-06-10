@@ -1,0 +1,1 @@
+{ parameters: { db_host: localhost, db_name: acp3, db_table_prefix: acp3_, db_password: '', db_user: root, db_driver: pdo_mysql, db_charset: utf8 } }

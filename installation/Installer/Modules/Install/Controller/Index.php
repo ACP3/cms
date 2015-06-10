@@ -17,7 +17,6 @@ class Index extends AbstractController
     const CLASS_SUCCESS = 'success';
     const CLASS_WARNING = 'warning';
 
-
     public function actionRequirements()
     {
         // Allgemeine Voraussetzungen
@@ -45,7 +44,7 @@ class Index extends AbstractController
 
         $this->view->assign('requirements', $requirements);
 
-        $defaults = ['ACP3/config/config.yml'];
+        $defaults = ['ACP3/config.yml'];
 
         // Uploadordner
         $uploads = array_diff(scandir(UPLOADS_DIR), ['.', '..']);

@@ -51,7 +51,7 @@ class Install extends AbstractController
 
         $this->date = $date;
         $this->installHelper = $installHelper;
-        $this->configFilePath = ACP3_DIR . 'config/config.yml';
+        $this->configFilePath = ACP3_DIR . 'config.yml';
     }
 
     public function actionIndex()
@@ -132,8 +132,8 @@ class Install extends AbstractController
         $this->container = new ContainerBuilder();
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
-        $loader->load(ACP3_DIR . 'config/services.yml');
-        $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
+        $loader->load(CLASSES_DIR . 'config/services.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
 
         // Load installer modules services

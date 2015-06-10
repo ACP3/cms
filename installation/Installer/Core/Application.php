@@ -1,9 +1,8 @@
 <?php
 
-namespace ACP3\Installer;
+namespace ACP3\Installer\Core;
 
 use ACP3\Core;
-use ACP3\Installer\Core\FrontController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
@@ -70,10 +69,10 @@ class Application
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
 
         if (defined('IN_UPDATER') === true) {
-            $loader->load(INSTALLER_ACP3_DIR . 'config/update.yml');
+            $loader->load(INSTALLER_CLASSES_DIR . 'config/update.yml');
             $excludedDirs = ['.', '..'];
         } else {
-            $loader->load(INSTALLER_ACP3_DIR . 'config/services.yml');
+            $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
             $excludedDirs = ['.', '..', 'Update'];
         }
 
@@ -141,7 +140,7 @@ class Application
 
         if (defined('IN_UPDATER') === true) {
             // DB-Config des ACP3 laden
-            $path = ACP3_DIR . 'config/config.yml';
+            $path = ACP3_DIR . 'config.yml';
             if (is_file($path) === false || filesize($path) === 0) {
                 exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
             }
