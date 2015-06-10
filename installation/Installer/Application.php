@@ -30,7 +30,6 @@ class Application
             $this->startupChecks();
         }
 
-        $this->includeAutoLoader();
         $this->initializeClasses();
         $this->outputPage();
     }
@@ -48,7 +47,6 @@ class Application
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
-        define('VENDOR_DIR', ACP3_ROOT_DIR . 'vendor/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
         define('CACHE_DIR', UPLOADS_DIR . 'cache/');
 
@@ -60,14 +58,6 @@ class Application
         // Set theme paths
         define('DESIGN_PATH', INSTALLATION_DIR . 'design/');
         define('DESIGN_PATH_INTERNAL', INSTALLATION_DIR . 'design/');
-    }
-
-    /**
-     * Include class autoloader
-     */
-    public function includeAutoLoader()
-    {
-        require VENDOR_DIR . 'autoload.php';
     }
 
     /**

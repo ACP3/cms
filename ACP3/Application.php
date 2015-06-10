@@ -43,7 +43,6 @@ class Application
     {
         $this->defineDirConstants();
         $this->startupChecks();
-        $this->includeAutoLoader();
         $this->setErrorHandler();
         $this->initializeClasses();
         $this->outputPage();
@@ -77,17 +76,8 @@ class Application
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
-        define('VENDOR_DIR', ACP3_ROOT_DIR . 'vendor/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
         define('CACHE_DIR', UPLOADS_DIR . 'cache/');
-    }
-
-    /**
-     * Klassen Autoloader inkludieren
-     */
-    public function includeAutoLoader()
-    {
-        require VENDOR_DIR . 'autoload.php';
     }
 
     /**
