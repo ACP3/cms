@@ -4,811 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2c47ef7df62680d63f0e44707e2b58d3",
+    "hash": "f6d8a96aa29142ff763cb1ae3730e853",
     "packages": [
-        {
-            "name": "acp3/composer-installer",
-            "version": "0.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/composer-installer.git",
-                "reference": "32924d13239544e80bce9e3f0cd8f3d51592fd29"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/composer-installer/zipball/32924d13239544e80bce9e3f0cd8f3d51592fd29",
-                "reference": "32924d13239544e80bce9e3f0cd8f3d51592fd29",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "1.0.0"
-            },
-            "require-dev": {
-                "composer/composer": "1.0.*@dev"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "ACP3\\Composer\\Installer\\Plugin"
-            },
-            "autoload": {
-                "psr-0": {
-                    "ACP3\\Composer": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL"
-            ],
-            "authors": [
-                {
-                    "name": "Tino Goratsch",
-                    "email": "mail@acp3-cms.net"
-                }
-            ],
-            "description": "Adds a custom installer to Composer so that it can install ACP3 modules into the right location.",
-            "time": "2015-03-21 20:27:18"
-        },
-        {
-            "name": "acp3/core",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/core.git",
-                "reference": "3cc1bead00de0a4a5f01db84774d4ccf1dad34c5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/core/zipball/3cc1bead00de0a4a5f01db84774d4ccf1dad34c5",
-                "reference": "3cc1bead00de0a4a5f01db84774d4ccf1dad34c5",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-core",
-            "extra": {
-                "installer-name": "ACP3/Core"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Tino Goratsch",
-                    "email": "mail@acp3-cms.net"
-                }
-            ],
-            "description": "Provides the core components of the ACP3 CMS.",
-            "time": "2015-06-10 19:49:05"
-        },
-        {
-            "name": "acp3/module-acp",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-acp.git",
-                "reference": "c3a8b25e61cafd1cdba8af14933b055952a39c15"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-acp/zipball/c3a8b25e61cafd1cdba8af14933b055952a39c15",
-                "reference": "c3a8b25e61cafd1cdba8af14933b055952a39c15",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Acp"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the admin panel module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-articles",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-articles.git",
-                "reference": "aa5a07b7e5ca2378f84a7758b0d7535d8bb978f2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-articles/zipball/aa5a07b7e5ca2378f84a7758b0d7535d8bb978f2",
-                "reference": "aa5a07b7e5ca2378f84a7758b0d7535d8bb978f2",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*",
-                "acp3/module-system": "dev-master"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Articles"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the articles module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-captcha",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-captcha.git",
-                "reference": "c21196a0ebca231f3bf4de33d34a8749fa3177f9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-captcha/zipball/c21196a0ebca231f3bf4de33d34a8749fa3177f9",
-                "reference": "c21196a0ebca231f3bf4de33d34a8749fa3177f9",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Captcha"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the captcha module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-categories",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-categories.git",
-                "reference": "23ad5a4f4e678961079ef239803c7fd6a5d06e5b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-categories/zipball/23ad5a4f4e678961079ef239803c7fd6a5d06e5b",
-                "reference": "23ad5a4f4e678961079ef239803c7fd6a5d06e5b",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Categories"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the categories module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-comments",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-comments.git",
-                "reference": "f8101d36996faf141d1f78c445e36017fe05ac73"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-comments/zipball/f8101d36996faf141d1f78c445e36017fe05ac73",
-                "reference": "f8101d36996faf141d1f78c445e36017fe05ac73",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Comments"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the comments module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-contact",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-contact.git",
-                "reference": "9efb6cfb95b0689e446ce72a81d5aba358503617"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-contact/zipball/9efb6cfb95b0689e446ce72a81d5aba358503617",
-                "reference": "9efb6cfb95b0689e446ce72a81d5aba358503617",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Contact"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the contact module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-emoticons",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-emoticons.git",
-                "reference": "12e242b40900263a550c4c71dcdfc62b1545664f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-emoticons/zipball/12e242b40900263a550c4c71dcdfc62b1545664f",
-                "reference": "12e242b40900263a550c4c71dcdfc62b1545664f",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Emoticons"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the emoticons module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-errors",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-errors.git",
-                "reference": "b616de6517294fa06fd4bb2670475d68638abada"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-errors/zipball/b616de6517294fa06fd4bb2670475d68638abada",
-                "reference": "b616de6517294fa06fd4bb2670475d68638abada",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Errors"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the errors module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-feeds",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-feeds.git",
-                "reference": "5838aaed629ebf923865d772ad95e177fdc20372"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-feeds/zipball/5838aaed629ebf923865d772ad95e177fdc20372",
-                "reference": "5838aaed629ebf923865d772ad95e177fdc20372",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*",
-                "mibe/feedwriter": "1.0.1"
-            },
-            "suggest": {
-                "acp3/module-files": "Makes it possible to show feeds for the Downloads module.",
-                "acp3/module-news": "Makes it possible to show feeds for the News module."
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Feeds"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the feeds module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-filemanager",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-filemanager.git",
-                "reference": "d68b9d913ca391a8aa3caef35e13dbd6e1cde2b9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-filemanager/zipball/d68b9d913ca391a8aa3caef35e13dbd6e1cde2b9",
-                "reference": "d68b9d913ca391a8aa3caef35e13dbd6e1cde2b9",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Filemanager"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the filemanager module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-files",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-files.git",
-                "reference": "8a382ae1e5014d8c2267a5880e7787d0c70fcbad"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-files/zipball/8a382ae1e5014d8c2267a5880e7787d0c70fcbad",
-                "reference": "8a382ae1e5014d8c2267a5880e7787d0c70fcbad",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*",
-                "acp3/module-categories": "dev-master"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Files"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the files module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-gallery",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-gallery.git",
-                "reference": "cee636edc234d26432fab7e94d39819991cc77ec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-gallery/zipball/cee636edc234d26432fab7e94d39819991cc77ec",
-                "reference": "cee636edc234d26432fab7e94d39819991cc77ec",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Gallery"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the gallery module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-guestbook",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-guestbook.git",
-                "reference": "9657f42394df36a1177ce3421e025ee96a5431a5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-guestbook/zipball/9657f42394df36a1177ce3421e025ee96a5431a5",
-                "reference": "9657f42394df36a1177ce3421e025ee96a5431a5",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Guestbook"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the guestbook module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-menus",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-menus.git",
-                "reference": "d4741498b68e89278f175f08bb55e01dc735cf93"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-menus/zipball/d4741498b68e89278f175f08bb55e01dc735cf93",
-                "reference": "d4741498b68e89278f175f08bb55e01dc735cf93",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Menus"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the menus module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-news",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-news.git",
-                "reference": "d31c42149b4e11e518af46a2dd66371a2578a0d3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-news/zipball/d31c42149b4e11e518af46a2dd66371a2578a0d3",
-                "reference": "d31c42149b4e11e518af46a2dd66371a2578a0d3",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*",
-                "acp3/module-categories": "dev-master"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/News"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the news module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-newsletter",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-newsletter.git",
-                "reference": "10617c3cf043960395f662ec1af19c28886dba24"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-newsletter/zipball/10617c3cf043960395f662ec1af19c28886dba24",
-                "reference": "10617c3cf043960395f662ec1af19c28886dba24",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Newsletter"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the newsletter module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-permissions",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-permissions.git",
-                "reference": "946c56cb91378a56cdc9355ec155b74f12809b90"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-permissions/zipball/946c56cb91378a56cdc9355ec155b74f12809b90",
-                "reference": "946c56cb91378a56cdc9355ec155b74f12809b90",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Permissions"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the permissions module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-polls",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-polls.git",
-                "reference": "31388576edccce5beffcda14847b8b6e3b0e8397"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-polls/zipball/31388576edccce5beffcda14847b8b6e3b0e8397",
-                "reference": "31388576edccce5beffcda14847b8b6e3b0e8397",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Polls"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the polls module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-search",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-search.git",
-                "reference": "742c12bdbc560fae21811d5c097e655a8b10a32f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-search/zipball/742c12bdbc560fae21811d5c097e655a8b10a32f",
-                "reference": "742c12bdbc560fae21811d5c097e655a8b10a32f",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "suggest": {
-                "acp3/module-articles": "Makes it possible to search through Articles.",
-                "acp3/module-files": "Makes it possible to search through the Downloads.",
-                "acp3/module-news": "Makes it possible to search through the News."
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Search"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the search module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-seo",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-seo.git",
-                "reference": "2c033d4cab2273f11577839b3664fbcd808e657a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-seo/zipball/2c033d4cab2273f11577839b3664fbcd808e657a",
-                "reference": "2c033d4cab2273f11577839b3664fbcd808e657a",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Seo"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the seo module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-system",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-system.git",
-                "reference": "3903292560a0d96f2cefb0fd3dc5bc8bc5f9cf47"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-system/zipball/3903292560a0d96f2cefb0fd3dc5bc8bc5f9cf47",
-                "reference": "3903292560a0d96f2cefb0fd3dc5bc8bc5f9cf47",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/System"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the system module for the ACP3 CMS.",
-            "time": "2015-06-03 20:40:36"
-        },
-        {
-            "name": "acp3/module-users",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-users.git",
-                "reference": "7955b9d5a654ab54f50f56cadeafdc6ccdc778f2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-users/zipball/7955b9d5a654ab54f50f56cadeafdc6ccdc778f2",
-                "reference": "7955b9d5a654ab54f50f56cadeafdc6ccdc778f2",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*",
-                "acp3/module-permissions": "dev-master"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/Users"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the users module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-wysiwyg-ckeditor",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-wysiwyg-ckeditor.git",
-                "reference": "d2d7ee1bca146dfac2544c55f602e879aff23fbf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-wysiwyg-ckeditor/zipball/d2d7ee1bca146dfac2544c55f602e879aff23fbf",
-                "reference": "d2d7ee1bca146dfac2544c55f602e879aff23fbf",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*",
-                "ckeditor/ckeditor": "dev-full/stable"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/WYSIWYGCKEditor"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the WYSIWYG-CKEditor module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/module-wysiwyg-tinymce",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/module-wysiwyg-tinymce.git",
-                "reference": "16a8f138d1f071a2e3232e12419df6300b704521"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/module-wysiwyg-tinymce/zipball/16a8f138d1f071a2e3232e12419df6300b704521",
-                "reference": "16a8f138d1f071a2e3232e12419df6300b704521",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*",
-                "tinymce/tinymce": "4.1.9"
-            },
-            "type": "acp3-module",
-            "extra": {
-                "installer-name": "ACP3/WYSIWYGTinyMCE"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides the WYSIWYG-TinyMCE module for the ACP3 CMS.",
-            "time": "2015-04-02 11:20:42"
-        },
-        {
-            "name": "acp3/setup",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ACP3/setup.git",
-                "reference": "4ac251edb511d11391ce075764fc6ff7fb42be14"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ACP3/setup/zipball/26d9a69b902ea98c2a1be236b66194561cf28350",
-                "reference": "4ac251edb511d11391ce075764fc6ff7fb42be14",
-                "shasum": ""
-            },
-            "require": {
-                "acp3/composer-installer": "*"
-            },
-            "type": "acp3-core",
-            "extra": {
-                "installer-name": "installation"
-            },
-            "autoload": {
-                "psr-4": {
-                    "ACP3\\Installer\\": "/Installer"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Tino Goratsch",
-                    "email": "mail@acp3-cms.net"
-                }
-            ],
-            "description": "Provides the installation wizard for the ACP3 CMS.",
-            "time": "2015-06-02 19:51:00"
-        },
         {
             "name": "ckeditor/ckeditor",
             "version": "dev-full/stable",
@@ -1444,16 +641,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.11.0",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa"
+                "reference": "c31a2c4e8db5da8b46c74cf275d7f109c0f249ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c31a2c4e8db5da8b46c74cf275d7f109c0f249ac",
+                "reference": "c31a2c4e8db5da8b46c74cf275d7f109c0f249ac",
                 "shasum": ""
             },
             "require": {
@@ -1467,9 +664,10 @@
                 "aws/aws-sdk-php": "~2.4, >2.4.8",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
-                "phpunit/phpunit": "~3.7.0",
+                "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
+                "swiftmailer/swiftmailer": "~5.3",
                 "videlalvaro/php-amqplib": "~2.4"
             },
             "suggest": {
@@ -1486,7 +684,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11.x-dev"
+                    "dev-master": "1.13.x-dev"
                 }
             },
             "autoload": {
@@ -1512,7 +710,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-09-30 13:30:58"
+            "time": "2015-03-09 09:58:04"
         },
         {
             "name": "mrclay/minify",
@@ -1711,16 +909,16 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.24",
+            "version": "v3.1.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "b58771e31b11c721f6aa8e574e16e4058f9edc5f"
+                "reference": "58616d6ee598674b682f8a2b81352ec4da7100c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/b58771e31b11c721f6aa8e574e16e4058f9edc5f",
-                "reference": "b58771e31b11c721f6aa8e574e16e4058f9edc5f",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/58616d6ee598674b682f8a2b81352ec4da7100c7",
+                "reference": "58616d6ee598674b682f8a2b81352ec4da7100c7",
                 "shasum": ""
             },
             "require": {
@@ -1762,25 +960,24 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-05-23 17:22:14"
+            "time": "2015-06-15 22:23:24"
         },
         {
             "name": "symfony/config",
-            "version": "v2.6.9",
-            "target-dir": "Symfony/Component/Config",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "2696c5bc7c31485a482c10865d713de9fcc7aa31"
+                "reference": "58ded81f1f582a87c528ef3dae9a859f78b5f374"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/2696c5bc7c31485a482c10865d713de9fcc7aa31",
-                "reference": "2696c5bc7c31485a482c10865d713de9fcc7aa31",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/58ded81f1f582a87c528ef3dae9a859f78b5f374",
+                "reference": "58ded81f1f582a87c528ef3dae9a859f78b5f374",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
+                "php": ">=5.3.9",
                 "symfony/filesystem": "~2.3"
             },
             "require-dev": {
@@ -1789,11 +986,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Config\\": ""
                 }
             },
@@ -1813,11 +1010,11 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:32:45"
+            "time": "2015-06-11 14:06:56"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/CssSelector.git",
@@ -1870,21 +1067,20 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v2.6.9",
-            "target-dir": "Symfony/Component/DependencyInjection",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "801a917c69538c162497adfdad28a4aa160c2952"
+                "reference": "1a409e52a38ec891de0a7a61a191d1c62080b69d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/801a917c69538c162497adfdad28a4aa160c2952",
-                "reference": "801a917c69538c162497adfdad28a4aa160c2952",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/1a409e52a38ec891de0a7a61a191d1c62080b69d",
+                "reference": "1a409e52a38ec891de0a7a61a191d1c62080b69d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "conflict": {
                 "symfony/expression-language": "<2.6"
@@ -1903,11 +1099,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\DependencyInjection\\": ""
                 }
             },
@@ -1927,20 +1123,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-29 14:42:58"
+            "time": "2015-06-11 19:13:11"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba"
+                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba",
-                "reference": "ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a0d43eb3e17d4f4c6990289805a488a0482a07f3",
+                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3",
                 "shasum": ""
             },
             "require": {
@@ -1976,25 +1172,24 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:33:16"
+            "time": "2015-06-08 09:37:21"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v2.6.9",
-            "target-dir": "Symfony/Component/HttpFoundation",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "f9b28dcc6d3e50f5568b42dda7292656a9fe8432"
+                "reference": "4f363c426b0ced57e3d14460022feb63937980ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/f9b28dcc6d3e50f5568b42dda7292656a9fe8432",
-                "reference": "f9b28dcc6d3e50f5568b42dda7292656a9fe8432",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/4f363c426b0ced57e3d14460022feb63937980ff",
+                "reference": "4f363c426b0ced57e3d14460022feb63937980ff",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "require-dev": {
                 "symfony/expression-language": "~2.4",
@@ -2003,15 +1198,15 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\HttpFoundation\\": ""
                 },
                 "classmap": [
-                    "Symfony/Component/HttpFoundation/Resources/stubs"
+                    "Resources/stubs"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2030,25 +1225,24 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-22 14:53:08"
+            "time": "2015-06-10 15:30:22"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.6.9",
-            "target-dir": "Symfony/Component/Yaml",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "f157ab074e453ecd4c0fa775f721f6e67a99d9e2"
+                "reference": "9808e75c609a14f6db02f70fccf4ca4aab53c160"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/f157ab074e453ecd4c0fa775f721f6e67a99d9e2",
-                "reference": "f157ab074e453ecd4c0fa775f721f6e67a99d9e2",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/9808e75c609a14f6db02f70fccf4ca4aab53c160",
+                "reference": "9808e75c609a14f6db02f70fccf4ca4aab53c160",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "require-dev": {
                 "symfony/phpunit-bridge": "~2.7"
@@ -2056,11 +1250,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Yaml\\": ""
                 }
             },
@@ -2080,7 +1274,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-02 15:18:45"
+            "time": "2015-06-10 15:30:22"
         },
         {
             "name": "tinymce/tinymce",
@@ -2134,32 +1328,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "mrclay/minify": 20,
-        "acp3/core": 20,
-        "acp3/module-acp": 20,
-        "acp3/module-articles": 20,
-        "acp3/module-captcha": 20,
-        "acp3/module-categories": 20,
-        "acp3/module-comments": 20,
-        "acp3/module-contact": 20,
-        "acp3/module-emoticons": 20,
-        "acp3/module-errors": 20,
-        "acp3/module-feeds": 20,
-        "acp3/module-filemanager": 20,
-        "acp3/module-files": 20,
-        "acp3/module-gallery": 20,
-        "acp3/module-guestbook": 20,
-        "acp3/module-menus": 20,
-        "acp3/module-news": 20,
-        "acp3/module-newsletter": 20,
-        "acp3/module-permissions": 20,
-        "acp3/module-polls": 20,
-        "acp3/module-search": 20,
-        "acp3/module-seo": 20,
-        "acp3/module-system": 20,
-        "acp3/module-users": 20,
-        "acp3/module-wysiwyg-ckeditor": 20,
-        "acp3/module-wysiwyg-tinymce": 20,
-        "acp3/setup": 20
+        "ckeditor/ckeditor": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
