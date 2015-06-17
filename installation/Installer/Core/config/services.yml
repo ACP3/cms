@@ -1,6 +1,9 @@
 parameters:
   default_request: 'install'
 
+imports:
+  - { resource: '../View/Renderer/Smarty/config/services.yml' }
+
 services:
   core.context.install:
     class: ACP3\Installer\Core\Context

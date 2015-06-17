@@ -76,8 +76,6 @@ class Application
             $excludedDirs = ['.', '..', 'Update'];
         }
 
-        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
-
         // Load installer modules services
         $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), $excludedDirs);
         foreach ($installerModules as $module) {
