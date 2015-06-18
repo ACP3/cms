@@ -1,10 +1,16 @@
+<FilesMatch "\.(tpl(\.php)?|yml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
 <IfModule mod_rewrite.c>
-	Options +FollowSymlinks
-	DirectoryIndex index.php
+    Options +FollowSymlinks
+    DirectoryIndex index.php
 
-	RewriteEngine On
+    RewriteEngine On
 
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
 </IfModule>
