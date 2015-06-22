@@ -10,10 +10,6 @@ use Symfony\Component\DependencyInjection\Container;
 class FrontController
 {
     /**
-     * @var \ACP3\Core\Request
-     */
-    protected $request;
-    /**
      * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
@@ -73,22 +69,24 @@ class FrontController
     }
 
     /**
-     * Überprüft die URI auf einen möglichen URI-Alias und
-     * macht im Erfolgsfall einen Redirect darauf
+     * Checks, whether there is an URI alias available for the current request.
+     * If so, set the alias as the canonical URI
      *
      * @param \ACP3\Core\Request $request
      */
     private function _checkForUriAlias(Request $request)
     {
-        // Nur ausführen, falls URI-Aliase verfügbar sind
+        // Return early, if we are currently in the admin panel
         if ($request->area !== 'admin') {
             $routerAliases = $this->container->get('core.router.aliases');
 
-            // Falls für Query ein Alias existiert, zu diesem weiterleiten
+            // If there is an URI alias available, set the alias as the canonical URI
             if ($routerAliases->uriAliasExists($request->query) === true &&
                 $request->originalQuery !== $routerAliases->getUriAlias($request->query) . '/'
             ) {
-                $this->container->get('core.redirect')->permanent($request->query); // URI-Alias wird von Router::route() erzeugt
+                $this->container->get('core.seo')->setCanonicalUri(
+                    $this->container->get('core.router')->route($request->query)
+                );
             }
         }
     }
