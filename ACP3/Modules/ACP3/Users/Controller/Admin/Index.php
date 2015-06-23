@@ -87,7 +87,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('super_user', $this->formsHelpers->selectGenerator('super_user', [1, 0], $lang_super_user, 0, 'checked'));
 
         // Sprache
-        $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $systemSettings['lang']));
+        $this->view->assign('languages', $this->lang->getLanguagePack(isset($_POST['language']) ? $_POST['language'] : $systemSettings['lang']));
 
         // Einträge pro Seite
         $this->view->assign('entries', $this->formsHelpers->recordsPerPage($systemSettings['entries']));
@@ -234,7 +234,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('super_user', $this->formsHelpers->selectGenerator('super_user', [1, 0], $langSuperUser, $user['super_user'], 'checked'));
 
             // Sprache
-            $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $user['language']));
+            $this->view->assign('languages', $this->lang->getLanguagePack(isset($_POST['language']) ? $_POST['language'] : $user['language']));
 
             // Einträge pro Seite
             $this->view->assign('entries', $this->formsHelpers->recordsPerPage((int)$user['entries']));

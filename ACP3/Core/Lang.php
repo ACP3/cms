@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Lang\Cache as LanguageCache;
+
 /**
  * Class Lang
  * @package ACP3\Core
@@ -12,7 +14,7 @@ class Lang
      */
     protected $auth;
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Lang\Cache
      */
     protected $cache;
     /**
@@ -43,18 +45,18 @@ class Lang
     protected $moduleNamespaces = [];
 
     /**
-     * @param \ACP3\Core\Auth   $auth
-     * @param \ACP3\Core\Cache  $langCache
-     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\Auth       $auth
+     * @param \ACP3\Core\Lang\Cache $cache
+     * @param \ACP3\Core\Config     $config
      */
     public function __construct(
         Auth $auth,
-        Cache $langCache,
+        LanguageCache $cache,
         Config $config
     )
     {
         $this->auth = $auth;
-        $this->cache = $langCache;
+        $this->cache = $cache;
         $this->config = $config;
     }
 
@@ -396,7 +398,7 @@ class Lang
      */
     public function setLanguage($lang)
     {
-        if ($this->languagePackExists($lang) === true) {
+        if (self::languagePackExists($lang) === true) {
             $this->lang = $lang;
             $this->buffer = [];
         }
@@ -412,73 +414,10 @@ class Lang
     public function getDirection()
     {
         if (empty($this->buffer)) {
-            $this->buffer = $this->getLanguageCache();
+            $this->buffer = $this->cache->getLanguageCache($this->getLanguage());
         }
 
         return isset($this->buffer['info']['direction']) ? $this->buffer['info']['direction'] : 'ltr';
-    }
-
-    /**
-     * Gibt die gecacheten Sprachstrings aus
-     *
-     * @return array
-     */
-    protected function getLanguageCache()
-    {
-        if ($this->cache->contains($this->getLanguage()) === false) {
-            $this->setLanguageCache();
-        }
-
-        return $this->cache->fetch($this->getLanguage());
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getModuleNamespaces()
-    {
-        if ($this->moduleNamespaces === []) {
-            $this->moduleNamespaces = array_merge(
-                ['ACP3'],
-                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
-                ['Custom']
-            );
-        }
-
-        return $this->moduleNamespaces;
-    }
-
-    /**
-     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
-     */
-    public function setLanguageCache()
-    {
-        $data = [];
-
-        foreach ($this->_getModuleNamespaces() as $namespace) {
-            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
-
-            if (!empty($namespaceModules)) {
-                foreach ($namespaceModules as $module) {
-                    $path = MODULES_DIR . $namespace . '/' . $module . '/Languages/' . $this->getLanguage() . '.xml';
-                    if (is_file($path) === true) {
-                        $xml = simplexml_load_file($path);
-                        if (isset($data['info']['direction']) === false) {
-                            $data['info']['direction'] = (string)$xml->info->direction;
-                        }
-
-                        // Über die einzelnen Sprachstrings iterieren
-                        foreach ($xml->keys->item as $item) {
-                            $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
-                        }
-                    }
-                }
-            }
-        }
-
-        $this->buffer = [];
-
-        return $this->cache->save($this->getLanguage(), $data);
     }
 
     /**
@@ -492,7 +431,7 @@ class Lang
     public function t($module, $key)
     {
         if (empty($this->buffer)) {
-            $this->buffer = $this->getLanguageCache();
+            $this->buffer = $this->cache->getLanguageCache($this->getLanguage());
         }
 
         return isset($this->buffer['keys'][$module][$key]) ? $this->buffer['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
@@ -505,14 +444,10 @@ class Lang
      *
      * @return array
      */
-    public function getLanguages($currentLanguage = '')
+    public function getLanguagePack($currentLanguage)
     {
-        if (empty($currentLanguage)) {
-            $currentLanguage = $this->getLanguage();
-        }
-
         if (empty($this->languages)) {
-            $this->languages = $this->_getLanguagesCache();
+            $this->languages = $this->cache->getLanguagePacksCache($this->getLanguage());
         }
 
         $languages = $this->languages;
@@ -524,72 +459,4 @@ class Lang
         return $languages;
     }
 
-    /**
-     * Gets the cache for all registered languages
-     *
-     * @return mixed
-     */
-    protected function _getLanguagesCache()
-    {
-        if ($this->cache->contains('languages') === false) {
-            $this->_setLanguagesCache();
-        }
-
-        return $this->cache->fetch('languages');
-    }
-
-    /**
-     * Sets the cache for all registered languages
-     *
-     * @return bool
-     */
-    protected function _setLanguagesCache()
-    {
-        $languages = [];
-
-        foreach ($this->_getModuleNamespaces() as $namespace) {
-            $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
-
-            if (!empty($namespaceModules)) {
-                foreach ($namespaceModules as $module) {
-                    $path = MODULES_DIR . $namespace . '/' . $module . '/Languages/';
-                    if (is_dir($path) === true) {
-                        $languagePacks = $this->_registerLanguagePacks($path);
-
-                        if (!empty($languagePacks)) {
-                            $languages += $languagePacks;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $this->cache->save('languages', $languages);
-    }
-
-    /**
-     * @param $path
-     *
-     * @return array
-     */
-    protected function _registerLanguagePacks($path)
-    {
-        $languagePacks = [];
-        $moduleLanguages = array_diff(scandir($path), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
-
-        foreach ($moduleLanguages as $language) {
-            if (is_file($path . $language) === true) {
-                $xml = simplexml_load_file($path . $language);
-                $languageIso = substr($language, 0, -4);
-                if (!empty($xml) && isset($languagePacks[$languageIso]) === false) {
-                    $languagePacks[$languageIso] = [
-                        'iso' => $languageIso,
-                        'name' => (string)$xml->info->name
-                    ];
-                }
-            }
-        }
-
-        return $languagePacks;
-    }
 }

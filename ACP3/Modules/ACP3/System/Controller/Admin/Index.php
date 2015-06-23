@@ -78,7 +78,7 @@ class Index extends Core\Modules\Controller\Admin
         }
         $this->view->assign('wysiwyg', $wysiwyg);
 
-        $this->view->assign('languages', $this->lang->getLanguages($systemSettings['lang']));
+        $this->view->assign('languages', $this->lang->getLanguagePack($systemSettings['lang']));
 
         // Zeitzonen
         $this->view->assign('time_zones', $this->date->getTimeZones($systemSettings['date_time_zone']));

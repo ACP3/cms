@@ -129,7 +129,7 @@ class Account extends Core\Modules\Controller\Frontend
         $this->view->assign('entries_override', $settings['entries_override']);
 
         // Sprache
-        $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $user['language']));
+        $this->view->assign('languages', $this->lang->getLanguagePack(isset($_POST['language']) ? $_POST['language'] : $user['language']));
 
         // Einträge pro Seite
         $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage((int)$user['entries']));

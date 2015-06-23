@@ -73,7 +73,11 @@ services:
 
   core.lang:
     class: ACP3\Core\Lang
-    arguments: ['@core.auth', '@core.cache.system', '@core.config']
+    arguments: ['@core.auth', @core.lang.cache, '@core.config']
+
+  core.lang.cache:
+    class: ACP3\Core\Lang\Cache
+    arguments: ['@core.cache.system']
 
   core.mailer:
     class: ACP3\Core\Mailer
