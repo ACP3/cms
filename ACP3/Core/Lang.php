@@ -34,7 +34,7 @@ class Lang
     /**
      * @var array
      */
-    protected $languages = [];
+    protected $languagePacks = [];
     /**
      * @var array
      */
@@ -400,7 +400,6 @@ class Lang
     {
         if (self::languagePackExists($lang) === true) {
             $this->lang = $lang;
-            $this->buffer = [];
         }
 
         return $this;
@@ -413,11 +412,11 @@ class Lang
      */
     public function getDirection()
     {
-        if (empty($this->buffer)) {
-            $this->buffer = $this->cache->getLanguageCache($this->getLanguage());
+        if (isset($this->buffer[$this->lang]) === false) {
+            $this->buffer[$this->lang] = $this->cache->getLanguageCache($this->getLanguage());
         }
 
-        return isset($this->buffer['info']['direction']) ? $this->buffer['info']['direction'] : 'ltr';
+        return isset($this->buffer[$this->lang]['info']['direction']) ? $this->buffer[$this->lang]['info']['direction'] : 'ltr';
     }
 
     /**
@@ -430,11 +429,11 @@ class Lang
      */
     public function t($module, $key)
     {
-        if (empty($this->buffer)) {
-            $this->buffer = $this->cache->getLanguageCache($this->getLanguage());
+        if (isset($this->buffer[$this->lang]) === false) {
+            $this->buffer[$this->lang] = $this->cache->getLanguageCache($this->getLanguage());
         }
 
-        return isset($this->buffer['keys'][$module][$key]) ? $this->buffer['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
+        return isset($this->buffer[$this->lang]['keys'][$module][$key]) ? $this->buffer[$this->lang]['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
     }
 
     /**
@@ -446,11 +445,11 @@ class Lang
      */
     public function getLanguagePack($currentLanguage)
     {
-        if (empty($this->languages)) {
-            $this->languages = $this->cache->getLanguagePacksCache($this->getLanguage());
+        if (empty($this->languagePacks)) {
+            $this->languagePacks = $this->cache->getLanguagePacksCache($this->getLanguage());
         }
 
-        $languages = $this->languages;
+        $languages = $this->languagePacks;
 
         foreach ($languages as $key => $value) {
             $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLanguage;

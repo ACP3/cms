@@ -33,7 +33,10 @@ services:
 
   core.lang:
     class: ACP3\Installer\Core\Lang
-    arguments: ['en_US']
+    arguments: [@core.lang.cache, 'en_US']
+
+  core.lang.cache:
+    class: ACP3\Installer\Core\Lang\Cache
 
   core.modules.controller.install:
     abstract: true

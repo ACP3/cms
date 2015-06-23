@@ -175,9 +175,8 @@ class Extensions extends Core\Modules\Controller\Admin
 
     protected function _renewCaches()
     {
-        $this->lang->setLanguageCache();
+        $this->get('core.lang.cache')->setLanguageCache($this->lang->getLanguage());
         $this->modules->setModulesCache();
-
         $this->permissionsCache->setResourcesCache();
     }
 

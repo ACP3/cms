@@ -73,8 +73,6 @@ class Cache
             }
         }
 
-        $this->buffer = [];
-
         return $this->cache->save($language, $data);
     }
 
