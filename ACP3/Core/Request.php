@@ -147,7 +147,7 @@ class Request extends \StdClass
         $probableQuery = $this->query;
 
         // Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
-        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
             $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
             if (isset($query[1]) === false) {
                 $query[1] = 'index';
