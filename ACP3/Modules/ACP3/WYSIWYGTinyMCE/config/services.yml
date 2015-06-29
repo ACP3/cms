@@ -9,6 +9,6 @@ services:
 
   core.wysiwyg.tinymce:
     class: %core.wysiwyg.tinymce.fqdn%
-    arguments: ['@core.assets', '@core.view']
+    arguments: ['@core.assets', @core.lang, '@core.view']
     calls:
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]

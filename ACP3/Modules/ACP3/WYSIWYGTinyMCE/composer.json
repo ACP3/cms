@@ -5,7 +5,7 @@
   "type": "acp3-module",
   "require": {
     "acp3/composer-installer": "*",
-    "tinymce/tinymce": "4.1.9"
+    "tinymce/tinymce": "4.2.0"
   },
   "extra": {
     "installer-name": "ACP3/WYSIWYGTinyMCE"

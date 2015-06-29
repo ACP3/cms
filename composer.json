@@ -32,6 +32,6 @@
     "symfony/yaml": "2.7.*",
     "mibe/feedwriter": "1.0.1",
     "ckeditor/ckeditor": "dev-full/stable",
-    "tinymce/tinymce": "4.1.9"
+    "tinymce/tinymce": "4.2.0"
   }
 }
