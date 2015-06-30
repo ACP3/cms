@@ -49,10 +49,6 @@ abstract class AbstractMinifier implements MinifierInterface
      * @var string
      */
     protected $assetGroup = '';
-    /**
-     * @var int
-     */
-    protected $currentTime = 0;
 
     /**
      * @param \ACP3\Core\Assets               $assets
@@ -74,16 +70,6 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->config = $config;
         $this->modules = $modules;
         $this->themeResolver = $themeResolver;
-
-        $this->currentTime = time();
-    }
-
-    /**
-     * @return int
-     */
-    protected function getCurrentTime()
-    {
-        return $this->currentTime;
     }
 
     /**
@@ -132,34 +118,25 @@ abstract class AbstractMinifier implements MinifierInterface
     {
         $debug = (defined('DEBUG') && DEBUG === true);
         $filenameHash = $this->generateFilenameHash($group, $layout);
-
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
-            $lastGenerated = $this->getCurrentTime();
+            $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
-        if ($debug === true) {
-            $path = 'assets/' . $filenameHash . '.' . $group;
-        } else {
-            $path = 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $group;
-        }
+        $path = $this->buildAssetPath($debug, $group, $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
         if (is_file(UPLOADS_DIR . $path) === false || $debug === true) {
-            $files = $this->processLibraries($layout);
+            // Get the enabled libraries and filter out empty entries
+            $files = array_filter(
+                $this->processLibraries($layout),
+                function ($var) {
+                    return !empty($var);
+                }
+            );
 
-            $files = array_filter($files, function ($var) {
-                return !empty($var);
-            });
-
-            $options = [];
-            $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];
-
-            $content = \Minify::combine($files, $options);
-
-            // Write the contents of the file to the uploads folder
-            file_put_contents(UPLOADS_DIR . $path, $content, LOCK_EX);
+            $this->saveMinifiedAsset($files, UPLOADS_DIR . $path);
 
             // Save the time of the generation if the requested file
             $this->systemCache->save($cacheId, $lastGenerated);
@@ -169,11 +146,43 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
+     * @param array  $files
+     * @param string $path
+     */
+    protected function saveMinifiedAsset($files, $path)
+    {
+        $options = [];
+        $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];
+
+        $content = \Minify::combine($files, $options);
+
+        // Write the contents of the file to the uploads folder
+        file_put_contents($path, $content, LOCK_EX);
+    }
+
+    /**
      * @inheritdoc
      */
     public function getLink($layout = 'layout')
     {
         return $this->buildMinifyLink($this->assetGroup, $layout);
+    }
+
+    /**
+     * @param bool   $debug
+     * @param string $group
+     * @param string $filenameHash
+     * @param int    $lastGenerated
+     *
+     * @return string
+     */
+    protected function buildAssetPath($debug, $group, $filenameHash, $lastGenerated)
+    {
+        if ($debug === true) {
+            return 'assets/' . $filenameHash . '.' . $group;
+        }
+
+        return 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $group;
     }
 
 }
