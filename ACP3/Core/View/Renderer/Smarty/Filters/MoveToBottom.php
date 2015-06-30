@@ -54,7 +54,7 @@ class MoveToBottom extends AbstractFilter
 
             $minifyJs = '';
             if (!$this->request->getIsAjax()) {
-                $minifyJs = '<script type="text/javascript" src="' . $this->minifier->getLink() . '"></script>' . "\n";
+                $minifyJs = '<script type="text/javascript" src="' . $this->minifier->getURI() . '"></script>' . "\n";
             }
 
             return str_replace('<!-- JAVASCRIPTS -->', $minifyJs . implode("\n", array_unique($matches[1])) . "\n", $tpl_output);

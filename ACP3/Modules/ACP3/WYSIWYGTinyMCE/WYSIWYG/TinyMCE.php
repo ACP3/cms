@@ -119,7 +119,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
-            'content_css' => $this->minifier->getLink()
+            'content_css' => $this->minifier->getURI()
         ];
 
         // Basic editor

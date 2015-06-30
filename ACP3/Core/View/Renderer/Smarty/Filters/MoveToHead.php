@@ -40,7 +40,7 @@ class MoveToHead extends AbstractFilter
 
             // Remove placeholder comments
             $tpl_output = preg_replace("!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is", '', $tpl_output);
-            $minifyCss = '<link rel="stylesheet" type="text/css" href="' . $this->minifier->getLink() . '">' . "\n";
+            $minifyCss = '<link rel="stylesheet" type="text/css" href="' . $this->minifier->getURI() . '">' . "\n";
             return str_replace('<!-- STYLESHEETS -->', $minifyCss . implode("\n", array_unique($matches[1])) . "\n", $tpl_output);
         }
 

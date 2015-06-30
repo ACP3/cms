@@ -107,24 +107,19 @@ abstract class AbstractMinifier implements MinifierInterface
     abstract protected function processLibraries($layout);
 
     /**
-     * Erstellt den Link zum Minifier mitsamt allen zu ladenden JavaScript Bibliotheken
-     *
-     * @param string $group
-     * @param string $layout
-     *
-     * @return string
+     * @inheritdoc
      */
-    protected function buildMinifyLink($group, $layout = 'layout')
+    public function getURI($layout = 'layout')
     {
         $debug = (defined('DEBUG') && DEBUG === true);
-        $filenameHash = $this->generateFilenameHash($group, $layout);
+        $filenameHash = $this->generateFilenameHash($this->assetGroup, $layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
             $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
-        $path = $this->buildAssetPath($debug, $group, $filenameHash, $lastGenerated);
+        $path = $this->buildAssetPath($debug, $this->assetGroup, $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
         if (is_file(UPLOADS_DIR . $path) === false || $debug === true) {
@@ -158,14 +153,6 @@ abstract class AbstractMinifier implements MinifierInterface
 
         // Write the contents of the file to the uploads folder
         file_put_contents($path, $content, LOCK_EX);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getLink($layout = 'layout')
-    {
-        return $this->buildMinifyLink($this->assetGroup, $layout);
     }
 
     /**

@@ -8,9 +8,11 @@ namespace ACP3\Core\Assets;
 interface MinifierInterface
 {
     /**
+     * Returns the URI of the minified assets
+     *
      * @param string $layout
      *
      * @return string
      */
-    function getLink($layout = 'layout');
+    function getURI($layout = 'layout');
 }
