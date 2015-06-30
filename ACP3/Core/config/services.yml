@@ -16,11 +16,14 @@ services:
 
   core.assets:
     class: ACP3\Core\Assets
-    arguments: ['@core.cache.system', '@core.modules', '@core.router', '@core.assets.themeResolver', '@core.config']
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
     arguments: ['@core.cache.system']
+
+  core.assets.minifier:
+    class: ACP3\Core\Assets\Minifier
+    arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.themeResolver]
 
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver

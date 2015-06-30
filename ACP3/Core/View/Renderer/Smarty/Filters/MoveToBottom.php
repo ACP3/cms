@@ -16,23 +16,23 @@ class MoveToBottom extends AbstractFilter
     protected $filterType = 'output';
 
     /**
-     * @var \ACP3\Core\Assets
+     * @var \ACP3\Core\Assets\Minifier
      */
-    protected $assets;
+    protected $minifier;
     /**
      * @var \ACP3\Core\Request
      */
     protected $request;
 
     /**
-     * @param \ACP3\Core\Assets  $assets
-     * @param \ACP3\Core\Request $request
+     * @param \ACP3\Core\Assets\Minifier $minifier
+     * @param \ACP3\Core\Request       $request
      */
     public function __construct(
-        Assets $assets,
+        Assets\Minifier $minifier,
         Request $request
     ) {
-        $this->assets = $assets;
+        $this->minifier = $minifier;
         $this->request = $request;
     }
 
@@ -54,7 +54,7 @@ class MoveToBottom extends AbstractFilter
 
             $minifyJs = '';
             if (!$this->request->getIsAjax()) {
-                $minifyJs = '<script type="text/javascript" src="' . $this->assets->buildMinifyLink('js') . '"></script>' . "\n";
+                $minifyJs = '<script type="text/javascript" src="' . $this->minifier->buildMinifiedJsLink() . '"></script>' . "\n";
             }
 
             return str_replace('<!-- JAVASCRIPTS -->', $minifyJs . implode("\n", array_unique($matches[1])) . "\n", $tpl_output);

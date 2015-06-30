@@ -11,9 +11,9 @@ use ACP3\Core;
 class TinyMCE extends Core\WYSIWYG\Textarea
 {
     /**
-     * @var \ACP3\Core\Assets
+     * @var \ACP3\Core\Assets\Minifier
      */
-    private $assets;
+    private $minifier;
     /**
      * @var \ACP3\Core\Lang
      */
@@ -33,16 +33,16 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     private $initialized = false;
 
     /**
-     * @param \ACP3\Core\Assets $assets
-     * @param \ACP3\Core\Lang   $lang
-     * @param \ACP3\Core\View   $view
+     * @param \ACP3\Core\Assets\Minifier $minifier
+     * @param \ACP3\Core\Lang          $lang
+     * @param \ACP3\Core\View          $view
      */
     public function __construct(
-        Core\Assets $assets,
+        Core\Assets\Minifier $minifier,
         Core\Lang $lang,
         Core\View $view
     ) {
-        $this->assets = $assets;
+        $this->minifier = $minifier;
         $this->lang = $lang;
         $this->view = $view;
     }
@@ -119,7 +119,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
-            'content_css' => $this->assets->buildMinifyLink('css')
+            'content_css' => $this->minifier->buildMinifiedCssLink()
         ];
 
         // Basic editor
