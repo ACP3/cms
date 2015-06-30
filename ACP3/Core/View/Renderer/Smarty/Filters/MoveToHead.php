@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core\Assets\Minifier;
+use ACP3\Core\Assets\MinifierInterface;
 
 /**
  * Class MoveToHead
@@ -15,14 +15,14 @@ class MoveToHead extends AbstractFilter
     protected $filterType = 'output';
 
     /**
-     * @var Minifier
+     * @var \ACP3\Core\Assets\MinifierInterface
      */
     protected $minifier;
 
     /**
-     * @param Minifier $minifier
+     * @param \ACP3\Core\Assets\MinifierInterface $minifier
      */
-    public function __construct(Minifier $minifier)
+    public function __construct(MinifierInterface $minifier)
     {
         $this->minifier = $minifier;
     }
@@ -40,7 +40,7 @@ class MoveToHead extends AbstractFilter
 
             // Remove placeholder comments
             $tpl_output = preg_replace("!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is", '', $tpl_output);
-            $minifyCss = '<link rel="stylesheet" type="text/css" href="' . $this->minifier->buildMinifiedCssLink() . '">' . "\n";
+            $minifyCss = '<link rel="stylesheet" type="text/css" href="' . $this->minifier->getLink() . '">' . "\n";
             return str_replace('<!-- STYLESHEETS -->', $minifyCss . implode("\n", array_unique($matches[1])) . "\n", $tpl_output);
         }
 

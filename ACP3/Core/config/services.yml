@@ -21,9 +21,18 @@ services:
     class: ACP3\Core\Assets\Cache
     arguments: ['@core.cache.system']
 
-  core.assets.minifier:
-    class: ACP3\Core\Assets\Minifier
+  core.assets.abstractMinifier:
+    class: ACP3\Core\Assets\AbstractMinifier
     arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.themeResolver]
+    abstract: true
+
+  core.assets.minifier.css:
+    class: ACP3\Core\Assets\Minifier\CSS
+    parent: core.assets.abstractMinifier
+
+  core.assets.minifier.javascript:
+    class: ACP3\Core\Assets\Minifier\JavaScript
+    parent: core.assets.abstractMinifier
 
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver
