@@ -41,7 +41,7 @@ class Robots extends AbstractModifier
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function _setReplaceParams()
     {

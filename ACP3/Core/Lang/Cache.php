@@ -45,7 +45,7 @@ class Cache
     /**
      * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
      *
-     * @param $language
+     * @param string $language
      *
      * @return bool
      */
