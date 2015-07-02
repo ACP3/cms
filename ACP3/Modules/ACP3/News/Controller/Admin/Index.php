@@ -354,7 +354,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _settingsPost(array $formData)
     {
         try {
-            $this->newsValidator->validateSettings($formData, $this->lang);
+            $this->newsValidator->validateSettings($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),

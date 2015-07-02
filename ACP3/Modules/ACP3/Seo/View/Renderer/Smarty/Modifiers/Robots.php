@@ -60,7 +60,7 @@ class Robots extends AbstractModifier
     public function process($value)
     {
         if (empty($this->replace) === true) {
-            $this->replace = $this->_setReplaceParams($this->seo);
+            $this->replace = $this->_setReplaceParams();
         }
 
         return str_replace($this->search, $this->replace, $value);

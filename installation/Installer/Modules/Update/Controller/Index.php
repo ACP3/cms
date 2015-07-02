@@ -65,7 +65,7 @@ class Index extends Core\Modules\Controller
      */
     protected function _returnUpdateModuleResult($moduleName)
     {
-        $result = $this->_updateModule($moduleName, $this->container);
+        $result = $this->_updateModule($moduleName);
 
         return [
             'text' => sprintf($this->lang->t('update', 'db_update_text'), ucfirst($moduleName)),

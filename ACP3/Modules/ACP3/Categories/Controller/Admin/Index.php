@@ -258,7 +258,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _settingsPost(array $formData)
     {
         try {
-            $this->categoriesValidator->validateSettings($formData, $this->lang);
+            $this->categoriesValidator->validateSettings($formData);
 
             $data = [
                 'width' => (int)$formData['width'],

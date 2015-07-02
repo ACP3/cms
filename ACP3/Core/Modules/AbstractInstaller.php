@@ -239,7 +239,7 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
 
         foreach ($serviceIds as $serviceId) {
             if (strpos($serviceId, static::MODULE_NAME . '.controller.') !== false) {
-                list($module, $unused, $area, $controller) = explode('.', $serviceId);
+                list($module,, $area, $controller) = explode('.', $serviceId);
                 $this->_insertAclResources($module, $controller, $area);
             }
         }
