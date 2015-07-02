@@ -111,8 +111,8 @@ class ThemeResolver
     /**
      * @param $modulePath
      * @param $designPath
-     * @param $dir
-     * @param $file
+     * @param string $dir
+     * @param string $file
      *
      * @return string
      */

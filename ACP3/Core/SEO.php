@@ -173,8 +173,8 @@ class SEO
     }
 
     /**
-     * @param        $path
-     * @param        $key
+     * @param        string $path
+     * @param        string $key
      * @param string $defaultValue
      *
      * @return string
@@ -241,7 +241,7 @@ class SEO
     /**
      * Sets a SEO description postfix for te current page
      *
-     * @param $string
+     * @param string $string
      *
      * @return $this
      */
@@ -269,7 +269,7 @@ class SEO
     /**
      * Sets the next page (useful for pagination)
      *
-     * @param $path
+     * @param string $path
      *
      * @return $this
      */
@@ -283,7 +283,7 @@ class SEO
     /**
      * Sets the previous page (useful for pagination)
      *
-     * @param $path
+     * @param string $path
      *
      * @return $this
      */
