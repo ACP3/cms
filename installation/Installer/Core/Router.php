@@ -47,7 +47,7 @@ class Router extends Core\Router
             $prefix .= $this->request->getHostname();
         }
 
-        $prefix.= PHP_SELF . '/';
+        $prefix .= PHP_SELF . '/';
         return $prefix . $path;
     }
 }

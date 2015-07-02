@@ -78,7 +78,7 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}seo` SET `uri` = "contact/index/index/" WHERE `uri` = "contact/index/list/";',
             ],
             36 => [
-                'INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ("", ' . $this->getModuleId(). ', "vat_id", "");'
+                'INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ("", ' . $this->getModuleId() . ', "vat_id", "");'
             ]
         ];
     }

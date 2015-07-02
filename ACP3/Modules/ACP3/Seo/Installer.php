@@ -85,13 +85,13 @@ class Installer extends Modules\AbstractInstaller
         return [
             2 => [
                 'DELETE FROM `{pre}settings` WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` LIKE "seo_%";',
-                'UPDATE `{pre}settings` SET `module_id` = ' . $this->getModuleId(). ' WHERE `module_id` = (SELECT `id` FROM `{pre}modules` WHERE `name` = "system") AND `name` LIKE "seo_%";'
+                'UPDATE `{pre}settings` SET `module_id` = ' . $this->getModuleId() . ' WHERE `module_id` = (SELECT `id` FROM `{pre}modules` WHERE `name` = "system") AND `name` LIKE "seo_%";'
             ],
             3 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'admin', 'index', 'settings', '', 7);",
             ],
             4 => [
-                'UPDATE `{pre}settings` SET `name` = SUBSTRING(`name`, 5) WHERE `module_id` = ' . $this->getModuleId() .' AND `name` LIKE "seo_%";',
+                'UPDATE `{pre}settings` SET `name` = SUBSTRING(`name`, 5) WHERE `module_id` = ' . $this->getModuleId() . ' AND `name` LIKE "seo_%";',
             ]
         ];
     }

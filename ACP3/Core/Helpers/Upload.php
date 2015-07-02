@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\Exceptions;
-
 /**
  * Class Upload
  * @package ACP3\Core\Helpers
@@ -15,7 +13,7 @@ class Upload
     private $directory = '';
 
     /**
-     * @param $directory
+     * @param string $directory
      */
     public function __construct($directory)
     {

@@ -83,7 +83,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param       $newsletterAccess
+     * @param       boolean $newsletterAccess
      *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed

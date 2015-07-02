@@ -84,8 +84,8 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param $group
-     * @param $layout
+     * @param string $group
+     * @param string $layout
      *
      * @return string
      */
@@ -100,7 +100,7 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param $layout
+     * @param string $layout
      *
      * @return array
      */
@@ -131,7 +131,7 @@ abstract class AbstractMinifier implements MinifierInterface
             // Get the enabled libraries and filter out empty entries
             $files = array_filter(
                 $this->processLibraries($layout),
-                function ($var) {
+                function($var) {
                     return !empty($var);
                 }
             );

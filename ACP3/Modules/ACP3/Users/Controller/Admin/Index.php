@@ -416,7 +416,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _editPost(array $formData)
     {
         try {
-            $this->usersValidator->validate($formData, (int) $this->request->id);
+            $this->usersValidator->validate($formData, (int)$this->request->id);
 
             $updateValues = [
                 'super_user' => (int)$formData['super_user'],
@@ -444,7 +444,7 @@ class Index extends Core\Modules\Controller\Admin
                 'entries' => (int)$formData['entries'],
             ];
 
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], (int) $this->request->id);
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], (int)$this->request->id);
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {

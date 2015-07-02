@@ -283,7 +283,7 @@ class Index extends Core\Modules\Controller\Admin
         try {
             $this->permissionsValidator->validate(
                 $formData,
-                (int) $this->request->id
+                (int)$this->request->id
             );
 
             $updateValues = [

@@ -475,9 +475,9 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
     }
 
     /**
-     * @param $moduleName
+     * @param string $moduleName
      *
-     * @return mixed
+     * @return boolean
      */
     public function moduleIsInstalled($moduleName)
     {

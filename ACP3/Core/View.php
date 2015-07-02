@@ -48,7 +48,7 @@ class View extends ContainerAware
     /**
      * Fetches a template and outputs its contents
      *
-     * @param      $template
+     * @param      string $template
      * @param null $cacheId
      * @param null $compileId
      * @param null $parent
