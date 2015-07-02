@@ -32,7 +32,7 @@ class Model extends Core\Model
     public function roleExistsByName($roleName, $id = 0)
     {
         if ($id !== 0) {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND name = ?', [(int) $id, $roleName]) == 1;
+            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND name = ?', [(int)$id, $roleName]) == 1;
         } else {
             return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$roleName]) == 1;
         }

@@ -46,7 +46,7 @@ class Index extends Core\Modules\Controller
         $settings = $this->config->getSettings('files');
 
         if (!empty($categoryId)) {
-            $categories = $this->filesModel->getAllByCategoryId((int) $categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
+            $categories = $this->filesModel->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
         } else {
             $categories = $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }

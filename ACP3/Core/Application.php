@@ -3,7 +3,6 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Modules;
-use ACP3\Core\Modules\Controller;
 use ACP3\Core\Logger as ACP3Logger;
 use Monolog\ErrorHandler;
 use Monolog\Formatter\LineFormatter;
@@ -267,7 +266,7 @@ class Application
     /**
      * Renders an exception
      *
-     * @param $errorMessage
+     * @param string $errorMessage
      */
     private function _renderApplicationException($errorMessage)
     {

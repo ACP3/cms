@@ -170,7 +170,7 @@ class Image
     /**
      * Gibt ein Bild direkt aus, ohne dieses in der Größe zu bearbeiten
      *
-     * @return string
+     * @return integer
      */
     protected function readFromFile()
     {
@@ -208,7 +208,7 @@ class Image
      * @param integer $width
      * @param integer $height
      * @param integer $type
-     * @param null    $cacheFile
+     * @param string    $cacheFile
      */
     protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile = null)
     {

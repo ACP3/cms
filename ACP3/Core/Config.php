@@ -90,7 +90,7 @@ class Config
     /**
      * Gibt den Inhalt der Konfigurationsdateien der Module aus
      *
-     * @param $module
+     * @param string $module
      *
      * @return array
      */

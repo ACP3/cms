@@ -77,7 +77,7 @@ class Cache
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return bool|mixed|string
      */
@@ -91,7 +91,7 @@ class Cache
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return bool
      */
@@ -101,7 +101,7 @@ class Cache
     }
 
     /**
-     * @param     $id
+     * @param     string $id
      * @param     $data
      * @param int $lifetime
      *

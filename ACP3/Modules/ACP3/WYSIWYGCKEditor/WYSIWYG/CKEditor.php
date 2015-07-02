@@ -234,7 +234,7 @@ class CKEditor extends Textarea
     /**
      * Prints javascript code.
      *
-     * @param $js
+     * @param string $js
      *
      * @return string
      */

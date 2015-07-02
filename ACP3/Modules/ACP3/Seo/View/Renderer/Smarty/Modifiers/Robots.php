@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Seo\View\Renderer\Smarty\Modifiers;
 
-use ACP3\Core\Config;
 use ACP3\Core\Lang;
 use ACP3\Core\SEO;
 use ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier;
@@ -42,7 +41,7 @@ class Robots extends AbstractModifier
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function _setReplaceParams()
     {
