@@ -90,7 +90,7 @@ class View extends ContainerAware
     /**
      * Assigns a new template variable
      *
-     * @param string $name
+     * @param string|array $name
      * @param mixed $value
      *
      * @return boolean

@@ -107,7 +107,7 @@ class Cache
     /**
      * Gets the cache for all registered languages
      *
-     * @return mixed
+     * @return array
      */
     public function getLanguagePacksCache()
     {

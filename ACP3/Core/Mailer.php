@@ -32,9 +32,9 @@ class Mailer
      */
     private $mailSignature = '';
     /**
-     * @var string
+     * @var string|array
      */
-    private $from = '';
+    private $from;
     /**
      * @var string|array
      */
@@ -335,7 +335,7 @@ class Mailer
     /**
      * Adds multiple recipients to the to be send email
      *
-     * @param      $recipients
+     * @param string|array $recipients
      * @param bool $bcc
      *
      * @return $this
@@ -348,7 +348,7 @@ class Mailer
             } else {
                 foreach ($recipients as $recipient) {
                     if (is_array($recipient) === true) {
-                        $this->_addRecipient($recipient['email'], $recipient['name'], '', $bcc);
+                        $this->_addRecipient($recipient['email'], $recipient['name'], $bcc);
                     } else {
                         $this->_addRecipient($recipient, '', $bcc);
                     }
@@ -364,7 +364,7 @@ class Mailer
     /**
      * Adds a single recipient to the to be send email
      *
-     * @param        $email
+     * @param string $email
      * @param string $name
      * @param bool   $bcc
      *

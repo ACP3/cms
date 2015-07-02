@@ -28,13 +28,15 @@ class Cache
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param                                                  $namespace
+     * @param  string                                          $namespace
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(
         Container $container,
         $namespace
-    ) {
+    )
+    {
         $this->container = $container;
         $this->namespace = $namespace;
     }
@@ -79,7 +81,7 @@ class Cache
     /**
      * @param string $id
      *
-     * @return bool|mixed|string
+     * @return bool|array|string
      */
     public function fetch($id)
     {
@@ -101,9 +103,9 @@ class Cache
     }
 
     /**
-     * @param     string $id
-     * @param     $data
-     * @param int $lifetime
+     * @param string $id
+     * @param mixed  $data
+     * @param int    $lifetime
      *
      * @return bool
      */
@@ -115,7 +117,7 @@ class Cache
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return bool
      */
