@@ -101,7 +101,7 @@ class Cache
     }
 
     /**
-     * @param     $id
+     * @param     string $id
      * @param     $data
      * @param int $lifetime
      *
