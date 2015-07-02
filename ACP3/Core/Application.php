@@ -20,23 +20,15 @@ use Symfony\Component\Config\FileLocator;
  * Bootstraps the application
  * @package ACP3
  */
-class Application
+class Application extends AbstractApplication
 {
-    /**
-     * Contains the current ACP3 version string
-     */
-    const VERSION = '4.0-dev';
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
     /**
      * @var array
      */
     protected $systemSettings = [];
 
     /**
-     * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
+     * @inheritdoc
      */
     public function run()
     {
@@ -48,22 +40,18 @@ class Application
     }
 
     /**
-     * Überprüft, ob die config.php existiert
+     * @inheritdoc
      */
     public function startupChecks()
     {
         // Standardzeitzone festlegen
         date_default_timezone_set('UTC');
 
-        // DB-Config des ACP3 laden
-        $path = ACP3_DIR . 'config.yml';
-        if (is_file($path) === false || filesize($path) === 0) {
-            exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
-        }
+        $this->checkForDbConfig();
     }
 
     /**
-     * Einige Pfadkonstanten definieren
+     * @inheritdoc
      */
     public function defineDirConstants()
     {
@@ -110,14 +98,14 @@ class Application
     }
 
     /**
-     * Überprüfen, ob der Wartungsmodus aktiv ist
+     * Checks, whether the maintenance mode is active
      */
     private function _checkForMaintenanceMode()
     {
         $request = $this->container->get('core.request');
 
         if ((bool)$this->systemSettings['maintenance_mode'] === true &&
-            ($request->area !== 'admin' && strpos($request->query, 'users/login/') !== 0)
+            ($request->area !== 'admin' && strpos($request->query, 'users/index/login/') !== 0)
         ) {
             header('HTTP/1.0 503 Service Unavailable');
 
@@ -130,7 +118,7 @@ class Application
     }
 
     /**
-     * Initialisieren der anderen Klassen
+     * @inheritdoc
      */
     public function initializeClasses()
     {
@@ -196,7 +184,7 @@ class Application
     }
 
     /**
-     * Gibt die Seite aus
+     * @inheritdoc
      */
     public function outputPage()
     {
@@ -246,14 +234,6 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * Renders an exception
      *
      * @param string $errorMessage
@@ -268,9 +248,9 @@ class Application
     }
 
     /**
-     * @param \Exception $exception
-     * @param \ACP3\Core\Redirect                                       $redirect
-     * @param string                                                    $path
+     * @param \Exception          $exception
+     * @param \ACP3\Core\Redirect $redirect
+     * @param string              $path
      */
     protected function handleException(\Exception $exception, Redirect $redirect, $path)
     {

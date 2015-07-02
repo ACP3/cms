@@ -11,15 +11,10 @@ use Symfony\Component\Config\FileLocator;
  * Class Application
  * @package ACP3\Installer
  */
-class Application
+class Application extends Core\AbstractApplication
 {
     /**
-     * @var ContainerBuilder
-     */
-    private $container;
-
-    /**
-     * run() method of the installer
+     * @inheritdoc
      */
     public function run()
     {
@@ -34,7 +29,7 @@ class Application
     }
 
     /**
-     * Define some path constants
+     * @inheritdoc
      */
     public function defineDirConstants()
     {
@@ -60,7 +55,7 @@ class Application
     }
 
     /**
-     * Initializes the classes
+     * @inheritdoc
      */
     public function initializeClasses()
     {
@@ -106,7 +101,7 @@ class Application
     }
 
     /**
-     * Outputs the requested page
+     * @inheritdoc
      */
     public function outputPage()
     {
@@ -127,7 +122,7 @@ class Application
     }
 
     /**
-     * Checks, whether the config.yml exists
+     * @inheritdoc
      */
     public function startupChecks()
     {
@@ -137,19 +132,8 @@ class Application
         error_reporting(E_ALL);
 
         if (defined('IN_UPDATER') === true) {
-            // DB-Config des ACP3 laden
-            $path = ACP3_DIR . 'config.yml';
-            if (is_file($path) === false || filesize($path) === 0) {
-                exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
-            }
+            $this->checkForDbConfig();
         }
     }
 
-    /**
-     * @return ContainerBuilder
-     */
-    public function getServiceContainer()
-    {
-        return $this->container;
-    }
 }
