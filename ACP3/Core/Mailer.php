@@ -292,7 +292,7 @@ class Mailer
 
     /**
      *
-     * @param $data
+     * @param string $data
      *
      * @return string
      */

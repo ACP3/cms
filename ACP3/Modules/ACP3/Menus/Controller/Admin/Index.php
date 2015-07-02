@@ -182,7 +182,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _editPost(array $formData)
     {
         try {
-            $this->menusValidator->validate($formData, (int) $this->request->id);
+            $this->menusValidator->validate($formData, (int)$this->request->id);
 
             $updateValues = [
                 'index_name' => $formData['index_name'],

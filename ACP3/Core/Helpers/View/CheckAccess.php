@@ -2,7 +2,6 @@
 namespace ACP3\Core\Helpers\View;
 
 use ACP3\Core;
-use ACP3\Core\View\Renderer\Smarty\Functions\Icon;
 
 /**
  * Class CheckAccess

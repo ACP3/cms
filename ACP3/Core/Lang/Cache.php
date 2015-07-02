@@ -29,7 +29,7 @@ class Cache
     /**
      * Gibt die gecacheten Sprachstrings aus
      *
-     * @param $language
+     * @param string $language
      *
      * @return array
      */
