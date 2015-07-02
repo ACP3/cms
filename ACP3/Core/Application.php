@@ -10,8 +10,8 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
@@ -27,7 +27,7 @@ class Application
      */
     const VERSION = '4.0-dev';
     /**
-     * @var Container
+     * @var ContainerInterface
      */
     protected $container;
     /**
@@ -229,34 +229,24 @@ class Application
             ACP3Logger::error('404', 'Request: ' . $request->query);
             ACP3Logger::error('404', $e);
 
-            if (defined('DEBUG') && DEBUG === true) {
-                $errorMessage = $e->getMessage();
-                $this->_renderApplicationException($errorMessage);
-            } else {
-                $redirect->temporary('errors/index/404');
-            }
+            $this->handleException($e, $redirect, 'errors/index/404');
         } catch (\Exception $e) {
             ACP3Logger::error('exception', $e);
 
-            if (defined('DEBUG') && DEBUG === true) {
-                $errorMessage = $e->getMessage();
-                $this->_renderApplicationException($errorMessage);
-            } else {
-                $redirect->temporary('errors/index/500');
-            }
+            $this->handleException($e, $redirect, 'errors/index/500');
         }
     }
 
     /**
-     * @param Container $container
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function setContainer(Container $container)
+    public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
     /**
-     * @return Container
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
     public function getContainer()
     {
@@ -275,5 +265,20 @@ class Application
         $view->assign('PAGE_TITLE', 'ACP3');
         $view->assign('CONTENT', $errorMessage);
         $view->displayTemplate('system/exception.tpl');
+    }
+
+    /**
+     * @param \Exception $exception
+     * @param \ACP3\Core\Redirect                                       $redirect
+     * @param string                                                    $path
+     */
+    protected function handleException(\Exception $exception, Redirect $redirect, $path)
+    {
+        if (defined('DEBUG') && DEBUG === true) {
+            $errorMessage = $exception->getMessage();
+            $this->_renderApplicationException($errorMessage);
+        } else {
+            $redirect->temporary($path);
+        }
     }
 }

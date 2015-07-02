@@ -136,7 +136,7 @@ class ACL
      *
      * @param array $roleIds
      *
-     * @return boolean
+     * @return array
      */
     public function getRules(array $roleIds)
     {

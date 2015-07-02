@@ -32,7 +32,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @return bool|mixed|string
+     * @return array
      */
     public function getResourcesCache()
     {
