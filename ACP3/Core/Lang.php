@@ -446,7 +446,7 @@ class Lang
     public function getLanguagePack($currentLanguage)
     {
         if (empty($this->languagePacks)) {
-            $this->languagePacks = $this->cache->getLanguagePacksCache($this->getLanguage());
+            $this->languagePacks = $this->cache->getLanguagePacksCache();
         }
 
         $languages = $this->languagePacks;

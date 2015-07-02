@@ -63,7 +63,7 @@ class Cache
                         $data['info']['direction'] = (string)$xml->info->direction;
                     }
 
-                    $module = $this->getModuleFromPath($file, $namespace);
+                    $module = $this->getModuleFromPath($file);
 
                     // Iterate over all language keys
                     foreach ($xml->keys->item as $item) {
