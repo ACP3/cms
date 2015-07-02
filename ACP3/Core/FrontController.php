@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class FrontController
@@ -10,14 +10,14 @@ use Symfony\Component\DependencyInjection\Container;
 class FrontController
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
