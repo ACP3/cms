@@ -19,7 +19,41 @@ class Index extends AbstractController
 
     public function actionRequirements()
     {
-        // Allgemeine Voraussetzungen
+        $requirements = $this->checkMandatoryRequirements();
+        $this->view->assign('requirements', $requirements);
+
+        list($requiredFilesAndDirs, $checkAgain) = $this->checkFolderAndFilePermissions();
+        $this->view->assign('files_dirs', $requiredFilesAndDirs);
+
+        $this->view->assign('php_settings', $this->checkOptionalRequirements());
+
+        foreach ($requirements as $row) {
+            if ($row['color'] !== self::COLOR_SUCCESS) {
+                $this->view->assign('stop_install', true);
+            }
+        }
+
+        if ($checkAgain === true) {
+            $this->view->assign('check_again', true);
+        }
+    }
+
+    public function actionLicence()
+    {
+        return;
+    }
+
+    public function actionIndex()
+    {
+        return;
+    }
+
+    /**
+     * Checks, whether the mandatory system requirements of the ACP3 are fulfilled
+     * @return array
+     */
+    private function checkMandatoryRequirements()
+    {
         $requirements = [];
         $requirements[0]['name'] = $this->lang->t('install', 'php_version');
         $requirements[0]['color'] = version_compare(phpversion(), self::REQUIRED_PHP_VERSION, '>=') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
@@ -41,12 +75,18 @@ class Index extends AbstractController
         $requirements[4]['color'] = ((bool)ini_get('safe_mode')) ? self::COLOR_ERROR : self::COLOR_SUCCESS;
         $requirements[4]['found'] = $this->lang->t('install', ((bool)ini_get('safe_mode')) ? 'on' : 'off');
         $requirements[4]['required'] = $this->lang->t('install', 'off');
+        return $requirements;
+    }
 
-        $this->view->assign('requirements', $requirements);
-
+    /**
+     * Checks, whether all mandatory files and folders exist and have the correct permissions set
+     *
+     * @return array
+     */
+    private function checkFolderAndFilePermissions()
+    {
         $defaults = ['ACP3/config.yml'];
 
-        // Uploadordner
         $uploads = array_diff(scandir(UPLOADS_DIR), ['.', '..']);
         foreach ($uploads as $row) {
             $path = 'uploads/' . $row . '/';
@@ -78,36 +118,25 @@ class Index extends AbstractController
             }
             ++$i;
         }
-        $this->view->assign('files_dirs', $requiredFilesAndDirs);
-
-        // PHP Einstellungen
-        $phpSettings = [];
-        $phpSettings[0]['setting'] = $this->lang->t('install', 'maximum_uploadsize');
-        $phpSettings[0]['class'] = ini_get('post_max_size') > 0 ? self::CLASS_SUCCESS : self::CLASS_WARNING;
-        $phpSettings[0]['value'] = ini_get('post_max_size');
-        $phpSettings[1]['setting'] = $this->lang->t('install', 'magic_quotes');
-        $phpSettings[1]['class'] = (bool)ini_get('magic_quotes_gpc') ? self::CLASS_WARNING : self::CLASS_SUCCESS;
-        $phpSettings[1]['value'] = $this->lang->t('install', (bool)ini_get('magic_quotes_gpc') ? 'on' : 'off');
-        $this->view->assign('php_settings', $phpSettings);
-
-        foreach ($requirements as $row) {
-            if ($row['color'] !== self::COLOR_SUCCESS) {
-                $this->view->assign('stop_install', true);
-            }
-        }
-
-        if ($checkAgain === true) {
-            $this->view->assign('check_again', true);
-        }
+        return [$requiredFilesAndDirs, $checkAgain];
     }
 
-    public function actionLicence()
+    /**
+     * @return array
+     */
+    private function checkOptionalRequirements()
     {
-        return;
-    }
-
-    public function actionIndex()
-    {
-        return;
+        return [
+            [
+                'setting' => $this->lang->t('install', 'maximum_uploadsize'),
+                'class' => ini_get('post_max_size') > 0 ? self::CLASS_SUCCESS : self::CLASS_WARNING,
+                'value' => ini_get('post_max_size'),
+            ],
+            [
+                'setting' => $this->lang->t('install', 'magic_quotes'),
+                'class' => (bool)ini_get('magic_quotes_gpc') ? self::CLASS_WARNING : self::CLASS_SUCCESS,
+                'value' => $this->lang->t('install', (bool)ini_get('magic_quotes_gpc') ? 'on' : 'off'),
+            ]
+        ];
     }
 }
