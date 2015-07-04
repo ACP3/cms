@@ -62,13 +62,13 @@
             </fieldset>
         </div>
     </div>
-    {if isset($stop_install)}
-        <div class="alert alert-error text-center">
+    {if $stop_install === true}
+        <div class="alert alert-danger text-center">
             <strong>{lang t="install|stop_installation"}</strong>
         </div>
     {else}
         <div class="well well-sm text-center">
-            {if isset($check_again)}
+            {if $check_again === true}
                 <a href="{$REQUEST_URI}" class="btn btn-warning">{lang t="install|check_again"}</a>
             {else}
                 <a href="{uri args="install/install"}" class="btn btn-default">{lang t="install|install_index"}</a>

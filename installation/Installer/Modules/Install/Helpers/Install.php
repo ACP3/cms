@@ -1,16 +1,16 @@
 <?php
 
-namespace ACP3\Installer\Modules\Install;
+namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Yaml\Dumper;
 
 /**
- * Class Helpers
- * @package ACP3\Installer\Modules\Install
+ * Class Install
+ * @package ACP3\Installer\Modules\Install\Helpers
  */
-class Helpers
+class Install
 {
     /**
      * Writes the system config file

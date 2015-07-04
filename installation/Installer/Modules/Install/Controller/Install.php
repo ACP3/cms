@@ -7,7 +7,7 @@ use ACP3\Installer\Core\Date;
 use ACP3\Core\Exceptions\ValidationFailed;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Installer\Core;
-use ACP3\Installer\Modules\Install\Helpers;
+use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -24,7 +24,7 @@ class Install extends AbstractController
     protected $configFilePath = '';
 
     /**
-     * @var Date
+     * @var \ACP3\Installer\Core\Date
      */
     protected $date;
     /**
@@ -32,19 +32,19 @@ class Install extends AbstractController
      */
     protected $db;
     /**
-     * @var Helpers
+     * @var \ACP3\Installer\Modules\Install\Helpers\Install
      */
     protected $installHelper;
 
     /**
      * @param Core\Context $context
      * @param Date $date
-     * @param Helpers $installHelper
+     * @param InstallerHelpers $installHelper
      */
     public function __construct(
         Core\Context $context,
         Date $date,
-        Helpers $installHelper
+        InstallerHelpers $installHelper
     )
     {
         parent::__construct($context);
