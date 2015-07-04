@@ -23,7 +23,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $routerValidator;
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
 
