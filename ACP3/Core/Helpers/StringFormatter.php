@@ -22,6 +22,7 @@ class StringFormatter
         if (!preg_match('/&([a-z]+);/', $var)) {
             $var = htmlentities($var, ENT_QUOTES, 'UTF-8');
         }
+
         $search = [
             '/&([a-z]{1})uml;/',
             '/&szlig;/',
@@ -38,6 +39,7 @@ class StringFormatter
             '-',
             '',
         ];
+
         return preg_replace($search, $replace, strtolower($var));
     }
 
@@ -54,10 +56,10 @@ class StringFormatter
     {
         $data = trim($data);
         if ($lineBreaks === true) {
-            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '<br' . ($isXhtml == true ? ' /' : '') . '>'], $data) . '</p>';
-        } else {
-            return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
+            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '<br' . ($isXhtml === true ? ' /' : '') . '>'], $data) . '</p>';
         }
+
+        return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
     }
 
     /**
@@ -85,6 +87,7 @@ class StringFormatter
         if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $diff) {
             return utf8_encode(substr($shortened, 0, $chars - $diff)) . $append;
         }
+
         return $data;
     }
 }

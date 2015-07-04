@@ -63,14 +63,17 @@ services:
   core.context:
     class : ACP3\Core\Context
     arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
+    public: false
 
   core.context.admin:
     class : ACP3\Core\Context\Admin
     arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session']
+    public: false
 
   core.context.frontend:
     class : ACP3\Core\Context\Frontend
     arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
+    public: false
 
   core.date:
     class: ACP3\Core\Date

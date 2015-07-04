@@ -8,6 +8,7 @@ services:
   core.context.install:
     class: ACP3\Installer\Core\Context
     arguments: ['@core.lang', '@core.request', '@core.router', '@core.view']
+    public: false
 
   core.date:
     class: ACP3\Installer\Core\Date

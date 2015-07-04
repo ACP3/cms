@@ -127,7 +127,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->setNoOutput(true);
 
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true) {
-            @set_time_limit(20);
+            set_time_limit(20);
             $picture = $this->galleryModel->getFileById($this->request->id);
             $action = $this->request->action === 'thumb' ? 'thumb' : '';
 

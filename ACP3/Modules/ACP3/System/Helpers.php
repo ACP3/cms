@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\System;
 
 use ACP3\Core;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -58,12 +58,12 @@ class Helpers
     }
 
     /**
-     * @param                                                  $moduleToBeUninstalled
-     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param string                                                    $moduleToBeUninstalled
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      *
      * @return array
      */
-    public function checkUninstallDependencies($moduleToBeUninstalled, Container $container)
+    public function checkUninstallDependencies($moduleToBeUninstalled, ContainerInterface $container)
     {
         $modules = $this->modules->getInstalledModules();
         $moduleDependencies = [];
@@ -115,9 +115,9 @@ class Helpers
     }
 
     /**
-     * @param array $tables
-     * @param       $exportType
-     * @param       $withDropTables
+     * @param array  $tables
+     * @param string $exportType
+     * @param bool   $withDropTables
      *
      * @return string
      */

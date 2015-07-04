@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\System;
 
 use ACP3\Core;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Validator
@@ -28,12 +28,12 @@ class Validator extends Core\Validator\AbstractValidator
     protected $container;
 
     /**
-     * @param \ACP3\Core\Lang                                  $lang
-     * @param \ACP3\Core\Validator\Rules\Misc                  $validate
-     * @param \ACP3\Core\Validator\Rules\Date                  $dateValidator
-     * @param \ACP3\Core\Validator\Rules\Mime                  $mimeValidator
-     * @param \ACP3\Core\Validator\Rules\Router                $routerValidator
-     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param \ACP3\Core\Lang                                           $lang
+     * @param \ACP3\Core\Validator\Rules\Misc                           $validate
+     * @param \ACP3\Core\Validator\Rules\Date                           $dateValidator
+     * @param \ACP3\Core\Validator\Rules\Mime                           $mimeValidator
+     * @param \ACP3\Core\Validator\Rules\Router                         $routerValidator
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(
         Core\Lang $lang,
@@ -41,8 +41,9 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Date $dateValidator,
         Core\Validator\Rules\Mime $mimeValidator,
         Core\Validator\Rules\Router $routerValidator,
-        Container $container
-    ) {
+        ContainerInterface $container
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->dateValidator = $dateValidator;
@@ -53,6 +54,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -71,8 +73,9 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['flood'] = $this->lang->t('system', 'type_in_flood_barrier');
         }
         if (empty($formData['wysiwyg']) ||
-            !$this->container->has($formData['wysiwyg']) ||
-            !($this->container->get($formData['wysiwyg']) instanceof Core\WYSIWYG\AbstractWYSIWYG)) {
+            $this->container->has($formData['wysiwyg']) === false ||
+            !($this->container->get($formData['wysiwyg']) instanceof Core\WYSIWYG\AbstractWYSIWYG)
+        ) {
             $this->errors['wysiwyg'] = $this->lang->t('system', 'select_editor');
         }
         if ($this->lang->languagePackExists($formData['language']) === false) {
@@ -116,6 +119,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -140,6 +144,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      * @param array $file
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

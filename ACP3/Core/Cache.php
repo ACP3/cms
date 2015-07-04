@@ -60,19 +60,15 @@ class Cache
             if (is_dir($path)) {
                 static::purge($path, $cacheId);
                 if (empty($cacheId)) {
-                    @rmdir($path);
+                    rmdir($path);
                 }
             } else {
                 if (!empty($cacheId) && strpos($file, $cacheId) === false) {
                     continue;
                 }
 
-                @unlink($path);
+                unlink($path);
             }
-        }
-
-        if (!empty($cacheId)) {
-            return true;
         }
 
         return true;
