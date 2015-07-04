@@ -87,9 +87,7 @@ class Navbar extends AbstractFunction
      * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
      * falls diese sich ebenfalls in der Navigationsleiste befindet
      *
-     * @param string                                               $menu
-     *    Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
-     *
+     * @param string                                             $menu
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      *
      * @return string
@@ -108,7 +106,7 @@ class Navbar extends AbstractFunction
 
     /**
      * @param                                                      $menu
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration   $menuConfig
      *
      * @return string
      */
@@ -161,6 +159,7 @@ class Navbar extends AbstractFunction
         }
         return '';
     }
+
     /**
      * @param string $menu
      *
@@ -185,8 +184,8 @@ class Navbar extends AbstractFunction
 
     /**
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
-     * @param array                                                $item
-     * @param string                                               $css
+     * @param array                                              $item
+     * @param string                                             $css
      *
      * @return string
      */
@@ -210,10 +209,10 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param string                                               $menu
+     * @param string                                             $menu
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
-     * @param array                                                $item
-     * @param string                                               $css
+     * @param array                                              $item
+     * @param string                                             $css
      *
      * @return string
      */
@@ -251,8 +250,8 @@ class Navbar extends AbstractFunction
      * Close the list of child elements
      *
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
-     * @param array                                                $items
-     * @param int                                                  $currentIndex
+     * @param array                                              $items
+     * @param int                                                $currentIndex
      *
      * @return string
      */
@@ -336,7 +335,7 @@ class Navbar extends AbstractFunction
 
     /**
      * @param                                                      $menu
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration   $menuConfig
      *
      * @return string
      */
