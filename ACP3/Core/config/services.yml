@@ -145,7 +145,7 @@ services:
     arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@core.config', '@seo.model']
 
   core.session:
-    class: ACP3\Core\Session
+    class: ACP3\Core\SessionHandler
     arguments: ['@core.db']
 
   core.view:

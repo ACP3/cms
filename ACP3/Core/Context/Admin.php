@@ -14,19 +14,19 @@ class Admin extends Frontend
      */
     protected $validate;
     /**
-     * @var \ACP3\Core\Session
+     * @var \ACP3\Core\SessionHandler
      */
     protected $session;
 
     /**
      * @param \ACP3\Core\Context\Frontend     $frontendContext
      * @param \ACP3\Core\Validator\Rules\Misc $validate
-     * @param \ACP3\Core\Session              $session
+     * @param \ACP3\Core\SessionHandler              $session
      */
     public function __construct(
         Core\Context\Frontend $frontendContext,
         Core\Validator\Rules\Misc $validate,
-        Core\Session $session
+        Core\SessionHandler $session
     ) {
         parent::__construct(
             $frontendContext,
@@ -40,7 +40,7 @@ class Admin extends Frontend
     }
 
     /**
-     * @return \ACP3\Core\Session
+     * @return \ACP3\Core\SessionHandler
      */
     public function getSession()
     {

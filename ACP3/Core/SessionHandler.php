@@ -5,10 +5,11 @@ namespace ACP3\Core;
 /**
  * @package ACP3\Core
  */
-class Session
+class SessionHandler implements \SessionHandlerInterface
 {
     const SESSION_NAME = 'ACP3_SID';
     const XSRF_TOKEN_NAME = 'security_token';
+
     /**
      * @var integer
      */
@@ -17,6 +18,10 @@ class Session
      * @var integer
      */
     public $gcProbability = 10;
+    /**
+     * @var bool
+     */
+    private $gcCalled = false;
     /**
      * @var \ACP3\Core\DB
      */
@@ -44,14 +49,7 @@ class Session
 
             // Set our own session handling methods
             ini_set('session.save_handler', 'user');
-            session_set_save_handler(
-                [$this, 'session_open'],
-                [$this, 'session_close'],
-                [$this, 'session_read'],
-                [$this, 'session_write'],
-                [$this, 'session_destroy'],
-                [$this, 'session_gc']
-            );
+            session_set_save_handler($this, true);
 
             // Start the session and secure it
             self::startSession();
@@ -89,22 +87,27 @@ class Session
     }
 
     /**
-     * Opens a session
-     *
-     * @return true
+     * @inheritdoc
      */
-    public function session_open()
+    public function open($savePath, $sessionId)
     {
         return true;
     }
 
     /**
-     * Closes the current session
-     *
-     * @return true
+     * @inheritdoc
      */
-    public function session_close()
+    public function close()
     {
+        if ($this->gcCalled === true) {
+            if ($this->expireTime === 0) {
+                return false;
+            }
+
+            $this->gcCalled = false;
+            $this->db->getConnection()->executeUpdate("DELETE FROM {$this->db->getPrefix()} sessions WHERE `session_starttime` + ? < ?", [$this->expireTime, time()]);
+        }
+
         return true;
     }
 
@@ -132,40 +135,29 @@ class Session
     }
 
     /**
-     * Reads a session from the database
-     *
-     * @param integer $sessionId
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function session_read($sessionId)
+    public function read($sessionId)
     {
-        $session = $this->db->fetchColumn('SELECT `session_data` FROM ' . $this->db->getPrefix() . 'sessions WHERE `session_id` = ?', [$sessionId]);
+        $session = $this->db->fetchColumn("SELECT `session_data` FROM {$this->db->getPrefix()} sessions WHERE `session_id` = ?", [$sessionId]);
 
         return $session ?: ''; // Return an empty string, if the requested session can't be found
     }
 
     /**
-     * Writes a session to the database
-     *
-     * @param integer $sessionId
-     * @param array   $data Contains the session data
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function session_write($sessionId, $data)
+    public function write($sessionId, $data)
     {
-        $this->db->getConnection()->executeUpdate('INSERT INTO ' . $this->db->getPrefix() . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?', [$sessionId, time(), $data, $data]);
+        $this->db->getConnection()->executeUpdate("INSERT INTO {$this->db->getPrefix()} sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?", [$sessionId, time(), $data, $data]);
 
         return true;
     }
 
     /**
-     * Deletes the current session
-     *
-     * @param integer $sessionId
+     * @inheritdoc
      */
-    public function session_destroy($sessionId)
+    public function destroy($sessionId)
     {
         // Reset all already set session variables
         $_SESSION = [];
@@ -177,6 +169,8 @@ class Session
 
         // Delete the session from the database
         $this->db->getConnection()->delete($this->db->getPrefix() . 'sessions', ['session_id' => $sessionId]);
+
+        return true;
     }
 
     /**
@@ -186,14 +180,12 @@ class Session
      *
      * @return boolean
      */
-    public function session_gc($sessionLifetime = 1800)
+    public function gc($sessionLifetime)
     {
-        if ($sessionLifetime == 0) {
-            return false;
-        }
-
-        $this->db->getConnection()->executeUpdate('DELETE FROM ' . $this->db->getPrefix() . 'sessions WHERE `session_starttime` + ? < ?', [$sessionLifetime, time()]);
+        // Delay the garbage collection to the close() method, to prevent from read/write locks
+        $this->gcCalled = true;
 
         return true;
     }
+
 }

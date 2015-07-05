@@ -51,7 +51,7 @@ class Misc
      */
     public function formToken()
     {
-        $tokenName = \ACP3\Core\Session::XSRF_TOKEN_NAME;
+        $tokenName = \ACP3\Core\SessionHandler::XSRF_TOKEN_NAME;
         $urlQueryString = $this->request->query;
 
         return (isset($_POST[$tokenName]) && isset($_SESSION[$tokenName][$urlQueryString]) && $_POST[$tokenName] === $_SESSION[$tokenName][$urlQueryString]);

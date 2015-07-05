@@ -65,7 +65,7 @@ abstract class Frontend extends Core\Modules\Controller
         $this->breadcrumb->prePopulate();
 
         $this->view->assign('PHP_SELF', PHP_SELF);
-        $this->view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+        $this->view->assign('REQUEST_URI', $this->router->route($this->request->originalQuery));
         $this->view->assign('ROOT_DIR', ROOT_DIR);
         $this->view->assign('ROOT_DIR_ABSOLUTE', ROOT_DIR_ABSOLUTE);
         $this->view->assign('HOST_NAME', HOST_NAME);

@@ -49,7 +49,7 @@ class Auth
      */
     protected $userInfo = [];
     /**
-     * @var \ACP3\Core\Session
+     * @var \ACP3\Core\SessionHandler
      */
     protected $session;
     /**
@@ -66,13 +66,13 @@ class Auth
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\Session        $session
+     * @param \ACP3\Core\SessionHandler        $session
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Config         $config
      * @param \ACP3\Modules\ACP3\Users\Model $usersModel
      */
     public function __construct(
-        Session $session,
+        SessionHandler $session,
         Secure $secureHelper,
         Config $config,
         Users\Model $usersModel
@@ -259,7 +259,7 @@ class Auth
                 $this->setCookie($username, $dbHash, $expiry);
 
                 // Neue Session-ID generieren
-                Session::secureSession(true);
+                SessionHandler::secureSession(true);
 
                 $this->isUser = true;
                 $this->userId = (int)$user['id'];

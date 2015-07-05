@@ -85,7 +85,7 @@ class Secure
      */
     public function generateFormToken($path)
     {
-        $tokenName = Core\Session::XSRF_TOKEN_NAME;
+        $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
         if (!isset($_SESSION[$tokenName]) || is_array($_SESSION[$tokenName]) === false) {
             $_SESSION[$tokenName] = [];
         }
@@ -107,7 +107,7 @@ class Secure
      */
     public function unsetFormToken($path, $token = '')
     {
-        $tokenName = Core\Session::XSRF_TOKEN_NAME;
+        $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
         if (empty($token) && isset($_POST[$tokenName])) {
             $token = $_POST[$tokenName];
         }

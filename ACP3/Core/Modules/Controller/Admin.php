@@ -11,7 +11,7 @@ use ACP3\Core;
 abstract class Admin extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var \ACP3\Core\Session
+     * @var \ACP3\Core\SessionHandler
      */
     protected $session;
     /**
@@ -62,7 +62,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
         /** @var \ACP3\Core\Helpers\Alerts $alerts */
         $alerts = $this->get('core.helpers.alerts');
 
-        if (!isset($entries)) {
+        if (empty($entries)) {
             $this->setTemplate($alerts->errorBoxContent($this->lang->t('system', 'no_entries_selected')));
         } elseif (empty($entries) === false && $this->request->action !== 'confirmed') {
             if (is_array($entries) === false) {
@@ -74,21 +74,53 @@ abstract class Admin extends Core\Modules\Controller\Frontend
                 'entries' => $entries
             ];
 
-            if ($moduleConfirmUrl === null) {
-                $moduleConfirmUrl = 'acp/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
-            }
+            list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl);
 
-            if ($moduleIndexUrl === null) {
-                $moduleIndexUrl = 'acp/' . $this->request->mod . '/' . $this->request->controller;
-            }
-
-            $confirmationText = count($entries) == 1 ? $this->lang->t('system', 'confirm_delete_single') : str_replace('{items}', count($entries), $this->lang->t('system', 'confirm_delete_multiple'));
-
-            $confirmBox = $alerts->confirmBoxPost($confirmationText, $data, $this->router->route($moduleConfirmUrl), $this->router->route($moduleIndexUrl));
+            $confirmBox = $alerts->confirmBoxPost(
+                $this->fetchConfirmationBoxText($entries),
+                $data,
+                $this->router->route($moduleConfirmUrl),
+                $this->router->route($moduleIndexUrl)
+            );
 
             $this->setTemplate($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
         }
+    }
+
+    /**
+     * @param string|null $moduleConfirmUrl
+     * @param string|null $moduleIndexUrl
+     *
+     * @return array
+     */
+    protected function generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl)
+    {
+        if ($moduleConfirmUrl === null) {
+            $moduleConfirmUrl = 'acp/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
+        }
+
+        if ($moduleIndexUrl === null) {
+            $moduleIndexUrl = 'acp/' . $this->request->mod . '/' . $this->request->controller;
+        }
+
+        return [$moduleConfirmUrl, $moduleIndexUrl];
+    }
+
+    /**
+     * @param array $entries
+     *
+     * @return mixed|string
+     */
+    protected function fetchConfirmationBoxText($entries)
+    {
+        $entriesCount = count($entries);
+
+        if ($entriesCount === 1) {
+            return $this->lang->t('system', 'confirm_delete_single');
+        }
+
+        return str_replace('{items}', $entriesCount, $this->lang->t('system', 'confirm_delete_multiple'));
     }
 }
