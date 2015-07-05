@@ -34,6 +34,11 @@ class SessionHandler implements \SessionHandlerInterface
     {
         $this->db = $db;
 
+        $this->configureSession();
+    }
+
+    protected function configureSession()
+    {
         if (session_status() == PHP_SESSION_NONE) {
             // Configure the php.ini session settings
             ini_set('session.name', self::SESSION_NAME);

@@ -9,31 +9,11 @@ class SessionHandler extends \ACP3\Core\SessionHandler
 {
     public function __construct()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            // Configure the php.ini session settings
-            ini_set('session.name', self::SESSION_NAME);
-            ini_set('session.use_trans_sid', 0);
-            ini_set('session.use_cookies', 1);
-            ini_set('session.use_only_cookies', 1);
-            ini_set('session.cookie_httponly', 1);
-
-            // Session GC
-            ini_set('session.gc_maxlifetime', $this->expireTime);
-            ini_set('session.gc_probability', $this->gcProbability);
-            ini_set('session.gc_divisor', 100);
-
-            // Set our own session handling methods
-            ini_set('session.save_handler', 'user');
-            session_set_save_handler($this, true);
-
-            // Start the session and secure it
-            $this->startSession();
-            $this->secureSession();
-        }
+        $this->configureSession();
     }
 
     /**
-     * Session starten
+     * @inheritdoc
      */
     protected function startSession()
     {
@@ -41,9 +21,7 @@ class SessionHandler extends \ACP3\Core\SessionHandler
     }
 
     /**
-     * Secures the current session
-     *
-     * @param boolean $force
+     * @inheritdoc
      */
     public function secureSession($force = false)
     {
