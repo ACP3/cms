@@ -9,7 +9,7 @@ services:
 
   core.validator.rules.captcha:
     class: ACP3\Core\Validator\Rules\Captcha
-    arguments: ['@core.request', '@core.router']
+    arguments: ['@core.request', '@core.router', @core.session]
 
   core.validator.rules.date:
     class: ACP3\Core\Validator\Rules\Date
@@ -21,7 +21,7 @@ services:
 
   core.validator.rules.misc:
     class: ACP3\Core\Validator\Rules\Misc
-    arguments: ['@core.request']
+    arguments: ['@core.request', @core.session]
 
   core.validator.rules.router:
     class: ACP3\Core\Validator\Rules\Router

@@ -10,15 +10,24 @@ use ACP3\Core;
 class Secure
 {
     /**
+     * @var \ACP3\Core\SessionHandler
+     */
+    protected $sessionHandler;
+    /**
      * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * @param \ACP3\Core\View $view
+     * @param \ACP3\Core\SessionHandler $sessionHandler
+     * @param \ACP3\Core\View           $view
      */
-    public function __construct(Core\View $view)
+    public function __construct(
+        Core\SessionHandler $sessionHandler,
+        Core\View $view
+    )
     {
+        $this->sessionHandler = $sessionHandler;
         $this->view = $view;
     }
 
@@ -86,17 +95,16 @@ class Secure
     public function generateFormToken($path)
     {
         $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
-        if (!isset($_SESSION[$tokenName]) || is_array($_SESSION[$tokenName]) === false) {
-            $_SESSION[$tokenName] = [];
-        }
+        $sessionTokens = $this->sessionHandler->getParameter($tokenName, []);
 
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
-        if (empty($_SESSION[$tokenName][$path])) {
-            $_SESSION[$tokenName][$path] = sha1(uniqid(mt_rand(), true));
+        if (!isset($sessionTokens[$path])) {
+            $sessionTokens[$path] = sha1(uniqid(mt_rand(), true));
+            $this->sessionHandler->setParameter($tokenName, $sessionTokens);
         }
 
-        $this->view->assign('form_token', '<input type="hidden" name="' . $tokenName . '" value="' . $_SESSION[$tokenName][$path] . '" />');
+        $this->view->assign('form_token', '<input type="hidden" name="' . $tokenName . '" value="' . $sessionTokens[$path] . '" />');
     }
 
     /**
@@ -111,9 +119,12 @@ class Secure
         if (empty($token) && isset($_POST[$tokenName])) {
             $token = $_POST[$tokenName];
         }
-        if (!empty($token) && is_array($_SESSION[$tokenName]) === true) {
-            if (isset($_SESSION[$tokenName][$path])) {
-                unset($_SESSION[$tokenName][$path]);
+        if (!empty($token)) {
+            $sessionTokens = $this->sessionHandler->getParameter($tokenName, []);
+            if (isset($sessionTokens[$path])) {
+                unset($sessionTokens[$path]);
+
+                $this->sessionHandler->setParameter($tokenName, $sessionTokens);
             }
         }
     }

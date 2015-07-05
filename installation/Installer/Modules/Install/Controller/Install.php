@@ -134,7 +134,7 @@ class Install extends AbstractController
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load(CLASSES_DIR . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
-        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/services.yml');
+        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
         // Load installer modules services
         $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..']);

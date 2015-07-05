@@ -51,7 +51,7 @@ class Auth
     /**
      * @var \ACP3\Core\SessionHandler
      */
-    protected $session;
+    protected $sessionHandler;
     /**
      * @var \ACP3\Core\Config
      */
@@ -66,18 +66,19 @@ class Auth
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\SessionHandler        $session
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Config         $config
+     * @param \ACP3\Core\SessionHandler      $sessionHandler
+     * @param \ACP3\Core\Helpers\Secure      $secureHelper
+     * @param \ACP3\Core\Config              $config
      * @param \ACP3\Modules\ACP3\Users\Model $usersModel
      */
     public function __construct(
-        SessionHandler $session,
+        SessionHandler $sessionHandler,
         Secure $secureHelper,
         Config $config,
         Users\Model $usersModel
-    ) {
-        $this->session = $session;
+    )
+    {
+        $this->sessionHandler = $sessionHandler;
         $this->secureHelper = $secureHelper;
         $this->config = $config;
         $this->usersModel = $usersModel;
@@ -128,16 +129,16 @@ class Auth
      */
     public function logout()
     {
-        $this->session->session_destroy(session_id());
+        $this->sessionHandler->destroy(session_id());
         return $this->setCookie('', '', -50400);
     }
 
     /**
      * Setzt den internen Authentifizierungscookie
      *
-     * @param string $nickname
+     * @param string  $nickname
      *  Der Loginname des Users
-     * @param string $password
+     * @param string  $password
      *  Die Hashsumme des Passwortes
      * @param integer $expiry
      *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
@@ -222,9 +223,9 @@ class Auth
     /**
      * Loggt einen User ein
      *
-     * @param string $username
+     * @param string  $username
      *    Der zu verwendente Username
-     * @param string $password
+     * @param string  $password
      *    Das zu verwendente Passwort
      * @param integer $expiry
      *    Gibt die Zeit in Sekunden an, wie lange der User eingeloggt bleiben soll
@@ -259,7 +260,7 @@ class Auth
                 $this->setCookie($username, $dbHash, $expiry);
 
                 // Neue Session-ID generieren
-                SessionHandler::secureSession(true);
+                $this->sessionHandler->secureSession(true);
 
                 $this->isUser = true;
                 $this->userId = (int)$user['id'];

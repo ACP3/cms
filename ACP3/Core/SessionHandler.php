@@ -52,8 +52,8 @@ class SessionHandler implements \SessionHandlerInterface
             session_set_save_handler($this, true);
 
             // Start the session and secure it
-            self::startSession();
-            self::secureSession();
+            $this->startSession();
+            $this->secureSession();
 
             register_shutdown_function('session_write_close');
         }
@@ -62,7 +62,7 @@ class SessionHandler implements \SessionHandlerInterface
     /**
      * Session starten
      */
-    protected static function startSession()
+    protected function startSession()
     {
         // Set the session cookie parameters
         session_set_cookie_params(0, ROOT_DIR);
@@ -76,13 +76,13 @@ class SessionHandler implements \SessionHandlerInterface
      *
      * @param boolean $force
      */
-    public static function secureSession($force = false)
+    public function secureSession($force = false)
     {
-        // Prevend from session fixations
-        if (isset($_SESSION['acp3_init']) === false || $force === true) {
+        // Prevent from session fixations
+        if ($this->getParameter('acp3_init', false) === false || $force === true) {
             session_regenerate_id(true);
-            $_SESSION = [];
-            $_SESSION['acp3_init'] = true;
+            $this->resetSessionData();
+            $this->setParameter('acp3_init', true);
         }
     }
 
@@ -112,13 +112,15 @@ class SessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * @param $key
+     * @param string     $key
+     *
+     * @param mixed|null $default
      *
      * @return mixed|null
      */
-    public function getParameter($key)
+    public function getParameter($key, $default = null)
     {
-        return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
+        return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
     }
 
     /**
@@ -132,6 +134,23 @@ class SessionHandler implements \SessionHandlerInterface
         $_SESSION[$key] = $value;
 
         return $this;
+    }
+
+    public function unsetParameter($key)
+    {
+        if (isset($_SESSION[$key])) {
+            unset($_SESSION[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Resets all already stored session data
+     */
+    protected function resetSessionData()
+    {
+        $_SESSION = [];
     }
 
     /**
@@ -159,8 +178,7 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        // Reset all already set session variables
-        $_SESSION = [];
+        $this->resetSessionData();
 
         // Session-Cookie löschen
         if (isset($_COOKIE[self::SESSION_NAME])) {
@@ -174,11 +192,7 @@ class SessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Session Garbage Collector
-     *
-     * @param integer $sessionLifetime Time in seconds
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function gc($sessionLifetime)
     {

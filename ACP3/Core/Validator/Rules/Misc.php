@@ -3,6 +3,7 @@
 namespace ACP3\Core\Validator\Rules;
 
 use ACP3\Core\Request;
+use ACP3\Core\SessionHandler;
 
 /**
  * Class Misc
@@ -14,13 +15,22 @@ class Misc
      * @var \ACP3\Core\Request
      */
     protected $request;
+    /**
+     * @var \ACP3\Core\SessionHandler
+     */
+    protected $sessionHandler;
 
     /**
-     * @param \ACP3\Core\Request $request
+     * @param \ACP3\Core\Request        $request
+     * @param \ACP3\Core\SessionHandler $sessionHandler
      */
-    public function __construct(Request $request)
+    public function __construct(
+        Request $request,
+        SessionHandler $sessionHandler
+    )
     {
         $this->request = $request;
+        $this->sessionHandler = $sessionHandler;
     }
 
     /**
@@ -51,10 +61,11 @@ class Misc
      */
     public function formToken()
     {
-        $tokenName = \ACP3\Core\SessionHandler::XSRF_TOKEN_NAME;
+        $tokenName = SessionHandler::XSRF_TOKEN_NAME;
         $urlQueryString = $this->request->query;
+        $sessionToken = $this->sessionHandler->getParameter($tokenName);
 
-        return (isset($_POST[$tokenName]) && isset($_SESSION[$tokenName][$urlQueryString]) && $_POST[$tokenName] === $_SESSION[$tokenName][$urlQueryString]);
+        return (isset($_POST[$tokenName]) && isset($sessionToken[$urlQueryString]) && $_POST[$tokenName] === $sessionToken[$urlQueryString]);
     }
 
     /**

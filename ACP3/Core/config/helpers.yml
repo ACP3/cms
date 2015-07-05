@@ -19,11 +19,11 @@ services:
 
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages
-    arguments: ['@core.redirect', '@core.request', '@core.view']
+    arguments: ['@core.redirect', '@core.request', @core.session, '@core.view']
 
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
-    arguments: ['@core.view']
+    arguments: [@core.session, '@core.view']
 
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort
