@@ -105,7 +105,7 @@ class SessionHandler implements \SessionHandlerInterface
             }
 
             $this->gcCalled = false;
-            $this->db->getConnection()->executeUpdate("DELETE FROM {$this->db->getPrefix()} sessions WHERE `session_starttime` + ? < ?", [$this->expireTime, time()]);
+            $this->db->getConnection()->executeUpdate("DELETE FROM `{$this->db->getPrefix()}sessions` WHERE `session_starttime` + ? < ?", [$this->expireTime, time()]);
         }
 
         return true;
@@ -139,7 +139,7 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function read($sessionId)
     {
-        $session = $this->db->fetchColumn("SELECT `session_data` FROM {$this->db->getPrefix()} sessions WHERE `session_id` = ?", [$sessionId]);
+        $session = $this->db->fetchColumn("SELECT `session_data` FROM `{$this->db->getPrefix()}sessions` WHERE `session_id` = ?", [$sessionId]);
 
         return $session ?: ''; // Return an empty string, if the requested session can't be found
     }
@@ -149,7 +149,7 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        $this->db->getConnection()->executeUpdate("INSERT INTO {$this->db->getPrefix()} sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?", [$sessionId, time(), $data, $data]);
+        $this->db->getConnection()->executeUpdate("INSERT INTO `{$this->db->getPrefix()}sessions` (`session_id`, `session_starttime`, `session_data`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?", [$sessionId, time(), $data, $data]);
 
         return true;
     }
