@@ -31,6 +31,10 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
+     * @var \ACP3\Core\Request
+     */
+    protected $request;
+    /**
      * @var \ACP3\Modules\ACP3\Guestbook\Model
      */
     protected $guestbookModel;
@@ -47,7 +51,8 @@ class Validator extends Core\Validator\AbstractValidator
      * @param \ACP3\Core\Auth                    $auth
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Modules                 $modules
-     * @param \ACP3\Modules\ACP3\Guestbook\Model      $guestbookModel
+     * @param \ACP3\Core\Request                 $request
+     * @param \ACP3\Modules\ACP3\Guestbook\Model $guestbookModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -57,6 +62,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Auth $auth,
         Core\Date $date,
         Core\Modules $modules,
+        Core\Request $request,
         Model $guestbookModel)
     {
         parent::__construct($lang, $validate);
@@ -66,6 +72,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->auth = $auth;
         $this->date = $date;
         $this->modules = $modules;
+        $this->request = $request;
         $this->guestbookModel = $guestbookModel;
     }
 
@@ -93,7 +100,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         // Flood Sperre
-        $flood = $this->guestbookModel->getLastDateFromIp($_SERVER['REMOTE_ADDR']);
+        $flood = $this->guestbookModel->getLastDateFromIp($this->request->getServer()->get('REMOTE_ADDR', ''));
         $floodTime = !empty($flood) ? $this->date->timestamp($flood, true) + 30 : 0;
         $time = $this->date->timestamp('now', true);
 

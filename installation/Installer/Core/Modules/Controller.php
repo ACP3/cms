@@ -71,16 +71,16 @@ class Controller
 
     public function preDispatch()
     {
-        if (!empty($_POST['lang'])) {
-            setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
+        if ($this->request->getPost()->has('lang')) {
+            setcookie('ACP3_INSTALLER_LANG', $this->request->getPost()->get('lang', ''), time() + 3600, '/');
             $this->redirect()->temporary($this->request->getFullPath());
         }
 
         if (defined('LANG') === false) {
-            if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
-                is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true
+            if (!preg_match('=/=', $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '')) &&
+                is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
             ) {
-                define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
+                define('LANG', $this->request->getCookie()->get('ACP3_INSTALLER_LANG', ''));
             } else {
                 define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
             }
@@ -183,7 +183,7 @@ class Controller
             if ($this->getContent() == '') {
                 // Template automatisch setzen
                 if ($this->getTemplate() === '') {
-                    $this->setTemplate($this->request->getModuleAndController() . '.' . $this->request->getControllerAction() . '.tpl');
+                    $this->setTemplate($this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
                 }
 
                 $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));

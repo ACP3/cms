@@ -19,6 +19,10 @@ class Helpers
      */
     protected $mailer;
     /**
+     * @var \ACP3\Core\Request
+     */
+    protected $request;
+    /**
      * @var \ACP3\Core\Router
      */
     protected $router;
@@ -36,22 +40,25 @@ class Helpers
     protected $config;
 
     /**
-     * @param \ACP3\Core\Lang                    $lang
-     * @param \ACP3\Core\Mailer                  $mailer
-     * @param \ACP3\Core\Router                  $router
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
-     * @param \ACP3\Core\Config                  $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Model     $newsletterModel
+     * @param \ACP3\Core\Lang                     $lang
+     * @param \ACP3\Core\Mailer                   $mailer
+     * @param \ACP3\Core\Request                  $request
+     * @param \ACP3\Core\Router                   $router
+     * @param \ACP3\Core\Helpers\StringFormatter  $stringFormatter
+     * @param \ACP3\Core\Config                   $config
+     * @param \ACP3\Modules\ACP3\Newsletter\Model $newsletterModel
      */
     public function __construct(
         Core\Lang $lang,
         Core\Mailer $mailer,
+        Core\Request $request,
         Core\Router $router,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Config $config,
         Model $newsletterModel) {
         $this->lang = $lang;
         $this->mailer = $mailer;
+        $this->request = $request;
         $this->router = $router;
         $this->stringFormatter = $stringFormatter;
         $this->config = $config;
@@ -108,7 +115,7 @@ class Helpers
     public function subscribeToNewsletter($emailAddress)
     {
         $hash = md5(mt_rand(0, microtime(true)));
-        $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
+        $host = htmlentities($this->request->getServer()->get('HTTP_HOST', ''), ENT_QUOTES, 'UTF-8');
         $url = 'http://' . $host . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
         $seoSettings = $this->config->getSettings('seo');

@@ -56,8 +56,8 @@ class Install extends AbstractController
 
     public function actionIndex()
     {
-        if (empty($_POST) === false) {
-            $this->_indexPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_indexPost($this->request->getPost()->getAllAsArray());
         }
 
         // Zeitzonen
@@ -75,7 +75,7 @@ class Install extends AbstractController
             'title' => 'ACP3',
         ];
 
-        $this->view->assign('form', array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAllAsArray()));
     }
 
     /**

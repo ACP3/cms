@@ -40,7 +40,7 @@ services:
 
   newsletter.helpers:
     class: %newsletter.helpers.fqdn%
-    arguments: ['@core.lang', '@core.mailer', '@core.router', '@core.helpers.stringFormatter', '@core.config', '@newsletter.model']
+    arguments: ['@core.lang', '@core.mailer', @core.request, '@core.router', '@core.helpers.stringFormatter', '@core.config', '@newsletter.model']
 
   newsletter.validator:
     class: %newsletter.validator.fqdn%

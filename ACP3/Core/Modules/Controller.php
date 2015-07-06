@@ -3,6 +3,7 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Controller
@@ -19,7 +20,7 @@ abstract class Controller
      */
     protected $auth;
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
     /**
@@ -155,11 +156,11 @@ abstract class Controller
     }
 
     /**
-     * @param $container
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      *
      * @return $this
      */
-    public function setContainer($container)
+    public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
 

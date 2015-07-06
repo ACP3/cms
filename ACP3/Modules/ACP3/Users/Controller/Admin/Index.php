@@ -457,7 +457,7 @@ class Index extends Core\Modules\Controller\Admin
 
             // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
             if ($this->request->id == $this->auth->getUserId()) {
-                $cookieArray = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
+                $cookieArray = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
                 $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
             }
 

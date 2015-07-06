@@ -15,7 +15,9 @@ class Request extends Core\Request
      */
     public function __construct($defaultPath = '')
     {
-        $this->_setBaseUrl();
+        $this->fillParameterBags($_SERVER, $_POST, $_FILES, $_COOKIE);
+        $this->setBaseUrl();
+
         $this->processQuery();
 
         // Set the user defined homepage of the website
@@ -23,7 +25,7 @@ class Request extends Core\Request
             $this->query = $defaultPath;
         }
 
-        $this->setUriParameters();
+        $this->parseURI();
     }
 
     /**

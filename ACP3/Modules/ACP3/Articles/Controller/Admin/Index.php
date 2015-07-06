@@ -109,8 +109,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAllAsArray());
         }
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
@@ -229,8 +229,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($article) === false) {
             $this->breadcrumb->setTitlePostfix($article['title']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAllAsArray());
             }
 
             if ($this->acl->hasPermission('admin/menus/items/create') === true &&

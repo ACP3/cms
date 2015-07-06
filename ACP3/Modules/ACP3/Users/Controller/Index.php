@@ -211,7 +211,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             // Neues Passwort und neuen Zufallsschlüssel erstellen
             $newPassword = $this->secureHelper->salt(8);
-            $host = htmlentities($_SERVER['HTTP_HOST']);
+            $host = htmlentities($this->request->getServer()->get('HTTP_HOST', ''));
 
             // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
             if ($this->get('core.validator.rules.misc')->email($formData['nick_mail']) === true && $this->usersModel->resultExistsByEmail($formData['nick_mail']) === true) {
@@ -260,7 +260,7 @@ class Index extends Core\Modules\Controller\Frontend
             $seoSettings = $this->config->getSettings('seo');
 
             // E-Mail mit den Accountdaten zusenden
-            $host = htmlentities($_SERVER['HTTP_HOST']);
+            $host = htmlentities($this->request->getServer()->get('HTTP_HOST', ''));
             $subject = str_replace(
                 ['{title}', '{host}'],
                 [$seoSettings['title'], $host],

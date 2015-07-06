@@ -44,9 +44,9 @@ class Index extends Core\Modules\Controller\Frontend
         if ($c_polls > 0) {
             for ($i = 0; $i < $c_polls; ++$i) {
                 if ($this->auth->isUser() === true) {
-                    $query = $this->pollsModel->getVotesByUserId($polls[$i]['id'], $this->auth->getUserId(), $_SERVER['REMOTE_ADDR']); // Check, whether the logged user has already voted
+                    $query = $this->pollsModel->getVotesByUserId($polls[$i]['id'], $this->auth->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
                 } else {
-                    $query = $this->pollsModel->getVotesByIpAddress($polls[$i]['id'], $_SERVER['REMOTE_ADDR']); // For guest users check against the ip address
+                    $query = $this->pollsModel->getVotesByIpAddress($polls[$i]['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
                 }
 
                 if ($query != 0 ||
@@ -109,7 +109,7 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected function _votePost(array $formData, $time)
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
         $answers = $formData['answer'];
 
         if ($this->auth->isUser() === true) {

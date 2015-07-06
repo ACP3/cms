@@ -216,7 +216,7 @@ class Index extends Core\Modules\Controller\Frontend
             $insertValues = [
                 'id' => '',
                 'date' => $this->date->toSQL(),
-                'ip' => $_SERVER['REMOTE_ADDR'],
+                'ip' => $this->request->getServer()->get('REMOTE_ADDR', ''),
                 'name' => Core\Functions::strEncode($formData['name']),
                 'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
                 'message' => Core\Functions::strEncode($formData['message']),

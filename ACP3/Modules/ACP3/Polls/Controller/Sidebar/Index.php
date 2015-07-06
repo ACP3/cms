@@ -46,9 +46,9 @@ class Index extends Core\Modules\Controller
             $this->view->assign('sidebar_polls', $poll);
 
             if ($this->auth->isUser() === true) {
-                $query = $this->pollsModel->getVotesByUserId($poll['id'], $this->auth->getUserId(), $_SERVER['REMOTE_ADDR']); // Check, whether the logged user has already voted
+                $query = $this->pollsModel->getVotesByUserId($poll['id'], $this->auth->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
             } else {
-                $query = $this->pollsModel->getVotesByIpAddress($poll['id'], $_SERVER['REMOTE_ADDR']); // For guest users check against the ip address
+                $query = $this->pollsModel->getVotesByIpAddress($poll['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
             }
 
             if ($query > 0) {

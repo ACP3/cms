@@ -214,7 +214,7 @@ class Index extends Core\Modules\Controller\Frontend
     protected function _createPost(array $formData)
     {
         try {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
 
             $this->commentsValidator->validateCreate($formData, $ip);
 

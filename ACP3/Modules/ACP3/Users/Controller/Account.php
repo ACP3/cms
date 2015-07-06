@@ -206,7 +206,7 @@ class Account extends Core\Modules\Controller\Frontend
 
             $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-            $cookieArr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
+            $cookieArr = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
             $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
 
             $this->secureHelper->unsetFormToken($this->request->getQuery());
