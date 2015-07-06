@@ -172,6 +172,26 @@ class Request extends \StdClass
     }
 
     /**
+     * Returns the currently requested module, controller and controller action
+     *
+     * @return string
+     */
+    public function getFullPath()
+    {
+        return $this->getModuleAndController() . $this->controllerAction . '/';
+    }
+
+    /**
+     * Returns the currently requested module and controller
+     *
+     * @return string
+     */
+    public function getModuleAndController()
+    {
+        return $this->module . '/' . $this->controller . '/';
+    }
+
+    /**
      * Processes the URL of the current request
      */
     public function processQuery()

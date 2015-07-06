@@ -89,7 +89,7 @@ class RedirectMessages
                     $path .= 'acp/';
                 }
 
-                $path .= $this->request->getModule() . '/' . $this->request->getController();
+                $path .= $this->request->getModuleAndController();
             }
 
             $this->redirect->temporary($path);

@@ -113,7 +113,7 @@ class SEO
     {
         $description = $this->getDescription($this->request->getUriWithoutPages());
         if (empty($description)) {
-            $description = $this->getDescription($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
+            $description = $this->getDescription($this->request->getFullPath());
         }
         if (empty($description)) {
             $description = $this->getDescription($this->request->getModule());
@@ -151,7 +151,7 @@ class SEO
     {
         $keywords = $this->getKeywords($this->request->getUriWithoutPages());
         if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
+            $keywords = $this->getKeywords($this->request->getFullPath());
         }
         if (empty($keywords)) {
             $keywords = $this->getKeywords($this->request->getModule());
@@ -200,7 +200,7 @@ class SEO
     {
         $robots = $this->getRobotsSetting($this->request->getUriWithoutPages());
         if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
+            $robots = $this->getRobotsSetting($this->request->getFullPath());
         }
         if (empty($robots)) {
             $robots = $this->getRobotsSetting($this->request->getModule());

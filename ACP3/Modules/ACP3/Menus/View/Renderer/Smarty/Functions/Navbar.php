@@ -172,8 +172,8 @@ class Navbar extends AbstractFunction
             $in = [
                 $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),
-                $this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction() . '/',
-                $this->request->getModule() . '/' . $this->request->getController() . '/',
+                $this->request->getFullPath(),
+                $this->request->getModuleAndController(),
                 $this->request->getModule()
             ];
             return (int)$this->menusModel->getLeftIdByUris($menu, $in);

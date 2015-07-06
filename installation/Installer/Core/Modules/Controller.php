@@ -73,7 +73,7 @@ class Controller
     {
         if (!empty($_POST['lang'])) {
             setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
-            $this->redirect()->temporary($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
+            $this->redirect()->temporary($this->request->getFullPath());
         }
 
         if (defined('LANG') === false) {
@@ -91,7 +91,7 @@ class Controller
         // Einige Template Variablen setzen
         $this->view->assign('LANGUAGES', $this->_languagesDropdown(LANG));
         $this->view->assign('PHP_SELF', PHP_SELF);
-        $this->view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+        $this->view->assign('REQUEST_URI', $this->request->getOriginalQuery());
         $this->view->assign('ROOT_DIR', ROOT_DIR);
         $this->view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
@@ -183,7 +183,7 @@ class Controller
             if ($this->getContent() == '') {
                 // Template automatisch setzen
                 if ($this->getTemplate() === '') {
-                    $this->setTemplate($this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
+                    $this->setTemplate($this->request->getModuleAndController() . '.' . $this->request->getControllerAction() . '.tpl');
                 }
 
                 $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));

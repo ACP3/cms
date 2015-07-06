@@ -98,11 +98,11 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     protected function generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl)
     {
         if ($moduleConfirmUrl === null) {
-            $moduleConfirmUrl = 'acp/' . $this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction();
+            $moduleConfirmUrl = 'acp/' . $this->request->getFullPath();
         }
 
         if ($moduleIndexUrl === null) {
-            $moduleIndexUrl = 'acp/' . $this->request->getModule() . '/' . $this->request->getController();
+            $moduleIndexUrl = 'acp/' . $this->request->getModuleAndController();
         }
 
         return [$moduleConfirmUrl, $moduleIndexUrl];
