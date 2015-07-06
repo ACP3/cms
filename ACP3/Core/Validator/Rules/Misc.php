@@ -62,7 +62,7 @@ class Misc
     public function formToken()
     {
         $tokenName = SessionHandler::XSRF_TOKEN_NAME;
-        $urlQueryString = $this->request->query;
+        $urlQueryString = $this->request->getQuery();
         $sessionToken = $this->sessionHandler->getParameter($tokenName);
 
         return (isset($_POST[$tokenName]) && isset($sessionToken[$urlQueryString]) && $_POST[$tokenName] === $sessionToken[$urlQueryString]);

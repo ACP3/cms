@@ -47,7 +47,7 @@ class Captcha
      */
     public function captcha($input, $path = '')
     {
-        $index = 'captcha_' . sha1($this->router->route(empty($path) === true ? $this->request->query : $path));
+        $index = 'captcha_' . sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
         return preg_match('/^[a-zA-Z0-9]+$/', $input) && strtolower($input) === strtolower($this->sessionHandler->getParameter($index, '')) ? true : false;
     }

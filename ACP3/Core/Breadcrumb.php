@@ -107,7 +107,7 @@ class Breadcrumb
     {
         if ($this->request->area !== 'admin' && $this->menusModel) {
             $in = [
-                $this->request->query,
+                $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),
                 $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
                 $this->request->mod . '/' . $this->request->controller . '/',

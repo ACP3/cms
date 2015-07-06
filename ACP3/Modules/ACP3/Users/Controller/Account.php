@@ -112,7 +112,7 @@ class Account extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($user, $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionSettings()
@@ -155,7 +155,7 @@ class Account extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($user, $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionIndex()
@@ -209,7 +209,7 @@ class Account extends Core\Modules\Controller\Frontend
             $cookieArr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
             $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -242,7 +242,7 @@ class Account extends Core\Modules\Controller\Frontend
 
             $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

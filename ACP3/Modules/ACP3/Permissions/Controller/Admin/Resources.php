@@ -71,7 +71,7 @@ class Resources extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -116,7 +116,7 @@ class Resources extends Core\Modules\Controller\Admin
             ];
             $this->view->assign('form', array_merge($defaults, $_POST));
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -160,7 +160,7 @@ class Resources extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->setResourcesCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -188,7 +188,7 @@ class Resources extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->setResourcesCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

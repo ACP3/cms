@@ -60,7 +60,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['uri' => ''], $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -97,7 +97,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge(['uri' => $seo['uri']], $_POST));
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -138,7 +138,7 @@ class Index extends Core\Modules\Controller\Admin
                 (int)$formData['seo_robots']
             );
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -169,7 +169,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->seoCache->setCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -202,7 +202,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($seoSettings, $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -224,7 +224,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->config->setSettings($data, 'seo');
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

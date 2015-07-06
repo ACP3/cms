@@ -105,7 +105,7 @@ class Application extends AbstractApplication
         $request = $this->container->get('core.request');
 
         if ((bool)$this->systemSettings['maintenance_mode'] === true &&
-            ($request->area !== 'admin' && strpos($request->query, 'users/index/login/') !== 0)
+            ($request->area !== 'admin' && strpos($request->getQuery(), 'users/index/login/') !== 0)
         ) {
             header('HTTP/1.0 503 Service Unavailable');
 
@@ -204,17 +204,17 @@ class Application extends AbstractApplication
             if ($e->getMessage()) {
                 ACP3Logger::error('404', $e);
             } else {
-                ACP3Logger::error('404', 'Could not find any results for request: ' . $request->query);
+                ACP3Logger::error('404', 'Could not find any results for request: ' . $request->getQuery());
             }
 
             $redirect->temporary('errors/index/404');
         } catch (Exceptions\UnauthorizedAccess $e) {
-            $redirectUri = base64_encode($request->originalQuery);
+            $redirectUri = base64_encode($request->getOriginalQuery());
             $redirect->temporary('users/index/login/redirect_' . $redirectUri);
         } catch (Exceptions\AccessForbidden $e) {
             $redirect->temporary('errors/index/403');
         } catch (Exceptions\ControllerActionNotFound $e) {
-            ACP3Logger::error('404', 'Request: ' . $request->query);
+            ACP3Logger::error('404', 'Request: ' . $request->getQuery());
             ACP3Logger::error('404', $e);
 
             $this->handleException($e, $redirect, 'errors/index/404');

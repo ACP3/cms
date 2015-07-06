@@ -132,7 +132,7 @@ class Items extends Core\Modules\Controller\Admin
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -218,7 +218,7 @@ class Items extends Core\Modules\Controller\Admin
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
             $this->view->assign('form', array_merge($menuItem, $_POST));
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -283,7 +283,7 @@ class Items extends Core\Modules\Controller\Admin
 
             $this->menusCache->setMenuItemsCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -336,7 +336,7 @@ class Items extends Core\Modules\Controller\Admin
 
             $this->menusCache->setMenuItemsCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
         } catch (Core\Exceptions\InvalidFormToken $e) {

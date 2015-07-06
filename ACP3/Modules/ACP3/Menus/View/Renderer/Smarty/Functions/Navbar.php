@@ -170,7 +170,7 @@ class Navbar extends AbstractFunction
         // Selektion nur vornehmen, wenn man sich im Frontend befindet
         if ($this->request->area !== 'admin') {
             $in = [
-                $this->request->query,
+                $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),
                 $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
                 $this->request->mod . '/' . $this->request->controller . '/',

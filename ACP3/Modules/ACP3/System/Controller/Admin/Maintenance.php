@@ -129,7 +129,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         $drop['lang'] = $this->lang->t('system', 'drop_tables');
         $this->view->assign('drop', $drop);
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionSqlImport()
@@ -140,7 +140,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['text' => ''], $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionUpdateCheck()
@@ -175,7 +175,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         try {
             $this->systemValidator->validateSqlExport($formData);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $export = $this->systemHelpers->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
 
@@ -214,7 +214,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
             $this->systemValidator->validateSqlImport($formData, $file);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $data = isset($file) ? file_get_contents($file['tmp_name']) : $formData['text'];
             $importData = explode(";\n", str_replace(["\r\n", "\r", "\n"], "\n", $data));

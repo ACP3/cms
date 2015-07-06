@@ -29,11 +29,11 @@ class Request extends \StdClass
      *
      * @var string
      */
-    public $query = '';
+    protected $query = '';
     /**
      * @var string
      */
-    public $originalQuery = '';
+    protected $originalQuery = '';
     /**
      * Holds all given query parameters
      *
@@ -59,8 +59,8 @@ class Request extends \StdClass
     protected $hostname = '';
 
     /**
-     * @param \ACP3\Core\Modules      $modules
-     * @param \ACP3\Core\Config       $config
+     * @param \ACP3\Core\Modules           $modules
+     * @param \ACP3\Core\Config            $config
      * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
      */
     public function __construct(
@@ -105,14 +105,30 @@ class Request extends \StdClass
         return $this->hostname;
     }
 
+    /**
+     * @return string
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * Returns the original requested query
+     *
+     * @return string
+     */
+    public function getOriginalQuery()
+    {
+        return $this->originalQuery;
+    }
 
     /**
      * Processes the URL of the current request
      */
     public function processQuery()
     {
-        $this->originalQuery = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
-        $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
+        $this->setOriginalQuery();
 
         $this->query = $this->originalQuery;
 
@@ -328,5 +344,11 @@ class Request extends \StdClass
     public function getUriWithoutPages()
     {
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
+    }
+
+    protected function setOriginalQuery()
+    {
+        $this->originalQuery = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
+        $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
     }
 }

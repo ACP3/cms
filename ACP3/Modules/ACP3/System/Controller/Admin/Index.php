@@ -109,7 +109,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($systemSettings, $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionIndex()
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->config->setSettings($data, 'system');
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
         } catch (Core\Exceptions\InvalidFormToken $e) {

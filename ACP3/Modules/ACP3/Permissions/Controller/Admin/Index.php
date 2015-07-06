@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('modules', $modules);
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -191,7 +191,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($role, $_POST));
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -264,7 +264,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->setRolesCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -312,7 +312,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

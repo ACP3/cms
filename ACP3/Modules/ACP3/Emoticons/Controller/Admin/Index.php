@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -90,7 +90,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->emoticonsCache->setCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -136,7 +136,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($emoticon, $_POST));
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -174,7 +174,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->emoticonsCache->setCache();
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -211,7 +211,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -229,7 +229,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $bool = $this->config->setSettings($data, 'emoticons');
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

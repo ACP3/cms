@@ -83,7 +83,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('answers', $answers);
         $this->view->assign('multiple', $this->get('core.helpers.forms')->selectEntry('multiple', '1', '0', 'checked'));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -159,7 +159,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$poll['start'], $poll['end']]));
             $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -219,7 +219,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -271,7 +271,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

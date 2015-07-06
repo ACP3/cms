@@ -97,7 +97,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge(['description' => ''], $_POST));
             $this->view->assign('gallery_id', $this->request->id);
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -156,7 +156,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge($picture, $_POST));
             $this->view->assign('gallery_id', $this->request->id);
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -215,7 +215,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $this->galleryCache->setCache($this->request->id);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $this->request->id);
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -261,7 +261,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $this->galleryCache->setCache($picture['gallery_id']);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
         } catch (Core\Exceptions\InvalidFormToken $e) {

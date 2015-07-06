@@ -31,8 +31,7 @@ class Request extends Core\Request
      */
     public function processQuery()
     {
-        $this->originalQuery = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
-        $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
+        $this->setOriginalQuery();
 
         $this->query = $this->originalQuery;
 

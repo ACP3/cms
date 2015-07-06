@@ -66,7 +66,7 @@ class Helpers
     {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
         if ($this->auth->isUser() === false) {
-            $path = sha1($this->router->route(empty($path) === true ? $this->request->query : $path));
+            $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
             $_SESSION['captcha_' . $path] = $this->secureHelper->salt($captchaLength);
 

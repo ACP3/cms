@@ -133,7 +133,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -182,7 +182,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->menusCache->setMenuItemsCache();
             }
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -260,7 +260,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($article, $_POST));
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -321,7 +321,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->menusCache->setMenuItemsCache();
             }
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

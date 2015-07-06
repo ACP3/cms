@@ -121,7 +121,7 @@ class Details extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge($comment, $_POST));
             $this->view->assign('module_id', (int)$comment['module_id']);
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -186,7 +186,7 @@ class Details extends Core\Modules\Controller\Admin
 
             $bool = $this->commentsModel->update($updateValues, $this->request->id);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
         } catch (Core\Exceptions\InvalidFormToken $e) {

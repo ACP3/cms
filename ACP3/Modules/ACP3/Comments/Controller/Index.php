@@ -203,7 +203,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
 
         return $this->view->fetchTemplate('Comments/Frontend/index.create.tpl');
     }
@@ -231,11 +231,11 @@ class Index extends Core\Modules\Controller\Frontend
 
             $bool = $this->commentsModel->insert($insertValues);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->query);
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->request->query);
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->request->getQuery());
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }

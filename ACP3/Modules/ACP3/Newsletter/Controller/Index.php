@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $bool = $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
 
-                    $this->secureHelper->unsetFormToken($this->request->query);
+                    $this->secureHelper->unsetFormToken($this->request->getQuery());
 
                     $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                     break;
@@ -132,7 +132,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $bool = $this->newsletterModel->delete(['mail' => $_POST['mail']], '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-                    $this->secureHelper->unsetFormToken($this->request->query);
+                    $this->secureHelper->unsetFormToken($this->request->getQuery());
 
                     $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                     break;

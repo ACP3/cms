@@ -81,11 +81,11 @@ class FrontController
             $routerAliases = $this->container->get('core.router.aliases');
 
             // If there is an URI alias available, set the alias as the canonical URI
-            if ($routerAliases->uriAliasExists($request->query) === true &&
-                $request->originalQuery !== $routerAliases->getUriAlias($request->query) . '/'
+            if ($routerAliases->uriAliasExists($request->getQuery()) === true &&
+                $request->getOriginalQuery() !== $routerAliases->getUriAlias($request->getQuery()) . '/'
             ) {
                 $this->container->get('core.seo')->setCanonicalUri(
-                    $this->container->get('core.router')->route($request->query)
+                    $this->container->get('core.router')->route($request->getQuery())
                 );
             }
         }

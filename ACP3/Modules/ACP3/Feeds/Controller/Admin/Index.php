@@ -53,7 +53,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($settings, $_POST));
 
-        $this->secureHelper->generateFormToken($this->request->query);
+        $this->secureHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -71,7 +71,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->config->setSettings($data, 'feeds');
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

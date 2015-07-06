@@ -104,7 +104,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         }
     }
 
@@ -185,7 +185,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
-            $this->secureHelper->generateFormToken($this->request->query);
+            $this->secureHelper->generateFormToken($this->request->getQuery());
         }
     }
 
@@ -241,7 +241,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $bool = $this->usersModel->update($updateValues, $user['id']);
             }
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -290,7 +290,7 @@ class Index extends Core\Modules\Controller\Frontend
             $lastId = $this->usersModel->insert($insertValues);
             $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-            $this->secureHelper->unsetFormToken($this->request->query);
+            $this->secureHelper->unsetFormToken($this->request->getQuery());
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
         } catch (Core\Exceptions\InvalidFormToken $e) {

@@ -174,7 +174,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        $this->secureHelpers->generateFormToken($this->request->query);
+        $this->secureHelpers->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -303,7 +303,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($user, $_POST));
 
-            $this->secureHelpers->generateFormToken($this->request->query);
+            $this->secureHelpers->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -328,7 +328,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['mail' => $settings['mail']], $_POST));
 
-        $this->secureHelpers->generateFormToken($this->request->query);
+        $this->secureHelpers->generateFormToken($this->request->getQuery());
     }
 
     public function actionIndex()
@@ -400,7 +400,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
 
-            $this->secureHelpers->unsetFormToken($this->request->query);
+            $this->secureHelpers->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -461,7 +461,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
             }
 
-            $this->secureHelpers->unsetFormToken($this->request->query);
+            $this->secureHelpers->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -487,7 +487,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $bool = $this->config->setSettings($data, 'users');
 
-            $this->secureHelpers->unsetFormToken($this->request->query);
+            $this->secureHelpers->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
