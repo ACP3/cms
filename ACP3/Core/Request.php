@@ -328,7 +328,7 @@ class Request extends AbstractRequest
             }
         }
 
-        $this->cat = (int) $this->getPost()->get('cat', 0);
+        $this->cat = (int)$this->getPost()->get('cat', 0);
         $this->action = $this->getPost()->get('action');
     }
 
@@ -355,7 +355,7 @@ class Request extends AbstractRequest
     /**
      * Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
      *
-     * @return array
+     * @return string[]
      */
     protected function checkUriAliasForAdditionalParameters()
     {
