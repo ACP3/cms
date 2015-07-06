@@ -4,7 +4,6 @@ namespace ACP3\Installer\Core\Modules;
 
 use ACP3\Core\Redirect;
 use ACP3\Installer\Core\Context;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Module Controller of the installer modules
@@ -13,7 +12,7 @@ use Symfony\Component\DependencyInjection\Container;
 class Controller
 {
     /**
-     * @var Container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
     /**
