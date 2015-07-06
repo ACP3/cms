@@ -115,14 +115,13 @@ class Helpers
     public function subscribeToNewsletter($emailAddress)
     {
         $hash = md5(mt_rand(0, microtime(true)));
-        $host = htmlentities($this->request->getServer()->get('HTTP_HOST', ''), ENT_QUOTES, 'UTF-8');
-        $url = 'http://' . $host . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
+        $url = 'http://' . $this->request->getHostname() . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
         $seoSettings = $this->config->getSettings('seo');
         $settings = $this->config->getSettings('newsletter');
 
         $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), $seoSettings['title']);
-        $body = str_replace('{host}', $host, $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+        $body = str_replace('{host}', $this->request->getHostname(), $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 
         $from = [
             'email' => $settings['mail'],

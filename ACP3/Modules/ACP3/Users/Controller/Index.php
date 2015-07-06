@@ -211,7 +211,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             // Neues Passwort und neuen Zufallsschlüssel erstellen
             $newPassword = $this->secureHelper->salt(8);
-            $host = htmlentities($this->request->getServer()->get('HTTP_HOST', ''));
+            $host = $this->request->getHostname();
 
             // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
             if ($this->get('core.validator.rules.misc')->email($formData['nick_mail']) === true && $this->usersModel->resultExistsByEmail($formData['nick_mail']) === true) {
@@ -260,15 +260,14 @@ class Index extends Core\Modules\Controller\Frontend
             $seoSettings = $this->config->getSettings('seo');
 
             // E-Mail mit den Accountdaten zusenden
-            $host = htmlentities($this->request->getServer()->get('HTTP_HOST', ''));
             $subject = str_replace(
                 ['{title}', '{host}'],
-                [$seoSettings['title'], $host],
+                [$seoSettings['title'], $this->request->getHostname()],
                 $this->lang->t('users', 'register_mail_subject')
             );
             $body = str_replace(
                 ['{name}', '{mail}', '{password}', '{title}', '{host}'],
-                [$formData['nickname'], $formData['mail'], $formData['pwd'], $seoSettings['title'], $host],
+                [$formData['nickname'], $formData['mail'], $formData['pwd'], $seoSettings['title'], $this->request->getHostname()],
                 $this->lang->t('users', 'register_mail_message')
             );
             $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);
