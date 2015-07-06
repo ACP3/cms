@@ -26,7 +26,7 @@ services:
 
   guestbook.validator:
     class: %guestbook.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@core.date', '@core.modules', '@guestbook.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@core.date', '@core.modules', @core.request, '@guestbook.model']
     calls:
       - ['setNewsletterModel', ['@?newsletter.model']]
 
