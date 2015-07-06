@@ -32,7 +32,7 @@ abstract class AbstractController extends Core\Modules\Controller
             ]
         ];
 
-        $key = $this->request->controller . '_' . $this->request->file;
+        $key = $this->request->getController() . '_' . $this->request->getControllerAction();
         if (isset($navbar[$key]) === true) {
             $navbar[$key]['active'] = true;
         }

@@ -25,6 +25,22 @@ class Request extends \StdClass
     protected $seoModel;
 
     /**
+     * @var string
+     */
+    protected $area = '';
+    /**
+     * @var string
+     */
+    protected $module = '';
+    /**
+     * @var string
+     */
+    protected $controller = '';
+    /**
+     * @var string
+     */
+    protected $controllerAction = '';
+    /**
      * Holds the trimmed query
      *
      * @var string
@@ -124,6 +140,38 @@ class Request extends \StdClass
     }
 
     /**
+     * @return string
+     */
+    public function getArea()
+    {
+        return $this->area;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * @return string
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    /**
+     * @return string
+     */
+    public function getControllerAction()
+    {
+        return $this->controllerAction;
+    }
+
+    /**
      * Processes the URL of the current request
      */
     public function processQuery()
@@ -206,13 +254,13 @@ class Request extends \StdClass
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
         if (isset($query[0])) {
-            $this->mod = $query[0];
+            $this->module = $query[0];
         } else {
-            $this->mod = ($this->area === 'admin') ? 'acp' : 'news';
+            $this->module = ($this->area === 'admin') ? 'acp' : 'news';
         }
 
         $this->controller = isset($query[1]) ? $query[1] : 'index';
-        $this->file = isset($query[2]) ? $query[2] : 'index';
+        $this->controllerAction = isset($query[2]) ? $query[2] : 'index';
 
         if (isset($query[3])) {
             $c_query = count($query);
@@ -231,13 +279,13 @@ class Request extends \StdClass
         }
 
         if (!isset($query[0])) {
-            $this->query = $this->mod . '/';
+            $this->query = $this->module . '/';
         }
         if (!isset($query[1])) {
             $this->query .= $this->controller . '/';
         }
         if (!isset($query[2])) {
-            $this->query .= $this->file . '/';
+            $this->query .= $this->controllerAction . '/';
         }
 
         if (!empty($_POST['cat']) && is_numeric($_POST['cat']) === true) {

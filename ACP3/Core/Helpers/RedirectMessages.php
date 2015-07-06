@@ -85,11 +85,11 @@ class RedirectMessages
 
             // If no path has been given, guess it automatically
             if ($path === null) {
-                if ($this->request->area === 'admin') {
+                if ($this->request->getArea() === 'admin') {
                     $path .= 'acp/';
                 }
 
-                $path .= $this->request->mod . '/' . $this->request->controller;
+                $path .= $this->request->getModule() . '/' . $this->request->getController();
             }
 
             $this->redirect->temporary($path);

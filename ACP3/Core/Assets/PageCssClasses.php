@@ -50,7 +50,7 @@ class PageCssClasses
     public function getModule()
     {
         if ($this->module === null) {
-            $this->module = $this->request->mod;
+            $this->module = $this->request->getModule();
         }
         return $this->module;
     }
@@ -61,7 +61,7 @@ class PageCssClasses
     public function getControllerAction()
     {
         if ($this->controllerAction === null) {
-            $this->controllerAction = $this->request->mod . '-' . $this->request->controller . '-' . $this->request->file;
+            $this->controllerAction = $this->request->getModule() . '-' . $this->request->getController() . '-' . $this->request->getControllerAction();
         }
         return $this->controllerAction;
     }
@@ -87,7 +87,7 @@ class PageCssClasses
                     )
                 )
             );
-            $this->details = $this->request->mod . '-' . $this->request->controller . '-' . $pageTitle;
+            $this->details = $this->request->getModule() . '-' . $this->request->getController() . '-' . $pageTitle;
         }
 
         return $this->details;

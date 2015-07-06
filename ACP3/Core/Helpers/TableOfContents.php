@@ -148,7 +148,7 @@ class TableOfContents
                 $toc[$i]['selected'] = false;
                 if ($customUris === true) {
                     if ($page['uri'] === $this->router->route($request->getQuery()) ||
-                        $this->router->route($request->getQuery()) === $this->router->route($request->mod . '/' . $request->controller . '/' . $request->file) && $i == 0
+                        $this->router->route($request->getQuery()) === $this->router->route($request->getModule() . '/' . $request->getController() . '/' . $request->getControllerAction()) && $i == 0
                     ) {
                         $toc[$i]['selected'] = true;
                         $this->breadcrumb->setTitlePostfix($toc[$i]['title']);

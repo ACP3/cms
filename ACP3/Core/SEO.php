@@ -95,9 +95,9 @@ class SEO
     public function getMetaTags()
     {
         return [
-            'description' => $this->request->area === 'admin' ? '' : $this->getPageDescription(),
-            'keywords' => $this->request->area === 'admin' ? '' : $this->getPageKeywords(),
-            'robots' => $this->request->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'description' => $this->request->getArea() === 'admin' ? '' : $this->getPageDescription(),
+            'keywords' => $this->request->getArea() === 'admin' ? '' : $this->getPageKeywords(),
+            'robots' => $this->request->getArea() === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
             'canonical' => $this->canonicalUrl,
@@ -113,10 +113,10 @@ class SEO
     {
         $description = $this->getDescription($this->request->getUriWithoutPages());
         if (empty($description)) {
-            $description = $this->getDescription($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
+            $description = $this->getDescription($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
         }
         if (empty($description)) {
-            $description = $this->getDescription($this->request->mod);
+            $description = $this->getDescription($this->request->getModule());
         }
         if (empty($description)) {
             $description = $this->config->getSettings('seo')['meta_description'];
@@ -151,10 +151,10 @@ class SEO
     {
         $keywords = $this->getKeywords($this->request->getUriWithoutPages());
         if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
+            $keywords = $this->getKeywords($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
         }
         if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->request->mod);
+            $keywords = $this->getKeywords($this->request->getModule());
         }
 
         return strtolower(!empty($keywords) ? $keywords : $this->config->getSettings('seo')['meta_keywords']);
@@ -200,10 +200,10 @@ class SEO
     {
         $robots = $this->getRobotsSetting($this->request->getUriWithoutPages());
         if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
+            $robots = $this->getRobotsSetting($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
         }
         if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->request->mod);
+            $robots = $this->getRobotsSetting($this->request->getModule());
         }
 
         return strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());

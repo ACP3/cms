@@ -36,7 +36,7 @@ class FrontController
         $this->_checkForUriAlias($request);
 
         if (empty($serviceId)) {
-            $serviceId = $request->mod . '.controller.' . $request->area . '.' . $request->controller;
+            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController();
         }
 
         if ($this->container->has($serviceId)) {
@@ -44,7 +44,7 @@ class FrontController
             $controller = $this->container->get($serviceId);
 
             if (empty($action)) {
-                $action = $request->file;
+                $action = $request->getControllerAction();
             }
 
             $action = 'action' . str_replace('_', '', $action);
@@ -77,7 +77,7 @@ class FrontController
     private function _checkForUriAlias(Request $request)
     {
         // Return early, if we are currently in the admin panel
-        if ($request->area !== 'admin') {
+        if ($request->getArea() !== 'admin') {
             $routerAliases = $this->container->get('core.router.aliases');
 
             // If there is an URI alias available, set the alias as the canonical URI

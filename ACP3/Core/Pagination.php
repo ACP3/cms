@@ -167,7 +167,7 @@ class Pagination
     {
         $output = '';
         if ($this->totalResults > $this->resultsPerPage) {
-            $link = $this->router->route(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->getUriWithoutPages());
+            $link = $this->router->route(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getUriWithoutPages());
             $this->currentPage = $this->miscValidator->isNumber($this->request->page) ? (int)$this->request->page : 1;
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
@@ -212,7 +212,7 @@ class Pagination
         }
 
         // Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
-        if ($this->request->area !== 'admin') {
+        if ($this->request->getArea() !== 'admin') {
             if ($this->currentPage - 1 > 0) {
                 // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
                 $this->seo->setDescriptionPostfix(sprintf($this->lang->t('system', 'page_x'), $this->currentPage));

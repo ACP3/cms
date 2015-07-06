@@ -168,13 +168,13 @@ class Navbar extends AbstractFunction
     protected function _selectMenuItem($menu)
     {
         // Selektion nur vornehmen, wenn man sich im Frontend befindet
-        if ($this->request->area !== 'admin') {
+        if ($this->request->getArea() !== 'admin') {
             $in = [
                 $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),
-                $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
-                $this->request->mod . '/' . $this->request->controller . '/',
-                $this->request->mod
+                $this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction() . '/',
+                $this->request->getModule() . '/' . $this->request->getController() . '/',
+                $this->request->getModule()
             ];
             return (int)$this->menusModel->getLeftIdByUris($menu, $in);
         }

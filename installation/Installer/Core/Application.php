@@ -111,8 +111,8 @@ class Application extends Core\AbstractApplication
         $frontController = new FrontController($this->container);
 
         try {
-            $serviceId = $request->mod . '.controller.install.' . $request->controller;
-            $frontController->dispatch($serviceId, $request->file);
+            $serviceId = $request->getModule() . '.controller.install.' . $request->getController();
+            $frontController->dispatch($serviceId, $request->getControllerAction());
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             $redirect->temporary('errors/index/404');
         } catch (\Exception $e) {

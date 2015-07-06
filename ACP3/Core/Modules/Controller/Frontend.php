@@ -50,7 +50,7 @@ abstract class Frontend extends Core\Modules\Controller
      */
     public function preDispatch()
     {
-        $path = $this->request->area . '/' . $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file;
+        $path = $this->request->getArea() . '/' . $this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction();
 
         if ($this->acl->hasPermission($path) === false) {
             throw new Core\Exceptions\AccessForbidden();
@@ -72,7 +72,7 @@ abstract class Frontend extends Core\Modules\Controller
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
         $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
-        $this->view->assign('IN_ADM', $this->request->area === 'admin');
+        $this->view->assign('IN_ADM', $this->request->getArea() === 'admin');
         $this->view->assign('IS_HOMEPAGE', $this->request->getIsHomepage());
         $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 
@@ -95,7 +95,7 @@ abstract class Frontend extends Core\Modules\Controller
             if ($this->getContent() == '') {
                 // Set the template automatically
                 if ($this->getTemplate() === '') {
-                    $this->setTemplate($this->request->mod . '/' . ucfirst($this->request->area) . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
+                    $this->setTemplate($this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
                 }
 
                 $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());

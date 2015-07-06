@@ -105,7 +105,7 @@ class Application extends AbstractApplication
         $request = $this->container->get('core.request');
 
         if ((bool)$this->systemSettings['maintenance_mode'] === true &&
-            ($request->area !== 'admin' && strpos($request->getQuery(), 'users/index/login/') !== 0)
+            ($request->getArea() !== 'admin' && strpos($request->getQuery(), 'users/index/login/') !== 0)
         ) {
             header('HTTP/1.0 503 Service Unavailable');
 

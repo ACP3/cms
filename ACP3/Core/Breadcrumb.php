@@ -105,13 +105,13 @@ class Breadcrumb
      */
     public function prePopulate()
     {
-        if ($this->request->area !== 'admin' && $this->menusModel) {
+        if ($this->request->getArea() !== 'admin' && $this->menusModel) {
             $in = [
                 $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),
-                $this->request->mod . '/' . $this->request->controller . '/' . $this->request->file . '/',
-                $this->request->mod . '/' . $this->request->controller . '/',
-                $this->request->mod
+                $this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction() . '/',
+                $this->request->getModule() . '/' . $this->request->getController() . '/',
+                $this->request->getModule()
             ];
             $items = $this->menusModel->getMenuItemsByUri($in);
             $c_items = count($items);
@@ -268,7 +268,7 @@ class Breadcrumb
     private function _setBreadcrumbCache()
     {
         // Breadcrumb of the admin panel
-        if ($this->request->area === 'admin') {
+        if ($this->request->getArea() === 'admin') {
             $this->_setBreadcrumbCacheForAdmin();
         } else { // Breadcrumb for frontend requests
             $this->_setBreadcrumbCacheForFrontend();
@@ -283,7 +283,7 @@ class Breadcrumb
      */
     private function _setBreadcrumbCacheForAdmin()
     {
-        $module = $this->request->mod;
+        $module = $this->request->getModule();
 
         if ($module !== 'acp') {
             // An postfix for the page title has been already set
@@ -296,10 +296,10 @@ class Breadcrumb
 
         // No breadcrumb is set yet
         if (empty($this->stepsFromModules)) {
-            $controller = $this->request->controller;
-            $file = $this->request->file;
-            $languageKey = $this->request->area . '_' . $controller . '_' . $file;
-            $languageKeyIndex = $this->request->area . '_' . $controller . '_index';
+            $controller = $this->request->getController();
+            $file = $this->request->getControllerAction();
+            $languageKey = $this->request->getArea() . '_' . $controller . '_' . $file;
+            $languageKeyIndex = $this->request->getArea() . '_' . $controller . '_index';
 
             $this->append($this->lang->t('system', 'acp'), 'acp/acp');
 
@@ -385,11 +385,11 @@ class Breadcrumb
     {
         // No breadcrumb has been set yet
         if (empty($this->stepsFromModules)) {
-            $module = $this->request->mod;
-            $controller = $this->request->controller;
-            $file = $this->request->file;
-            $languageKey = $this->request->area . '_' . $controller . '_' . $file;
-            $languageKeyIndex = $this->request->area . '_' . $controller . '_index';
+            $module = $this->request->getModule();
+            $controller = $this->request->getController();
+            $file = $this->request->getControllerAction();
+            $languageKey = $this->request->getArea() . '_' . $controller . '_' . $file;
+            $languageKeyIndex = $this->request->getArea() . '_' . $controller . '_index';
 
             if ($module !== 'errors') {
                 $this->append($this->lang->t($module, $module), $module);

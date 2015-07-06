@@ -35,7 +35,7 @@ class FrontController extends \ACP3\Core\FrontController
         $request = $this->container->get('core.request');
 
         if (empty($serviceId)) {
-            $serviceId = $request->mod . '.controller.' . $request->area . '.' . $request->controller;
+            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController();
         }
 
         if ($this->container->has($serviceId)) {
@@ -43,7 +43,7 @@ class FrontController extends \ACP3\Core\FrontController
             $controller = $this->container->get($serviceId);
 
             if (empty($action)) {
-                $action = $request->file;
+                $action = $request->getControllerAction();
             }
 
             $action = 'action' . str_replace('_', '', $action);

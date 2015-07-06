@@ -73,7 +73,7 @@ class Controller
     {
         if (!empty($_POST['lang'])) {
             setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
-            $this->redirect()->temporary($this->request->mod . '/' . $this->request->controller . '/' . $this->request->file);
+            $this->redirect()->temporary($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction());
         }
 
         if (defined('LANG') === false) {
@@ -183,11 +183,11 @@ class Controller
             if ($this->getContent() == '') {
                 // Template automatisch setzen
                 if ($this->getTemplate() === '') {
-                    $this->setTemplate($this->request->mod . '/' . $this->request->controller . '.' . $this->request->file . '.tpl');
+                    $this->setTemplate($this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
                 }
 
                 $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));
-                $this->view->assign('TITLE', $this->lang->t($this->request->mod, $this->request->controller . '_' . $this->request->file));
+                $this->view->assign('TITLE', $this->lang->t($this->request->getModule(), $this->request->getController() . '_' . $this->request->getControllerAction()));
                 $this->view->assign('CONTENT', $this->getContentAppend());
                 $this->view->assign('IS_AJAX', $this->request->getIsAjax());
 

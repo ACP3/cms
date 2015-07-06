@@ -25,7 +25,7 @@ class Index extends Core\Modules\Controller
     public function actionLogin()
     {
         if ($this->auth->isUser() === false) {
-            $currentPage = base64_encode(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->getQuery());
+            $currentPage = base64_encode(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getQuery());
 
             $settings = $this->config->getSettings('users');
 
@@ -45,7 +45,7 @@ class Index extends Core\Modules\Controller
     {
         if ($this->auth->isUser() === true) {
             $userSidebar = [];
-            $userSidebar['page'] = base64_encode(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->getQuery());
+            $userSidebar['page'] = base64_encode(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getQuery());
 
             $activeModules = $this->modules->getActiveModules();
             $navMods = $navSystem = [];
@@ -59,7 +59,7 @@ class Index extends Core\Modules\Controller
                     } else {
                         $navMods[$name]['name'] = $name;
                         $navMods[$name]['dir'] = $dir;
-                        $navMods[$name]['active'] = $this->request->area === 'admin' && $dir === $this->request->mod ? ' class="active"' : '';
+                        $navMods[$name]['active'] = $this->request->getArea() === 'admin' && $dir === $this->request->getModule() ? ' class="active"' : '';
                     }
                 }
             }
