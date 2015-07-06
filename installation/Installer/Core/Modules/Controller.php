@@ -3,7 +3,6 @@
 namespace ACP3\Installer\Core\Modules;
 
 use ACP3\Core\Redirect;
-use ACP3\Core\XML;
 use ACP3\Installer\Core\Context;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -113,7 +112,7 @@ class Controller
     /**
      * Gets a class from the service container
      *
-     * @param $serviceId
+     * @param string $serviceId
      *
      * @return mixed
      */
@@ -149,7 +148,7 @@ class Controller
     }
 
     /**
-     * @param $container
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      *
      * @return $this
      */
@@ -226,7 +225,7 @@ class Controller
      * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
      * erfolgen soll oder die Datei dies selber handelt
      *
-     * @return string
+     * @return boolean
      */
     public function getNoOutput()
     {

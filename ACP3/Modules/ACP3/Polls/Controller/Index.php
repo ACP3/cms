@@ -105,7 +105,7 @@ class Index extends Core\Modules\Controller\Frontend
 
     /**
      * @param array $formData
-     * @param $time
+     * @param string $time
      */
     protected function _votePost(array $formData, $time)
     {

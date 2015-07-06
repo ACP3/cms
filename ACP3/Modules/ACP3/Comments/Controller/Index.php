@@ -116,7 +116,7 @@ class Index extends Core\Modules\Controller\Frontend
     }
 
     /**
-     * @param $module
+     * @param string $module
      *
      * @return $this
      */
