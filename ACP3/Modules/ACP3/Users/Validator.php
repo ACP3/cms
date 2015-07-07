@@ -35,14 +35,14 @@ class Validator extends Core\Validator\AbstractValidator
     protected $userModel;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\ACL $aclValidator
+     * @param Core\Lang                    $lang
+     * @param Core\Validator\Rules\Misc    $validate
+     * @param Core\Validator\Rules\ACL     $aclValidator
      * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\Validator\Rules\Date $dateValidator
-     * @param Core\ACL $acl
-     * @param Core\Auth $auth
-     * @param Model $userModel
+     * @param Core\Validator\Rules\Date    $dateValidator
+     * @param Core\ACL                     $acl
+     * @param Core\Auth                    $auth
+     * @param Model                        $userModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -53,7 +53,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\ACL $acl,
         Core\Auth $auth,
         Model $userModel
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->aclValidator = $aclValidator;
@@ -66,6 +67,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -92,7 +94,8 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param int $userId
+     * @param int   $userId
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -156,16 +159,39 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['birthday-display'] = $this->lang->t('users', 'select_birthday_display');
         }
         if (isset($formData['new_pwd'])) {
-            if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat']) && $formData['new_pwd'] != $formData['new_pwd_repeat']) {
-                $this->errors['new-pwd'] = $this->lang->t('users', 'type_in_pwd');
-            }
+            $this->validateNewPassword($formData, 'new_pwd', 'new_pwd_repeat');
         } else {
-            if (empty($_POST['pwd']) || empty($_POST['pwd_repeat']) || $_POST['pwd'] != $_POST['pwd_repeat']) {
-                $this->errors['new-pwd'] = $this->lang->t('users', 'type_in_pwd');
-            }
+            $this->validatePassword($formData, 'pwd', 'pwd_repeat');
         }
 
         $this->_checkForFailedValidation();
+    }
+
+    /**
+     * @param array  $formData
+     * @param string $passwordField
+     * @param string $passwordConfirmationField
+     */
+    protected function validateNewPassword(array $formData, $passwordField, $passwordConfirmationField)
+    {
+        if (!empty($formData[$passwordField]) &&
+            !empty($formData[$passwordConfirmationField]) &&
+            $formData[$passwordField] !== $formData[$passwordConfirmationField]
+        ) {
+            $this->errors[$passwordField] = $this->lang->t('users', 'type_in_pwd');
+        }
+    }
+
+    /**
+     * @param array  $formData
+     * @param string $passwordField
+     * @param string $passwordConfirmationField
+     */
+    protected function validatePassword(array $formData, $passwordField, $passwordConfirmationField)
+    {
+        if (empty($formData[$passwordField]) || empty($formData[$passwordConfirmationField]) || $formData[$passwordField] != $formData[$passwordConfirmationField]) {
+            $this->errors[$passwordField] = $this->lang->t('users', 'type_in_pwd');
+        }
     }
 
     /**
@@ -198,6 +224,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -227,9 +254,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (!empty($formData['icq']) && $this->_icq($formData['icq']) === false) {
             $this->errors['icq'] = $this->lang->t('users', 'invalid_icq_number');
         }
-        if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat']) && $formData['new_pwd'] != $formData['new_pwd_repeat']) {
-            $this->errors['new-pwd'] = $this->lang->t('users', 'type_in_pwd');
-        }
+        $this->validateNewPassword($formData, 'new_pwd', 'new_pwd_repeat');
 
         $this->_checkForFailedValidation();
     }
@@ -237,6 +262,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      * @param array $settings
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -278,6 +304,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -302,6 +329,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -322,9 +350,7 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->userModel->resultExistsByEmail($formData['mail']) === true) {
             $this->errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
-        if (empty($formData['pwd']) || empty($formData['pwd_repeat']) || $formData['pwd'] != $formData['pwd_repeat']) {
-            $this->errors['pwd'] = $this->lang->t('users', 'type_in_pwd');
-        }
+        $this->validatePassword($formData, 'pwd', 'pwd_repeat');
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
