@@ -20,8 +20,11 @@ class Application extends Core\AbstractApplication
     {
         $this->defineDirConstants();
 
-        if (defined('IN_UPDATER') && IN_UPDATER === true) {
-            $this->startupChecks();
+        if (defined('IN_UPDATER') &&
+            IN_UPDATER === true &&
+            $this->startupChecks() === false
+        ) {
+            return;
         }
 
         $this->initializeClasses();
@@ -132,8 +135,10 @@ class Application extends Core\AbstractApplication
         error_reporting(E_ALL);
 
         if (defined('IN_UPDATER') === true) {
-            $this->checkForDbConfig();
+            return $this->databaseConfigExists();
         }
+
+        return true;
     }
 
 }

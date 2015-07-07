@@ -29,24 +29,25 @@ class ACP3
 
             $application = new Application();
             $application->defineDirConstants();
-            $application->startupChecks();
-            $application->initializeClasses();
+            if ($application->startupChecks()) {
+                $application->initializeClasses();
 
-            chdir(ACP3_ROOT_DIR);
+                chdir(ACP3_ROOT_DIR);
 
-            // if user has access permission...
-            if ($application->getContainer()->get('core.auth')->isUser()) {
-                if (!isset($_SESSION['KCFINDER'])) {
-                    $_SESSION['KCFINDER'] = array();
+                // if user has access permission...
+                if ($application->getContainer()->get('core.auth')->isUser()) {
+                    if (!isset($_SESSION['KCFINDER'])) {
+                        $_SESSION['KCFINDER'] = array();
+                        $_SESSION['KCFINDER']['disabled'] = false;
+                    }
+
+                    // User has permission, so make sure KCFinder is not disabled!
                     $_SESSION['KCFINDER']['disabled'] = false;
+
+                    chdir($currentCwd);
+
+                    self::$authenticated = true;
                 }
-
-                // User has permission, so make sure KCFinder is not disabled!
-                $_SESSION['KCFINDER']['disabled'] = false;
-
-                chdir($currentCwd);
-
-                self::$authenticated = true;
             }
         }
 

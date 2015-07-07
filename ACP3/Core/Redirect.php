@@ -55,7 +55,7 @@ class Redirect
     }
 
     /**
-     * Umleitung auf andere URLs
+     * Redirect to an other URLs
      *
      * @param string $path
      * @param bool   $movedPermanently

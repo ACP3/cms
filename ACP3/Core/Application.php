@@ -33,10 +33,12 @@ class Application extends AbstractApplication
     public function run()
     {
         $this->defineDirConstants();
-        $this->startupChecks();
-        $this->setErrorHandler();
-        $this->initializeClasses();
-        $this->outputPage();
+
+        if ($this->startupChecks()) {
+            $this->setErrorHandler();
+            $this->initializeClasses();
+            $this->outputPage();
+        }
     }
 
     /**
@@ -47,7 +49,7 @@ class Application extends AbstractApplication
         // Standardzeitzone festlegen
         date_default_timezone_set('UTC');
 
-        $this->checkForDbConfig();
+        return $this->databaseConfigExists();
     }
 
     /**
@@ -99,22 +101,29 @@ class Application extends AbstractApplication
 
     /**
      * Checks, whether the maintenance mode is active
+     *
+     * @param \ACP3\Core\RequestInterface $request
+     *
+     * @return bool
      */
-    private function _checkForMaintenanceMode()
+    private function maintenanceModeIsEnabled(RequestInterface $request)
     {
-        $request = $this->container->get('core.request');
-
         if ((bool)$this->systemSettings['maintenance_mode'] === true &&
-            ($request->getArea() !== 'admin' && strpos($request->getQuery(), 'users/index/login/') !== 0)
+            $request->getArea() !== 'admin' &&
+            strpos($request->getQuery(), 'users/index/login/') !== 0
         ) {
             header('HTTP/1.0 503 Service Unavailable');
 
             $view = $this->container->get('core.view');
             $view->assign('PAGE_TITLE', 'ACP3');
+            $view->assign('ROOT_DIR', ROOT_DIR);
             $view->assign('CONTENT', $this->systemSettings['maintenance_message']);
             $view->displayTemplate('system/maintenance.tpl');
-            exit;
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -188,11 +197,13 @@ class Application extends AbstractApplication
      */
     public function outputPage()
     {
-        $this->_checkForMaintenanceMode();
-
         /** @var \ACP3\Core\Request $request */
         $request = $this->container->get('core.request');
         $request->processQuery();
+
+        if ($this->maintenanceModeIsEnabled($request)) {
+            return;
+        }
 
         /** @var \ACP3\Core\Redirect $redirect */
         $redirect = $this->container->get('core.redirect');

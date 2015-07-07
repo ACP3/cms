@@ -22,13 +22,18 @@ abstract class AbstractApplication implements ApplicationInterface
 
     /**
      * Checks, whether the database configuration file exists
+     *
+     * @return bool
      */
-    protected function checkForDbConfig()
+    protected function databaseConfigExists()
     {
         $path = ACP3_DIR . 'config.yml';
         if (is_file($path) === false || filesize($path) === 0) {
-            exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
+            echo 'The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.';
+            return false;
         }
+
+        return true;
     }
 
 }
