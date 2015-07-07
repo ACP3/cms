@@ -168,7 +168,7 @@ class Pagination
         $output = '';
         if ($this->totalResults > $this->resultsPerPage) {
             $link = $this->router->route(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getUriWithoutPages());
-            $this->currentPage = (int) $this->request->getParameters()->get('page', 1);
+            $this->currentPage = (int)$this->request->getParameters()->get('page', 1);
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
             $this->setMetaStatements($link);
@@ -323,7 +323,7 @@ class Pagination
 
     /**
      * @param string $link
-     * @param array $range
+     * @param array  $range
      */
     private function showLastPageLink($link, array $range)
     {

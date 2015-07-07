@@ -25,9 +25,9 @@ class Date
     /**
      * PHP DateTimeZone-Object
      *
-     * @var object
+     * @var \DateTimeZone
      */
-    protected $dateTimeZone = null;
+    protected $dateTimeZone;
 
     /**
      * @var \ACP3\Core\Lang
@@ -180,11 +180,11 @@ class Date
      */
     public function dateFormatDropdown($format = '')
     {
-        $dateformatLang = [
+        $dateFormatLang = [
             $this->lang->t('system', 'date_format_short'),
             $this->lang->t('system', 'date_format_long')
         ];
-        return $this->formsHelper->selectGenerator('dateformat', ['short', 'long'], $dateformatLang, $format);
+        return $this->formsHelper->selectGenerator('dateformat', ['short', 'long'], $dateFormatLang, $format);
     }
 
     /**
@@ -218,7 +218,7 @@ class Date
     {
         $range = (is_array($name) === true && $range === 1);
 
-        $datepicker = [
+        $datePicker = [
             'range' => $range,
             'with_time' => (bool)$withTime,
             'length' => $withTime === true ? 16 : 10,
@@ -230,12 +230,12 @@ class Date
             ]
         ];
         if ($withTime === true) {
-            $datepicker['params']['format'] .= ' HH:mm';
+            $datePicker['params']['format'] .= ' HH:mm';
         }
 
         // Zusätzliche Datepicker-Parameter hinzufügen
         if (!empty($params) && is_array($params) === true) {
-            $datepicker['params'] = array_merge($datepicker['params'], $params);
+            $datePicker['params'] = array_merge($datePicker['params'], $params);
         }
 
         // Veröffentlichungszeitraum
@@ -257,19 +257,19 @@ class Date
                 $valueEndR = $this->format('now', 'r', false);
             }
 
-            $datepicker['name_start'] = $name[0];
-            $datepicker['name_end'] = $name[1];
-            $datepicker['id_start'] = 'date-' . str_replace('_', '-', $name[0]);
-            $datepicker['id_end'] = 'date-' . str_replace('_', '-', $name[1]);
-            $datepicker['value_start'] = $valueStart;
-            $datepicker['value_start_r'] = $valueStartR;
-            $datepicker['value_end'] = $valueEnd;
-            $datepicker['value_end_r'] = $valueEndR;
-            $datepicker['range_json'] = json_encode(
+            $datePicker['name_start'] = $name[0];
+            $datePicker['name_end'] = $name[1];
+            $datePicker['id_start'] = 'date-' . str_replace('_', '-', $name[0]);
+            $datePicker['id_end'] = 'date-' . str_replace('_', '-', $name[1]);
+            $datePicker['value_start'] = $valueStart;
+            $datePicker['value_start_r'] = $valueStartR;
+            $datePicker['value_end'] = $valueEnd;
+            $datePicker['value_end_r'] = $valueEndR;
+            $datePicker['range_json'] = json_encode(
                 [
-                    'start' => '#' . $datepicker['id_start'],
+                    'start' => '#' . $datePicker['id_start'],
                     'startDefaultDate' => $valueStartR,
-                    'end' => '#' . $datepicker['id_end'],
+                    'end' => '#' . $datePicker['id_end'],
                     'endDefaultDate' => $valueEndR
                 ]
             );
@@ -282,12 +282,12 @@ class Date
                 $value = $this->format('now', $format, false);
             }
 
-            $datepicker['name'] = $name;
-            $datepicker['id'] = 'date-' . str_replace('_', '-', $name);
-            $datepicker['value'] = $value;
+            $datePicker['name'] = $name;
+            $datePicker['id'] = 'date-' . str_replace('_', '-', $name);
+            $datePicker['value'] = $value;
         }
 
-        return $datepicker;
+        return $datePicker;
     }
 
     /**
@@ -444,11 +444,11 @@ class Date
      * @param string $value
      * @param bool   $islocalTime
      *
-     * @return integer
+     * @return int
      */
     public function timestamp($value = 'now', $islocalTime = false)
     {
-        return $this->format($value, 'U', true, $islocalTime);
+        return (int)$this->format($value, 'U', true, $islocalTime);
     }
 
     /**
@@ -478,8 +478,8 @@ class Date
     /**
      * Konvertiert einen Unixstamp in das MySQL-Datetime Format
      *
-     * @param      $value
-     * @param bool $isLocalTime
+     * @param string $value
+     * @param bool   $isLocalTime
      *
      * @return string
      */

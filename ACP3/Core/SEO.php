@@ -175,9 +175,9 @@ class SEO
     }
 
     /**
-     * @param        string $path
-     * @param        string $key
-     * @param string        $defaultValue
+     * @param string $path
+     * @param string $key
+     * @param string $defaultValue
      *
      * @return string
      */
@@ -257,7 +257,7 @@ class SEO
     /**
      * Sets the canonical URL for the current page
      *
-     * @param $path
+     * @param string $path
      *
      * @return $this
      */

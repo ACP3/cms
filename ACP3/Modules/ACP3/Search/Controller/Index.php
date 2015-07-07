@@ -25,7 +25,7 @@ class Index extends Core\Modules\Controller\Frontend
     protected $searchExtensions;
 
     /**
-     * @param \ACP3\Core\Context\Frontend     $context
+     * @param \ACP3\Core\Context\Frontend          $context
      * @param \ACP3\Modules\ACP3\Search\Helpers    $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validator  $searchValidator
      * @param \ACP3\Modules\ACP3\Search\Extensions $searchExtensions
@@ -69,12 +69,12 @@ class Index extends Core\Modules\Controller\Frontend
     }
 
     /**
-     * @param $modules
-     * @param $searchTerm
-     * @param $area
-     * @param $sort
+     * @param array  $modules
+     * @param string $searchTerm
+     * @param string $area
+     * @param string $sort
      */
-    protected function _displaySearchResults($modules, $searchTerm, $area, $sort)
+    protected function _displaySearchResults(array $modules, $searchTerm, $area, $sort)
     {
         $this->breadcrumb
             ->append($this->lang->t('search', 'search'), 'search')
