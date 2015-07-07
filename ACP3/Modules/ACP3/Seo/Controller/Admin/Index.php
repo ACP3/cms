@@ -52,8 +52,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
@@ -89,8 +89,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($seo) === false) {
             $this->breadcrumb->setTitlePostfix($seo['alias']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $seo['uri']);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $seo['uri']);
             }
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($seo['uri']));
@@ -181,8 +181,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $seoSettings = $this->config->getSettings('seo');

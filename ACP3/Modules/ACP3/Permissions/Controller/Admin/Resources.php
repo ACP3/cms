@@ -52,8 +52,8 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         $modules = $this->modules->getActiveModules();
@@ -97,8 +97,8 @@ class Resources extends Core\Modules\Controller\Admin
     {
         $resource = $this->permissionsModel->getResourceById((int)$this->request->id);
         if (!empty($resource)) {
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll());
             }
 
             $privileges = $this->acl->getAllPrivileges();

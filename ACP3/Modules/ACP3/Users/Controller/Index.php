@@ -101,8 +101,8 @@ class Index extends Core\Modules\Controller\Frontend
         if ($this->auth->isUser() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
         } else {
-            if (empty($_POST) === false) {
-                $this->_forgotPasswordPost($_POST);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_forgotPasswordPost($this->request->getPost()->getAll());
             }
 
             $this->view->assign('form', array_merge(['nick_mail' => ''], $this->request->getPost()->getAll()));
@@ -140,7 +140,7 @@ class Index extends Core\Modules\Controller\Frontend
         // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
         if ($this->auth->isUser() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
-        } elseif (empty($_POST) === false) {
+        } elseif ($this->request->getPost()->isEmpty() === false) {
             $result = $this->auth->login(Core\Functions::strEncode($_POST['nickname']), $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
             if ($result == 1) {
                 if ($this->request->redirect) {
@@ -177,8 +177,8 @@ class Index extends Core\Modules\Controller\Frontend
         } elseif ($settings['enable_registration'] == 0) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
-            if (empty($_POST) === false) {
-                $this->_registerPost($_POST, $settings);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_registerPost($this->request->getPost()->getAll(), $settings);
             }
 
             $defaults = [

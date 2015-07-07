@@ -172,8 +172,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         // Emoticons einbinden, falls diese aktiv sind

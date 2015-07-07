@@ -109,8 +109,8 @@ class Details extends Core\Modules\Controller\Admin
                 ->append($this->lang->t('comments', 'admin_details_edit'))
                 ->setTitlePostfix($comment['name']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $comment);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $comment);
             }
 
             if ($this->emoticonsHelpers) {

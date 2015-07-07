@@ -66,8 +66,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         // Datumsauswahl
@@ -124,8 +124,8 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->breadcrumb->setTitlePostfix($gallery['title']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll());
             }
 
             $this->view->assign('gallery_id', $this->request->id);
@@ -182,8 +182,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         $settings = $this->config->getSettings('gallery');
 
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST, $settings);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll(), $settings);
         }
 
         if ($this->modules->isActive('comments') === true) {

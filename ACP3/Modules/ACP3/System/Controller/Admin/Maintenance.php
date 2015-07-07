@@ -96,8 +96,8 @@ class Maintenance extends Core\Modules\Controller\Admin
 
     public function actionSqlExport()
     {
-        if (empty($_POST) === false) {
-            $this->_sqlExportPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_sqlExportPost($this->request->getPost()->getAll());
         }
 
         $dbTables = $this->systemModel->getSchemaTables();
@@ -134,8 +134,8 @@ class Maintenance extends Core\Modules\Controller\Admin
 
     public function actionSqlImport()
     {
-        if (empty($_POST) === false) {
-            $this->_sqlImportPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_sqlImportPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['text' => ''], $this->request->getPost()->getAll()));

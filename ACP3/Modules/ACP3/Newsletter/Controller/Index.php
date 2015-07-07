@@ -89,8 +89,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        if (empty($_POST) === false) {
-            $this->_indexPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_indexPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['mail' => ''], $this->request->getPost()->getAll()));

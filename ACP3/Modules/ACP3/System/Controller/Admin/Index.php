@@ -52,8 +52,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionConfiguration()
     {
-        if (empty($_POST) === false) {
-            $this->_configurationPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_configurationPost($this->request->getPost()->getAll());
         }
 
         $systemSettings = $this->config->getSettings('system');

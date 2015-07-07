@@ -86,8 +86,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         $settings = $this->config->getSettings('files');
 
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST, $settings);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
         // Datumsauswahl
@@ -160,8 +160,8 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->breadcrumb->setTitlePostfix($file['title']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $settings, $file);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $settings, $file);
             }
 
             // Datumsauswahl
@@ -216,8 +216,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('files');

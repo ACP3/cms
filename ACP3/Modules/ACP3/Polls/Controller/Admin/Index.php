@@ -53,7 +53,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (isset($_POST['submit']) === true) {
-            $this->_createPost($_POST);
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         $answers = [];
@@ -79,7 +79,7 @@ class Index extends Core\Modules\Controller\Admin
 
         // Übergabe der Daten an Smarty
         $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
-        $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
+        $this->view->assign('title', $this->request->getPost()->get('title', ''));
         $this->view->assign('answers', $answers);
         $this->view->assign('multiple', $this->get('core.helpers.forms')->selectEntry('multiple', '1', '0', 'checked'));
 
@@ -115,7 +115,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->breadcrumb->setTitlePostfix($poll['title']);
 
             if (isset($_POST['submit']) === true) {
-                $this->_editPost($_POST);
+                $this->_editPost($this->request->getPost()->getAll());
             }
 
             $answers = [];
@@ -157,7 +157,7 @@ class Index extends Core\Modules\Controller\Admin
 
             // Übergabe der Daten an Smarty
             $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$poll['start'], $poll['end']]));
-            $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
+            $this->view->assign('title', $this->request->getPost()->get('title', $poll['title']));
 
             $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {

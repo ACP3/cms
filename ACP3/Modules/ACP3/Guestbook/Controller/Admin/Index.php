@@ -91,8 +91,8 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->breadcrumb->setTitlePostfix($guestbook['name']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $settings);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $settings);
             }
 
             if ($settings['emoticons'] == 1 && $this->emoticonsHelpers) {
@@ -146,8 +146,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('guestbook');

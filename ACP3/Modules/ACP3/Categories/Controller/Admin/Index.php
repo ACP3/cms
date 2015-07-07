@@ -52,8 +52,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $this->request->getPost()->getAll()));
@@ -157,8 +157,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($category) === false) {
             $this->breadcrumb->setTitlePostfix($category['title']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $category);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $category);
             }
 
             $this->view->assign('form', array_merge($category, $this->request->getPost()->getAll()));
@@ -231,8 +231,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('categories');

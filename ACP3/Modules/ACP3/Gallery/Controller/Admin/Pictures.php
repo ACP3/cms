@@ -82,8 +82,8 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $settings = $this->config->getSettings('gallery');
 
-            if (empty($_POST) === false) {
-                $this->_createPost($_POST, $settings);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_createPost($this->request->getPost()->getAll(), $settings);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -141,8 +141,8 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $settings = $this->config->getSettings('gallery');
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $settings, $picture);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $settings, $picture);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {

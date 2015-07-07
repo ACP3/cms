@@ -86,11 +86,11 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $time = $this->date->getCurrentDateTime();
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
-            $this->pollsModel->pollExists($this->request->id, $time, !empty($_POST['answer']) && is_array($_POST['answer'])) === true
+            $this->pollsModel->pollExists($this->request->id, $time, is_array($this->request->getPost()->get('answer'))) === true
         ) {
             // Wenn abgestimmt wurde
-            if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || $this->get('core.validator.rules.misc')->isNumber($_POST['answer']) === true)) {
-                $this->_votePost($_POST, $time);
+            if (is_array($this->request->getPost()->get('answer')) === true || $this->get('core.validator.rules.misc')->isNumber($this->request->getPost()->get('answer')) === true) {
+                $this->_votePost($this->request->getPost()->getAll(), $time);
             } else {
                 $poll = $this->pollsModel->getOneById($this->request->id);
 

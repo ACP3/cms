@@ -68,8 +68,8 @@ class Account extends Core\Modules\Controller\Frontend
 
     public function actionEdit()
     {
-        if (empty($_POST) === false) {
-            $this->_editPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_editPost($this->request->getPost()->getAll());
         }
 
         $user = $this->auth->getUserInfo();
@@ -90,19 +90,19 @@ class Account extends Core\Modules\Controller\Frontend
         $contact = [];
         $contact[0]['name'] = 'mail';
         $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-        $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : $user['mail'];
+        $contact[0]['value'] = $this->request->getPost()->get('mail', $user['mail']);
         $contact[0]['maxlength'] = '120';
         $contact[1]['name'] = 'website';
         $contact[1]['lang'] = $this->lang->t('system', 'website');
-        $contact[1]['value'] = empty($_POST) === false ? $_POST['website'] : $user['website'];
+        $contact[1]['value'] = $this->request->getPost()->get('website', $user['website']);
         $contact[1]['maxlength'] = '120';
         $contact[2]['name'] = 'icq';
         $contact[2]['lang'] = $this->lang->t('users', 'icq');
-        $contact[2]['value'] = empty($_POST) === false ? $_POST['icq'] : $user['icq'];
+        $contact[2]['value'] = $this->request->getPost()->get('icq', $user['icq']);
         $contact[2]['maxlength'] = '9';
         $contact[3]['name'] = 'skype';
         $contact[3]['lang'] = $this->lang->t('users', 'skype');
-        $contact[3]['value'] = empty($_POST) === false ? $_POST['skype'] : $user['skype'];
+        $contact[3]['value'] = $this->request->getPost()->get('skype', $user['skype']);
         $contact[3]['maxlength'] = '28';
         $this->view->assign('contact', $contact);
 
@@ -126,8 +126,8 @@ class Account extends Core\Modules\Controller\Frontend
     {
         $settings = $this->config->getSettings('users');
 
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST, $settings);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll(), $settings);
         }
 
         $user = $this->usersModel->getOneById($this->auth->getUserId());
@@ -136,7 +136,7 @@ class Account extends Core\Modules\Controller\Frontend
         $this->view->assign('entries_override', $settings['entries_override']);
 
         // Sprache
-        $this->view->assign('languages', $this->lang->getLanguagePack(isset($_POST['language']) ? $_POST['language'] : $user['language']));
+        $this->view->assign('languages', $this->lang->getLanguagePack($this->request->getPost()->get('language', $user['language'])));
 
         // Einträge pro Seite
         $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage((int)$user['entries']));
@@ -167,7 +167,7 @@ class Account extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        if (empty($_POST) === false) {
+        if ($this->request->getPost()->isEmpty() === false) {
             $updateValues = [
                 'draft' => Core\Functions::strEncode($_POST['draft'], true)
             ];

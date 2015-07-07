@@ -86,8 +86,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         $settings = $this->config->getSettings('news');
 
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST, $settings);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
         // Datumsauswahl
@@ -165,8 +165,8 @@ class Index extends Core\Modules\Controller\Admin
 
             $settings = $this->config->getSettings('news');
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $settings);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $settings);
             }
 
             // Datumsauswahl
@@ -230,8 +230,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('news');
@@ -241,7 +241,7 @@ class Index extends Core\Modules\Controller\Admin
         $lang_readmore = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('readmore', $this->get('core.helpers.forms')->selectGenerator('readmore', [1, 0], $lang_readmore, $settings['readmore'], 'checked'));
 
-        $this->view->assign('readmore_chars', empty($_POST) === false ? $_POST['readmore_chars'] : $settings['readmore_chars']);
+        $this->view->assign('readmore_chars', $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']));
 
         if ($this->modules->isActive('comments') === true) {
             $lang_allow_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];

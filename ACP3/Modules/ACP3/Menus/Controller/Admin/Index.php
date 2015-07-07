@@ -66,8 +66,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->getAll()));
@@ -112,8 +112,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($menu) === false) {
             $this->breadcrumb->setTitlePostfix($menu['title']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll());
             }
 
             $this->view->assign('form', array_merge($menu, $this->request->getPost()->getAll()));

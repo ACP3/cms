@@ -74,8 +74,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         $systemSettings = $this->config->getSettings('system');
@@ -94,7 +94,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('super_user', $this->formsHelpers->selectGenerator('super_user', [1, 0], $lang_super_user, 0, 'checked'));
 
         // Sprache
-        $this->view->assign('languages', $this->lang->getLanguagePack(isset($_POST['language']) ? $_POST['language'] : $systemSettings['lang']));
+        $this->view->assign('languages', $this->lang->getLanguagePack($this->request->getPost()->get('language', $systemSettings['lang'])));
 
         // Einträge pro Seite
         $this->view->assign('entries', $this->formsHelpers->recordsPerPage($systemSettings['entries']));
@@ -123,19 +123,19 @@ class Index extends Core\Modules\Controller\Admin
         $contact = [];
         $contact[0]['name'] = 'mail';
         $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-        $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : '';
+        $contact[0]['value'] = $this->request->getPost()->get('mail', '');
         $contact[0]['maxlength'] = '120';
         $contact[1]['name'] = 'website';
         $contact[1]['lang'] = $this->lang->t('system', 'website');
-        $contact[1]['value'] = empty($_POST) === false ? $_POST['website'] : '';
+        $contact[1]['value'] = $this->request->getPost()->get('website', '');
         $contact[1]['maxlength'] = '120';
         $contact[2]['name'] = 'icq';
         $contact[2]['lang'] = $this->lang->t('users', 'icq');
-        $contact[2]['value'] = empty($_POST) === false ? $_POST['icq'] : '';
+        $contact[2]['value'] = $this->request->getPost()->get('icq', '');
         $contact[2]['maxlength'] = '9';
         $contact[3]['name'] = 'skype';
         $contact[3]['lang'] = $this->lang->t('users', 'skype');
-        $contact[3]['value'] = empty($_POST) === false ? $_POST['skype'] : '';
+        $contact[3]['value'] = $this->request->getPost()->get('skype', '');
         $contact[3]['maxlength'] = '28';
         $this->view->assign('contact', $contact);
 
@@ -222,8 +222,8 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->breadcrumb->setTitlePostfix($user['nickname']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll());
             }
 
             // Zugriffslevel holen
@@ -241,7 +241,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('super_user', $this->formsHelpers->selectGenerator('super_user', [1, 0], $langSuperUser, $user['super_user'], 'checked'));
 
             // Sprache
-            $this->view->assign('languages', $this->lang->getLanguagePack(isset($_POST['language']) ? $_POST['language'] : $user['language']));
+            $this->view->assign('languages', $this->lang->getLanguagePack($this->request->getPost()->get('language', $user['language'])));
 
             // Einträge pro Seite
             $this->view->assign('entries', $this->formsHelpers->recordsPerPage((int)$user['entries']));
@@ -265,19 +265,19 @@ class Index extends Core\Modules\Controller\Admin
             $contact = [];
             $contact[0]['name'] = 'mail';
             $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-            $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : $user['mail'];
+            $contact[0]['value'] = $this->request->getPost()->get('mail', $user['mail']);
             $contact[0]['maxlength'] = '120';
             $contact[1]['name'] = 'website';
             $contact[1]['lang'] = $this->lang->t('system', 'website');
-            $contact[1]['value'] = empty($_POST) === false ? $_POST['website'] : $user['website'];
+            $contact[1]['value'] = $this->request->getPost()->get('website', $user['website']);
             $contact[1]['maxlength'] = '120';
             $contact[2]['name'] = 'icq';
             $contact[2]['lang'] = $this->lang->t('users', 'icq');
-            $contact[2]['value'] = empty($_POST) === false ? $_POST['icq'] : $user['icq'];
+            $contact[2]['value'] = $this->request->getPost()->get('icq', $user['icq']);
             $contact[2]['maxlength'] = '9';
             $contact[3]['name'] = 'skype';
             $contact[3]['lang'] = $this->lang->t('users', 'skype');
-            $contact[3]['value'] = empty($_POST) === false ? $_POST['skype'] : $user['skype'];
+            $contact[3]['value'] = $this->request->getPost()->get('skype', $user['skype']);
             $contact[3]['maxlength'] = '28';
             $this->view->assign('contact', $contact);
 
@@ -318,8 +318,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('users');

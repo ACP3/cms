@@ -90,8 +90,8 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         // Seitentyp
@@ -168,8 +168,8 @@ class Items extends Core\Modules\Controller\Admin
             $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $menuItem);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $menuItem);
             }
 
             // Seitentyp

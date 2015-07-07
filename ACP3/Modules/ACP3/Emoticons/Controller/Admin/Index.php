@@ -52,8 +52,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (empty($_POST) === false) {
-            $this->_createPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->getAll()));
@@ -125,8 +125,8 @@ class Index extends Core\Modules\Controller\Admin
         $emoticon = $this->emoticonsModel->getOneById((int)$this->request->id);
 
         if (empty($emoticon) === false) {
-            if (empty($_POST) === false) {
-                $this->_editPost($_POST, $emoticon);
+            if ($this->request->getPost()->isEmpty() === false) {
+                $this->_editPost($this->request->getPost()->getAll(), $emoticon);
             }
 
             $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->getAll()));
@@ -195,8 +195,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (empty($_POST) === false) {
-            $this->_settingsPost($_POST);
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->getAll()));

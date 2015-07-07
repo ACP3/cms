@@ -30,7 +30,7 @@ class Index extends Core\Modules\Controller
             $settings = $this->config->getSettings('users');
 
             $this->view->assign('enable_registration', $settings['enable_registration']);
-            $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
+            $this->view->assign('redirect_uri', $this->request->getPost()->get('redirect_uri', $currentPage));
 
             $this->setTemplate('Users/Sidebar/index.login.tpl');
         } else {
