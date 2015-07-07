@@ -47,8 +47,8 @@ class Index extends Core\Modules\Controller\Frontend
     {
         if ($this->request->getPost()->isEmpty() === false) {
             $this->_indexPost($this->request->getPost()->getAll());
-        } elseif (isset($this->request->q)) {
-            $this->_indexPost(['search_term' => $this->request->q]);
+        } elseif ($this->request->getParameters()->has('q')) {
+            $this->_indexPost(['search_term' => $this->request->getParameters()->get('q')]);
         }
 
         $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->getAll()));

@@ -71,10 +71,10 @@ class Index extends Core\Modules\Controller\Frontend
     {
         try {
             $mail = $hash = '';
-            if ($this->get('core.validator.rules.misc')->email($this->request->mail) &&
-                $this->get('core.validator.rules.misc')->isMD5($this->request->hash)) {
-                $mail = $this->request->mail;
-                $hash = $this->request->hash;
+            if ($this->get('core.validator.rules.misc')->email($this->request->getParameters()->get('mail', '')) &&
+                $this->get('core.validator.rules.misc')->isMD5($this->request->getParameters()->get('hash', ''))) {
+                $mail = $this->request->getParameters()->get('mail', '');
+                $hash = $this->request->getParameters()->get('hash', '');
             }
 
             $this->newsletterValidator->validateActivate($mail, $hash);

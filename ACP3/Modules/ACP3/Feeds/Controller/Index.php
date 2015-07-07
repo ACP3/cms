@@ -38,7 +38,7 @@ class Index extends Core\Modules\Controller\Frontend
             'feed_type' => $settings['feed_type'],
             'feed_link' => $this->router->route('', true),
             'feed_title' => $this->config->getSettings('seo')['title'],
-            'module' => $this->request->feed,
+            'module' => $this->request->getParameters()->get('feed', ''),
         ];
 
         $this->view->setRenderer('feedgenerator', $config);
@@ -48,9 +48,9 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        $action = strtolower($this->request->feed) . 'Feed';
+        $action = strtolower($this->request->getParameters()->get('feed', '')) . 'Feed';
 
-        if ($this->acl->hasPermission('frontend/' . $this->request->feed) === true &&
+        if ($this->acl->hasPermission('frontend/' . $this->request->getParameters()->get('feed', '')) === true &&
             method_exists($this->feedsExtensions, $action) === true
         ) {
             $items = $this->feedsExtensions->$action();

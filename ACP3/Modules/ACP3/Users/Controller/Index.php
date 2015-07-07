@@ -147,8 +147,8 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->request->getPost()->has('remember') ? 31104000 : 3600
             );
             if ($result == 1) {
-                if ($this->request->redirect) {
-                    $this->redirect()->temporary(base64_decode($this->request->redirect));
+                if ($this->request->getParameters()->has('redirect')) {
+                    $this->redirect()->temporary(base64_decode($this->request->getParameters()->get('redirect')));
                 } else {
                     $this->redirect()->toNewPage(ROOT_DIR);
                 }
@@ -162,8 +162,8 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->auth->logout();
 
-        if ($this->request->last) {
-            $lastPage = base64_decode($this->request->last);
+        if ($this->request->getParameters()->has('last')) {
+            $lastPage = base64_decode($this->request->getParameters()->get('last'));
 
             if (!preg_match('/^((acp|users)\/)/', $lastPage)) {
                 $this->redirect()->temporary($lastPage);

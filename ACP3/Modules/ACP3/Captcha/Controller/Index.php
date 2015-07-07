@@ -33,13 +33,13 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->setNoOutput(true);
 
-        if (!empty($this->request->path) &&
-            $this->sessionHandler->has('captcha_' . $this->request->path)
+        if ($this->request->getParameters()->has('path') &&
+            $this->sessionHandler->has('captcha_' . $this->request->getParameters()->get('path'))
         ) {
             header('Cache-Control: no-cache, must-revalidate');
             header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
             header('Content-Type: image/gif');
-            $captcha = $this->sessionHandler->get('captcha_' . $this->request->path);
+            $captcha = $this->sessionHandler->get('captcha_' . $this->request->getParameters()->get('path'));
             $captchaLength = strlen($captcha);
             $width = $captchaLength * 25;
             $height = 30;
