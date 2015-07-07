@@ -47,13 +47,13 @@ class FormToken
     public function generateFormToken($path)
     {
         $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
-        $sessionTokens = $this->sessionHandler->getParameter($tokenName, []);
+        $sessionTokens = $this->sessionHandler->get($tokenName, []);
 
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
         if (!isset($sessionTokens[$path])) {
             $sessionTokens[$path] = sha1(uniqid(mt_rand(), true));
-            $this->sessionHandler->setParameter($tokenName, $sessionTokens);
+            $this->sessionHandler->set($tokenName, $sessionTokens);
         }
 
         $this->view->assign('form_token', '<input type="hidden" name="' . $tokenName . '" value="' . $sessionTokens[$path] . '" />');
@@ -72,11 +72,11 @@ class FormToken
             $token = $this->request->getPost()->get($tokenName, '');
         }
         if (!empty($token)) {
-            $sessionTokens = $this->sessionHandler->getParameter($tokenName, []);
+            $sessionTokens = $this->sessionHandler->get($tokenName, []);
             if (isset($sessionTokens[$path])) {
                 unset($sessionTokens[$path]);
 
-                $this->sessionHandler->setParameter($tokenName, $sessionTokens);
+                $this->sessionHandler->set($tokenName, $sessionTokens);
             }
         }
     }

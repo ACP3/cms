@@ -76,7 +76,7 @@ class Helpers
         if ($this->auth->isUser() === false) {
             $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
-            $this->sessionHandler->setParameter('captcha_' . $path, $this->secureHelper->salt($captchaLength));
+            $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));
 
             $this->view->assign('captcha', [
                 'width' => $captchaLength * 25,

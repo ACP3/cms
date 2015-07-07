@@ -53,11 +53,11 @@ class RedirectMessages
      */
     public function getMessage()
     {
-        $param = $this->sessionHandler->getParameter('redirect_message');
+        $param = $this->sessionHandler->get('redirect_message');
         if (isset($param) && is_array($param)) {
             $this->view->assign('redirect', $param);
 
-            $this->sessionHandler->unsetParameter('redirect_message');
+            $this->sessionHandler->remove('redirect_message');
 
             return $this->view->fetchTemplate('system/redirect_message.tpl');
         }
@@ -75,7 +75,7 @@ class RedirectMessages
     public function setMessage($success, $text, $path = null)
     {
         if (empty($text) === false) {
-            $this->sessionHandler->setParameter(
+            $this->sessionHandler->set(
                 'redirect_message',
                 [
                     'success' => is_int($success) ? true : (bool)$success,

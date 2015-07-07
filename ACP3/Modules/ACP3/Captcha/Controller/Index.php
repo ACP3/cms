@@ -10,17 +10,36 @@ use ACP3\Core;
  */
 class Index extends Core\Modules\Controller\Frontend
 {
+    /**
+     * @var \ACP3\Core\SessionHandler
+     */
+    protected $sessionHandler;
+
+    /**
+     * @param \ACP3\Core\Context\Frontend $context
+     * @param \ACP3\Core\SessionHandler   $sessionHandler
+     */
+    public function __construct(
+        Core\Context\Frontend $context,
+        Core\SessionHandler $sessionHandler
+    )
+    {
+        parent::__construct($context);
+
+        $this->sessionHandler = $sessionHandler;
+    }
+
     public function actionImage()
     {
         $this->setNoOutput(true);
 
         if (!empty($this->request->path) &&
-            isset($_SESSION['captcha_' . $this->request->path])
+            $this->sessionHandler->has('captcha_' . $this->request->path)
         ) {
             header('Cache-Control: no-cache, must-revalidate');
             header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
             header('Content-Type: image/gif');
-            $captcha = $_SESSION['captcha_' . $this->request->path];
+            $captcha = $this->sessionHandler->get('captcha_' . $this->request->path);
             $captchaLength = strlen($captcha);
             $width = $captchaLength * 25;
             $height = 30;

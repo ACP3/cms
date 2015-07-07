@@ -3,8 +3,8 @@ namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Router\Aliases;
-use ACP3\Modules\ACP3\Seo\Cache;
-use ACP3\Modules\ACP3\Seo\Model;
+use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
+use ACP3\Modules\ACP3\Seo\Model as SeoModel;
 
 /**
  * Class SEO
@@ -76,9 +76,9 @@ class SEO
         RequestInterface $request,
         Aliases $aliases,
         Forms $formsHelper,
-        Cache $seoCache,
+        SeoCache $seoCache,
         Config $config,
-        Model $seoModel)
+        SeoModel $seoModel)
     {
         $this->lang = $lang;
         $this->request = $request;
@@ -177,7 +177,7 @@ class SEO
     /**
      * @param        string $path
      * @param        string $key
-     * @param string $defaultValue
+     * @param string        $defaultValue
      *
      * @return string
      */
@@ -308,9 +308,9 @@ class SEO
         if (!empty($path)) {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->aliases->getUriAlias($path, true);
-            $keywords = isset($_POST['seo_keywords']) ? $_POST['seo_keywords'] : $this->getKeywords($path);
-            $description = isset($_POST['seo_description']) ? $_POST['seo_description'] : $this->getDescription($path);
+            $alias = $this->request->getPost()->get('alias', $this->aliases->getUriAlias($path, true));
+            $keywords = $this->request->getPost()->get('seo_keywords', $this->getKeywords($path));
+            $description = $this->request->getPost()->get('seo_description', $this->getDescription($path));
             $robots = $this->getSeoInformation($path, 'robots', 0);
         } else {
             $alias = $keywords = $description = '';

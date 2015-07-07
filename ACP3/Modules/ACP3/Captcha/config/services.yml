@@ -6,7 +6,7 @@ parameters:
 services:
   captcha.controller.frontend.index:
     class: %captcha.controller.frontend.index.fqdn%
-    parent: core.modules.controller.frontend
+    arguments: [@core.context.frontend, @core.session]
 
   captcha.helpers:
     class: %captcha.helpers.fqdn%

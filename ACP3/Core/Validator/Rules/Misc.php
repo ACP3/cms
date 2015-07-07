@@ -64,7 +64,7 @@ class Misc
     {
         $tokenName = SessionHandler::XSRF_TOKEN_NAME;
         $urlQueryString = $this->request->getQuery();
-        $sessionToken = $this->sessionHandler->getParameter($tokenName);
+        $sessionToken = $this->sessionHandler->get($tokenName);
 
         return (isset($sessionToken[$urlQueryString]) && $this->request->getPost()->get($tokenName, '') === $sessionToken[$urlQueryString]);
     }

@@ -84,10 +84,10 @@ class SessionHandler implements \SessionHandlerInterface
     public function secureSession($force = false)
     {
         // Prevent from session fixations
-        if ($this->getParameter('acp3_init', false) === false || $force === true) {
+        if ($this->get('acp3_init', false) === false || $force === true) {
             session_regenerate_id(true);
             $this->resetSessionData();
-            $this->setParameter('acp3_init', true);
+            $this->set('acp3_init', true);
         }
     }
 
@@ -123,9 +123,19 @@ class SessionHandler implements \SessionHandlerInterface
      *
      * @return mixed|null
      */
-    public function getParameter($key, $default = null)
+    public function get($key, $default = null)
     {
-        return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
+        return $this->has($key) ? $_SESSION[$key] : $default;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return bool
+     */
+    public function has($key)
+    {
+        return array_key_exists($key, $_SESSION);
     }
 
     /**
@@ -134,14 +144,14 @@ class SessionHandler implements \SessionHandlerInterface
      *
      * @return $this
      */
-    public function setParameter($key, $value)
+    public function set($key, $value)
     {
         $_SESSION[$key] = $value;
 
         return $this;
     }
 
-    public function unsetParameter($key)
+    public function remove($key)
     {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
