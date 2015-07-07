@@ -2,7 +2,6 @@
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 use ACP3\Core\Assets;
-use ACP3\Core\Request;
 use ACP3\Core\RequestInterface;
 
 /**

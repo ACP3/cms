@@ -111,7 +111,7 @@ class Pagination
     }
 
     /**
-     * @param $results
+     * @param int $results
      */
     public function setResultsPerPage($results)
     {
@@ -119,7 +119,7 @@ class Pagination
     }
 
     /**
-     * @param $results
+     * @param int $results
      */
     public function setTotalResults($results)
     {
@@ -127,7 +127,7 @@ class Pagination
     }
 
     /**
-     * @param $fragment
+     * @param string $fragment
      */
     public function setUrlFragment($fragment)
     {
@@ -202,7 +202,7 @@ class Pagination
     }
 
     /**
-     * @param $link
+     * @param string $link
      */
     private function setMetaStatements($link)
     {
@@ -258,10 +258,10 @@ class Pagination
     }
 
     /**
-     * @param $link
-     * @param $range
+     * @param string $link
+     * @param array  $range
      */
-    private function showFirstPageLink($link, $range)
+    private function showFirstPageLink($link, array $range)
     {
         if ($this->totalPages > $this->showFirstLast && $range['start'] > 1) {
             $this->pagination[] = $this->buildPageNumber(
@@ -274,9 +274,9 @@ class Pagination
     }
 
     /**
-     * @param        $selected
-     * @param        $pageNumber
-     * @param        $uri
+     * @param bool   $selected
+     * @param int    $pageNumber
+     * @param string $uri
      * @param string $title
      *
      * @return array
@@ -292,7 +292,7 @@ class Pagination
     }
 
     /**
-     * @param $link
+     * @param string $link
      */
     private function showPreviousPageLink($link)
     {
@@ -307,7 +307,7 @@ class Pagination
     }
 
     /**
-     * @param $link
+     * @param string $link
      */
     private function showNextPageLink($link)
     {
@@ -322,10 +322,10 @@ class Pagination
     }
 
     /**
-     * @param $link
-     * @param $range
+     * @param string $link
+     * @param array $range
      */
-    private function showLastPageLink($link, $range)
+    private function showLastPageLink($link, array $range)
     {
         if ($this->totalPages > $this->showFirstLast && $this->totalPages !== $range['end']) {
             $this->pagination[] = $this->buildPageNumber(

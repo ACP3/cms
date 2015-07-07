@@ -2,7 +2,6 @@
 
 namespace ACP3\Core\Validator\Rules;
 
-use ACP3\Core\Request;
 use ACP3\Core\RequestInterface;
 use ACP3\Core\SessionHandler;
 
