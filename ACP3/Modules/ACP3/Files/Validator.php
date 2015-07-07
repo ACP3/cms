@@ -79,7 +79,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['external'] = $this->lang->t('files', 'type_in_external_resource');
         }
         if (!isset($formData['external']) &&
-            (empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK)
+            (empty($file['tmp_name']) || empty($file['size']) || $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
         }
@@ -117,7 +117,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['external'] = $this->lang->t('files', 'type_in_external_resource');
         }
         if (!isset($formData['external']) && !empty($file) && is_array($file) &&
-            (empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK)
+            (empty($file['tmp_name']) || empty($file['size']) || $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
         }

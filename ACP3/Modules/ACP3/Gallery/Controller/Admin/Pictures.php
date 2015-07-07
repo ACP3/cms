@@ -190,10 +190,7 @@ class Pictures extends Core\Modules\Controller\Admin
     protected function _createPost(array $formData, array $settings)
     {
         try {
-            $file = [];
-            $file['tmp_name'] = $_FILES['file']['tmp_name'];
-            $file['name'] = $_FILES['file']['name'];
-            $file['size'] = $_FILES['file']['size'];
+            $file = $this->request->getFiles()->get('file');
 
             $this->galleryValidator->validateCreatePicture($file, $settings);
 
@@ -233,12 +230,7 @@ class Pictures extends Core\Modules\Controller\Admin
     protected function _editPost(array $formData, array $settings, array $picture)
     {
         try {
-            $file = [];
-            if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
-                $file['tmp_name'] = $_FILES['file']['tmp_name'];
-                $file['name'] = $_FILES['file']['name'];
-                $file['size'] = $_FILES['file']['size'];
-            }
+            $file = $this->request->getFiles()->get('file');
 
             $this->galleryValidator->validateEditPicture($file, $settings);
 

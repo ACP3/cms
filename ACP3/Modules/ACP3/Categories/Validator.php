@@ -64,7 +64,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) ||
                 $this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-                $_FILES['picture']['error'] !== UPLOAD_ERR_OK)
+                $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['picture'] = $this->lang->t('categories', 'invalid_image_selected');
         }

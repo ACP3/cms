@@ -29,8 +29,8 @@ class Index extends Core\Modules\Controller\Admin
     protected $emoticonsCache;
 
     /**
-     * @param \ACP3\Core\Context\Admin          $context
-     * @param \ACP3\Core\Helpers\Secure         $secureHelper
+     * @param \ACP3\Core\Context\Admin               $context
+     * @param \ACP3\Core\Helpers\Secure              $secureHelper
      * @param \ACP3\Modules\ACP3\Emoticons\Model     $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validator $emoticonsValidator
      * @param \ACP3\Modules\ACP3\Emoticons\Cache     $emoticonsCache
@@ -67,12 +67,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _createPost(array $formData)
     {
         try {
-            $file = [];
-            if (!empty($_FILES['picture']['tmp_name'])) {
-                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                $file['name'] = $_FILES['picture']['name'];
-                $file['size'] = $_FILES['picture']['size'];
-            }
+            $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
 
@@ -149,12 +144,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _editPost(array $formData, array $emoticon)
     {
         try {
-            $file = [];
-            if (!empty($_FILES['picture']['name'])) {
-                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                $file['name'] = $_FILES['picture']['name'];
-                $file['size'] = $_FILES['picture']['size'];
-            }
+            $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateEdit($formData, $file, $this->config->getSettings('emoticons'));
 

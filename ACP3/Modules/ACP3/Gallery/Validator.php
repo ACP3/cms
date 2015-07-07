@@ -90,7 +90,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if (!empty($file['tmp_name']) &&
             ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
-                $_FILES['file']['error'] !== UPLOAD_ERR_OK)
+                $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
         }
@@ -111,7 +111,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->errors = [];
         if (!empty($file['tmp_name']) &&
             ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
-                $_FILES['file']['error'] !== UPLOAD_ERR_OK)
+                $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
         }

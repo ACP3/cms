@@ -24,7 +24,7 @@ class ParameterBag
      * @param string $key
      * @param null   $default
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function get($key, $default = null)
     {

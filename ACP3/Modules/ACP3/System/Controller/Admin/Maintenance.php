@@ -205,12 +205,7 @@ class Maintenance extends Core\Modules\Controller\Admin
     protected function _sqlImportPost(array $formData)
     {
         try {
-            $file = [];
-            if (isset($_FILES['file'])) {
-                $file['tmp_name'] = $_FILES['file']['tmp_name'];
-                $file['name'] = $_FILES['file']['name'];
-                $file['size'] = $_FILES['file']['size'];
-            }
+            $file = $this->request->getFiles()->get('file');
 
             $this->systemValidator->validateSqlImport($formData, $file);
 

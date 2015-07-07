@@ -77,12 +77,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _createPost(array $formData)
     {
         try {
-            $file = [];
-            if (!empty($_FILES['picture']['name'])) {
-                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                $file['name'] = $_FILES['picture']['name'];
-                $file['size'] = $_FILES['picture']['size'];
-            }
+            $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
 
@@ -181,12 +176,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _editPost(array $formData, array $category)
     {
         try {
-            $file = [];
-            if (!empty($_FILES['picture']['name'])) {
-                $file['tmp_name'] = $_FILES['picture']['tmp_name'];
-                $file['name'] = $_FILES['picture']['name'];
-                $file['size'] = $_FILES['picture']['size'];
-            }
+            $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $this->request->id);
 

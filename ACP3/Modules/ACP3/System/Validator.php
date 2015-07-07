@@ -158,7 +158,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if (!empty($file['size']) &&
             (!$this->mimeValidator->mimeType($file['tmp_name'], 'text/plain') ||
-                $_FILES['file']['error'] !== UPLOAD_ERR_OK)
+                $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['upload-file'] = $this->lang->t('system', 'select_sql_file');
         }

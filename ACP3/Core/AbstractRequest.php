@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Request\FilesParameterBag;
 use ACP3\Core\Request\ParameterBag;
 
 /**
@@ -133,7 +134,7 @@ abstract class AbstractRequest extends \StdClass
      */
     protected function fillParameterBags(array $server, array $post, array $files, array $cookie)
     {
-        $this->files = new ParameterBag($files);
+        $this->files = new FilesParameterBag($files);
         $this->post = new ParameterBag($post);
         $this->server = new ParameterBag($server);
         $this->cookie = new ParameterBag($cookie);

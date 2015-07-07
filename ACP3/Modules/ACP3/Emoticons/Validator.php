@@ -47,7 +47,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['description'] = $this->lang->t('emoticons', 'type_in_description');
         }
         if ($this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-            $_FILES['picture']['error'] !== UPLOAD_ERR_OK
+            $file['error'] !== UPLOAD_ERR_OK
         ) {
             $this->errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
         }
@@ -72,7 +72,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['description'])) {
             $this->errors['description'] = $this->lang->t('emoticons', 'type_in_description');
         }
-        if (!empty($file) && ($this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $_FILES['picture']['error'] !== UPLOAD_ERR_OK)) {
+        if (!empty($file) && ($this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $file['error'] !== UPLOAD_ERR_OK)) {
             $this->errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
         }
 

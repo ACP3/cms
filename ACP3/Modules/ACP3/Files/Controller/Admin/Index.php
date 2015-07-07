@@ -244,10 +244,7 @@ class Index extends Core\Modules\Controller\Admin
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {
-                $file = [];
-                $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
-                $file['name'] = $_FILES['file_internal']['name'];
-                $file['size'] = $_FILES['file_internal']['size'];
+                $file = $this->request->getFiles()->get('file_internal');
             }
 
             $this->filesValidator->validateCreate($formData, $file);
@@ -308,11 +305,8 @@ class Index extends Core\Modules\Controller\Admin
             $file = [];
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
-            } elseif (!empty($_FILES['file_internal']['name'])) {
-                $file = [];
-                $file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
-                $file['name'] = $_FILES['file_internal']['name'];
-                $file['size'] = $_FILES['file_internal']['size'];
+            } elseif ($this->request->getFiles()->has('file_internal')) {
+                $file = $this->request->getFiles()->get('file_internal');
             }
 
             $this->filesValidator->validateEdit($formData, $file);
