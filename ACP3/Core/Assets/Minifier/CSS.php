@@ -45,14 +45,14 @@ class CSS extends AbstractMinifier
             foreach ($modules as $module) {
                 $modulePath = $module['dir'] . '/Resources/';
                 $designPath = $module['dir'] . '/';
-                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'style.css')) &&
+                if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'style.css')) &&
                     $module['dir'] !== 'System'
                 ) {
                     $css[] = $stylesheet;
                 }
 
                 // Append custom styles to the default module styling
-                if (true == ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'append.css'))) {
+                if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'append.css'))) {
                     $css[] = $stylesheet;
                 }
             }
