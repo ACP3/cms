@@ -81,7 +81,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getQuery()
     {
@@ -89,9 +89,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Returns the original requested query
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getOriginalQuery()
     {
@@ -99,7 +97,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getArea()
     {
@@ -107,7 +105,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getModule()
     {
@@ -115,7 +113,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getController()
     {
@@ -123,7 +121,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getControllerAction()
     {
@@ -131,9 +129,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Returns the currently requested module, controller and controller action
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getFullPath()
     {
@@ -141,9 +137,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Returns the currently requested module and controller
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getModuleAndController()
     {
@@ -199,7 +193,7 @@ class Request extends AbstractRequest
     /**
      * Setzt alle in URI::query enthaltenen Parameter
      */
-    public function parseURI()
+    protected function parseURI()
     {
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -256,7 +250,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function getIsHomepage()
     {
@@ -268,9 +262,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Gibt zurück, ob der aktuelle User Agent ein mobiler Browser ist, oder nicht.
-     *
-     * @return boolean
+     * @inheritdoc
      * @see http://detectmobilebrowsers.com/download/php
      */
     public function isMobileBrowser()
@@ -282,9 +274,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Gibt die URI-Parameter aus
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getParameters()
     {
@@ -292,9 +282,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Gibt die bereinigte URI-Query aus, d.h. ohne die anzuzeigende Seite
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getUriWithoutPages()
     {

@@ -16,9 +16,9 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model
      */
@@ -33,9 +33,9 @@ class Index extends Core\Modules\Controller\Admin
     protected $newsletterHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin           $context
-     * @param \ACP3\Core\Date                    $date
-     * @param \ACP3\Core\Helpers\Secure          $secureHelper
+     * @param \ACP3\Core\Context\Admin                $context
+     * @param \ACP3\Core\Date                         $date
+     * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Model     $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validator $newsletterValidator
      * @param \ACP3\Modules\ACP3\Newsletter\Helpers   $newsletterHelpers
@@ -43,7 +43,7 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model $newsletterModel,
         Newsletter\Validator $newsletterValidator,
         Newsletter\Helpers $newsletterHelpers)
@@ -51,7 +51,7 @@ class Index extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->date = $date;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->newsletterModel = $newsletterModel;
         $this->newsletterValidator = $newsletterValidator;
         $this->newsletterHelpers = $newsletterHelpers;
@@ -75,7 +75,7 @@ class Index extends Core\Modules\Controller\Admin
         $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
         $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -117,7 +117,7 @@ class Index extends Core\Modules\Controller\Admin
             $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
             $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -184,7 +184,7 @@ class Index extends Core\Modules\Controller\Admin
         ];
         $this->view->assign('html', $this->get('core.helpers.forms')->selectGenerator('html', [1, 0], $langHtml, $settings['html'], 'checked'));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -219,7 +219,7 @@ class Index extends Core\Modules\Controller\Admin
                 $result = $lastId !== false;
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             if ($result === false) {
                 $lang = $this->lang->t('newsletter', 'create_save_error');
@@ -261,7 +261,7 @@ class Index extends Core\Modules\Controller\Admin
                 $result = $bool !== false;
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             if ($result === false) {
                 $lang = $this->lang->t('newsletter', 'create_save_error');
@@ -291,7 +291,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->config->setSettings($data, 'newsletter');
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

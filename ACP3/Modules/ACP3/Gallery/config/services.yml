@@ -12,11 +12,11 @@ parameters:
 services:
   gallery.controller.admin.index:
     class: %gallery.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@gallery.cache', '@gallery.helpers', '@gallery.model', '@gallery.validator']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@gallery.cache', '@gallery.helpers', '@gallery.model', '@gallery.validator']
 
   gallery.controller.admin.pictures:
     class: %gallery.controller.admin.pictures.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.sort', '@gallery.helpers', '@gallery.model', '@gallery.cache', '@gallery.validator']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@core.helpers.sort', '@gallery.helpers', '@gallery.model', '@gallery.cache', '@gallery.validator']
 
   gallery.controller.frontend.index:
     class: %gallery.controller.frontend.index.fqdn%

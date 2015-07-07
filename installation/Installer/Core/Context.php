@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Installer\Core;
+use ACP3\Core\RequestInterface;
 
 /**
  * Class Context
@@ -12,7 +13,7 @@ class Context
      */
     protected $lang;
     /**
-     * @var Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -25,14 +26,14 @@ class Context
     protected $view;
 
     /**
-     * @param Lang $lang
-     * @param Request $request
-     * @param Router $router
-     * @param \ACP3\Core\View $view
+     * @param \ACP3\Installer\Core\Lang   $lang
+     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Installer\Core\Router $router
+     * @param \ACP3\Core\View             $view
      */
     public function __construct(
         Lang $lang,
-        Request $request,
+        RequestInterface $request,
         Router $router,
         \ACP3\Core\View $view)
     {

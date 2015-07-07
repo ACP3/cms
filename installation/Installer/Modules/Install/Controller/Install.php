@@ -3,6 +3,7 @@
 namespace ACP3\Installer\Modules\Install\Controller;
 
 use ACP3\Core\Functions;
+use ACP3\Core\Helpers\Secure;
 use ACP3\Installer\Core\Date;
 use ACP3\Core\Exceptions\ValidationFailed;
 use ACP3\Installer\Core;
@@ -31,24 +32,31 @@ class Install extends AbstractController
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var \ACP3\Installer\Modules\Install\Helpers\Install
      */
     protected $installHelper;
 
     /**
-     * @param Core\Context $context
-     * @param Date $date
-     * @param InstallerHelpers $installHelper
+     * @param \ACP3\Installer\Core\Context                    $context
+     * @param \ACP3\Installer\Core\Date                       $date
+     * @param \ACP3\Core\Helpers\Secure                       $secureHelper
+     * @param \ACP3\Installer\Modules\Install\Helpers\Install $installHelper
      */
     public function __construct(
         Core\Context $context,
         Date $date,
+        Secure $secureHelper,
         InstallerHelpers $installHelper
     )
     {
         parent::__construct($context);
 
         $this->date = $date;
+        $this->secureHelper = $secureHelper;
         $this->installHelper = $installHelper;
         $this->configFilePath = ACP3_DIR . 'config.yml';
     }
@@ -199,13 +207,12 @@ class Install extends AbstractController
         /** @var \ACP3\Core\DB db */
         $this->db = $this->get('core.db');
 
-        $securityHelper = $this->get('core.helpers.secure');
-        $salt = $securityHelper->salt(12);
+        $salt = $this->secureHelper->salt(12);
         $currentDate = gmdate('Y-m-d H:i:s');
 
         $newsModuleId = $this->db->getConnection()->fetchColumn("SELECT `id` FROM `{$this->db->getPrefix()}modules` WHERE `name` = ?", ['news']);
         $queries = [
-            "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->getConnection()->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->getConnection()->quote($formData["date_format_long"]) . ", " . $this->db->getConnection()->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
+            "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->getConnection()->quote($formData["user_name"]) . ", '" . $this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->getConnection()->quote($formData["date_format_long"]) . ", " . $this->db->getConnection()->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
             'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('install', 'category_name') . '\', \'\', \'' . $this->lang->t('install', 'category_description') . '\', \'' . $newsModuleId . '\');',
             'INSERT INTO `{pre}news` VALUES (\'\', \'' . $currentDate . '\', \'' . $currentDate . '\', \'' . $this->lang->t('install', 'news_headline') . '\', \'' . $this->lang->t('install', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
             'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $this->lang->t('install', 'pages_news') . '\', \'news\', 1);',

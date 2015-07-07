@@ -26,6 +26,10 @@ class Helpers
      */
     protected $router;
     /**
+     * @var \ACP3\Core\SessionHandler
+     */
+    protected $sessionHandler;
+    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -34,6 +38,7 @@ class Helpers
      * @param \ACP3\Core\Auth           $auth
      * @param \ACP3\Core\Request        $request
      * @param \ACP3\Core\Router         $router
+     * @param \ACP3\Core\SessionHandler $sessionHandler
      * @param \ACP3\Core\View           $view
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      */
@@ -41,12 +46,15 @@ class Helpers
         Core\Auth $auth,
         Core\Request $request,
         Core\Router $router,
+        Core\SessionHandler $sessionHandler,
         Core\View $view,
         Core\Helpers\Secure $secureHelper
-    ) {
+    )
+    {
         $this->auth = $auth;
         $this->request = $request;
         $this->router = $router;
+        $this->sessionHandler = $sessionHandler;
         $this->view = $view;
         $this->secureHelper = $secureHelper;
     }
@@ -68,15 +76,15 @@ class Helpers
         if ($this->auth->isUser() === false) {
             $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
-            $_SESSION['captcha_' . $path] = $this->secureHelper->salt($captchaLength);
+            $this->sessionHandler->setParameter('captcha_' . $path, $this->secureHelper->salt($captchaLength));
 
-            $captcha = [];
-            $captcha['width'] = $captchaLength * 25;
-            $captcha['id'] = $id;
-            $captcha['height'] = 30;
-            $captcha['input_only'] = $inputOnly;
-            $captcha['path'] = $path;
-            $this->view->assign('captcha', $captcha);
+            $this->view->assign('captcha', [
+                'width' => $captchaLength * 25,
+                'id' => $id,
+                'height' => 30,
+                'input_only' => $inputOnly,
+                'path' => $path
+            ]);
             return $this->view->fetchTemplate('captcha/captcha.tpl');
         }
         return '';

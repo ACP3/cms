@@ -11,20 +11,20 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class Redirect
 {
     /**
-     * @var Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
-     * @var Router
+     * @var \ACP3\Core\Router
      */
     protected $router;
 
     /**
-     * @param Request $request
-     * @param Router $router
+     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Router           $router
      */
     public function __construct(
-        Request $request,
+        RequestInterface $request,
         Router $router
     ) {
         $this->request = $request;

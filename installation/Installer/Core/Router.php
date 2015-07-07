@@ -10,14 +10,14 @@ use ACP3\Core;
 class Router extends Core\Router
 {
     /**
-     * @var \ACP3\Installer\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
 
     /**
-     * @param \ACP3\Installer\Core\Request $request
+     * @param \ACP3\Core\RequestInterface $request
      */
-    public function __construct(Request $request)
+    public function __construct(Core\RequestInterface $request)
     {
         $this->request = $request;
     }

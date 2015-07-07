@@ -16,9 +16,9 @@ class Pictures extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Core\Helpers\Sort
      */
@@ -41,10 +41,10 @@ class Pictures extends Core\Modules\Controller\Admin
     protected $galleryValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin        $context
-     * @param \ACP3\Core\Date                 $date
-     * @param \ACP3\Core\Helpers\Secure       $secureHelper
-     * @param \ACP3\Core\Helpers\Sort         $sortHelper
+     * @param \ACP3\Core\Context\Admin             $context
+     * @param \ACP3\Core\Date                      $date
+     * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
+     * @param \ACP3\Core\Helpers\Sort              $sortHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers   $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model     $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Cache     $galleryCache
@@ -53,7 +53,7 @@ class Pictures extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Sort $sortHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model $galleryModel,
@@ -63,7 +63,7 @@ class Pictures extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->date = $date;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->sortHelper = $sortHelper;
         $this->galleryHelpers = $galleryHelpers;
         $this->galleryModel = $galleryModel;
@@ -97,7 +97,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge(['description' => ''], $this->request->getPost()->getAll()));
             $this->view->assign('gallery_id', $this->request->id);
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -156,7 +156,7 @@ class Pictures extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge($picture, $this->request->getPost()->getAll()));
             $this->view->assign('gallery_id', $this->request->id);
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -212,7 +212,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $this->galleryCache->setCache($this->request->id);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $this->request->id);
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -253,7 +253,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $this->galleryCache->setCache($picture['gallery_id']);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
         } catch (Core\Exceptions\InvalidFormToken $e) {

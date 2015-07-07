@@ -24,30 +24,30 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $categoriesValidator;
     /**
-     * @var Core\Helpers\Secure
+     * @var Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\Context\Admin                $context
      * @param \ACP3\Modules\ACP3\Categories\Model     $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Cache     $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validator $categoriesValidator
-     * @param \ACP3\Core\Helpers\Secure          $secureHelper
+     * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
      */
     public function __construct(
         Core\Context\Admin $context,
         Categories\Model $categoriesModel,
         Categories\Cache $categoriesCache,
         Categories\Validator $categoriesValidator,
-        Core\Helpers\Secure $secureHelper)
+        Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->categoriesModel = $categoriesModel;
         $this->categoriesCache = $categoriesCache;
         $this->categoriesValidator = $categoriesValidator;
-        $this->secureHelper = $secureHelper;
+        $this->secureHelper = $formTokenHelper;
     }
 
     public function actionCreate()

@@ -10,15 +10,15 @@ parameters:
 services:
   users.controller.admin.index:
     class: %users.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@core.helpers.forms', '@users.model', '@users.validator', '@permissions.helpers']
+    arguments: ['@core.context.admin', '@core.date', @core.helpers.formToken, '@core.helpers.secure', '@core.helpers.forms', '@users.model', '@users.validator', '@permissions.helpers']
 
   users.controller.frontend.account:
     class: %users.controller.frontend.account.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.helpers.secure', '@users.model', '@users.validator']
+    arguments: ['@core.context.frontend', '@core.date', '@core.helpers.formToken', @core.helpers.secure, '@users.model', '@users.validator']
 
   users.controller.frontend.index:
     class: %users.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.secure', '@users.model', '@users.validator', '@permissions.helpers', '@core.helpers.sendEmail']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', @core.helpers.formToken, '@core.helpers.secure', '@users.model', '@users.validator', '@permissions.helpers', '@core.helpers.sendEmail']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 

@@ -22,6 +22,10 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $pagination;
     /**
+     * @var \ACP3\Core\Helpers\FormToken
+     */
+    protected $formTokenHelper;
+    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -47,19 +51,21 @@ class Index extends Core\Modules\Controller\Frontend
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Frontend       $context
-     * @param \ACP3\Core\Date                   $date
-     * @param \ACP3\Core\Pagination             $pagination
-     * @param \ACP3\Core\Helpers\Secure         $secureHelper
+     * @param \ACP3\Core\Context\Frontend            $context
+     * @param \ACP3\Core\Date                        $date
+     * @param \ACP3\Core\Pagination                  $pagination
+     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure              $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model         $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validator     $usersValidator
      * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
-     * @param \ACP3\Core\Helpers\SendEmail      $sendEmail
+     * @param \ACP3\Core\Helpers\SendEmail           $sendEmail
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Pagination $pagination,
+        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
         Users\Validator $usersValidator,
@@ -70,6 +76,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->date = $date;
         $this->pagination = $pagination;
+        $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
         $this->usersValidator = $usersValidator;
@@ -104,7 +111,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         }
     }
 
@@ -185,7 +192,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         }
     }
 
@@ -241,7 +248,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $bool = $this->usersModel->update($updateValues, $user['id']);
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -289,7 +296,7 @@ class Index extends Core\Modules\Controller\Frontend
             $lastId = $this->usersModel->insert($insertValues);
             $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
         } catch (Core\Exceptions\InvalidFormToken $e) {

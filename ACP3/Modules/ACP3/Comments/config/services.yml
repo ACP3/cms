@@ -10,17 +10,17 @@ parameters:
 services:
   comments.controller.admin.details:
     class: %comments.controller.admin.details.fqdn%
-    arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@system.model', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@system.model', '@core.helpers.formToken']
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.admin.index:
     class: %comments.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@comments.model', '@comments.validator', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@core.date', '@comments.model', '@comments.validator', '@core.helpers.formToken']
 
   comments.controller.frontend.index:
     class: %comments.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@core.helpers.secure']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@core.helpers.formToken']
     calls:
       - ['setContainer', ['@service_container']]
       - ['setCaptchaHelpers', ['@?captcha.helpers']]

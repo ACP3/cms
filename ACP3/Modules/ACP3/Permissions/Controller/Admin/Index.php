@@ -16,9 +16,9 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model
      */
@@ -33,9 +33,9 @@ class Index extends Core\Modules\Controller\Admin
     protected $permissionsValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin            $context
-     * @param \ACP3\Core\DB                       $db
-     * @param \ACP3\Core\Helpers\Secure           $secureHelper
+     * @param \ACP3\Core\Context\Admin                 $context
+     * @param \ACP3\Core\DB                            $db
+     * @param \ACP3\Core\Helpers\FormToken             $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model     $permissionsModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache     $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validator $permissionsValidator
@@ -43,7 +43,7 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\DB $db,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache,
         Permissions\Validator $permissionsValidator)
@@ -51,7 +51,7 @@ class Index extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->db = $db;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
         $this->permissionsValidator = $permissionsValidator;
@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('modules', $modules);
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -191,7 +191,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($role, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -264,7 +264,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->setRolesCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -312,7 +312,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

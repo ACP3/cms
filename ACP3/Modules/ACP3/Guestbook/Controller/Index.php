@@ -23,9 +23,9 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $pagination;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Model
      */
@@ -63,7 +63,7 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Context\Frontend            $context
      * @param \ACP3\Core\Date                        $date
      * @param \ACP3\Core\Pagination                  $pagination
-     * @param \ACP3\Core\Helpers\Secure              $secureHelper
+     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model     $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validator $guestbookValidator
      */
@@ -71,7 +71,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Context\Frontend $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model $guestbookModel,
         Guestbook\Validator $guestbookValidator)
     {
@@ -79,7 +79,7 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->date = $date;
         $this->pagination = $pagination;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->guestbookModel = $guestbookModel;
         $this->guestbookValidator = $guestbookValidator;
     }
@@ -174,7 +174,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionIndex()
@@ -253,7 +253,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

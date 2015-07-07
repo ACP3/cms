@@ -22,9 +22,9 @@ class Index extends Core\Modules\Controller\Frontend
      */
     protected $pagination;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model
      */
@@ -64,7 +64,7 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Pagination                 $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model     $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validator $commentsValidator
-     * @param \ACP3\Core\Helpers\Secure             $secureHelper
+     * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
      */
     public function __construct(
         Core\Context\Frontend $context,
@@ -72,7 +72,7 @@ class Index extends Core\Modules\Controller\Frontend
         Core\Pagination $pagination,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
-        Core\Helpers\Secure $secureHelper)
+        Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
@@ -80,7 +80,7 @@ class Index extends Core\Modules\Controller\Frontend
         $this->pagination = $pagination;
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
     }
 
     public function preDispatch()
@@ -203,7 +203,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
 
         return $this->view->fetchTemplate('Comments/Frontend/index.create.tpl');
     }
@@ -231,7 +231,7 @@ class Index extends Core\Modules\Controller\Frontend
 
             $bool = $this->commentsModel->insert($insertValues);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
         } catch (Core\Exceptions\InvalidFormToken $e) {

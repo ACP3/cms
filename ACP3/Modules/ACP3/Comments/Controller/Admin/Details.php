@@ -26,34 +26,34 @@ class Details extends Core\Modules\Controller\Admin
      */
     protected $systemModel;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers
      */
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Core\Context\Admin              $context
      * @param \ACP3\Modules\ACP3\Comments\Model     $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validator $commentsValidator
      * @param \ACP3\Modules\ACP3\System\Model       $systemModel
-     * @param \ACP3\Core\Helpers\Secure        $secureHelper
+     * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
      */
     public function __construct(
         Core\Context\Admin $context,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
         System\Model $systemModel,
-        Core\Helpers\Secure $secureHelper)
+        Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
         $this->systemModel = $systemModel;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
     }
 
     /**
@@ -121,7 +121,7 @@ class Details extends Core\Modules\Controller\Admin
             $this->view->assign('form', array_merge($comment, $this->request->getPost()->getAll()));
             $this->view->assign('module_id', (int)$comment['module_id']);
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -186,7 +186,7 @@ class Details extends Core\Modules\Controller\Admin
 
             $bool = $this->commentsModel->update($updateValues, $this->request->id);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
         } catch (Core\Exceptions\InvalidFormToken $e) {

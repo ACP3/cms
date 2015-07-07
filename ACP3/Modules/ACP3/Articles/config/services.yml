@@ -11,7 +11,7 @@ parameters:
 services:
   articles.controller.admin.index:
     class: %articles.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@articles.model', '@articles.cache', '@articles.validator', '@core.helpers.secure']
+    arguments: ['@core.context.admin', '@core.date', '@articles.model', '@articles.cache', '@articles.validator', '@core.helpers.formToken']
     calls:
       - ['setMenusCache', ['@?menus.cache']]
       - ['setMenusHelpers', ['@?menus.helpers']]

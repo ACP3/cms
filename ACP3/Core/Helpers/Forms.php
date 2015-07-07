@@ -1,5 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers;
+use ACP3\Core\Request;
+use ACP3\Core\RequestInterface;
 
 /**
  * Class Forms
@@ -7,6 +9,19 @@ namespace ACP3\Core\Helpers;
  */
 class Forms
 {
+    /**
+     * @var \ACP3\Core\RequestInterface
+     */
+    protected $request;
+
+    /**
+     * @param \ACP3\Core\RequestInterface $request
+     */
+    public function __construct(RequestInterface $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * Liefert ein Array zur Ausgabe als Dropdown-Menü
      * für die Anzahl der anzuzeigenden Datensätze je Seite
@@ -32,9 +47,9 @@ class Forms
      *
      * @param string $name
      *  Name des Feldes im Formular
-     * @param mixed $defValue
+     * @param mixed  $defValue
      *  Abzugleichender Parameter mit $currentValue
-     * @param mixed $currentValue
+     * @param mixed  $currentValue
      *  Wert aus der SQL Tabelle
      * @param string $attr
      *  HTML-Attribut, um Eintrag zu selektieren
@@ -44,10 +59,7 @@ class Forms
     public function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
     {
         $attr = ' ' . $attr . '="' . $attr . '"';
-
-        if (isset($_POST[$name]) === true) {
-            $currentValue = $_POST[$name];
-        }
+        $currentValue = $this->request->getPost()->get($name, $currentValue);
 
         if (is_array($currentValue) === false && $currentValue == $defValue) {
             return $attr;
@@ -64,11 +76,11 @@ class Forms
 
     /**
      *
-     * @param string $name
-     * @param array $values
-     * @param array $lang
+     * @param string         $name
+     * @param array          $values
+     * @param array          $lang
      * @param string|integer $currentValue
-     * @param string $selected
+     * @param string         $selected
      *
      * @return array
      */

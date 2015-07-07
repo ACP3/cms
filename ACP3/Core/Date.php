@@ -34,6 +34,10 @@ class Date
      */
     protected $lang;
     /**
+     * @var \ACP3\Core\RequestInterface
+     */
+    protected $request;
+    /**
      * @var Forms
      */
     protected $formsHelper;
@@ -49,6 +53,7 @@ class Date
     /**
      * @param \ACP3\Core\Auth                 $auth
      * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\RequestInterface     $request
      * @param \ACP3\Core\Helpers\Forms        $formsHelper
      * @param \ACP3\Core\Validator\Rules\Date $dateValidator
      * @param \ACP3\Core\Config               $config
@@ -56,12 +61,14 @@ class Date
     public function __construct(
         Auth $auth,
         Lang $lang,
+        RequestInterface $request,
         Forms $formsHelper,
         Validator\Rules\Date $dateValidator,
         Config $config
     )
     {
         $this->lang = $lang;
+        $this->request = $request;
         $this->formsHelper = $formsHelper;
         $this->dateValidator = $dateValidator;
         $this->config = $config;
@@ -233,11 +240,11 @@ class Date
 
         // Veröffentlichungszeitraum
         if ($range === true) {
-            if (!empty($_POST[$name[0]]) && !empty($_POST[$name[1]])) {
-                $valueStart = $_POST[$name[0]];
-                $valueEnd = $_POST[$name[1]];
-                $valueStartR = $this->format($_POST[$name[0]], 'r', false);
-                $valueEndR = $this->format($_POST[$name[1]], 'r', false);
+            if ($this->request->getPost()->has($name[0]) && $this->request->getPost()->has($name[1])) {
+                $valueStart = $this->request->getPost()->get($name[0]);
+                $valueEnd = $this->request->getPost()->get($name[1]);
+                $valueStartR = $this->format($valueStart, 'r', false);
+                $valueEndR = $this->format($valueEnd, 'r', false);
             } elseif (is_array($value) === true && $this->dateValidator->date($value[0], $value[1]) === true) {
                 $valueStart = $this->format($value[0], $format);
                 $valueEnd = $this->format($value[1], $format);
@@ -267,8 +274,8 @@ class Date
                 ]
             );
         } else { // Einfaches Inputfeld mit Datepicker
-            if (!empty($_POST[$name])) {
-                $value = $_POST[$name];
+            if ($this->request->getPost()->has($name)) {
+                $value = $this->request->getPost()->get($name, '');
             } elseif ($this->dateValidator->date($value) === true) {
                 $value = $this->format($value, $format);
             } else {

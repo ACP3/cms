@@ -16,9 +16,9 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\System\Model
      */
@@ -29,23 +29,23 @@ class Index extends Core\Modules\Controller\Admin
     protected $systemValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin       $context
-     * @param \ACP3\Core\Date                $date
-     * @param \ACP3\Core\Helpers\Secure      $secureHelper
+     * @param \ACP3\Core\Context\Admin            $context
+     * @param \ACP3\Core\Date                     $date
+     * @param \ACP3\Core\Helpers\FormToken        $formTokenHelper
      * @param \ACP3\Modules\ACP3\System\Model     $systemModel
      * @param \ACP3\Modules\ACP3\System\Validator $systemValidator
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         System\Model $systemModel,
         System\Validator $systemValidator)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->systemModel = $systemModel;
         $this->systemValidator = $systemValidator;
     }
@@ -109,7 +109,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($systemSettings, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionIndex()
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->config->setSettings($data, 'system');
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
         } catch (Core\Exceptions\InvalidFormToken $e) {

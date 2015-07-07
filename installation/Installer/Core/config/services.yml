@@ -12,7 +12,7 @@ services:
 
   core.date:
     class: ACP3\Installer\Core\Date
-    arguments: ['@core.lang', '@core.helpers.forms', '@core.validator.rules.date']
+    arguments: ['@core.lang', @core.request, '@core.helpers.forms', '@core.validator.rules.date']
 
   core.helpers.alerts:
     class: ACP3\Installer\Core\Helpers\Alerts
@@ -20,6 +20,7 @@ services:
 
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
+    arguments: [@core.request]
 
   core.helpers.output:
     class: ACP3\Core\Helpers\Output
@@ -30,7 +31,6 @@ services:
 
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
-    arguments: [@core.session, '@core.view']
 
   core.lang:
     class: ACP3\Installer\Core\Lang

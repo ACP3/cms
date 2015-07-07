@@ -10,7 +10,7 @@ use ACP3\Core;
 class Captcha
 {
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -23,12 +23,12 @@ class Captcha
     protected $sessionHandler;
 
     /**
-     * @param \ACP3\Core\Request        $request
-     * @param \ACP3\Core\Router         $router
-     * @param \ACP3\Core\SessionHandler $sessionHandler
+     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Router           $router
+     * @param \ACP3\Core\SessionHandler   $sessionHandler
      */
     public function __construct(
-        Core\Request $request,
+        Core\RequestInterface $request,
         Core\Router $router,
         Core\SessionHandler $sessionHandler
     ) {

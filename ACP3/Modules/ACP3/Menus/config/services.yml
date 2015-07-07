@@ -11,11 +11,11 @@ parameters:
 services:
   menus.controller.admin.index:
     class: %menus.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@menus.helpers', '@menus.model', '@menus.cache', '@menus.validator']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@menus.helpers', '@menus.model', '@menus.cache', '@menus.validator']
 
   menus.controller.admin.items:
     class: %menus.controller.admin.items.fqdn%
-    arguments: ['@core.context.admin', '@core.router.aliases', '@core.db', '@core.helpers.secure', '@menus.model', '@menus.cache', '@menus.helpers', '@menus.validator']
+    arguments: ['@core.context.admin', '@core.router.aliases', '@core.db', '@core.helpers.formToken', '@menus.model', '@menus.cache', '@menus.helpers', '@menus.validator']
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 

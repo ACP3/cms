@@ -13,9 +13,9 @@ use ACP3\Modules\ACP3\Contact;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Core\Helpers\SendEmail
      */
@@ -30,20 +30,20 @@ class Index extends Core\Modules\Controller\Frontend
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Frontend     $context
-     * @param \ACP3\Core\Helpers\Secure       $secureHelper
-     * @param \ACP3\Core\Helpers\SendEmail    $sendEmailHelper
+     * @param \ACP3\Core\Context\Frontend          $context
+     * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
+     * @param \ACP3\Core\Helpers\SendEmail         $sendEmailHelper
      * @param \ACP3\Modules\ACP3\Contact\Validator $contactValidator
      */
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
         Contact\Validator $contactValidator)
     {
         parent::__construct($context);
 
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->sendEmailHelper = $sendEmailHelper;
         $this->contactValidator = $contactValidator;
     }
@@ -92,7 +92,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->sendEmailHelper->execute($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                 $bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'),

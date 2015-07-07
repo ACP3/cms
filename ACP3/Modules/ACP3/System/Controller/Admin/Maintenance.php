@@ -17,9 +17,9 @@ class Maintenance extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\System\Helpers
      */
@@ -34,9 +34,9 @@ class Maintenance extends Core\Modules\Controller\Admin
     protected $systemValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin       $context
-     * @param \ACP3\Core\DB                  $db
-     * @param \ACP3\Core\Helpers\Secure      $secureHelper
+     * @param \ACP3\Core\Context\Admin            $context
+     * @param \ACP3\Core\DB                       $db
+     * @param \ACP3\Core\Helpers\FormToken        $formTokenHelper
      * @param \ACP3\Modules\ACP3\System\Helpers   $systemHelpers
      * @param \ACP3\Modules\ACP3\System\Model     $systemModel
      * @param \ACP3\Modules\ACP3\System\Validator $systemValidator
@@ -44,7 +44,7 @@ class Maintenance extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\DB $db,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         System\Helpers $systemHelpers,
         System\Model $systemModel,
         System\Validator $systemValidator)
@@ -52,7 +52,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->db = $db;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->systemHelpers = $systemHelpers;
         $this->systemModel = $systemModel;
         $this->systemValidator = $systemValidator;
@@ -129,7 +129,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         $drop['lang'] = $this->lang->t('system', 'drop_tables');
         $this->view->assign('drop', $drop);
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionSqlImport()
@@ -140,7 +140,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['text' => ''], $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionUpdateCheck()
@@ -175,7 +175,7 @@ class Maintenance extends Core\Modules\Controller\Admin
         try {
             $this->systemValidator->validateSqlExport($formData);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $export = $this->systemHelpers->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
 
@@ -209,7 +209,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
             $this->systemValidator->validateSqlImport($formData, $file);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $data = isset($file) ? file_get_contents($file['tmp_name']) : $formData['text'];
             $importData = explode(";\n", str_replace(["\r\n", "\r", "\n"], "\n", $data));

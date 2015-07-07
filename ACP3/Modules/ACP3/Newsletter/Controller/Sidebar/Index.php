@@ -12,25 +12,25 @@ use ACP3\Modules\ACP3\Captcha;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var Core\Helpers\Secure
+     * @var Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Captcha\Helpers
      */
     protected $captchaHelpers;
 
     /**
-     * @param Core\Context $context
-     * @param Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Context           $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Context $context,
-        Core\Helpers\Secure $secureHelper)
+        Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
     }
 
     /**
@@ -54,7 +54,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('captcha', $this->captchaHelpers->captcha(3, 'captcha', true, 'newsletter'));
         }
 
-        $this->secureHelper->generateFormToken('newsletter/index/index');
+        $this->formTokenHelper->generateFormToken('newsletter/index/index');
 
         $this->setTemplate($template !== '' ? $template : 'Newsletter/Sidebar/index.index.tpl');
     }

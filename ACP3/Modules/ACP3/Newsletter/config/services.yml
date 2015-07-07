@@ -16,7 +16,7 @@ services:
 
   newsletter.controller.admin.index:
     class: %newsletter.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@newsletter.model', '@newsletter.validator', '@newsletter.helpers']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@newsletter.model', '@newsletter.validator', '@newsletter.helpers']
 
   newsletter.controller.frontend.archive:
     class: %newsletter.controller.frontend.archive.fqdn%
@@ -24,13 +24,13 @@ services:
 
   newsletter.controller.frontend.index:
     class: %newsletter.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.helpers.secure', '@newsletter.helpers', '@newsletter.model', '@newsletter.validator']
+    arguments: ['@core.context.frontend', '@core.helpers.formToken', '@newsletter.helpers', '@newsletter.model', '@newsletter.validator']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   newsletter.controller.sidebar.index:
     class: %newsletter.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.helpers.secure']
+    arguments: ['@core.context', '@core.helpers.formToken']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 

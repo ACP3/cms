@@ -9,7 +9,7 @@ parameters:
 services:
   seo.controller.admin.index:
     class: %seo.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.secure', '@seo.cache', '@seo.model', '@seo.validator']
+    arguments: ['@core.context.admin', '@core.helpers.formToken', '@seo.cache', '@seo.model', '@seo.validator']
 
   seo.cache:
     class: %seo.cache.fqdn%

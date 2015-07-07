@@ -16,9 +16,9 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Cache
      */
@@ -37,9 +37,9 @@ class Index extends Core\Modules\Controller\Admin
     protected $galleryValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin        $context
-     * @param \ACP3\Core\Date                 $date
-     * @param \ACP3\Core\Helpers\Secure       $secureHelper
+     * @param \ACP3\Core\Context\Admin             $context
+     * @param \ACP3\Core\Date                      $date
+     * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Cache     $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Helpers   $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model     $galleryModel
@@ -48,7 +48,7 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model $galleryModel,
@@ -57,7 +57,7 @@ class Index extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->date = $date;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->galleryCache = $galleryCache;
         $this->galleryHelpers = $galleryHelpers;
         $this->galleryModel = $galleryModel;
@@ -80,7 +80,7 @@ class Index extends Core\Modules\Controller\Admin
         ];
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -134,7 +134,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->_actionEditPictures();
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -200,7 +200,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -229,7 +229,7 @@ class Index extends Core\Modules\Controller\Admin
                 (int)$formData['seo_robots']
             );
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -268,7 +268,7 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->galleryHelpers->generatePictureAliases($this->request->id);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -314,7 +314,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->get('gallery.cache.core')->getDriver()->deleteAll();
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

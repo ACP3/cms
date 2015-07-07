@@ -17,9 +17,9 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Model
      */
@@ -34,23 +34,23 @@ class Index extends Core\Modules\Controller\Admin
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin          $context
-     * @param \ACP3\Core\Date                   $date
-     * @param \ACP3\Core\Helpers\Secure         $secureHelper
+     * @param \ACP3\Core\Context\Admin               $context
+     * @param \ACP3\Core\Date                        $date
+     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model     $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validator $guestbookValidator
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model $guestbookModel,
         Guestbook\Validator $guestbookValidator)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->guestbookModel = $guestbookModel;
         $this->guestbookValidator = $guestbookValidator;
     }
@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($guestbook, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -178,7 +178,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -198,7 +198,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->guestbookModel->update($updateValues, $this->request->id);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -226,7 +226,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $bool = $this->config->setSettings($data, 'guestbook');
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

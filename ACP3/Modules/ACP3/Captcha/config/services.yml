@@ -10,7 +10,7 @@ services:
 
   captcha.helpers:
     class: %captcha.helpers.fqdn%
-    arguments: ['@core.auth', '@core.request', '@core.router', '@core.view', '@core.helpers.secure']
+    arguments: ['@core.auth', '@core.request', '@core.router', @core.session, '@core.view', '@core.helpers.secure']
 
   captcha.installer:
     class: %captcha.installer.fqdn%

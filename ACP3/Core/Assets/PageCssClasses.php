@@ -14,7 +14,7 @@ class PageCssClasses
      */
     protected $breadcrumb;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
 
@@ -32,12 +32,12 @@ class PageCssClasses
     protected $details;
 
     /**
-     * @param \ACP3\Core\Breadcrumb $breadcrumb
-     * @param \ACP3\Core\Request    $request
+     * @param \ACP3\Core\Breadcrumb       $breadcrumb
+     * @param \ACP3\Core\RequestInterface $request
      */
     public function __construct(
         Core\Breadcrumb $breadcrumb,
-        Core\Request $request
+        Core\RequestInterface $request
     )
     {
         $this->breadcrumb = $breadcrumb;

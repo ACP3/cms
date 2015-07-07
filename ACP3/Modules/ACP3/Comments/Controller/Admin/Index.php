@@ -26,28 +26,28 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Context\Admin         $context
-     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Core\Context\Admin              $context
+     * @param \ACP3\Core\Date                       $date
      * @param \ACP3\Modules\ACP3\Comments\Model     $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validator $commentsValidator
-     * @param \ACP3\Core\Helpers\Secure        $secureHelper
+     * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
      */
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
-        Core\Helpers\Secure $secureHelper)
+        Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
     }
 
     public function actionDelete()
@@ -106,7 +106,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->selectGenerator('emoticons', [1, 0], $lang_allowEmoticons, $settings['emoticons'], 'checked'));
         }
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $bool = $this->config->setSettings($data, 'comments');
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

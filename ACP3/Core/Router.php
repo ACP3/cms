@@ -18,7 +18,7 @@ class Router
      */
     protected $aliases;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -27,13 +27,13 @@ class Router
     protected $config;
 
     /**
-     * @param \ACP3\Core\Router\Aliases $aliases
-     * @param \ACP3\Core\Request        $request
-     * @param \ACP3\Core\Config         $config
+     * @param \ACP3\Core\Router\Aliases   $aliases
+     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Config           $config
      */
     public function __construct(
         Aliases $aliases,
-        Request $request,
+        RequestInterface $request,
         Config $config
     ) {
         $this->aliases = $aliases;

@@ -53,8 +53,8 @@ abstract class Admin extends Core\Modules\Controller\Frontend
      */
     protected function _deleteItem($moduleConfirmUrl = null, $moduleIndexUrl = null)
     {
-        if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
-            $entries = $_POST['entries'];
+        if ($this->request->getPost()->has('entries') && is_array($this->request->getPost()->get('entries')) === true) {
+            $entries = $this->request->getPost()->get('entries');
         } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->entries) === true) {
             $entries = $this->request->entries;
         }

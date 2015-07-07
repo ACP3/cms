@@ -21,9 +21,9 @@ class Items extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model
      */
@@ -46,10 +46,10 @@ class Items extends Core\Modules\Controller\Admin
     protected $articlesHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin      $context
-     * @param \ACP3\Core\Router\Aliases     $aliases
-     * @param \ACP3\Core\DB                 $db
-     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\Router\Aliases          $aliases
+     * @param \ACP3\Core\DB                      $db
+     * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Model     $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Cache     $menusCache
      * @param \ACP3\Modules\ACP3\Menus\Helpers   $menusHelpers
@@ -59,7 +59,7 @@ class Items extends Core\Modules\Controller\Admin
         Core\Context\Admin $context,
         Core\Router\Aliases $aliases,
         Core\DB $db,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Menus\Model $menusModel,
         Menus\Cache $menusCache,
         Menus\Helpers $menusHelpers,
@@ -69,7 +69,7 @@ class Items extends Core\Modules\Controller\Admin
 
         $this->aliases = $aliases;
         $this->db = $db;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
         $this->menusHelpers = $menusHelpers;
@@ -132,7 +132,7 @@ class Items extends Core\Modules\Controller\Admin
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -218,7 +218,7 @@ class Items extends Core\Modules\Controller\Admin
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
             $this->view->assign('form', array_merge($menuItem, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -283,7 +283,7 @@ class Items extends Core\Modules\Controller\Admin
 
             $this->menusCache->setMenuItemsCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -336,7 +336,7 @@ class Items extends Core\Modules\Controller\Admin
 
             $this->menusCache->setMenuItemsCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
         } catch (Core\Exceptions\InvalidFormToken $e) {

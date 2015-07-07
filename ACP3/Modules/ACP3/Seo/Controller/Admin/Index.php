@@ -12,9 +12,9 @@ use ACP3\Modules\ACP3\Seo;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Seo\Cache
      */
@@ -29,22 +29,22 @@ class Index extends Core\Modules\Controller\Admin
     protected $seoValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin    $context
-     * @param \ACP3\Core\Helpers\Secure   $secureHelper
+     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Core\Helpers\FormToken     $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Cache     $seoCache
      * @param \ACP3\Modules\ACP3\Seo\Model     $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validator $seoValidator
      */
     public function __construct(
         Core\Context\Admin $context,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Seo\Cache $seoCache,
         Seo\Model $seoModel,
         Seo\Validator $seoValidator)
     {
         parent::__construct($context);
 
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->seoCache = $seoCache;
         $this->seoModel = $seoModel;
         $this->seoValidator = $seoValidator;
@@ -60,7 +60,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['uri' => ''], $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -97,7 +97,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge(['uri' => $seo['uri']], $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -138,7 +138,7 @@ class Index extends Core\Modules\Controller\Admin
                 (int)$formData['seo_robots']
             );
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -169,7 +169,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->seoCache->setCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -202,7 +202,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -224,7 +224,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $bool = $this->config->setSettings($data, 'seo');
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

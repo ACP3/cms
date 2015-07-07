@@ -19,7 +19,11 @@ class Index extends Core\Modules\Controller\Admin
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $secureHelpers;
+    protected $secureHelper;
+    /**
+     * @var \ACP3\Core\Helpers\FormToken
+     */
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
@@ -38,10 +42,11 @@ class Index extends Core\Modules\Controller\Admin
     protected $permissionsHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin          $context
-     * @param \ACP3\Core\Date                   $date
-     * @param \ACP3\Core\Helpers\Secure         $secureHelper
-     * @param \ACP3\Core\Helpers\Forms          $formsHelpers
+     * @param \ACP3\Core\Context\Admin               $context
+     * @param \ACP3\Core\Date                        $date
+     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure              $secureHelper
+     * @param \ACP3\Core\Helpers\Forms               $formsHelpers
      * @param \ACP3\Modules\ACP3\Users\Model         $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validator     $usersValidator
      * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
@@ -49,6 +54,7 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\Date $date,
+        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
         Users\Model $usersModel,
@@ -58,7 +64,8 @@ class Index extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->date = $date;
-        $this->secureHelpers = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
+        $this->secureHelper = $secureHelper;
         $this->formsHelpers = $formsHelpers;
         $this->usersModel = $usersModel;
         $this->usersValidator = $usersValidator;
@@ -174,7 +181,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->secureHelpers->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -303,7 +310,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
-            $this->secureHelpers->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -328,7 +335,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['mail' => $settings['mail']], $this->request->getPost()->getAll()));
 
-        $this->secureHelpers->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionIndex()
@@ -363,14 +370,13 @@ class Index extends Core\Modules\Controller\Admin
         try {
             $this->usersValidator->validate($formData);
 
-            $securityHelper = $this->get('core.helpers.secure');
-            $salt = $securityHelper->salt(12);
+            $salt = $this->secureHelper->salt(12);
 
             $insertValues = [
                 'id' => '',
                 'super_user' => (int)$formData['super_user'],
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
-                'pwd' => $securityHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
+                'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
                 'realname' => Core\Functions::strEncode($formData['realname']),
                 'gender' => (int)$formData['gender'],
                 'birthday' => $formData['birthday'],
@@ -400,7 +406,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
 
-            $this->secureHelpers->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -448,8 +454,8 @@ class Index extends Core\Modules\Controller\Admin
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $salt = $this->secureHelpers->salt(12);
-                $newPassword = $this->secureHelpers->generateSaltedPassword($salt, $formData['new_pwd']);
+                $salt = $this->secureHelper->salt(12);
+                $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd']);
                 $updateValues['pwd'] = $newPassword . ':' . $salt;
             }
 
@@ -461,7 +467,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
             }
 
-            $this->secureHelpers->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -487,7 +493,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $bool = $this->config->setSettings($data, 'users');
 
-            $this->secureHelpers->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

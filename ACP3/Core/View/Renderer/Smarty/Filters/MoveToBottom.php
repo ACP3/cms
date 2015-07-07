@@ -3,6 +3,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Request;
+use ACP3\Core\RequestInterface;
 
 /**
  * Class MoveToBottom
@@ -20,17 +21,17 @@ class MoveToBottom extends AbstractFilter
      */
     protected $minifier;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
 
     /**
      * @param \ACP3\Core\Assets\MinifierInterface $minifier
-     * @param \ACP3\Core\Request                  $request
+     * @param \ACP3\Core\RequestInterface         $request
      */
     public function __construct(
         Assets\MinifierInterface $minifier,
-        Request $request
+        RequestInterface $request
     ) {
         $this->minifier = $minifier;
         $this->request = $request;

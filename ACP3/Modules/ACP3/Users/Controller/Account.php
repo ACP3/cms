@@ -16,6 +16,10 @@ class Account extends Core\Modules\Controller\Frontend
      */
     protected $date;
     /**
+     * @var \ACP3\Core\Helpers\FormToken
+     */
+    protected $formTokenHelper;
+    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -29,15 +33,17 @@ class Account extends Core\Modules\Controller\Frontend
     protected $usersValidator;
 
     /**
-     * @param \ACP3\Core\Context\Frontend   $context
-     * @param \ACP3\Core\Date               $date
-     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Core\Context\Frontend        $context
+     * @param \ACP3\Core\Date                    $date
+     * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure          $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model     $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validator $usersValidator
      */
     public function __construct(
         Core\Context\Frontend $context,
         Core\Date $date,
+        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model $usersModel,
         Users\Validator $usersValidator)
@@ -45,6 +51,7 @@ class Account extends Core\Modules\Controller\Frontend
         parent::__construct($context);
 
         $this->date = $date;
+        $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->usersModel = $usersModel;
         $this->usersValidator = $usersValidator;
@@ -112,7 +119,7 @@ class Account extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionSettings()
@@ -155,7 +162,7 @@ class Account extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionIndex()
@@ -197,10 +204,8 @@ class Account extends Core\Modules\Controller\Frontend
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $securityHelper = $this->get('core.helpers.secure');
-
-                $salt = $securityHelper->salt(12);
-                $newPassword = $securityHelper->generateSaltedPassword($salt, $formData['new_pwd']);
+                $salt = $this->secureHelper->salt(12);
+                $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd']);
                 $updateValues['pwd'] = $newPassword . ':' . $salt;
             }
 
@@ -209,7 +214,7 @@ class Account extends Core\Modules\Controller\Frontend
             $cookieArr = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
             $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -242,7 +247,7 @@ class Account extends Core\Modules\Controller\Frontend
 
             $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

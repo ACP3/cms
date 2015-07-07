@@ -5,7 +5,7 @@ services:
 
   install.controller.install.install:
     class: ACP3\Installer\Modules\Install\Controller\Install
-    arguments: ['@core.context.install', '@core.date', '@install.helpers.install']
+    arguments: ['@core.context.install', '@core.date', @core.helpers.secure, '@install.helpers.install']
 
   install.validator:
     class: ACP3\Installer\Modules\Install\Validator

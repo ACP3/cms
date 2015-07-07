@@ -2,7 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Modules\ACP3\System;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Modules
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Container;
 class Modules
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
     /**
@@ -44,14 +44,14 @@ class Modules
     private $moduleNamespaces = [];
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\Lang                                  $lang
-     * @param \ACP3\Core\XML                                   $xml
-     * @param \ACP3\Core\Cache                                 $modulesCache
-     * @param \ACP3\Modules\ACP3\System\Model                  $systemModel
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\Lang                                           $lang
+     * @param \ACP3\Core\XML                                            $xml
+     * @param \ACP3\Core\Cache                                          $modulesCache
+     * @param \ACP3\Modules\ACP3\System\Model                           $systemModel
      */
     public function __construct(
-        Container $container,
+        ContainerInterface $container,
         Lang $lang,
         XML $xml,
         Cache $modulesCache,

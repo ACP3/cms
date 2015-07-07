@@ -14,11 +14,11 @@ services:
 
   system.controller.admin.index:
     class: %system.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.secure', '@system.model', '@system.validator']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@system.model', '@system.validator']
 
   system.controller.admin.maintenance:
     class: %system.controller.admin.maintenance.fqdn%
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.secure', '@system.helpers', '@system.model', '@system.validator']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers', '@system.model', '@system.validator']
 
   system.model:
     class: %system.model.fqdn%

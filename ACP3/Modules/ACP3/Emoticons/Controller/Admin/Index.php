@@ -12,9 +12,9 @@ use ACP3\Modules\ACP3\Emoticons;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Model
      */
@@ -30,21 +30,21 @@ class Index extends Core\Modules\Controller\Admin
 
     /**
      * @param \ACP3\Core\Context\Admin               $context
-     * @param \ACP3\Core\Helpers\Secure              $secureHelper
+     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Emoticons\Model     $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validator $emoticonsValidator
      * @param \ACP3\Modules\ACP3\Emoticons\Cache     $emoticonsCache
      */
     public function __construct(
         Core\Context\Admin $context,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model $emoticonsModel,
         Emoticons\Validator $emoticonsValidator,
         Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($context);
 
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->emoticonsModel = $emoticonsModel;
         $this->emoticonsValidator = $emoticonsValidator;
         $this->emoticonsCache = $emoticonsCache;
@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -85,7 +85,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->emoticonsCache->setCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -131,7 +131,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -164,7 +164,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->emoticonsCache->setCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -201,7 +201,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -219,7 +219,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $bool = $this->config->setSettings($data, 'emoticons');
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

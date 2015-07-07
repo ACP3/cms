@@ -12,9 +12,9 @@ use ACP3\Modules\ACP3\Permissions;
 class Resources extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model
      */
@@ -29,22 +29,22 @@ class Resources extends Core\Modules\Controller\Admin
     protected $permissionsValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin            $context
-     * @param \ACP3\Core\Helpers\Secure           $secureHelper
+     * @param \ACP3\Core\Context\Admin                 $context
+     * @param \ACP3\Core\Helpers\FormToken             $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model     $permissionsModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache     $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validator $permissionsValidator
      */
     public function __construct(
         Core\Context\Admin $context,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache,
         Permissions\Validator $permissionsValidator)
     {
         parent::__construct($context);
 
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
         $this->permissionsValidator = $permissionsValidator;
@@ -71,7 +71,7 @@ class Resources extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -116,7 +116,7 @@ class Resources extends Core\Modules\Controller\Admin
             ];
             $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -160,7 +160,7 @@ class Resources extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->setResourcesCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -188,7 +188,7 @@ class Resources extends Core\Modules\Controller\Admin
 
             $this->permissionsCache->setResourcesCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

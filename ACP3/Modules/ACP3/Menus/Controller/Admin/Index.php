@@ -16,9 +16,9 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $db;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Helpers
      */
@@ -37,9 +37,9 @@ class Index extends Core\Modules\Controller\Admin
     protected $menusValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin      $context
-     * @param \ACP3\Core\DB                 $db
-     * @param \ACP3\Core\Helpers\Secure     $secureHelper
+     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\DB                      $db
+     * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Helpers   $menusHelpers
      * @param \ACP3\Modules\ACP3\Menus\Model     $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Cache     $menusCache
@@ -48,7 +48,7 @@ class Index extends Core\Modules\Controller\Admin
     public function __construct(
         Core\Context\Admin $context,
         Core\DB $db,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Menus\Helpers $menusHelpers,
         Menus\Model $menusModel,
         Menus\Cache $menusCache,
@@ -57,7 +57,7 @@ class Index extends Core\Modules\Controller\Admin
         parent::__construct($context);
 
         $this->db = $db;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->menusHelpers = $menusHelpers;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
@@ -72,7 +72,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     public function actionDelete()
@@ -118,7 +118,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($menu, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -166,7 +166,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $lastId = $this->menusModel->insert($insertValues);
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -193,7 +193,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->menusCache->setMenuItemsCache();
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

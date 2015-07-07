@@ -3,6 +3,8 @@ namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Router\Aliases;
+use ACP3\Modules\ACP3\Seo\Cache;
+use ACP3\Modules\ACP3\Seo\Model;
 
 /**
  * Class SEO
@@ -19,7 +21,7 @@ class SEO
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -61,22 +63,22 @@ class SEO
     protected $metaDescriptionPostfix = '';
 
     /**
-     * @param \ACP3\Core\Lang           $lang
-     * @param \ACP3\Core\Request        $request
-     * @param \ACP3\Core\Router\Aliases $aliases
-     * @param \ACP3\Core\Helpers\Forms  $formsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache   $seoCache
-     * @param \ACP3\Core\Config         $config
-     * @param \ACP3\Modules\ACP3\Seo\Model   $seoModel
+     * @param \ACP3\Core\Lang              $lang
+     * @param \ACP3\Core\RequestInterface  $request
+     * @param \ACP3\Core\Router\Aliases    $aliases
+     * @param \ACP3\Core\Helpers\Forms     $formsHelper
+     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Core\Config            $config
+     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
      */
     public function __construct(
         Lang $lang,
-        Request $request,
+        RequestInterface $request,
         Aliases $aliases,
         Forms $formsHelper,
-        \ACP3\Modules\ACP3\Seo\Cache $seoCache,
+        Cache $seoCache,
         Config $config,
-        \ACP3\Modules\ACP3\Seo\Model $seoModel)
+        Model $seoModel)
     {
         $this->lang = $lang;
         $this->request = $request;

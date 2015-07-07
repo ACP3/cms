@@ -8,11 +8,11 @@ parameters:
 services:
   contact.controller.admin.index:
     class: %contact.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.secure', '@contact.validator']
+    arguments: ['@core.context.admin', '@core.helpers.formToken', '@contact.validator']
 
   contact.controller.frontend.index:
     class: %contact.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.helpers.secure', '@core.helpers.sendEmail', '@contact.validator']
+    arguments: ['@core.context.frontend', '@core.helpers.formToken', '@core.helpers.sendEmail', '@contact.validator']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 

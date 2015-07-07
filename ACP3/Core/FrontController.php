@@ -72,9 +72,9 @@ class FrontController
      * Checks, whether there is an URI alias available for the current request.
      * If so, set the alias as the canonical URI
      *
-     * @param \ACP3\Core\Request $request
+     * @param \ACP3\Core\RequestInterface $request
      */
-    private function _checkForUriAlias(Request $request)
+    private function _checkForUriAlias(RequestInterface $request)
     {
         // Return early, if we are currently in the admin panel
         if ($request->getArea() !== 'admin') {

@@ -13,9 +13,9 @@ use ACP3\Modules\ACP3\Newsletter;
 class Index extends Core\Modules\Controller\Frontend
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helpers
      */
@@ -34,22 +34,22 @@ class Index extends Core\Modules\Controller\Frontend
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Frontend        $context
-     * @param \ACP3\Core\Helpers\Secure          $secureHelper
+     * @param \ACP3\Core\Context\Frontend             $context
+     * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Helpers   $newsletterHelpers
      * @param \ACP3\Modules\ACP3\Newsletter\Model     $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validator $newsletterValidator
      */
     public function __construct(
         Core\Context\Frontend $context,
-        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helpers $newsletterHelpers,
         Newsletter\Model $newsletterModel,
         Newsletter\Validator $newsletterValidator)
     {
         parent::__construct($context);
 
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
         $this->newsletterHelpers = $newsletterHelpers;
         $this->newsletterModel = $newsletterModel;
         $this->newsletterValidator = $newsletterValidator;
@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $bool = $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
 
-                    $this->secureHelper->unsetFormToken($this->request->getQuery());
+                    $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
                     $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                     break;
@@ -132,7 +132,7 @@ class Index extends Core\Modules\Controller\Frontend
 
                     $bool = $this->newsletterModel->delete(['mail' => $_POST['mail']], '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-                    $this->secureHelper->unsetFormToken($this->request->getQuery());
+                    $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
                     $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                     break;

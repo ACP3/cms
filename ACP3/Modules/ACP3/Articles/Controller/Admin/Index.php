@@ -16,7 +16,6 @@ class Index extends Core\Modules\Controller\Admin
      * @var \ACP3\Core\Date
      */
     protected $date;
-
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model
      */
@@ -42,17 +41,17 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $menusModel;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $secureHelper;
+    protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Context\Admin         $context
-     * @param \ACP3\Core\Date                  $date
+     * @param \ACP3\Core\Context\Admin              $context
+     * @param \ACP3\Core\Date                       $date
      * @param \ACP3\Modules\ACP3\Articles\Model     $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Cache     $articlesCache
      * @param \ACP3\Modules\ACP3\Articles\Validator $articlesValidator
-     * @param \ACP3\Core\Helpers\Secure        $secureHelper
+     * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
      */
     public function __construct(
         Core\Context\Admin $context,
@@ -60,7 +59,7 @@ class Index extends Core\Modules\Controller\Admin
         Articles\Model $articlesModel,
         Articles\Cache $articlesCache,
         Articles\Validator $articlesValidator,
-        Core\Helpers\Secure $secureHelper)
+        Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
@@ -68,7 +67,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->articlesModel = $articlesModel;
         $this->articlesCache = $articlesCache;
         $this->articlesValidator = $articlesValidator;
-        $this->secureHelper = $secureHelper;
+        $this->formTokenHelper = $formTokenHelper;
     }
 
     /**
@@ -133,7 +132,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -182,7 +181,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->menusCache->setMenuItemsCache();
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -260,7 +259,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('form', array_merge($article, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -321,7 +320,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->menusCache->setMenuItemsCache();
             }
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

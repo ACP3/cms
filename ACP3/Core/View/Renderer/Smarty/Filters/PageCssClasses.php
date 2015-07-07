@@ -19,7 +19,7 @@ class PageCssClasses extends AbstractFilter
      */
     protected $pageCssClasses;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -29,11 +29,11 @@ class PageCssClasses extends AbstractFilter
 
     /**
      * @param \ACP3\Core\Assets\PageCssClasses $pageCssClasses
-     * @param \ACP3\Core\Request               $request
+     * @param \ACP3\Core\RequestInterface      $request
      */
     public function __construct(
         Core\Assets\PageCssClasses $pageCssClasses,
-        Core\Request $request)
+        Core\RequestInterface $request)
     {
         $this->pageCssClasses = $pageCssClasses;
         $this->request = $request;

@@ -50,7 +50,7 @@ class Breadcrumb
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -69,14 +69,14 @@ class Breadcrumb
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
      * @param \ACP3\Core\Lang                                  $lang
-     * @param \ACP3\Core\Request                               $request
+     * @param \ACP3\Core\RequestInterface                      $request
      * @param \ACP3\Core\Router                                $router
      * @param \ACP3\Core\Config                                $config
      */
     public function __construct(
         Container $container,
         Lang $lang,
-        Request $request,
+        RequestInterface $request,
         Router $router,
         Config $config
     )

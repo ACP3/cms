@@ -24,7 +24,7 @@ class Context
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -41,21 +41,21 @@ class Context
     protected $config;
 
     /**
-     * @param \ACP3\Core\ACL     $acl
-     * @param \ACP3\Core\Auth    $auth
-     * @param \ACP3\Core\Lang    $lang
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Request $request
-     * @param \ACP3\Core\Router  $router
-     * @param \ACP3\Core\View    $view
-     * @param \ACP3\Core\Config  $config
+     * @param \ACP3\Core\ACL              $acl
+     * @param \ACP3\Core\Auth             $auth
+     * @param \ACP3\Core\Lang             $lang
+     * @param \ACP3\Core\Modules          $modules
+     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Router           $router
+     * @param \ACP3\Core\View             $view
+     * @param \ACP3\Core\Config           $config
      */
     public function __construct(
         ACL $acl,
         Auth $auth,
         Lang $lang,
         Modules $modules,
-        Request $request,
+        RequestInterface $request,
         Router $router,
         View $view,
         Config $config

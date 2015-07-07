@@ -9,6 +9,7 @@ services:
 
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
+    arguments: [@core.request]
 
   core.helpers.sendEmail:
     class: ACP3\Core\Helpers\SendEmail
@@ -23,7 +24,10 @@ services:
 
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
-    arguments: [@core.session, '@core.view']
+
+  core.helpers.formToken:
+    class: ACP3\Core\Helpers\FormToken
+    arguments: [@core.request, @core.session, @core.view]
 
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort

@@ -22,7 +22,7 @@ class TableOfContents
      */
     protected $seo;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -42,7 +42,7 @@ class TableOfContents
      * @param \ACP3\Core\Breadcrumb           $breadcrumb
      * @param \ACP3\Core\Lang                 $lang
      * @param \ACP3\Core\SEO                  $seo
-     * @param \ACP3\Core\Request              $request
+     * @param \ACP3\Core\RequestInterface     $request
      * @param \ACP3\Core\Router               $router
      * @param \ACP3\Core\Validator\Rules\Misc $validate
      * @param \ACP3\Core\View                 $view
@@ -51,7 +51,7 @@ class TableOfContents
         Core\Breadcrumb $breadcrumb,
         Core\Lang $lang,
         Core\SEO $seo,
-        Core\Request $request,
+        Core\RequestInterface $request,
         Core\Router $router,
         Core\Validator\Rules\Misc $validate,
         Core\View $view

@@ -8,7 +8,7 @@ use ACP3\Core\Request\ParameterBag;
  * Class AbstractRequest
  * @package ACP3\Core
  */
-abstract class AbstractRequest extends \StdClass
+abstract class AbstractRequest extends \StdClass implements RequestInterface
 {
     /**
      * @var string

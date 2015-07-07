@@ -26,7 +26,7 @@ class Pagination
      */
     protected $seo;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -83,7 +83,7 @@ class Pagination
      * @param \ACP3\Core\Breadcrumb           $breadcrumb
      * @param \ACP3\Core\Lang                 $lang
      * @param \ACP3\Core\SEO                  $seo
-     * @param \ACP3\Core\Request              $request
+     * @param \ACP3\Core\RequestInterface     $request
      * @param \ACP3\Core\Router               $router
      * @param \ACP3\Core\View                 $view
      * @param \ACP3\Core\Validator\Rules\Misc $miscValidator
@@ -93,7 +93,7 @@ class Pagination
         Breadcrumb $breadcrumb,
         Lang $lang,
         SEO $seo,
-        Request $request,
+        RequestInterface $request,
         Router $router,
         View $view,
         Misc $miscValidator)

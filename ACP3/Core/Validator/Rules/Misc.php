@@ -3,6 +3,7 @@
 namespace ACP3\Core\Validator\Rules;
 
 use ACP3\Core\Request;
+use ACP3\Core\RequestInterface;
 use ACP3\Core\SessionHandler;
 
 /**
@@ -12,7 +13,7 @@ use ACP3\Core\SessionHandler;
 class Misc
 {
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\RequestInterface
      */
     protected $request;
     /**
@@ -21,11 +22,11 @@ class Misc
     protected $sessionHandler;
 
     /**
-     * @param \ACP3\Core\Request        $request
-     * @param \ACP3\Core\SessionHandler $sessionHandler
+     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\SessionHandler   $sessionHandler
      */
     public function __construct(
-        Request $request,
+        RequestInterface $request,
         SessionHandler $sessionHandler
     )
     {
@@ -65,7 +66,7 @@ class Misc
         $urlQueryString = $this->request->getQuery();
         $sessionToken = $this->sessionHandler->getParameter($tokenName);
 
-        return (isset($_POST[$tokenName]) && isset($sessionToken[$urlQueryString]) && $_POST[$tokenName] === $sessionToken[$urlQueryString]);
+        return (isset($sessionToken[$urlQueryString]) && $this->request->getPost()->get($tokenName, '') === $sessionToken[$urlQueryString]);
     }
 
     /**
