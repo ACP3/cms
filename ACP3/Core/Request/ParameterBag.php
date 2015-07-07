@@ -8,27 +8,16 @@ namespace ACP3\Core\Request;
 class ParameterBag
 {
     /**
-     * @var \stdClass
+     * @var array
      */
-    private $data;
+    private $data = [];
 
     /**
      * @param array $data
      */
     public function __construct(array $data)
     {
-        $this->convertArrayToObject($data);
-    }
-
-    /**
-     * @param array $data
-     */
-    private function convertArrayToObject(array $data)
-    {
-        $this->data = new\stdClass();
-        foreach ($data as $key => $value) {
-            $this->data->$key = $value;
-        }
+        $this->data = $data;
     }
 
     /**
@@ -39,23 +28,15 @@ class ParameterBag
      */
     public function get($key, $default = null)
     {
-        return $this->has($key) ? $this->data->$key : $default;
-    }
-
-    /**
-     * @return \stdClass
-     */
-    public function getAllAsObject()
-    {
-        return $this->data;
+        return $this->has($key) ? $this->data[$key] : $default;
     }
 
     /**
      * @return array
      */
-    public function getAllAsArray()
+    public function getAll()
     {
-        return (array)$this->data;
+        return $this->data;
     }
 
     /**
@@ -64,7 +45,7 @@ class ParameterBag
      */
     public function set($key, $value)
     {
-        $this->data->$key = $value;
+        $this->data[$key] = $value;
     }
 
     /**
@@ -74,7 +55,15 @@ class ParameterBag
      */
     public function has($key)
     {
-        return isset($this->data->$key);
+        return array_key_exists($key, $this->data);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->data);
     }
 
     /**
@@ -82,7 +71,7 @@ class ParameterBag
      */
     public function isEmpty()
     {
-        return count($this->getAllAsArray()) === 0;
+        return $this->count() === 0;
     }
 
 }

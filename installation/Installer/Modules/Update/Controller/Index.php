@@ -27,7 +27,7 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        if ($this->request->getPost()->getAllAsArray() === false) {
+        if ($this->request->getPost()->getAll() === false) {
             $this->_indexPost();
         }
     }

@@ -110,7 +110,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAllAsArray());
+            $this->_createPost($this->request->getPost()->getAll());
         }
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
@@ -230,7 +230,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->breadcrumb->setTitlePostfix($article['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAllAsArray());
+                $this->_editPost($this->request->getPost()->getAll());
             }
 
             if ($this->acl->hasPermission('admin/menus/items/create') === true &&
