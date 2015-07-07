@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Request\ParameterBag;
 use ACP3\Modules\ACP3\Seo;
 
 /**
@@ -41,8 +42,10 @@ class Request extends AbstractRequest
      */
     protected $controllerAction = '';
     /**
-     * Holds the trimmed query
-     *
+     * @var ParameterBag
+     */
+    protected $parameters;
+    /**
      * @var string
      */
     protected $query = '';
@@ -50,13 +53,6 @@ class Request extends AbstractRequest
      * @var string
      */
     protected $originalQuery = '';
-    /**
-     * Holds all given query parameters
-     *
-     * @var array
-     * @access protected
-     */
-    protected $params = [];
     /**
      * @var bool
      */
@@ -144,6 +140,8 @@ class Request extends AbstractRequest
         return $this->module . '/' . $this->controller . '/';
     }
 
+
+
     /**
      * Processes the URL of the current request
      */
@@ -212,44 +210,6 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Gibt einen URI Parameter aus
-     *
-     * @param string $key
-     *
-     * @return string|integer|null
-     */
-    public function __get($key)
-    {
-        return isset($this->params[$key]) === true ? $this->params[$key] : null;
-    }
-
-    /**
-     * Setzt einen neuen URI Parameter
-     *
-     * @param string         $key
-     * @param string|integer $value
-     */
-    public function __set($key, $value)
-    {
-        // Make it impossible to overwrite already set parameters
-        if (isset($this->params[$key]) === false) {
-            $this->params[$key] = $value;
-        }
-    }
-
-    /**
-     * Überprüft, ob ein URI-Parameter existiert
-     *
-     * @param string $key
-     *
-     * @return boolean
-     */
-    public function __isset($key)
-    {
-        return isset($this->params[$key]);
-    }
-
-    /**
      * @inheritdoc
      */
     public function getIsHomepage()
@@ -278,7 +238,7 @@ class Request extends AbstractRequest
      */
     public function getParameters()
     {
-        return $this->params;
+        return $this->parameters;
     }
 
     /**
@@ -300,24 +260,26 @@ class Request extends AbstractRequest
      */
     protected function setRequestParameters($query)
     {
+        $this->parameters = new ParameterBag([]);
+
         if (isset($query[3])) {
             $c_query = count($query);
 
             for ($i = 3; $i < $c_query; ++$i) {
                 // Position
                 if (preg_match('/^(page_(\d+))$/', $query[$i])) {
-                    $this->page = (int)substr($query[$i], 5);
+                    $this->parameters->add('page', (int)substr($query[$i], 5));
                 } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // ID eines Datensatzes
-                    $this->id = (int)substr($query[$i], 3);
+                    $this->parameters->add('id', (int)substr($query[$i], 3));
                 } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);
-                    $this->$param[0] = $param[1];
+                    $this->parameters->add($this->$param[0], $param[1]);
                 }
             }
         }
 
-        $this->cat = (int)$this->getPost()->get('cat', 0);
-        $this->action = $this->getPost()->get('action');
+        $this->parameters->set('cat', (int)$this->getPost()->get('cat', 0));
+        $this->parameters->set('action', $this->getPost()->get('action'));
     }
 
     /**
@@ -335,8 +297,8 @@ class Request extends AbstractRequest
         }
         if (!isset($query[2])) {
             $this->query .= $this->controllerAction . '/';
-            return $query;
         }
+
         return $query;
     }
 

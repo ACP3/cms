@@ -60,9 +60,9 @@ class Maintenance extends Core\Modules\Controller\Admin
 
     public function actionCache()
     {
-        if (isset($this->request->action)) {
+        if ($this->request->getParameters()->has('action')) {
             $result = false;
-            switch ($this->request->action) {
+            switch ($this->request->getParameters()->get('action')) {
                 case 'general':
                     $result = Core\Cache::purge(CACHE_DIR . 'sql');
                     $text = $this->lang->t('system', $result === true ? 'cache_type_general_delete_success' : 'cache_type_general_delete_success');

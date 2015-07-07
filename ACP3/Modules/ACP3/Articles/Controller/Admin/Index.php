@@ -195,7 +195,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
 
             foreach ($items as $item) {
@@ -223,7 +223,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $article = $this->articlesModel->getOneById($this->request->id);
+        $article = $this->articlesModel->getOneById($this->request->getParameters()->get('id'));
 
         if (empty($article) === false) {
             $this->breadcrumb->setTitlePostfix($article['title']);
@@ -236,7 +236,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->menusHelpers &&
                 $this->menusModel
             ) {
-                $menuItem = $this->menusModel->getOneMenuItemUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id));
+                $menuItem = $this->menusModel->getOneMenuItemUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')));
 
                 $lang_options = [$this->lang->t('articles', 'create_menu_item')];
                 $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', [1], $lang_options, !empty($menuItem) ? 1 : 0, 'checked'));
@@ -255,7 +255,7 @@ class Index extends Core\Modules\Controller\Admin
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$article['start'], $article['end']]));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id)));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))));
 
             $this->view->assign('form', array_merge($article, $this->request->getPost()->getAll()));
 
@@ -273,7 +273,7 @@ class Index extends Core\Modules\Controller\Admin
         try {
             $this->articlesValidator->validate(
                 $formData,
-                sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id)
+                sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))
             );
 
             $updateValues = [
@@ -284,17 +284,17 @@ class Index extends Core\Modules\Controller\Admin
                 'user_id' => $this->auth->getUserId(),
             ];
 
-            $bool = $this->articlesModel->update($updateValues, $this->request->id);
+            $bool = $this->articlesModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->seo->insertUriAlias(
-                sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
+                sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
 
-            $this->articlesCache->setCache($this->request->id);
+            $this->articlesCache->setCache($this->request->getParameters()->get('id'));
 
             // Check, if the Menus module is available
             if ($this->menusCache) {
@@ -305,12 +305,12 @@ class Index extends Core\Modules\Controller\Admin
                         'parent_id' => (int)$formData['parent_id'],
                         'display' => $formData['display'],
                         'title' => Core\Functions::strEncode($formData['title']),
-                        'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
+                        'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')),
                         'target' => 1
                     ];
 
                     $this->menusHelpers->manageMenuItem(
-                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->id),
+                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')),
                         isset($formData['create']) === true,
                         $data
                     );

@@ -82,7 +82,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->newsletterModel->delete($item);
@@ -96,7 +96,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $newsletter = $this->newsletterModel->getOneById($this->request->id);
+        $newsletter = $this->newsletterModel->getOneById($this->request->getParameters()->get('id'));
 
         if (empty($newsletter) === false) {
             $this->breadcrumb->setTitlePostfix($newsletter['title']);
@@ -146,8 +146,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSend()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
-            $this->newsletterModel->newsletterExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
+            $this->newsletterModel->newsletterExists($this->request->getParameters()->get('id')) === true) {
             $accounts = $this->newsletterModel->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = [];
@@ -156,10 +156,10 @@ class Index extends Core\Modules\Controller\Admin
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool = $this->newsletterHelpers->sendNewsletter($this->request->id, $recipients);
+            $bool = $this->newsletterHelpers->sendNewsletter($this->request->getParameters()->get('id'), $recipients);
             $bool2 = false;
             if ($bool === true) {
-                $bool2 = $this->newsletterModel->update(['status' => '1'], $this->request->id);
+                $bool2 = $this->newsletterModel->update(['status' => '1'], $this->request->getParameters()->get('id'));
             }
 
             $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'));
@@ -248,11 +248,11 @@ class Index extends Core\Modules\Controller\Admin
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'user_id' => $this->auth->getUserId(),
             ];
-            $bool = $this->newsletterModel->update($updateValues, $this->request->id);
+            $bool = $this->newsletterModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             // Test-Newsletter
             if ($formData['test'] == 1) {
-                $bool2 = $this->newsletterHelpers->sendNewsletter($this->request->id, $settings['mail']);
+                $bool2 = $this->newsletterHelpers->sendNewsletter($this->request->getParameters()->get('id'), $settings['mail']);
 
                 $lang = $this->lang->t('newsletter', 'create_success');
                 $result = $bool !== false && $bool2;

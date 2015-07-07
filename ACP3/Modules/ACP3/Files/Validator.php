@@ -127,7 +127,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['cat_create']) && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $this->errors['cat'] = $this->lang->t('files', 'select_category');
         }
-        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->id)) === true) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))) === true) {
             $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
 

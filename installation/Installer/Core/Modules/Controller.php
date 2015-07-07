@@ -89,7 +89,7 @@ class Controller
         // Einige Template Variablen setzen
         $this->view->assign('LANGUAGES', $this->_languagesDropdown(LANG));
         $this->view->assign('PHP_SELF', PHP_SELF);
-        $this->view->assign('REQUEST_URI', $this->request->getOriginalQuery());
+        $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
         $this->view->assign('ROOT_DIR', ROOT_DIR);
         $this->view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);

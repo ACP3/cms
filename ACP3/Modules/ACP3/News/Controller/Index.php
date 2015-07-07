@@ -87,10 +87,10 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
-            $this->newsModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) == 1
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
+            $this->newsModel->resultExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) == 1
         ) {
-            $news = $this->newsCache->getCache($this->request->id);
+            $news = $this->newsCache->getCache($this->request->getParameters()->get('id'));
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
 
@@ -112,7 +112,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
                     ->setModule('news')
-                    ->setEntryId($this->request->id);
+                    ->setEntryId($this->request->getParameters()->get('id'));
 
                 $this->view->assign('comments', $comments->actionIndex());
             }
@@ -125,8 +125,8 @@ class Index extends Core\Modules\Controller\Frontend
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->getPost()->get('cat')) === true) {
             $cat = (int)$this->request->getPost()->get('cat');
-        } elseif ($this->get('core.validator.rules.misc')->isNumber($this->request->cat) === true) {
-            $cat = (int)$this->request->cat;
+        } elseif ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('cat')) === true) {
+            $cat = (int)$this->request->getParameters()->get('cat');
         } else {
             $cat = 0;
         }

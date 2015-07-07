@@ -91,7 +91,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
             foreach ($items as $item) {
                 $bool = $this->pollsModel->delete($item);
@@ -110,7 +110,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $poll = $this->pollsModel->getOneById($this->request->id);
+        $poll = $this->pollsModel->getOneById($this->request->getParameters()->get('id'));
 
         if (empty($poll) === false) {
             $this->breadcrumb->setTitlePostfix($poll['title']);
@@ -138,7 +138,7 @@ class Index extends Core\Modules\Controller\Admin
                     $answers[$i]['value'] = '';
                 }
             } else {
-                $answers = $this->pollsModel->getAnswersByPollId($this->request->id);
+                $answers = $this->pollsModel->getAnswersByPollId($this->request->getParameters()->get('id'));
                 $c_answers = count($answers);
 
                 for ($i = 0; $i < $c_answers; ++$i) {
@@ -248,11 +248,11 @@ class Index extends Core\Modules\Controller\Admin
                 'user_id' => $this->auth->getUserId(),
             ];
 
-            $bool = $this->pollsModel->update($updateValues, $this->request->id);
+            $bool = $this->pollsModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             // Stimmen zurücksetzen
             if (!empty($formData['reset'])) {
-                $this->pollsModel->delete($this->request->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                $this->pollsModel->delete($this->request->getParameters()->get('id'), 'poll_id', Polls\Model::TABLE_NAME_VOTES);
             }
 
             // Antworten
@@ -261,7 +261,7 @@ class Index extends Core\Modules\Controller\Admin
                 if (empty($row['id'])) {
                     // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                     if (!empty($row['value']) && !isset($row['delete'])) {
-                        $this->pollsModel->insert(['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->id], Polls\Model::TABLE_NAME_ANSWERS);
+                        $this->pollsModel->insert(['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->getParameters()->get('id')], Polls\Model::TABLE_NAME_ANSWERS);
                     }
                     // Antwort mitsamt Stimmen löschen
                 } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {

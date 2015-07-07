@@ -78,7 +78,7 @@ class Resources extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
 
             foreach ($items as $item) {
@@ -95,7 +95,7 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $resource = $this->permissionsModel->getResourceById((int)$this->request->id);
+        $resource = $this->permissionsModel->getResourceById((int)$this->request->getParameters()->get('id'));
         if (!empty($resource)) {
             if ($this->request->getPost()->isEmpty() === false) {
                 $this->_editPost($this->request->getPost()->getAll());
@@ -184,7 +184,7 @@ class Resources extends Core\Modules\Controller\Admin
                 'page' => $formData['resource'],
                 'privilege_id' => $formData['privileges'],
             ];
-            $bool = $this->permissionsModel->update($updateValues, $this->request->id, Permissions\Model::TABLE_NAME_RESOURCES);
+            $bool = $this->permissionsModel->update($updateValues, $this->request->getParameters()->get('id'), Permissions\Model::TABLE_NAME_RESOURCES);
 
             $this->permissionsCache->setResourcesCache();
 

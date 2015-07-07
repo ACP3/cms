@@ -79,7 +79,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
 
@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $menu = $this->menusModel->getOneById($this->request->id);
+        $menu = $this->menusModel->getOneById($this->request->getParameters()->get('id'));
 
         if (empty($menu) === false) {
             $this->breadcrumb->setTitlePostfix($menu['title']);
@@ -182,14 +182,14 @@ class Index extends Core\Modules\Controller\Admin
     protected function _editPost(array $formData)
     {
         try {
-            $this->menusValidator->validate($formData, (int)$this->request->id);
+            $this->menusValidator->validate($formData, (int)$this->request->getParameters()->get('id'));
 
             $updateValues = [
                 'index_name' => $formData['index_name'],
                 'title' => Core\Functions::strEncode($formData['title']),
             ];
 
-            $bool = $this->menusModel->update($updateValues, $this->request->id);
+            $bool = $this->menusModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->menusCache->setMenuItemsCache();
 

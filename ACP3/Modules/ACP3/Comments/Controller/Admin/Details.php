@@ -72,7 +72,7 @@ class Details extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem(null, 'acp/comments');
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
 
             // Get the module-ID of the first item
@@ -101,7 +101,7 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $comment = $this->commentsModel->getOneById((int)$this->request->id);
+        $comment = $this->commentsModel->getOneById((int)$this->request->getParameters()->get('id'));
 
         if (empty($comment) === false) {
             $this->breadcrumb
@@ -129,10 +129,10 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->request->id);
+        $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->request->getParameters()->get('id'));
 
         if (empty($comments) === false) {
-            $moduleName = $this->systemModel->getModuleNameById($this->request->id);
+            $moduleName = $this->systemModel->getModuleNameById($this->request->getParameters()->get('id'));
 
             //Brotkrümelspur
             $this->breadcrumb->append($this->lang->t($moduleName, $moduleName));
@@ -184,7 +184,7 @@ class Details extends Core\Modules\Controller\Admin
                 $updateValues['name'] = Core\Functions::strEncode($formData['name']);
             }
 
-            $bool = $this->commentsModel->update($updateValues, $this->request->id);
+            $bool = $this->commentsModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

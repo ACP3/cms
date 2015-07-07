@@ -74,9 +74,9 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
-            $this->articlesModel->resultExists($this->request->id, $this->date->getCurrentDateTime()) === true) {
-            $article = $this->articlesCache->getCache($this->request->id);
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
+            $this->articlesModel->resultExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true) {
+            $article = $this->articlesCache->getCache($this->request->getParameters()->get('id'));
 
             $this->breadcrumb->replaceAncestor($article['title'], 0, true);
 

@@ -128,7 +128,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
 
             $upload = new Core\Helpers\Upload('files');
@@ -153,7 +153,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $file = $this->filesModel->getOneById((int)$this->request->id);
+        $file = $this->filesModel->getOneById((int)$this->request->getParameters()->get('id'));
 
         if (empty($file) === false) {
             $settings = $this->config->getSettings('files');
@@ -186,7 +186,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('checked_external', $this->request->getPost()->has('external') ? ' checked="checked"' : '');
             $this->view->assign('current_file', $file['file']);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id)));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))));
             $this->view->assign('form', array_merge($file, $this->request->getPost()->getAll()));
 
             $this->formTokenHelper->generateFormToken($this->request->getQuery());
@@ -345,17 +345,17 @@ class Index extends Core\Modules\Controller\Admin
                 $updateValues = array_merge($updateValues, $newFileSql);
             }
 
-            $bool = $this->filesModel->update($updateValues, $this->request->id);
+            $bool = $this->filesModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->seo->insertUriAlias(
-                sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id),
+                sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
 
-            $this->filesCache->setCache($this->request->id);
+            $this->filesCache->setCache($this->request->getParameters()->get('id'));
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

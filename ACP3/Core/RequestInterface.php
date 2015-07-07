@@ -85,7 +85,7 @@ interface RequestInterface
     /**
      * Gibt die URI-Parameter aus
      *
-     * @return array
+     * @return ParameterBag
      */
     public function getParameters();
 

@@ -63,8 +63,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        if ($this->galleryModel->pictureExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
-            $picture = $this->galleryModel->getPictureById((int)$this->request->id);
+        if ($this->galleryModel->pictureExists((int)$this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true) {
+            $picture = $this->galleryModel->getPictureById((int)$this->request->getParameters()->get('id'));
 
             // Brotkrümelspur
             $this->breadcrumb
@@ -113,7 +113,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
                     ->setModule('gallery')
-                    ->setEntryId($this->request->id);
+                    ->setEntryId($this->request->getParameters()->get('id'));
 
                 $this->view->assign('comments', $comments->actionIndex());
             }
@@ -126,10 +126,10 @@ class Index extends Core\Modules\Controller\Frontend
     {
         $this->setNoOutput(true);
 
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true) {
             set_time_limit(20);
-            $picture = $this->galleryModel->getFileById($this->request->id);
-            $action = $this->request->action === 'thumb' ? 'thumb' : '';
+            $picture = $this->galleryModel->getFileById($this->request->getParameters()->get('id'));
+            $action = $this->request->getParameters()->get('action') === 'thumb' ? 'thumb' : '';
 
             $options = [
                 'enable_cache' => $this->config->getSettings('system')['cache_images'] == 1,
@@ -158,13 +158,13 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionPics()
     {
-        if ($this->galleryModel->galleryExists((int)$this->request->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->galleryModel->galleryExists((int)$this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true) {
             // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->lang->t('gallery', 'gallery'), 'gallery')
-                ->append($this->galleryModel->getGalleryTitle($this->request->id));
+                ->append($this->galleryModel->getGalleryTitle($this->request->getParameters()->get('id')));
 
-            $this->view->assign('pictures', $this->galleryCache->getCache($this->request->id));
+            $this->view->assign('pictures', $this->galleryCache->getCache($this->request->getParameters()->get('id')));
             $this->view->assign('overlay', (int)$this->settings['overlay']);
         } else {
             throw new Core\Exceptions\ResultNotExists();

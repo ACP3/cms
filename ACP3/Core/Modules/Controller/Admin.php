@@ -55,8 +55,8 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     {
         if ($this->request->getPost()->has('entries') && is_array($this->request->getPost()->get('entries')) === true) {
             $entries = $this->request->getPost()->get('entries');
-        } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->entries) === true) {
-            $entries = $this->request->entries;
+        } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
+            $entries = $this->request->getParameters()->get('entries');
         }
 
         /** @var \ACP3\Core\Helpers\Alerts $alerts */
@@ -64,7 +64,7 @@ abstract class Admin extends Core\Modules\Controller\Frontend
 
         if (empty($entries)) {
             $this->setTemplate($alerts->errorBoxContent($this->lang->t('system', 'no_entries_selected')));
-        } elseif (empty($entries) === false && $this->request->action !== 'confirmed') {
+        } elseif (empty($entries) === false && $this->request->getParameters()->get('action') !== 'confirmed') {
             if (is_array($entries) === false) {
                 $entries = [$entries];
             }

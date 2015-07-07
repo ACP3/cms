@@ -58,14 +58,14 @@ abstract class Frontend extends Core\Modules\Controller
 
         // Get the current resultset position
         if (!defined('POS')) {
-            define('POS', (int)$this->request->page >= 1 ? (int)($this->request->page - 1) * $this->auth->entries : 0);
+            define('POS', (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->auth->entries : 0);
         }
 
         // Initialize the breadcrumb
         $this->breadcrumb->prePopulate();
 
         $this->view->assign('PHP_SELF', PHP_SELF);
-        $this->view->assign('REQUEST_URI', $this->router->route($this->request->getOriginalQuery()));
+        $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
         $this->view->assign('ROOT_DIR', ROOT_DIR);
         $this->view->assign('ROOT_DIR_ABSOLUTE', ROOT_DIR_ABSOLUTE);
         $this->view->assign('HOST_NAME', HOST_NAME);

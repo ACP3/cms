@@ -95,13 +95,13 @@ class Index extends Core\Modules\Controller\Frontend
 
         $this->view->assign('form', array_merge(['mail' => ''], $this->request->getPost()->getAll()));
 
-        $field_value = $this->request->action ? $this->request->action : 'subscribe';
+        $fieldValue = $this->request->getParameters()->get('action', 'subscribe');
 
         $actions_Lang = [
             $this->lang->t('newsletter', 'subscribe'),
             $this->lang->t('newsletter', 'unsubscribe')
         ];
-        $this->view->assign('actions', $this->get('core.helpers.forms')->selectGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $field_value, 'checked'));
+        $this->view->assign('actions', $this->get('core.helpers.forms')->selectGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $fieldValue, 'checked'));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
@@ -117,7 +117,7 @@ class Index extends Core\Modules\Controller\Frontend
     protected function _indexPost(array $formData)
     {
         try {
-            switch ($this->request->action) {
+            switch ($this->request->getParameters()->get('action')) {
                 case 'subscribe':
                     $this->newsletterValidator->validateSubscribe($formData);
 

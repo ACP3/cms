@@ -99,7 +99,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
 
             $upload = new Core\Helpers\Upload('emoticons');
@@ -122,7 +122,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $emoticon = $this->emoticonsModel->getOneById((int)$this->request->id);
+        $emoticon = $this->emoticonsModel->getOneById((int)$this->request->getParameters()->get('id'));
 
         if (empty($emoticon) === false) {
             if ($this->request->getPost()->isEmpty() === false) {
@@ -160,7 +160,7 @@ class Index extends Core\Modules\Controller\Admin
                 $updateValues['img'] = $result['name'];
             }
 
-            $bool = $this->emoticonsModel->update($updateValues, $this->request->id);
+            $bool = $this->emoticonsModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->emoticonsCache->setCache();
 

@@ -168,7 +168,7 @@ class Pagination
         $output = '';
         if ($this->totalResults > $this->resultsPerPage) {
             $link = $this->router->route(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getUriWithoutPages());
-            $this->currentPage = $this->miscValidator->isNumber($this->request->page) ? (int)$this->request->page : 1;
+            $this->currentPage = (int) $this->request->getParameters()->get('page', 1);
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
             $this->setMetaStatements($link);
@@ -221,7 +221,7 @@ class Pagination
             if ($this->currentPage + 1 <= $this->totalPages) {
                 $this->seo->setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');
             }
-            if (isset($this->request->page) && $this->request->page === 1) {
+            if ($this->request->getParameters()->get('page', 0) === 1) {
                 $this->seo->setCanonicalUri($link);
             }
         }

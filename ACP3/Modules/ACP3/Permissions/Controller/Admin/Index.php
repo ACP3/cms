@@ -105,7 +105,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
             $levelUndeletable = false;
 
@@ -136,7 +136,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $role = $this->permissionsModel->getRoleById((int)$this->request->id);
+        $role = $this->permissionsModel->getRoleById((int)$this->request->getParameters()->get('id', 0));
 
         if (!empty($role)) {
             $this->breadcrumb->setTitlePostfix($role['name']);
@@ -145,7 +145,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->_editPost($this->request->getPost()->getAll());
             }
 
-            if ($this->request->id != 1) {
+            if ($this->request->getParameters()->get('id', 0) != 1) {
                 $roles = $this->acl->getAllRoles();
                 $c_roles = count($roles);
                 for ($i = 0; $i < $c_roles; ++$i) {
@@ -159,7 +159,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('parent', $roles);
             }
 
-            $rules = $this->acl->getRules([$this->request->id]);
+            $rules = $this->acl->getRules([$this->request->getParameters()->get('id')]);
             $modules = $this->modules->getActiveModules();
             $privileges = $this->acl->getAllPrivileges();
             $c_privileges = count($privileges);
@@ -176,7 +176,7 @@ class Index extends Core\Modules\Controller\Admin
                     $select[1]['value'] = 1;
                     $select[1]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 1 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
                     $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
-                    if ($this->request->id != 1) {
+                    if ($this->request->getParameters()->get('id', 0) != 1) {
                         $select[2]['value'] = 2;
                         $select[2]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 2 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
                         $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
@@ -214,9 +214,14 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->permissionsModel->roleExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
+            $this->permissionsModel->roleExists($this->request->getParameters()->get('id')) === true
+        ) {
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $nestedSet->order($this->request->id, $this->request->action);
+            $nestedSet->order(
+                $this->request->getParameters()->get('id'),
+                $this->request->getParameters()->get('action')
+            );
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
@@ -228,6 +233,7 @@ class Index extends Core\Modules\Controller\Admin
 
     /**
      * @param array $formData
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function _createPost(array $formData)
@@ -276,6 +282,7 @@ class Index extends Core\Modules\Controller\Admin
 
     /**
      * @param array $formData
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function _editPost(array $formData)
@@ -283,24 +290,24 @@ class Index extends Core\Modules\Controller\Admin
         try {
             $this->permissionsValidator->validate(
                 $formData,
-                (int)$this->request->id
+                (int)$this->request->getParameters()->get('id', 0)
             );
 
             $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),
-                'parent_id' => $this->request->id == 1 ? 0 : $formData['parent_id'],
+                'parent_id' => $this->request->getParameters()->get('id', 0) == 1 ? 0 : $formData['parent_id'],
             ];
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $bool = $nestedSet->editNode($this->request->id, $this->request->id == 1 ? '' : (int)$formData['parent_id'], 0, $updateValues);
+            $bool = $nestedSet->editNode($this->request->getParameters()->get('id', 0), $this->request->getParameters()->get('id', 0) == 1 ? '' : (int)$formData['parent_id'], 0, $updateValues);
 
             $this->db->getConnection()->beginTransaction();
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
-            $this->permissionsModel->delete($this->request->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
+            $this->permissionsModel->delete($this->request->getParameters()->get('id'), 'role_id', Permissions\Model::TABLE_NAME_RULES);
             foreach ($formData['privileges'] as $moduleId => $privileges) {
                 foreach ($privileges as $id => $permission) {
                     $ruleInsertValues = [
                         'id' => '',
-                        'role_id' => $this->request->id,
+                        'role_id' => $this->request->getParameters()->get('id'),
                         'module_id' => $moduleId,
                         'privilege_id' => $id,
                         'permission' => $permission

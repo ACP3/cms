@@ -3,6 +3,7 @@
 namespace ACP3\Installer\Modules\Update\Controller;
 
 use ACP3\Core\Cache;
+use ACP3\Core\Modules;
 use ACP3\Installer\Core;
 
 /**
@@ -12,13 +13,17 @@ use ACP3\Installer\Core;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var Modules
      */
     protected $modules;
 
+    /**
+     * @param \ACP3\Installer\Core\Context $context
+     * @param \ACP3\Core\Modules           $modules
+     */
     public function __construct(
         Core\Context $context,
-        \ACP3\Core\Modules $modules
+        Modules $modules
     ) {
         parent::__construct($context);
 
@@ -27,7 +32,7 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        if ($this->request->getPost()->getAll() === false) {
+        if ($this->request->getPost()->isEmpty() === false) {
             $this->_indexPost();
         }
     }
@@ -39,7 +44,7 @@ class Index extends Core\Modules\Controller
         // Zuerst die wichtigen System-Module aktualisieren...
         $coreModules = ['system', 'permissions', 'users'];
         foreach ($coreModules as $row) {
-            $results[$row] = $this->_returnUpdateModuleResult($row);
+            $results[$row] = $this->_returnModuleUpdateResult($row);
         }
 
         // ...danach die Restlichen
@@ -47,7 +52,7 @@ class Index extends Core\Modules\Controller
             $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
             foreach ($modules as $row) {
                 if (in_array(strtolower($row), $coreModules) === false) {
-                    $results[$row] = $this->_returnUpdateModuleResult($row);
+                    $results[$row] = $this->_returnModuleUpdateResult($row);
                 }
             }
         }
@@ -60,10 +65,10 @@ class Index extends Core\Modules\Controller
     }
 
     /**
-     * @param $moduleName
+     * @param string $moduleName
      * @return array
      */
-    protected function _returnUpdateModuleResult($moduleName)
+    protected function _returnModuleUpdateResult($moduleName)
     {
         $result = $this->_updateModule($moduleName);
 

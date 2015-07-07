@@ -63,11 +63,11 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionResult()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
-            $this->pollsModel->pollExists($this->request->id, $this->date->getCurrentDateTime()) === true
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
+            $this->pollsModel->pollExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true
         ) {
-            $question = $this->pollsModel->getOneByIdWithTotalVotes($this->request->id);
-            $answers = $this->pollsModel->getAnswersByPollId($this->request->id);
+            $question = $this->pollsModel->getOneByIdWithTotalVotes($this->request->getParameters()->get('id'));
+            $answers = $this->pollsModel->getAnswersByPollId($this->request->getParameters()->get('id'));
             $c_answers = count($answers);
             $totalVotes = $question['total_votes'];
 
@@ -85,18 +85,18 @@ class Index extends Core\Modules\Controller\Frontend
     public function actionVote()
     {
         $time = $this->date->getCurrentDateTime();
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true &&
-            $this->pollsModel->pollExists($this->request->id, $time, is_array($this->request->getPost()->get('answer'))) === true
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
+            $this->pollsModel->pollExists($this->request->getParameters()->get('id'), $time, is_array($this->request->getPost()->get('answer'))) === true
         ) {
             // Wenn abgestimmt wurde
             if (is_array($this->request->getPost()->get('answer')) === true || $this->get('core.validator.rules.misc')->isNumber($this->request->getPost()->get('answer')) === true) {
                 $this->_votePost($this->request->getPost()->getAll(), $time);
             } else {
-                $poll = $this->pollsModel->getOneById($this->request->id);
+                $poll = $this->pollsModel->getOneById($this->request->getParameters()->get('id'));
 
                 $this->view->assign('question', $poll['title']);
                 $this->view->assign('multiple', $poll['multiple']);
-                $this->view->assign('answers', $this->pollsModel->getAnswersById($this->request->id));
+                $this->view->assign('answers', $this->pollsModel->getAnswersById($this->request->getParameters()->get('id')));
             }
         } else {
             throw new Core\Exceptions\ResultNotExists();
@@ -113,9 +113,9 @@ class Index extends Core\Modules\Controller\Frontend
         $answers = $formData['answer'];
 
         if ($this->auth->isUser() === true) {
-            $query = $this->pollsModel->getVotesByUserId($this->request->id, $this->auth->getUserId(), $ip); // Check, whether the logged user has already voted
+            $query = $this->pollsModel->getVotesByUserId($this->request->getParameters()->get('id'), $this->auth->getUserId(), $ip); // Check, whether the logged user has already voted
         } else {
-            $query = $this->pollsModel->getVotesByIpAddress($this->request->id, $ip); // For guest users check against the ip address
+            $query = $this->pollsModel->getVotesByIpAddress($this->request->getParameters()->get('id'), $ip); // For guest users check against the ip address
         }
 
         $bool = false;
@@ -130,7 +130,7 @@ class Index extends Core\Modules\Controller\Frontend
             foreach ($answers as $answer) {
                 if ($this->get('core.validator.rules.misc')->isNumber($answer) === true) {
                     $insertValues = [
-                        'poll_id' => $this->request->id,
+                        'poll_id' => $this->request->getParameters()->get('id'),
                         'answer_id' => $answer,
                         'user_id' => $userId,
                         'ip' => $ip,
@@ -144,6 +144,6 @@ class Index extends Core\Modules\Controller\Frontend
             $text = $this->lang->t('polls', 'already_voted');
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $this->request->id);
+        $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $this->request->getParameters()->get('id'));
     }
 }

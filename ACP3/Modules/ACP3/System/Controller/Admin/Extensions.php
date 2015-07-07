@@ -53,8 +53,8 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function actionDesigns()
     {
-        if (isset($this->request->dir)) {
-            $this->_designsPost($this->request->dir);
+        if ($this->request->getParameters()->has('dir')) {
+            $this->_designsPost($this->request->getParameters()->get('dir'));
         } else {
             $designs = [];
             $path = ACP3_ROOT_DIR . 'designs/';
@@ -101,7 +101,7 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function actionModules()
     {
-        switch ($this->request->action) {
+        switch ($this->request->getParameters()->get('action')) {
             case 'activate':
                 $this->_enableModule();
                 break;
@@ -137,13 +137,13 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _enableModule()
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($this->request->dir);
+        $info = $this->modules->getModuleInfo($this->request->getParameters()->get('dir', ''));
         if (empty($info)) {
             $text = $this->lang->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $serviceId = strtolower($this->request->dir . '.installer');
+            $serviceId = strtolower($this->request->getParameters()->get('dir', '') . '.installer');
 
             $container = $this->systemHelpers->updateServiceContainer(true);
 
@@ -156,7 +156,7 @@ class Extensions extends Core\Modules\Controller\Admin
 
                 // Modul installieren
                 if (empty($deps)) {
-                    $bool = $this->systemModel->update(['active' => 1], ['name' => $this->request->dir]);
+                    $bool = $this->systemModel->update(['active' => 1], ['name' => $this->request->getParameters()->get('dir')]);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
@@ -183,13 +183,13 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _disableModule()
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($this->request->dir);
+        $info = $this->modules->getModuleInfo($this->request->getParameters()->get('dir', ''));
         if (empty($info)) {
             $text = $this->lang->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $serviceId = strtolower($this->request->dir . '.installer');
+            $serviceId = strtolower($this->request->getParameters()->get('dir', '') . '.installer');
 
             if ($this->container->has($serviceId) === true) {
                 /** @var Core\Modules\AbstractInstaller $installer */
@@ -199,7 +199,7 @@ class Extensions extends Core\Modules\Controller\Admin
                 $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $this->container);
 
                 if (empty($deps)) {
-                    $bool = $this->systemModel->update(['active' => 0], ['name' => $this->request->dir]);
+                    $bool = $this->systemModel->update(['active' => 0], ['name' => $this->request->getParameters()->get('dir')]);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
@@ -222,8 +222,8 @@ class Extensions extends Core\Modules\Controller\Admin
     {
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
-        if ($this->modules->isInstalled($this->request->dir) === false) {
-            $serviceId = strtolower($this->request->dir . '.installer');
+        if ($this->modules->isInstalled($this->request->getParameters()->get('dir', '')) === false) {
+            $serviceId = strtolower($this->request->getParameters()->get('dir', '') . '.installer');
 
             $container = $this->systemHelpers->updateServiceContainer(true);
 
@@ -258,10 +258,10 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _uninstallModule()
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($this->request->dir);
+        $info = $this->modules->getModuleInfo($this->request->getParameters()->get('dir', ''));
         // Nur installierte und Nicht-Core-Module berücksichtigen
-        if ($info['protected'] === false && $this->modules->isInstalled($this->request->dir) === true) {
-            $serviceId = strtolower($this->request->dir . '.installer');
+        if ($info['protected'] === false && $this->modules->isInstalled($this->request->getParameters()->get('dir', '')) === true) {
+            $serviceId = strtolower($this->request->getParameters()->get('dir', '') . '.installer');
 
             $container = $this->systemHelpers->updateServiceContainer();
 

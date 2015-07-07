@@ -71,7 +71,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->guestbookModel->delete($item);
@@ -85,7 +85,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $guestbook = $this->guestbookModel->getOneById($this->request->id);
+        $guestbook = $this->guestbookModel->getOneById($this->request->getParameters()->get('id'));
         if (empty($guestbook) === false) {
             $settings = $this->config->getSettings('guestbook');
 
@@ -196,7 +196,7 @@ class Index extends Core\Modules\Controller\Admin
                 'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
             ];
 
-            $bool = $this->guestbookModel->update($updateValues, $this->request->id);
+            $bool = $this->guestbookModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

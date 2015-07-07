@@ -188,7 +188,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = $isAdminUser = $selfDelete = false;
             foreach ($items as $item) {
                 if ($item == 1) {
@@ -217,8 +217,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
-            $user = $this->auth->getUserInfo($this->request->id);
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true && $this->usersModel->resultExists($this->request->getParameters()->get('id')) === true) {
+            $user = $this->auth->getUserInfo($this->request->getParameters()->get('id'));
 
             $this->breadcrumb->setTitlePostfix($user['nickname']);
 
@@ -229,7 +229,7 @@ class Index extends Core\Modules\Controller\Admin
             // Zugriffslevel holen
             $roles = $this->acl->getAllRoles();
             $c_roles = count($roles);
-            $userRoles = $this->acl->getUserRoleIds($this->request->id);
+            $userRoles = $this->acl->getUserRoleIds($this->request->getParameters()->get('id'));
             for ($i = 0; $i < $c_roles; ++$i) {
                 $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
                 $roles[$i]['selected'] = $this->formsHelpers->selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $userRoles) ? $roles[$i]['id'] : '');
@@ -422,7 +422,7 @@ class Index extends Core\Modules\Controller\Admin
     protected function _editPost(array $formData)
     {
         try {
-            $this->usersValidator->validate($formData, (int)$this->request->id);
+            $this->usersValidator->validate($formData, (int)$this->request->getParameters()->get('id'));
 
             $updateValues = [
                 'super_user' => (int)$formData['super_user'],
@@ -450,7 +450,7 @@ class Index extends Core\Modules\Controller\Admin
                 'entries' => (int)$formData['entries'],
             ];
 
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], (int)$this->request->id);
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], (int)$this->request->getParameters()->get('id'));
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
@@ -459,10 +459,10 @@ class Index extends Core\Modules\Controller\Admin
                 $updateValues['pwd'] = $newPassword . ':' . $salt;
             }
 
-            $bool = $this->usersModel->update($updateValues, $this->request->id);
+            $bool = $this->usersModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-            if ($this->request->id == $this->auth->getUserId()) {
+            if ($this->request->getParameters()->get('id') == $this->auth->getUserId()) {
                 $cookieArray = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
                 $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
             }

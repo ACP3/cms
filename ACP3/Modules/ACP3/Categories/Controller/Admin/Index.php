@@ -112,7 +112,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
             $isInUse = false;
 
@@ -152,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $category = $this->categoriesModel->getOneById($this->request->id);
+        $category = $this->categoriesModel->getOneById($this->request->getParameters()->get('id'));
 
         if (empty($category) === false) {
             $this->breadcrumb->setTitlePostfix($category['title']);
@@ -178,7 +178,7 @@ class Index extends Core\Modules\Controller\Admin
         try {
             $file = $this->request->getFiles()->get('picture');
 
-            $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $this->request->id);
+            $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $this->request->getParameters()->get('id'));
 
             $updateValues = [
                 'title' => Core\Functions::strEncode($formData['title']),
@@ -192,9 +192,9 @@ class Index extends Core\Modules\Controller\Admin
                 $updateValues['picture'] = $result['name'];
             }
 
-            $bool = $this->categoriesModel->update($updateValues, $this->request->id);
+            $bool = $this->categoriesModel->update($updateValues, $this->request->getParameters()->get('id'));
 
-            $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->request->id));
+            $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->request->getParameters()->get('id')));
 
             $this->secureHelper->unsetFormToken($this->request->getQuery());
 

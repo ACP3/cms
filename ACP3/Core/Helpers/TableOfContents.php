@@ -94,7 +94,7 @@ class TableOfContents
                 $matches = [];
                 preg_match_all($regex, $text, $matches);
 
-                $currentPage = $this->validate->isNumber($this->request->page) === true && $this->request->page <= $c_pages ? $this->request->page : 1;
+                $currentPage = ((int)$this->request->getParameters()->get('page', 1) <= $c_pages) ? (int)$this->request->getParameters()->get('page', 1) : 1;
                 $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
                 $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
@@ -154,7 +154,7 @@ class TableOfContents
                         $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
                     }
                 } else {
-                    if (($this->validate->isNumber($request->page) === false && $i === 0) || $request->page === $pageNumber) {
+                    if (($this->validate->isNumber($request->getParameters()->get('page')) === false && $i === 0) || $request->getParameters()->get('page') === $pageNumber) {
                         $toc[$i]['selected'] = true;
                         $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
                     }

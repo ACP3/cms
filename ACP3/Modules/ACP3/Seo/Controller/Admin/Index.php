@@ -67,7 +67,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
 
             foreach ($items as $item) {
@@ -84,7 +84,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $seo = $this->seoModel->getOneById((int)$this->request->id);
+        $seo = $this->seoModel->getOneById((int)$this->request->getParameters()->get('id'));
 
         if (empty($seo) === false) {
             $this->breadcrumb->setTitlePostfix($seo['alias']);
@@ -165,7 +165,7 @@ class Index extends Core\Modules\Controller\Admin
                 'robots' => (int)$formData['seo_robots']
             ];
 
-            $bool = $this->seoModel->update($updateValues, $this->request->id);
+            $bool = $this->seoModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->seoCache->setCache();
 

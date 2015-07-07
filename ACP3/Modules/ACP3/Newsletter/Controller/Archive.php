@@ -38,7 +38,7 @@ class Archive extends Core\Modules\Controller\Frontend
 
     public function actionDetails()
     {
-        $newsletter = $this->newsletterModel->getOneById((int)$this->request->id, 1);
+        $newsletter = $this->newsletterModel->getOneById((int)$this->request->getParameters()->get('id'), 1);
 
         if (!empty($newsletter)) {
             $this->breadcrumb

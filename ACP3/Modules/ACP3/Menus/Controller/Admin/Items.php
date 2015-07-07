@@ -139,7 +139,7 @@ class Items extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem(null, 'acp/menus');
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
@@ -159,7 +159,7 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $menuItem = $this->menusModel->getOneMenuItemById($this->request->id);
+        $menuItem = $this->menusModel->getOneMenuItemById($this->request->getParameters()->get('id'));
 
         if (empty($menuItem) === false) {
             $this->breadcrumb->setTitlePostfix($menuItem['title']);
@@ -226,9 +226,14 @@ class Items extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->menusModel->menuItemExists($this->request->id) === true) {
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
+            $this->menusModel->menuItemExists($this->request->getParameters()->get('id')) === true
+        ) {
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $nestedSet->order($this->request->id, $this->request->action);
+            $nestedSet->order(
+                $this->request->getParameters()->get('id'),
+                $this->request->getParameters()->get('action')
+            );
 
             $this->menusCache->setMenuItemsCache();
 
@@ -317,7 +322,7 @@ class Items extends Core\Modules\Controller\Admin
             ];
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $bool = $nestedSet->editNode($this->request->id, (int)$formData['parent_id'], (int)$formData['block_id'], $updateValues);
+            $bool = $nestedSet->editNode($this->request->getParameters()->get('id'), (int)$formData['parent_id'], (int)$formData['block_id'], $updateValues);
 
             // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
             if ($formData['mode'] != 3) {

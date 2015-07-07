@@ -54,7 +54,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->commentsModel->delete($item, 'module_id');

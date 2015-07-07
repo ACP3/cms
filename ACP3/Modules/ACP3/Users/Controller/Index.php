@@ -202,8 +202,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionViewProfile()
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->id) === true && $this->usersModel->resultExists($this->request->id) === true) {
-            $user = $this->auth->getUserInfo($this->request->id);
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true && $this->usersModel->resultExists($this->request->getParameters()->get('id')) === true) {
+            $user = $this->auth->getUserInfo($this->request->getParameters()->get('id'));
             $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
             if (!empty($user['website']) && (bool)preg_match('=^http(s)?://=', $user['website']) === false) {
                 $user['website'] = 'http://' . $user['website'];

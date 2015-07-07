@@ -42,10 +42,29 @@ class ParameterBag
     /**
      * @param string $key
      * @param mixed  $value
+     *
+     * @return $this
      */
     public function set($key, $value)
     {
         $this->data[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     *
+     * @return $this
+     */
+    public function add($key, $value)
+    {
+        if ($this->has($key) === false) {
+            $this->set($key, $value);
+        }
+
+        return $this;
     }
 
     /**

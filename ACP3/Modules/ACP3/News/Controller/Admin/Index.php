@@ -137,7 +137,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->action === 'confirmed') {
+        if ($this->request->getParameters()->get('action') === 'confirmed') {
             $bool = false;
 
             foreach ($items as $item) {
@@ -158,7 +158,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $news = $this->newsModel->getOneById((int)$this->request->id);
+        $news = $this->newsModel->getOneById((int)$this->request->getParameters()->get('id'));
 
         if (empty($news) === false) {
             $this->breadcrumb->setTitlePostfix($news['title']);
@@ -199,7 +199,7 @@ class Index extends Core\Modules\Controller\Admin
             $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
             $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target, $news['target']));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id)));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))));
 
             $this->view->assign('form', array_merge($news, $this->request->getPost()->getAll()));
 
@@ -309,7 +309,7 @@ class Index extends Core\Modules\Controller\Admin
         try {
             $this->newsValidator->validate(
                 $formData,
-                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id)
+                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))
             );
 
             $updateValues = [
@@ -326,17 +326,17 @@ class Index extends Core\Modules\Controller\Admin
                 'user_id' => $this->auth->getUserId(),
             ];
 
-            $bool = $this->newsModel->update($updateValues, $this->request->id);
+            $bool = $this->newsModel->update($updateValues, $this->request->getParameters()->get('id'));
 
             $this->seo->insertUriAlias(
-                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->id),
+                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
 
-            $this->newsCache->setCache($this->request->id);
+            $this->newsCache->setCache($this->request->getParameters()->get('id'));
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
