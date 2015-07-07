@@ -93,7 +93,7 @@ class Index extends Core\Modules\Controller\Frontend
             $this->_indexPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(['mail' => ''], $_POST));
+        $this->view->assign('form', array_merge(['mail' => ''], $this->request->getPost()->getAll()));
 
         $field_value = $this->request->action ? $this->request->action : 'subscribe';
 

@@ -119,7 +119,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -187,7 +187,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('current_file', $file['file']);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id)));
-            $this->view->assign('form', array_merge($file, $_POST));
+            $this->view->assign('form', array_merge($file, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {

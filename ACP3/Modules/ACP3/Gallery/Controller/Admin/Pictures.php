@@ -94,7 +94,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', array_merge(['description' => ''], $_POST));
+            $this->view->assign('form', array_merge(['description' => ''], $this->request->getPost()->getAll()));
             $this->view->assign('gallery_id', $this->request->id);
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
@@ -153,7 +153,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', array_merge($picture, $_POST));
+            $this->view->assign('form', array_merge($picture, $this->request->getPost()->getAll()));
             $this->view->assign('gallery_id', $this->request->id);
 
             $this->secureHelper->generateFormToken($this->request->getQuery());

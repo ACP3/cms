@@ -189,7 +189,10 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected function validatePassword(array $formData, $passwordField, $passwordConfirmationField)
     {
-        if (empty($formData[$passwordField]) || empty($formData[$passwordConfirmationField]) || $formData[$passwordField] != $formData[$passwordConfirmationField]) {
+        if (empty($formData[$passwordField]) ||
+            empty($formData[$passwordConfirmationField]) ||
+            $formData[$passwordField] !== $formData[$passwordConfirmationField]
+        ) {
             $this->errors[$passwordField] = $this->lang->t('users', 'type_in_pwd');
         }
     }

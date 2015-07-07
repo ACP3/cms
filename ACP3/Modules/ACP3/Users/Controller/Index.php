@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller\Frontend
                 $this->_forgotPasswordPost($_POST);
             }
 
-            $this->view->assign('form', array_merge(['nick_mail' => ''], $_POST));
+            $this->view->assign('form', array_merge(['nick_mail' => ''], $this->request->getPost()->getAll()));
 
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
@@ -179,7 +179,7 @@ class Index extends Core\Modules\Controller\Frontend
                 'mail' => '',
             ];
 
-            $this->view->assign('form', array_merge($defaults, $_POST));
+            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());

@@ -67,7 +67,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('date', $this->date->datepicker('date'));
         $this->view->assign('settings', $settings);
-        $this->view->assign('form', array_merge(['title' => '', 'text' => ''], $_POST));
+        $this->view->assign('form', array_merge(['title' => '', 'text' => ''], $this->request->getPost()->getAll()));
 
         $lang_test = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', [1, 0], $lang_test, 0, 'checked'));
@@ -109,7 +109,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('date', $this->date->datepicker('date', $newsletter['date']));
             $this->view->assign('settings', array_merge($settings, ['html' => $newsletter['html']]));
-            $this->view->assign('form', array_merge($newsletter, $_POST));
+            $this->view->assign('form', array_merge($newsletter, $this->request->getPost()->getAll()));
 
             $lang_test = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
             $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', [1, 0], $lang_test, 0, 'checked'));
@@ -176,7 +176,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $settings = $this->config->getSettings('newsletter');
 
-        $this->view->assign('form', array_merge($settings, $_POST));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
         $langHtml = [
             $this->lang->t('system', 'yes'),

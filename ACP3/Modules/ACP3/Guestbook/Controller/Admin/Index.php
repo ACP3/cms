@@ -105,7 +105,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('activate', $this->get('core.helpers.forms')->selectGenerator('active', [1, 0], $langActivate, $guestbook['active'], 'checked'));
             }
 
-            $this->view->assign('form', array_merge($guestbook, $_POST));
+            $this->view->assign('form', array_merge($guestbook, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
@@ -176,7 +176,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->selectGenerator('newsletter_integration', [1, 0], $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
         }
 
-        $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $_POST));
+        $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

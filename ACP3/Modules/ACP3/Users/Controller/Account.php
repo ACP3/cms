@@ -110,7 +110,7 @@ class Account extends Core\Modules\Controller\Frontend
         }
         $this->view->assign('countries', $countries_select);
 
-        $this->view->assign('form', array_merge($user, $_POST));
+        $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -153,7 +153,7 @@ class Account extends Core\Modules\Controller\Frontend
         ];
         $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $user['birthday_display'], 'checked'));
 
-        $this->view->assign('form', array_merge($user, $_POST));
+        $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

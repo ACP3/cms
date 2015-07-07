@@ -138,7 +138,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             $this->_sqlImportPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(['text' => ''], $_POST));
+        $this->view->assign('form', array_merge(['text' => ''], $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -150,7 +150,7 @@ class Maintenance extends Core\Modules\Controller\Admin
             $data = explode('||', $file);
             if (count($data) === 2) {
                 $update = [
-                    'installed_version' => Application::VERSION,
+                    'installed_version' => Core\ApplicationInterface::VERSION,
                     'current_version' => $data[0],
                 ];
 

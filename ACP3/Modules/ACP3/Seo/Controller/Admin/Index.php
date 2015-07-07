@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', array_merge(['uri' => ''], $_POST));
+        $this->view->assign('form', array_merge(['uri' => ''], $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -95,7 +95,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($seo['uri']));
 
-            $this->view->assign('form', array_merge(['uri' => $seo['uri']], $_POST));
+            $this->view->assign('form', array_merge(['uri' => $seo['uri']], $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
@@ -200,7 +200,7 @@ class Index extends Core\Modules\Controller\Admin
         $lang_modRewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('mod_rewrite', [1, 0], $lang_modRewrite, $seoSettings['mod_rewrite'], 'checked'));
 
-        $this->view->assign('form', array_merge($seoSettings, $_POST));
+        $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

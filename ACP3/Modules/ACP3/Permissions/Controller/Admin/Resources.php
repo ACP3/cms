@@ -69,7 +69,7 @@ class Resources extends Core\Modules\Controller\Admin
         }
         $this->view->assign('privileges', $privileges);
 
-        $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $_POST));
+        $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -114,7 +114,7 @@ class Resources extends Core\Modules\Controller\Admin
                 'controller' => $resource['controller'],
                 'modules' => $resource['module_name']
             ];
-            $this->view->assign('form', array_merge($defaults, $_POST));
+            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {

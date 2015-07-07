@@ -63,7 +63,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(['name' => ''], $_POST));
+        $this->view->assign('form', array_merge(['name' => ''], $this->request->getPost()->getAll()));
 
         $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
@@ -189,7 +189,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('modules', $modules);
 
-            $this->view->assign('form', array_merge($role, $_POST));
+            $this->view->assign('form', array_merge($role, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {

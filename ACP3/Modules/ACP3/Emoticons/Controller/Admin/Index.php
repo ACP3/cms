@@ -56,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $_POST));
+        $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -129,7 +129,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->_editPost($_POST, $emoticon);
             }
 
-            $this->view->assign('form', array_merge($emoticon, $_POST));
+            $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
@@ -199,7 +199,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_settingsPost($_POST);
         }
 
-        $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $_POST));
+        $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

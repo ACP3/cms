@@ -172,7 +172,7 @@ class Index extends Core\Modules\Controller\Admin
             'date_format_short' => $systemSettings['date_format_short']
         ];
 
-        $this->view->assign('form', array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
         $this->secureHelpers->generateFormToken($this->request->getQuery());
     }
@@ -301,7 +301,7 @@ class Index extends Core\Modules\Controller\Admin
             ];
             $this->view->assign('birthday_display', $this->formsHelpers->selectGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $user['birthday_display'], 'checked'));
 
-            $this->view->assign('form', array_merge($user, $_POST));
+            $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
             $this->secureHelpers->generateFormToken($this->request->getQuery());
         } else {
@@ -326,7 +326,7 @@ class Index extends Core\Modules\Controller\Admin
         $lang_registration = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('registration', $this->formsHelpers->selectGenerator('enable_registration', [1, 0], $lang_registration, $settings['enable_registration'], 'checked'));
 
-        $this->view->assign('form', array_merge(['mail' => $settings['mail']], $_POST));
+        $this->view->assign('form', array_merge(['mail' => $settings['mail']], $this->request->getPost()->getAll()));
 
         $this->secureHelpers->generateFormToken($this->request->getQuery());
     }

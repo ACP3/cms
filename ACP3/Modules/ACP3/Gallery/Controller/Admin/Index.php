@@ -78,7 +78,7 @@ class Index extends Core\Modules\Controller\Admin
         $defaults = [
             'title' => '',
         ];
-        $this->view->assign('form', array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -130,7 +130,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->view->assign('gallery_id', $this->request->id);
             $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$gallery['start'], $gallery['end']]));
-            $this->view->assign('form', array_merge($gallery, $_POST));
+            $this->view->assign('form', array_merge($gallery, $this->request->getPost()->getAll()));
 
             $this->_actionEditPictures();
 
@@ -198,7 +198,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 
-        $this->view->assign('form', array_merge($settings, $_POST));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

@@ -51,7 +51,7 @@ class Index extends Core\Modules\Controller\Frontend
             );
         }
 
-        $this->view->assign('form', array_merge(['search_term' => ''], $_POST));
+        $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->getAll()));
 
         $this->view->assign('search_mods', $this->searchHelpers->getModules());
 

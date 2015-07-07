@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
         ];
         $this->view->assign('mailer_smtp_security', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailerSmtpSecurity, $systemSettings['mailer_smtp_security']));
 
-        $this->view->assign('form', array_merge($systemSettings, $_POST));
+        $this->view->assign('form', array_merge($systemSettings, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

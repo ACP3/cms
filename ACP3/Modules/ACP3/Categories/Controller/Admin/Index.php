@@ -56,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $_POST));
+        $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $this->request->getPost()->getAll()));
 
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
@@ -161,7 +161,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->_editPost($_POST, $category);
             }
 
-            $this->view->assign('form', array_merge($category, $_POST));
+            $this->view->assign('form', array_merge($category, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {
@@ -237,7 +237,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $settings = $this->config->getSettings('categories');
 
-        $this->view->assign('form', array_merge($settings, $_POST));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

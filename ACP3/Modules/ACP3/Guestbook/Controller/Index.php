@@ -168,7 +168,7 @@ class Index extends Core\Modules\Controller\Frontend
             $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
         }
 
-        $this->view->assign('form', array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());

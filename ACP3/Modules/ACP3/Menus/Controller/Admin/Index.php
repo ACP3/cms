@@ -70,7 +70,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->_createPost($_POST);
         }
 
-        $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $_POST));
+        $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -116,7 +116,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->_editPost($_POST);
             }
 
-            $this->view->assign('form', array_merge($menu, $_POST));
+            $this->view->assign('form', array_merge($menu, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {

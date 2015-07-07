@@ -44,7 +44,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $settings = $this->config->getSettings('contact');
 
-        $this->view->assign('form', array_merge($settings, $_POST));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }

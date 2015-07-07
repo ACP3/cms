@@ -118,7 +118,7 @@ class Details extends Core\Modules\Controller\Admin
                 $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
             }
 
-            $this->view->assign('form', array_merge($comment, $_POST));
+            $this->view->assign('form', array_merge($comment, $this->request->getPost()->getAll()));
             $this->view->assign('module_id', (int)$comment['module_id']);
 
             $this->secureHelper->generateFormToken($this->request->getQuery());

@@ -84,7 +84,7 @@ class Index extends Core\Modules\Controller\Frontend
             $defaults['mail_disabled'] = $disabled;
         }
 
-        $this->view->assign('form', array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
         $this->view->assign('copy_checked', $this->get('core.helpers.forms')->selectEntry('copy', 1, 0, 'checked'));
         $this->view->assign('contact', $this->config->getSettings('contact'));
 

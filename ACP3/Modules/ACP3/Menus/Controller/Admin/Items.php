@@ -130,7 +130,7 @@ class Items extends Core\Modules\Controller\Admin
 
         $this->view->assign($this->menusHelpers->createMenuItemFormFields());
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-        $this->view->assign('form', array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
@@ -216,7 +216,7 @@ class Items extends Core\Modules\Controller\Admin
                 )
             );
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
-            $this->view->assign('form', array_merge($menuItem, $_POST));
+            $this->view->assign('form', array_merge($menuItem, $this->request->getPost()->getAll()));
 
             $this->secureHelper->generateFormToken($this->request->getQuery());
         } else {

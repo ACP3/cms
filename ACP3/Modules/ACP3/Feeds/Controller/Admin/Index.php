@@ -51,7 +51,7 @@ class Index extends Core\Modules\Controller\Admin
         ];
         $this->view->assign('feed_types', $this->get('core.helpers.forms')->selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']));
 
-        $this->view->assign('form', array_merge($settings, $_POST));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
         $this->secureHelper->generateFormToken($this->request->getQuery());
     }
