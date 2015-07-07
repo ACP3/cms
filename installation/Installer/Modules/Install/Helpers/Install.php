@@ -3,7 +3,7 @@
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 
 /**
@@ -23,26 +23,24 @@ class Install
     public function writeConfigFile($configFilePath, array $data)
     {
         if (is_writable($configFilePath) === true) {
-            // Konfigurationsdatei in ein Array schreiben
             ksort($data);
 
             $dumper = new Dumper();
-
             $yaml = $dumper->dump($data);
 
-            $bool = @file_put_contents($configFilePath, $yaml, LOCK_EX);
-            return $bool !== false;
+            return file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
         }
+
         return false;
     }
 
     /**
-     * @param           $module
-     * @param Container $container
+     * @param                                                           $module
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      *
      * @return bool
      */
-    public function installModule($module, Container $container)
+    public function installModule($module, ContainerInterface $container)
     {
         $bool = false;
         $serviceId = $module . '.installer';
@@ -58,8 +56,9 @@ class Install
     }
 
     /**
-     * @param array $queries
-     * @param Core\DB $db
+     * @param array         $queries
+     * @param \ACP3\Core\DB $db
+     *
      * @return bool
      * @throws \Doctrine\DBAL\ConnectionException
      */

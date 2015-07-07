@@ -2,10 +2,9 @@
 
 namespace ACP3\Installer\Modules\Install\Controller;
 
-use ACP3\Core\Config;
+use ACP3\Core\Functions;
 use ACP3\Installer\Core\Date;
 use ACP3\Core\Exceptions\ValidationFailed;
-use ACP3\Core\Helpers\Secure;
 use ACP3\Installer\Core;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
 use Symfony\Component\Config\FileLocator;
@@ -204,7 +203,7 @@ class Install extends AbstractController
         $salt = $securityHelper->salt(12);
         $currentDate = gmdate('Y-m-d H:i:s');
 
-        $newsModuleId = $this->db->getConnection()->fetchColumn('SELECT `id` FROM ' . $this->db->getPrefix() . 'modules WHERE `name` = ?', ['news']);
+        $newsModuleId = $this->db->getConnection()->fetchColumn("SELECT `id` FROM `{$this->db->getPrefix()}modules` WHERE `name` = ?", ['news']);
         $queries = [
             "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->getConnection()->quote($formData["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->getConnection()->quote($formData["date_format_long"]) . ", " . $this->db->getConnection()->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
             'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('install', 'category_name') . '\', \'\', \'' . $this->lang->t('install', 'category_description') . '\', \'' . $newsModuleId . '\');',
@@ -228,8 +227,8 @@ class Install extends AbstractController
 
         // Modulkonfigurationsdateien schreiben
         $systemSettings = [
-            'date_format_long' => \ACP3\Core\Functions::strEncode($formData['date_format_long']),
-            'date_format_short' => \ACP3\Core\Functions::strEncode($formData['date_format_short']),
+            'date_format_long' => Functions::strEncode($formData['date_format_long']),
+            'date_format_short' => Functions::strEncode($formData['date_format_short']),
             'date_time_zone' => $formData['date_time_zone'],
             'maintenance_message' => $this->lang->t('install', 'offline_message'),
             'lang' => LANG
