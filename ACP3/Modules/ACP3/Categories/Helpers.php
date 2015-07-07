@@ -22,6 +22,10 @@ class Helpers
      */
     protected $modules;
     /**
+     * @var \ACP3\Core\RequestInterface
+     */
+    protected $request;
+    /**
      * @var Core\View
      */
     protected $view;
@@ -39,11 +43,12 @@ class Helpers
     protected $formsHelper;
 
     /**
-     * @param \ACP3\Core\ACL                 $acl
-     * @param \ACP3\Core\Lang                $lang
-     * @param \ACP3\Core\Modules             $modules
-     * @param \ACP3\Core\View                $view
-     * @param \ACP3\Core\Helpers\Forms       $formsHelper
+     * @param \ACP3\Core\ACL                      $acl
+     * @param \ACP3\Core\Lang                     $lang
+     * @param \ACP3\Core\Modules                  $modules
+     * @param \ACP3\Core\RequestInterface         $request
+     * @param \ACP3\Core\View                     $view
+     * @param \ACP3\Core\Helpers\Forms            $formsHelper
      * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Model $categoriesModel
      */
@@ -51,14 +56,17 @@ class Helpers
         Core\ACL $acl,
         Core\Lang $lang,
         Core\Modules $modules,
+        Core\RequestInterface $request,
         Core\View $view,
         Core\Helpers\Forms $formsHelper,
         Cache $categoriesCache,
         Model $categoriesModel
-    ) {
+    )
+    {
         $this->acl = $acl;
         $this->lang = $lang;
         $this->modules = $modules;
+        $this->request = $request;
         $this->view = $view;
         $this->formsHelper = $formsHelper;
         $this->categoriesCache = $categoriesCache;
@@ -150,7 +158,7 @@ class Helpers
         }
         if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
             $categories['create']['name'] = $formFieldName . '_create';
-            $categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
+            $categories['create']['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
         }
         $this->view->assign('categories', $categories);
         return $this->view->fetchTemplate('categories/create_list.tpl');

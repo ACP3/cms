@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('options', $options);
         }
 
-        $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
+        $this->view->assign('checked_external', $this->request->getPost()->has('external') ? ' checked="checked"' : '');
 
         $defaults = [
             'title' => '',
@@ -183,7 +183,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
+            $this->view->assign('checked_external', $this->request->getPost()->has('external') ? ' checked="checked"' : '');
             $this->view->assign('current_file', $file['file']);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->id)));

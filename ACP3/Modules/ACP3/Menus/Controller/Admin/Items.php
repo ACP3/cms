@@ -199,7 +199,7 @@ class Items extends Core\Modules\Controller\Admin
 
             if ($this->articlesHelpers) {
                 $matches = [];
-                if (!empty($_POST) === false && $menuItem['mode'] == 4) {
+                if ($this->request->getPost()->isEmpty() && $menuItem['mode'] == 4) {
                     preg_match_all(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }
 

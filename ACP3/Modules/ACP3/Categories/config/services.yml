@@ -25,7 +25,7 @@ services:
 
   categories.helpers:
     class: %categories.helpers.fqdn%
-    arguments: ['@core.acl', '@core.lang', '@core.modules', '@core.view', '@core.helpers.forms', '@categories.cache', '@categories.model']
+    arguments: ['@core.acl', '@core.lang', '@core.modules', @core.request, '@core.view', '@core.helpers.forms', '@categories.cache', '@categories.model']
 
   categories.validator:
     class: %categories.validator.fqdn%

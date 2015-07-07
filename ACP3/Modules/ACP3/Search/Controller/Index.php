@@ -45,10 +45,10 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        if (empty($_POST) === false || isset($this->request->q)) {
-            $this->_indexPost(
-                (empty($_POST) === false) ? $_POST : ['search_term' => $this->request->q]
-            );
+        if ($this->request->getPost()->isEmpty() === false) {
+            $this->_indexPost($this->request->getPost()->getAll());
+        } elseif (isset($this->request->q)) {
+            $this->_indexPost(['search_term' => $this->request->q]);
         }
 
         $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->getAll()));

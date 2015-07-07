@@ -141,7 +141,11 @@ class Index extends Core\Modules\Controller\Frontend
         if ($this->auth->isUser() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($this->request->getPost()->isEmpty() === false) {
-            $result = $this->auth->login(Core\Functions::strEncode($_POST['nickname']), $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
+            $result = $this->auth->login(
+                Core\Functions::strEncode($this->request->getPost()->get('nickname', '')),
+                $this->request->getPost()->get('pwd', ''),
+                $this->request->getPost()->has('remember') ? 31104000 : 3600
+            );
             if ($result == 1) {
                 if ($this->request->redirect) {
                     $this->redirect()->temporary(base64_decode($this->request->redirect));

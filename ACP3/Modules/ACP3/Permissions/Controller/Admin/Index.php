@@ -83,13 +83,13 @@ class Index extends Core\Modules\Controller\Admin
                 // Für jede Privilegie ein Input-Feld zuweisen
                 $select = [];
                 $select[0]['value'] = 0;
-                $select[0]['selected'] = empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
+                $select[0]['selected'] = $this->request->getPost()->isEmpty() === false && $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
                 $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');
                 $select[1]['value'] = 1;
-                $select[1]['selected'] = empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
+                $select[1]['selected'] = $this->request->getPost()->isEmpty() === false && $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
                 $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
                 $select[2]['value'] = 2;
-                $select[2]['selected'] = !empty($_POST) === false || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
+                $select[2]['selected'] = $this->request->getPost()->isEmpty() || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
                 $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
                 $privileges[$j]['select'] = $select;
             }
@@ -171,14 +171,14 @@ class Index extends Core\Modules\Controller\Admin
                     $privilegeValue = isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? $rules[$moduleDir][$privileges[$j]['key']]['permission'] : 0;
                     $select = [];
                     $select[0]['value'] = 0;
-                    $select[0]['selected'] = !empty($_POST) === false && $privilegeValue == 0 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
+                    $select[0]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 0 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
                     $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');
                     $select[1]['value'] = 1;
-                    $select[1]['selected'] = !empty($_POST) === false && $privilegeValue == 1 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
+                    $select[1]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 1 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
                     $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
                     if ($this->request->id != 1) {
                         $select[2]['value'] = 2;
-                        $select[2]['selected'] = !empty($_POST) === false && $privilegeValue == 2 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
+                        $select[2]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 2 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
                         $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
                         //$privileges[$j]['calculated'] = sprintf($this->lang->t('permissions', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $this->lang->t('permissions', 'allow_access') :  $this->lang->t('permissions', 'deny_access'));
                     }

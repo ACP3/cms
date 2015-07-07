@@ -52,21 +52,22 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (isset($_POST['submit']) === true) {
+        if ($this->request->getPost()->has('submit')) {
             $this->_createPost($this->request->getPost()->getAll());
         }
 
         $answers = [];
-        if (isset($_POST['answers'])) {
+        if ($this->request->getPost()->has('answers')) {
             // Bisherige Antworten
             $i = 0;
-            foreach ($_POST['answers'] as $row) {
+            $answersPost = $this->request->getPost()->get('answers', []);
+            foreach ($answersPost as $row) {
                 $answers[$i]['number'] = $i;
                 $answers[$i]['value'] = $row;
                 ++$i;
             }
             // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-            if (!empty($_POST['answers'][$i - 1])) {
+            if (!empty($answersPost[$i - 1])) {
                 $answers[$i]['number'] = $i;
                 $answers[$i]['value'] = '';
             }
@@ -114,23 +115,24 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($poll) === false) {
             $this->breadcrumb->setTitlePostfix($poll['title']);
 
-            if (isset($_POST['submit']) === true) {
+            if ($this->request->getPost()->has('submit')) {
                 $this->_editPost($this->request->getPost()->getAll());
             }
 
             $answers = [];
             // Neue Antworten hinzufügen
-            if (isset($_POST['answers'])) {
+            if ($this->request->getPost()->has('answers')) {
                 // Bisherige Antworten
                 $i = 0;
-                foreach ($_POST['answers'] as $row) {
+                $answersPost = $this->request->getPost()->get('answers', []);
+                foreach ($answersPost as $row) {
                     $answers[$i]['number'] = $i;
                     $answers[$i]['id'] = $row['id'];
                     $answers[$i]['value'] = $row['value'];
                     ++$i;
                 }
                 // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-                if (!empty($_POST['answers'][$i - 1]['value'])) {
+                if (!empty($answersPost[$i - 1]['value'])) {
                     $answers[$i]['number'] = $i;
                     $answers[$i]['id'] = '0';
                     $answers[$i]['value'] = '';

@@ -123,8 +123,8 @@ class Index extends Core\Modules\Controller\Frontend
 
     public function actionIndex()
     {
-        if (isset($_POST['cat']) && $this->get('core.validator.rules.misc')->isNumber($_POST['cat']) === true) {
-            $cat = (int)$_POST['cat'];
+        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getPost()->get('cat')) === true) {
+            $cat = (int)$this->request->getPost()->get('cat');
         } elseif ($this->get('core.validator.rules.misc')->isNumber($this->request->cat) === true) {
             $cat = (int)$this->request->cat;
         } else {

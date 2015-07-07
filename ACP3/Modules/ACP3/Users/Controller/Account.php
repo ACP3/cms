@@ -169,7 +169,7 @@ class Account extends Core\Modules\Controller\Frontend
     {
         if ($this->request->getPost()->isEmpty() === false) {
             $updateValues = [
-                'draft' => Core\Functions::strEncode($_POST['draft'], true)
+                'draft' => Core\Functions::strEncode($this->request->getPost()->get('draft', ''), true)
             ];
             $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
