@@ -10,7 +10,7 @@ use ACP3\Core;
 class RedirectMessages
 {
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     private $request;
     /**
@@ -28,13 +28,13 @@ class RedirectMessages
 
     /**
      * @param \ACP3\Core\Redirect         $redirect
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\SessionHandler   $sessionHandler
      * @param \ACP3\Core\View             $view
      */
     public function __construct(
         Core\Redirect $redirect,
-        Core\RequestInterface $request,
+        Core\Http\RequestInterface $request,
         Core\SessionHandler $sessionHandler,
         Core\View $view
     )

@@ -1,14 +1,15 @@
 <?php
 
-namespace ACP3\Core\Modules\Controller;
+namespace ACP3\Core\Modules;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Controller\Context;
 
 /**
- * Class Admin
- * @package ACP3\Core\Modules\Controller
+ * Class AdminController
+ * @package ACP3\Core\Modules
  */
-abstract class Admin extends Core\Modules\Controller\Frontend
+abstract class AdminController extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\SessionHandler
@@ -20,9 +21,9 @@ abstract class Admin extends Core\Modules\Controller\Frontend
     protected $validate;
 
     /**
-     * @param \ACP3\Core\Context\Admin $adminContext
+     * @param \ACP3\Core\Modules\Controller\AdminContext $adminContext
      */
-    public function __construct(Core\Context\Admin $adminContext)
+    public function __construct(Controller\AdminContext $adminContext)
     {
         parent::__construct($adminContext);
 

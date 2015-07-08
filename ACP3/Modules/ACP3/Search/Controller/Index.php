@@ -3,13 +3,14 @@
 namespace ACP3\Modules\ACP3\Search\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Search;
 
 /**
  * Class Index
  * @package ACP3\Modules\ACP3\Search\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Modules\ACP3\Search\Helpers
@@ -25,13 +26,13 @@ class Index extends Core\Modules\Controller\Frontend
     protected $searchExtensions;
 
     /**
-     * @param \ACP3\Core\Context\Frontend          $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
      * @param \ACP3\Modules\ACP3\Search\Helpers    $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validator  $searchValidator
      * @param \ACP3\Modules\ACP3\Search\Extensions $searchExtensions
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Search\Helpers $searchHelpers,
         Search\Validator $searchValidator,
         Search\Extensions $searchExtensions)

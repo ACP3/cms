@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\System;
  * Class Details
  * @package ACP3\Modules\ACP3\Comments\Controller\Admin
  */
-class Details extends Core\Modules\Controller\Admin
+class Details extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model
@@ -35,14 +35,14 @@ class Details extends Core\Modules\Controller\Admin
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin              $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
      * @param \ACP3\Modules\ACP3\Comments\Model     $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validator $commentsValidator
      * @param \ACP3\Modules\ACP3\System\Model       $systemModel
      * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
         System\Model $systemModel,

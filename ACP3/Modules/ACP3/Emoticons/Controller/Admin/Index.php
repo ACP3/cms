@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Emoticons;
  * Class Index
  * @package ACP3\Modules\ACP3\Emoticons\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -29,14 +29,14 @@ class Index extends Core\Modules\Controller\Admin
     protected $emoticonsCache;
 
     /**
-     * @param \ACP3\Core\Context\Admin               $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext               $context
      * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Emoticons\Model     $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validator $emoticonsValidator
      * @param \ACP3\Modules\ACP3\Emoticons\Cache     $emoticonsCache
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model $emoticonsModel,
         Emoticons\Validator $emoticonsValidator,

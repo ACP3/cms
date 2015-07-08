@@ -3,7 +3,7 @@
 namespace ACP3\Installer\Core\Modules;
 
 use ACP3\Core\Redirect;
-use ACP3\Installer\Core\Context;
+use ACP3\Installer\Core\Modules\Controller\Context;
 
 /**
  * Module Controller of the installer modules
@@ -20,7 +20,7 @@ class Controller
      */
     protected $lang;
     /**
-     * @var \ACP3\Installer\Core\Request
+     * @var \ACP3\Installer\Core\Http\Request
      */
     protected $request;
     /**
@@ -59,6 +59,9 @@ class Controller
      */
     protected $contentAppend = '';
 
+    /**
+     * @param \ACP3\Installer\Core\Modules\Controller\Context $context
+     */
     public function __construct(Context $context)
     {
         $this->lang = $context->getLang();

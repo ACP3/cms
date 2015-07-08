@@ -18,17 +18,17 @@ class Alerts
      */
     protected $view;
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
 
     /**
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\View             $view
      * @param \ACP3\Core\Helpers\Output   $outputHelper
      */
     public function __construct(
-        Core\RequestInterface $request,
+        Core\Http\RequestInterface $request,
         Core\View $view,
         Core\Helpers\Output $outputHelper
     ) {

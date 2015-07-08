@@ -10,7 +10,7 @@ use ACP3\Core;
 class FormToken
 {
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -23,12 +23,12 @@ class FormToken
     protected $view;
 
     /**
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\SessionHandler   $sessionHandler
      * @param \ACP3\Core\View             $view
      */
     public function __construct(
-        Core\RequestInterface $request,
+        Core\Http\RequestInterface $request,
         Core\SessionHandler $sessionHandler,
         Core\View $view
     )

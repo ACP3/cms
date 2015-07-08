@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Index
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\DB
@@ -33,7 +33,7 @@ class Index extends Core\Modules\Controller\Admin
     protected $permissionsValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin                 $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
      * @param \ACP3\Core\DB                            $db
      * @param \ACP3\Core\Helpers\FormToken             $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model     $permissionsModel
@@ -41,7 +41,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\ACP3\Permissions\Validator $permissionsValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\DB $db,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model $permissionsModel,

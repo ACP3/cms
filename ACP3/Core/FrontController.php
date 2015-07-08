@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -72,7 +73,7 @@ class FrontController
      * Checks, whether there is an URI alias available for the current request.
      * If so, set the alias as the canonical URI
      *
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      */
     private function _checkForUriAlias(RequestInterface $request)
     {

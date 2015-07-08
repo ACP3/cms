@@ -23,7 +23,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\Request
      */
     protected $request;
     /**

@@ -18,11 +18,11 @@ class Index extends Core\Modules\Controller
     protected $modules;
 
     /**
-     * @param \ACP3\Installer\Core\Context $context
+     * @param \ACP3\Installer\Core\Modules\Controller\Context $context
      * @param \ACP3\Core\Modules           $modules
      */
     public function __construct(
-        Core\Context $context,
+        Core\Modules\Controller\Context $context,
         Modules $modules
     ) {
         parent::__construct($context);

@@ -23,7 +23,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\Request
      */
     protected $request;
     /**
@@ -37,7 +37,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
      * @param Core\Validator\Rules\Date $dateValidator
      * @param Core\Modules $modules
-     * @param Core\Request $request
+     * @param \ACP3\Core\Http\Request $request
      * @param Categories\Helpers $categoriesHelpers
      */
     public function __construct(
@@ -46,7 +46,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Date $dateValidator,
         Core\Modules $modules,
-        Core\Request $request,
+        Core\Http\Request $request,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($lang, $validate);

@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Newsletter;
 
@@ -10,7 +11,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Index
  * @package ACP3\Modules\ACP3\Newsletter\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -34,14 +35,14 @@ class Index extends Core\Modules\Controller\Frontend
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Frontend             $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext             $context
      * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Helpers   $newsletterHelpers
      * @param \ACP3\Modules\ACP3\Newsletter\Model     $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validator $newsletterValidator
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helpers $newsletterHelpers,
         Newsletter\Model $newsletterModel,

@@ -2,7 +2,7 @@
 
 namespace ACP3\Core\Validator\Rules;
 
-use ACP3\Core\RequestInterface;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\SessionHandler;
 
 /**
@@ -12,7 +12,7 @@ use ACP3\Core\SessionHandler;
 class Misc
 {
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -21,7 +21,7 @@ class Misc
     protected $sessionHandler;
 
     /**
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\SessionHandler   $sessionHandler
      */
     public function __construct(

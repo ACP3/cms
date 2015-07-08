@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\System;
 
@@ -18,7 +19,7 @@ class Router
      */
     protected $aliases;
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -28,7 +29,7 @@ class Router
 
     /**
      * @param \ACP3\Core\Router\Aliases   $aliases
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Config           $config
      */
     public function __construct(

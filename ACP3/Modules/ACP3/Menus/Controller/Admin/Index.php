@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Index
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\DB
@@ -37,7 +37,7 @@ class Index extends Core\Modules\Controller\Admin
     protected $menusValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext           $context
      * @param \ACP3\Core\DB                      $db
      * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Helpers   $menusHelpers
@@ -46,7 +46,7 @@ class Index extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\ACP3\Menus\Validator $menusValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\DB $db,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Helpers $menusHelpers,

@@ -3,13 +3,14 @@
 namespace ACP3\Modules\ACP3\Articles\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Articles;
 
 /**
  * Class Index
  * @package ACP3\Modules\ACP3\Articles\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\Date
@@ -33,7 +34,7 @@ class Index extends Core\Modules\Controller\Frontend
     protected $articlesCache;
 
     /**
-     * @param \ACP3\Core\Context\Frontend        $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext        $context
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Pagination              $pagination
      * @param \ACP3\Core\Helpers\TableOfContents $toc
@@ -41,7 +42,7 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Modules\ACP3\Articles\Cache       $articlesCache
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
         Core\Helpers\TableOfContents $toc,

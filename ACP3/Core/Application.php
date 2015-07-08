@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Logger as ACP3Logger;
 use Monolog\ErrorHandler;
@@ -102,7 +103,7 @@ class Application extends AbstractApplication
     /**
      * Checks, whether the maintenance mode is active
      *
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      *
      * @return bool
      */
@@ -197,7 +198,7 @@ class Application extends AbstractApplication
      */
     public function outputPage()
     {
-        /** @var \ACP3\Core\Request $request */
+        /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.request');
         $request->processQuery();
 

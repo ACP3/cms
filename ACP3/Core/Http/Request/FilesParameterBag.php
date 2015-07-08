@@ -1,9 +1,9 @@
 <?php
-namespace ACP3\Core\Request;
+namespace ACP3\Core\Http\Request;
 
 /**
  * Class FilesParameterBag
- * @package ACP3\Core\Request
+ * @package ACP3\Core\Http\Request
  */
 class FilesParameterBag extends ParameterBag
 {

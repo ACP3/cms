@@ -31,7 +31,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\Request
      */
     protected $request;
     /**
@@ -51,7 +51,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param \ACP3\Core\Auth                    $auth
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Modules                 $modules
-     * @param \ACP3\Core\Request                 $request
+     * @param \ACP3\Core\Http\Request                 $request
      * @param \ACP3\Modules\ACP3\Guestbook\Model $guestbookModel
      */
     public function __construct(
@@ -62,7 +62,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Auth $auth,
         Core\Date $date,
         Core\Modules $modules,
-        Core\Request $request,
+        Core\Http\Request $request,
         Model $guestbookModel)
     {
         parent::__construct($lang, $validate);

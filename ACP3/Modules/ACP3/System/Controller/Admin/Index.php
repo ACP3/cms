@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\System;
  * Class Index
  * @package ACP3\Modules\ACP3\System\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\Date
@@ -29,14 +29,14 @@ class Index extends Core\Modules\Controller\Admin
     protected $systemValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin            $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
      * @param \ACP3\Core\Date                     $date
      * @param \ACP3\Core\Helpers\FormToken        $formTokenHelper
      * @param \ACP3\Modules\ACP3\System\Model     $systemModel
      * @param \ACP3\Modules\ACP3\System\Validator $systemValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         System\Model $systemModel,

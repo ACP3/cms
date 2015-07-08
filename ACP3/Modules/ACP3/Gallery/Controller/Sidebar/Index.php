@@ -21,12 +21,12 @@ class Index extends Core\Modules\Controller
     protected $galleryModel;
 
     /**
-     * @param \ACP3\Core\Context          $context
+     * @param \ACP3\Core\Modules\Controller\Context          $context
      * @param \ACP3\Core\Date             $date
      * @param \ACP3\Modules\ACP3\Gallery\Model $galleryModel
      */
     public function __construct(
-        Core\Context $context,
+        Core\Modules\Controller\Context $context,
         Core\Date $date,
         Gallery\Model $galleryModel)
     {

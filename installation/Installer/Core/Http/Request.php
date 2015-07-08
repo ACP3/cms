@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Installer\Core;
+namespace ACP3\Installer\Core\Http;
 
 use ACP3\Core;
 
 /**
  * Class Request
- * @package ACP3\Installer\Core
+ * @package ACP3\Installer\Core\Http
  */
-class Request extends Core\Request
+class Request extends Core\Http\Request
 {
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile

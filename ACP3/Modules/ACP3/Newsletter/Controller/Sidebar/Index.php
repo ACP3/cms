@@ -21,11 +21,11 @@ class Index extends Core\Modules\Controller
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Context           $context
+     * @param \ACP3\Core\Modules\Controller\Context           $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
-        Core\Context $context,
+        Core\Modules\Controller\Context $context,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

@@ -3,13 +3,14 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Newsletter;
 
 /**
  * Class Archive
  * @package ACP3\Modules\ACP3\Newsletter\Controller
  */
-class Archive extends Core\Modules\Controller\Frontend
+class Archive extends Core\Modules\FrontendController
 {
     /**
      * @var Core\Pagination
@@ -21,12 +22,12 @@ class Archive extends Core\Modules\Controller\Frontend
     protected $newsletterModel;
 
     /**
-     * @param Core\Context\Frontend $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
      * @param Core\Pagination $pagination
      * @param Newsletter\Model $newsletterModel
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Pagination $pagination,
         Newsletter\Model $newsletterModel)
     {

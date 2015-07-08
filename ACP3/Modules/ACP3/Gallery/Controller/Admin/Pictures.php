@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Pictures
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin
  */
-class Pictures extends Core\Modules\Controller\Admin
+class Pictures extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\Date
@@ -41,7 +41,7 @@ class Pictures extends Core\Modules\Controller\Admin
     protected $galleryValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin             $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
      * @param \ACP3\Core\Date                      $date
      * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
      * @param \ACP3\Core\Helpers\Sort              $sortHelper
@@ -51,7 +51,7 @@ class Pictures extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\ACP3\Gallery\Validator $galleryValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Sort $sortHelper,

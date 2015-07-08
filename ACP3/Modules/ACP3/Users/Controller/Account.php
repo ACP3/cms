@@ -3,13 +3,14 @@
 namespace ACP3\Modules\ACP3\Users\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Users;
 
 /**
  * Class Account
  * @package ACP3\Modules\ACP3\Users\Controller
  */
-class Account extends Core\Modules\Controller\Frontend
+class Account extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\Date
@@ -33,7 +34,7 @@ class Account extends Core\Modules\Controller\Frontend
     protected $usersValidator;
 
     /**
-     * @param \ACP3\Core\Context\Frontend        $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext        $context
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure          $secureHelper
@@ -41,7 +42,7 @@ class Account extends Core\Modules\Controller\Frontend
      * @param \ACP3\Modules\ACP3\Users\Validator $usersValidator
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,

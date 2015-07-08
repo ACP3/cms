@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Contact\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Contact;
 
@@ -10,7 +11,7 @@ use ACP3\Modules\ACP3\Contact;
  * Class Index
  * @package ACP3\Modules\ACP3\Contact\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -30,13 +31,13 @@ class Index extends Core\Modules\Controller\Frontend
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Frontend          $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
      * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
      * @param \ACP3\Core\Helpers\SendEmail         $sendEmailHelper
      * @param \ACP3\Modules\ACP3\Contact\Validator $contactValidator
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
         Contact\Validator $contactValidator)

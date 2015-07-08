@@ -22,12 +22,12 @@ class Index extends Core\Modules\Controller
     protected $filesModel;
 
     /**
-     * @param \ACP3\Core\Context        $context
+     * @param \ACP3\Core\Modules\Controller\Context        $context
      * @param \ACP3\Core\Date           $date
      * @param \ACP3\Modules\ACP3\Files\Model $filesModel
      */
     public function __construct(
-        Core\Context $context,
+        Core\Modules\Controller\Context $context,
         Core\Date $date,
         Files\Model $filesModel)
     {

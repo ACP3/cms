@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Index
  * @package ACP3\Modules\ACP3\Acp\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     public function actionIndex()
     {

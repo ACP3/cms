@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Polls;
  * Class Index
  * @package ACP3\Modules\ACP3\Polls\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var Core\Date
@@ -29,14 +29,14 @@ class Index extends Core\Modules\Controller\Admin
     protected $pollsValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext           $context
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Polls\Model     $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Validator $pollsValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Polls\Model $pollsModel,

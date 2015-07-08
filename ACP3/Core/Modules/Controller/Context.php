@@ -1,9 +1,18 @@
 <?php
-namespace ACP3\Core;
+namespace ACP3\Core\Modules\Controller;
+
+use ACP3\Core\ACL;
+use ACP3\Core\Auth;
+use ACP3\Core\Config;
+use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Lang;
+use ACP3\Core\Modules;
+use ACP3\Core\Router;
+use ACP3\Core\View;
 
 /**
  * Class Context
- * @package ACP3\Core
+ * @package ACP3\Core\Modules\Controller
  */
 class Context
 {
@@ -24,7 +33,7 @@ class Context
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -41,14 +50,14 @@ class Context
     protected $config;
 
     /**
-     * @param \ACP3\Core\ACL              $acl
-     * @param \ACP3\Core\Auth             $auth
-     * @param \ACP3\Core\Lang             $lang
-     * @param \ACP3\Core\Modules          $modules
-     * @param \ACP3\Core\RequestInterface $request
-     * @param \ACP3\Core\Router           $router
-     * @param \ACP3\Core\View             $view
-     * @param \ACP3\Core\Config           $config
+     * @param \ACP3\Core\ACL                   $acl
+     * @param \ACP3\Core\Auth                  $auth
+     * @param \ACP3\Core\Lang                  $lang
+     * @param \ACP3\Core\Modules               $modules
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router                $router
+     * @param \ACP3\Core\View                  $view
+     * @param \ACP3\Core\Config                $config
      */
     public function __construct(
         ACL $acl,
@@ -59,7 +68,8 @@ class Context
         Router $router,
         View $view,
         Config $config
-    ) {
+    )
+    {
         $this->acl = $acl;
         $this->auth = $auth;
         $this->lang = $lang;
@@ -103,7 +113,7 @@ class Context
     }
 
     /**
-     * @return \ACP3\Core\Request
+     * @return \ACP3\Core\Http\Request
      */
     public function getRequest()
     {

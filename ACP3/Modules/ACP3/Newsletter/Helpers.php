@@ -19,7 +19,7 @@ class Helpers
      */
     protected $mailer;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\Request
      */
     protected $request;
     /**
@@ -42,7 +42,7 @@ class Helpers
     /**
      * @param \ACP3\Core\Lang                     $lang
      * @param \ACP3\Core\Mailer                   $mailer
-     * @param \ACP3\Core\Request                  $request
+     * @param \ACP3\Core\Http\Request                  $request
      * @param \ACP3\Core\Router                   $router
      * @param \ACP3\Core\Helpers\StringFormatter  $stringFormatter
      * @param \ACP3\Core\Config                   $config
@@ -51,7 +51,7 @@ class Helpers
     public function __construct(
         Core\Lang $lang,
         Core\Mailer $mailer,
-        Core\Request $request,
+        Core\Http\Request $request,
         Core\Router $router,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Config $config,

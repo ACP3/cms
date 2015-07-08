@@ -3,12 +3,13 @@
 namespace ACP3\Modules\ACP3\Captcha\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 
 /**
  * Class Index
  * @package ACP3\Modules\ACP3\Captcha\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\SessionHandler
@@ -16,11 +17,11 @@ class Index extends Core\Modules\Controller\Frontend
     protected $sessionHandler;
 
     /**
-     * @param \ACP3\Core\Context\Frontend $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
      * @param \ACP3\Core\SessionHandler   $sessionHandler
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\SessionHandler $sessionHandler
     )
     {

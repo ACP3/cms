@@ -3,13 +3,14 @@
 namespace ACP3\Modules\ACP3\Polls\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Polls;
 
 /**
  * Class Index
  * @package ACP3\Modules\ACP3\Polls\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var Core\Date
@@ -21,12 +22,12 @@ class Index extends Core\Modules\Controller\Frontend
     protected $pollsModel;
 
     /**
-     * @param Core\Context\Frontend $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
      * @param Core\Date $date
      * @param Polls\Model $pollsModel
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Polls\Model $pollsModel)
     {

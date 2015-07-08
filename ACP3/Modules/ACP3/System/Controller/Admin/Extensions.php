@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\System;
  * Class Extensions
  * @package ACP3\Modules\ACP3\System\Controller\Admin
  */
-class Extensions extends Core\Modules\Controller\Admin
+class Extensions extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\XML
@@ -30,14 +30,14 @@ class Extensions extends Core\Modules\Controller\Admin
     protected $permissionsCache;
 
     /**
-     * @param \ACP3\Core\Context\Admin        $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
      * @param \ACP3\Core\XML                  $xml
      * @param \ACP3\Modules\ACP3\System\Model      $systemModel
      * @param \ACP3\Modules\ACP3\System\Helpers    $systemHelpers
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\XML $xml,
         System\Model $systemModel,
         System\Helpers $systemHelpers,

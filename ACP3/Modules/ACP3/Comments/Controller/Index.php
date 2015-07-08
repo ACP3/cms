@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Emoticons;
@@ -11,7 +12,7 @@ use ACP3\Modules\ACP3\Emoticons;
  * Class Index
  * @package ACP3\Modules\ACP3\Comments\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\Date
@@ -59,7 +60,7 @@ class Index extends Core\Modules\Controller\Frontend
     protected $commentsSettings;
 
     /**
-     * @param \ACP3\Core\Context\Frontend           $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext           $context
      * @param \ACP3\Core\Date                       $date
      * @param \ACP3\Core\Pagination                 $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model     $commentsModel
@@ -67,7 +68,7 @@ class Index extends Core\Modules\Controller\Frontend
      * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
         Comments\Model $commentsModel,

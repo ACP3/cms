@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers;
-use ACP3\Core\Request;
-use ACP3\Core\RequestInterface;
+use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 
 /**
  * Class Forms
@@ -10,12 +10,12 @@ use ACP3\Core\RequestInterface;
 class Forms
 {
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
 
     /**
-     * @param \ACP3\Core\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(RequestInterface $request)
     {

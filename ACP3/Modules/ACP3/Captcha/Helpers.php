@@ -18,7 +18,7 @@ class Helpers
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\Request
      */
     protected $request;
     /**
@@ -36,7 +36,7 @@ class Helpers
 
     /**
      * @param \ACP3\Core\Auth           $auth
-     * @param \ACP3\Core\Request        $request
+     * @param \ACP3\Core\Http\Request        $request
      * @param \ACP3\Core\Router         $router
      * @param \ACP3\Core\SessionHandler $sessionHandler
      * @param \ACP3\Core\View           $view
@@ -44,7 +44,7 @@ class Helpers
      */
     public function __construct(
         Core\Auth $auth,
-        Core\Request $request,
+        Core\Http\Request $request,
         Core\Router $router,
         Core\SessionHandler $sessionHandler,
         Core\View $view,

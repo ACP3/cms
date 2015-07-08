@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Items
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin
  */
-class Items extends Core\Modules\Controller\Admin
+class Items extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\Router\Aliases
@@ -46,7 +46,7 @@ class Items extends Core\Modules\Controller\Admin
     protected $articlesHelpers;
 
     /**
-     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext           $context
      * @param \ACP3\Core\Router\Aliases          $aliases
      * @param \ACP3\Core\DB                      $db
      * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
@@ -56,7 +56,7 @@ class Items extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\ACP3\Menus\Validator $menusValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\Router\Aliases $aliases,
         Core\DB $db,
         Core\Helpers\FormToken $formTokenHelper,

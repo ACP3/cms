@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Files\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 
@@ -11,7 +12,7 @@ use ACP3\Modules\ACP3\Files;
  * Class Index
  * @package ACP3\Modules\ACP3\Files\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var \ACP3\Core\Date
@@ -31,14 +32,14 @@ class Index extends Core\Modules\Controller\Frontend
     protected $categoriesModel;
 
     /**
-     * @param \ACP3\Core\Context\Frontend    $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext    $context
      * @param \ACP3\Core\Date                $date
      * @param \ACP3\Modules\ACP3\Files\Model      $filesModel
      * @param \ACP3\Modules\ACP3\Files\Cache      $filesCache
      * @param \ACP3\Modules\ACP3\Categories\Model $categoriesModel
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Files\Model $filesModel,
         Files\Cache $filesCache,

@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Categories;
  * Class Index
  * @package ACP3\Modules\ACP3\Categories\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var Categories\Model
@@ -29,14 +29,14 @@ class Index extends Core\Modules\Controller\Admin
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Context\Admin                $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext                $context
      * @param \ACP3\Modules\ACP3\Categories\Model     $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Cache     $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validator $categoriesValidator
      * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Categories\Model $categoriesModel,
         Categories\Cache $categoriesCache,
         Categories\Validator $categoriesValidator,

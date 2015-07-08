@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Seo;
  * Class Index
  * @package ACP3\Modules\ACP3\Seo\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -29,14 +29,14 @@ class Index extends Core\Modules\Controller\Admin
     protected $seoValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin         $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
      * @param \ACP3\Core\Helpers\FormToken     $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Cache     $seoCache
      * @param \ACP3\Modules\ACP3\Seo\Model     $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validator $seoValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Cache $seoCache,
         Seo\Model $seoModel,

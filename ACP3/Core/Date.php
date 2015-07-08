@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Forms;
+use ACP3\Core\Http\RequestInterface;
 
 /**
  * Stellt Funktionen zur Datumsformatierung und Ausrichtung an den Zeitzonen bereit
@@ -34,7 +35,7 @@ class Date
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -53,7 +54,7 @@ class Date
     /**
      * @param \ACP3\Core\Auth                 $auth
      * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\RequestInterface     $request
+     * @param \ACP3\Core\Http\RequestInterface     $request
      * @param \ACP3\Core\Helpers\Forms        $formsHelper
      * @param \ACP3\Core\Validator\Rules\Date $dateValidator
      * @param \ACP3\Core\Config               $config

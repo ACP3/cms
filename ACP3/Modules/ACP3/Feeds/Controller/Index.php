@@ -3,13 +3,14 @@
 namespace ACP3\Modules\ACP3\Feeds\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Feeds;
 
 /**
  * Class Index
  * @package ACP3\Modules\ACP3\Feeds\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var Feeds\Extensions
@@ -17,11 +18,11 @@ class Index extends Core\Modules\Controller\Frontend
     protected $feedsExtensions;
 
     /**
-     * @param \ACP3\Core\Context\Frontend    $context
+     * @param \ACP3\Core\Modules\Controller\FrontendContext    $context
      * @param \ACP3\Modules\ACP3\Feeds\Extensions $feedsExtensions
      */
     public function __construct(
-        Core\Context\Frontend $context,
+        Core\Modules\Controller\FrontendContext $context,
         Feeds\Extensions $feedsExtensions)
     {
         parent::__construct($context);

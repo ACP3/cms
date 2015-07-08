@@ -1,12 +1,14 @@
 <?php
-namespace ACP3\Core;
+namespace ACP3\Core\Http;
 
-use ACP3\Core\Request\ParameterBag;
+use ACP3\Core\Config;
+use ACP3\Core\Modules;
+use ACP3\Core\http\Request\ParameterBag;
 use ACP3\Modules\ACP3\Seo;
 
 /**
  * Class Request
- * @package ACP3\Core
+ * @package ACP3\Core\Http
  */
 class Request extends AbstractRequest
 {

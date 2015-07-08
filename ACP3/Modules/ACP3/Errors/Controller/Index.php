@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Index
  * @package ACP3\Modules\ACP3\Errors\Controller
  */
-class Index extends Core\Modules\Controller\Frontend
+class Index extends Core\Modules\FrontendController
 {
     public function action403()
     {

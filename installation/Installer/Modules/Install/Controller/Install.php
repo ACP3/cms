@@ -41,13 +41,13 @@ class Install extends AbstractController
     protected $installHelper;
 
     /**
-     * @param \ACP3\Installer\Core\Context                    $context
+     * @param \ACP3\Installer\Core\Modules\Controller\Context                    $context
      * @param \ACP3\Installer\Core\Date                       $date
      * @param \ACP3\Core\Helpers\Secure                       $secureHelper
      * @param \ACP3\Installer\Modules\Install\Helpers\Install $installHelper
      */
     public function __construct(
-        Core\Context $context,
+        Core\Modules\Controller\Context $context,
         Date $date,
         Secure $secureHelper,
         InstallerHelpers $installHelper

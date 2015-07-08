@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Validator\Rules\Misc;
 
 /**
@@ -26,7 +27,7 @@ class Pagination
      */
     protected $seo;
     /**
-     * @var \ACP3\Core\RequestInterface
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -83,7 +84,7 @@ class Pagination
      * @param \ACP3\Core\Breadcrumb           $breadcrumb
      * @param \ACP3\Core\Lang                 $lang
      * @param \ACP3\Core\SEO                  $seo
-     * @param \ACP3\Core\RequestInterface     $request
+     * @param \ACP3\Core\Http\RequestInterface     $request
      * @param \ACP3\Core\Router               $router
      * @param \ACP3\Core\View                 $view
      * @param \ACP3\Core\Validator\Rules\Misc $miscValidator

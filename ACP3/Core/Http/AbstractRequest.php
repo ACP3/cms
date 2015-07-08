@@ -1,12 +1,12 @@
 <?php
-namespace ACP3\Core;
+namespace ACP3\Core\Http;
 
-use ACP3\Core\Request\FilesParameterBag;
-use ACP3\Core\Request\ParameterBag;
+use ACP3\Core\Http\Request\FilesParameterBag;
+use ACP3\Core\http\Request\ParameterBag;
 
 /**
  * Class AbstractRequest
- * @package ACP3\Core
+ * @package ACP3\Core\Http
  */
 abstract class AbstractRequest implements RequestInterface
 {
@@ -99,7 +99,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the uploaded files ($_FILES superglobal)
      *
-     * @return \ACP3\Core\Request\ParameterBag
+     * @return \ACP3\Core\http\Request\ParameterBag
      */
     public function getFiles()
     {
@@ -119,7 +119,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the $_SERVER superglobal
      *
-     * @return \ACP3\Core\Request\ParameterBag
+     * @return \ACP3\Core\http\Request\ParameterBag
      */
     public function getServer()
     {

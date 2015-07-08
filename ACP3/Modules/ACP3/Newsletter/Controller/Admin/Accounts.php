@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Accounts
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin
  */
-class Accounts extends Core\Modules\Controller\Admin
+class Accounts extends Core\Modules\AdminController
 {
     /**
      * @var Newsletter\Model
@@ -17,11 +17,11 @@ class Accounts extends Core\Modules\Controller\Admin
     protected $newsletterModel;
 
     /**
-     * @param Core\Context\Admin $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param Newsletter\Model $newsletterModel
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Newsletter\Model $newsletterModel)
     {
         parent::__construct($context);

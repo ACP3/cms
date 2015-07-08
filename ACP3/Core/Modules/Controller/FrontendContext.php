@@ -1,13 +1,14 @@
 <?php
-namespace ACP3\Core\Context;
+namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Controller\Context;
 
 /**
- * Class Frontend
- * @package ACP3\Core\Context
+ * Class FrontendContext
+ * @package ACP3\Core\Modules\Controller
  */
-class Frontend extends Core\Context
+class FrontendContext extends Core\Modules\Controller\Context
 {
     /**
      * @var \ACP3\Core\Assets
@@ -23,17 +24,18 @@ class Frontend extends Core\Context
     protected $seo;
 
     /**
-     * @param Core\Context $context
-     * @param Core\Assets $assets
-     * @param Core\Breadcrumb $breadcrumb
-     * @param Core\SEO $seo
+     * @param \ACP3\Core\Modules\Controller\Context $context
+     * @param \ACP3\Core\Assets                     $assets
+     * @param \ACP3\Core\Breadcrumb                 $breadcrumb
+     * @param \ACP3\Core\SEO                        $seo
      */
     public function __construct(
-        Core\Context $context,
+        Core\Modules\Controller\Context $context,
         Core\Assets $assets,
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo
-    ) {
+    )
+    {
         parent::__construct(
             $context->getACL(),
             $context->getAuth(),

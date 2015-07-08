@@ -17,11 +17,11 @@ class Index extends Core\Modules\Controller
     protected $searchHelpers;
 
     /**
-     * @param \ACP3\Core\Context           $context
+     * @param \ACP3\Core\Modules\Controller\Context           $context
      * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
      */
     public function __construct(
-        Core\Context $context,
+        Core\Modules\Controller\Context $context,
         Search\Helpers $searchHelpers)
     {
         parent::__construct($context);

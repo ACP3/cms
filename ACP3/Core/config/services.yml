@@ -61,17 +61,17 @@ services:
     arguments: ['@core.cache.system', '@system.model']
 
   core.context:
-    class : ACP3\Core\Context
+    class: ACP3\Core\Modules\Controller\Context
     arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
     public: false
 
   core.context.admin:
-    class : ACP3\Core\Context\Admin
+    class: ACP3\Core\Modules\Controller\AdminContext
     arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session']
     public: false
 
   core.context.frontend:
-    class : ACP3\Core\Context\Frontend
+    class: ACP3\Core\Modules\Controller\FrontendContext
     arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
     public: false
 
@@ -129,7 +129,7 @@ services:
     arguments: ['@core.request', '@core.router']
 
   core.request:
-    class: ACP3\Core\Request
+    class: ACP3\Core\Http\Request
     arguments: ['@core.modules', '@core.config', '@seo.model']
 
   core.router:

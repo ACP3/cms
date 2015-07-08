@@ -32,7 +32,7 @@ abstract class Controller
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\Request
      */
     protected $request;
     /**
@@ -71,9 +71,9 @@ abstract class Controller
     protected $content = '';
 
     /**
-     * @param Core\Context $context
+     * @param \ACP3\Core\Modules\Controller\Context $context
      */
-    public function __construct(Core\Context $context)
+    public function __construct(Controller\Context $context)
     {
         $this->acl = $context->getACL();
         $this->auth = $context->getAuth();

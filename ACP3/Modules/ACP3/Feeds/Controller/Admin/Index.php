@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Feeds;
  * Class Index
  * @package ACP3\Modules\ACP3\Feeds\Controller\Admin
  */
-class Index extends Core\Modules\Controller\Admin
+class Index extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\Secure
@@ -21,12 +21,12 @@ class Index extends Core\Modules\Controller\Admin
     protected $feedsValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin           $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext           $context
      * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Feeds\Validator $feedsValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Feeds\Validator $feedsValidator)
     {

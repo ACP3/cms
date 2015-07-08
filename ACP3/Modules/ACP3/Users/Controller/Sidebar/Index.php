@@ -12,9 +12,9 @@ use ACP3\Modules\ACP3\Users;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @param \ACP3\Core\Context $context
+     * @param \ACP3\Core\Modules\Controller\Context $context
      */
-    public function __construct(Core\Context $context)
+    public function __construct(Core\Modules\Controller\Context $context)
     {
         parent::__construct($context);
     }

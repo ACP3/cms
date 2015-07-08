@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Core\Context;
+namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core;
 
 /**
- * Class Admin
- * @package ACP3\Core\Context
+ * Class AdminContext
+ * @package ACP3\Core\Modules\Controller
  */
-class Admin extends Frontend
+class AdminContext extends FrontendContext
 {
     /**
      * @var \ACP3\Core\Validator\Rules\Misc
@@ -19,15 +19,16 @@ class Admin extends Frontend
     protected $session;
 
     /**
-     * @param \ACP3\Core\Context\Frontend     $frontendContext
-     * @param \ACP3\Core\Validator\Rules\Misc $validate
-     * @param \ACP3\Core\SessionHandler              $session
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
+     * @param \ACP3\Core\Validator\Rules\Misc                $validate
+     * @param \ACP3\Core\SessionHandler                      $session
      */
     public function __construct(
-        Core\Context\Frontend $frontendContext,
+        Core\Modules\Controller\FrontendContext $frontendContext,
         Core\Validator\Rules\Misc $validate,
         Core\SessionHandler $session
-    ) {
+    )
+    {
         parent::__construct(
             $frontendContext,
             $frontendContext->getAssets(),

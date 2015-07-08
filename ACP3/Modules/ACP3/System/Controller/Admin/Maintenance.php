@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\System;
  * Class Maintenance
  * @package ACP3\Modules\ACP3\System\Controller\Admin
  */
-class Maintenance extends Core\Modules\Controller\Admin
+class Maintenance extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\DB
@@ -34,7 +34,7 @@ class Maintenance extends Core\Modules\Controller\Admin
     protected $systemValidator;
 
     /**
-     * @param \ACP3\Core\Context\Admin            $context
+     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
      * @param \ACP3\Core\DB                       $db
      * @param \ACP3\Core\Helpers\FormToken        $formTokenHelper
      * @param \ACP3\Modules\ACP3\System\Helpers   $systemHelpers
@@ -42,7 +42,7 @@ class Maintenance extends Core\Modules\Controller\Admin
      * @param \ACP3\Modules\ACP3\System\Validator $systemValidator
      */
     public function __construct(
-        Core\Context\Admin $context,
+        Core\Modules\Controller\AdminContext $context,
         Core\DB $db,
         Core\Helpers\FormToken $formTokenHelper,
         System\Helpers $systemHelpers,

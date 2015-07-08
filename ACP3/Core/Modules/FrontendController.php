@@ -1,14 +1,15 @@
 <?php
 
-namespace ACP3\Core\Modules\Controller;
+namespace ACP3\Core\Modules;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Controller\Context;
 
 /**
- * Class Frontend
- * @package ACP3\Core\Modules\Controller
+ * Class FrontendController
+ * @package ACP3\Core\Modules
  */
-abstract class Frontend extends Core\Modules\Controller
+abstract class FrontendController extends Core\Modules\Controller
 {
     /**
      * @var \ACP3\Core\Assets
@@ -34,9 +35,9 @@ abstract class Frontend extends Core\Modules\Controller
     protected $contentType = 'Content-Type: text/html; charset=UTF-8';
 
     /**
-     * @param \ACP3\Core\Context\Frontend $frontendContext
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
      */
-    public function __construct(Core\Context\Frontend $frontendContext)
+    public function __construct(Controller\FrontendContext $frontendContext)
     {
         parent::__construct($frontendContext);
 

@@ -6,7 +6,7 @@ imports:
 
 services:
   core.context.install:
-    class: ACP3\Installer\Core\Context
+    class: ACP3\Installer\Core\Modules\Controller\Context
     arguments: ['@core.lang', '@core.request', '@core.router', '@core.view']
     public: false
 
@@ -48,7 +48,7 @@ services:
     arguments: ['@core.request', '@core.router']
 
   core.request:
-    class: ACP3\Installer\Core\Request
+    class: ACP3\Installer\Core\Http\Request
     arguments: [%default_request%]
 
   core.router:
