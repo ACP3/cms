@@ -19,7 +19,7 @@ services:
 
   articles.controller.frontend.index:
     class: %articles.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.toc', '@articles.model', '@articles.cache']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.pageBreaks', '@articles.model', '@articles.cache']
 
   articles.controller.sidebar.index:
     class: %articles.controller.sidebar.index.fqdn%

@@ -33,9 +33,17 @@ services:
     class: ACP3\Core\Helpers\FormToken
     arguments: [@core.request, @core.session, @core.view]
 
+  core.helpers.pageBreaks:
+    class: ACP3\Core\Helpers\PageBreaks
+    arguments: [@core.helpers.toc, '@core.seo', '@core.request', '@core.router']
+
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort
     arguments: ['@core.db']
+
+  core.helpers.toc:
+    class: ACP3\Core\Helpers\TableOfContents
+    arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.validator.rules.misc', '@core.view']
 
   core.helpers.stringFormatter:
     class: ACP3\Core\Helpers\StringFormatter
@@ -47,7 +55,3 @@ services:
   core.helpers.formatter.rewriteInternalUri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
     arguments: ['@core.modules', '@core.router', '@core.validator.rules.router.aliases']
-
-  core.helpers.toc:
-    class: ACP3\Core\Helpers\TableOfContents
-    arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.validator.rules.misc', '@core.view']

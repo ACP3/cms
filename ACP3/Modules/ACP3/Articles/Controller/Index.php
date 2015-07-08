@@ -21,9 +21,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $pagination;
     /**
-     * @var \ACP3\Core\Helpers\TableOfContents
+     * @var \ACP3\Core\Helpers\PageBreaks
      */
-    protected $toc;
+    protected $pageBreaksHelper;
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model
      */
@@ -37,7 +37,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
      * @param \ACP3\Core\Date                               $date
      * @param \ACP3\Core\Pagination                         $pagination
-     * @param \ACP3\Core\Helpers\TableOfContents            $toc
+     * @param \ACP3\Core\Helpers\PageBreaks                 $pageBreaksHelper
      * @param \ACP3\Modules\ACP3\Articles\Model             $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Cache             $articlesCache
      */
@@ -45,7 +45,7 @@ class Index extends Core\Modules\FrontendController
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Core\Helpers\TableOfContents $toc,
+        Core\Helpers\PageBreaks $pageBreaksHelper,
         Articles\Model $articlesModel,
         Articles\Cache $articlesCache)
     {
@@ -53,7 +53,7 @@ class Index extends Core\Modules\FrontendController
 
         $this->date = $date;
         $this->pagination = $pagination;
-        $this->toc = $toc;
+        $this->pageBreaksHelper = $pageBreaksHelper;
         $this->articlesModel = $articlesModel;
         $this->articlesCache = $articlesCache;
     }
@@ -82,7 +82,7 @@ class Index extends Core\Modules\FrontendController
 
             $this->breadcrumb->replaceAncestor($article['title'], 0, true);
 
-            $this->view->assign('page', $this->toc->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages()));
+            $this->view->assign('page', $this->pageBreaksHelper->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages()));
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
