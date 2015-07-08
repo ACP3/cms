@@ -188,7 +188,7 @@ class TableOfContents
      *
      * @return bool
      */
-    protected function isCurrentPage($customUris, array $page, $pageNumber, $currentIndex)
+    protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
     {
         if ($customUris === true) {
             if ($page['uri'] === $this->router->route($this->request->getQuery()) ||
@@ -212,7 +212,7 @@ class TableOfContents
      *
      * @return string
      */
-    protected function fetchTocPageTitle(array $page, $pageNumber, $titlesFromDb)
+    protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
     {
         if ($titlesFromDb === false) {
             $attributes = $this->_getHtmlAttributes($page);
@@ -230,7 +230,7 @@ class TableOfContents
      *
      * @return string
      */
-    protected function fetchTocPageUri($customUris, array $page, $pageNumber, $requestQuery)
+    protected function fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery)
     {
         if ($customUris === true) {
             return $page['uri'];
