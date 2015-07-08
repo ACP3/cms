@@ -135,7 +135,7 @@ class TableOfContents
     {
         if ($customUris === true) {
             if (is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery()) ||
-                $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction()) && $currentIndex == 0
+                $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0
             ) {
                 return true;
             }

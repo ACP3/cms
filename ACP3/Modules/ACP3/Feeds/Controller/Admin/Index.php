@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Feeds;
 class Index extends Core\Modules\AdminController
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
     /**

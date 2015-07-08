@@ -104,8 +104,8 @@ class Upload
     public function removeUploadedFile($file)
     {
         $path = UPLOADS_DIR . $this->directory . '/' . $file;
-        if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
-            return @unlink($path);
+        if (!empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
+            return unlink($path);
         }
         return false;
     }

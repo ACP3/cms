@@ -24,7 +24,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $commentsValidator;
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
 
