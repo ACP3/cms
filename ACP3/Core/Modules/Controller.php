@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Class Controller
  * @package ACP3\Core\Modules
  */
-abstract class Controller
+abstract class Controller implements ControllerInterface
 {
     /**
      * @var \ACP3\Core\ACL
@@ -144,11 +144,7 @@ abstract class Controller
     }
 
     /**
-     * Gets a class from the service container
-     *
-     * @param $serviceId
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function get($serviceId)
     {
@@ -156,9 +152,7 @@ abstract class Controller
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     *
-     * @return $this
+     * @inheritdoc
      */
     public function setContainer(ContainerInterface $container)
     {
@@ -167,6 +161,9 @@ abstract class Controller
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function display()
     {
         if ($this->getNoOutput() === false && $this->getTemplate() !== '') {

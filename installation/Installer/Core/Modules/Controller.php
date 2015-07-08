@@ -2,14 +2,16 @@
 
 namespace ACP3\Installer\Core\Modules;
 
+use ACP3\Core\Modules\ControllerInterface;
 use ACP3\Core\Redirect;
 use ACP3\Installer\Core\Modules\Controller\Context;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Module Controller of the installer modules
  * @package ACP3\Installer\Core\Modules
  */
-class Controller
+class Controller implements ControllerInterface
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -70,6 +72,9 @@ class Controller
         $this->view = $context->getView();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function preDispatch()
     {
         if ($this->request->getPost()->has('lang')) {
@@ -112,11 +117,7 @@ class Controller
     }
 
     /**
-     * Gets a class from the service container
-     *
-     * @param string $serviceId
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function get($serviceId)
     {
@@ -150,11 +151,9 @@ class Controller
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function setContainer($container)
+    public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
 
@@ -175,6 +174,9 @@ class Controller
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function display()
     {
         if ($this->getNoOutput() === false) {

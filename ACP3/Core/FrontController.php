@@ -3,7 +3,7 @@ namespace ACP3\Core;
 
 use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Modules\Controller;
+use ACP3\Core\Modules\ControllerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -79,7 +79,7 @@ class FrontController
      *
      * @param \ACP3\Core\Http\RequestInterface $request
      */
-    private function _checkForUriAlias(RequestInterface $request)
+    protected function _checkForUriAlias(RequestInterface $request)
     {
         // Return early, if we are currently in the admin panel
         if ($request->getArea() !== 'admin') {
@@ -97,14 +97,14 @@ class FrontController
     }
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface     $request
-     * @param \ACP3\Core\Modules\Controller|string $controller
-     * @param string                               $action
-     * @param bool                                 $resolveParameters
+     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param \ACP3\Core\Modules\ControllerInterface $controller
+     * @param string                                 $action
+     * @param bool                                   $resolveParameters
      *
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    private function callControllerAction(RequestInterface $request, Controller $controller, $action, $resolveParameters)
+    private function callControllerAction(RequestInterface $request, ControllerInterface $controller, $action, $resolveParameters)
     {
         $reflection = new \ReflectionMethod($controller, $action);
         $parameterCount = $reflection->getNumberOfParameters();
@@ -133,11 +133,11 @@ class FrontController
     }
 
     /**
-     * @param \ACP3\Core\Modules\Controller|string $controller
-     * @param string                               $action
-     * @param array                                $arguments
+     * @param \ACP3\Core\Modules\ControllerInterface $controller
+     * @param string                                 $action
+     * @param array                                  $arguments
      */
-    private function callControllerActionWithArguments(Controller $controller, $action, $arguments)
+    private function callControllerActionWithArguments(ControllerInterface $controller, $action, $arguments)
     {
         call_user_func_array([$controller, $action], $arguments);
     }

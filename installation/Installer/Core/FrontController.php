@@ -2,7 +2,7 @@
 namespace ACP3\Installer\Core;
 
 use ACP3\Core\Exceptions;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use ACP3\Core\Http\RequestInterface;
 
 /**
  * Class FrontController
@@ -11,53 +11,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FrontController extends \ACP3\Core\FrontController
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @inheritdoc
      */
-    protected $container;
-
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+    protected function _checkForUriAlias(RequestInterface $request)
     {
-        $this->container = $container;
-    }
-
-    /**
-     * @param string $serviceId
-     * @param string $action
-     * @param array  $arguments
-     *
-     * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
-     */
-    public function dispatch($serviceId = '', $action = '', array $arguments = [])
-    {
-        $request = $this->container->get('core.request');
-
-        if (empty($serviceId)) {
-            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController();
-        }
-
-        if ($this->container->has($serviceId)) {
-            /** @var Modules\Controller $controller */
-            $controller = $this->container->get($serviceId);
-
-            if (empty($action)) {
-                $action = $request->getControllerAction();
-            }
-
-            $action = 'action' . str_replace('_', '', $action);
-
-            if (method_exists($controller, $action) === true) {
-                $controller->setContainer($this->container);
-                $controller->preDispatch();
-                $controller->$action();
-                $controller->display();
-            } else {
-                throw new Exceptions\ControllerActionNotFound('Controller action ' . get_class($controller) . '::' . $action . '() was not found!');
-            }
-        } else {
-            throw new Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
-        }
     }
 }
