@@ -145,6 +145,9 @@ class Validator extends Core\Validator\AbstractValidator
     public function validateActivate($mail, $hash)
     {
         $this->errors = [];
+        if (!$this->validate->email($mail) || !$this->validate->isMD5($hash)) {
+            $this->errors[] = $this->lang->t('newsletter', 'account_activation_credentials_wrong');
+        }
         if ($this->newsletterModel->accountExists($mail, $hash) === false) {
             $this->errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }

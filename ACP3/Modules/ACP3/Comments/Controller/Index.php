@@ -129,7 +129,7 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @param $entryId
+     * @param int $entryId
      *
      * @return $this
      */

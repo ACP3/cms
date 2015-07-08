@@ -5,6 +5,7 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="account_activation_credentials_wrong">Die übermittelten Daten konnten keinem Newsletter-Konto zugeordnert werden.</item>
         <item key="account_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto.</item>
         <item key="account_not_exists">Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden.</item>
         <item key="action">Aktion</item>

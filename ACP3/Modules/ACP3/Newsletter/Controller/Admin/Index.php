@@ -78,11 +78,16 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->newsletterModel->delete($item);
@@ -94,9 +99,14 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $newsletter = $this->newsletterModel->getOneById($this->request->getParameters()->get('id'));
+        $newsletter = $this->newsletterModel->getOneById($id);
 
         if (empty($newsletter) === false) {
             $this->breadcrumb->setTitlePostfix($newsletter['title']);
@@ -104,7 +114,7 @@ class Index extends Core\Modules\AdminController
             $settings = $this->config->getSettings('newsletter');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings);
+                $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             $this->view->assign('date', $this->get('core.helpers.date')->datepicker('date', $newsletter['date']));
@@ -236,8 +246,9 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $settings
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $settings)
+    protected function _editPost(array $formData, array $settings, $id)
     {
         try {
             $this->newsletterValidator->validate($formData);
@@ -249,11 +260,11 @@ class Index extends Core\Modules\AdminController
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'user_id' => $this->auth->getUserId(),
             ];
-            $bool = $this->newsletterModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->newsletterModel->update($updateValues, $id);
 
             // Test-Newsletter
             if ($formData['test'] == 1) {
-                $bool2 = $this->newsletterHelpers->sendNewsletter($this->request->getParameters()->get('id'), $settings['mail']);
+                $bool2 = $this->newsletterHelpers->sendNewsletter($id, $settings['mail']);
 
                 $lang = $this->lang->t('newsletter', 'create_success');
                 $result = $bool !== false && $bool2;

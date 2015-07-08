@@ -5,6 +5,7 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="account_activation_credentials_wrong">Can not find any associated newsletter account.</item>
         <item key="account_exists">There is already an newsletter account with the same E-Mail address registered.</item>
         <item key="account_not_exists">For the stated E-mail address is no newsletter account registered.</item>
         <item key="action">Action</item>

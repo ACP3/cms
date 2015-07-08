@@ -29,21 +29,26 @@ class Accounts extends Core\Modules\AdminController
         $this->newsletterModel = $newsletterModel;
     }
 
-    public function actionActivate()
+    /**
+     * @param int $id
+     */
+    public function actionActivate($id)
     {
-        $bool = false;
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true) {
-            $bool = $this->newsletterModel->update(['hash' => ''], $this->request->getParameters()->get('id'), Newsletter\Model::TABLE_NAME_ACCOUNTS);
-        }
+        $bool = $this->newsletterModel->update(['hash' => ''], $id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
         $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->newsletterModel->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);

@@ -68,17 +68,13 @@ class Index extends Core\Modules\FrontendController
         return $this;
     }
 
-    public function actionActivate()
+    /**
+     * @param string $mail
+     * @param string $hash
+     */
+    public function actionActivate($mail, $hash)
     {
         try {
-            $mail = $hash = '';
-            if ($this->get('core.validator.rules.misc')->email($this->request->getParameters()->get('mail', '')) &&
-                $this->get('core.validator.rules.misc')->isMD5($this->request->getParameters()->get('hash', ''))
-            ) {
-                $mail = $this->request->getParameters()->get('mail', '');
-                $hash = $this->request->getParameters()->get('hash', '');
-            }
-
             $this->newsletterValidator->validateActivate($mail, $hash);
 
             $bool = $this->newsletterModel->update(['hash' => ''], ['mail' => $mail, 'hash' => $hash], Newsletter\Model::TABLE_NAME_ACCOUNTS);
@@ -89,15 +85,20 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionIndex()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionIndex($action = 'subscribe')
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost($this->request->getPost()->getAll());
+            $this->_indexPost($this->request->getPost()->getAll(), $action);
         }
 
         $this->view->assign('form', array_merge(['mail' => ''], $this->request->getPost()->getAll()));
 
-        $fieldValue = $this->request->getParameters()->get('action', 'subscribe');
+        $fieldValue = $action;
 
         $actions_Lang = [
             $this->lang->t('newsletter', 'subscribe'),
@@ -113,14 +114,15 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @param array $formData
+     * @param array  $formData
+     * @param string $action
      *
-     * @throws Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    protected function _indexPost(array $formData)
+    protected function _indexPost(array $formData, $action)
     {
         try {
-            switch ($this->request->getParameters()->get('action')) {
+            switch ($action) {
                 case 'subscribe':
                     $this->newsletterValidator->validateSubscribe($formData);
 

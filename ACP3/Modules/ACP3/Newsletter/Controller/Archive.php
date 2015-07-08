@@ -37,9 +37,14 @@ class Archive extends Core\Modules\FrontendController
         $this->newsletterModel = $newsletterModel;
     }
 
-    public function actionDetails()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDetails($id)
     {
-        $newsletter = $this->newsletterModel->getOneById((int)$this->request->getParameters()->get('id'), 1);
+        $newsletter = $this->newsletterModel->getOneById($id, 1);
 
         if (!empty($newsletter)) {
             $this->breadcrumb
