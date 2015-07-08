@@ -23,7 +23,7 @@ class Config
     protected $settings = [];
 
     /**
-     * @param \ACP3\Core\Cache           $coreCache
+     * @param \ACP3\Core\Cache                $coreCache
      * @param \ACP3\Modules\ACP3\System\Model $systemModel
      */
     public function __construct(

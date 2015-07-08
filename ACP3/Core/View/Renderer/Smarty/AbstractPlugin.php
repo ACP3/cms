@@ -9,6 +9,7 @@ abstract class AbstractPlugin implements PluginInterface
 {
     /**
      * @param \Smarty $smarty
+     *
      * @throws \SmartyException
      */
     public function registerPlugin(\Smarty $smarty)

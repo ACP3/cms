@@ -20,8 +20,8 @@ class AdminContext extends FrontendContext
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
-     * @param \ACP3\Core\Validator\Rules\Misc                $validate
-     * @param \ACP3\Core\SessionHandler                      $session
+     * @param \ACP3\Core\Validator\Rules\Misc               $validate
+     * @param \ACP3\Core\SessionHandler                     $session
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $frontendContext,

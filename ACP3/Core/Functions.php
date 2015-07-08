@@ -12,7 +12,7 @@ class Functions
      * Enkodiert alle HTML-Entitäten eines Strings
      * zur Vermeidung von XSS
      *
-     * @param string $var
+     * @param string  $var
      * @param boolean $scriptTagOnly
      *
      * @return string

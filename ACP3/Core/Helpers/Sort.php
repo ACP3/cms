@@ -30,6 +30,7 @@ class Sort
      * @param string $sortField
      * @param string $id
      * @param string $where
+     *
      * @return boolean
      */
     public function up($table, $idField, $sortField, $id, $where = '')
@@ -45,6 +46,7 @@ class Sort
      * @param string $sortField
      * @param string $id
      * @param string $where
+     *
      * @return boolean
      */
     public function down($table, $idField, $sortField, $id, $where = '')
@@ -61,6 +63,7 @@ class Sort
      * @param string $sortField
      * @param string $id
      * @param string $where
+     *
      * @return boolean
      */
     private function _moveOneStep($action, $table, $idField, $sortField, $id, $where = '')

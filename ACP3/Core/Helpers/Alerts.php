@@ -24,14 +24,15 @@ class Alerts
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\View             $view
-     * @param \ACP3\Core\Helpers\Output   $outputHelper
+     * @param \ACP3\Core\View                  $view
+     * @param \ACP3\Core\Helpers\Output        $outputHelper
      */
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\View $view,
         Core\Helpers\Output $outputHelper
-    ) {
+    )
+    {
         $this->request = $request;
         $this->view = $view;
         $this->outputHelper = $outputHelper;
@@ -40,10 +41,10 @@ class Alerts
     /**
      * Displays a confirm box
      *
-     * @param string $text
+     * @param string           $text
      * @param int|string|array $forward
-     * @param int|string $backward
-     * @param integer $overlay
+     * @param int|string       $backward
+     * @param integer          $overlay
      *
      * @return string
      */
@@ -72,7 +73,7 @@ class Alerts
      * @param       $text
      * @param array $data
      * @param       $forward
-     * @param int $backward
+     * @param int   $backward
      *
      * @return string
      */
@@ -130,7 +131,8 @@ class Alerts
      * Gibt eine Box mit den aufgetretenen Fehlern aus
      *
      * @param string|array $errors
-     * @param bool $contentOnly
+     * @param bool         $contentOnly
+     *
      * @return string
      */
     public function errorBox($errors, $contentOnly = true)
@@ -155,6 +157,7 @@ class Alerts
 
     /**
      * @param $errors
+     *
      * @return string
      */
     public function errorBoxContent($errors)

@@ -70,7 +70,7 @@ class Breadcrumb
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
      * @param \ACP3\Core\Lang                                  $lang
-     * @param \ACP3\Core\Http\RequestInterface                      $request
+     * @param \ACP3\Core\Http\RequestInterface                 $request
      * @param \ACP3\Core\Router                                $router
      * @param \ACP3\Core\Config                                $config
      */

@@ -29,7 +29,8 @@ class IncludeJs extends AbstractFunction
     public function __construct(
         Core\Assets $assets,
         Core\Assets\ThemeResolver $themeResolver
-    ) {
+    )
+    {
         $this->assets = $assets;
         $this->themeResolver = $themeResolver;
     }

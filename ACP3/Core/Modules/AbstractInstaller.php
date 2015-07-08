@@ -61,9 +61,9 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
     protected $specialResources = [];
 
     /**
-     * @param \ACP3\Core\DB                   $db
-     * @param \ACP3\Core\XML                  $xml
-     * @param \ACP3\Core\Cache                $aclCache
+     * @param \ACP3\Core\DB                        $db
+     * @param \ACP3\Core\XML                       $xml
+     * @param \ACP3\Core\Cache                     $aclCache
      * @param \ACP3\Modules\ACP3\System\Model      $systemModel
      * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
      */
@@ -239,7 +239,7 @@ abstract class AbstractInstaller extends ContainerAware implements InstallerInte
 
         foreach ($serviceIds as $serviceId) {
             if (strpos($serviceId, static::MODULE_NAME . '.controller.') !== false) {
-                list($module,, $area, $controller) = explode('.', $serviceId);
+                list($module, , $area, $controller) = explode('.', $serviceId);
                 $this->_insertAclResources($module, $controller, $area);
             }
         }

@@ -23,9 +23,10 @@ class Router extends Core\Router
     }
 
     /**
-     * @param $path
+     * @param      $path
      * @param bool $absolute
      * @param bool $forceSecure
+     *
      * @return string
      */
     public function route($path, $absolute = false, $forceSecure = false)

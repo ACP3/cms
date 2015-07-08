@@ -19,12 +19,13 @@ class Index extends Core\Modules\Controller
 
     /**
      * @param \ACP3\Installer\Core\Modules\Controller\Context $context
-     * @param \ACP3\Core\Modules           $modules
+     * @param \ACP3\Core\Modules                              $modules
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Modules $modules
-    ) {
+    )
+    {
         parent::__construct($context);
 
         $this->modules = $modules;
@@ -66,6 +67,7 @@ class Index extends Core\Modules\Controller
 
     /**
      * @param string $moduleName
+     *
      * @return array
      */
     protected function _returnModuleUpdateResult($moduleName)

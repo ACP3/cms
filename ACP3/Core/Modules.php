@@ -74,7 +74,7 @@ class Modules
      */
     public function actionExists($path)
     {
-        $pathArray = array_map(function($value) {
+        $pathArray = array_map(function ($value) {
             return str_replace(' ', '', strtolower(str_replace('_', ' ', $value)));
         }, explode('/', $path));
 

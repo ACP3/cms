@@ -28,15 +28,16 @@ class Router
     protected $config;
 
     /**
-     * @param \ACP3\Core\Router\Aliases   $aliases
+     * @param \ACP3\Core\Router\Aliases        $aliases
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Config           $config
+     * @param \ACP3\Core\Config                $config
      */
     public function __construct(
         Aliases $aliases,
         RequestInterface $request,
         Config $config
-    ) {
+    )
+    {
         $this->aliases = $aliases;
         $this->request = $request;
         $this->config = $config;
@@ -45,9 +46,10 @@ class Router
     /**
      * Generates the internal ACP3 hyperlinks
      *
-     * @param $path
+     * @param      $path
      * @param bool $absolute
      * @param bool $forceSecure
+     *
      * @return string
      */
     public function route($path, $absolute = false, $forceSecure = false)

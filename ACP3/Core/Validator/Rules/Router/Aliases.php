@@ -21,12 +21,13 @@ class Aliases
 
     /**
      * @param \ACP3\Core\Validator\Rules\Router $routerValidator
-     * @param \ACP3\Modules\ACP3\Seo\Model           $seoModel
+     * @param \ACP3\Modules\ACP3\Seo\Model      $seoModel
      */
     public function __construct(
         Core\Validator\Rules\Router $routerValidator,
         Seo\Model $seoModel
-    ) {
+    )
+    {
         $this->routerValidator = $routerValidator;
         $this->seoModel = $seoModel;
     }

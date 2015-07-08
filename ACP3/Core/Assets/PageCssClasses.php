@@ -21,18 +21,10 @@ class PageCssClasses
     /**
      * @var string
      */
-    protected $module;
-    /**
-     * @var string
-     */
-    protected $controllerAction;
-    /**
-     * @var string
-     */
     protected $details;
 
     /**
-     * @param \ACP3\Core\Breadcrumb       $breadcrumb
+     * @param \ACP3\Core\Breadcrumb            $breadcrumb
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
@@ -49,10 +41,7 @@ class PageCssClasses
      */
     public function getModule()
     {
-        if ($this->module === null) {
-            $this->module = $this->request->getModule();
-        }
-        return $this->module;
+        return $this->request->getModule();
     }
 
     /**
@@ -60,10 +49,7 @@ class PageCssClasses
      */
     public function getControllerAction()
     {
-        if ($this->controllerAction === null) {
-            $this->controllerAction = $this->request->getModule() . '-' . $this->request->getController() . '-' . $this->request->getControllerAction();
-        }
-        return $this->controllerAction;
+        return $this->request->getModule() . '-' . $this->request->getController() . '-' . $this->request->getControllerAction();
     }
 
     /**

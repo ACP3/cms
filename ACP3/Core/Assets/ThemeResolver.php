@@ -39,7 +39,7 @@ class ThemeResolver
     protected $moduleNamespaces = [];
 
     /**
-     * @param \ACP3\Core\XML             $xml
+     * @param \ACP3\Core\XML          $xml
      * @param \ACP3\Core\Assets\Cache $resourcesCache
      */
     public function __construct(
@@ -98,19 +98,19 @@ class ThemeResolver
             $dir .= '/';
         }
 
-            $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
+        $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
 
-            // Return early, if the path has been already cached
-            if (isset($this->cachedPaths[$systemAssetPath])) {
-                return $this->cachedPaths[$systemAssetPath];
-            }
+        // Return early, if the path has been already cached
+        if (isset($this->cachedPaths[$systemAssetPath])) {
+            return $this->cachedPaths[$systemAssetPath];
+        }
 
-            return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
+        return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
     }
 
     /**
-     * @param $modulePath
-     * @param $designPath
+     * @param        $modulePath
+     * @param        $designPath
      * @param string $dir
      * @param string $file
      *

@@ -16,10 +16,11 @@ class Stylesheets extends AbstractBlock
     }
 
     /**
-     * @param $params
-     * @param $content
+     * @param                           $params
+     * @param                           $content
      * @param \Smarty_Internal_Template $smarty
-     * @param $repeat
+     * @param                           $repeat
+     *
      * @return string
      */
     public function process($params, $content, \Smarty_Internal_Template $smarty, &$repeat)

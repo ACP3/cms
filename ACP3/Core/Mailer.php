@@ -336,7 +336,7 @@ class Mailer
      * Adds multiple recipients to the to be send email
      *
      * @param string|array $recipients
-     * @param bool $bcc
+     * @param bool         $bcc
      *
      * @return $this
      */

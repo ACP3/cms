@@ -24,14 +24,15 @@ class Captcha
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router           $router
-     * @param \ACP3\Core\SessionHandler   $sessionHandler
+     * @param \ACP3\Core\Router                $router
+     * @param \ACP3\Core\SessionHandler        $sessionHandler
      */
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\Router $router,
         Core\SessionHandler $sessionHandler
-    ) {
+    )
+    {
         $this->request = $request;
         $this->router = $router;
         $this->sessionHandler = $sessionHandler;

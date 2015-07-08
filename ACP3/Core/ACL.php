@@ -46,8 +46,8 @@ class ACL
     protected $resources = [];
 
     /**
-     * @param \ACP3\Core\Auth                 $auth
-     * @param \ACP3\Core\Modules              $modules
+     * @param \ACP3\Core\Auth                      $auth
+     * @param \ACP3\Core\Modules                   $modules
      * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */

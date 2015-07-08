@@ -16,7 +16,7 @@ class Install
      * Writes the system config file
      *
      * @param string $configFilePath
-     * @param array $data
+     * @param array  $data
      *
      * @return bool
      */

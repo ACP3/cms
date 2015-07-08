@@ -37,6 +37,7 @@ class Cache
 
     /**
      * @param array $paths
+     *
      * @return bool
      */
     public function setCache(array $paths)

@@ -11,6 +11,7 @@ class Request extends Core\Http\Request
 {
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
+     *
      * @param string $defaultPath
      */
     public function __construct($defaultPath = '')

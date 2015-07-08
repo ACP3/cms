@@ -143,7 +143,6 @@ class Request extends AbstractRequest
     }
 
 
-
     /**
      * Processes the URL of the current request
      */

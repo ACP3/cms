@@ -18,8 +18,9 @@ abstract class AbstractFunction extends AbstractPlugin
     }
 
     /**
-     * @param array $params
+     * @param array                     $params
      * @param \Smarty_Internal_Template $smarty
+     *
      * @return mixed
      */
     abstract public function process(array $params, \Smarty_Internal_Template $smarty);

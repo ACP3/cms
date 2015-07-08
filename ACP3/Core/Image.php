@@ -208,7 +208,7 @@ class Image
      * @param integer $width
      * @param integer $height
      * @param integer $type
-     * @param string    $cacheFile
+     * @param string  $cacheFile
      */
     protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile = null)
     {

@@ -24,8 +24,8 @@ class FormToken
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler   $sessionHandler
-     * @param \ACP3\Core\View             $view
+     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         Core\Http\RequestInterface $request,

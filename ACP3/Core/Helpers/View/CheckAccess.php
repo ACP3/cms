@@ -27,10 +27,10 @@ class CheckAccess
     protected $view;
 
     /**
-     * @param \ACP3\Core\ACL                                 $acl
-     * @param \ACP3\Core\Lang                                $lang
-     * @param \ACP3\Core\Router                              $router
-     * @param \ACP3\Core\View                                $view
+     * @param \ACP3\Core\ACL    $acl
+     * @param \ACP3\Core\Lang   $lang
+     * @param \ACP3\Core\Router $router
+     * @param \ACP3\Core\View   $view
      */
     public function __construct(
         Core\ACL $acl,
@@ -85,7 +85,7 @@ class CheckAccess
     }
 
     /**
-     * @param array $params
+     * @param array  $params
      * @param string $action
      * @param string $area
      *

@@ -22,7 +22,7 @@ class Misc
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler   $sessionHandler
+     * @param \ACP3\Core\SessionHandler        $sessionHandler
      */
     public function __construct(
         RequestInterface $request,

@@ -126,7 +126,7 @@ abstract class AbstractMinifier implements MinifierInterface
             // Get the enabled libraries and filter out empty entries
             $files = array_filter(
                 $this->processLibraries($layout),
-                function($var) {
+                function ($var) {
                     return !empty($var);
                 }
             );

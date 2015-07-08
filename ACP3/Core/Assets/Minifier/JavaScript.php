@@ -13,6 +13,10 @@ class JavaScript extends AbstractMinifier
      * @var string
      */
     protected $assetGroup = 'js';
+    /**
+     * @var array
+     */
+    protected $javascript = [];
 
     /**
      * @inheritdoc
@@ -22,25 +26,40 @@ class JavaScript extends AbstractMinifier
         $cacheId = $this->_buildCacheId('js', $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
-            $scripts = [];
-            foreach ($this->assets->getLibraries() as $library) {
-                if ($library['enabled'] === true && isset($library['js']) === true) {
-                    $scripts[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_JS_LIBS, $library['js']);
-                }
-            }
+            $this->fetchLibraries();
+            $this->fetchThemeJavaScript($layout);
 
-            // Include additional js files from the design
-            foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
-                $scripts[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);
-            }
-
-            // Include general js file of the layout
-            $scripts[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
-
-            $this->systemCache->save($cacheId, $scripts);
+            $this->systemCache->save($cacheId, $this->javascript);
         }
 
         return $this->systemCache->fetch($cacheId);
+    }
+
+    /**
+     * Fetches the javascript files of all enabled frontend frameworks/libraries
+     */
+    protected function fetchLibraries()
+    {
+        foreach ($this->assets->getLibraries() as $library) {
+            if ($library['enabled'] === true && isset($library['js']) === true) {
+                $this->javascript[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_JS_LIBS, $library['js']);
+            }
+        }
+    }
+
+    /**
+     * Fetches the theme javascript files
+     *
+     * @param $layout
+     */
+    protected function fetchThemeJavaScript($layout)
+    {
+        foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
+            $this->javascript[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);
+        }
+
+        // Include general js file of the layout
+        $this->javascript[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
     }
 
 }

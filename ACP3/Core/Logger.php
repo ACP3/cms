@@ -22,7 +22,7 @@ class Logger
      * Debug log
      *
      * @param string $channel
-     * @param mixed $message
+     * @param mixed  $message
      */
     public static function debug($channel, $message)
     {
@@ -34,7 +34,7 @@ class Logger
      *
      * @param string $channel
      * @param string $level
-     * @param mixed $message
+     * @param mixed  $message
      */
     private static function _log($channel, $level, $message)
     {

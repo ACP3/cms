@@ -17,7 +17,7 @@ class Index extends AbstractController
     protected $requirementsHelpers;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\Context                         $context
+     * @param \ACP3\Installer\Core\Modules\Controller\Context      $context
      * @param \ACP3\Installer\Modules\Install\Helpers\Requirements $requirementsHelpers
      */
     public function __construct(

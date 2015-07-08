@@ -22,12 +22,13 @@ class Redirect
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router           $router
+     * @param \ACP3\Core\Router                $router
      */
     public function __construct(
         RequestInterface $request,
         Router $router
-    ) {
+    )
+    {
         $this->request = $request;
         $this->router = $router;
     }

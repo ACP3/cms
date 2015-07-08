@@ -25,12 +25,13 @@ class SendEmail
     /**
      * Generates and sends an E-mail
      *
-     * @param $recipientName
-     * @param $recipientEmail
-     * @param $from
-     * @param $subject
-     * @param $body
+     * @param        $recipientName
+     * @param        $recipientEmail
+     * @param        $from
+     * @param        $subject
+     * @param        $body
      * @param string $mailSignature
+     *
      * @return mixed
      */
     public function execute($recipientName, $recipientEmail, $from, $subject, $body, $mailSignature = '')

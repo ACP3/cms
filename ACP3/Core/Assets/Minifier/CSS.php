@@ -13,6 +13,10 @@ class CSS extends AbstractMinifier
      * @var string
      */
     protected $assetGroup = 'css';
+    /**
+     * @var array
+     */
+    protected $stylesheets = [];
 
     /**
      * @inheritdoc
@@ -22,46 +26,65 @@ class CSS extends AbstractMinifier
         $cacheId = $this->_buildCacheId('css', $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
-            $css = [];
+            $this->fetchLibraries();
+            $this->fetchThemeStylesheets($layout);
+            $this->fetchModuleStylesheets();
 
-            // At first, load the library stylesheets
-            foreach ($this->assets->getLibraries() as $library) {
-                if ($library['enabled'] === true && isset($library['css']) === true) {
-                    $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, $library['css']);
-                }
-            }
-
-            foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
-                $css[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, trim($file));
-            }
-
-            // General system styles
-            $css[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, 'style.css');
-            // Stylesheet of the current theme
-            $css[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, $layout . '.css');
-
-            // Module stylesheets
-            $modules = $this->modules->getActiveModules();
-            foreach ($modules as $module) {
-                $modulePath = $module['dir'] . '/Resources/';
-                $designPath = $module['dir'] . '/';
-                if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'style.css')) &&
-                    $module['dir'] !== 'System'
-                ) {
-                    $css[] = $stylesheet;
-                }
-
-                // Append custom styles to the default module styling
-                if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'append.css'))) {
-                    $css[] = $stylesheet;
-                }
-            }
-
-            $this->systemCache->save($cacheId, $css);
+            $this->systemCache->save($cacheId, $this->stylesheets);
         }
 
 
         return $this->systemCache->fetch($cacheId);
+    }
+
+    /**
+     * Fetches the stylesheets of all currently enabled modules
+     */
+    protected function fetchModuleStylesheets()
+    {
+        $modules = $this->modules->getActiveModules();
+        foreach ($modules as $module) {
+            $modulePath = $module['dir'] . '/Resources/';
+            $designPath = $module['dir'] . '/';
+            if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'style.css')) &&
+                $module['dir'] !== 'System'
+            ) {
+                $this->stylesheets[] = $stylesheet;
+            }
+
+            // Append custom styles to the default module styling
+            if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'append.css'))) {
+                $this->stylesheets[] = $stylesheet;
+            }
+        }
+    }
+
+    /**
+     * Fetch all stylesheets of the enabled frontend frameworks/libraries
+     */
+    protected function fetchLibraries()
+    {
+        foreach ($this->assets->getLibraries() as $library) {
+            if ($library['enabled'] === true && isset($library['css']) === true) {
+                $this->stylesheets[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, $library['css']);
+            }
+        }
+    }
+
+    /**
+     * Fetches the theme stylesheets
+     *
+     * @param $layout
+     */
+    protected function fetchThemeStylesheets($layout)
+    {
+        foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
+            $this->stylesheets[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, trim($file));
+        }
+
+        // Include general system styles and the stylesheet of the current theme
+        $this->stylesheets[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, 'style.css');
+        $this->stylesheets[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, $layout . '.css');
     }
 
 }

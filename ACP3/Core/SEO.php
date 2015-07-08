@@ -64,13 +64,13 @@ class SEO
     protected $metaDescriptionPostfix = '';
 
     /**
-     * @param \ACP3\Core\Lang              $lang
-     * @param \ACP3\Core\Http\RequestInterface  $request
-     * @param \ACP3\Core\Router\Aliases    $aliases
-     * @param \ACP3\Core\Helpers\Forms     $formsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
-     * @param \ACP3\Core\Config            $config
-     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
+     * @param \ACP3\Core\Lang                  $lang
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\Aliases        $aliases
+     * @param \ACP3\Core\Helpers\Forms         $formsHelper
+     * @param \ACP3\Modules\ACP3\Seo\Cache     $seoCache
+     * @param \ACP3\Core\Config                $config
+     * @param \ACP3\Modules\ACP3\Seo\Model     $seoModel
      */
     public function __construct(
         Lang $lang,

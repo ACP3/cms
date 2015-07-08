@@ -35,7 +35,8 @@ class NestedSet
         DB $db,
         $tableName,
         $enableBlocks = false
-    ) {
+    )
+    {
         $this->db = $db->getConnection();
         $this->tableName = $db->getPrefix() . $tableName;
         $this->enableBlocks = $enableBlocks;
@@ -91,7 +92,7 @@ class NestedSet
      *
      * @param integer $parentId
      *    ID der übergeordneten Seite
-     * @param array $insertValues
+     * @param array   $insertValues
      *
      * @return boolean
      */
@@ -163,7 +164,7 @@ class NestedSet
      *    ID des neuen Elternelements
      * @param integer $blockId
      *    ID des neuen Blocks
-     * @param array $updateValues
+     * @param array   $updateValues
      *
      * @return boolean
      */
@@ -276,7 +277,7 @@ class NestedSet
      * Methode zum Umsortieren von Knoten
      *
      * @param integer $id
-     * @param string $mode
+     * @param string  $mode
      *
      * @return boolean
      */

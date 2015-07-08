@@ -39,13 +39,13 @@ class TableOfContents
     protected $view;
 
     /**
-     * @param \ACP3\Core\Breadcrumb           $breadcrumb
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\SEO                  $seo
-     * @param \ACP3\Core\Http\RequestInterface     $request
-     * @param \ACP3\Core\Router               $router
-     * @param \ACP3\Core\Validator\Rules\Misc $validate
-     * @param \ACP3\Core\View                 $view
+     * @param \ACP3\Core\Breadcrumb            $breadcrumb
+     * @param \ACP3\Core\Lang                  $lang
+     * @param \ACP3\Core\SEO                   $seo
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router                $router
+     * @param \ACP3\Core\Validator\Rules\Misc  $validate
+     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         Core\Breadcrumb $breadcrumb,
@@ -55,7 +55,8 @@ class TableOfContents
         Core\Router $router,
         Core\Validator\Rules\Misc $validate,
         Core\View $view
-    ) {
+    )
+    {
         $this->breadcrumb = $breadcrumb;
         $this->lang = $lang;
         $this->seo = $seo;

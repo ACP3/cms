@@ -26,19 +26,21 @@ class MoveToBottom extends AbstractFilter
 
     /**
      * @param \ACP3\Core\Assets\MinifierInterface $minifier
-     * @param \ACP3\Core\Http\RequestInterface         $request
+     * @param \ACP3\Core\Http\RequestInterface    $request
      */
     public function __construct(
         Assets\MinifierInterface $minifier,
         RequestInterface $request
-    ) {
+    )
+    {
         $this->minifier = $minifier;
         $this->request = $request;
     }
 
     /**
-     * @param $tpl_output
+     * @param                           $tpl_output
      * @param \Smarty_Internal_Template $smarty
+     *
      * @return string
      */
     public function process($tpl_output, \Smarty_Internal_Template $smarty)

@@ -20,6 +20,7 @@ class Smarty extends AbstractRenderer
 
     /**
      * @param array $params
+     *
      * @throws \SmartyException
      */
     public function configure(array $params = [])

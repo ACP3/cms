@@ -10,6 +10,7 @@ class Smarty extends \ACP3\Core\View\Renderer\Smarty
 {
     /**
      * @param array $params
+     *
      * @throws \SmartyException
      */
     public function configure(array $params = [])

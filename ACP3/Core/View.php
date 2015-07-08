@@ -30,7 +30,7 @@ class View extends ContainerAware
      * Set the desired renderer with an optional config array
      *
      * @param string $renderer
-     * @param array $params
+     * @param array  $params
      *
      * @throws \Exception
      */
@@ -49,9 +49,9 @@ class View extends ContainerAware
      * Fetches a template and outputs its contents
      *
      * @param      string $template
-     * @param null $cacheId
-     * @param null $compileId
-     * @param null $parent
+     * @param null        $cacheId
+     * @param null        $compileId
+     * @param null        $parent
      */
     public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -61,10 +61,10 @@ class View extends ContainerAware
     /**
      * Fetches a template and returns its contents
      *
-     * @param string $template
-     * @param mixed $cacheId
-     * @param mixed $compileId
-     * @param object $parent
+     * @param string  $template
+     * @param mixed   $cacheId
+     * @param mixed   $compileId
+     * @param object  $parent
      * @param boolean $display
      *
      * @throws \Exception
@@ -91,7 +91,7 @@ class View extends ContainerAware
      * Assigns a new template variable
      *
      * @param string|array $name
-     * @param mixed $value
+     * @param mixed        $value
      *
      * @return boolean
      */

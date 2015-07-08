@@ -80,14 +80,14 @@ class Pagination
     private $pagination = [];
 
     /**
-     * @param \ACP3\Core\Auth                 $auth
-     * @param \ACP3\Core\Breadcrumb           $breadcrumb
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\SEO                  $seo
-     * @param \ACP3\Core\Http\RequestInterface     $request
-     * @param \ACP3\Core\Router               $router
-     * @param \ACP3\Core\View                 $view
-     * @param \ACP3\Core\Validator\Rules\Misc $miscValidator
+     * @param \ACP3\Core\Auth                  $auth
+     * @param \ACP3\Core\Breadcrumb            $breadcrumb
+     * @param \ACP3\Core\Lang                  $lang
+     * @param \ACP3\Core\SEO                   $seo
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router                $router
+     * @param \ACP3\Core\View                  $view
+     * @param \ACP3\Core\Validator\Rules\Misc  $miscValidator
      */
     public function __construct(
         Auth $auth,

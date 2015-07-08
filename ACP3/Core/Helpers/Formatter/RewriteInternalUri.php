@@ -31,7 +31,8 @@ class RewriteInternalUri
         Core\Modules $modules,
         Core\Router $router,
         Core\Validator\Rules\Router\Aliases $aliasValidator
-    ) {
+    )
+    {
         $this->modules = $modules;
         $this->router = $router;
         $this->aliasesValidator = $aliasValidator;

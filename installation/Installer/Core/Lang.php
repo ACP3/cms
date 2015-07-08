@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3\Installer\Core;
+
 use ACP3\Installer\Core\Lang\Cache;
 
 /**
@@ -16,7 +17,7 @@ class Lang extends \ACP3\Core\Lang
 
     /**
      * @param \ACP3\Installer\Core\Lang\Cache $cache
-     * @param string           $lang
+     * @param string                          $lang
      */
     public function __construct(
         Cache $cache,

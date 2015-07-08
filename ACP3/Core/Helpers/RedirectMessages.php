@@ -27,10 +27,10 @@ class RedirectMessages
     private $view;
 
     /**
-     * @param \ACP3\Core\Redirect         $redirect
+     * @param \ACP3\Core\Redirect              $redirect
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler   $sessionHandler
-     * @param \ACP3\Core\View             $view
+     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         Core\Redirect $redirect,
