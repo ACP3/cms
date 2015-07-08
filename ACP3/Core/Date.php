@@ -119,12 +119,13 @@ class Date
     public function format($time = 'now', $format = 'long', $toLocalTimeZone = true, $isLocalTimeZone = true)
     {
         switch ($format) {
+            case '':
             case 'short':
                 $format = $this->dateFormatShort;
                 break;
             case 'long':
-            default:
                 $format = $this->dateFormatLong;
+                break;
         }
 
         if (is_numeric($time)) {

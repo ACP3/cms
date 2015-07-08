@@ -78,7 +78,7 @@ class Model extends Core\Model
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS p LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_VOTES . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt, ['time' => $time]);
     }
 

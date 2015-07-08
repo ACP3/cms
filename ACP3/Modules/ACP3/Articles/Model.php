@@ -61,7 +61,7 @@ class Model extends Core\Model
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY title ASC' . $limitStmt, ['time' => $time]);
     }
 
@@ -75,7 +75,7 @@ class Model extends Core\Model
     public function getLatest($time = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY `start` DESC' . $limitStmt, ['time' => $time]);
     }
 

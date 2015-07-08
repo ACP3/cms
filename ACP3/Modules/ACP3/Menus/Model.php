@@ -132,7 +132,7 @@ class Model extends Core\Model
      */
     public function getAllMenus($limitStart = '', $resultsPerPage = '')
     {
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY title ASC, id ASC' . $limitStmt);
     }
 

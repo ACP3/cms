@@ -163,7 +163,7 @@ class Date
             $datePicker['id_start'] = 'date-' . str_replace('_', '-', $name[0]);
             $datePicker['id_end'] = 'date-' . str_replace('_', '-', $name[1]);
 
-            array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $format));
+            $datePicker = array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $format));
 
             $datePicker['range_json'] = json_encode(
                 [

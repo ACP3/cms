@@ -76,7 +76,7 @@ class Model extends Core\Model
      */
     public function getAllByModule($moduleId, $resultId, $limitStart = '', $resultsPerPage = '')
     {
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS c LEFT JOIN ' . $this->db->getPrefix() . 'users AS u ON (u.id = c.user_id) WHERE c.module_id = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt, [$moduleId, $resultId]);
     }
 

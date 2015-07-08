@@ -114,7 +114,7 @@ class Model extends Core\Model
      */
     public function getAll($limitStart = '', $resultsPerPage = '')
     {
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY nickname ASC, id ASC' . $limitStmt);
     }
 

@@ -31,22 +31,14 @@ class Model
      * @param array  $params
      * @param string $tableName
      *
-     * @return int
+     * @return int|bool
      */
     public function insert(array $params, $tableName = '')
     {
-        $this->db->getConnection()->beginTransaction();
-        try {
-            $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
-            $this->db->getConnection()->insert($this->db->getPrefix() . $tableName, $params);
-            $lastId = (int)$this->db->getConnection()->lastInsertId();
-            $this->db->getConnection()->commit();
-            return $lastId;
-        } catch (\Exception $e) {
-            $this->db->getConnection()->rollback();
-            Logger::error('database', $e->getMessage());
-            return false;
-        }
+        return $this->executeTransactionalQuery(function () use ($params, $tableName) {
+            $this->db->getConnection()->insert($this->getTableName($tableName), $params);
+            return (int)$this->db->getConnection()->lastInsertId();
+        });
     }
 
     /**
@@ -56,17 +48,28 @@ class Model
      * @param string    $field
      * @param string    $tableName
      *
-     * @return int
+     * @return int|bool
      */
     public function delete($id, $field = '', $tableName = '')
     {
+        return $this->executeTransactionalQuery(function () use ($id, $field, $tableName) {
+            return $this->db->getConnection()->delete($this->getTableName($tableName), $this->getIdentifier($id, $field));
+        });
+    }
+
+    /**
+     * @param callable $callback
+     *
+     * @return int|bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    protected function executeTransactionalQuery(callable $callback)
+    {
         $this->db->getConnection()->beginTransaction();
         try {
-            $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
-            $field = empty($field) ? 'id' : $field;
-            $bool = $this->db->getConnection()->delete($this->db->getPrefix() . $tableName, is_array($id) ? $id : [$field => (int)$id]);
+            $result = $callback();
             $this->db->getConnection()->commit();
-            return $bool;
+            return $result;
         } catch (\Exception $e) {
             $this->db->getConnection()->rollback();
             Logger::error('database', $e->getMessage());
@@ -81,22 +84,34 @@ class Model
      * @param int|array $id
      * @param string    $tableName
      *
-     * @return int
+     * @return int|bool
      */
     public function update(array $params, $id, $tableName = '')
     {
-        $this->db->getConnection()->beginTransaction();
-        try {
-            $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
-            $where = is_array($id) === true ? $id : ['id' => $id];
-            $bool = $this->db->getConnection()->update($this->db->getPrefix() . $tableName, $params, $where);
-            $this->db->getConnection()->commit();
-            return $bool;
-        } catch (\Exception $e) {
-            $this->db->getConnection()->rollback();
-            Logger::error('database', $e->getMessage());
-            return false;
-        }
+        return $this->executeTransactionalQuery(function () use ($params, $id, $tableName) {
+            return $this->db->getConnection()->update($this->getTableName($tableName), $params, $this->getIdentifier($id));
+        });
+    }
+
+    /**
+     * @param string $tableName
+     *
+     * @return string
+     */
+    private function getTableName($tableName)
+    {
+        return $this->db->getPrefix() . (!empty($tableName) ? $tableName : static::TABLE_NAME);
+    }
+
+    /**
+     * @param int|array $id
+     * @param string    $fieldName
+     *
+     * @return array
+     */
+    private function getIdentifier($id, $fieldName = 'id')
+    {
+        return is_array($id) === true ? $id : [$fieldName => (int)$id];
     }
 
     /**
@@ -107,7 +122,7 @@ class Model
      *
      * @return string
      */
-    protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '')
+    protected function buildLimitStmt($limitStart = '', $resultsPerPage = '')
     {
         if ($limitStart !== '' && $resultsPerPage !== '') {
             return ' LIMIT ' . ((int)$limitStart) . ',' . ((int)$resultsPerPage);

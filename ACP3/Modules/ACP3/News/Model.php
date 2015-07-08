@@ -71,7 +71,7 @@ class Model extends Core\Model
     public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
     }
 
@@ -85,7 +85,7 @@ class Model extends Core\Model
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time]);
     }
 

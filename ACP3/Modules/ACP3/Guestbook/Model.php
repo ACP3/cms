@@ -52,7 +52,7 @@ class Model extends Core\Model
     public function getAll($notify = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = ($notify == 2) ? 'WHERE active = 1' : '';
-        $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
+        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT u.id AS user_id_real, u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.* FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->db->getPrefix() . \ACP3\Modules\ACP3\Users\Model::TABLE_NAME . ' AS u ON(u.id = g.user_id) ' . $where . ' ORDER BY DATE DESC' . $limitStmt);
     }
 
