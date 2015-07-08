@@ -3,6 +3,7 @@ namespace ACP3\Core;
 
 use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Modules\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -96,14 +97,14 @@ class FrontController
     }
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param string                           $controller
-     * @param string                           $action
-     * @param bool                             $resolveParameters
+     * @param \ACP3\Core\Http\RequestInterface     $request
+     * @param \ACP3\Core\Modules\Controller|string $controller
+     * @param string                               $action
+     * @param bool                                 $resolveParameters
      *
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    private function callControllerAction(RequestInterface $request, $controller, $action, $resolveParameters)
+    private function callControllerAction(RequestInterface $request, Controller $controller, $action, $resolveParameters)
     {
         $reflection = new \ReflectionMethod($controller, $action);
         $parameterCount = $reflection->getNumberOfParameters();
@@ -132,11 +133,11 @@ class FrontController
     }
 
     /**
-     * @param string $controller
-     * @param string $action
-     * @param array  $arguments
+     * @param \ACP3\Core\Modules\Controller|string $controller
+     * @param string                               $action
+     * @param array                                $arguments
      */
-    private function callControllerActionWithArguments($controller, $action, $arguments)
+    private function callControllerActionWithArguments(Controller $controller, $action, $arguments)
     {
         call_user_func_array([$controller, $action], $arguments);
     }
