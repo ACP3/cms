@@ -29,11 +29,11 @@ class Resources extends Core\Modules\AdminController
     protected $permissionsValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
-     * @param \ACP3\Core\Helpers\FormToken             $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model     $permissionsModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache     $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validator $permissionsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model       $permissionsModel
+     * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validator   $permissionsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

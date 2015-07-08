@@ -32,11 +32,11 @@ class Index extends Core\Modules\FrontendController
     protected $categoriesModel;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext    $context
-     * @param \ACP3\Core\Date                $date
-     * @param \ACP3\Modules\ACP3\Files\Model      $filesModel
-     * @param \ACP3\Modules\ACP3\Files\Cache      $filesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model $categoriesModel
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Modules\ACP3\Files\Model                $filesModel
+     * @param \ACP3\Modules\ACP3\Files\Cache                $filesCache
+     * @param \ACP3\Modules\ACP3\Categories\Model           $categoriesModel
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

@@ -21,7 +21,7 @@ class Model extends Core\Model
     }
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $time
      *
      * @return bool
@@ -81,7 +81,7 @@ class Model extends Core\Model
     {
         $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
     }
 
     /**
@@ -95,7 +95,7 @@ class Model extends Core\Model
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time]);
     }
 
     public function getAllInAcp()
@@ -108,11 +108,12 @@ class Model extends Core\Model
      * @param $searchTerm
      * @param $sort
      * @param $time
+     *
      * @return array
      */
     public function getAllSearchResults($fields, $searchTerm, $sort, $time)
     {
         $period = ' AND ' . $this->_getPeriod();
-        return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY start ' . $sort . ', end ' . $sort . ', id ' . $sort, ['time' => $time]);
+        return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY START ' . $sort . ', END ' . $sort . ', id ' . $sort, ['time' => $time]);
     }
 }

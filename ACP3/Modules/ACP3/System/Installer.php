@@ -262,7 +262,7 @@ class Installer extends Modules\AbstractInstaller
                 'ALTER TABLE `{pre}seo` ADD `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
             ],
             50 => [
-                function() {
+                function () {
                     $result = true;
                     if ($this->container->has('seo.installer') && $this->systemModel->moduleExists('seo') === false) {
                         /** @var Modules\AbstractInstaller $seoInstaller */
@@ -287,7 +287,7 @@ class Installer extends Modules\AbstractInstaller
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'admin', 'maintenance', 'cache', '', 7);",
             ],
             52 => [
-                function() {
+                function () {
                     $result = true;
                     if ($this->container->has('minify.installer') && $this->systemModel->moduleExists('minify') === false) {
                         /** @var Modules\AbstractInstaller $minifyInstaller */
@@ -299,7 +299,7 @@ class Installer extends Modules\AbstractInstaller
                 }
             ],
             53 => [
-                function() {
+                function () {
                     $result = true;
                     if ($this->systemModel->moduleExists('minify') === true) {
                         $minifyModuleId = $this->db->fetchColumn('SELECT `id` FROM `' . $this->db->getPrefix() . 'modules` WHERE `name` = "minify"');

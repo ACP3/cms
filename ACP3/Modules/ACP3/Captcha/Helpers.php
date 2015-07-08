@@ -36,7 +36,7 @@ class Helpers
 
     /**
      * @param \ACP3\Core\Auth           $auth
-     * @param \ACP3\Core\Http\Request        $request
+     * @param \ACP3\Core\Http\Request   $request
      * @param \ACP3\Core\Router         $router
      * @param \ACP3\Core\SessionHandler $sessionHandler
      * @param \ACP3\Core\View           $view

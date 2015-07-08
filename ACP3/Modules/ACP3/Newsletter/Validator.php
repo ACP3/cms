@@ -27,12 +27,12 @@ class Validator extends Core\Validator\AbstractValidator
     protected $newsletterModel;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Lang                    $lang
+     * @param Core\Validator\Rules\Misc    $validate
      * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\ACL $acl
-     * @param Core\Auth $auth
-     * @param Model $newsletterModel
+     * @param Core\ACL                     $acl
+     * @param Core\Auth                    $auth
+     * @param Model                        $newsletterModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -41,7 +41,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\ACL $acl,
         Core\Auth $auth,
         Model $newsletterModel
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
@@ -52,6 +53,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -72,6 +74,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -94,6 +97,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -116,6 +120,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -134,6 +139,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param $mail
      * @param $hash
+     *
      * @throws Core\Exceptions\ValidationFailed
      */
     public function validateActivate($mail, $hash)

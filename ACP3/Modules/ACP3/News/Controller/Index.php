@@ -51,13 +51,13 @@ class Index extends Core\Modules\FrontendController
     protected $commentsActive;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext           $context
-     * @param \ACP3\Core\Date                       $date
-     * @param \ACP3\Core\Pagination                 $pagination
-     * @param \ACP3\Modules\ACP3\News\Model         $newsModel
-     * @param \ACP3\Modules\ACP3\News\Cache         $newsCache
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
-     * @param \ACP3\Modules\ACP3\Categories\Model   $categoriesModel
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Pagination                         $pagination
+     * @param \ACP3\Modules\ACP3\News\Model                 $newsModel
+     * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
+     * @param \ACP3\Modules\ACP3\Categories\Helpers         $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Model           $categoriesModel
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

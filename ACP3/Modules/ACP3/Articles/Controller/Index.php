@@ -34,12 +34,12 @@ class Index extends Core\Modules\FrontendController
     protected $articlesCache;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext        $context
-     * @param \ACP3\Core\Date                    $date
-     * @param \ACP3\Core\Pagination              $pagination
-     * @param \ACP3\Core\Helpers\TableOfContents $toc
-     * @param \ACP3\Modules\ACP3\Articles\Model       $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Cache       $articlesCache
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Pagination                         $pagination
+     * @param \ACP3\Core\Helpers\TableOfContents            $toc
+     * @param \ACP3\Modules\ACP3\Articles\Model             $articlesModel
+     * @param \ACP3\Modules\ACP3\Articles\Cache             $articlesCache
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -76,7 +76,8 @@ class Index extends Core\Modules\FrontendController
     public function actionDetails()
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->articlesModel->resultExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true) {
+            $this->articlesModel->resultExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true
+        ) {
             $article = $this->articlesCache->getCache($this->request->getParameters()->get('id'));
 
             $this->breadcrumb->replaceAncestor($article['title'], 0, true);

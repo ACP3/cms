@@ -43,13 +43,13 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
-     * @param \ACP3\Core\Date                       $date
-     * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model         $newsModel
-     * @param \ACP3\Modules\ACP3\News\Cache         $newsCache
-     * @param \ACP3\Modules\ACP3\News\Validator     $newsValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Date                            $date
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\News\Model              $newsModel
+     * @param \ACP3\Modules\ACP3\News\Cache              $newsCache
+     * @param \ACP3\Modules\ACP3\News\Validator          $newsValidator
+     * @param \ACP3\Modules\ACP3\Categories\Helpers      $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

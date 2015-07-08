@@ -46,14 +46,14 @@ class Items extends Core\Modules\AdminController
     protected $articlesHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext           $context
-     * @param \ACP3\Core\Router\Aliases          $aliases
-     * @param \ACP3\Core\DB                      $db
-     * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model     $menusModel
-     * @param \ACP3\Modules\ACP3\Menus\Cache     $menusCache
-     * @param \ACP3\Modules\ACP3\Menus\Helpers   $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Validator $menusValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Router\Aliases                  $aliases
+     * @param \ACP3\Core\DB                              $db
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Model             $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Cache             $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Helpers           $menusHelpers
+     * @param \ACP3\Modules\ACP3\Menus\Validator         $menusValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

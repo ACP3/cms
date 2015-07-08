@@ -27,12 +27,12 @@ class Validator extends Core\Validator\AbstractValidator
     protected $modules;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Lang                           $lang
+     * @param Core\Validator\Rules\Misc           $validate
      * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
-     * @param Core\Validator\Rules\Date $dateValidator
-     * @param Core\Validator\Rules\Mime $mimeValidator
-     * @param Core\Modules $modules
+     * @param Core\Validator\Rules\Date           $dateValidator
+     * @param Core\Validator\Rules\Mime           $mimeValidator
+     * @param Core\Modules                        $modules
      */
     public function __construct(
         Core\Lang $lang,
@@ -41,7 +41,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Date $dateValidator,
         Core\Validator\Rules\Mime $mimeValidator,
         Core\Modules $modules
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->aliasesValidator = $aliasesValidator;
@@ -51,8 +52,9 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array $formData
+     * @param array  $formData
      * @param string $uriAlias
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -77,6 +79,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $file
      * @param array $settings
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -101,6 +104,7 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $file
      * @param array $settings
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -121,6 +125,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

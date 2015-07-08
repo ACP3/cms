@@ -15,9 +15,10 @@ class Model extends Core\Model
     const TABLE_NAME_VOTES = 'poll_votes';
 
     /**
-     * @param $pollId
+     * @param        $pollId
      * @param string $time
-     * @param bool $multiple
+     * @param bool   $multiple
+     *
      * @return bool
      */
     public function pollExists($pollId, $time = '', $multiple = false)
@@ -29,6 +30,7 @@ class Model extends Core\Model
 
     /**
      * @param $pollId
+     *
      * @return array
      */
     public function getOneById($pollId)
@@ -38,6 +40,7 @@ class Model extends Core\Model
 
     /**
      * @param $pollId
+     *
      * @return array
      */
     public function getOneByIdWithTotalVotes($pollId)
@@ -47,6 +50,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getAnswersById($id)
@@ -56,6 +60,7 @@ class Model extends Core\Model
 
     /**
      * @param string $status
+     *
      * @return array
      */
     public function countAll($status = '')
@@ -67,6 +72,7 @@ class Model extends Core\Model
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
@@ -80,6 +86,7 @@ class Model extends Core\Model
      * @param $pollId
      * @param $userId
      * @param $ipAddress
+     *
      * @return mixed
      */
     public function getVotesByUserId($pollId, $userId, $ipAddress)
@@ -90,6 +97,7 @@ class Model extends Core\Model
     /**
      * @param $pollId
      * @param $ipAddress
+     *
      * @return mixed
      */
     public function getVotesByIpAddress($pollId, $ipAddress)
@@ -99,6 +107,7 @@ class Model extends Core\Model
 
     /**
      * @param $pollId
+     *
      * @return array
      */
     public function getAnswersByPollId($pollId)
@@ -108,6 +117,7 @@ class Model extends Core\Model
 
     /**
      * @param $time
+     *
      * @return array
      */
     public function getLatestPoll($time)
@@ -121,6 +131,6 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY start DESC, end DESC, id DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY START DESC, END DESC, id DESC');
     }
 }

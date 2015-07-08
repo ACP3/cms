@@ -61,12 +61,12 @@ class Index extends Core\Modules\FrontendController
     protected $newsletterActive;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext            $context
-     * @param \ACP3\Core\Date                        $date
-     * @param \ACP3\Core\Pagination                  $pagination
-     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model     $guestbookModel
-     * @param \ACP3\Modules\ACP3\Guestbook\Validator $guestbookValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Pagination                         $pagination
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Guestbook\Model            $guestbookModel
+     * @param \ACP3\Modules\ACP3\Guestbook\Validator        $guestbookValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

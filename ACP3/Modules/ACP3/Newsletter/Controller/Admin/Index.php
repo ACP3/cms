@@ -33,12 +33,12 @@ class Index extends Core\Modules\AdminController
     protected $newsletterHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext                $context
-     * @param \ACP3\Core\Date                         $date
-     * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model     $newsletterModel
-     * @param \ACP3\Modules\ACP3\Newsletter\Validator $newsletterValidator
-     * @param \ACP3\Modules\ACP3\Newsletter\Helpers   $newsletterHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Date                            $date
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Model        $newsletterModel
+     * @param \ACP3\Modules\ACP3\Newsletter\Validator    $newsletterValidator
+     * @param \ACP3\Modules\ACP3\Newsletter\Helpers      $newsletterHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -147,7 +147,8 @@ class Index extends Core\Modules\AdminController
     public function actionSend()
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->newsletterModel->newsletterExists($this->request->getParameters()->get('id')) === true) {
+            $this->newsletterModel->newsletterExists($this->request->getParameters()->get('id')) === true
+        ) {
             $accounts = $this->newsletterModel->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = [];

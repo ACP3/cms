@@ -29,11 +29,11 @@ class Index extends Core\Modules\AdminController
     protected $seoValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
-     * @param \ACP3\Core\Helpers\FormToken     $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache     $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Model     $seoModel
-     * @param \ACP3\Modules\ACP3\Seo\Validator $seoValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Model               $seoModel
+     * @param \ACP3\Modules\ACP3\Seo\Validator           $seoValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -150,7 +150,7 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
-     * @param $path
+     * @param       $path
      */
     protected function _editPost(array $formData, $path)
     {

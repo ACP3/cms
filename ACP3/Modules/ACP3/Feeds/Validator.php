@@ -12,6 +12,7 @@ class Validator extends Core\Validator\AbstractValidator
 {
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

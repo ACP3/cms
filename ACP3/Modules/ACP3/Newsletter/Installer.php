@@ -35,12 +35,12 @@ class Installer extends Modules\AbstractInstaller
                 `mail` VARCHAR(120) NOT NULL,
                 `hash` VARCHAR(32) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}newsletter_queue` (
                 `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
                 `newsletter_id` INT(10) UNSIGNED NOT NULL,
                 INDEX (`newsletter_account_id`), INDEX (`newsletter_id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}newsletters` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
@@ -50,7 +50,7 @@ class Installer extends Modules\AbstractInstaller
                 `status` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 
@@ -86,7 +86,7 @@ class Installer extends Modules\AbstractInstaller
         return [
             31 => [
                 "RENAME TABLE `{pre}newsletter_archive` TO `{pre}newsletters`;",
-                "ALTER TABLE `{pre}newsletters` CHANGE `subject` `title` VARCHAR(120) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}newsletters` CHANGE `subject` `title` VARCHAR(120) {CHARSET} NOT NULL;",
             ],
             32 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'archive', '', 1);",
@@ -135,7 +135,7 @@ class Installer extends Modules\AbstractInstaller
                     `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
                     `newsletter_id` INT(10) UNSIGNED NOT NULL,
                     INDEX (`newsletter_account_id`), INDEX (`newsletter_id`)
-                ) {engine} {charset};'
+                ) {ENGINE} {CHARSET};'
             ]
         ];
     }

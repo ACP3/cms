@@ -24,11 +24,11 @@ class Validator extends Core\Validator\AbstractValidator
     protected $acl;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Lang                    $lang
+     * @param Core\Validator\Rules\Misc    $validate
      * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\ACL $acl
-     * @param Core\Auth $auth
+     * @param Core\ACL                     $acl
+     * @param Core\Auth                    $auth
      */
     public function __construct(
         Core\Lang $lang,
@@ -36,7 +36,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\ACL $acl,
         Core\Auth $auth
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
@@ -46,6 +47,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -74,6 +76,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

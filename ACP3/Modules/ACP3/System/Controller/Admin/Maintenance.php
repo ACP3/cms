@@ -34,12 +34,12 @@ class Maintenance extends Core\Modules\AdminController
     protected $systemValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
-     * @param \ACP3\Core\DB                       $db
-     * @param \ACP3\Core\Helpers\FormToken        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\System\Helpers   $systemHelpers
-     * @param \ACP3\Modules\ACP3\System\Model     $systemModel
-     * @param \ACP3\Modules\ACP3\System\Validator $systemValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\DB                              $db
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\System\Helpers          $systemHelpers
+     * @param \ACP3\Modules\ACP3\System\Model            $systemModel
+     * @param \ACP3\Modules\ACP3\System\Validator        $systemValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

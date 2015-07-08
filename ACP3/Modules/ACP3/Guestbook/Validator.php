@@ -51,7 +51,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param \ACP3\Core\Auth                    $auth
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Modules                 $modules
-     * @param \ACP3\Core\Http\Request                 $request
+     * @param \ACP3\Core\Http\Request            $request
      * @param \ACP3\Modules\ACP3\Guestbook\Model $guestbookModel
      */
     public function __construct(
@@ -89,7 +89,7 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array $formData
+     * @param array         $formData
      * @param       boolean $newsletterAccess
      *
      * @throws Core\Exceptions\InvalidFormToken

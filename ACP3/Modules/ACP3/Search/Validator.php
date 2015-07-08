@@ -11,6 +11,7 @@ class Validator extends Core\Validator\AbstractValidator
 {
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)

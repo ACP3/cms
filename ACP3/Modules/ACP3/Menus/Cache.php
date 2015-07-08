@@ -23,14 +23,15 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param Core\Cache $cache
-     * @param Core\Lang $lang
-     * @param Model $menuModel
+     * @param Core\Lang  $lang
+     * @param Model      $menuModel
      */
     public function __construct(
         Core\Cache $cache,
         Core\Lang $lang,
         Model $menuModel
-    ) {
+    )
+    {
         parent::__construct($cache);
 
         $this->lang = $lang;

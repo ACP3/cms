@@ -23,8 +23,8 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param Core\Date $date
-     * @param Polls\Model $pollsModel
+     * @param Core\Date                                     $date
+     * @param Polls\Model                                   $pollsModel
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -105,7 +105,7 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @param array $formData
+     * @param array  $formData
      * @param string $time
      */
     protected function _votePost(array $formData, $time)

@@ -35,11 +35,11 @@ class Index extends Core\Modules\FrontendController
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext             $context
-     * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helpers   $newsletterHelpers
-     * @param \ACP3\Modules\ACP3\Newsletter\Model     $newsletterModel
-     * @param \ACP3\Modules\ACP3\Newsletter\Validator $newsletterValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Helpers         $newsletterHelpers
+     * @param \ACP3\Modules\ACP3\Newsletter\Model           $newsletterModel
+     * @param \ACP3\Modules\ACP3\Newsletter\Validator       $newsletterValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -73,7 +73,8 @@ class Index extends Core\Modules\FrontendController
         try {
             $mail = $hash = '';
             if ($this->get('core.validator.rules.misc')->email($this->request->getParameters()->get('mail', '')) &&
-                $this->get('core.validator.rules.misc')->isMD5($this->request->getParameters()->get('hash', ''))) {
+                $this->get('core.validator.rules.misc')->isMD5($this->request->getParameters()->get('hash', ''))
+            ) {
                 $mail = $this->request->getParameters()->get('mail', '');
                 $hash = $this->request->getParameters()->get('hash', '');
             }
@@ -113,6 +114,7 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\ResultNotExists
      */
     protected function _indexPost(array $formData)

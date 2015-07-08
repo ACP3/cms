@@ -42,14 +42,14 @@ class Index extends Core\Modules\AdminController
     protected $permissionsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext               $context
-     * @param \ACP3\Core\Date                        $date
-     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure              $secureHelper
-     * @param \ACP3\Core\Helpers\Forms               $formsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model         $usersModel
-     * @param \ACP3\Modules\ACP3\Users\Validator     $usersValidator
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Date                            $date
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
+     * @param \ACP3\Core\Helpers\Forms                   $formsHelpers
+     * @param \ACP3\Modules\ACP3\Users\Model             $usersModel
+     * @param \ACP3\Modules\ACP3\Users\Validator         $usersValidator
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers     $permissionsHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

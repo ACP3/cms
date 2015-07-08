@@ -30,11 +30,11 @@ class Extensions extends Core\Modules\AdminController
     protected $permissionsCache;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
-     * @param \ACP3\Core\XML                  $xml
-     * @param \ACP3\Modules\ACP3\System\Model      $systemModel
-     * @param \ACP3\Modules\ACP3\System\Helpers    $systemHelpers
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\XML                             $xml
+     * @param \ACP3\Modules\ACP3\System\Model            $systemModel
+     * @param \ACP3\Modules\ACP3\System\Helpers          $systemHelpers
+     * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

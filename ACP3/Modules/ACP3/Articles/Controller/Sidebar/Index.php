@@ -24,10 +24,10 @@ class Index extends Core\Modules\Controller
     protected $articlesModel;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context           $context
-     * @param \ACP3\Core\Date              $date
-     * @param \ACP3\Modules\ACP3\Articles\Model $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
+     * @param \ACP3\Core\Modules\Controller\Context $context
+     * @param \ACP3\Core\Date                       $date
+     * @param \ACP3\Modules\ACP3\Articles\Model     $articlesModel
+     * @param \ACP3\Modules\ACP3\Articles\Cache     $articlesCache
      */
     public function __construct(
         Core\Modules\Controller\Context $context,

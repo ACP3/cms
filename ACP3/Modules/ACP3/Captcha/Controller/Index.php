@@ -18,7 +18,7 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\SessionHandler   $sessionHandler
+     * @param \ACP3\Core\SessionHandler                     $sessionHandler
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

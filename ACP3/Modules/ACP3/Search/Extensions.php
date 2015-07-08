@@ -59,15 +59,16 @@ class Extensions
     protected $newsModel;
 
     /**
-     * @param Core\Date $date
-     * @param Core\Lang $lang
+     * @param Core\Date   $date
+     * @param Core\Lang   $lang
      * @param Core\Router $router
      */
     public function __construct(
         Core\Date $date,
         Core\Lang $lang,
         Core\Router $router
-    ) {
+    )
+    {
         $this->lang = $lang;
         $this->router = $router;
 

@@ -19,9 +19,9 @@ class Validator extends Core\Validator\AbstractValidator
     protected $aliasesValidator;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Router $routerValidator
+     * @param Core\Lang                           $lang
+     * @param Core\Validator\Rules\Misc           $validate
+     * @param Core\Validator\Rules\Router         $routerValidator
      * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
      */
     public function __construct(
@@ -38,8 +38,9 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array $formData
+     * @param array  $formData
      * @param string $uriAlias
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -60,6 +61,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

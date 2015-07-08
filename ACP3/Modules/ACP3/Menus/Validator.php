@@ -41,7 +41,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasesValidator
      * @param \ACP3\Core\Validator\Rules\Router         $routerValidator
      * @param \ACP3\Core\Modules                        $modules
-     * @param \ACP3\Modules\ACP3\Menus\Model                 $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model            $menusModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -50,7 +50,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
         Model $menusModel
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->aliasesValidator = $aliasesValidator;
@@ -61,6 +62,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param Articles\Helpers $articlesHelpers
+     *
      * @return $this
      */
     public function setArticlesHelpers(Articles\Helpers $articlesHelpers)
@@ -72,7 +74,8 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param int $menuId
+     * @param int   $menuId
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -96,6 +99,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

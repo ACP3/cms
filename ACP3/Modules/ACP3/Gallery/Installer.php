@@ -28,7 +28,7 @@ class Installer extends Modules\AbstractInstaller
                 `title` VARCHAR(120) NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}gallery_pictures` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `pic` INT(10) UNSIGNED NOT NULL,
@@ -37,7 +37,7 @@ class Installer extends Modules\AbstractInstaller
                 `description` TEXT NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 
@@ -79,7 +79,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             31 => [
-                "ALTER TABLE `{pre}gallery` CHANGE `name` `title` VARCHAR(120) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}gallery` CHANGE `name` `title` VARCHAR(120) {CHARSET} NOT NULL;",
             ],
             32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",

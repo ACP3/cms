@@ -28,14 +28,15 @@ class Helpers
 
     /**
      * @param Core\Router\Aliases $aliases
-     * @param Core\SEO $seo
-     * @param Model $galleryModel
+     * @param Core\SEO            $seo
+     * @param Model               $galleryModel
      */
     public function __construct(
         Core\Router\Aliases $aliases,
         Core\SEO $seo,
         Model $galleryModel
-    ) {
+    )
+    {
         $this->aliases = $aliases;
         $this->seo = $seo;
         $this->galleryModel = $galleryModel;

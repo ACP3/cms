@@ -41,14 +41,14 @@ class Pictures extends Core\Modules\AdminController
     protected $galleryValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
-     * @param \ACP3\Core\Date                      $date
-     * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
-     * @param \ACP3\Core\Helpers\Sort              $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers   $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model     $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Cache     $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Validator $galleryValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Date                            $date
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Core\Helpers\Sort                    $sortHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers         $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model           $galleryModel
+     * @param \ACP3\Modules\ACP3\Gallery\Cache           $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Validator       $galleryValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

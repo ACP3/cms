@@ -32,7 +32,7 @@ class Installer extends Modules\AbstractInstaller
                 `mail` VARCHAR(120) NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX `foreign_user_id` (`user_id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 

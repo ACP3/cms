@@ -25,7 +25,7 @@ class Installer extends Modules\AbstractInstaller
                 `description` VARCHAR(15) NOT NULL,
                 `img` VARCHAR(40) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             // Default Smilies
             "INSERT INTO `{pre}emoticons` VALUES ('', ':D', 'Very Happy', '1.gif');",
             "INSERT INTO `{pre}emoticons` VALUES ('', ':)', 'Smile', '2.gif');",

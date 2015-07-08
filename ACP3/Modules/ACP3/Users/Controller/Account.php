@@ -34,12 +34,12 @@ class Account extends Core\Modules\FrontendController
     protected $usersValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext        $context
-     * @param \ACP3\Core\Date                    $date
-     * @param \ACP3\Core\Helpers\FormToken       $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure          $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model     $usersModel
-     * @param \ACP3\Modules\ACP3\Users\Validator $usersValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                     $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Model                $usersModel
+     * @param \ACP3\Modules\ACP3\Users\Validator            $usersValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

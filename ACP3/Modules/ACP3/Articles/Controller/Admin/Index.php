@@ -46,12 +46,12 @@ class Index extends Core\Modules\AdminController
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
-     * @param \ACP3\Core\Date                       $date
-     * @param \ACP3\Modules\ACP3\Articles\Model     $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Cache     $articlesCache
-     * @param \ACP3\Modules\ACP3\Articles\Validator $articlesValidator
-     * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Date                            $date
+     * @param \ACP3\Modules\ACP3\Articles\Model          $articlesModel
+     * @param \ACP3\Modules\ACP3\Articles\Cache          $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Validator      $articlesValidator
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

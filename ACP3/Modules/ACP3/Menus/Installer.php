@@ -42,13 +42,13 @@ class Installer extends Modules\AbstractInstaller
                 `uri` VARCHAR(120) NOT NULL,
                 `target` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX `foreign_block_id` (`block_id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}menus` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `index_name` VARCHAR(10) NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 

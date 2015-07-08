@@ -20,8 +20,9 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $id
+     * @param        $id
      * @param string $time
+     *
      * @return bool
      */
     public function resultExists($id, $time = '')
@@ -32,6 +33,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -41,6 +43,7 @@ class Model extends Core\Model
 
     /**
      * @param string $time
+     *
      * @return int
      */
     public function countAll($time = '')
@@ -52,6 +55,7 @@ class Model extends Core\Model
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
@@ -65,6 +69,7 @@ class Model extends Core\Model
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getLatest($time = '', $limitStart = '', $resultsPerPage = '')
@@ -88,11 +93,12 @@ class Model extends Core\Model
      * @param $searchTerm
      * @param $sort
      * @param $time
+     *
      * @return array
      */
     public function getAllSearchResults($fields, $searchTerm, $sort, $time)
     {
         $period = ' AND ' . $this->_getPeriod();
-        return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY start ' . $sort . ', end ' . $sort . ', title ' . $sort, ['time' => $time]);
+        return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY START ' . $sort . ', END ' . $sort . ', title ' . $sort, ['time' => $time]);
     }
 }

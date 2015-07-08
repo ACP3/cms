@@ -35,10 +35,10 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date             $date
-     * @param \ACP3\Core\Pagination       $pagination
-     * @param \ACP3\Modules\ACP3\Gallery\Model $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Pagination                         $pagination
+     * @param \ACP3\Modules\ACP3\Gallery\Model              $galleryModel
+     * @param \ACP3\Modules\ACP3\Gallery\Cache              $galleryCache
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -58,7 +58,7 @@ class Index extends Core\Modules\FrontendController
     public function preDispatch()
     {
         parent::preDispatch();
-        
+
         $this->settings = $this->config->getSettings('gallery');
     }
 

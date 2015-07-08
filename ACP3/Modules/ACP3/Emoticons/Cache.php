@@ -17,12 +17,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param Core\Cache $cache
-     * @param Model $emoticonsModel
+     * @param Model      $emoticonsModel
      */
     public function __construct(
         Core\Cache $cache,
         Model $emoticonsModel
-    ) {
+    )
+    {
         parent::__construct($cache);
 
         $this->emoticonsModel = $emoticonsModel;

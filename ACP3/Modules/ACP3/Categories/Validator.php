@@ -23,11 +23,11 @@ class Validator extends Core\Validator\AbstractValidator
     protected $categoriesHelpers;
 
     /**
-     * @param Core\Lang $lang
+     * @param Core\Lang                 $lang
      * @param Core\Validator\Rules\Misc $validate
      * @param Core\Validator\Rules\Mime $mimeValidator
-     * @param Helpers $categoriesHelpers
-     * @param Model $categoriesModel
+     * @param Helpers                   $categoriesHelpers
+     * @param Model                     $categoriesModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -35,7 +35,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Mime $mimeValidator,
         Helpers $categoriesHelpers,
         Model $categoriesModel
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->mimeValidator = $mimeValidator;
@@ -44,10 +45,11 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array $formData
-     * @param $file
-     * @param array $settings
+     * @param array  $formData
+     * @param        $file
+     * @param array  $settings
      * @param string $categoryId
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -82,6 +84,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

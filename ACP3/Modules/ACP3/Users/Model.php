@@ -14,6 +14,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function resultExists($id)
@@ -26,7 +27,7 @@ class Model extends Core\Model
      *
      * @param string $nickname
      *  Der zu überprüfende Nickname
-     * @param int $id
+     * @param int    $id
      *
      * @return boolean
      */
@@ -44,7 +45,7 @@ class Model extends Core\Model
      *
      * @param string $mail
      *  Die zu überprüfende E-Mail-Adresse
-     * @param int $id
+     * @param int    $id
      *
      * @return boolean
      */
@@ -59,6 +60,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -68,6 +70,7 @@ class Model extends Core\Model
 
     /**
      * @param $nickname
+     *
      * @return array
      */
     public function getOneByNickname($nickname)
@@ -77,6 +80,7 @@ class Model extends Core\Model
 
     /**
      * @param $nickname
+     *
      * @return array
      */
     public function getOneActiveUserByNickname($nickname)
@@ -86,6 +90,7 @@ class Model extends Core\Model
 
     /**
      * @param $email
+     *
      * @return array
      */
     public function getOneByEmail($email)
@@ -104,6 +109,7 @@ class Model extends Core\Model
     /**
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAll($limitStart = '', $resultsPerPage = '')

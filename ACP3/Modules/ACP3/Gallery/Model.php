@@ -14,8 +14,9 @@ class Model extends Core\Model
     const TABLE_NAME_PICTURES = 'gallery_pictures';
 
     /**
-     * @param $id
+     * @param        $id
      * @param string $time
+     *
      * @return bool
      */
     public function galleryExists($id, $time = '')
@@ -25,8 +26,9 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $pictureId
+     * @param        $pictureId
      * @param string $time
+     *
      * @return bool
      */
     public function pictureExists($pictureId, $time = '')
@@ -37,6 +39,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getGalleryById($id)
@@ -46,6 +49,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getPictureById($id)
@@ -55,6 +59,7 @@ class Model extends Core\Model
 
     /**
      * @param $pictureId
+     *
      * @return mixed
      */
     public function getGalleryIdFromPictureId($pictureId)
@@ -64,6 +69,7 @@ class Model extends Core\Model
 
     /**
      * @param $galleryId
+     *
      * @return mixed
      */
     public function getLastPictureByGalleryId($galleryId)
@@ -73,6 +79,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getPicturesByGalleryId($id)
@@ -83,6 +90,7 @@ class Model extends Core\Model
     /**
      * @param $picture
      * @param $galleryId
+     *
      * @return mixed
      */
     public function getPreviousPictureId($picture, $galleryId)
@@ -93,6 +101,7 @@ class Model extends Core\Model
     /**
      * @param $picture
      * @param $galleryId
+     *
      * @return mixed
      */
     public function getNextPictureId($picture, $galleryId)
@@ -102,6 +111,7 @@ class Model extends Core\Model
 
     /**
      * @param $pictureId
+     *
      * @return mixed
      */
     public function getFileById($pictureId)
@@ -111,6 +121,7 @@ class Model extends Core\Model
 
     /**
      * @param $galleryId
+     *
      * @return mixed
      */
     public function getGalleryTitle($galleryId)
@@ -120,6 +131,7 @@ class Model extends Core\Model
 
     /**
      * @param $time
+     *
      * @return int
      */
     public function countAll($time)
@@ -131,6 +143,7 @@ class Model extends Core\Model
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
@@ -151,6 +164,7 @@ class Model extends Core\Model
     /**
      * @param $pictureNumber
      * @param $galleryId
+     *
      * @return int
      * @throws \Doctrine\DBAL\DBALException
      */

@@ -27,12 +27,12 @@ class Validator extends Core\Validator\AbstractValidator
     protected $permissionsModel;
 
     /**
-     * @param \ACP3\Core\Lang                   $lang
-     * @param \ACP3\Core\Validator\Rules\Misc   $validate
-     * @param \ACP3\Core\Validator\Rules\ACL    $aclValidator
-     * @param \ACP3\Core\Validator\Rules\Router $routerValidator
-     * @param \ACP3\Core\Modules                $modules
-     * @param \ACP3\Modules\ACP3\Permissions\Model   $permissionsModel
+     * @param \ACP3\Core\Lang                      $lang
+     * @param \ACP3\Core\Validator\Rules\Misc      $validate
+     * @param \ACP3\Core\Validator\Rules\ACL       $aclValidator
+     * @param \ACP3\Core\Validator\Rules\Router    $routerValidator
+     * @param \ACP3\Core\Modules                   $modules
+     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
      */
     public function __construct(
         Core\Lang $lang,
@@ -41,7 +41,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
         Model $permissionsModel
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->aclValidator = $aclValidator;
@@ -52,7 +53,8 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param int $roleId
+     * @param int   $roleId
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -78,6 +80,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

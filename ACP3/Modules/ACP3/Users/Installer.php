@@ -57,7 +57,7 @@ class Installer extends Modules\AbstractInstaller
                 `draft` TEXT NOT NULL,
                 `registration_date` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 

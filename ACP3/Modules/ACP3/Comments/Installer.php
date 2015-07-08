@@ -29,7 +29,7 @@ class Installer extends Modules\AbstractInstaller
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 `entry_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX (`module_id`, `entry_id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 

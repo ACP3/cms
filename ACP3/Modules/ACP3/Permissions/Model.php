@@ -17,6 +17,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function roleExists($id)
@@ -25,21 +26,23 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $roleName
+     * @param     $roleName
      * @param int $id
+     *
      * @return bool
      */
     public function roleExistsByName($roleName, $id = 0)
     {
         if ($id !== 0) {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND name = ?', [(int)$id, $roleName]) == 1;
+            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id != ? AND NAME = ?', [(int)$id, $roleName]) == 1;
         } else {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE name = ?', [$roleName]) == 1;
+            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE NAME = ?', [$roleName]) == 1;
         }
     }
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function resourceExists($id)
@@ -49,6 +52,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function privilegeExists($id)
@@ -58,6 +62,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getRoleById($id)
@@ -75,6 +80,7 @@ class Model extends Core\Model
 
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getRolesByUserId($userId)
@@ -84,6 +90,7 @@ class Model extends Core\Model
 
     /**
      * @param array $roles
+     *
      * @return array
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -98,6 +105,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getResourceById($id)
@@ -132,6 +140,7 @@ class Model extends Core\Model
     /**
      * @param $key
      * @param $roleId
+     *
      * @return array
      */
     public function getPermissionByKeyAndRoleId($key, $roleId)

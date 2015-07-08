@@ -18,8 +18,8 @@ class Index extends Core\Modules\FrontendController
     protected $feedsExtensions;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext    $context
-     * @param \ACP3\Modules\ACP3\Feeds\Extensions $feedsExtensions
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Modules\ACP3\Feeds\Extensions           $feedsExtensions
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

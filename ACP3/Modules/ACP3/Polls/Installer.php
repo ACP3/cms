@@ -27,13 +27,13 @@ class Installer extends Modules\AbstractInstaller
                 `multiple` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}poll_answers` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `text` VARCHAR(120) NOT NULL,
                 `poll_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), INDEX `foreign_poll_id` (`poll_id`)
-            ) {engine} {charset};",
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}poll_votes` (
                 `poll_id` INT(10) UNSIGNED NOT NULL,
                 `answer_id` INT(10) UNSIGNED NOT NULL,
@@ -41,7 +41,7 @@ class Installer extends Modules\AbstractInstaller
                 `ip` VARCHAR(40) NOT NULL,
                 `time` DATETIME NOT NULL,
                 INDEX (`poll_id`, `answer_id`, `user_id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 
@@ -80,7 +80,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             31 => [
-                "ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {charset} NOT NULL",
+                "ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {CHARSET} NOT NULL",
             ],
             32 => [
                 'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "polls/", "polls/index/") WHERE `uri` LIKE "polls/%";',

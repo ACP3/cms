@@ -14,6 +14,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function resultExists($id)
@@ -23,6 +24,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -32,6 +34,7 @@ class Model extends Core\Model
 
     /**
      * @param string $notify
+     *
      * @return int
      */
     public function countAll($notify = '')
@@ -43,17 +46,19 @@ class Model extends Core\Model
      * @param string $notify
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAll($notify = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = ($notify == 2) ? 'WHERE active = 1' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT u.id AS user_id_real, u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.* FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->db->getPrefix() . \ACP3\Modules\ACP3\Users\Model::TABLE_NAME . ' AS u ON(u.id = g.user_id) ' . $where . ' ORDER BY date DESC' . $limitStmt);
+        return $this->db->fetchAll('SELECT u.id AS user_id_real, u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.* FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->db->getPrefix() . \ACP3\Modules\ACP3\Users\Model::TABLE_NAME . ' AS u ON(u.id = g.user_id) ' . $where . ' ORDER BY DATE DESC' . $limitStmt);
     }
 
     /**
      * @param $ipAddress
+     *
      * @return mixed
      */
     public function getLastDateFromIp($ipAddress)
@@ -66,6 +71,6 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY date DESC, id DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY DATE DESC, id DESC');
     }
 }

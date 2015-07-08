@@ -46,7 +46,7 @@ class Helpers
      * @param \ACP3\Core\ACL                      $acl
      * @param \ACP3\Core\Lang                     $lang
      * @param \ACP3\Core\Modules                  $modules
-     * @param \ACP3\Core\Http\RequestInterface         $request
+     * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\View                     $view
      * @param \ACP3\Core\Helpers\Forms            $formsHelper
      * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache

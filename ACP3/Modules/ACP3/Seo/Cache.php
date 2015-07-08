@@ -15,7 +15,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $seoModel;
 
     /**
-     * @param \ACP3\Core\Cache        $cache
+     * @param \ACP3\Core\Cache             $cache
      * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
      */
     public function __construct(

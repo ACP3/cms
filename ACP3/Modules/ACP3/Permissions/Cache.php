@@ -20,12 +20,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param Core\Cache $cache
-     * @param Model $permissionsModel
+     * @param Model      $permissionsModel
      */
     public function __construct(
         Core\Cache $cache,
         Model $permissionsModel
-    ) {
+    )
+    {
         parent::__construct($cache);
 
         $this->permissionsModel = $permissionsModel;

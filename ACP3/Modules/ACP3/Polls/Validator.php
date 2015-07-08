@@ -15,7 +15,7 @@ class Validator extends Core\Validator\AbstractValidator
     protected $dateValidator;
 
     /**
-     * @param Core\Lang $lang
+     * @param Core\Lang                 $lang
      * @param Core\Validator\Rules\Misc $validate
      * @param Core\Validator\Rules\Date $dateValidator
      */
@@ -23,7 +23,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Date $dateValidator
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->dateValidator = $dateValidator;
@@ -31,6 +32,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -60,6 +62,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

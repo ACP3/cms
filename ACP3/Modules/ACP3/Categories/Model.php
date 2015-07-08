@@ -14,6 +14,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function resultExists($id)
@@ -25,6 +26,7 @@ class Model extends Core\Model
      * @param $title
      * @param $module
      * @param $categoryId
+     *
      * @return bool
      */
     public function resultIsDuplicate($title, $module, $categoryId)
@@ -34,6 +36,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -43,6 +46,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function getTitleById($id)
@@ -52,6 +56,7 @@ class Model extends Core\Model
 
     /**
      * @param $moduleName
+     *
      * @return array
      */
     public function getAllByModuleName($moduleName)
@@ -69,6 +74,7 @@ class Model extends Core\Model
 
     /**
      * @param $categoryId
+     *
      * @return mixed
      */
     public function getModuleNameFromCategoryId($categoryId)
@@ -78,6 +84,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getCategoryDeleteInfosById($id)

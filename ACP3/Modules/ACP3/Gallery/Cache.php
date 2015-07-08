@@ -23,15 +23,16 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $config;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model $galleryModel
+     * @param Core\Cache  $cache
+     * @param Model       $galleryModel
      * @param Core\Config $config
      */
     public function __construct(
         Core\Cache $cache,
         Model $galleryModel,
         Core\Config $config
-    ) {
+    )
+    {
         parent::__construct($cache);
 
         $this->galleryModel = $galleryModel;

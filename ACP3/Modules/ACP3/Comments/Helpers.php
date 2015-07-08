@@ -19,7 +19,7 @@ class Helpers
     protected $commentsModel;
 
     /**
-     * @param \ACP3\Core\Modules           $modules
+     * @param \ACP3\Core\Modules                $modules
      * @param \ACP3\Modules\ACP3\Comments\Model $commentsModel
      */
     public function __construct(

@@ -13,6 +13,7 @@ class Model extends Core\Model
 
     /**
      * @param $path
+     *
      * @return bool
      */
     public function uriAliasExists($path)
@@ -21,8 +22,9 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $alias
+     * @param        $alias
      * @param string $path
+     *
      * @return bool
      */
     public function uriAliasExistsByAlias($alias, $path = '')
@@ -40,6 +42,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)

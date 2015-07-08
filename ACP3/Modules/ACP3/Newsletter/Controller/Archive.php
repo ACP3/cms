@@ -23,8 +23,8 @@ class Archive extends Core\Modules\FrontendController
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param Core\Pagination $pagination
-     * @param Newsletter\Model $newsletterModel
+     * @param Core\Pagination                               $pagination
+     * @param Newsletter\Model                              $newsletterModel
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

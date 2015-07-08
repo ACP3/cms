@@ -21,12 +21,13 @@ class Helpers
 
     /**
      * @param Core\Helpers\Forms $formsHelper
-     * @param Model $articlesModel
+     * @param Model              $articlesModel
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         Model $articlesModel
-    ) {
+    )
+    {
         $this->formsHelper = $formsHelper;
         $this->articlesModel = $articlesModel;
     }
@@ -35,6 +36,7 @@ class Helpers
      * Gibt alle angelegten Artikel zurück
      *
      * @param integer $id
+     *
      * @return array
      */
     public function articlesList($id = 0)
@@ -52,6 +54,7 @@ class Helpers
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function articleExists($id)

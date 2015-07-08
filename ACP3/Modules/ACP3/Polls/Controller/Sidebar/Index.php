@@ -22,8 +22,8 @@ class Index extends Core\Modules\Controller
 
     /**
      * @param \ACP3\Core\Modules\Controller\Context $context
-     * @param Core\Date $date
-     * @param Polls\Model $pollsModel
+     * @param Core\Date                             $date
+     * @param Polls\Model                           $pollsModel
      */
     public function __construct(
         Core\Modules\Controller\Context $context,

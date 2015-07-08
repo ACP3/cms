@@ -26,7 +26,7 @@ class Installer extends Modules\AbstractInstaller
                 `description` VARCHAR(120) NOT NULL,
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 
@@ -57,7 +57,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             31 => [
-                "ALTER TABLE `{pre}categories` CHANGE `name` `title` VARCHAR(120) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}categories` CHANGE `name` `title` VARCHAR(120) {CHARSET} NOT NULL;",
             ],
             32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",

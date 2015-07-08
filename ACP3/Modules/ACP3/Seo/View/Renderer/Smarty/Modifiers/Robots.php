@@ -30,7 +30,7 @@ class Robots extends AbstractModifier
 
     /**
      * @param Lang $lang
-     * @param SEO $seo
+     * @param SEO  $seo
      */
     public function __construct(
         Lang $lang,

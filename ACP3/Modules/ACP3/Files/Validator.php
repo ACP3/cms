@@ -32,13 +32,13 @@ class Validator extends Core\Validator\AbstractValidator
     protected $categoriesHelpers;
 
     /**
-     * @param Core\Lang $lang
-     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Lang                           $lang
+     * @param Core\Validator\Rules\Misc           $validate
      * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
-     * @param Core\Validator\Rules\Date $dateValidator
-     * @param Core\Modules $modules
-     * @param \ACP3\Core\Http\Request $request
-     * @param Categories\Helpers $categoriesHelpers
+     * @param Core\Validator\Rules\Date           $dateValidator
+     * @param Core\Modules                        $modules
+     * @param \ACP3\Core\Http\Request             $request
+     * @param Categories\Helpers                  $categoriesHelpers
      */
     public function __construct(
         Core\Lang $lang,
@@ -48,7 +48,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Modules $modules,
         Core\Http\Request $request,
         Categories\Helpers $categoriesHelpers
-    ) {
+    )
+    {
         parent::__construct($lang, $validate);
 
         $this->aliasesValidator = $aliasesValidator;
@@ -60,7 +61,8 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param $file
+     * @param       $file
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -98,7 +100,8 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param $file
+     * @param       $file
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
@@ -136,6 +139,7 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
+     *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */

@@ -29,11 +29,11 @@ class Index extends Core\Modules\AdminController
     protected $emoticonsCache;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext               $context
-     * @param \ACP3\Core\Helpers\FormToken           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Emoticons\Model     $emoticonsModel
-     * @param \ACP3\Modules\ACP3\Emoticons\Validator $emoticonsValidator
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache     $emoticonsCache
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Emoticons\Model         $emoticonsModel
+     * @param \ACP3\Modules\ACP3\Emoticons\Validator     $emoticonsValidator
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache         $emoticonsCache
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

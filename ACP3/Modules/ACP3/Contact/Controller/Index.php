@@ -31,10 +31,10 @@ class Index extends Core\Modules\FrontendController
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
-     * @param \ACP3\Core\Helpers\SendEmail         $sendEmailHelper
-     * @param \ACP3\Modules\ACP3\Contact\Validator $contactValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Core\Helpers\SendEmail                  $sendEmailHelper
+     * @param \ACP3\Modules\ACP3\Contact\Validator          $contactValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

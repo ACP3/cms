@@ -21,9 +21,9 @@ class Index extends Core\Modules\AdminController
     protected $contactValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
-     * @param \ACP3\Core\Helpers\FormToken         $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Contact\Validator $contactValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Contact\Validator       $contactValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

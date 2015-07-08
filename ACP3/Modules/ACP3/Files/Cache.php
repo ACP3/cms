@@ -18,12 +18,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param Core\Cache $cache
-     * @param Model $filesModel
+     * @param Model      $filesModel
      */
     public function __construct(
         Core\Cache $cache,
         Model $filesModel
-    ) {
+    )
+    {
         parent::__construct($cache);
 
         $this->filesModel = $filesModel;

@@ -35,11 +35,11 @@ class Details extends Core\Modules\AdminController
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
-     * @param \ACP3\Modules\ACP3\Comments\Model     $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Validator $commentsValidator
-     * @param \ACP3\Modules\ACP3\System\Model       $systemModel
-     * @param \ACP3\Core\Helpers\FormToken          $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Modules\ACP3\Comments\Model          $commentsModel
+     * @param \ACP3\Modules\ACP3\Comments\Validator      $commentsValidator
+     * @param \ACP3\Modules\ACP3\System\Model            $systemModel
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,

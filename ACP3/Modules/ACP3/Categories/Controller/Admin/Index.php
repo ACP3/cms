@@ -29,11 +29,11 @@ class Index extends Core\Modules\AdminController
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext                $context
-     * @param \ACP3\Modules\ACP3\Categories\Model     $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Cache     $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Validator $categoriesValidator
-     * @param \ACP3\Core\Helpers\FormToken            $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Modules\ACP3\Categories\Model        $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Cache        $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Validator    $categoriesValidator
+     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -47,7 +47,7 @@ class Index extends Core\Modules\AdminController
         $this->categoriesModel = $categoriesModel;
         $this->categoriesCache = $categoriesCache;
         $this->categoriesValidator = $categoriesValidator;
-        $this->secureHelper = $formTokenHelper;
+        $this->formTokenHelper = $formTokenHelper;
     }
 
     public function actionCreate()
@@ -68,7 +68,7 @@ class Index extends Core\Modules\AdminController
         }
         $this->view->assign('mod_list', $modules);
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -98,7 +98,7 @@ class Index extends Core\Modules\AdminController
 
             $this->categoriesCache->setCache(strtolower($formData['module']));
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -163,7 +163,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($category, $this->request->getPost()->getAll()));
 
-            $this->secureHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -196,7 +196,7 @@ class Index extends Core\Modules\AdminController
 
             $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->request->getParameters()->get('id')));
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -239,7 +239,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
-        $this->secureHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
     /**
@@ -257,7 +257,7 @@ class Index extends Core\Modules\AdminController
             ];
             $bool = $this->config->setSettings($data, 'categories');
 
-            $this->secureHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {

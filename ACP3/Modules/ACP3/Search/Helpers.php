@@ -28,9 +28,9 @@ class Helpers
     protected $searchExtensions;
 
     /**
-     * @param \ACP3\Core\ACL                  $acl
-     * @param \ACP3\Core\Modules              $modules
-     * @param \ACP3\Core\Helpers\Forms        $formsHelper
+     * @param \ACP3\Core\ACL                       $acl
+     * @param \ACP3\Core\Modules                   $modules
+     * @param \ACP3\Core\Helpers\Forms             $formsHelper
      * @param \ACP3\Modules\ACP3\Search\Extensions $searchExtensions
      */
     public function __construct(
@@ -38,7 +38,8 @@ class Helpers
         Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
         Extensions $searchExtensions
-    ) {
+    )
+    {
         $this->acl = $acl;
         $this->modules = $modules;
         $this->formsHelper = $formsHelper;

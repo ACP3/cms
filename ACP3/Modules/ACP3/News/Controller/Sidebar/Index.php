@@ -21,9 +21,9 @@ class Index extends Core\Modules\Controller
     protected $newsModel;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context       $context
-     * @param \ACP3\Core\Date          $date
-     * @param \ACP3\Modules\ACP3\News\Model $newsModel
+     * @param \ACP3\Core\Modules\Controller\Context $context
+     * @param \ACP3\Core\Date                       $date
+     * @param \ACP3\Modules\ACP3\News\Model         $newsModel
      */
     public function __construct(
         Core\Modules\Controller\Context $context,

@@ -33,7 +33,7 @@ class Installer extends Modules\AbstractInstaller
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`), INDEX `foreign_category_id` (`category_id`)
-            ) {engine} {charset};"
+            ) {ENGINE} {CHARSET};"
         ];
     }
 
@@ -67,7 +67,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             31 => [
-                "ALTER TABLE `{pre}files` CHANGE `link_title` `title` VARCHAR(120) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}files` CHANGE `link_title` `title` VARCHAR(120) {CHARSET} NOT NULL;",
             ],
             32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"extensions/search\";",

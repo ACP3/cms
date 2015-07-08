@@ -41,7 +41,8 @@ class TinyMCE extends Core\WYSIWYG\Textarea
         Core\Assets\MinifierInterface $minifier,
         Core\Lang $lang,
         Core\View $view
-    ) {
+    )
+    {
         $this->minifier = $minifier;
         $this->lang = $lang;
         $this->view = $view;

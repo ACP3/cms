@@ -41,9 +41,9 @@ class Helpers
     protected $menusCache;
 
     /**
-     * @param \ACP3\Core\DB             $db
-     * @param \ACP3\Core\Lang           $lang
-     * @param \ACP3\Core\Helpers\Forms  $formsHelper
+     * @param \ACP3\Core\DB                  $db
+     * @param \ACP3\Core\Lang                $lang
+     * @param \ACP3\Core\Helpers\Forms       $formsHelper
      * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */

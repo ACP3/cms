@@ -42,7 +42,7 @@ class Helpers
     /**
      * @param \ACP3\Core\Lang                     $lang
      * @param \ACP3\Core\Mailer                   $mailer
-     * @param \ACP3\Core\Http\Request                  $request
+     * @param \ACP3\Core\Http\Request             $request
      * @param \ACP3\Core\Router                   $router
      * @param \ACP3\Core\Helpers\StringFormatter  $stringFormatter
      * @param \ACP3\Core\Config                   $config
@@ -55,7 +55,8 @@ class Helpers
         Core\Router $router,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Config $config,
-        Model $newsletterModel) {
+        Model $newsletterModel)
+    {
         $this->lang = $lang;
         $this->mailer = $mailer;
         $this->request = $request;

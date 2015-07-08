@@ -14,8 +14,9 @@ class Model extends Core\Model
     const TABLE_NAME_ACCOUNTS = 'newsletter_accounts';
 
     /**
-     * @param $id
+     * @param        $id
      * @param string $status
+     *
      * @return bool
      */
     public function newsletterExists($id, $status = '')
@@ -25,8 +26,9 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $emailAddress
+     * @param        $emailAddress
      * @param string $hash
+     *
      * @return bool
      */
     public function accountExists($emailAddress, $hash = '')
@@ -36,8 +38,9 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $id
+     * @param        $id
      * @param string $status
+     *
      * @return array
      */
     public function getOneById($id, $status = '')
@@ -48,6 +51,7 @@ class Model extends Core\Model
 
     /**
      * @param string $status
+     *
      * @return mixed
      */
     public function countAll($status = '')
@@ -69,20 +73,21 @@ class Model extends Core\Model
      */
     public function countAllActiveAccounts()
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE hash = ""');
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE HASH = ""');
     }
 
     /**
      * @param string $status
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAll($status = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY date DESC' . $limitStmt, ['status' => $status]);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY DATE DESC' . $limitStmt, ['status' => $status]);
     }
 
     /**
@@ -90,7 +95,7 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY date DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY DATE DESC');
     }
 
     /**
@@ -106,6 +111,6 @@ class Model extends Core\Model
      */
     public function getAllActiveAccounts()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE hash = "" ORDER BY id DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE HASH = "" ORDER BY id DESC');
     }
 }

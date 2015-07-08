@@ -37,7 +37,7 @@ class Navbar extends AbstractFunction
     protected $menusCache;
 
     /**
-     * @param \ACP3\Core\Http\Request             $request
+     * @param \ACP3\Core\Http\Request        $request
      * @param \ACP3\Core\Router              $router
      * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache

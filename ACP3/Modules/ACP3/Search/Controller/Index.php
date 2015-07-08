@@ -26,10 +26,10 @@ class Index extends Core\Modules\FrontendController
     protected $searchExtensions;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
-     * @param \ACP3\Modules\ACP3\Search\Helpers    $searchHelpers
-     * @param \ACP3\Modules\ACP3\Search\Validator  $searchValidator
-     * @param \ACP3\Modules\ACP3\Search\Extensions $searchExtensions
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Modules\ACP3\Search\Helpers             $searchHelpers
+     * @param \ACP3\Modules\ACP3\Search\Validator           $searchValidator
+     * @param \ACP3\Modules\ACP3\Search\Extensions          $searchExtensions
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

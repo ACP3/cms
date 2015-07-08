@@ -14,6 +14,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     public function resultExists($id)
@@ -23,6 +24,7 @@ class Model extends Core\Model
 
     /**
      * @param $moduleId
+     *
      * @return bool
      */
     public function resultsExist($moduleId)
@@ -32,6 +34,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return array
      */
     public function getOneById($id)
@@ -41,6 +44,7 @@ class Model extends Core\Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function getOneImageById($id)
