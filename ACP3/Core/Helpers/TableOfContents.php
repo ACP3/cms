@@ -78,87 +78,75 @@ class TableOfContents
      */
     public function splitTextIntoPages($text, $path)
     {
-        // Falls keine Seitenumbrüche vorhanden sein sollten, Text nicht unnötig bearbeiten
+        // Return early, if there are no page breaks
         if (strpos($text, 'class="page-break"') === false) {
             return $text;
-        } else {
-            $regex = '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
-
-            $pages = preg_split($regex, $text, -1, PREG_SPLIT_NO_EMPTY);
-            $c_pages = count($pages);
-
-            // Falls zwar Seitenumbruch gesetzt ist, aber danach
-            // kein weiterer Text kommt, den unbearbeiteten Text ausgeben
-            if ($c_pages == 1) {
-                return $text;
-            } else {
-                $matches = [];
-                preg_match_all($regex, $text, $matches);
-
-                $currentPage = ((int)$this->request->getParameters()->get('page', 1) <= $c_pages) ? (int)$this->request->getParameters()->get('page', 1) : 1;
-                $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-                $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
-
-                if (!empty($nextPage)) {
-                    $this->seo->setNextPage($nextPage);
-                }
-                if (!empty($previousPage)) {
-                    $this->seo->setPreviousPage($previousPage);
-                }
-
-                $page = [
-                    'toc' => $this->generateTOC($matches[0], $path),
-                    'text' => $pages[$currentPage - 1],
-                    'next' => $nextPage,
-                    'previous' => $previousPage,
-                ];
-
-                return $page;
-            }
         }
+
+        $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
+        $c_pages = count($pages);
+
+        // Return early, if an page breaks has been found but no content follows after it
+        if ($c_pages === 1) {
+            return $text;
+        }
+
+        $matches = [];
+        preg_match_all($this->getSplitPagesRegex(), $text, $matches);
+
+        $currentPage = ((int)$this->request->getParameters()->get('page', 1) <= $c_pages) ? (int)$this->request->getParameters()->get('page', 1) : 1;
+        $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
+        $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
+
+        if (!empty($nextPage)) {
+            $this->seo->setNextPage($nextPage);
+        }
+        if (!empty($previousPage)) {
+            $this->seo->setPreviousPage($previousPage);
+        }
+
+        $page = [
+            'toc' => $this->generateTOC($matches[0], $path),
+            'text' => $pages[$currentPage - 1],
+            'next' => $nextPage,
+            'previous' => $previousPage,
+        ];
+
+        return $page;
     }
 
     /**
-     * Generiert ein Inhaltsverzeichnis
+     * @return string
+     */
+    protected function getSplitPagesRegex()
+    {
+        return '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
+    }
+
+    /**
+     * Generates the table of contents
      *
      * @param array   $pages
-     * @param string  $path
+     * @param string  $requestQuery
      * @param boolean $titlesFromDb
      * @param boolean $customUris
      *
      * @return string
      */
-    public function generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
+    public function generateTOC(array $pages, $requestQuery = '', $titlesFromDb = false, $customUris = false)
     {
         if (!empty($pages)) {
-            $request = $this->request;
-            $path = empty($path) ? $request->getUriWithoutPages() : $path;
+            $requestQuery = $requestQuery === '' ? $this->request->getUriWithoutPages() : $requestQuery;
             $toc = [];
             $i = 0;
             foreach ($pages as $page) {
                 $pageNumber = $i + 1;
-                if ($titlesFromDb === false) {
-                    $attributes = $this->_getHtmlAttributes($page);
-                    $toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
-                } else {
-                    $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
-                }
+                $toc[$i]['title'] = $this->fetchTocPageTitle($page, $pageNumber, $titlesFromDb);
+                $toc[$i]['uri'] = $this->fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery);
+                $toc[$i]['selected'] = $this->isCurrentPage($customUris, $page, $pageNumber, $i);
 
-                $toc[$i]['uri'] = $customUris === true ? $page['uri'] : $this->router->route($path) . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '');
-
-                $toc[$i]['selected'] = false;
-                if ($customUris === true) {
-                    if ($page['uri'] === $this->router->route($request->getQuery()) ||
-                        $this->router->route($request->getQuery()) === $this->router->route($request->getModule() . '/' . $request->getController() . '/' . $request->getControllerAction()) && $i == 0
-                    ) {
-                        $toc[$i]['selected'] = true;
-                        $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
-                    }
-                } else {
-                    if (($this->validate->isNumber($request->getParameters()->get('page')) === false && $i === 0) || $request->getParameters()->get('page') === $pageNumber) {
-                        $toc[$i]['selected'] = true;
-                        $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
-                    }
+                if ($toc[$i]['selected'] === true) {
+                    $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
                 }
                 ++$i;
             }
@@ -190,5 +178,64 @@ class TableOfContents
         }
 
         return $return;
+    }
+
+    /**
+     * @param bool  $customUris
+     * @param array $page
+     * @param int   $pageNumber
+     * @param int   $currentIndex
+     *
+     * @return bool
+     */
+    protected function isCurrentPage($customUris, array $page, $pageNumber, $currentIndex)
+    {
+        if ($customUris === true) {
+            if ($page['uri'] === $this->router->route($this->request->getQuery()) ||
+                $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction()) && $currentIndex == 0
+            ) {
+                return true;
+            }
+        } else {
+            if (($this->validate->isNumber($this->request->getParameters()->get('page')) === false && $currentIndex === 0) || $this->request->getParameters()->get('page') === $pageNumber) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $page
+     * @param int   $pageNumber
+     * @param bool  $titlesFromDb
+     *
+     * @return string
+     */
+    protected function fetchTocPageTitle(array $page, $pageNumber, $titlesFromDb)
+    {
+        if ($titlesFromDb === false) {
+            $attributes = $this->_getHtmlAttributes($page);
+            return !empty($attributes['title']) ? $attributes['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
+        }
+
+        return !empty($page['title']) ? $page['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
+    }
+
+    /**
+     * @param bool   $customUris
+     * @param array  $page
+     * @param int    $pageNumber
+     * @param string $requestQuery
+     *
+     * @return string
+     */
+    protected function fetchTocPageUri($customUris, array $page, $pageNumber, $requestQuery)
+    {
+        if ($customUris === true) {
+            return $page['uri'];
+        }
+
+        return $this->router->route($requestQuery) . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '');
     }
 }
