@@ -50,7 +50,7 @@ class Model
      *
      * @return int|bool
      */
-    public function delete($id, $field = '', $tableName = '')
+    public function delete($id, $field = 'id', $tableName = '')
     {
         return $this->executeTransactionalQuery(function () use ($id, $field, $tableName) {
             return $this->db->getConnection()->delete($this->getTableName($tableName), $this->getIdentifier($id, $field));

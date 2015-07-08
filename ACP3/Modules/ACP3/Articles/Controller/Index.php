@@ -73,12 +73,15 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionDetails()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDetails($id)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->articlesModel->resultExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true
-        ) {
-            $article = $this->articlesCache->getCache($this->request->getParameters()->get('id'));
+        if ($this->articlesModel->resultExists($id, $this->date->getCurrentDateTime()) === true) {
+            $article = $this->articlesCache->getCache($id);
 
             $this->breadcrumb->replaceAncestor($article['title'], 0, true);
 

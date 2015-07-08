@@ -63,10 +63,15 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionDetails()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDetails($id)
     {
-        if ($this->filesModel->resultExists((int)$this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true) {
-            $file = $this->filesCache->getCache($this->request->getParameters()->get('id'));
+        if ($this->filesModel->resultExists($id, $this->date->getCurrentDateTime()) === true) {
+            $file = $this->filesCache->getCache($id);
 
             if ($this->request->getParameters()->get('action') === 'confirmed') {
                 $path = UPLOADS_DIR . 'files/';
@@ -112,10 +117,15 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionFiles()
+    /**
+     * @param int $cat
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionFiles($cat)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('cat')) && $this->categoriesModel->resultExists($this->request->getParameters()->get('cat')) === true) {
-            $category = $this->categoriesModel->getOneById($this->request->getParameters()->get('cat'));
+        if ($this->get('core.validator.rules.misc')->isNumber($cat) && $this->categoriesModel->resultExists($cat) === true) {
+            $category = $this->categoriesModel->getOneById($cat);
 
             $this->breadcrumb
                 ->append($this->lang->t('files', 'files'), 'files')
@@ -124,7 +134,7 @@ class Index extends Core\Modules\FrontendController
             $settings = $this->config->getSettings('files');
 
             $this->view->assign('dateformat', $settings['dateformat']);
-            $this->view->assign('files', $this->filesModel->getAllByCategoryId($this->request->getParameters()->get('cat'), $this->date->getCurrentDateTime()));
+            $this->view->assign('files', $this->filesModel->getAllByCategoryId($cat, $this->date->getCurrentDateTime()));
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

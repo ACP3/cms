@@ -68,11 +68,16 @@ class Details extends Core\Modules\AdminController
         return $this;
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem(null, 'acp/comments');
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
 
             // Get the module-ID of the first item
@@ -99,9 +104,14 @@ class Details extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $comment = $this->commentsModel->getOneById((int)$this->request->getParameters()->get('id'));
+        $comment = $this->commentsModel->getOneById($id);
 
         if (empty($comment) === false) {
             $this->breadcrumb
@@ -110,7 +120,7 @@ class Details extends Core\Modules\AdminController
                 ->setTitlePostfix($comment['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $comment);
+                $this->_editPost($this->request->getPost()->getAll(), $comment, $id);
             }
 
             if ($this->emoticonsHelpers) {
@@ -127,12 +137,15 @@ class Details extends Core\Modules\AdminController
         }
     }
 
-    public function actionIndex()
+    /**
+     * @param int $id
+     */
+    public function actionIndex($id)
     {
-        $comments = $this->commentsModel->getAllByModuleInAcp((int)$this->request->getParameters()->get('id'));
+        $comments = $this->commentsModel->getAllByModuleInAcp($id);
 
         if (empty($comments) === false) {
-            $moduleName = $this->systemModel->getModuleNameById($this->request->getParameters()->get('id'));
+            $moduleName = $this->systemModel->getModuleNameById($id);
 
             //Brotkrümelspur
             $this->breadcrumb->append($this->lang->t($moduleName, $moduleName));
@@ -172,8 +185,9 @@ class Details extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $comment
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $comment)
+    protected function _editPost(array $formData, array $comment, $id)
     {
         try {
             $this->commentsValidator->validateEdit($formData);
@@ -184,7 +198,7 @@ class Details extends Core\Modules\AdminController
                 $updateValues['name'] = Core\Functions::strEncode($formData['name']);
             }
 
-            $bool = $this->commentsModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->commentsModel->update($updateValues, $id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

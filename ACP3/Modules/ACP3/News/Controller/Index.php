@@ -86,12 +86,15 @@ class Index extends Core\Modules\FrontendController
         $this->commentsActive = ($this->newsSettings['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true);
     }
 
-    public function actionDetails()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDetails($id)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->newsModel->resultExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) == 1
-        ) {
-            $news = $this->newsCache->getCache($this->request->getParameters()->get('id'));
+        if ($this->newsModel->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
+            $news = $this->newsCache->getCache($id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
 
@@ -110,7 +113,7 @@ class Index extends Core\Modules\FrontendController
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
                     ->setModule('news')
-                    ->setEntryId($this->request->getParameters()->get('id'));
+                    ->setEntryId($id);
 
                 $this->view->assign('comments', $comments->actionIndex());
             }
@@ -119,16 +122,11 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionIndex()
+    /**
+     * @param int $cat
+     */
+    public function actionIndex($cat = 0)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getPost()->get('cat')) === true) {
-            $cat = (int)$this->request->getPost()->get('cat');
-        } elseif ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('cat')) === true) {
-            $cat = (int)$this->request->getParameters()->get('cat');
-        } else {
-            $cat = 0;
-        }
-
         $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $cat));
 
         // Kategorie in Brotkrümelspur anzeigen

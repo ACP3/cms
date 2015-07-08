@@ -274,7 +274,7 @@ class Request extends AbstractRequest
                     $this->parameters->add('id', (int)substr($query[$i], 3));
                 } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);
-                    $this->parameters->add($this->$param[0], $param[1]);
+                    $this->parameters->add($param[0], $param[1]);
                 }
             }
         }

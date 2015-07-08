@@ -133,11 +133,16 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
 
             foreach ($items as $item) {
@@ -156,9 +161,14 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $news = $this->newsModel->getOneById((int)$this->request->getParameters()->get('id'));
+        $news = $this->newsModel->getOneById($id);
 
         if (empty($news) === false) {
             $this->breadcrumb->setTitlePostfix($news['title']);
@@ -166,7 +176,7 @@ class Index extends Core\Modules\AdminController
             $settings = $this->config->getSettings('news');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings);
+                $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             // Datumsauswahl
@@ -199,7 +209,7 @@ class Index extends Core\Modules\AdminController
             $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
             $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target, $news['target']));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id)));
 
             $this->view->assign('form', array_merge($news, $this->request->getPost()->getAll()));
 
@@ -303,13 +313,14 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $settings
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $settings)
+    protected function _editPost(array $formData, array $settings, $id)
     {
         try {
             $this->newsValidator->validate(
                 $formData,
-                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))
+                sprintf(News\Helpers::URL_KEY_PATTERN, $id)
             );
 
             $updateValues = [
@@ -326,17 +337,17 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->auth->getUserId(),
             ];
 
-            $bool = $this->newsModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->newsModel->update($updateValues, $id);
 
             $this->seo->insertUriAlias(
-                sprintf(News\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')),
+                sprintf(News\Helpers::URL_KEY_PATTERN, $id),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
 
-            $this->newsCache->setCache($this->request->getParameters()->get('id'));
+            $this->newsCache->setCache($id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

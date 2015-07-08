@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -27,10 +28,12 @@ class FrontController
      * @param string $serviceId
      * @param string $action
      * @param array  $arguments
+     * @param bool   $resolveParameters
      *
      * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function dispatch($serviceId = '', $action = '', array $arguments = [])
+    public function dispatch($serviceId = '', $action = '', array $arguments = [], $resolveParameters = true)
     {
         $request = $this->container->get('core.request');
 
@@ -55,9 +58,9 @@ class FrontController
                 $controller->preDispatch();
 
                 if (!empty($arguments)) {
-                    call_user_func_array([$controller, $action], $arguments);
+                    $this->callControllerActionWithArguments($controller, $action, $arguments);
                 } else {
-                    $controller->$action();
+                    $this->callControllerAction($request, $controller, $action, $resolveParameters);
                 }
 
                 $controller->display();
@@ -90,5 +93,51 @@ class FrontController
                 );
             }
         }
+    }
+
+    /**
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param string                           $controller
+     * @param string                           $action
+     * @param bool                             $resolveParameters
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    private function callControllerAction(RequestInterface $request, $controller, $action, $resolveParameters)
+    {
+        $reflection = new \ReflectionMethod($controller, $action);
+        $parameterCount = $reflection->getNumberOfParameters();
+
+        if ($parameterCount === 0 || $resolveParameters === false) {
+            $controller->$action();
+            return;
+        }
+
+        $arguments = [];
+        foreach ($reflection->getParameters() as $parameter) {
+            if ($request->getPost()->has($parameter->getName())) {
+                $arguments[$parameter->getPosition()] = $request->getPost()->get($parameter->getName());
+            } elseif ($request->getParameters()->has($parameter->getName())) {
+                $arguments[$parameter->getPosition()] = $request->getParameters()->get($parameter->getName());
+            } elseif ($parameter->isOptional()) {
+                $arguments[$parameter->getPosition()] = $parameter->getDefaultValue();
+            }
+        }
+
+        if ($reflection->getNumberOfRequiredParameters() > count($arguments)) {
+            throw new ResultNotExists();
+        }
+
+        $this->callControllerActionWithArguments($controller, $action, $arguments);
+    }
+
+    /**
+     * @param string $controller
+     * @param string $action
+     * @param array  $arguments
+     */
+    private function callControllerActionWithArguments($controller, $action, $arguments)
+    {
+        call_user_func_array([$controller, $action], $arguments);
     }
 }

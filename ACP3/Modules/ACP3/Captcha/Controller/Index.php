@@ -30,17 +30,19 @@ class Index extends Core\Modules\FrontendController
         $this->sessionHandler = $sessionHandler;
     }
 
-    public function actionImage()
+    /**
+     * @param string $path
+     */
+    public function actionImage($path)
     {
         $this->setNoOutput(true);
 
-        if ($this->request->getParameters()->has('path') &&
-            $this->sessionHandler->has('captcha_' . $this->request->getParameters()->get('path'))
+        if ($this->request->getParameters()->has('path') && $this->sessionHandler->has('captcha_' . $path)
         ) {
             header('Cache-Control: no-cache, must-revalidate');
             header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
             header('Content-Type: image/gif');
-            $captcha = $this->sessionHandler->get('captcha_' . $this->request->getParameters()->get('path'));
+            $captcha = $this->sessionHandler->get('captcha_' . $path);
             $captchaLength = strlen($captcha);
             $width = $captchaLength * 25;
             $height = 30;

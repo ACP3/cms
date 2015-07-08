@@ -47,11 +47,16 @@ class Index extends Core\Modules\FrontendController
         parent::preDispatch();
     }
 
-    public function actionIndex()
+    /**
+     * @param string $feed
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionIndex($feed)
     {
-        $action = strtolower($this->request->getParameters()->get('feed', '')) . 'Feed';
+        $action = strtolower($feed) . 'Feed';
 
-        if ($this->acl->hasPermission('frontend/' . $this->request->getParameters()->get('feed', '')) === true &&
+        if ($this->acl->hasPermission('frontend/' . $feed) === true &&
             method_exists($this->feedsExtensions, $action) === true
         ) {
             $items = $this->feedsExtensions->$action();

@@ -124,11 +124,16 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
 
             $upload = new Core\Helpers\Upload('files');
@@ -151,9 +156,14 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $file = $this->filesModel->getOneById((int)$this->request->getParameters()->get('id'));
+        $file = $this->filesModel->getOneById($id);
 
         if (empty($file) === false) {
             $settings = $this->config->getSettings('files');
@@ -161,7 +171,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($file['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings, $file);
+                $this->_editPost($this->request->getPost()->getAll(), $settings, $file, $id);
             }
 
             // Datumsauswahl
@@ -186,7 +196,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('checked_external', $this->request->getPost()->has('external') ? ' checked="checked"' : '');
             $this->view->assign('current_file', $file['file']);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id)));
             $this->view->assign('form', array_merge($file, $this->request->getPost()->getAll()));
 
             $this->formTokenHelper->generateFormToken($this->request->getQuery());
@@ -298,8 +308,9 @@ class Index extends Core\Modules\AdminController
      * @param array $formData
      * @param array $settings
      * @param array $dl
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $settings, array $dl)
+    protected function _editPost(array $formData, array $settings, array $dl, $id)
     {
         try {
             $file = [];
@@ -345,17 +356,17 @@ class Index extends Core\Modules\AdminController
                 $updateValues = array_merge($updateValues, $newFileSql);
             }
 
-            $bool = $this->filesModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->filesModel->update($updateValues, $id);
 
             $this->seo->insertUriAlias(
-                sprintf(Files\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id')),
+                sprintf(Files\Helpers::URL_KEY_PATTERN, $id),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
 
-            $this->filesCache->setCache($this->request->getParameters()->get('id'));
+            $this->filesCache->setCache($id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

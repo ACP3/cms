@@ -52,7 +52,7 @@ class LoadModule extends AbstractFunction
             $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2]);
 
             $frontController = new FrontController($this->container);
-            $frontController->dispatch($serviceId, $pathArray[3], isset($params['args']) ? $params['args'] : []);
+            $frontController->dispatch($serviceId, $pathArray[3], isset($params['args']) ? $params['args'] : [], false);
         }
     }
 }

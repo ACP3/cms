@@ -108,11 +108,16 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             $isInUse = false;
 
@@ -150,15 +155,20 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $category = $this->categoriesModel->getOneById($this->request->getParameters()->get('id'));
+        $category = $this->categoriesModel->getOneById($id);
 
         if (empty($category) === false) {
             $this->breadcrumb->setTitlePostfix($category['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $category);
+                $this->_editPost($this->request->getPost()->getAll(), $category, $id);
             }
 
             $this->view->assign('form', array_merge($category, $this->request->getPost()->getAll()));
@@ -172,13 +182,14 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $category
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $category)
+    protected function _editPost(array $formData, array $category, $id)
     {
         try {
             $file = $this->request->getFiles()->get('picture');
 
-            $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $this->request->getParameters()->get('id'));
+            $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $id);
 
             $updateValues = [
                 'title' => Core\Functions::strEncode($formData['title']),
@@ -192,9 +203,9 @@ class Index extends Core\Modules\AdminController
                 $updateValues['picture'] = $result['name'];
             }
 
-            $bool = $this->categoriesModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->categoriesModel->update($updateValues, $id);
 
-            $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->request->getParameters()->get('id')));
+            $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($id));
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

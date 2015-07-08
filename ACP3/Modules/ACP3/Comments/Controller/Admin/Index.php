@@ -50,11 +50,16 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->commentsModel->delete($item, 'module_id');

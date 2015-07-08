@@ -95,11 +95,16 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
 
             $upload = new Core\Helpers\Upload('emoticons');
@@ -120,13 +125,18 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $emoticon = $this->emoticonsModel->getOneById((int)$this->request->getParameters()->get('id'));
+        $emoticon = $this->emoticonsModel->getOneById($id);
 
         if (empty($emoticon) === false) {
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $emoticon);
+                $this->_editPost($this->request->getPost()->getAll(), $emoticon, $id);
             }
 
             $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->getAll()));
@@ -140,8 +150,9 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $emoticon
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $emoticon)
+    protected function _editPost(array $formData, array $emoticon, $id)
     {
         try {
             $file = $this->request->getFiles()->get('picture');
@@ -160,7 +171,7 @@ class Index extends Core\Modules\AdminController
                 $updateValues['img'] = $result['name'];
             }
 
-            $bool = $this->emoticonsModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->emoticonsModel->update($updateValues, $id);
 
             $this->emoticonsCache->setCache();
 
