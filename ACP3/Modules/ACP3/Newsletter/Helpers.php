@@ -116,7 +116,7 @@ class Helpers
     public function subscribeToNewsletter($emailAddress)
     {
         $hash = md5(mt_rand(0, microtime(true)));
-        $url = 'http://' . $this->request->getHostname() . $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
+        $url = $this->router->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress, true);
 
         $seoSettings = $this->config->getSettings('seo');
         $settings = $this->config->getSettings('newsletter');

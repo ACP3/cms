@@ -36,7 +36,7 @@
                 <div class="content">
                     <div class="pull-right">
                         {if $row.website != ''}
-                            <a href="{$row.website}" target="_blank" rel="nofollow" title="{lang t="guestbook|visit_website"}">
+                            <a href="{$row.website|prefix_uri}" target="_blank" rel="nofollow" title="{lang t="guestbook|visit_website"}">
                                 <i class="glyphicon glyphicon-link"></i>
                             </a>
                             <br>

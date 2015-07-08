@@ -16,7 +16,7 @@
                 <footer>
                     <div class="hyperlink">
                         <strong>{lang t="news|hyperlink"}:</strong>
-                        <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
+                        <a href="{$news.uri|prefix_uri}"{$news.target}>{$news.link_title}</a>
                     </div>
                 </footer>
             {/if}

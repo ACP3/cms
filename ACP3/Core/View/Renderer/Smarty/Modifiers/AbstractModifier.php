@@ -18,9 +18,9 @@ abstract class AbstractModifier extends AbstractPlugin
     }
 
     /**
-     * @param $params
+     * @param string $value
      *
      * @return string
      */
-    abstract public function process($params);
+    abstract public function process($value);
 }

@@ -126,11 +126,6 @@ class Index extends Core\Modules\FrontendController
             $this->pagination->setTotalResults($allUsers);
             $this->pagination->display();
 
-            for ($i = 0; $i < $c_users; ++$i) {
-                if (!empty($users[$i]['website']) && (bool)preg_match('=^http(s)?://=', $users[$i]['website']) === false) {
-                    $users[$i]['website'] = 'http://' . $users[$i]['website'];
-                }
-            }
             $this->view->assign('users', $users);
         }
         $this->view->assign('LANG_users_found', sprintf($this->lang->t('users', 'users_found'), $allUsers));
@@ -206,9 +201,6 @@ class Index extends Core\Modules\FrontendController
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true && $this->usersModel->resultExists($this->request->getParameters()->get('id')) === true) {
             $user = $this->auth->getUserInfo($this->request->getParameters()->get('id'));
             $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
-            if (!empty($user['website']) && (bool)preg_match('=^http(s)?://=', $user['website']) === false) {
-                $user['website'] = 'http://' . $user['website'];
-            }
 
             $this->view->assign('user', $user);
         } else {
