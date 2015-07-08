@@ -124,17 +124,17 @@ class TableOfContents
     }
 
     /**
-     * @param bool  $customUris
-     * @param array $page
-     * @param int   $pageNumber
-     * @param int   $currentIndex
+     * @param bool         $customUris
+     * @param array|string $page
+     * @param int          $pageNumber
+     * @param int          $currentIndex
      *
      * @return bool
      */
     protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
     {
         if ($customUris === true) {
-            if ($page['uri'] === $this->router->route($this->request->getQuery()) ||
+            if (is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery()) ||
                 $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getModule() . '/' . $this->request->getController() . '/' . $this->request->getControllerAction()) && $currentIndex == 0
             ) {
                 return true;
@@ -149,15 +149,15 @@ class TableOfContents
     }
 
     /**
-     * @param array $page
-     * @param int   $pageNumber
-     * @param bool  $titlesFromDb
+     * @param array|string $page
+     * @param int          $pageNumber
+     * @param bool         $titlesFromDb
      *
      * @return string
      */
     protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
     {
-        if ($titlesFromDb === false) {
+        if ($titlesFromDb === false && is_array($page) === false) {
             $attributes = $this->_getHtmlAttributes($page);
             return !empty($attributes['title']) ? $attributes['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
         }
@@ -166,16 +166,16 @@ class TableOfContents
     }
 
     /**
-     * @param bool   $customUris
-     * @param array  $page
-     * @param int    $pageNumber
-     * @param string $requestQuery
+     * @param bool         $customUris
+     * @param array|string $page
+     * @param int          $pageNumber
+     * @param string       $requestQuery
      *
      * @return string
      */
     protected function fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery)
     {
-        if ($customUris === true) {
+        if ($customUris === true && is_array($page) === true) {
             return $page['uri'];
         }
 
