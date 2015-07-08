@@ -83,11 +83,11 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = $bool2 = false;
 
             foreach ($items as $item) {
@@ -115,20 +115,25 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        if ($this->galleryModel->galleryExists((int)$this->request->getParameters()->get('id')) === true) {
-            $gallery = $this->galleryModel->getGalleryById((int)$this->request->getParameters()->get('id'));
+        if ($this->galleryModel->galleryExists($id) === true) {
+            $gallery = $this->galleryModel->getGalleryById($id);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->getParameters()->get('id'))));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)));
 
             $this->breadcrumb->setTitlePostfix($gallery['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll());
+                $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
-            $this->view->assign('gallery_id', $this->request->getParameters()->get('id'));
+            $this->view->assign('gallery_id', $id);
             $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$gallery['start'], $gallery['end']]));
             $this->view->assign('form', array_merge($gallery, $this->request->getPost()->getAll()));
 
@@ -241,13 +246,14 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     * @param int   $id
      */
-    protected function _editPost(array $formData)
+    protected function _editPost(array $formData, $id)
     {
         try {
             $this->galleryValidator->validate(
                 $formData,
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->getParameters()->get('id'))
+                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
             );
 
             $updateValues = [
@@ -257,16 +263,16 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->auth->getUserId(),
             ];
 
-            $bool = $this->galleryModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->galleryModel->update($updateValues, $id);
 
             $this->seo->insertUriAlias(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->request->getParameters()->get('id')),
+                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id),
                 $formData['alias'],
                 $formData['seo_keywords'],
                 $formData['seo_description'],
                 (int)$formData['seo_robots']
             );
-            $this->galleryHelpers->generatePictureAliases($this->request->getParameters()->get('id'));
+            $this->galleryHelpers->generatePictureAliases($id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

@@ -135,11 +135,16 @@ class Items extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem(null, 'acp/menus');
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
@@ -157,9 +162,14 @@ class Items extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $menuItem = $this->menusModel->getOneMenuItemById($this->request->getParameters()->get('id'));
+        $menuItem = $this->menusModel->getOneMenuItemById($id);
 
         if (empty($menuItem) === false) {
             $this->breadcrumb->setTitlePostfix($menuItem['title']);
@@ -169,7 +179,7 @@ class Items extends Core\Modules\AdminController
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $menuItem);
+                $this->_editPost($this->request->getPost()->getAll(), $menuItem, $id);
             }
 
             // Seitentyp
@@ -301,8 +311,9 @@ class Items extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $menuItem
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $menuItem)
+    protected function _editPost(array $formData, array $menuItem, $id)
     {
         try {
             $this->menusValidator->validateItem($formData);
@@ -322,7 +333,7 @@ class Items extends Core\Modules\AdminController
             ];
 
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $bool = $nestedSet->editNode($this->request->getParameters()->get('id'), (int)$formData['parent_id'], (int)$formData['block_id'], $updateValues);
+            $bool = $nestedSet->editNode($id, (int)$formData['parent_id'], (int)$formData['block_id'], $updateValues);
 
             // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
             if ($formData['mode'] != 3) {

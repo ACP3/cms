@@ -162,7 +162,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */

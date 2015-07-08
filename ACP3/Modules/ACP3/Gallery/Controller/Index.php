@@ -62,10 +62,15 @@ class Index extends Core\Modules\FrontendController
         $this->settings = $this->config->getSettings('gallery');
     }
 
-    public function actionDetails()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDetails($id)
     {
-        if ($this->galleryModel->pictureExists((int)$this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true) {
-            $picture = $this->galleryModel->getPictureById((int)$this->request->getParameters()->get('id'));
+        if ($this->galleryModel->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
+            $picture = $this->galleryModel->getPictureById($id);
 
             // Brotkrümelspur
             $this->breadcrumb
@@ -123,27 +128,29 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionImage()
+    /**
+     * @param int    $id
+     * @param string $action
+     */
+    public function actionImage($id, $action = '')
     {
         $this->setNoOutput(true);
 
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true) {
-            set_time_limit(20);
-            $picture = $this->galleryModel->getFileById($this->request->getParameters()->get('id'));
-            $action = $this->request->getParameters()->get('action') === 'thumb' ? 'thumb' : '';
+        set_time_limit(20);
+        $picture = $this->galleryModel->getFileById($id);
+        $action = $action === 'thumb' ? 'thumb' : '';
 
-            $options = [
-                'enable_cache' => $this->config->getSettings('system')['cache_images'] == 1,
-                'cache_prefix' => 'gallery_' . $action,
-                'max_width' => $this->settings[$action . 'width'],
-                'max_height' => $this->settings[$action . 'height'],
-                'file' => UPLOADS_DIR . 'gallery/' . $picture,
-                'prefer_height' => $action === 'thumb'
-            ];
+        $options = [
+            'enable_cache' => $this->config->getSettings('system')['cache_images'] == 1,
+            'cache_prefix' => 'gallery_' . $action,
+            'max_width' => $this->settings[$action . 'width'],
+            'max_height' => $this->settings[$action . 'height'],
+            'file' => UPLOADS_DIR . 'gallery/' . $picture,
+            'prefer_height' => $action === 'thumb'
+        ];
 
-            $image = new Core\Image($options);
-            $image->output();
-        }
+        $image = new Core\Image($options);
+        $image->output();
     }
 
     public function actionIndex()
@@ -157,15 +164,20 @@ class Index extends Core\Modules\FrontendController
         $this->view->assign('dateformat', $this->settings['dateformat']);
     }
 
-    public function actionPics()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionPics($id)
     {
-        if ($this->galleryModel->galleryExists((int)$this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true) {
+        if ($this->galleryModel->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->lang->t('gallery', 'gallery'), 'gallery')
-                ->append($this->galleryModel->getGalleryTitle($this->request->getParameters()->get('id')));
+                ->append($this->galleryModel->getGalleryTitle($id));
 
-            $this->view->assign('pictures', $this->galleryCache->getCache($this->request->getParameters()->get('id')));
+            $this->view->assign('pictures', $this->galleryCache->getCache($id));
             $this->view->assign('overlay', (int)$this->settings['overlay']);
         } else {
             throw new Core\Exceptions\ResultNotExists();

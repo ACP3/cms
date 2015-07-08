@@ -67,11 +67,16 @@ class Index extends Core\Modules\AdminController
         return $this;
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($$action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->guestbookModel->delete($item);
@@ -83,16 +88,21 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $guestbook = $this->guestbookModel->getOneById($this->request->getParameters()->get('id'));
+        $guestbook = $this->guestbookModel->getOneById($id);
         if (empty($guestbook) === false) {
             $settings = $this->config->getSettings('guestbook');
 
             $this->breadcrumb->setTitlePostfix($guestbook['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings);
+                $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             if ($settings['emoticons'] == 1 && $this->emoticonsHelpers) {
@@ -184,8 +194,9 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $settings
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $settings)
+    protected function _editPost(array $formData, array $settings, $id)
     {
         try {
             $this->guestbookValidator->validateEdit($formData, $settings);
@@ -196,7 +207,7 @@ class Index extends Core\Modules\AdminController
                 'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
             ];
 
-            $bool = $this->guestbookModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->guestbookModel->update($updateValues, $id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

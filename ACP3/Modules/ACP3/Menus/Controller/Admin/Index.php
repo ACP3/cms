@@ -75,11 +75,11 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
 
@@ -105,15 +105,20 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $menu = $this->menusModel->getOneById($this->request->getParameters()->get('id'));
+        $menu = $this->menusModel->getOneById($id);
 
         if (empty($menu) === false) {
             $this->breadcrumb->setTitlePostfix($menu['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll());
+                $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             $this->view->assign('form', array_merge($menu, $this->request->getPost()->getAll()));
@@ -178,18 +183,19 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     * @param int   $id
      */
-    protected function _editPost(array $formData)
+    protected function _editPost(array $formData, $id)
     {
         try {
-            $this->menusValidator->validate($formData, (int)$this->request->getParameters()->get('id'));
+            $this->menusValidator->validate($formData, $id);
 
             $updateValues = [
                 'index_name' => $formData['index_name'],
                 'title' => Core\Functions::strEncode($formData['title']),
             ];
 
-            $bool = $this->menusModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->menusModel->update($updateValues, $id);
 
             $this->menusCache->setMenuItemsCache();
 

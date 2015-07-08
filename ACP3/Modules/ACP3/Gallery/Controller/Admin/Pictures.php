@@ -71,19 +71,24 @@ class Pictures extends Core\Modules\AdminController
         $this->galleryValidator = $galleryValidator;
     }
 
-    public function actionCreate()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionCreate($id)
     {
-        if ($this->galleryModel->galleryExists((int)$this->request->getParameters()->get('id')) === true) {
-            $gallery = $this->galleryModel->getGalleryTitle((int)$this->request->getParameters()->get('id'));
+        if ($this->galleryModel->galleryExists($id) === true) {
+            $gallery = $this->galleryModel->getGalleryTitle($id);
 
             $this->breadcrumb
-                ->append($gallery, 'acp/gallery/index/edit/id_' . $this->request->getParameters()->get('id'))
+                ->append($gallery, 'acp/gallery/index/edit/id_' . $id)
                 ->append($this->lang->t('gallery', 'admin_pictures_create'));
 
             $settings = $this->config->getSettings('gallery');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_createPost($this->request->getPost()->getAll(), $settings);
+                $this->_createPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -95,7 +100,7 @@ class Pictures extends Core\Modules\AdminController
             }
 
             $this->view->assign('form', array_merge(['description' => ''], $this->request->getPost()->getAll()));
-            $this->view->assign('gallery_id', $this->request->getParameters()->get('id'));
+            $this->view->assign('gallery_id', $id);
 
             $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
@@ -103,11 +108,17 @@ class Pictures extends Core\Modules\AdminController
         }
     }
 
-    public function actionDelete()
+    /**
+     * @param int    $id
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($id, $action = '')
     {
-        $items = $this->_deleteItem(null, 'acp/gallery/index/edit/id_' . $this->request->getParameters()->get('id'));
+        $items = $this->_deleteItem(null, 'acp/gallery/index/edit/id_' . $id);
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 if (!empty($item) && $this->galleryModel->pictureExists($item) === true) {
@@ -123,16 +134,21 @@ class Pictures extends Core\Modules\AdminController
                 }
             }
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/index/edit/id_' . $this->request->getParameters()->get('id'));
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/index/edit/id_' . $id);
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        if ($this->galleryModel->pictureExists((int)$this->request->getParameters()->get('id')) === true) {
-            $picture = $this->galleryModel->getPictureById((int)$this->request->getParameters()->get('id'));
+        if ($this->galleryModel->pictureExists($id) === true) {
+            $picture = $this->galleryModel->getPictureById($id);
 
             $this->breadcrumb
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
@@ -142,7 +158,7 @@ class Pictures extends Core\Modules\AdminController
             $settings = $this->config->getSettings('gallery');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings, $picture);
+                $this->_editPost($this->request->getPost()->getAll(), $settings, $picture, $id);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -154,7 +170,7 @@ class Pictures extends Core\Modules\AdminController
             }
 
             $this->view->assign('form', array_merge($picture, $this->request->getPost()->getAll()));
-            $this->view->assign('gallery_id', $this->request->getParameters()->get('id'));
+            $this->view->assign('gallery_id', $id);
 
             $this->formTokenHelper->generateFormToken($this->request->getQuery());
         } else {
@@ -162,33 +178,33 @@ class Pictures extends Core\Modules\AdminController
         }
     }
 
-    public function actionOrder()
+    /**
+     * @param int    $id
+     * @param string $action
+     */
+    public function actionOrder($id, $action)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true) {
-            $action = $this->request->getParameters()->get('action');
-            if (($action === 'up' || $action === 'down') && $this->galleryModel->pictureExists((int)$this->request->getParameters()->get('id')) === true) {
-                if ($action === 'up') {
-                    $this->sortHelper->up(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->request->getParameters()->get('id'), 'gallery_id');
-                } else {
-                    $this->sortHelper->down(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->request->getParameters()->get('id'), 'gallery_id');
-                }
-
-                $galleryId = $this->galleryModel->getGalleryIdFromPictureId($this->request->getParameters()->get('id'));
-
-                $this->galleryCache->setCache($galleryId);
-
-                $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
+        if (($action === 'up' || $action === 'down') && $this->galleryModel->pictureExists($id) === true) {
+            if ($action === 'up') {
+                $this->sortHelper->up(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $id, 'gallery_id');
+            } else {
+                $this->sortHelper->down(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $id, 'gallery_id');
             }
-        }
 
-        throw new Core\Exceptions\ResultNotExists();
+            $galleryId = $this->galleryModel->getGalleryIdFromPictureId($id);
+
+            $this->galleryCache->setCache($galleryId);
+
+            $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
+        }
     }
 
     /**
      * @param array $formData
      * @param array $settings
+     * @param int   $id
      */
-    protected function _createPost(array $formData, array $settings)
+    protected function _createPost(array $formData, array $settings, $id)
     {
         try {
             $file = $this->request->getFiles()->get('file');
@@ -197,12 +213,12 @@ class Pictures extends Core\Modules\AdminController
 
             $upload = new Core\Helpers\Upload('gallery');
             $result = $upload->moveFile($file['tmp_name'], $file['name']);
-            $picNum = $this->galleryModel->getLastPictureByGalleryId($this->request->getParameters()->get('id'));
+            $picNum = $this->galleryModel->getLastPictureByGalleryId($id);
 
             $insertValues = [
                 'id' => '',
                 'pic' => !is_null($picNum) ? $picNum + 1 : 1,
-                'gallery_id' => $this->request->getParameters()->get('id'),
+                'gallery_id' => $id,
                 'file' => $result['name'],
                 'description' => Core\Functions::strEncode($formData['description'], true),
                 'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
@@ -211,13 +227,13 @@ class Pictures extends Core\Modules\AdminController
             $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
             $bool2 = $this->galleryHelpers->generatePictureAlias($lastId);
 
-            $this->galleryCache->setCache($this->request->getParameters()->get('id'));
+            $this->galleryCache->setCache($id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $this->request->getParameters()->get('id'));
+            $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $id);
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery/index/edit/id_' . $this->request->getParameters()->get('id'));
+            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery/index/edit/id_' . $id);
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
@@ -227,8 +243,9 @@ class Pictures extends Core\Modules\AdminController
      * @param array $formData
      * @param array $settings
      * @param array $picture
+     * @param int   $id
      */
-    protected function _editPost(array $formData, array $settings, array $picture)
+    protected function _editPost(array $formData, array $settings, array $picture, $id)
     {
         try {
             $file = $this->request->getFiles()->get('file');
@@ -243,14 +260,14 @@ class Pictures extends Core\Modules\AdminController
             if (!empty($file)) {
                 $upload = new Core\Helpers\Upload('gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                $oldFile = $this->galleryModel->getFileById($this->request->getParameters()->get('id'));
+                $oldFile = $this->galleryModel->getFileById($id);
 
                 $this->galleryHelpers->removePicture($oldFile);
 
                 $updateValues = array_merge($updateValues, ['file' => $result['name']]);
             }
 
-            $bool = $this->galleryModel->update($updateValues, $this->request->getParameters()->get('id'), Gallery\Model::TABLE_NAME_PICTURES);
+            $bool = $this->galleryModel->update($updateValues, $id, Gallery\Model::TABLE_NAME_PICTURES);
 
             $this->galleryCache->setCache($picture['gallery_id']);
 
