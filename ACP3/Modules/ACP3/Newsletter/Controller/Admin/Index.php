@@ -65,7 +65,7 @@ class Index extends Core\Modules\AdminController
             $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
-        $this->view->assign('date', $this->date->datepicker('date'));
+        $this->view->assign('date', $this->get('core.helpers.date')->datepicker('date'));
         $this->view->assign('settings', $settings);
         $this->view->assign('form', array_merge(['title' => '', 'text' => ''], $this->request->getPost()->getAll()));
 
@@ -107,7 +107,7 @@ class Index extends Core\Modules\AdminController
                 $this->_editPost($this->request->getPost()->getAll(), $settings);
             }
 
-            $this->view->assign('date', $this->date->datepicker('date', $newsletter['date']));
+            $this->view->assign('date', $this->get('core.helpers.date')->datepicker('date', $newsletter['date']));
             $this->view->assign('settings', array_merge($settings, ['html' => $newsletter['html']]));
             $this->view->assign('form', array_merge($newsletter, $this->request->getPost()->getAll()));
 

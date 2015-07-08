@@ -100,7 +100,7 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('entries', $this->formsHelpers->recordsPerPage($systemSettings['entries']));
 
         // Zeitzonen
-        $this->view->assign('time_zones', $this->date->getTimeZones($systemSettings['date_time_zone']));
+        $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']));
 
         // Geschlecht
         $lang_gender = [
@@ -117,7 +117,7 @@ class Index extends Core\Modules\AdminController
             'changeYear' => 'true',
             'yearRange' => '\'-50:+0\''
         ];
-        $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', '', 'Y-m-d', $datepickerParams, 0, false, true));
+        $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', '', 'Y-m-d', $datepickerParams, 0, false, true));
 
         // Kontaktangaben
         $contact = [];
@@ -247,7 +247,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('entries', $this->formsHelpers->recordsPerPage((int)$user['entries']));
 
             // Zeitzonen
-            $this->view->assign('time_zones', $this->date->getTimeZones($user['time_zone']));
+            $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones($user['time_zone']));
 
             // Geschlecht
             $lang_gender = [
@@ -259,7 +259,7 @@ class Index extends Core\Modules\AdminController
 
             // Geburtstag
             $datepickerParams = ['constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''];
-            $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
+            $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
 
             // Kontaktangaben
             $contact = [];

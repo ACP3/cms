@@ -152,7 +152,7 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('guestbook');
 
-        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
 
         $lang_notify = [
             $this->lang->t('guestbook', 'no_notification'),

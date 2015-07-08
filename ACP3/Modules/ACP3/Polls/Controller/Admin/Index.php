@@ -79,7 +79,7 @@ class Index extends Core\Modules\AdminController
         }
 
         // Übergabe der Daten an Smarty
-        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
+        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
         $this->view->assign('title', $this->request->getPost()->get('title', ''));
         $this->view->assign('answers', $answers);
         $this->view->assign('multiple', $this->get('core.helpers.forms')->selectEntry('multiple', '1', '0', 'checked'));
@@ -158,7 +158,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('options', $options);
 
             // Übergabe der Daten an Smarty
-            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$poll['start'], $poll['end']]));
+            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$poll['start'], $poll['end']]));
             $this->view->assign('title', $this->request->getPost()->get('title', $poll['title']));
 
             $this->formTokenHelper->generateFormToken($this->request->getQuery());

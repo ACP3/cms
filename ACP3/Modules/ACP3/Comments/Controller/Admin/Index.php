@@ -98,7 +98,7 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('comments');
 
-        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {

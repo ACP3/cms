@@ -77,7 +77,7 @@ services:
 
   core.date:
     class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', @core.request, '@core.helpers.forms', '@core.validator.rules.date', '@core.config']
+    arguments: ['@core.auth', '@core.lang', '@core.config']
 
   core.db:
     class: ACP3\Core\DB

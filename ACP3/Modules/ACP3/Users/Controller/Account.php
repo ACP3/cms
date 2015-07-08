@@ -85,7 +85,7 @@ class Account extends Core\Modules\FrontendController
 
         // Geburtstag
         $datepickerParams = ['constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''];
-        $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
+        $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
 
         // Kontaktangaben
         $contact = [];
@@ -143,7 +143,7 @@ class Account extends Core\Modules\FrontendController
         $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage((int)$user['entries']));
 
         // Zeitzonen
-        $this->view->assign('time_zones', $this->date->getTimeZones($user['time_zone']));
+        $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones($user['time_zone']));
 
         $lang_mailDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', [1, 0], $lang_mailDisplay, $user['mail_display'], 'checked'));

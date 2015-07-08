@@ -121,7 +121,7 @@ class Index extends Core\Modules\AdminController
             }
         }
 
-        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
+        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
 
         $defaults = [
             'title' => '',
@@ -253,7 +253,7 @@ class Index extends Core\Modules\AdminController
             }
 
             // Datumsauswahl
-            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$article['start'], $article['end']]));
+            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$article['start'], $article['end']]));
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))));
 

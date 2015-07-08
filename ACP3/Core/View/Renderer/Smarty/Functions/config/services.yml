@@ -9,7 +9,7 @@ services:
 
   smarty.plugin.date_ramge:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
-    arguments: ['@core.date']
+    arguments: [@core.helpers.formatter.dateRange]
 
   smarty.plugin.redirect_message:
     class: ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage

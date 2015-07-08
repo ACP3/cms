@@ -71,7 +71,7 @@ class Index extends Core\Modules\AdminController
         }
 
         // Datumsauswahl
-        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
+        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
@@ -129,7 +129,7 @@ class Index extends Core\Modules\AdminController
             }
 
             $this->view->assign('gallery_id', $this->request->getParameters()->get('id'));
-            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$gallery['start'], $gallery['end']]));
+            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$gallery['start'], $gallery['end']]));
             $this->view->assign('form', array_merge($gallery, $this->request->getPost()->getAll()));
 
             $this->_actionEditPictures();
@@ -194,7 +194,7 @@ class Index extends Core\Modules\AdminController
         $lang_overlay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', [1, 0], $lang_overlay, $settings['overlay'], 'checked'));
 
-        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
 
         $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 

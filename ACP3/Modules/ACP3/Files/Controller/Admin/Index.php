@@ -91,7 +91,7 @@ class Index extends Core\Modules\AdminController
         }
 
         // Datumsauswahl
-        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
+        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
 
         $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
         $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''));
@@ -165,7 +165,7 @@ class Index extends Core\Modules\AdminController
             }
 
             // Datumsauswahl
-            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$file['start'], $file['end']]));
+            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$file['start'], $file['end']]));
 
             $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
             $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($file['size'], ' '))));
@@ -227,7 +227,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', [1, 0], $lang_comments, $settings['comments'], 'checked'));
         }
 
-        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
 
         $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 

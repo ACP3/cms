@@ -81,7 +81,7 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('languages', $this->lang->getLanguagePack($systemSettings['lang']));
 
         // Zeitzonen
-        $this->view->assign('time_zones', $this->date->getTimeZones($systemSettings['date_time_zone']));
+        $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']));
 
         // Wartungsmodus an/aus
         $lang_maintenance = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];

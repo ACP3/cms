@@ -68,7 +68,7 @@ class Install extends AbstractController
         }
 
         // Zeitzonen
-        $this->view->assign('time_zones', $this->date->getTimeZones(date_default_timezone_get()));
+        $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones(date_default_timezone_get()));
 
         $defaults = [
             'db_host' => 'localhost',

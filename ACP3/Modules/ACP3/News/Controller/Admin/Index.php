@@ -91,7 +91,7 @@ class Index extends Core\Modules\AdminController
         }
 
         // Datumsauswahl
-        $this->view->assign('publication_period', $this->date->datepicker(['start', 'end']));
+        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
 
         // Kategorien
         $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', '', true));
@@ -170,7 +170,7 @@ class Index extends Core\Modules\AdminController
             }
 
             // Datumsauswahl
-            $this->view->assign('publication_period', $this->date->datepicker(['start', 'end'], [$news['start'], $news['end']]));
+            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$news['start'], $news['end']]));
 
             // Kategorien
             $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $news['category_id'], true));
@@ -236,7 +236,7 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('news');
 
-        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
 
         $lang_readmore = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('readmore', $this->get('core.helpers.forms')->selectGenerator('readmore', [1, 0], $lang_readmore, $settings['readmore'], 'checked'));

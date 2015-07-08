@@ -2,30 +2,21 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\Helpers\Forms;
-use ACP3\Core\Http\RequestInterface;
-
 /**
- * Stellt Funktionen zur Datumsformatierung und Ausrichtung an den Zeitzonen bereit
+ * Class Date
  * @package ACP3\Core
  */
 class Date
 {
     /**
-     * Langes Datumsformat
-     *
      * @var string
      */
     protected $dateFormatLong = '';
     /**
-     * Kurzes Datumsformat
-     *
      * @var string
      */
     protected $dateFormatShort = '';
     /**
-     * PHP DateTimeZone-Object
-     *
      * @var \DateTimeZone
      */
     protected $dateTimeZone;
@@ -35,52 +26,31 @@ class Date
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var Forms
-     */
-    protected $formsHelper;
-    /**
-     * @var Validator\Rules\Date
-     */
-    protected $dateValidator;
-    /**
      * @var \ACP3\Core\Config
      */
     protected $config;
 
     /**
-     * @param \ACP3\Core\Auth                 $auth
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\Http\RequestInterface     $request
-     * @param \ACP3\Core\Helpers\Forms        $formsHelper
-     * @param \ACP3\Core\Validator\Rules\Date $dateValidator
-     * @param \ACP3\Core\Config               $config
+     * @param \ACP3\Core\Auth   $auth
+     * @param \ACP3\Core\Lang   $lang
+     * @param \ACP3\Core\Config $config
      */
     public function __construct(
         Auth $auth,
         Lang $lang,
-        RequestInterface $request,
-        Forms $formsHelper,
-        Validator\Rules\Date $dateValidator,
         Config $config
     )
     {
         $this->lang = $lang;
-        $this->request = $request;
-        $this->formsHelper = $formsHelper;
-        $this->dateValidator = $dateValidator;
         $this->config = $config;
 
         $this->_setFormatAndTimeZone($auth->getUserInfo());
     }
 
     /**
-     * @param $userInfo
+     * @param array $userInfo
      */
-    protected function _setFormatAndTimeZone($userInfo)
+    protected function _setFormatAndTimeZone(array $userInfo = [])
     {
         if (!empty($userInfo)) {
             $this->dateFormatLong = $userInfo['date_format_long'];
@@ -105,7 +75,7 @@ class Date
     }
 
     /**
-     * @param $dateFormatLong
+     * @param string $dateFormatLong
      *
      * @return $this
      */
@@ -125,7 +95,7 @@ class Date
     }
 
     /**
-     * @param $dateFormatShort
+     * @param string $dateFormatShort
      *
      * @return $this
      */
@@ -134,161 +104,6 @@ class Date
         $this->dateFormatShort = $dateFormatShort;
 
         return $this;
-    }
-
-    /**
-     * Liefert ein Array mit allen Zeitzonen dieser Welt aus
-     *
-     * @param string $currentValue
-     *
-     * @return array
-     */
-    public function getTimeZones($currentValue = '')
-    {
-        $timeZones = [
-            'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
-            'America' => \DateTimeZone::listIdentifiers(\DateTimeZone::AMERICA),
-            'Antarctica' => \DateTimeZone::listIdentifiers(\DateTimeZone::ANTARCTICA),
-            'Arctic' => \DateTimeZone::listIdentifiers(\DateTimeZone::ARCTIC),
-            'Asia' => \DateTimeZone::listIdentifiers(\DateTimeZone::ASIA),
-            'Atlantic' => \DateTimeZone::listIdentifiers(\DateTimeZone::ATLANTIC),
-            'Australia' => \DateTimeZone::listIdentifiers(\DateTimeZone::AUSTRALIA),
-            'Europe' => \DateTimeZone::listIdentifiers(\DateTimeZone::EUROPE),
-            'Indian' => \DateTimeZone::listIdentifiers(\DateTimeZone::INDIAN),
-            'Pacitic' => \DateTimeZone::listIdentifiers(\DateTimeZone::PACIFIC),
-            'UTC' => \DateTimeZone::listIdentifiers(\DateTimeZone::UTC),
-        ];
-
-        foreach ($timeZones as $key => $values) {
-            $i = 0;
-            foreach ($values as $row) {
-                unset($timeZones[$key][$i]);
-                $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry('date_time_zone', $row, $currentValue);
-                ++$i;
-            }
-        }
-        return $timeZones;
-    }
-
-    /**
-     * Gibts ein Array mit den möglichen Datumsformaten aus,
-     * um diese als Dropdownmenü darstellen zu können
-     *
-     * @param string $format
-     *    Optionaler Parameter für das aktuelle Datumsformat
-     *
-     * @return array
-     */
-    public function dateFormatDropdown($format = '')
-    {
-        $dateFormatLang = [
-            $this->lang->t('system', 'date_format_short'),
-            $this->lang->t('system', 'date_format_long')
-        ];
-        return $this->formsHelper->selectGenerator('dateformat', ['short', 'long'], $dateFormatLang, $format);
-    }
-
-    /**
-     * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
-     *
-     * @param mixed    $name
-     *    Name des jeweiligen Inputfeldes
-     * @param mixed    $value
-     *    Der Zeitstempel des jeweiligen Eintrages
-     * @param string   $format
-     *    Das anzuzeigende Format im Textfeld
-     * @param array    $params
-     *    Dient dem Festlegen von weiteren Parametern
-     * @param integer  $range
-     *    1 = Start- und Enddatum anzeigen
-     *    2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
-     * @param bool|int $withTime
-     * @param bool     $inputFieldOnly
-     *
-     * @return array
-     */
-    public function datepicker(
-        $name,
-        $value = '',
-        $format = 'Y-m-d H:i',
-        array $params = [],
-        $range = 1,
-        $withTime = true,
-        $inputFieldOnly = false
-    )
-    {
-        $range = (is_array($name) === true && $range === 1);
-
-        $datePicker = [
-            'range' => $range,
-            'with_time' => (bool)$withTime,
-            'length' => $withTime === true ? 16 : 10,
-            'input_only' => (bool)$inputFieldOnly,
-            'params' => [
-                'format' => 'YYYY-MM-DD',
-                'changeMonth' => 'true',
-                'changeYear' => 'true',
-            ]
-        ];
-        if ($withTime === true) {
-            $datePicker['params']['format'] .= ' HH:mm';
-        }
-
-        // Zusätzliche Datepicker-Parameter hinzufügen
-        if (!empty($params) && is_array($params) === true) {
-            $datePicker['params'] = array_merge($datePicker['params'], $params);
-        }
-
-        // Veröffentlichungszeitraum
-        if ($range === true) {
-            if ($this->request->getPost()->has($name[0]) && $this->request->getPost()->has($name[1])) {
-                $valueStart = $this->request->getPost()->get($name[0]);
-                $valueEnd = $this->request->getPost()->get($name[1]);
-                $valueStartR = $this->format($valueStart, 'r', false);
-                $valueEndR = $this->format($valueEnd, 'r', false);
-            } elseif (is_array($value) === true && $this->dateValidator->date($value[0], $value[1]) === true) {
-                $valueStart = $this->format($value[0], $format);
-                $valueEnd = $this->format($value[1], $format);
-                $valueStartR = $this->format($value[0], 'r');
-                $valueEndR = $this->format($value[1], 'r');
-            } else {
-                $valueStart = $this->format('now', $format, false);
-                $valueEnd = $this->format('now', $format, false);
-                $valueStartR = $this->format('now', 'r', false);
-                $valueEndR = $this->format('now', 'r', false);
-            }
-
-            $datePicker['name_start'] = $name[0];
-            $datePicker['name_end'] = $name[1];
-            $datePicker['id_start'] = 'date-' . str_replace('_', '-', $name[0]);
-            $datePicker['id_end'] = 'date-' . str_replace('_', '-', $name[1]);
-            $datePicker['value_start'] = $valueStart;
-            $datePicker['value_start_r'] = $valueStartR;
-            $datePicker['value_end'] = $valueEnd;
-            $datePicker['value_end_r'] = $valueEndR;
-            $datePicker['range_json'] = json_encode(
-                [
-                    'start' => '#' . $datePicker['id_start'],
-                    'startDefaultDate' => $valueStartR,
-                    'end' => '#' . $datePicker['id_end'],
-                    'endDefaultDate' => $valueEndR
-                ]
-            );
-        } else { // Einfaches Inputfeld mit Datepicker
-            if ($this->request->getPost()->has($name)) {
-                $value = $this->request->getPost()->get($name, '');
-            } elseif ($this->dateValidator->date($value) === true) {
-                $value = $this->format($value, $format);
-            } else {
-                $value = $this->format('now', $format, false);
-            }
-
-            $datePicker['name'] = $name;
-            $datePicker['id'] = 'date-' . str_replace('_', '-', $name);
-            $datePicker['value'] = $value;
-        }
-
-        return $datePicker;
     }
 
     /**
@@ -303,30 +118,13 @@ class Date
      */
     public function format($time = 'now', $format = 'long', $toLocalTimeZone = true, $isLocalTimeZone = true)
     {
-        // Datum in gewünschter Formatierung ausgeben
         switch ($format) {
-            case '':
-            case 'long':
-                $format = $this->dateFormatLong;
-                break;
             case 'short':
                 $format = $this->dateFormatShort;
                 break;
-        }
-
-        $replace = [];
-        // Wochentage lokalisieren
-        if (strpos($format, 'D') !== false) {
-            $replace = $this->localizeDaysAbbr();
-        } elseif (strpos($format, 'l') !== false) {
-            $replace = $this->localizeDays();
-        }
-
-        // Monate lokalisieren
-        if (strpos($format, 'M') !== false) {
-            $replace = array_merge($replace, $this->localizeMonthsAbbr());
-        } elseif (strpos($format, 'F') !== false) {
-            $replace = array_merge($replace, $this->localizeMonths());
+            case 'long':
+            default:
+                $format = $this->dateFormatLong;
         }
 
         if (is_numeric($time)) {
@@ -341,7 +139,32 @@ class Date
                 $dateTime->setTimestamp($dateTime->getTimestamp() - $dateTime->getOffset());
             }
         }
-        return strtr($dateTime->format($format), $replace);
+        return strtr($dateTime->format($format), $this->localizeDaysAndMonths($format));
+    }
+
+    /**
+     * @param string $format
+     *
+     * @return array
+     */
+    protected function localizeDaysAndMonths($format)
+    {
+        $replace = [];
+        // Localize days
+        if (strpos($format, 'D') !== false) {
+            $replace = $this->localizeDaysAbbr();
+        } elseif (strpos($format, 'l') !== false) {
+            $replace = $this->localizeDays();
+        }
+
+        // Localize months
+        if (strpos($format, 'M') !== false) {
+            $replace = array_merge($replace, $this->localizeMonthsAbbr());
+        } elseif (strpos($format, 'F') !== false) {
+            $replace = array_merge($replace, $this->localizeMonths());
+        }
+
+        return $replace;
     }
 
     /**
@@ -419,37 +242,16 @@ class Date
     }
 
     /**
-     * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
-     *
-     * @param string $start
-     * @param string $end
-     * @param string $format
-     *
-     * @return string
-     */
-    public function formatTimeRange($start, $end = '', $format = 'long')
-    {
-        $datetimeFormat = 'Y-m-d H:i';
-        if ($end === '' || $start >= $end) {
-            $title = $end === '' ? $this->format($start, $format) : sprintf($this->lang->t('system', 'date_published_since'), $this->format($start, $format));
-            return '<time datetime="' . $start . '" title="' . $title . '">' . $this->format($start, $datetimeFormat) . '</time>';
-        } else {
-            $title = sprintf($this->lang->t('system', 'date_time_range'), $this->format($start, $format), $this->format($end, $format));
-            return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->format($start, $datetimeFormat) . '&ndash;' . $this->format($end, $datetimeFormat) . '</time>';
-        }
-    }
-
-    /**
      * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
      *
      * @param string $value
-     * @param bool   $islocalTime
+     * @param bool   $isLocalTime
      *
      * @return int
      */
-    public function timestamp($value = 'now', $islocalTime = false)
+    public function timestamp($value = 'now', $isLocalTime = false)
     {
-        return (int)$this->format($value, 'U', true, $islocalTime);
+        return (int)$this->format($value, 'U', true, $isLocalTime);
     }
 
     /**
