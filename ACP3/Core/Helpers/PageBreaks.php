@@ -21,18 +21,22 @@ class PageBreaks
      * @var \ACP3\Core\Router
      */
     protected $router;
+    /**
+     * @var \ACP3\Core\Helpers\TableOfContents
+     */
+    protected $tableOfContents;
 
     /**
-     * @param \ACP3\Core\Helpers\TableOfContents $tableOfContents
      * @param \ACP3\Core\SEO                     $seo
      * @param \ACP3\Core\Http\RequestInterface   $request
      * @param \ACP3\Core\Router                  $router
+     * @param \ACP3\Core\Helpers\TableOfContents $tableOfContents
      */
     public function __construct(
-        TableOfContents $tableOfContents,
         Core\SEO $seo,
         Core\Http\RequestInterface $request,
-        Core\Router $router
+        Core\Router $router,
+        TableOfContents $tableOfContents
     )
     {
         $this->tableOfContents = $tableOfContents;

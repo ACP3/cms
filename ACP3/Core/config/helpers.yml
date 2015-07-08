@@ -35,7 +35,7 @@ services:
 
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
-    arguments: [@core.helpers.toc, '@core.seo', '@core.request', '@core.router']
+    arguments: ['@core.seo', '@core.request', '@core.router', @core.helpers.toc]
 
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort
