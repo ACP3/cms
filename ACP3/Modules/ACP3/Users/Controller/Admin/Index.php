@@ -525,6 +525,6 @@ class Index extends Core\Modules\AdminController
                 'value' => $this->request->getPost()->get('skype', $defaultSkypeName),
                 'maxlength' => '28',
             ]
-        ];;
+        ];
     }
 }
