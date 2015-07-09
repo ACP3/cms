@@ -74,11 +74,16 @@ class Resources extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
 
             foreach ($items as $item) {
@@ -93,12 +98,17 @@ class Resources extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $resource = $this->permissionsModel->getResourceById((int)$this->request->getParameters()->get('id'));
+        $resource = $this->permissionsModel->getResourceById($id);
         if (!empty($resource)) {
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll());
+                $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             $privileges = $this->acl->getAllPrivileges();
@@ -172,8 +182,9 @@ class Resources extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     * @param int   $id
      */
-    protected function _editPost(array $formData)
+    protected function _editPost(array $formData, $id)
     {
         try {
             $this->permissionsValidator->validateResource($formData);
@@ -184,7 +195,7 @@ class Resources extends Core\Modules\AdminController
                 'page' => $formData['resource'],
                 'privilege_id' => $formData['privileges'],
             ];
-            $bool = $this->permissionsModel->update($updateValues, $this->request->getParameters()->get('id'), Permissions\Model::TABLE_NAME_RESOURCES);
+            $bool = $this->permissionsModel->update($updateValues, $id, Permissions\Model::TABLE_NAME_RESOURCES);
 
             $this->permissionsCache->setResourcesCache();
 

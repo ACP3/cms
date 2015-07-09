@@ -44,12 +44,15 @@ class Index extends Core\Modules\FrontendController
         $this->searchExtensions = $searchExtensions;
     }
 
-    public function actionIndex()
+    /**
+     * @param string $q
+     */
+    public function actionIndex($q = '')
     {
         if ($this->request->getPost()->isEmpty() === false) {
             $this->_indexPost($this->request->getPost()->getAll());
-        } elseif ($this->request->getParameters()->has('q')) {
-            $this->_indexPost(['search_term' => $this->request->getParameters()->get('q')]);
+        } elseif (!empty($q)) {
+            $this->_indexPost(['search_term' => (string) $q]);
         }
 
         $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->getAll()));

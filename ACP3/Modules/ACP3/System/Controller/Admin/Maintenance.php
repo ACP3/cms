@@ -58,11 +58,14 @@ class Maintenance extends Core\Modules\AdminController
         $this->systemValidator = $systemValidator;
     }
 
-    public function actionCache()
+    /**
+     * @param string $action
+     */
+    public function actionCache($action = '')
     {
-        if ($this->request->getParameters()->has('action')) {
+        if (!empty($action)) {
             $result = false;
-            switch ($this->request->getParameters()->get('action')) {
+            switch ($action) {
                 case 'general':
                     $result = Core\Cache::purge(CACHE_DIR . 'sql');
                     $text = $this->lang->t('system', $result === true ? 'cache_type_general_delete_success' : 'cache_type_general_delete_success');

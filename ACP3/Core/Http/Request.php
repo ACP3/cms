@@ -279,8 +279,8 @@ class Request extends AbstractRequest
             }
         }
 
-        $this->parameters->set('cat', (int)$this->getPost()->get('cat', 0));
-        $this->parameters->set('action', $this->getPost()->get('action'));
+        $this->parameters->set('cat', (int)$this->getPost()->get('cat', $this->parameters->get('cat')));
+        $this->parameters->set('action', $this->getPost()->get('action', $this->parameters->get('action')));
     }
 
     /**

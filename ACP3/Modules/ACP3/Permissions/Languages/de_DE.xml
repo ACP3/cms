@@ -26,7 +26,7 @@
         <item key="privilege_does_not_exist">Das ausgewählte Privileg existiert nicht.</item>
         <item key="resource_name">Ressourcen-Name</item>
         <item key="role_already_exists">Es existiert bereits eine Rolle mit diesem Namen.</item>
-        <item key="role_undeletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
+        <item key="role_not_deletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
         <item key="roles">Zugeordnete Rollen</item>
         <item key="superior_role">Übergeordnete Rolle</item>
         <item key="select_module">Bitte wählen Sie das Modul aus, für welches die Ressource erstellt werden soll.</item>

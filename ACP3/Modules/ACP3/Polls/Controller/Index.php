@@ -62,18 +62,21 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionResult()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionResult($id)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->pollsModel->pollExists($this->request->getParameters()->get('id'), $this->date->getCurrentDateTime()) === true
-        ) {
-            $question = $this->pollsModel->getOneByIdWithTotalVotes($this->request->getParameters()->get('id'));
-            $answers = $this->pollsModel->getAnswersByPollId($this->request->getParameters()->get('id'));
+        if ($this->pollsModel->pollExists($id, $this->date->getCurrentDateTime()) === true) {
+            $question = $this->pollsModel->getOneByIdWithTotalVotes($id);
+            $answers = $this->pollsModel->getAnswersByPollId($id);
             $c_answers = count($answers);
             $totalVotes = $question['total_votes'];
 
             for ($i = 0; $i < $c_answers; ++$i) {
-                $answers[$i]['percent'] = $totalVotes > '0' ? round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
+                $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
             }
             $this->view->assign('question', $question['title']);
             $this->view->assign('answers', $answers);
@@ -83,21 +86,27 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionVote()
+    /**
+     * @param int       $id
+     *
+     * @param int|array $answer
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionVote($id, $answer)
     {
         $time = $this->date->getCurrentDateTime();
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->pollsModel->pollExists($this->request->getParameters()->get('id'), $time, is_array($this->request->getPost()->get('answer'))) === true
+        if ($this->pollsModel->pollExists($id, $time, is_array($answer)) === true
         ) {
             // Wenn abgestimmt wurde
-            if (is_array($this->request->getPost()->get('answer')) === true || $this->get('core.validator.rules.misc')->isNumber($this->request->getPost()->get('answer')) === true) {
-                $this->_votePost($this->request->getPost()->getAll(), $time);
+            if (is_array($answer) === true || $this->get('core.validator.rules.misc')->isNumber($answer) === true) {
+                $this->_votePost($this->request->getPost()->getAll(), $time, $id);
             } else {
-                $poll = $this->pollsModel->getOneById($this->request->getParameters()->get('id'));
+                $poll = $this->pollsModel->getOneById($id);
 
                 $this->view->assign('question', $poll['title']);
                 $this->view->assign('multiple', $poll['multiple']);
-                $this->view->assign('answers', $this->pollsModel->getAnswersById($this->request->getParameters()->get('id')));
+                $this->view->assign('answers', $this->pollsModel->getAnswersById($id));
             }
         } else {
             throw new Core\Exceptions\ResultNotExists();
@@ -107,16 +116,17 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param array  $formData
      * @param string $time
+     * @param int    $id
      */
-    protected function _votePost(array $formData, $time)
+    protected function _votePost(array $formData, $time, $id)
     {
         $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
         $answers = $formData['answer'];
 
         if ($this->auth->isUser() === true) {
-            $query = $this->pollsModel->getVotesByUserId($this->request->getParameters()->get('id'), $this->auth->getUserId(), $ip); // Check, whether the logged user has already voted
+            $query = $this->pollsModel->getVotesByUserId($id, $this->auth->getUserId(), $ip); // Check, whether the logged user has already voted
         } else {
-            $query = $this->pollsModel->getVotesByIpAddress($this->request->getParameters()->get('id'), $ip); // For guest users check against the ip address
+            $query = $this->pollsModel->getVotesByIpAddress($id, $ip); // For guest users check against the ip address
         }
 
         $bool = false;
@@ -131,7 +141,7 @@ class Index extends Core\Modules\FrontendController
             foreach ($answers as $answer) {
                 if ($this->get('core.validator.rules.misc')->isNumber($answer) === true) {
                     $insertValues = [
-                        'poll_id' => $this->request->getParameters()->get('id'),
+                        'poll_id' => $id,
                         'answer_id' => $answer,
                         'user_id' => $userId,
                         'ip' => $ip,
@@ -145,6 +155,6 @@ class Index extends Core\Modules\FrontendController
             $text = $this->lang->t('polls', 'already_voted');
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $this->request->getParameters()->get('id'));
+        $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $id);
     }
 }

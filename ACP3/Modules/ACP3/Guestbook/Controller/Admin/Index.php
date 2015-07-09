@@ -76,7 +76,7 @@ class Index extends Core\Modules\AdminController
     {
         $items = $this->_deleteItem();
 
-        if ($$action === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->guestbookModel->delete($item);

@@ -87,11 +87,16 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
             foreach ($items as $item) {
                 $bool = $this->pollsModel->delete($item);
@@ -108,15 +113,20 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        $poll = $this->pollsModel->getOneById($this->request->getParameters()->get('id'));
+        $poll = $this->pollsModel->getOneById($id);
 
         if (empty($poll) === false) {
             $this->breadcrumb->setTitlePostfix($poll['title']);
 
             if ($this->request->getPost()->has('submit')) {
-                $this->_editPost($this->request->getPost()->getAll());
+                $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             $answers = [];
@@ -138,7 +148,7 @@ class Index extends Core\Modules\AdminController
                     $answers[$i]['value'] = '';
                 }
             } else {
-                $answers = $this->pollsModel->getAnswersByPollId($this->request->getParameters()->get('id'));
+                $answers = $this->pollsModel->getAnswersByPollId($id);
                 $c_answers = count($answers);
 
                 for ($i = 0; $i < $c_answers; ++$i) {
@@ -233,8 +243,9 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     * @param int   $id
      */
-    protected function _editPost(array $formData)
+    protected function _editPost(array $formData, $id)
     {
         try {
             $this->pollsValidator->validateEdit($formData);
@@ -248,11 +259,11 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->auth->getUserId(),
             ];
 
-            $bool = $this->pollsModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->pollsModel->update($updateValues, $id);
 
             // Stimmen zurücksetzen
             if (!empty($formData['reset'])) {
-                $this->pollsModel->delete($this->request->getParameters()->get('id'), 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                $this->pollsModel->delete($id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
             }
 
             // Antworten
@@ -261,7 +272,7 @@ class Index extends Core\Modules\AdminController
                 if (empty($row['id'])) {
                     // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                     if (!empty($row['value']) && !isset($row['delete'])) {
-                        $this->pollsModel->insert(['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->request->getParameters()->get('id')], Polls\Model::TABLE_NAME_ANSWERS);
+                        $this->pollsModel->insert(['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $id], Polls\Model::TABLE_NAME_ANSWERS);
                     }
                     // Antwort mitsamt Stimmen löschen
                 } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {

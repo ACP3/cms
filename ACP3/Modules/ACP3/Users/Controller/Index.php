@@ -154,12 +154,15 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionLogout()
+    /**
+     * @param string $last
+     */
+    public function actionLogout($last = '')
     {
         $this->auth->logout();
 
-        if ($this->request->getParameters()->has('last')) {
-            $lastPage = base64_decode($this->request->getParameters()->get('last'));
+        if (!empty($last)) {
+            $lastPage = base64_decode($last);
 
             if (!preg_match('/^((acp|users)\/)/', $lastPage)) {
                 $this->redirect()->temporary($lastPage);
@@ -196,10 +199,15 @@ class Index extends Core\Modules\FrontendController
         }
     }
 
-    public function actionViewProfile()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionViewProfile($id)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true && $this->usersModel->resultExists($this->request->getParameters()->get('id')) === true) {
-            $user = $this->auth->getUserInfo($this->request->getParameters()->get('id'));
+        if ($this->usersModel->resultExists($id) === true) {
+            $user = $this->auth->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
 
             $this->view->assign('user', $user);

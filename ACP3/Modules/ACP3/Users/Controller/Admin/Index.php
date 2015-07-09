@@ -120,24 +120,7 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', '', 'Y-m-d', $datepickerParams, 0, false, true));
 
         // Kontaktangaben
-        $contact = [];
-        $contact[0]['name'] = 'mail';
-        $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-        $contact[0]['value'] = $this->request->getPost()->get('mail', '');
-        $contact[0]['maxlength'] = '120';
-        $contact[1]['name'] = 'website';
-        $contact[1]['lang'] = $this->lang->t('system', 'website');
-        $contact[1]['value'] = $this->request->getPost()->get('website', '');
-        $contact[1]['maxlength'] = '120';
-        $contact[2]['name'] = 'icq';
-        $contact[2]['lang'] = $this->lang->t('users', 'icq');
-        $contact[2]['value'] = $this->request->getPost()->get('icq', '');
-        $contact[2]['maxlength'] = '9';
-        $contact[3]['name'] = 'skype';
-        $contact[3]['lang'] = $this->lang->t('users', 'skype');
-        $contact[3]['value'] = $this->request->getPost()->get('skype', '');
-        $contact[3]['maxlength'] = '28';
-        $this->view->assign('contact', $contact);
+        $this->view->assign('contact', $this->fetchContactDetails());
 
         $countries = Core\Lang::worldCountries();
         $countries_select = [];
@@ -184,11 +167,16 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
 
-    public function actionDelete()
+    /**
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionDelete($action = '')
     {
         $items = $this->_deleteItem();
 
-        if ($this->request->getParameters()->get('action') === 'confirmed') {
+        if ($action === 'confirmed') {
             $bool = $isAdminUser = $selfDelete = false;
             foreach ($items as $item) {
                 if ($item == 1) {
@@ -215,21 +203,26 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionEdit()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionEdit($id)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true && $this->usersModel->resultExists($this->request->getParameters()->get('id')) === true) {
-            $user = $this->auth->getUserInfo($this->request->getParameters()->get('id'));
+        if ($this->usersModel->resultExists($id) === true) {
+            $user = $this->auth->getUserInfo($id);
 
             $this->breadcrumb->setTitlePostfix($user['nickname']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll());
+                $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             // Zugriffslevel holen
             $roles = $this->acl->getAllRoles();
             $c_roles = count($roles);
-            $userRoles = $this->acl->getUserRoleIds($this->request->getParameters()->get('id'));
+            $userRoles = $this->acl->getUserRoleIds($id);
             for ($i = 0; $i < $c_roles; ++$i) {
                 $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
                 $roles[$i]['selected'] = $this->formsHelpers->selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $userRoles) ? $roles[$i]['id'] : '');
@@ -262,24 +255,12 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
 
             // Kontaktangaben
-            $contact = [];
-            $contact[0]['name'] = 'mail';
-            $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-            $contact[0]['value'] = $this->request->getPost()->get('mail', $user['mail']);
-            $contact[0]['maxlength'] = '120';
-            $contact[1]['name'] = 'website';
-            $contact[1]['lang'] = $this->lang->t('system', 'website');
-            $contact[1]['value'] = $this->request->getPost()->get('website', $user['website']);
-            $contact[1]['maxlength'] = '120';
-            $contact[2]['name'] = 'icq';
-            $contact[2]['lang'] = $this->lang->t('users', 'icq');
-            $contact[2]['value'] = $this->request->getPost()->get('icq', $user['icq']);
-            $contact[2]['maxlength'] = '9';
-            $contact[3]['name'] = 'skype';
-            $contact[3]['lang'] = $this->lang->t('users', 'skype');
-            $contact[3]['value'] = $this->request->getPost()->get('skype', $user['skype']);
-            $contact[3]['maxlength'] = '28';
-            $this->view->assign('contact', $contact);
+            $this->view->assign('contact', $this->fetchContactDetails(
+                $user['mail'],
+                $user['website'],
+                $user['icq'],
+                $user['skype']
+            ));
 
             $countries = Core\Lang::worldCountries();
             $countries_select = [];
@@ -418,11 +399,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     * @param int   $id
      */
-    protected function _editPost(array $formData)
+    protected function _editPost(array $formData, $id)
     {
         try {
-            $this->usersValidator->validate($formData, (int)$this->request->getParameters()->get('id'));
+            $this->usersValidator->validate($formData, $id);
 
             $updateValues = [
                 'super_user' => (int)$formData['super_user'],
@@ -450,7 +432,7 @@ class Index extends Core\Modules\AdminController
                 'entries' => (int)$formData['entries'],
             ];
 
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], (int)$this->request->getParameters()->get('id'));
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
@@ -459,7 +441,7 @@ class Index extends Core\Modules\AdminController
                 $updateValues['pwd'] = $newPassword . ':' . $salt;
             }
 
-            $bool = $this->usersModel->update($updateValues, $this->request->getParameters()->get('id'));
+            $bool = $this->usersModel->update($updateValues, $id);
 
             // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
             if ($this->request->getParameters()->get('id') == $this->auth->getUserId()) {
@@ -501,5 +483,40 @@ class Index extends Core\Modules\AdminController
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
+    }
+
+    /**
+     * @param string $defaultMail
+     * @param string $defaultWebsite
+     * @param string $defaultIcqNumber
+     * @param string $defaultSkypeName
+     *
+     * @return array
+     */
+    private function fetchContactDetails(
+        $defaultMail = '',
+        $defaultWebsite = '',
+        $defaultIcqNumber = '',
+        $defaultSkypeName = ''
+    )
+    {
+        $contact = [];
+        $contact[0]['name'] = 'mail';
+        $contact[0]['lang'] = $this->lang->t('system', 'email_address');
+        $contact[0]['value'] = $this->request->getPost()->get('mail', $defaultMail);
+        $contact[0]['maxlength'] = '120';
+        $contact[1]['name'] = 'website';
+        $contact[1]['lang'] = $this->lang->t('system', 'website');
+        $contact[1]['value'] = $this->request->getPost()->get('website', $defaultWebsite);
+        $contact[1]['maxlength'] = '120';
+        $contact[2]['name'] = 'icq';
+        $contact[2]['lang'] = $this->lang->t('users', 'icq');
+        $contact[2]['value'] = $this->request->getPost()->get('icq', $defaultIcqNumber);
+        $contact[2]['maxlength'] = '9';
+        $contact[3]['name'] = 'skype';
+        $contact[3]['lang'] = $this->lang->t('users', 'skype');
+        $contact[3]['value'] = $this->request->getPost()->get('skype', $defaultSkypeName);
+        $contact[3]['maxlength'] = '28';
+        return $contact;
     }
 }
