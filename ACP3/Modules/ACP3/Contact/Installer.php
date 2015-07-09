@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Installer extends Modules\AbstractInstaller
 {
     const MODULE_NAME = 'contact';
-    const SCHEMA_VERSION = 36;
+    const SCHEMA_VERSION = 37;
 
     /**
      * @var array
@@ -47,6 +47,7 @@ class Installer extends Modules\AbstractInstaller
     {
         return [
             'address' => '',
+            'ceo' => '',
             'disclaimer' => '',
             'fax' => '',
             'mail' => '',
@@ -79,6 +80,9 @@ class Installer extends Modules\AbstractInstaller
             ],
             36 => [
                 'INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ("", ' . $this->getModuleId() . ', "vat_id", "");'
+            ],
+            37 => [
+                'INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ("", ' . $this->getModuleId() . ', "ceo", "");'
             ]
         ];
     }

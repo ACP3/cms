@@ -7,6 +7,7 @@
     <keys>
         <item key="address">Address</item>
         <item key="address_to_short">The address should be at least 3 characters long.</item>
+        <item key="ceo">Chief executive officer</item>
         <item key="contact">Contact</item>
         <item key="contact_body">{name} ({mail}) has left the following message:
 
