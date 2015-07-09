@@ -500,23 +500,31 @@ class Index extends Core\Modules\AdminController
         $defaultSkypeName = ''
     )
     {
-        $contact = [];
-        $contact[0]['name'] = 'mail';
-        $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-        $contact[0]['value'] = $this->request->getPost()->get('mail', $defaultMail);
-        $contact[0]['maxlength'] = '120';
-        $contact[1]['name'] = 'website';
-        $contact[1]['lang'] = $this->lang->t('system', 'website');
-        $contact[1]['value'] = $this->request->getPost()->get('website', $defaultWebsite);
-        $contact[1]['maxlength'] = '120';
-        $contact[2]['name'] = 'icq';
-        $contact[2]['lang'] = $this->lang->t('users', 'icq');
-        $contact[2]['value'] = $this->request->getPost()->get('icq', $defaultIcqNumber);
-        $contact[2]['maxlength'] = '9';
-        $contact[3]['name'] = 'skype';
-        $contact[3]['lang'] = $this->lang->t('users', 'skype');
-        $contact[3]['value'] = $this->request->getPost()->get('skype', $defaultSkypeName);
-        $contact[3]['maxlength'] = '28';
-        return $contact;
+        return [
+            [
+                'name' => 'mail',
+                'lang' => $this->lang->t('system', 'email_address'),
+                'value' => $this->request->getPost()->get('mail', $defaultMail),
+                'maxlength' => '120',
+            ],
+            [
+                'name' => 'website',
+                'lang' => $this->lang->t('system', 'website'),
+                'value' => $this->request->getPost()->get('website', $defaultWebsite),
+                'maxlength' => '120',
+            ],
+            [
+                'name' => 'icq',
+                'lang' => $this->lang->t('users', 'icq'),
+                'value' => $this->request->getPost()->get('icq', $defaultIcqNumber),
+                'maxlength' => '9',
+            ],
+            [
+                'name' => 'skype',
+                'lang' => $this->lang->t('users', 'skype'),
+                'value' => $this->request->getPost()->get('skype', $defaultSkypeName),
+                'maxlength' => '28',
+            ]
+        ];;
     }
 }
