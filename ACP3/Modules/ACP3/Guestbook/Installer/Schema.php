@@ -1,22 +1,41 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Guestbook;
+namespace ACP3\Modules\ACP3\Guestbook\Installer;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\System;
-use ACP3\Modules\ACP3\Permissions;
 
 /**
- * Class Installer
- * @package ACP3\Modules\ACP3\Guestbook
+ * Class Schema
+ * @package ACP3\Modules\ACP3\Guestbook\Installer
  */
-class Installer extends Modules\SchemaInstaller
+class Schema implements Modules\Installer\SchemaInterface
 {
-    const MODULE_NAME = 'guestbook';
-    const SCHEMA_VERSION = 32;
+    /**
+     * @return array
+     */
+    public function specialResources()
+    {
+        return [];
+    }
 
     /**
-     * @inheritdoc
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return 'guestbook';
+    }
+
+    /**
+     * @return int
+     */
+    public function getSchemaVersion()
+    {
+        return 32;
+    }
+
+    /**
+     * @return array
      */
     public function createTables()
     {
@@ -37,7 +56,7 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function removeTables()
     {
@@ -45,7 +64,7 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function settings()
     {
@@ -56,22 +75,6 @@ class Installer extends Modules\SchemaInstaller
             'emoticons' => 1,
             'newsletter_integration' => 0,
             'overlay' => 1
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function schemaUpdates()
-    {
-        return [
-            31 => [
-                'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "guestbook/", "guestbook/index/") WHERE `uri` LIKE "guestbook/%";',
-            ],
-            32 => [
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "guestbook/list/", "guestbook/index/index/") WHERE `uri` LIKE "guestbook/list/%";' : '',
-                $this->moduleIsInstalled('menus') || $this->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "guestbook/create/", "guestbook/index/create/") WHERE `uri` LIKE "guestbook/create/%";' : '',
-            ]
         ];
     }
 }
