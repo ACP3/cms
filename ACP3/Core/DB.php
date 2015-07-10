@@ -103,6 +103,16 @@ class DB
     }
 
     /**
+     * @param string $tableName
+     *
+     * @return string
+     */
+    public function getPrefixedTableName($tableName)
+    {
+        return $this->prefix . $tableName;
+    }
+
+    /**
      * @param       $statement
      * @param array $params
      * @param array $types

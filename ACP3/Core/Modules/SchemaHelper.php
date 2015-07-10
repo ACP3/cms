@@ -36,15 +36,18 @@ class SchemaHelper extends ContainerAware
     /**
      * Executes all given SQL queries
      *
-     * @param array $queries
+     * @param array  $queries
      *
-     * @return boolean
+     * @param string $moduleName
+     *
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executeSqlQueries(array $queries)
+    public function executeSqlQueries(array $queries, $moduleName = '')
     {
         if (count($queries) > 0) {
-            $search = ['{pre}', '{engine}', '{charset}'];
-            $replace = [$this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
+            $search = ['{pre}', '{engine}', '{charset}', '{moduleId}'];
+            $replace = [$this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`', $this->getModuleId($moduleName)];
 
             $this->db->getConnection()->beginTransaction();
             try {
@@ -87,7 +90,7 @@ class SchemaHelper extends ContainerAware
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . System\Model::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]) == 1;
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->db->getPrefixedTableName(System\Model::TABLE_NAME)} WHERE `name` = ?", [$moduleName]) == 1;
     }
 
 }

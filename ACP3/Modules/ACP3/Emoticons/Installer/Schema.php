@@ -1,20 +1,17 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Emoticons;
+namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
 use ACP3\Core\Modules;
 
 /**
- * Class Installer
- * @package ACP3\Modules\ACP3\Emoticons
+ * Class Schema
+ * @package ACP3\Modules\ACP3\Emoticons\Installer
  */
-class Installer extends Modules\SchemaInstaller
+class Schema implements Modules\Installer\SchemaInterface
 {
-    const MODULE_NAME = 'emoticons';
-    const SCHEMA_VERSION = 31;
-
     /**
-     * @inheritdoc
+     * @return array
      */
     public function createTables()
     {
@@ -53,7 +50,7 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function removeTables()
     {
@@ -61,7 +58,7 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function settings()
     {
@@ -73,14 +70,26 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
-    public function schemaUpdates()
+    public function specialResources()
     {
-        return [
-            31 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",
-            ]
-        ];
+        return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return 'emoticons';
+    }
+
+    /**
+     * @return int
+     */
+    public function getSchemaVersion()
+    {
+        return 31;
     }
 }

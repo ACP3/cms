@@ -91,7 +91,7 @@ class SchemaInstaller extends SchemaHelper
     public function install(SchemaInterface $schema)
     {
         return
-            $this->executeSqlQueries($schema->createTables()) &&
+            $this->executeSqlQueries($schema->createTables(), $schema->getModuleName()) &&
             $this->addToModulesTable($schema->getModuleName(), $schema->getSchemaVersion()) &&
             $this->installSettings($schema->getModuleName(), $schema->settings()) &&
             $this->addResources($schema);
@@ -260,7 +260,7 @@ class SchemaInstaller extends SchemaHelper
      */
     public function uninstall(SchemaInterface $schema)
     {
-        $bool1 = $this->executeSqlQueries($schema->removeTables());
+        $bool1 = $this->executeSqlQueries($schema->removeTables(), $schema->getModuleName());
         $bool2 = $this->removeFromModulesTable($schema->getModuleName());
         $bool3 = $this->removeSettings($schema->getModuleName());
         $bool4 = $this->removeResources($schema->getModuleName());

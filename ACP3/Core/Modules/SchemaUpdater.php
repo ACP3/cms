@@ -75,7 +75,7 @@ class SchemaUpdater extends SchemaHelper
                 $schemaUpdateVersion <= $schemaVersion &&
                 !empty($queries)
             ) {
-                $result = $this->executeSqlQueries((is_array($queries) === false) ? (array)$queries : $queries) === true ? 1 : 0;
+                $result = $this->executeSqlQueries((is_array($queries) === false) ? (array)$queries : $queries, $moduleName) === true ? 1 : 0;
 
                 if ($result !== 0) {
                     $this->updateSchemaVersion($moduleName, $schemaUpdateVersion);

@@ -11,7 +11,7 @@ class Migration extends AbstractMigration
 {
 
     /**
-     * Aktualisiert die Tabellen und Einstellungen eines Moduls auf eine neue Version
+     * @inheritdoc
      *
      * @return array
      */
@@ -25,14 +25,14 @@ class Migration extends AbstractMigration
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET `uri` = REPLACE(`uri`, 'static_pages', 'articles') WHERE `uri` REGEXP '^(static_pages/list/id_[0-9]+/)$';" : ''
             ],
             32 => [
-                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', {$this->schemaHelper->getModuleId()}, 'details', '', 1);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'details', '', 1);",
                 "UPDATE `{pre}seo` SET `uri` = REPLACE(`uri`, '/list/', '/details/') WHERE `uri` REGEXP '^(articles/list/id_[0-9]+/)$';",
                 "UPDATE `{pre}articles` SET `text` = REPLACE(`text`, 'articles/list/id_', 'articles/details/id_') WHERE `text` REGEXP '(articles/list/id_[0-9]+/)';",
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET `uri` = REPLACE(`uri`, '/list/', '/details/') WHERE `uri` REGEXP '^(articles/list/id_[0-9]+/)$';" : ''
             ],
             33 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {$this->schemaHelper->getModuleId()} AND `page` = \"extensions/search\";",
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {$this->schemaHelper->getModuleId()} AND `page` = \"functions\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = \"extensions/search\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = \"functions\";",
             ],
             34 => [
                 'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "articles/", "articles/index/") WHERE `uri` LIKE "articles/%";',
@@ -42,14 +42,14 @@ class Migration extends AbstractMigration
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "articles/details/", "articles/index/details/") WHERE `uri` LIKE "articles/details/%";' : '',
             ],
             36 => [
-                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', {$this->schemaHelper->getModuleId()}, 'sidebar', 'index', 'index', '', 1);",
-                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', {$this->schemaHelper->getModuleId()}, 'sidebar', 'index', 'single', '', 1);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'sidebar', 'index', 'index', '', 1);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'sidebar', 'index', 'single', '', 1);",
             ]
         ];
     }
 
     /**
-     * Methodenstub zum Umbenennen eines Moduls
+     * @inheritdoc
      *
      * @return array
      */

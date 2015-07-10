@@ -8,14 +8,14 @@ namespace ACP3\Core\Modules\Installer;
 interface MigrationInterface
 {
     /**
-     * Aktualisiert die Tabellen und Einstellungen eines Moduls auf eine neue Version
+     * Returns an array with changes to the table structure and data of a module
      *
      * @return array
      */
     public function schemaUpdates();
 
     /**
-     * Methodenstub zum Umbenennen eines Moduls
+     * Returns an array with the SQL changes needed to convert a module, so that a functions with its new name
      *
      * @return array
      */

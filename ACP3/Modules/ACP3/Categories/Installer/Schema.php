@@ -1,20 +1,16 @@
 <?php
-
-namespace ACP3\Modules\ACP3\Categories;
+namespace ACP3\Modules\ACP3\Categories\Installer;
 
 use ACP3\Core\Modules;
 
 /**
- * Class Installer
- * @package ACP3\Modules\ACP3\Categories
+ * Class Schema
+ * @package ACP3\Modules\ACP3\Categories\Installer
  */
-class Installer extends Modules\SchemaInstaller
+class Schema implements Modules\Installer\SchemaInterface
 {
-    const MODULE_NAME = 'categories';
-    const SCHEMA_VERSION = 32;
-
     /**
-     * @inheritdoc
+     * @return array
      */
     public function createTables()
     {
@@ -31,7 +27,7 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function removeTables()
     {
@@ -39,7 +35,7 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function settings()
     {
@@ -51,17 +47,26 @@ class Installer extends Modules\SchemaInstaller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
-    public function schemaUpdates()
+    public function specialResources()
     {
-        return [
-            31 => [
-                "ALTER TABLE `{pre}categories` CHANGE `name` `title` VARCHAR(120) {CHARSET} NOT NULL;",
-            ],
-            32 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND `page` = \"functions\";",
-            ]
-        ];
+        return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return 'categories';
+    }
+
+    /**
+     * @return int
+     */
+    public function getSchemaVersion()
+    {
+        return 32;
     }
 }
