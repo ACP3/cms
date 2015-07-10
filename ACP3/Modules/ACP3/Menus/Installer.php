@@ -8,7 +8,7 @@ use ACP3\Core\Modules;
  * Class Installer
  * @package ACP3\Modules\ACP3\Menus
  */
-class Installer extends Modules\AbstractInstaller
+class Installer extends Modules\SchemaInstaller
 {
     const MODULE_NAME = 'menus';
     const SCHEMA_VERSION = 33;

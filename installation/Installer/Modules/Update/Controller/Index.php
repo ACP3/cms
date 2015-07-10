@@ -94,9 +94,9 @@ class Index extends Core\Modules\Controller
 
         $serviceId = $module . '.installer';
         if ($this->container->has($serviceId) === true) {
-            /** @var \ACP3\Core\Modules\AbstractInstaller $installer */
+            /** @var \ACP3\Core\Modules\SchemaInstaller $installer */
             $installer = $this->container->get($serviceId);
-            if ($installer instanceof \ACP3\Core\Modules\AbstractInstaller &&
+            if ($installer instanceof \ACP3\Core\Modules\SchemaInstaller &&
                 ($this->modules->isInstalled($module) || count($installer->renameModule()) > 0)
             ) {
                 $result = $installer->updateSchema();

@@ -8,7 +8,7 @@ use ACP3\Core\Modules;
  * Class Installer
  * @package ACP3\Modules\ACP3\Captcha
  */
-class Installer extends Modules\AbstractInstaller
+class Installer extends Modules\SchemaInstaller
 {
     const MODULE_NAME = 'captcha';
     const SCHEMA_VERSION = 31;

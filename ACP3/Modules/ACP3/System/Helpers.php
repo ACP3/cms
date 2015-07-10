@@ -38,13 +38,15 @@ class Helpers
     /**
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
      *
-     * @param Core\Modules\AbstractInstaller $moduleInstaller
+     * @param Core\Modules\SchemaInstaller                 $moduleInstaller
+     *
+     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
      * @return array
      */
-    public function checkInstallDependencies(Core\Modules\AbstractInstaller $moduleInstaller)
+    public function checkInstallDependencies(Core\Modules\SchemaInstaller $moduleInstaller, Core\Modules\Installer\SchemaInterface $schema)
     {
-        $dependencies = $moduleInstaller->getDependencies();
+        $dependencies = $moduleInstaller->getDependencies($schema->getModuleName());
         $modulesToEnable = [];
         if (!empty($dependencies)) {
             foreach ($dependencies as $dependency) {

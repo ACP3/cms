@@ -1,29 +1,45 @@
 <?php
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Modules\Installer;
 
 /**
- * Interface InstallerInterface
- * @package ACP3\Core\Modules
+ * Interface SchemaInterface
+ * @package ACP3\Core\Modules\Installer
  */
-interface InstallerInterface
+interface SchemaInterface
 {
     /**
      * Liefert ein Array mit den zu erstellenden Datenbanktabellen des Moduls zurück
+     *
+     * @return array
      */
     public function createTables();
 
     /**
      * Liefert ein Array mit den zu löschenden Datenbanktabellen des Moduls zurück
+     *
+     * @return array
      */
     public function removeTables();
 
     /**
      * Liefert ein Array mit den zu erstellenden Moduleinstellungen zurück
+     *
+     * @return array
      */
     public function settings();
 
     /**
-     * Aktualisiert die Tabellen und Einstellungen eines Moduls auf eine neue Version
+     * @return array
      */
-    public function schemaUpdates();
+    public function specialResources();
+
+    /**
+     * @return string
+     */
+    public function getModuleName();
+
+    /**
+     * @return int
+     */
+    public function getSchemaVersion();
 }

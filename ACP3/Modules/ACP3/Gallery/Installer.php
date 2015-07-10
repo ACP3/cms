@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Installer
  * @package ACP3\Modules\ACP3\Gallery
  */
-class Installer extends Modules\AbstractInstaller
+class Installer extends Modules\SchemaInstaller
 {
     const MODULE_NAME = 'gallery';
     const SCHEMA_VERSION = 35;

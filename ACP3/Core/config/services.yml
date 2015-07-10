@@ -102,11 +102,25 @@ services:
     class: ACP3\Core\Modules
     arguments: ['@service_container', '@core.lang', '@core.xml', '@core.cache.system', '@system.model']
 
-  core.modules.abstractInstaller:
-    abstract: true
+  core.modules.schemaHelper:
+    class: ACP3\Core\Modules\SchemaHelper
+    arguments: [@core.db, @system.model]
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.modules.schemaInstaller:
+    class: ACP3\Core\Modules\SchemaInstaller
     arguments: ['@core.db', '@core.xml', '@core.cache.system', '@system.model', '@permissions.model']
     calls:
       - ['setContainer', ['@service_container']]
+
+  core.modules.schemaUpdater:
+    class: ACP3\Core\Modules\SchemaUpdater
+    parent: core.modules.schemaHelper
+
+  core.modules.installer.abstractMigration:
+    abstract: true
+    arguments: [@core.modules.schemaHelper]
 
   core.modules.controller:
     abstract: true

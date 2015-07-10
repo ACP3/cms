@@ -46,7 +46,7 @@ class Install
         $serviceId = $module . '.installer';
 
         if ($container->has($serviceId)) {
-            /** @var \ACP3\Core\Modules\AbstractInstaller $installer */
+            /** @var \ACP3\Core\Modules\SchemaInstaller $installer */
             $installer = $container->get($serviceId);
 
             $bool = $installer->install();

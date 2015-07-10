@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Installer
  * @package ACP3\Modules\ACP3\Guestbook
  */
-class Installer extends Modules\AbstractInstaller
+class Installer extends Modules\SchemaInstaller
 {
     const MODULE_NAME = 'guestbook';
     const SCHEMA_VERSION = 32;

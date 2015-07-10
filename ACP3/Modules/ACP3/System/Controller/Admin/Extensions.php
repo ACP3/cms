@@ -160,7 +160,7 @@ class Extensions extends Core\Modules\AdminController
             $container = $this->systemHelpers->updateServiceContainer(true);
 
             if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\AbstractInstaller $installer */
+                /** @var Core\Modules\SchemaInstaller $installer */
                 $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
@@ -209,7 +209,7 @@ class Extensions extends Core\Modules\AdminController
             $serviceId = strtolower($moduleDirectory . '.installer');
 
             if ($this->container->has($serviceId) === true) {
-                /** @var Core\Modules\AbstractInstaller $installer */
+                /** @var Core\Modules\SchemaInstaller $installer */
                 $installer = $this->container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
@@ -248,7 +248,7 @@ class Extensions extends Core\Modules\AdminController
             $container = $this->systemHelpers->updateServiceContainer(true);
 
             if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\AbstractInstaller $installer */
+                /** @var Core\Modules\SchemaInstaller $installer */
                 $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
@@ -289,7 +289,7 @@ class Extensions extends Core\Modules\AdminController
             $container = $this->systemHelpers->updateServiceContainer();
 
             if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\AbstractInstaller $installer */
+                /** @var Core\Modules\SchemaInstaller $installer */
                 $installer = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen

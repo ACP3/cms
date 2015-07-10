@@ -8,7 +8,7 @@ use ACP3\Core\Modules;
  * Class Installer
  * @package ACP3\Modules\ACP3\System
  */
-class Installer extends Modules\AbstractInstaller
+class Installer extends Modules\SchemaInstaller
 {
     const MODULE_NAME = 'system';
     const SCHEMA_VERSION = 54;
@@ -265,7 +265,7 @@ class Installer extends Modules\AbstractInstaller
                 function () {
                     $result = true;
                     if ($this->container->has('seo.installer') && $this->systemModel->moduleExists('seo') === false) {
-                        /** @var Modules\AbstractInstaller $seoInstaller */
+                        /** @var Modules\SchemaInstaller $seoInstaller */
                         $seoInstaller = $this->container->get('seo.installer');
                         $result = $seoInstaller->install();
 
@@ -290,7 +290,7 @@ class Installer extends Modules\AbstractInstaller
                 function () {
                     $result = true;
                     if ($this->container->has('minify.installer') && $this->systemModel->moduleExists('minify') === false) {
-                        /** @var Modules\AbstractInstaller $minifyInstaller */
+                        /** @var Modules\SchemaInstaller $minifyInstaller */
                         $minifyInstaller = $this->container->get('minify.installer');
                         return $minifyInstaller->install();
                     }
