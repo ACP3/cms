@@ -5,7 +5,8 @@ parameters:
   users.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index'
   users.model.fqdn: 'ACP3\Modules\ACP3\Users\Model'
   users.validator.fqdn: 'ACP3\Modules\ACP3\Users\Validator'
-  users.installer.fqdn: 'ACP3\Modules\ACP3\Users\Installer'
+  users.installer.schema.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Schema'
+  users.installer.migration.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Migration'
 
 services:
   users.controller.admin.index:
@@ -34,6 +35,9 @@ services:
     class: %users.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.captcha', '@core.validator.rules.date', '@core.acl', '@core.auth', '@users.model']
 
-  users.installer:
-    class: %users.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  users.installer.schema:
+    class: %users.installer.schema.fqdn%
+
+  users.installer.migration:
+    class: %users.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

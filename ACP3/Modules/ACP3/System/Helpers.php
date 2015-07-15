@@ -21,32 +21,37 @@ class Helpers
      * @var Core\Modules
      */
     protected $modules;
+    /**
+     * @var \ACP3\Core\Modules\SchemaInstaller
+     */
+    protected $schemaInstaller;
 
     /**
-     * @param Core\DB      $db
-     * @param Core\Modules $modules
+     * @param Core\DB                            $db
+     * @param Core\Modules                       $modules
+     * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
      */
     public function __construct(
         Core\DB $db,
-        Core\Modules $modules
+        Core\Modules $modules,
+        Core\Modules\SchemaInstaller $schemaInstaller
     )
     {
         $this->db = $db;
         $this->modules = $modules;
+        $this->schemaInstaller = $schemaInstaller;
     }
 
     /**
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
      *
-     * @param Core\Modules\SchemaInstaller                 $moduleInstaller
-     *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
      * @return array
      */
-    public function checkInstallDependencies(Core\Modules\SchemaInstaller $moduleInstaller, Core\Modules\Installer\SchemaInterface $schema)
+    public function checkInstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
     {
-        $dependencies = $moduleInstaller->getDependencies($schema->getModuleName());
+        $dependencies = $this->schemaInstaller->getDependencies($schema->getModuleName());
         $modulesToEnable = [];
         if (!empty($dependencies)) {
             foreach ($dependencies as $dependency) {
@@ -73,10 +78,10 @@ class Helpers
         foreach ($modules as $module) {
             $moduleName = strtolower($module['dir']);
             if ($moduleName !== $moduleToBeUninstalled) {
-                $service = $moduleName . '.installer';
+                $service = $moduleName . '.installer.schema';
 
                 if ($container->has($service) === true) {
-                    $deps = $container->get($moduleName . '.installer')->getDependencies();
+                    $deps = $this->schemaInstaller->getDependencies($moduleToBeUninstalled);
                     if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
                         $moduleDependencies[] = $module['name'];
                     }
@@ -129,9 +134,9 @@ class Helpers
         foreach ($tables as $table) {
             // Struktur ausgeben
             if ($exportType === 'complete' || $exportType === 'structure') {
-                $result = $this->db->fetchAssoc('SHOW CREATE TABLE ' . $table);
+                $result = $this->db->fetchAssoc("SHOW CREATE TABLE {$table}");
                 if (!empty($result)) {
-                    $structure .= $withDropTables == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
+                    $structure .= $withDropTables == 1 ? "DROP TABLE IF EXISTS `{$table}`;\n\n" : '';
                     $structure .= $result['Create Table'] . ';' . "\n\n";
                 }
             }
@@ -152,7 +157,7 @@ class Helpers
                         foreach ($row as $value) {
                             $values .= '\'' . $value . '\', ';
                         }
-                        $data .= 'INSERT INTO `' . $table . '` (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ');' . "\n";
+                        $data .= "INSERT INTO `{$table}` ({substr($fields, 0, -2)}) VALUES ({substr($values, 0, -2)});\n";
                     }
                 }
             }

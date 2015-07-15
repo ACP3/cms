@@ -3,7 +3,8 @@ parameters:
   feeds.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Index'
   feeds.extensions.fqdn: 'ACP3\Modules\ACP3\Feeds\Extensions'
   feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validator'
-  feeds.installer.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer'
+  feeds.installer.schema.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Schema'
+  feeds.installer.migration.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Migration'
 
 services:
   feeds.controller.admin.index:
@@ -25,9 +26,11 @@ services:
       - ['setFilesModel', ['@?files.model']]
       - ['setNewsModel', ['@?news.model']]
 
-  feeds.installer:
-    class: %feeds.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  feeds.installer.schema:
+    class: %feeds.installer.schema.fqdn%
+
+  feeds.installer.migration:
+    class: %feeds.installer.migration.fqdn%
 
   core.view.renderer.feedgenerator:
     class: ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator

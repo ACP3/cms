@@ -4,7 +4,8 @@ parameters:
   search.extensions.fqdn: 'ACP3\Modules\ACP3\Search\Extensions'
   search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
   search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validator'
-  search.installer.fqdn: 'ACP3\Modules\ACP3\Search\Installer'
+  search.installer.schema.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Schema'
+  search.installer.migration.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Migration'
 
 services:
   search.controller.frontend.index:
@@ -31,6 +32,9 @@ services:
       - ['setFilesModel', ['@?files.model']]
       - ['setNewsModel', ['@?news.model']]
 
-  search.installer:
-    class: %search.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  search.installer.schema:
+    class: %search.installer.schema.fqdn%
+
+  search.installer.migration:
+    class: %search.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

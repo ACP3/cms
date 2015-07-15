@@ -5,7 +5,8 @@ parameters:
   comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
   comments.model.fqdn: 'ACP3\Modules\ACP3\Comments\Model'
   comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validator'
-  comments.installer.fqdn: 'ACP3\Modules\ACP3\Comments\Installer'
+  comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'
+  comments.installer.migration.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Migration'
 
 services:
   comments.controller.admin.details:
@@ -38,6 +39,8 @@ services:
     class: %comments.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@core.date', '@core.modules', '@comments.model']
 
-  comments.installer:
-    class: %comments.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  comments.installer.schema:
+    class: %comments.installer.schema.fqdn%
+
+  comments.installer.migration:
+    class: %comments.installer.migration.fqdn%

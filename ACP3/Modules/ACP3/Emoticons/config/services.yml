@@ -4,7 +4,8 @@ parameters:
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
   emoticons.model.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model'
   emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validator'
-  emoticons.installer.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer'
+  emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
+  emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'
 
 services:
   emoticons.controller.admin.index:
@@ -31,6 +32,8 @@ services:
     class: %emoticons.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime']
 
-  emoticons.installer:
-    class: %emoticons.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  emoticons.installer.schema:
+    class: %emoticons.installer.schema.fqdn%
+
+  emoticons.installer.migration:
+    class: %emoticons.installer.migration.fqdn%

@@ -5,7 +5,8 @@ parameters:
   menus.helpers.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers'
   menus.model.fqdn: 'ACP3\Modules\ACP3\Menus\Model'
   menus.validator.fqdn: 'ACP3\Modules\ACP3\Menus\Validator'
-  menus.installer.fqdn: 'ACP3\Modules\ACP3\Menus\Installer'
+  menus.installer.schema.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Schema'
+  menus.installer.migration.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Migration'
   smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\View\Renderer\Smarty\Functions\Navbar'
 
 services:
@@ -41,9 +42,11 @@ services:
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
-  menus.installer:
-    class: %menus.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  menus.installer.schema:
+    class: %menus.installer.schema.fqdn%
+
+  menus.installer.migration:
+    class: %menus.installer.migration.fqdn%
 
   smarty.plugin.navbar:
     class: %smarty.plugin.navbar.fqdn%

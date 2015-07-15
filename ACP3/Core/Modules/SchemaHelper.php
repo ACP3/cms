@@ -34,6 +34,30 @@ class SchemaHelper extends ContainerAware
     }
 
     /**
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * @return \ACP3\Core\DB
+     */
+    public function getDb()
+    {
+        return $this->db;
+    }
+
+    /**
+     * @return \ACP3\Modules\ACP3\System\Model
+     */
+    public function getSystemModel()
+    {
+        return $this->systemModel;
+    }
+
+    /**
      * Executes all given SQL queries
      *
      * @param array  $queries

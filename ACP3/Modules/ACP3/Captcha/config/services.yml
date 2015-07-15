@@ -1,7 +1,8 @@
 parameters:
   captcha.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Captcha\Controller\Index'
   captcha.helpers.fqdn: 'ACP3\Modules\ACP3\Captcha\Helpers'
-  captcha.installer.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer'
+  captcha.installer.schema.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Schema'
+  captcha.installer.migration.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Migration'
 
 services:
   captcha.controller.frontend.index:
@@ -12,6 +13,8 @@ services:
     class: %captcha.helpers.fqdn%
     arguments: ['@core.auth', '@core.request', '@core.router', @core.session, '@core.view', '@core.helpers.secure']
 
-  captcha.installer:
-    class: %captcha.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  captcha.installer.schema:
+    class: %captcha.installer.schema.fqdn%
+
+  captcha.installer.migration:
+    class: %captcha.installer.migration.fqdn%

@@ -1,11 +1,14 @@
 parameters:
-  wysiwygtinymce.installer.fqdn: 'ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer'
+  wysiwygtinymce.installer.schema.fqdn: 'ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Schema'
+  wysiwygtinymce.installer.migration.fqdn: 'ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Migration'
   core.wysiwyg.tinymce.fqdn: 'ACP3\Modules\ACP3\WYSIWYGTinyMCE\WYSIWYG\TinyMCE'
 
 services:
-  wysiwygtinymce.installer:
-    class: %wysiwygtinymce.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  wysiwygtinymce.installer.schema:
+    class: %wysiwygtinymce.installer.schema.fqdn%
+
+  wysiwygtinymce.installer.migration:
+    class: %wysiwygtinymce.installer.migration.fqdn%
 
   core.wysiwyg.tinymce:
     class: %core.wysiwyg.tinymce.fqdn%

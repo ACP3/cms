@@ -5,7 +5,8 @@ parameters:
   files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
   files.model.fqdn: 'ACP3\Modules\ACP3\Files\Model'
   files.validator.fqdn: 'ACP3\Modules\ACP3\Files\Validator'
-  files.installer.fqdn: 'ACP3\Modules\ACP3\Files\Installer'
+  files.installer.schema.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Schema'
+  files.installer.migration.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Migration'
 
 services:
   files.controller.admin.index:
@@ -38,6 +39,9 @@ services:
     class: %files.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@categories.helpers']
 
-  files.installer:
-    class: %files.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  files.installer.schema:
+    class: %files.installer.schema.fqdn%
+
+  files.installer.migration:
+    class: %files.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

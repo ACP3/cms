@@ -7,7 +7,8 @@ parameters:
   newsletter.helpers.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helpers'
   newsletter.model.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model'
   newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validator'
-  newsletter.installer.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer'
+  newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
+  newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
 
 services:
   newsletter.controller.admin.accounts:
@@ -46,6 +47,9 @@ services:
     class: %newsletter.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@newsletter.model']
 
-  newsletter.installer:
-    class: %newsletter.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  newsletter.installer.schema:
+    class: %newsletter.installer.schema.fqdn%
+
+  newsletter.installer.migration:
+    class: %newsletter.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

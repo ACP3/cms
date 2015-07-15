@@ -6,7 +6,8 @@ parameters:
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
   articles.model.fqdn: 'ACP3\Modules\ACP3\Articles\Model'
   articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validator'
-  articles.installer.fqdn: 'ACP3\Modules\ACP3\Articles\Installer'
+  articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
+  articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
 
 services:
   articles.controller.admin.index:
@@ -47,6 +48,9 @@ services:
     calls:
       - ['setMenusModel', ['@?menus.model']]
 
-  articles.installer:
-    class: %articles.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  articles.installer.schema:
+    class: %articles.installer.schema.fqdn%
+
+  articles.installer.migration:
+    class: %articles.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

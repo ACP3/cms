@@ -7,7 +7,8 @@ parameters:
   gallery.helpers.fqdn: 'ACP3\Modules\ACP3\Gallery\Helpers'
   gallery.model.fqdn: 'ACP3\Modules\ACP3\Gallery\Model'
   gallery.validator.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator'
-  gallery.installer.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer'
+  gallery.installer.schema.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Schema'
+  gallery.installer.migration.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Migration'
 
 services:
   gallery.controller.admin.index:
@@ -46,6 +47,9 @@ services:
     class: %gallery.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.modules']
 
-  gallery.installer:
-    class: %gallery.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  gallery.installer.schema:
+    class: %gallery.installer.schema.fqdn%
+
+  gallery.installer.migration:
+    class: %gallery.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

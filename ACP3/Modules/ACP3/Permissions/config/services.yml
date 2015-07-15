@@ -5,7 +5,8 @@ parameters:
   permissions.helpers.fqdn: 'ACP3\Modules\ACP3\Permissions\Helpers'
   permissions.model.fqdn: 'ACP3\Modules\ACP3\Permissions\Model'
   permissions.validator.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator'
-  permissions.installer.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer'
+  permissions.installer.schema.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Schema'
+  permissions.installer.migration.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Migration'
 
 services:
   permissions.controller.admin.index:
@@ -32,6 +33,8 @@ services:
     class: %permissions.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.router', '@core.modules', '@permissions.model']
 
-  permissions.installer:
-    class: %permissions.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  permissions.installer.schema:
+    class: %permissions.installer.schema.fqdn%
+
+  permissions.installer.migration:
+    class: %permissions.installer.migration.fqdn%

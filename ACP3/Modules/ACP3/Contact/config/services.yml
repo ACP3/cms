@@ -3,7 +3,8 @@ parameters:
   contact.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Index'
   contact.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Sidebar\Index'
   contact.validator.fqdn: 'ACP3\Modules\ACP3\Contact\Validator'
-  contact.installer.fqdn: 'ACP3\Modules\ACP3\Contact\Installer'
+  contact.installer.schema.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Schema'
+  contact.installer.migration.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Migration'
 
 services:
   contact.controller.admin.index:
@@ -24,6 +25,9 @@ services:
     class: %contact.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth']
 
-  contact.installer:
-    class: %contact.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  contact.installer.schema:
+    class: %contact.installer.schema.fqdn%
+
+  contact.installer.migration:
+    class: %contact.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

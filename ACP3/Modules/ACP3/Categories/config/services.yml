@@ -4,7 +4,8 @@ parameters:
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
   categories.model.fqdn: 'ACP3\Modules\ACP3\Categories\Model'
   categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validator'
-  categories.installer.fqdn: 'ACP3\Modules\ACP3\Categories\Installer'
+  categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'
+  categories.installer.migration.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Migration'
 
 services:
   categories.controller.admin.index:
@@ -31,6 +32,8 @@ services:
     class: %categories.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime', '@categories.helpers', '@categories.model']
 
-  categories.installer:
-    class: %categories.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  categories.installer.schema:
+    class: %categories.installer.schema.fqdn%
+
+  categories.installer.migration:
+    class: %categories.installer.migration.fqdn%

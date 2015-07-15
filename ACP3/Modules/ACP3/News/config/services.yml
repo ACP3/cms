@@ -5,7 +5,8 @@ parameters:
   news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
   news.model.fqdn: 'ACP3\Modules\ACP3\News\Model'
   news.validator.fqdn: 'ACP3\Modules\ACP3\News\Validator'
-  news.installer.fqdn: 'ACP3\Modules\ACP3\News\Installer'
+  news.installer.schema.fqdn: 'ACP3\Modules\ACP3\News\Installer\Schema'
+  news.installer.migration.fqdn: 'ACP3\Modules\ACP3\News\Installer\Migration'
 
 services:
   news.controller.admin.index:
@@ -38,6 +39,9 @@ services:
     class: %news.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@categories.helpers']
 
-  news.installer:
-    class: %news.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  news.installer.schema:
+    class: %news.installer.schema.fqdn%
+
+  news.installer.migration:
+    class: %news.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

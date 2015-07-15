@@ -13,22 +13,29 @@ use ACP3\Installer\Core;
 class Index extends Core\Modules\Controller
 {
     /**
-     * @var Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
+    /**
+     * @var \ACP3\Core\Modules\SchemaUpdater
+     */
+    protected $schemaUpdater;
 
     /**
      * @param \ACP3\Installer\Core\Modules\Controller\Context $context
      * @param \ACP3\Core\Modules                              $modules
+     * @param \ACP3\Core\Modules\SchemaUpdater                $schemaUpdater
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
-        Modules $modules
+        Modules $modules,
+        Modules\SchemaUpdater $schemaUpdater
     )
     {
         parent::__construct($context);
 
         $this->modules = $modules;
+        $this->schemaUpdater = $schemaUpdater;
     }
 
     public function actionIndex()
@@ -44,16 +51,16 @@ class Index extends Core\Modules\Controller
 
         // Zuerst die wichtigen System-Module aktualisieren...
         $coreModules = ['system', 'permissions', 'users'];
-        foreach ($coreModules as $row) {
-            $results[$row] = $this->_returnModuleUpdateResult($row);
+        foreach ($coreModules as $module) {
+            $results[$module] = $this->_returnModuleUpdateResult($module);
         }
 
         // ...danach die Restlichen
         foreach ($this->modules->getModuleNamespaces() as $namespace) {
             $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
-            foreach ($modules as $row) {
-                if (in_array(strtolower($row), $coreModules) === false) {
-                    $results[$row] = $this->_returnModuleUpdateResult($row);
+            foreach ($modules as $module) {
+                if (in_array(strtolower($module), $coreModules) === false) {
+                    $results[$module] = $this->_returnModuleUpdateResult($module);
                 }
             }
         }
@@ -92,14 +99,16 @@ class Index extends Core\Modules\Controller
     {
         $result = false;
 
-        $serviceId = $module . '.installer';
-        if ($this->container->has($serviceId) === true) {
-            /** @var \ACP3\Core\Modules\SchemaInstaller $installer */
-            $installer = $this->container->get($serviceId);
-            if ($installer instanceof \ACP3\Core\Modules\SchemaInstaller &&
-                ($this->modules->isInstalled($module) || count($installer->renameModule()) > 0)
-            ) {
-                $result = $installer->updateSchema();
+        $serviceIdSchema = $module . '.installer.schema';
+        $serviceIdMigration = $module . '.installer.migration';
+        if ($this->container->has($serviceIdSchema) === true &&
+            $this->container->has($serviceIdMigration) === true) {
+            /** @var Modules\Installer\SchemaInterface $moduleSchema */
+            $moduleSchema = $this->container->get($serviceIdSchema);
+            /** @var Modules\Installer\MigrationInterface $moduleMigration */
+            $moduleMigration = $this->container->get($serviceIdMigration);
+            if ($this->modules->isInstalled($module) || count($moduleMigration->renameModule()) > 0) {
+                $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
             }
         }
 

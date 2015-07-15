@@ -38,7 +38,6 @@ class SchemaUpdater extends SchemaHelper
                 $moduleNames,
                 $installedSchemaVersion
             );
-            // Modul-ID explizit nochmal neu setzen
         }
 
         $queries = $migration->schemaUpdates();
@@ -75,7 +74,7 @@ class SchemaUpdater extends SchemaHelper
                 $schemaUpdateVersion <= $schemaVersion &&
                 !empty($queries)
             ) {
-                $result = $this->executeSqlQueries((is_array($queries) === false) ? (array)$queries : $queries, $moduleName) === true ? 1 : 0;
+                $result = $this->executeSqlQueries($this->forceSqlQueriesToArray($queries), $moduleName) === true ? 1 : 0;
 
                 if ($result !== 0) {
                     $this->updateSchemaVersion($moduleName, $schemaUpdateVersion);
@@ -96,5 +95,15 @@ class SchemaUpdater extends SchemaHelper
     public function updateSchemaVersion($moduleName, $schemaVersion)
     {
         return $this->systemModel->update(['version' => (int)$schemaVersion], ['name' => $moduleName]) !== false;
+    }
+
+    /**
+     * @param $queries
+     *
+     * @return array
+     */
+    protected function forceSqlQueriesToArray($queries)
+    {
+        return (is_array($queries) === false) ? (array)$queries : $queries;
     }
 }

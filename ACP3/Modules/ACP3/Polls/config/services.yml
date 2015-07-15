@@ -4,7 +4,8 @@ parameters:
   polls.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Sidebar\Index'
   polls.model.fqdn: 'ACP3\Modules\ACP3\Polls\Model'
   polls.validator.fqdn: 'ACP3\Modules\ACP3\Polls\Validator'
-  polls.installer.fqdn: 'ACP3\Modules\ACP3\Polls\Installer'
+  polls.installer.schema.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Schema'
+  polls.installer.migration.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Migration'
 
 services:
   polls.controller.admin.index:
@@ -27,6 +28,9 @@ services:
     class: %polls.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date']
 
-  polls.installer:
-    class: %polls.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  polls.installer.schema:
+    class: %polls.installer.schema.fqdn%
+
+  polls.installer.migration:
+    class: %polls.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

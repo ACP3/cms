@@ -155,16 +155,16 @@ class Extensions extends Core\Modules\AdminController
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $serviceId = strtolower($moduleDirectory . '.installer');
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
             $container = $this->systemHelpers->updateServiceContainer(true);
 
             if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\SchemaInstaller $installer */
-                $installer = $container->get($serviceId);
+                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+                $moduleSchema = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkInstallDependencies($installer);
+                $deps = $this->systemHelpers->checkInstallDependencies($moduleSchema);
 
                 // Modul installieren
                 if (empty($deps)) {
@@ -206,14 +206,17 @@ class Extensions extends Core\Modules\AdminController
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $serviceId = strtolower($moduleDirectory . '.installer');
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
             if ($this->container->has($serviceId) === true) {
-                /** @var Core\Modules\SchemaInstaller $installer */
-                $installer = $this->container->get($serviceId);
+                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+                $moduleSchema = $this->container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $this->container);
+                $deps = $this->systemHelpers->checkUninstallDependencies(
+                    $moduleSchema->getModuleName(),
+                    $this->container
+                );
 
                 if (empty($deps)) {
                     $bool = $this->systemModel->update(['active' => 0], ['name' => $moduleDirectory]);
@@ -243,20 +246,20 @@ class Extensions extends Core\Modules\AdminController
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
         if ($this->modules->isInstalled($moduleDirectory) === false) {
-            $serviceId = strtolower($moduleDirectory . '.installer');
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
             $container = $this->systemHelpers->updateServiceContainer(true);
 
             if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\SchemaInstaller $installer */
-                $installer = $container->get($serviceId);
+                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+                $moduleSchema = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkInstallDependencies($installer);
+                $deps = $this->systemHelpers->checkInstallDependencies($moduleSchema);
 
                 // Modul installieren
                 if (empty($deps)) {
-                    $bool = $installer->install();
+                    $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
@@ -284,20 +287,23 @@ class Extensions extends Core\Modules\AdminController
         $info = $this->modules->getModuleInfo($moduleDirectory);
         // Nur installierte und Nicht-Core-Module berücksichtigen
         if ($info['protected'] === false && $this->modules->isInstalled($moduleDirectory) === true) {
-            $serviceId = strtolower($moduleDirectory . '.installer');
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
             $container = $this->systemHelpers->updateServiceContainer();
 
             if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\SchemaInstaller $installer */
-                $installer = $container->get($serviceId);
+                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+                $moduleSchema = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkUninstallDependencies($installer::MODULE_NAME, $container);
+                $deps = $this->systemHelpers->checkUninstallDependencies(
+                    $moduleSchema->getModuleName(),
+                    $container
+                );
 
                 // Modul deinstallieren
                 if (empty($deps)) {
-                    $bool = $installer->uninstall();
+                    $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'tpl_compiled');

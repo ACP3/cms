@@ -3,7 +3,8 @@ parameters:
   guestbook.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Guestbook\Controller\Index'
   guestbook.model.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model'
   guestbook.validator.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validator'
-  guestbook.installer.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer'
+  guestbook.installer.schema.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Schema'
+  guestbook.installer.migration.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Migration'
 
 services:
   guestbook.controller.admin.index:
@@ -30,6 +31,9 @@ services:
     calls:
       - ['setNewsletterModel', ['@?newsletter.model']]
 
-  guestbook.installer:
-    class: %guestbook.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  guestbook.installer.schema:
+    class: %guestbook.installer.schema.fqdn%
+
+  guestbook.installer.migration:
+    class: %guestbook.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

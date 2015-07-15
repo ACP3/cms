@@ -3,7 +3,8 @@ parameters:
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
   seo.model.fqdn: 'ACP3\Modules\ACP3\Seo\Model'
   seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validator'
-  seo.installer.fqdn: 'ACP3\Modules\ACP3\Seo\Installer'
+  seo.installer.schema.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Schema'
+  seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
   smarty.plugin.robots.fqdn: 'ACP3\Modules\ACP3\Seo\View\Renderer\Smarty\Modifiers\Robots'
 
 services:
@@ -23,9 +24,11 @@ services:
     class: %seo.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.validator.rules.router.aliases']
 
-  seo.installer:
-    class: %seo.installer.fqdn%
-    parent: core.modules.abstractInstaller
+  seo.installer.schema:
+    class: %seo.installer.schema.fqdn%
+
+  seo.installer.migration:
+    class: %seo.installer.migration.fqdn%
 
   smarty.plugin.robots:
     class: %smarty.plugin.robots.fqdn%

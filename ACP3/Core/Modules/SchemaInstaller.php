@@ -8,18 +8,11 @@ use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\Permissions;
 
 /**
- * Class AbstractInstaller
+ * Class SchemaInstaller
  * @package ACP3\Core\Modules
  */
 class SchemaInstaller extends SchemaHelper
 {
-    /**
-     * Name des Moduls
-     *
-     * @var string
-     */
-    const MODULE_NAME = '';
-
     /**
      * @var \ACP3\Core\XML
      */
@@ -32,12 +25,6 @@ class SchemaInstaller extends SchemaHelper
      * @var \ACP3\Modules\ACP3\Permissions\Model
      */
     protected $permissionsModel;
-    /**
-     * Die bei der Installation an das Modul zugewiesene ID
-     *
-     * @var integer
-     */
-    protected $moduleId = null;
 
     /**
      * @param \ACP3\Core\DB                        $db
@@ -252,7 +239,7 @@ class SchemaInstaller extends SchemaHelper
     }
 
     /**
-     * Metod for uninstalling a module
+     * Method for uninstalling a module
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
