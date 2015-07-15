@@ -35,7 +35,7 @@ class Install
     }
 
     /**
-     * @param                                                           $module
+     * @param string                                                    $module
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      *
      * @return bool
@@ -43,13 +43,13 @@ class Install
     public function installModule($module, ContainerInterface $container)
     {
         $bool = false;
-        $serviceId = $module . '.installer';
+        $serviceId = $module . '.installer.schema';
 
         if ($container->has($serviceId)) {
-            /** @var \ACP3\Core\Modules\SchemaInstaller $installer */
-            $installer = $container->get($serviceId);
+            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+            $moduleSchema = $container->get($serviceId);
 
-            $bool = $installer->install();
+            $bool = $container->get('core.modules.schemaInstaller')->install($moduleSchema);
         }
 
         return $bool;

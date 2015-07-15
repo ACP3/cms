@@ -70,8 +70,8 @@ class SchemaHelper extends ContainerAware
     public function executeSqlQueries(array $queries, $moduleName = '')
     {
         if (count($queries) > 0) {
-            $search = ['{pre}', '{engine}', '{charset}', '{moduleId}'];
-            $replace = [$this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`', $this->getModuleId($moduleName)];
+            $search = ['{pre}', '{engine}', '{charset}'];
+            $replace = [$this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
 
             $this->db->getConnection()->beginTransaction();
             try {
@@ -81,6 +81,9 @@ class SchemaHelper extends ContainerAware
                             return false;
                         }
                     } elseif (!empty($query)) {
+                        if (strpos($query, '{moduleId}') !== false) {
+                            str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
+                        }
                         $this->db->getConnection()->query(str_ireplace($search, $replace, $query));
                     }
                 }
