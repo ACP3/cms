@@ -161,25 +161,7 @@ class Index extends Core\Modules\AdminController
                 (int)$formData['seo_robots']
             );
 
-            if ($lastId !== false && $this->acl->hasPermission('admin/menus/items/create') === true) {
-                $data = [
-                    'mode' => 4,
-                    'block_id' => $formData['block_id'],
-                    'parent_id' => (int)$formData['parent_id'],
-                    'display' => $formData['display'],
-                    'title' => $formData['title'],
-                    'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
-                    'target' => 1
-                ];
-
-                $this->menusHelpers->manageMenuItem(
-                    sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
-                    isset($formData['create']) === true,
-                    $data
-                );
-
-                $this->menusCache->setMenuItemsCache();
-            }
+            $this->createOrUpdateMenuItem($formData, $lastId);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -307,29 +289,7 @@ class Index extends Core\Modules\AdminController
 
             $this->articlesCache->setCache($id);
 
-            // Check, if the Menus module is available
-            if ($this->menusCache) {
-                if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-                    $data = [
-                        'mode' => 4,
-                        'block_id' => $formData['block_id'],
-                        'parent_id' => (int)$formData['parent_id'],
-                        'display' => $formData['display'],
-                        'title' => $formData['title'],
-                        'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
-                        'target' => 1
-                    ];
-
-                    $this->menusHelpers->manageMenuItem(
-                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
-                        isset($formData['create']) === true,
-                        $data
-                    );
-                }
-
-                // Refresh the menu items cache
-                $this->menusCache->setMenuItemsCache();
-            }
+            $this->createOrUpdateMenuItem($formData, $id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -357,6 +317,36 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('datatable_config', $config);
             $this->view->assign('articles', $articles);
             $this->view->assign('can_delete', $canDelete);
+        }
+    }
+
+    /**
+     * @param array $formData
+     * @param int $id
+     */
+    protected function createOrUpdateMenuItem(array $formData, $id)
+    {
+        if ($this->menusCache) {
+            if ($this->acl->hasPermission('admin/menus/items/create') === true) {
+                $data = [
+                    'mode' => 4,
+                    'block_id' => $formData['block_id'],
+                    'parent_id' => (int)$formData['parent_id'],
+                    'display' => $formData['display'],
+                    'title' => $formData['title'],
+                    'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
+                    'target' => 1
+                ];
+
+                $this->menusHelpers->manageMenuItem(
+                    sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
+                    isset($formData['create']) === true,
+                    $data
+                );
+            }
+
+            // Refresh the menu items cache
+            $this->menusCache->setMenuItemsCache();
         }
     }
 }
