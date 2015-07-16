@@ -334,7 +334,6 @@ class Index extends Core\Modules\AdminController
                     'parent_id' => (int)$formData['parent_id'],
                     'display' => $formData['display'],
                     'title' => $formData['title'],
-                    'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
                     'target' => 1
                 ];
 
