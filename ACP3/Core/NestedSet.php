@@ -281,49 +281,15 @@ class NestedSet
      *
      * @return boolean
      */
-    public function order($id, $mode)
+    public function sort($id, $mode)
     {
         if ($this->nodeExists($id) === true) {
             $items = $this->db->fetchAll('SELECT c.id, ' . ($this->enableBlocks === true ? 'c.block_id, ' : '') . "c.left_id, c.right_id FROM {$this->tableName} AS p, {$this->tableName} AS c WHERE p.id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC", [$id], [\PDO::PARAM_INT]);
 
             if ($mode === 'up' && $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->tableName} WHERE right_id = ?{$this->addBlockIdToWhereClause($items)}", [$items[0]['left_id'] - 1]) > 0) {
-                // Vorherigen Knoten mit allen Kindern selektieren
-                $elem = $this->db->fetchAll("SELECT c.id, c.left_id, c.right_id FROM {$this->tableName} AS p, {$this->tableName} AS c WHERE p.right_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC", [$items[0]['left_id'] - 1]);
-                $diffLeft = $items[0]['left_id'] - $elem[0]['left_id'];
-                $diffRight = $items[0]['right_id'] - $elem[0]['right_id'];
+                return $this->sortNodeUpwards($items);
             } elseif ($mode === 'down' && $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->tableName} WHERE left_id = ?{$this->addBlockIdToWhereClause($items)}", [$items[0]['right_id'] + 1]) > 0) {
-                // Nachfolgenden Knoten mit allen Kindern selektieren
-                $elem = $this->db->fetchAll("SELECT c.id, c.left_id, c.right_id FROM {$this->tableName} AS p, {$this->tableName} AS c WHERE p.left_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC", [$items[0]['right_id'] + 1]);
-                $diffLeft = $elem[0]['left_id'] - $items[0]['left_id'];
-                $diffRight = $elem[0]['right_id'] - $items[0]['right_id'];
-            } else {
-                return false;
-            }
-
-            $c_elem = count($elem);
-            $c_items = count($items);
-            $elemIds = $itemsIds = [];
-
-            for ($i = 0; $i < $c_elem; ++$i) {
-                $elemIds[] = $elem[$i]['id'];
-            }
-            for ($i = 0; $i < $c_items; ++$i) {
-                $itemsIds[] = $items[$i]['id'];
-            }
-
-            $this->db->beginTransaction();
-            try {
-                if ($mode === 'up') {
-                    $bool = $this->db->executeUpdate("UPDATE {$this->tableName} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)", [$diffRight, $diffRight, $elemIds], [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]);
-                    $bool2 = $this->db->executeUpdate("UPDATE {$this->tableName} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)", [$diffLeft, $diffLeft, $itemsIds], [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]);
-                } else {
-                    $bool = $this->db->executeUpdate("UPDATE {$this->tableName} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)", [$diffLeft, $diffLeft, $elemIds], [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]);
-                    $bool2 = $this->db->executeUpdate("UPDATE {$this->tableName} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)", [$diffRight, $diffRight, $itemsIds], [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]);
-                }
-                $this->db->commit();
-                return $bool && $bool2;
-            } catch (\Exception $e) {
-                $this->db->rollback();
+                return $this->sortNodeDownwards($items);
             }
         }
 
@@ -358,5 +324,101 @@ class NestedSet
     protected function addBlockIdToWhereClause(array $items)
     {
         return ($this->enableBlocks === true ? ' AND block_id = ' . $items[0]['block_id'] : '');
+    }
+
+    /**
+     * @param array $nodes
+     *
+     * @return array
+     */
+    protected function fetchAffectedNodesForReorder(array $nodes)
+    {
+        $rtn = [];
+        foreach ($nodes as $node) {
+            $rtn[] = $node['id'];
+        }
+
+        return $rtn;
+    }
+
+    /**
+     * @param array $item
+     * @param array $elem
+     *
+     * @return array
+     */
+    protected function calculateNodeDifferences(array $item, array $elem)
+    {
+        $diffLeft = $item['left_id'] - $elem['left_id'];
+        $diffRight = $item['right_id'] - $elem['right_id'];
+
+        return [
+            $diffLeft,
+            $diffRight
+        ];
+    }
+
+    /**
+     * @param array $items
+     *
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    protected function sortNodeUpwards(array $items)
+    {
+        // Vorherigen Knoten mit allen Kindern selektieren
+        $elem = $this->db->fetchAll("SELECT c.id, c.left_id, c.right_id FROM {$this->tableName} AS p, {$this->tableName} AS c WHERE p.right_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC", [$items[0]['left_id'] - 1]);
+        list($diffLeft, $diffRight) = $this->calculateNodeDifferences($items[0], $elem[0]);
+
+        $this->db->beginTransaction();
+        try {
+            $bool = $this->db->executeUpdate(
+                "UPDATE {$this->tableName} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
+                [$diffRight, $diffRight, $this->fetchAffectedNodesForReorder($elem)],
+                [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
+            );
+            $bool2 = $this->db->executeUpdate(
+                "UPDATE {$this->tableName} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",
+                [$diffLeft, $diffLeft, $this->fetchAffectedNodesForReorder($items)],
+                [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
+            );
+            $this->db->commit();
+            return $bool && $bool2;
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    /**
+     * @param array $items
+     *
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    protected function sortNodeDownwards(array $items)
+    {
+        // Nachfolgenden Knoten mit allen Kindern selektieren
+        $elem = $this->db->fetchAll("SELECT c.id, c.left_id, c.right_id FROM {$this->tableName} AS p, {$this->tableName} AS c WHERE p.left_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC", [$items[0]['right_id'] + 1]);
+        list($diffLeft, $diffRight) = $this->calculateNodeDifferences($elem[0], $items[0]);
+
+        $this->db->beginTransaction();
+        try {
+            $bool = $this->db->executeUpdate(
+                "UPDATE {$this->tableName} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",
+                [$diffLeft, $diffLeft, $this->fetchAffectedNodesForReorder($elem)],
+                [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
+            );
+            $bool2 = $this->db->executeUpdate(
+                "UPDATE {$this->tableName} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
+                [$diffRight, $diffRight, $this->fetchAffectedNodesForReorder($items)],
+                [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
+            );
+            $this->db->commit();
+            return $bool && $bool2;
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            return false;
+        }
     }
 }

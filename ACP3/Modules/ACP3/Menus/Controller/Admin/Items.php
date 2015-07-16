@@ -240,7 +240,7 @@ class Items extends Core\Modules\AdminController
             $this->menusModel->menuItemExists($this->request->getParameters()->get('id')) === true
         ) {
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $nestedSet->order(
+            $nestedSet->sort(
                 $this->request->getParameters()->get('id'),
                 $this->request->getParameters()->get('action')
             );

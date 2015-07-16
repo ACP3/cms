@@ -232,7 +232,7 @@ class Index extends Core\Modules\AdminController
     {
         if ($this->permissionsModel->roleExists($id) === true) {
             $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $nestedSet->order($id, $action);
+            $nestedSet->sort($id, $action);
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
