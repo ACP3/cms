@@ -72,7 +72,7 @@ class Modules
      *
      * @return boolean
      */
-    public function actionExists($path)
+    public function controllerActionExists($path)
     {
         $pathArray = array_map(function ($value) {
             return str_replace(' ', '', strtolower(str_replace('_', ' ', $value)));
@@ -121,7 +121,7 @@ class Modules
         if (empty($this->parseModules)) {
             $filename = $this->_getCacheKey();
             if ($this->modulesCache->contains($filename) === false) {
-                $this->setModulesCache();
+                $this->saveModulesCache();
             }
             $this->parseModules = $this->modulesCache->fetch($filename);
         }
@@ -164,9 +164,9 @@ class Modules
     }
 
     /**
-     * Setzt den Cache für alle vorliegenden Modulinformationen
+     * Saves a modules info cache
      */
-    public function setModulesCache()
+    public function saveModulesCache()
     {
         $infos = [];
 
@@ -205,7 +205,7 @@ class Modules
     }
 
     /**
-     * @param $moduleDirectory
+     * @param string $moduleDirectory
      *
      * @return array
      */
@@ -243,8 +243,7 @@ class Modules
     }
 
     /**
-     * Überprüft, ob ein Modul in der modules DB-Tabelle
-     * eingetragen und somit installiert ist
+     * Checks, whether a modules in currently installed or not
      *
      * @param string $moduleName
      *
@@ -277,7 +276,7 @@ class Modules
     /**
      * Returns all currently installed modules
      *
-     * @return mixed
+     * @return array
      */
     public function getInstalledModules()
     {
@@ -293,10 +292,9 @@ class Modules
     }
 
     /**
-     * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
-     * Modulen des ACP3 mitsamt Modulinformationen aus
+     * Returns an alphabetically sorted array of all found ACP3 modules
      *
-     * @return mixed
+     * @return array
      */
     public function getAllModules()
     {

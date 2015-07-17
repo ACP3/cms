@@ -38,7 +38,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getResourcesCache()
     {
         if ($this->cache->contains(static::CACHE_ID_RESOURCES) === false) {
-            $this->setResourcesCache();
+            $this->saveResourcesCache();
         }
 
         return $this->cache->fetch(static::CACHE_ID_RESOURCES);
@@ -49,7 +49,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setResourcesCache()
+    public function saveResourcesCache()
     {
         $resources = $this->permissionsModel->getAllResources();
         $c_resources = count($resources);
@@ -77,7 +77,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getRolesCache()
     {
         if ($this->cache->contains(static::CACHE_ID_ROLES) === false) {
-            $this->setRolesCache();
+            $this->saveRolesCache();
         }
 
         return $this->cache->fetch(static::CACHE_ID_ROLES);
@@ -88,7 +88,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setRolesCache()
+    public function saveRolesCache()
     {
         $roles = $this->permissionsModel->getAllRoles();
         $c_roles = count($roles);
@@ -128,7 +128,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     {
         $filename = static::CACHE_ID_RULES . implode(',', $roles);
         if ($this->cache->contains($filename) === false) {
-            $this->setRulesCache($roles);
+            $this->saveRulesCache($roles);
         }
 
         return $this->cache->fetch($filename);
@@ -142,7 +142,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setRulesCache(array $roles)
+    public function saveRulesCache(array $roles)
     {
         // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
         $rules = $this->permissionsModel->getAllRulesByRoleIds($roles);

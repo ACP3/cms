@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\Menus;
 class Index extends Core\Modules\AdminController
 {
     /**
-     * @var \ACP3\Core\DB
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -38,7 +34,7 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\DB                              $db
+     * @param \ACP3\Core\NestedSet                       $nestedSet
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Helpers           $menusHelpers
      * @param \ACP3\Modules\ACP3\Menus\Model             $menusModel
@@ -47,7 +43,7 @@ class Index extends Core\Modules\AdminController
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
-        Core\DB $db,
+        Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Helpers $menusHelpers,
         Menus\Model $menusModel,
@@ -56,7 +52,7 @@ class Index extends Core\Modules\AdminController
     {
         parent::__construct($context);
 
-        $this->db = $db;
+        $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->menusHelpers = $menusHelpers;
         $this->menusModel = $menusModel;
@@ -81,14 +77,17 @@ class Index extends Core\Modules\AdminController
 
         if ($action === 'confirmed') {
             $bool = false;
-            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
 
             foreach ($items as $item) {
                 if (!empty($item) && $this->menusModel->menuExists($item) === true) {
                     // Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
                     $items = $this->menusModel->getAllItemsByBlockId($item);
                     foreach ($items as $row) {
-                        $nestedSet->deleteNode($row['id']);
+                        $this->nestedSet->deleteNode(
+                            $row['id'],
+                            Menus\Model::TABLE_NAME_ITEMS,
+                            true
+                        );
                     }
 
                     $block = $this->menusModel->getMenuNameById($item);
@@ -97,7 +96,7 @@ class Index extends Core\Modules\AdminController
                 }
             }
 
-            $this->menusCache->setMenuItemsCache();
+            $this->menusCache->saveMenusCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
         } elseif (is_string($items)) {
@@ -197,7 +196,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->menusModel->update($updateValues, $id);
 
-            $this->menusCache->setMenuItemsCache();
+            $this->menusCache->saveMenusCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

@@ -79,7 +79,7 @@ class Index extends Core\Modules\AdminController
                 $bool = $this->seoModel->delete($item);
             }
 
-            $this->seoCache->setCache();
+            $this->seoCache->saveCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
         } elseif (is_string($items)) {
@@ -178,7 +178,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->seoModel->update($updateValues, $id);
 
-            $this->seoCache->setCache();
+            $this->seoCache->saveCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

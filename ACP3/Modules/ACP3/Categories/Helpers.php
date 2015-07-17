@@ -107,7 +107,7 @@ class Helpers
             ];
             $result = $this->categoriesModel->insert($insertValues);
 
-            $this->categoriesCache->setCache($module);
+            $this->categoriesCache->saveCache($module);
 
             return $result;
         } else {

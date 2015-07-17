@@ -90,7 +90,7 @@ class Resources extends Core\Modules\AdminController
                 $bool = $this->permissionsModel->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
             }
 
-            $this->permissionsCache->setResourcesCache();
+            $this->permissionsCache->saveResourcesCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
         } elseif (is_string($items)) {
@@ -168,7 +168,7 @@ class Resources extends Core\Modules\AdminController
             ];
             $bool = $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
 
-            $this->permissionsCache->setResourcesCache();
+            $this->permissionsCache->saveResourcesCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -197,7 +197,7 @@ class Resources extends Core\Modules\AdminController
             ];
             $bool = $this->permissionsModel->update($updateValues, $id, Permissions\Model::TABLE_NAME_RESOURCES);
 
-            $this->permissionsCache->setResourcesCache();
+            $this->permissionsCache->saveResourcesCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

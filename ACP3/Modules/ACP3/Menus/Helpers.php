@@ -20,13 +20,13 @@ class Helpers
      */
     protected $navbar = [];
     /**
-     * @var \ACP3\Core\DB
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\Lang
      */
     protected $lang;
+    /**
+     * @var \ACP3\Core\NestedSet
+     */
+    protected $nestedSet;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
@@ -41,22 +41,22 @@ class Helpers
     protected $menusCache;
 
     /**
-     * @param \ACP3\Core\DB                  $db
      * @param \ACP3\Core\Lang                $lang
+     * @param \ACP3\Core\NestedSet           $nestedSet
      * @param \ACP3\Core\Helpers\Forms       $formsHelper
      * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */
     public function __construct(
-        Core\DB $db,
         Core\Lang $lang,
+        Core\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Model $menusModel,
         Cache $menusCache
     )
     {
-        $this->db = $db;
         $this->lang = $lang;
+        $this->nestedSet = $nestedSet;
         $this->formsHelper = $formsHelper;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
@@ -76,7 +76,7 @@ class Helpers
     {
         // Menüpunkte einbinden
         if (empty($this->menuItems)) {
-            $this->menuItems = $this->menusCache->getMenuItemsCache();
+            $this->menuItems = $this->menusCache->getMenusCache();
         }
 
         $output = [];
@@ -145,7 +145,6 @@ class Helpers
     public function manageMenuItem($menuItemUri, $createOrUpdateMenuItem, array $data = [])
     {
         $menuItem = $this->menusModel->getOneMenuItemUri($menuItemUri);
-        $nestedSet = new Core\NestedSet($this->db, Model::TABLE_NAME_ITEMS, true);
 
         if ($createOrUpdateMenuItem === true) {
             // Create a new menu item
@@ -161,7 +160,12 @@ class Helpers
                     'target' => $data['target'],
                 ];
 
-                return $nestedSet->insertNode((int)$data['parent_id'], $insertValues) !== false;
+                return $this->nestedSet->insertNode(
+                    (int)$data['parent_id'],
+                    $insertValues,
+                    Model::TABLE_NAME_ITEMS,
+                    true
+                ) !== false;
             } else { // Update an existing menu item
                 $updateValues = [
                     'block_id' => $data['block_id'],
@@ -170,10 +174,21 @@ class Helpers
                     'title' => Core\Functions::strEncode($data['title'])
                 ];
 
-                return $nestedSet->editNode($menuItem['id'], (int)$data['parent_id'], (int)$data['block_id'], $updateValues);
+                return $this->nestedSet->editNode(
+                    $menuItem['id'],
+                    (int)$data['parent_id'],
+                    (int)$data['block_id'],
+                    $updateValues,
+                    Model::TABLE_NAME_ITEMS,
+                    true
+                );
             }
         } elseif (!empty($menuItem)) { // Delete an existing menu item
-            return $nestedSet->deleteNode($menuItem['id']);
+            return $this->nestedSet->deleteNode(
+                $menuItem['id'],
+                Model::TABLE_NAME_ITEMS,
+                true
+            );
         }
 
         return true;

@@ -41,7 +41,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache($id)
     {
         if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->setCache($id);
+            $this->saveCache($id);
         }
 
         return $this->cache->fetch(self::CACHE_ID . $id);
@@ -55,7 +55,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache($id)
+    public function saveCache($id)
     {
         return $this->cache->save(self::CACHE_ID . $id, $this->articlesModel->getOneById($id));
     }

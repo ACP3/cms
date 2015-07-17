@@ -1,0 +1,52 @@
+services:
+  core.context:
+    class: ACP3\Core\Modules\Controller\Context
+    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
+    public: false
+
+  core.context.admin:
+    class: ACP3\Core\Modules\Controller\AdminContext
+    arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session']
+    public: false
+
+  core.context.frontend:
+    class: ACP3\Core\Modules\Controller\FrontendContext
+    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
+    public: false
+
+  core.modules:
+    class: ACP3\Core\Modules
+    arguments: ['@service_container', '@core.lang', '@core.xml', '@core.cache.system', '@system.model']
+
+  core.modules.schemaHelper:
+    class: ACP3\Core\Modules\SchemaHelper
+    arguments: [@core.db, @system.model]
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.modules.schemaInstaller:
+    class: ACP3\Core\Modules\SchemaInstaller
+    arguments: ['@core.db', '@core.xml', '@core.cache.system', '@system.model', '@permissions.model']
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.modules.schemaUpdater:
+    class: ACP3\Core\Modules\SchemaUpdater
+    parent: core.modules.schemaHelper
+
+  core.modules.installer.abstractMigration:
+    abstract: true
+    arguments: [@core.modules.schemaHelper]
+
+  core.modules.controller:
+    abstract: true
+    arguments: ['@core.context']
+
+  core.modules.controller.frontend:
+    abstract: true
+    arguments: ['@core.context.frontend']
+
+  core.modules.controller.admin:
+    abstract: true
+    arguments: ['@core.context.admin']
+

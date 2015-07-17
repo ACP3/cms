@@ -22,7 +22,7 @@ class Model extends Core\Model
     public function newsletterExists($id, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
-        return ((int)$this->db->fetchAssoc('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where, ['id' => $id, 'status' => $status]) > 0);
+        return ((int)$this->db->fetchAssoc('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $where, ['id' => $id, 'status' => $status]) > 0);
     }
 
     /**
@@ -34,7 +34,7 @@ class Model extends Core\Model
     public function accountExists($emailAddress, $hash = '')
     {
         $where = empty($hash) === false ? ' AND hash = :hash' : '';
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE mail = :mail' . $where, ['mail' => $emailAddress, 'hash' => $hash]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(static::TABLE_NAME_ACCOUNTS) . ' WHERE mail = :mail' . $where, ['mail' => $emailAddress, 'hash' => $hash]) > 0;
     }
 
     /**
@@ -46,7 +46,7 @@ class Model extends Core\Model
     public function getOneById($id, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $where, ['id' => $id, 'status' => $status]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = :id' . $where, ['id' => $id, 'status' => $status]);
     }
 
     /**
@@ -57,7 +57,7 @@ class Model extends Core\Model
     public function countAll($status = '')
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where, ['status' => $status]);
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . $where, ['status' => $status]);
     }
 
     /**
@@ -65,7 +65,7 @@ class Model extends Core\Model
      */
     public function countAllAccounts()
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS);
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(static::TABLE_NAME_ACCOUNTS));
     }
 
     /**
@@ -73,7 +73,7 @@ class Model extends Core\Model
      */
     public function countAllActiveAccounts()
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE HASH = ""');
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(static::TABLE_NAME_ACCOUNTS) . ' WHERE HASH = ""');
     }
 
     /**
@@ -87,7 +87,7 @@ class Model extends Core\Model
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . $where . ' ORDER BY DATE DESC' . $limitStmt, ['status' => $status]);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY DATE DESC' . $limitStmt, ['status' => $status]);
     }
 
     /**
@@ -95,7 +95,7 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' ORDER BY DATE DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY DATE DESC');
     }
 
     /**
@@ -103,7 +103,7 @@ class Model extends Core\Model
      */
     public function getAllAccounts()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' ORDER BY id DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName(static::TABLE_NAME_ACCOUNTS) . ' ORDER BY id DESC');
     }
 
     /**
@@ -111,6 +111,6 @@ class Model extends Core\Model
      */
     public function getAllActiveAccounts()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_ACCOUNTS . ' WHERE HASH = "" ORDER BY id DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName(static::TABLE_NAME_ACCOUNTS) . ' WHERE HASH = "" ORDER BY id DESC');
     }
 }

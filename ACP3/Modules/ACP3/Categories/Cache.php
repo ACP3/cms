@@ -39,7 +39,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache($moduleName)
     {
         if ($this->cache->contains($moduleName) === false) {
-            $this->setCache($moduleName);
+            $this->saveCache($moduleName);
         }
 
         return $this->cache->fetch($moduleName);
@@ -53,7 +53,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache($moduleName)
+    public function saveCache($moduleName)
     {
         return $this->cache->save($moduleName, $this->categoriesModel->getAllByModuleName($moduleName));
     }

@@ -99,11 +99,11 @@ abstract class AdminController extends Core\Modules\FrontendController
     protected function generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl)
     {
         if ($moduleConfirmUrl === null) {
-            $moduleConfirmUrl = 'acp/' . $this->request->getFullPath();
+            $moduleConfirmUrl = $this->request->getFullPath();
         }
 
         if ($moduleIndexUrl === null) {
-            $moduleIndexUrl = 'acp/' . $this->request->getModuleAndController();
+            $moduleIndexUrl = $this->request->getModuleAndController();
         }
 
         return [$moduleConfirmUrl, $moduleIndexUrl];

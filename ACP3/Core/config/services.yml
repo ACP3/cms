@@ -1,8 +1,11 @@
 imports:
   - { resource: cache.yml }
   - { resource: ../../config.yml }
-  - { resource: helpers.yml }
-  - { resource: validation.yml }
+  - { resource: components/assets.yml }
+  - { resource: components/helpers.yml }
+  - { resource: components/modules.yml }
+  - { resource: components/nestedsets.yml }
+  - { resource: components/validation.yml }
   - { resource: ../WYSIWYG/config/services.yml }
   - { resource: ../../Modules/ACP3/Permissions/config/services.yml }
   - { resource: ../../Modules/ACP3/Seo/config/services.yml }
@@ -14,34 +17,6 @@ services:
     class: ACP3\Core\ACL
     arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache']
 
-  core.assets:
-    class: ACP3\Core\Assets
-
-  core.assets.cache:
-    class: ACP3\Core\Assets\Cache
-    arguments: ['@core.cache.system']
-
-  core.assets.abstractMinifier:
-    class: ACP3\Core\Assets\AbstractMinifier
-    arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.themeResolver]
-    abstract: true
-
-  core.assets.minifier.css:
-    class: ACP3\Core\Assets\Minifier\CSS
-    parent: core.assets.abstractMinifier
-
-  core.assets.minifier.javascript:
-    class: ACP3\Core\Assets\Minifier\JavaScript
-    parent: core.assets.abstractMinifier
-
-  core.assets.themeResolver:
-    class: ACP3\Core\Assets\ThemeResolver
-    arguments: ['@core.xml', '@core.assets.cache']
-
-  core.assets.pageCssClasses:
-    class: ACP3\Core\Assets\PageCssClasses
-    arguments: ['@core.breadcrumb', '@core.request']
-
   core.auth:
     class: ACP3\Core\Auth
     arguments: ['@core.session', '@core.helpers.secure', '@core.config', '@users.model']
@@ -49,8 +24,6 @@ services:
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
     arguments: ['@service_container', '@core.lang', '@core.request', '@core.router', '@core.config']
-    calls:
-      - ['setMenusModel', ['@?menus.model']]
 
   core.cache.system:
     class: ACP3\Core\Cache
@@ -59,21 +32,6 @@ services:
   core.config:
     class: ACP3\Core\Config
     arguments: ['@core.cache.system', '@system.model']
-
-  core.context:
-    class: ACP3\Core\Modules\Controller\Context
-    arguments: ['@core.acl', '@core.auth', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
-    public: false
-
-  core.context.admin:
-    class: ACP3\Core\Modules\Controller\AdminContext
-    arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session']
-    public: false
-
-  core.context.frontend:
-    class: ACP3\Core\Modules\Controller\FrontendContext
-    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
-    public: false
 
   core.date:
     class: ACP3\Core\Date
@@ -97,42 +55,6 @@ services:
   core.mailer:
     class: ACP3\Core\Mailer
     arguments: ['@core.view', '@core.config']
-
-  core.modules:
-    class: ACP3\Core\Modules
-    arguments: ['@service_container', '@core.lang', '@core.xml', '@core.cache.system', '@system.model']
-
-  core.modules.schemaHelper:
-    class: ACP3\Core\Modules\SchemaHelper
-    arguments: [@core.db, @system.model]
-    calls:
-      - ['setContainer', ['@service_container']]
-
-  core.modules.schemaInstaller:
-    class: ACP3\Core\Modules\SchemaInstaller
-    arguments: ['@core.db', '@core.xml', '@core.cache.system', '@system.model', '@permissions.model']
-    calls:
-      - ['setContainer', ['@service_container']]
-
-  core.modules.schemaUpdater:
-    class: ACP3\Core\Modules\SchemaUpdater
-    parent: core.modules.schemaHelper
-
-  core.modules.installer.abstractMigration:
-    abstract: true
-    arguments: [@core.modules.schemaHelper]
-
-  core.modules.controller:
-    abstract: true
-    arguments: ['@core.context']
-
-  core.modules.controller.frontend:
-    abstract: true
-    arguments: ['@core.context.frontend']
-
-  core.modules.controller.admin:
-    abstract: true
-    arguments: ['@core.context.admin']
 
   core.pagination:
     class: ACP3\Core\Pagination

@@ -51,7 +51,7 @@ abstract class FrontendController extends Core\Modules\Controller
      */
     public function preDispatch()
     {
-        $path = $this->request->getArea() . '/' . $this->request->getFullPath();
+        $path = $this->request->getArea() . '/' . $this->request->getFullPathWithoutArea();
 
         if ($this->acl->hasPermission($path) === false) {
             throw new Core\Exceptions\AccessForbidden();

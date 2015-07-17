@@ -16,6 +16,10 @@ class Index extends Core\Modules\AdminController
      */
     protected $db;
     /**
+     * @var \ACP3\Core\NestedSet
+     */
+    protected $nestedSet;
+    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -43,6 +47,7 @@ class Index extends Core\Modules\AdminController
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\DB $db,
+        Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache,
@@ -51,6 +56,7 @@ class Index extends Core\Modules\AdminController
         parent::__construct($context);
 
         $this->db = $db;
+        $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
@@ -114,12 +120,11 @@ class Index extends Core\Modules\AdminController
             $bool = $bool2 = $bool3 = false;
             $levelNotDeletable = false;
 
-            $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
             foreach ($items as $item) {
                 if (in_array($item, [1, 2, 4]) === true) {
                     $levelNotDeletable = true;
                 } else {
-                    $bool = $nestedSet->deleteNode($item);
+                    $bool = $this->nestedSet->deleteNode($item, Permissions\Model::TABLE_NAME);
                     $bool2 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_RULES);
                     $bool3 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_USER_ROLES);
                 }
@@ -231,8 +236,11 @@ class Index extends Core\Modules\AdminController
     public function actionOrder($id, $action)
     {
         if ($this->permissionsModel->roleExists($id) === true) {
-            $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $nestedSet->sort($id, $action);
+            $this->nestedSet->sort(
+                $id,
+                $action,
+                Permissions\Model::TABLE_NAME
+            );
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
@@ -260,8 +268,12 @@ class Index extends Core\Modules\AdminController
                 'parent_id' => $formData['parent_id'],
             ];
 
-            $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $bool = $nestedSet->insertNode((int)$formData['parent_id'], $insertValues);
+            $bool = $this->nestedSet->insertNode(
+                (int)$formData['parent_id'],
+                $insertValues,
+                Permissions\Model::TABLE_NAME,
+                true
+            );
             $roleId = $this->db->getConnection()->lastInsertId();
 
             foreach ($formData['privileges'] as $moduleId => $privileges) {
@@ -279,7 +291,7 @@ class Index extends Core\Modules\AdminController
 
             $this->db->getConnection()->commit();
 
-            $this->permissionsCache->setRolesCache();
+            $this->permissionsCache->saveRolesCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -307,8 +319,14 @@ class Index extends Core\Modules\AdminController
                 'name' => Core\Functions::strEncode($formData['name']),
                 'parent_id' => $id === 1 ? 0 : $formData['parent_id'],
             ];
-            $nestedSet = new Core\NestedSet($this->db, Permissions\Model::TABLE_NAME);
-            $bool = $nestedSet->editNode($id, $id === 1 ? '' : (int)$formData['parent_id'], 0, $updateValues);
+
+            $bool = $this->nestedSet->editNode(
+                $id,
+                $id === 1 ? '' : (int)$formData['parent_id'],
+                0,
+                $updateValues,
+                Permissions\Model::TABLE_NAME
+            );
 
             $this->db->getConnection()->beginTransaction();
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten

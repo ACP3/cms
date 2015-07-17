@@ -140,7 +140,9 @@ class TableOfContents
                 return true;
             }
         } else {
-            if (($this->validate->isNumber($this->request->getParameters()->get('page')) === false && $currentIndex === 0) || $this->request->getParameters()->get('page') === $pageNumber) {
+            if (($this->validate->isNumber($this->request->getParameters()->get('page')) === false && $currentIndex === 0) ||
+                $this->request->getParameters()->get('page') === $pageNumber
+            ) {
                 return true;
             }
         }

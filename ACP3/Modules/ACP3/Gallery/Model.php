@@ -22,7 +22,7 @@ class Model extends Core\Model
     public function galleryExists($id, $time = '')
     {
         $period = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = :id' . $period, ['id' => $id, 'time' => $time]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period, ['id' => $id, 'time' => $time]) > 0);
     }
 
     /**
@@ -34,7 +34,7 @@ class Model extends Core\Model
     public function pictureExists($pictureId, $time = '')
     {
         $period = empty($time) === false ? ' AND (g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS g, ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, ['id' => $pictureId, 'time' => $time]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' AS g, ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, ['id' => $pictureId, 'time' => $time]) > 0);
     }
 
     /**
@@ -44,7 +44,7 @@ class Model extends Core\Model
      */
     public function getGalleryById($id)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
     }
 
     /**
@@ -54,7 +54,7 @@ class Model extends Core\Model
      */
     public function getPictureById($id)
     {
-        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS g, ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$id]);
+        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->getTableName() . ' AS g, ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$id]);
     }
 
     /**
@@ -64,7 +64,7 @@ class Model extends Core\Model
      */
     public function getGalleryIdFromPictureId($pictureId)
     {
-        return $this->db->fetchColumn('SELECT gallery_id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' WHERE id = ?', [$pictureId]);
+        return $this->db->fetchColumn('SELECT gallery_id FROM ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' WHERE id = ?', [$pictureId]);
     }
 
     /**
@@ -74,7 +74,7 @@ class Model extends Core\Model
      */
     public function getLastPictureByGalleryId($galleryId)
     {
-        return $this->db->fetchColumn('SELECT MAX(pic) FROM ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' WHERE gallery_id = ?', [$galleryId]);
+        return $this->db->fetchColumn('SELECT MAX(pic) FROM ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' WHERE gallery_id = ?', [$galleryId]);
     }
 
     /**
@@ -84,7 +84,7 @@ class Model extends Core\Model
      */
     public function getPicturesByGalleryId($id)
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' WHERE gallery_id = ? ORDER BY pic ASC', [$id]);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' WHERE gallery_id = ? ORDER BY pic ASC', [$id]);
     }
 
     /**
@@ -95,7 +95,7 @@ class Model extends Core\Model
      */
     public function getPreviousPictureId($picture, $galleryId)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$picture, $galleryId]);
+        return $this->db->fetchColumn('SELECT id FROM ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$picture, $galleryId]);
     }
 
     /**
@@ -106,7 +106,7 @@ class Model extends Core\Model
      */
     public function getNextPictureId($picture, $galleryId)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$picture, $galleryId]);
+        return $this->db->fetchColumn('SELECT id FROM ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$picture, $galleryId]);
     }
 
     /**
@@ -116,7 +116,7 @@ class Model extends Core\Model
      */
     public function getFileById($pictureId)
     {
-        return $this->db->fetchColumn('SELECT file FROM ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' WHERE id = ?', [$pictureId]);
+        return $this->db->fetchColumn('SELECT file FROM ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' WHERE id = ?', [$pictureId]);
     }
 
     /**
@@ -126,7 +126,7 @@ class Model extends Core\Model
      */
     public function getGalleryTitle($galleryId)
     {
-        return $this->db->fetchColumn('SELECT title FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [$galleryId]);
+        return $this->db->fetchColumn('SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?', [$galleryId]);
     }
 
     /**
@@ -150,7 +150,7 @@ class Model extends Core\Model
     {
         $where = $time !== '' ? ' WHERE (g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT g.*, COUNT(p.gallery_id) AS pics FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' AS p ON(g.id = p.gallery_id) ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll('SELECT g.*, COUNT(p.gallery_id) AS pics FROM ' . $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' AS p ON(g.id = p.gallery_id) ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC' . $limitStmt, ['time' => $time]);
     }
 
     /**
@@ -158,7 +158,7 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT g.id, g.start, g.end, g.title, COUNT(p.gallery_id) AS pictures FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' AS p ON(g.id = p.gallery_id) GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC');
+        return $this->db->fetchAll('SELECT g.id, g.start, g.end, g.title, COUNT(p.gallery_id) AS pictures FROM ' . $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' AS p ON(g.id = p.gallery_id) GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC');
     }
 
     /**
@@ -170,6 +170,6 @@ class Model extends Core\Model
      */
     public function updatePicturesNumbers($pictureNumber, $galleryId)
     {
-        return $this->db->getConnection()->executeUpdate('UPDATE ' . $this->db->getPrefix() . static::TABLE_NAME_PICTURES . ' SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?', [$pictureNumber, $galleryId]);
+        return $this->db->getConnection()->executeUpdate('UPDATE ' . $this->getTableName(static::TABLE_NAME_PICTURES) . ' SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?', [$pictureNumber, $galleryId]);
     }
 }

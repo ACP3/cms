@@ -188,4 +188,27 @@ class DB
 
         return $this->connection->executeCacheQuery($query, $params, $types, new QueryCacheProfile($lifetime, $cacheKey ?: md5($query)));
     }
+
+    /**
+     * @param callable $callback
+     *
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    public function executeTransactionalQuery(callable $callback)
+    {
+        $this->connection->beginTransaction();
+
+        try {
+            $result = $callback();
+
+            $this->connection->commit();
+        } catch (\Exception $e) {
+            $this->connection->rollBack();
+            Logger::error('database', $e->getMessage());
+            $result = false;
+        }
+
+        return $result;
+    }
 }

@@ -213,7 +213,7 @@ class ACL
     /**
      * Gibt zurück, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
      *
-     * @param        $module
+     * @param string $module
      * @param string $key
      *    The key of the privilege
      *
@@ -238,7 +238,7 @@ class ACL
      */
     public function hasPermission($path)
     {
-        if ($this->modules->actionExists($path) === true) {
+        if ($this->modules->controllerActionExists($path) === true) {
             $pathArray = explode('/', $path);
 
             if ($this->modules->isActive($pathArray[1]) === true) {

@@ -58,7 +58,7 @@ class ThemeResolver
     public function __destruct()
     {
         if ($this->newAssetPathsAdded === true) {
-            $this->resourcesCache->setCache($this->cachedPaths);
+            $this->resourcesCache->saveCache($this->cachedPaths);
         }
     }
 

@@ -1,0 +1,24 @@
+services:
+  core.nestedSet:
+    class: ACP3\Core\NestedSet
+    arguments: [@core.nestedSet.insert, @core.nestedSet.edit, @core.nestedSet.delete, @core.nestedSet.sort]
+
+  core.nestedSet.model:
+    class: ACP3\Core\NestedSet\Model
+    arguments: [@core.db]
+
+  core.nestedSet.insert:
+    class: ACP3\Core\NestedSet\Insert
+    arguments: [@core.db, @core.nestedSet.model]
+
+  core.nestedSet.delete:
+    class: ACP3\Core\NestedSet\Delete
+    arguments: [@core.db, @core.nestedSet.model]
+
+  core.nestedSet.edit:
+    class: ACP3\Core\NestedSet\Edit
+    arguments: [@core.db, @core.nestedSet.model]
+
+  core.nestedSet.sort:
+    class: ACP3\Core\NestedSet\Sort
+    arguments: [@core.db, @core.nestedSet.model]

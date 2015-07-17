@@ -36,7 +36,7 @@ class Cache
     public function getLanguageCache($language)
     {
         if ($this->cache->contains($language) === false) {
-            $this->setLanguageCache($language);
+            $this->saveLanguageCache($language);
         }
 
         return $this->cache->fetch($language);
@@ -49,7 +49,7 @@ class Cache
      *
      * @return bool
      */
-    public function setLanguageCache($language)
+    public function saveLanguageCache($language)
     {
         $data = [];
 
@@ -112,7 +112,7 @@ class Cache
     public function getLanguagePacksCache()
     {
         if ($this->cache->contains('language_packs') === false) {
-            $this->_setLanguagePacksCache();
+            $this->saveLanguagePacksCache();
         }
 
         return $this->cache->fetch('language_packs');
@@ -123,7 +123,7 @@ class Cache
      *
      * @return bool
      */
-    protected function _setLanguagePacksCache()
+    protected function saveLanguagePacksCache()
     {
         $languagePacks = [];
 

@@ -76,7 +76,7 @@ class RewriteInternalUri
                 $path .= '/' . $uriArray[3];
             }
 
-            if ($this->modules->actionExists($path) === true) {
+            if ($this->modules->controllerActionExists($path) === true) {
                 return '<a' . $matches[1] . 'href="' . $this->router->route($matches[7]) . '"';
             } else {
                 return $matches[0];

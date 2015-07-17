@@ -366,7 +366,7 @@ class Index extends Core\Modules\AdminController
                 (int)$formData['seo_robots']
             );
 
-            $this->filesCache->setCache($id);
+            $this->filesCache->saveCache($id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

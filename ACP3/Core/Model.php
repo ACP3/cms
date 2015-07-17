@@ -35,8 +35,11 @@ class Model
      */
     public function insert(array $params, $tableName = '')
     {
-        return $this->executeTransactionalQuery(function () use ($params, $tableName) {
-            $this->db->getConnection()->insert($this->getTableName($tableName), $params);
+        return $this->db->executeTransactionalQuery(function () use ($params, $tableName) {
+            $this->db->getConnection()->insert(
+                $this->getTableName($tableName),
+                $params
+            );
             return (int)$this->db->getConnection()->lastInsertId();
         });
     }
@@ -52,29 +55,12 @@ class Model
      */
     public function delete($id, $field = 'id', $tableName = '')
     {
-        return $this->executeTransactionalQuery(function () use ($id, $field, $tableName) {
-            return $this->db->getConnection()->delete($this->getTableName($tableName), $this->getIdentifier($id, $field));
+        return $this->db->executeTransactionalQuery(function () use ($id, $field, $tableName) {
+            return $this->db->getConnection()->delete(
+                $this->getTableName($tableName),
+                $this->getIdentifier($id, $field)
+            );
         });
-    }
-
-    /**
-     * @param callable $callback
-     *
-     * @return int|bool
-     * @throws \Doctrine\DBAL\ConnectionException
-     */
-    protected function executeTransactionalQuery(callable $callback)
-    {
-        $this->db->getConnection()->beginTransaction();
-        try {
-            $result = $callback();
-            $this->db->getConnection()->commit();
-            return $result;
-        } catch (\Exception $e) {
-            $this->db->getConnection()->rollback();
-            Logger::error('database', $e->getMessage());
-            return false;
-        }
     }
 
     /**
@@ -88,8 +74,12 @@ class Model
      */
     public function update(array $params, $id, $tableName = '')
     {
-        return $this->executeTransactionalQuery(function () use ($params, $id, $tableName) {
-            return $this->db->getConnection()->update($this->getTableName($tableName), $params, $this->getIdentifier($id));
+        return $this->db->executeTransactionalQuery(function () use ($params, $id, $tableName) {
+            return $this->db->getConnection()->update(
+                $this->getTableName($tableName),
+                $params,
+                $this->getIdentifier($id)
+            );
         });
     }
 
@@ -98,9 +88,9 @@ class Model
      *
      * @return string
      */
-    private function getTableName($tableName)
+    protected function getTableName($tableName = '')
     {
-        return $this->db->getPrefix() . (!empty($tableName) ? $tableName : static::TABLE_NAME);
+        return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
     }
 
     /**

@@ -17,9 +17,9 @@ class Items extends Core\Modules\AdminController
      */
     protected $aliases;
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\NestedSet
      */
-    protected $db;
+    protected $nestedSet;
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -48,7 +48,7 @@ class Items extends Core\Modules\AdminController
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param \ACP3\Core\Router\Aliases                  $aliases
-     * @param \ACP3\Core\DB                              $db
+     * @param \ACP3\Core\NestedSet                       $nestedSet
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Model             $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Cache             $menusCache
@@ -58,7 +58,7 @@ class Items extends Core\Modules\AdminController
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Router\Aliases $aliases,
-        Core\DB $db,
+        Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model $menusModel,
         Menus\Cache $menusCache,
@@ -68,7 +68,7 @@ class Items extends Core\Modules\AdminController
         parent::__construct($context);
 
         $this->aliases = $aliases;
-        $this->db = $db;
+        $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->menusModel = $menusModel;
         $this->menusCache = $menusCache;
@@ -95,25 +95,10 @@ class Items extends Core\Modules\AdminController
         }
 
         // Seitentyp
-        $values_mode = [1, 2, 3];
-        $lang_mode = [
-            $this->lang->t('menus', 'module'),
-            $this->lang->t('menus', 'dynamic_page'),
-            $this->lang->t('menus', 'hyperlink')
-        ];
-        if ($this->articlesHelpers) {
-            $values_mode[] = 4;
-            $lang_mode[] = $this->lang->t('menus', 'article');
-        }
-        $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $values_mode, $lang_mode));
+        $this->view->assign('mode', $this->fetchMenuItemModes());
 
         // Module
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $row) {
-            $row['dir'] = strtolower($row['dir']);
-            $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $row['dir']);
-        }
-        $this->view->assign('modules', $modules);
+        $this->view->assign('modules', $this->fetchModules());
 
         // Ziel des Hyperlinks
         $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
@@ -146,15 +131,15 @@ class Items extends Core\Modules\AdminController
 
         if ($action === 'confirmed') {
             $bool = false;
-            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
+
             foreach ($items as $item) {
                 // URI-Alias löschen
                 $itemUri = $this->menusModel->getMenuItemUriById($item);
-                $bool = $nestedSet->deleteNode($item);
+                $bool = $this->nestedSet->deleteNode($item, Menus\Model::TABLE_NAME_ITEMS, true);
                 $this->seo->deleteUriAlias($itemUri);
             }
 
-            $this->menusCache->setMenuItemsCache();
+            $this->menusCache->saveMenusCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
@@ -183,25 +168,10 @@ class Items extends Core\Modules\AdminController
             }
 
             // Seitentyp
-            $modeValues = [1, 2, 3];
-            $modeLang = [
-                $this->lang->t('menus', 'module'),
-                $this->lang->t('menus', 'dynamic_page'),
-                $this->lang->t('menus', 'hyperlink')
-            ];
-            if ($this->articlesHelpers) {
-                $modeValues[] = 4;
-                $modeLang[] = $this->lang->t('menus', 'article');
-            }
-            $this->view->assign('mode', $this->get('core.helpers.forms')->selectGenerator('mode', $modeValues, $modeLang, $menuItem['mode']));
+            $this->view->assign('mode', $this->fetchMenuItemModes($menuItem['mode']));
 
             // Module
-            $modules = $this->modules->getAllModules();
-            foreach ($modules as $row) {
-                $row['dir'] = strtolower($row['dir']);
-                $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $row['dir'], $menuItem['mode'] == 1 ? $menuItem['uri'] : '');
-            }
-            $this->view->assign('modules', $modules);
+            $this->view->assign('modules', $this->fetchModules($menuItem));
 
             // Ziel des Hyperlinks
             $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
@@ -239,13 +209,14 @@ class Items extends Core\Modules\AdminController
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
             $this->menusModel->menuItemExists($this->request->getParameters()->get('id')) === true
         ) {
-            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $nestedSet->sort(
+            $this->nestedSet->sort(
                 $this->request->getParameters()->get('id'),
-                $this->request->getParameters()->get('action')
+                $this->request->getParameters()->get('action'),
+                Menus\Model::TABLE_NAME_ITEMS,
+                true
             );
 
-            $this->menusCache->setMenuItemsCache();
+            $this->menusCache->saveMenusCache();
 
             $this->redirect()->temporary('acp/menus');
         } else {
@@ -263,17 +234,21 @@ class Items extends Core\Modules\AdminController
 
             $insertValues = [
                 'id' => '',
-                'mode' => ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'],
+                'mode' => $this->fetchMenuItemModeForSave($formData),
                 'block_id' => (int)$formData['block_id'],
                 'parent_id' => (int)$formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => Core\Functions::strEncode($formData['title']),
-                'uri' => $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']),
+                'uri' => $this->fetchMenuItemUriForSave($formData),
                 'target' => $formData['display'] == 0 ? 1 : $formData['target'],
             ];
 
-            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $bool = $nestedSet->insertNode((int)$formData['parent_id'], $insertValues);
+            $bool = $this->nestedSet->insertNode(
+                (int)$formData['parent_id'],
+                $insertValues,
+                Menus\Model::TABLE_NAME_ITEMS,
+                true
+            );
 
             // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
             if ($formData['mode'] != 3) {
@@ -296,7 +271,7 @@ class Items extends Core\Modules\AdminController
                 );
             }
 
-            $this->menusCache->setMenuItemsCache();
+            $this->menusCache->saveMenusCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -318,22 +293,24 @@ class Items extends Core\Modules\AdminController
         try {
             $this->menusValidator->validateItem($formData);
 
-            // Vorgenommene Änderungen am Datensatz anwenden
-            $mode = ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
-            $uriType = $formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri'];
-
             $updateValues = [
-                'mode' => $mode,
+                'mode' => $this->fetchMenuItemModeForSave($formData),
                 'block_id' => $formData['block_id'],
                 'parent_id' => $formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => Core\Functions::strEncode($formData['title']),
-                'uri' => $formData['mode'] == 1 ? $formData['module'] : $uriType,
+                'uri' => $this->fetchMenuItemUriForSave($formData),
                 'target' => $formData['display'] == 0 ? 1 : $formData['target'],
             ];
 
-            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
-            $bool = $nestedSet->editNode($id, (int)$formData['parent_id'], (int)$formData['block_id'], $updateValues);
+            $bool = $this->nestedSet->editNode(
+                $id,
+                (int)$formData['parent_id'],
+                (int)$formData['block_id'],
+                $updateValues,
+                Menus\Model::TABLE_NAME_ITEMS,
+                true
+            );
 
             // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
             if ($formData['mode'] != 3) {
@@ -350,7 +327,7 @@ class Items extends Core\Modules\AdminController
                 );
             }
 
-            $this->menusCache->setMenuItemsCache();
+            $this->menusCache->saveMenusCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -360,5 +337,65 @@ class Items extends Core\Modules\AdminController
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return string
+     */
+    protected function fetchMenuItemModeForSave(array $formData)
+    {
+        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return string
+     */
+    protected function fetchMenuItemUriForSave(array $formData)
+    {
+        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']);
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    private function fetchMenuItemModes($value = '')
+    {
+        $values_mode = [1, 2, 3];
+        $lang_mode = [
+            $this->lang->t('menus', 'module'),
+            $this->lang->t('menus', 'dynamic_page'),
+            $this->lang->t('menus', 'hyperlink')
+        ];
+        if ($this->articlesHelpers) {
+            $values_mode[] = 4;
+            $lang_mode[] = $this->lang->t('menus', 'article');
+        }
+
+        return $this->get('core.helpers.forms')->selectGenerator('mode', $values_mode, $lang_mode, $value);
+    }
+
+    /**
+     * @param array $menuItem
+     *
+     * @return array
+     */
+    protected function fetchModules(array $menuItem = [])
+    {
+        $modules = $this->modules->getAllModules();
+        foreach ($modules as $row) {
+            $row['dir'] = strtolower($row['dir']);
+            $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry(
+                'module',
+                $row['dir'],
+                !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : ''
+            );
+        }
+        return $modules;
     }
 }

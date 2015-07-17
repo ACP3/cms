@@ -13,18 +13,11 @@ class Breadcrumb
 {
     /**
      * Enthält alle Schritte der Brotkrümelspur,
-     * welche sich aus der Navigationsstruktur der Website ergeben
-     *
-     * @var array
-     */
-    protected $stepsFromDb = [];
-    /**
-     * Enthält alle Schritte der Brotkrümelspur,
      * welche von den Modulen festgelegt werden
      *
      * @var array
      */
-    protected $stepsFromModules = [];
+    protected $steps = [];
 
     /**
      * @var array
@@ -61,11 +54,7 @@ class Breadcrumb
     /**
      * @var \ACP3\Core\Config
      */
-    protected $seoConfig;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
-     */
-    protected $menusModel;
+    protected $config;
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
@@ -86,19 +75,7 @@ class Breadcrumb
         $this->lang = $lang;
         $this->request = $request;
         $this->router = $router;
-        $this->seoConfig = $config;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
-     *
-     * @return $this
-     */
-    public function setMenusModel(Menus\Model $menusModel)
-    {
-        $this->menusModel = $menusModel;
-
-        return $this;
+        $this->config = $config;
     }
 
     /**
@@ -106,42 +83,6 @@ class Breadcrumb
      */
     public function prePopulate()
     {
-        if ($this->request->getArea() !== 'admin' && $this->menusModel) {
-            $in = [
-                $this->request->getQuery(),
-                $this->request->getUriWithoutPages(),
-                $this->request->getFullPath(),
-                $this->request->getModuleAndController(),
-                $this->request->getModule()
-            ];
-            $items = $this->menusModel->getMenuItemsByUri($in);
-            $c_items = count($items);
-
-            // Populate the breadcrumb with internal pages
-            for ($i = 0; $i < $c_items; ++$i) {
-                $this->_appendFromDB($items[$i]['title'], $items[$i]['uri']);
-            }
-        }
-    }
-
-    /**
-     * Zuweisung einer neuen Stufe zur Brotkrümelspur
-     *
-     * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
-     * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
-     *
-     * @return $this
-     */
-    protected function _appendFromDB($title, $path = '')
-    {
-        $this->stepsFromDb[] = [
-            'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
-        ];
-
-        return $this;
     }
 
     /**
@@ -191,14 +132,10 @@ class Breadcrumb
      */
     public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
-        if ($dbSteps === true) {
-            $index = count($this->stepsFromDb) - (!empty($this->stepsFromDb) ? 1 : 0);
-            $this->stepsFromDb[$index]['title'] = $title;
-            $this->stepsFromDb[$index]['uri'] = !empty($path) ? $this->router->route($path) : '';
-        } else {
-            $index = count($this->stepsFromModules) - (!empty($this->stepsFromModules) ? 1 : 0);
-            $this->stepsFromModules[$index]['title'] = $title;
-            $this->stepsFromModules[$index]['uri'] = !empty($path) ? $this->router->route($path) : '';
+        if ($dbSteps === false) {
+            $index = count($this->steps) - (!empty($this->steps) ? 1 : 0);
+            $this->steps[$index]['title'] = $title;
+            $this->steps[$index]['uri'] = !empty($path) ? $this->router->route($path) : '';
         }
 
         return $this;
@@ -225,7 +162,7 @@ class Breadcrumb
      */
     public function getSiteTitle()
     {
-        return $this->seoConfig->getSettings('seo')['title'];
+        return $this->config->getSettings('seo')['title'];
     }
 
     /**
@@ -270,9 +207,9 @@ class Breadcrumb
     {
         // Breadcrumb of the admin panel
         if ($this->request->getArea() === 'admin') {
-            $this->_setBreadcrumbCacheForAdmin();
+            $this->setBreadcrumbCacheForAdmin();
         } else { // Breadcrumb for frontend requests
-            $this->_setBreadcrumbCacheForFrontend();
+            $this->setBreadcrumbCacheForFrontend();
         }
 
         // Mark the last breadcrumb
@@ -282,11 +219,9 @@ class Breadcrumb
     /**
      * Sets the breadcrumb steps cache for admin panel action requests
      */
-    private function _setBreadcrumbCacheForAdmin()
+    private function setBreadcrumbCacheForAdmin()
     {
-        $module = $this->request->getModule();
-
-        if ($module !== 'acp') {
+        if ($this->request->getModule() !== 'acp') {
             // An postfix for the page title has been already set
             if (!empty($this->title['postfix'])) {
                 $this->setTitlePostfix($this->title['postfix'] . $this->getTitleSeparator() . $this->lang->t('system', 'acp'));
@@ -295,35 +230,29 @@ class Breadcrumb
             }
         }
 
-        // No breadcrumb is set yet
-        if (empty($this->stepsFromModules)) {
-            $controller = $this->request->getController();
-            $file = $this->request->getControllerAction();
-            $languageKey = $this->request->getArea() . '_' . $controller . '_' . $file;
-            $languageKeyIndex = $this->request->getArea() . '_' . $controller . '_index';
-
+        // No breadcrumb has been set yet
+        if (empty($this->steps)) {
             $this->append($this->lang->t('system', 'acp'), 'acp/acp');
 
-            if ($module !== 'acp') {
-                $this->append($this->lang->t($module, $module), 'acp/' . $module);
+            if ($this->request->getModule() !== 'acp') {
+                $this->append(
+                    $this->lang->t($this->request->getModule(), $this->request->getModule()),
+                    'acp/' . $this->request->getModule()
+                );
 
-                $serviceId = $module . '.controller.admin.' . $controller;
-                if ($controller !== 'index' &&
-                    method_exists($this->container->get($serviceId), 'actionIndex')
-                ) {
-                    $this->append($this->lang->t($module, $languageKeyIndex), 'acp/' . $module . '/' . $controller);
-                }
-                if ($file !== 'index') {
-                    $this->append($this->lang->t($module, $languageKey), 'acp/' . $module . '/' . $controller . '/' . $file);
-                }
+                $this->setControllerActionBreadcrumbs();
             }
         } else { // Prepend breadcrumb steps, if there have been already some steps set
-            if ($module !== 'acp') {
-                $this->prepend($this->lang->t($module, $module), 'acp/' . $module);
+            if ($this->request->getModule() !== 'acp') {
+                $this->prepend(
+                    $this->lang->t($this->request->getModule(), $this->request->getModule()),
+                    'acp/' . $this->request->getModule()
+                );
             }
+
             $this->prepend($this->lang->t('system', 'acp'), 'acp/acp');
         }
-        $this->breadcrumbCache = $this->stepsFromModules;
+        $this->breadcrumbCache = $this->steps;
     }
 
     /**
@@ -351,7 +280,7 @@ class Breadcrumb
      */
     public function append($title, $path = '')
     {
-        $this->stepsFromModules[] = [
+        $this->steps[] = [
             'title' => $title,
             'uri' => !empty($path) ? $this->router->route($path) : ''
         ];
@@ -375,49 +304,62 @@ class Breadcrumb
             'title' => $title,
             'uri' => $this->router->route($path)
         ];
-        array_unshift($this->stepsFromModules, $step);
+        array_unshift($this->steps, $step);
         return $this;
     }
 
     /**
      * Sets the breadcrumb steps cache for frontend action requests
      */
-    private function _setBreadcrumbCacheForFrontend()
+    protected function setBreadcrumbCacheForFrontend()
     {
         // No breadcrumb has been set yet
-        if (empty($this->stepsFromModules)) {
-            $module = $this->request->getModule();
-            $controller = $this->request->getController();
-            $file = $this->request->getControllerAction();
-            $languageKey = $this->request->getArea() . '_' . $controller . '_' . $file;
-            $languageKeyIndex = $this->request->getArea() . '_' . $controller . '_index';
-
-            if ($module !== 'errors') {
-                $this->append($this->lang->t($module, $module), $module);
+        if (empty($this->steps)) {
+            if ($this->request->getModule() !== 'errors') {
+                $this->append(
+                    $this->lang->t($this->request->getModule(), $this->request->getModule()),
+                    $this->request->getModule()
+                );
             }
 
-            $serviceId = $module . '.controller.frontend.' . $controller;
-            if ($controller !== 'index' &&
-                method_exists($this->container->get($serviceId), 'actionIndex')
-            ) {
-                $this->append($this->lang->t($module, $languageKeyIndex), $module . '/' . $controller);
-            }
-            if ($file !== 'index') {
-                $this->append($this->lang->t($module, $languageKey), 'acp/' . $module . '/' . $controller . '/' . $file);
-            }
+            $this->setControllerActionBreadcrumbs();
         }
 
-        if (!empty($this->stepsFromModules) && empty($this->stepsFromDb)) {
-            $this->breadcrumbCache = $this->stepsFromModules;
-        } else {
-            $this->breadcrumbCache = $this->stepsFromDb;
+        $this->breadcrumbCache = $this->steps;
+    }
 
-            if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->stepsFromModules[0]['uri']) {
-                $c_stepsFromModules = count($this->stepsFromModules);
-                for ($i = 1; $i < $c_stepsFromModules; ++$i) {
-                    $this->breadcrumbCache[] = $this->stepsFromModules[$i];
-                }
-            }
+    private function setControllerActionBreadcrumbs()
+    {
+        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController();
+        if ($this->request->getController() !== 'index' &&
+            method_exists($this->container->get($serviceId), 'actionIndex')
+        ) {
+            $this->append(
+                $this->lang->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
+                $this->request->getModuleAndController()
+            );
         }
+        if ($this->request->getControllerAction() !== 'index') {
+            $this->append(
+                $this->lang->t($this->request->getModule(), $this->getControllerActionTitle()),
+                $this->request->getFullPath()
+            );
+        }
+    }
+
+    /**
+     * @return string
+     */
+    private function getControllerActionTitle()
+    {
+        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getControllerAction();
+    }
+
+    /**
+     * @return string
+     */
+    private function getControllerIndexActionTitle()
+    {
+        return $languageKeyIndex = $this->request->getArea() . '_' . $this->request->getController() . '_index';
     }
 }

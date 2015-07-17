@@ -199,7 +199,7 @@ class Index extends Core\Modules\AdminController
             }
 
             if ($this->menusCache) {
-                $this->menusCache->setMenuItemsCache();
+                $this->menusCache->saveMenusCache();
             }
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
@@ -287,7 +287,7 @@ class Index extends Core\Modules\AdminController
                 (int)$formData['seo_robots']
             );
 
-            $this->articlesCache->setCache($id);
+            $this->articlesCache->saveCache($id);
 
             $this->createOrUpdateMenuItem($formData, $id);
 
@@ -345,7 +345,7 @@ class Index extends Core\Modules\AdminController
             }
 
             // Refresh the menu items cache
-            $this->menusCache->setMenuItemsCache();
+            $this->menusCache->saveMenusCache();
         }
     }
 }

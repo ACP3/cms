@@ -154,7 +154,7 @@ class Image
      */
     protected function getCacheFileName()
     {
-        return CACHE_DIR . $this->cacheDir . $this->setCacheName();
+        return CACHE_DIR . $this->cacheDir . $this->getCacheName();
     }
 
     /**
@@ -162,7 +162,7 @@ class Image
      *
      * @return string
      */
-    protected function setCacheName()
+    protected function getCacheName()
     {
         return $this->cachePrefix . substr($this->file, strrpos($this->file, '/') + 1);
     }

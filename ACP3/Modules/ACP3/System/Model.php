@@ -27,7 +27,7 @@ class Model extends Core\Model
      */
     public function getModuleId($moduleName)
     {
-        return $this->db->fetchColumn('SELECT `id` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]);
+        return $this->db->fetchColumn('SELECT `id` FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]);
     }
 
     /**
@@ -35,7 +35,7 @@ class Model extends Core\Model
      */
     public function getAllModuleSettings()
     {
-        return $this->db->fetchAll('SELECT m.name AS module_name, s.name, s.value FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SETTINGS . ' AS s JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS m ON(m.id = s.module_id) ORDER BY s.module_id');
+        return $this->db->fetchAll('SELECT m.name AS module_name, s.name, s.value FROM ' . $this->getTableName(static::TABLE_NAME_SETTINGS) . ' AS s JOIN ' . $this->getTableName() . ' AS m ON(m.id = s.module_id) ORDER BY s.module_id');
     }
 
     /**
@@ -45,7 +45,7 @@ class Model extends Core\Model
      */
     public function getSettingsByModuleName($moduleName)
     {
-        return $this->db->fetchAll('SELECT s.name, s.value FROM ' . $this->db->getPrefix() . static::TABLE_NAME_SETTINGS . ' AS s JOIN ' . $this->db->getPrefix() . static::TABLE_NAME . ' AS m ON(m.id = s.module_id) WHERE m.name = ?', [$moduleName]);
+        return $this->db->fetchAll('SELECT s.name, s.value FROM ' . $this->getTableName(static::TABLE_NAME_SETTINGS) . ' AS s JOIN ' . $this->getTableName() . ' AS m ON(m.id = s.module_id) WHERE m.name = ?', [$moduleName]);
     }
 
     /**
@@ -55,7 +55,7 @@ class Model extends Core\Model
      */
     public function getModuleSchemaVersion($moduleName)
     {
-        return $this->db->fetchColumn('SELECT `version` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]);
+        return $this->db->fetchColumn('SELECT `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]);
     }
 
     /**
@@ -65,7 +65,7 @@ class Model extends Core\Model
      */
     public function moduleExists($moduleName)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]) > 0;
     }
 
     /**
@@ -75,7 +75,7 @@ class Model extends Core\Model
      */
     public function getInfoByModuleName($moduleName)
     {
-        return $this->db->fetchAssoc('SELECT `id`, `version`, `active` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `name` = ?', [$moduleName]);
+        return $this->db->fetchAssoc('SELECT `id`, `version`, `active` FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]);
     }
 
     /**
@@ -85,6 +85,6 @@ class Model extends Core\Model
      */
     public function getModuleNameById($moduleId)
     {
-        return $this->db->fetchColumn('SELECT `name` FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE `id` = ?', [$moduleId]);
+        return $this->db->fetchColumn('SELECT `name` FROM ' . $this->getTableName() . ' WHERE `id` = ?', [$moduleId]);
     }
 }

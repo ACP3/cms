@@ -18,7 +18,7 @@ class Model extends Core\Model
      */
     public function uriAliasExists($path)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE uri = ?', [$path]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE uri = ?', [$path]) > 0;
     }
 
     /**
@@ -29,7 +29,7 @@ class Model extends Core\Model
      */
     public function uriAliasExistsByAlias($alias, $path = '')
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE alias = ? AND uri != ?', [$alias, $path]) > 0;
     }
 
     /**
@@ -37,7 +37,7 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName());
     }
 
     /**
@@ -47,7 +47,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE id = ?', [(int)$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [(int)$id]);
     }
 
     /**
@@ -55,7 +55,7 @@ class Model extends Core\Model
      */
     public function getAllMetaTags()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->db->getPrefix() . static::TABLE_NAME . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE alias != "" OR keywords != "" OR description != "" OR robots != 0');
     }
 
     /**
@@ -65,6 +65,6 @@ class Model extends Core\Model
      */
     public function getUriByAlias($alias)
     {
-        return $this->db->fetchColumn('SELECT uri FROM ' . $this->db->getPrefix() . 'seo WHERE alias = ?', [$alias]);
+        return $this->db->fetchColumn('SELECT uri FROM ' . $this->getTableName() . ' WHERE alias = ?', [$alias]);
     }
 }

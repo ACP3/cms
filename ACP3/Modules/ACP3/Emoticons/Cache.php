@@ -37,7 +37,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache()
     {
         if ($this->cache->contains(static::CACHE_ID) === false) {
-            $this->setCache();
+            $this->saveCache();
         }
 
         return $this->cache->fetch(static::CACHE_ID);
@@ -48,7 +48,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache()
+    public function saveCache()
     {
         $emoticons = $this->emoticonsModel->getAll();
         $c_emoticons = count($emoticons);

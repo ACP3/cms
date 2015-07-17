@@ -63,11 +63,25 @@ interface RequestInterface
     public function getFullPath();
 
     /**
+     * Returns the currently requested module, controller and controller action without the area prefix
+     *
+     * @return string
+     */
+    public function getFullPathWithoutArea();
+
+    /**
      * Returns the currently requested module and controller
      *
      * @return string
      */
     public function getModuleAndController();
+
+    /**
+     * Returns the currently requested module and controller without the area prefix
+     *
+     * @return string
+     */
+    public function getModuleAndControllerWithoutArea();
 
     /**
      * @return bool

@@ -137,7 +137,26 @@ class Request extends AbstractRequest
     /**
      * @inheritdoc
      */
+    public function getFullPathWithoutArea()
+    {
+        return $this->getModuleAndControllerWithoutArea() . $this->controllerAction . '/';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getModuleAndController()
+    {
+        $path = ($this->area === 'admin') ? 'acp/' : '';
+        $path .= $this->getModuleAndControllerWithoutArea();
+
+        return $path;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getModuleAndControllerWithoutArea()
     {
         return $this->module . '/' . $this->controller . '/';
     }
@@ -322,7 +341,7 @@ class Request extends AbstractRequest
             }
 
             // Keine entsprechende Module-Action gefunden -> muss Alias sein
-            if ($this->modules->actionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
+            if ($this->modules->controllerActionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
                 $length = 0;
                 foreach ($query as $row) {
                     if (strpos($row, '_') !== false) {

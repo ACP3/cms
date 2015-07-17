@@ -83,7 +83,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->emoticonsModel->insert($insertValues);
 
-            $this->emoticonsCache->setCache();
+            $this->emoticonsCache->saveCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -117,7 +117,7 @@ class Index extends Core\Modules\AdminController
                 }
             }
 
-            $this->emoticonsCache->setCache();
+            $this->emoticonsCache->saveCache();
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
         } elseif (is_string($items)) {
@@ -173,7 +173,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->emoticonsModel->update($updateValues, $id);
 
-            $this->emoticonsCache->setCache();
+            $this->emoticonsCache->saveCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

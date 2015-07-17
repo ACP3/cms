@@ -58,7 +58,7 @@ class Config
                 ];
                 $bool = $this->systemModel->update($updateValues, $where, System\Model::TABLE_NAME_SETTINGS);
             }
-            $bool2 = $this->setCache();
+            $bool2 = $this->saveCache();
         }
 
         return $bool !== false && $bool2 !== false;
@@ -69,7 +69,7 @@ class Config
      *
      * @return bool
      */
-    protected function setCache()
+    protected function saveCache()
     {
         $settings = $this->systemModel->getAllModuleSettings();
 
@@ -98,7 +98,7 @@ class Config
     {
         if ($this->settings === []) {
             if ($this->coreCache->contains('settings') === false) {
-                $this->setCache();
+                $this->saveCache();
             }
 
             $this->settings = $this->coreCache->fetch('settings');

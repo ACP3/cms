@@ -346,7 +346,7 @@ class SEO
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
         $bool = $this->seoModel->delete($path, 'uri');
-        return $bool !== false && $this->seoCache->setCache() !== false;
+        return $bool !== false && $this->seoCache->saveCache() !== false;
     }
 
     /**
@@ -380,6 +380,6 @@ class SEO
             $bool = $this->seoModel->insert($values);
         }
 
-        return $bool !== false && $this->seoCache->setCache() !== false;
+        return $bool !== false && $this->seoCache->saveCache() !== false;
     }
 }

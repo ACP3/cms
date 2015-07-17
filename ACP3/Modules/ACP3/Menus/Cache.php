@@ -39,25 +39,25 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Bindet die gecacheten Menüpunkte ein
+     * Returns the cached menu items
      *
      * @return array
      */
-    public function getMenuItemsCache()
+    public function getMenusCache()
     {
         if ($this->cache->contains(self::CACHE_ID) === false) {
-            $this->setMenuItemsCache();
+            $this->saveMenusCache();
         }
 
         return $this->cache->fetch(self::CACHE_ID);
     }
 
     /**
-     * Erstellt den Cache für die Menüpunkte
+     * Saves the menu items to the cache
      *
      * @return boolean
      */
-    public function setMenuItemsCache()
+    public function saveMenusCache()
     {
         $items = $this->menuModel->getAllMenuItems();
         $c_items = count($items);
@@ -67,7 +67,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
             $c_menus = count($menus);
 
             for ($i = 0; $i < $c_menus; ++$i) {
-                $this->setVisibleMenuItemsCache($menus[$i]['index_name']);
+                $this->saveVisibleMenuItemsCache($menus[$i]['index_name']);
             }
 
             for ($i = 0; $i < $c_items; ++$i) {
@@ -89,58 +89,78 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
             for ($i = 0; $i < $c_items; ++$i) {
                 $items[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $items[$i]['mode']);
-
-                // Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
-                $first = $last = true;
-                if ($i > 0) {
-                    for ($j = $i - 1; $j >= 0; --$j) {
-                        if ($items[$j]['parent_id'] == $items[$i]['parent_id'] && $items[$j]['block_name'] == $items[$i]['block_name']) {
-                            $first = false;
-                            break;
-                        }
-                    }
-                }
-
-                for ($j = $i + 1; $j < $c_items; ++$j) {
-                    if ($items[$i]['parent_id'] == $items[$j]['parent_id'] && $items[$j]['block_name'] == $items[$i]['block_name']) {
-                        $last = false;
-                        break;
-                    }
-                }
-
-                $items[$i]['first'] = $first;
-                $items[$i]['last'] = $last;
+                $items[$i]['first'] = $this->isFirstItemInSet($i, $items);
+                $items[$i]['last'] = $this->isLastItemInSet($i, $items);
             }
         }
         return $this->cache->save(self::CACHE_ID, $items);
     }
 
     /**
-     * Erstellt den Cache für die Menüpunkte
+     * Svaes the visible menu items to the cache
      *
-     * @param $block
+     * @param string $menuIdentifier
      *
      * @return boolean
      */
-    public function setVisibleMenuItemsCache($block)
+    public function saveVisibleMenuItemsCache($menuIdentifier)
     {
-        $items = $this->menuModel->getVisibleMenuItemsByBlockName($block);
-        return $this->cache->save(self::CACHE_ID_VISIBLE . $block, $items);
+        return $this->cache->save(
+            self::CACHE_ID_VISIBLE . $menuIdentifier,
+            $this->menuModel->getVisibleMenuItemsByBlockName($menuIdentifier)
+        );
     }
 
     /**
-     * Bindet die gecacheten Menüpunkte ein
+     * Returns the cached visible menu items
      *
-     * @param $block
+     * @param string $menuIdentifier
      *
      * @return array
      */
-    public function getVisibleMenuItems($block)
+    public function getVisibleMenuItems($menuIdentifier)
     {
-        if ($this->cache->contains(self::CACHE_ID_VISIBLE . $block) === false) {
-            $this->setVisibleMenuItemsCache($block);
+        if ($this->cache->contains(self::CACHE_ID_VISIBLE . $menuIdentifier) === false) {
+            $this->saveVisibleMenuItemsCache($menuIdentifier);
         }
 
-        return $this->cache->fetch(self::CACHE_ID_VISIBLE . $block);
+        return $this->cache->fetch(self::CACHE_ID_VISIBLE . $menuIdentifier);
+    }
+
+    /**
+     * @param int $index
+     * @param array $items
+     *
+     * @return bool
+     */
+    protected function isFirstItemInSet($index, array $items)
+    {
+        if ($index > 0) {
+            for ($j = $index - 1; $j >= 0; --$j) {
+                if ($items[$j]['parent_id'] == $items[$index]['parent_id'] && $items[$j]['block_name'] == $items[$index]['block_name']) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int $index
+     * @param array $items
+     *
+     * @return bool
+     */
+    protected function isLastItemInSet($index, array $items)
+    {
+        $c_items = count($items);
+        for ($j = $index + 1; $j < $c_items; ++$j) {
+            if ($items[$index]['parent_id'] == $items[$j]['parent_id'] && $items[$j]['block_name'] == $items[$index]['block_name']) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -1,4 +1,5 @@
 parameters:
+  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb'
   menus.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Index'
   menus.controller.admin.items.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Items'
   menus.cache.fqdn: 'ACP3\Modules\ACP3\Menus\Cache'
@@ -10,13 +11,17 @@ parameters:
   smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\View\Renderer\Smarty\Functions\Navbar'
 
 services:
+  core.breadcrumb:
+    class: %core.breadcrumb.fqdn%
+    arguments: ['@service_container', '@core.lang', '@core.request', '@core.router', '@core.config', @menus.model]
+
   menus.controller.admin.index:
     class: %menus.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@menus.helpers', '@menus.model', '@menus.cache', '@menus.validator']
+    arguments: ['@core.context.admin', '@core.nestedSet', '@core.helpers.formToken', '@menus.helpers', '@menus.model', '@menus.cache', '@menus.validator']
 
   menus.controller.admin.items:
     class: %menus.controller.admin.items.fqdn%
-    arguments: ['@core.context.admin', '@core.router.aliases', '@core.db', '@core.helpers.formToken', '@menus.model', '@menus.cache', '@menus.helpers', '@menus.validator']
+    arguments: ['@core.context.admin', '@core.router.aliases', '@core.nestedSet', '@core.helpers.formToken', '@menus.model', '@menus.cache', '@menus.helpers', '@menus.validator']
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
@@ -30,7 +35,7 @@ services:
 
   menus.helpers:
     class: %menus.helpers.fqdn%
-    arguments: ['@core.db', '@core.lang', '@core.helpers.forms', '@menus.model', '@menus.cache']
+    arguments: ['@core.lang', @core.nestedSet, '@core.helpers.forms', '@menus.model', '@menus.cache']
 
   menus.model:
     class: %menus.model.fqdn%

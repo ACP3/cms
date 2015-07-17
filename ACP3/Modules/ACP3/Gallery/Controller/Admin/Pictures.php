@@ -130,7 +130,7 @@ class Pictures extends Core\Modules\AdminController
                     $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
                     $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
 
-                    $this->galleryCache->setCache($picture['gallery_id']);
+                    $this->galleryCache->saveCache($picture['gallery_id']);
                 }
             }
 
@@ -193,7 +193,7 @@ class Pictures extends Core\Modules\AdminController
 
             $galleryId = $this->galleryModel->getGalleryIdFromPictureId($id);
 
-            $this->galleryCache->setCache($galleryId);
+            $this->galleryCache->saveCache($galleryId);
 
             $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
         }
@@ -227,7 +227,7 @@ class Pictures extends Core\Modules\AdminController
             $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
             $bool2 = $this->galleryHelpers->generatePictureAlias($lastId);
 
-            $this->galleryCache->setCache($id);
+            $this->galleryCache->saveCache($id);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -269,7 +269,7 @@ class Pictures extends Core\Modules\AdminController
 
             $bool = $this->galleryModel->update($updateValues, $id, Gallery\Model::TABLE_NAME_PICTURES);
 
-            $this->galleryCache->setCache($picture['gallery_id']);
+            $this->galleryCache->saveCache($picture['gallery_id']);
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 

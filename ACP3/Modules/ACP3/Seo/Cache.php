@@ -35,7 +35,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache()
     {
         if ($this->cache->contains('seo') === false) {
-            $this->setCache();
+            $this->saveCache();
         }
 
         return $this->cache->fetch('seo');
@@ -46,7 +46,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache()
+    public function saveCache()
     {
         $aliases = $this->seoModel->getAllMetaTags();
         $c_aliases = count($aliases);

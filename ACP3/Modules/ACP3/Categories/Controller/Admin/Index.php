@@ -96,7 +96,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->categoriesModel->insert($insertValues);
 
-            $this->categoriesCache->setCache(strtolower($formData['module']));
+            $this->categoriesCache->saveCache(strtolower($formData['module']));
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
@@ -205,7 +205,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->categoriesModel->update($updateValues, $id);
 
-            $this->categoriesCache->setCache($this->categoriesModel->getModuleNameFromCategoryId($id));
+            $this->categoriesCache->saveCache($this->categoriesModel->getModuleNameFromCategoryId($id));
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
