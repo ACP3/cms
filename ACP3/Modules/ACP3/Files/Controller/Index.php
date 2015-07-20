@@ -64,16 +64,17 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @param int $id
+     * @param int    $id
+     * @param string $action
      *
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionDetails($id)
+    public function actionDetails($id, $action = '')
     {
         if ($this->filesModel->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesCache->getCache($id);
 
-            if ($this->request->getParameters()->get('action') === 'confirmed') {
+            if ($action === 'download') {
                 $path = UPLOADS_DIR . 'files/';
                 if (is_file($path . $file['file'])) {
                     $formatter = $this->get('core.helpers.stringFormatter');
@@ -108,7 +109,7 @@ class Index extends Core\Modules\FrontendController
                     $comments = $this->get('comments.controller.frontend.index');
                     $comments
                         ->setModule('files')
-                        ->setEntryId($this->request->getParameters()->get('id'));
+                        ->setEntryId($id);
                     $this->view->assign('comments', $comments->actionIndex());
                 }
             }
