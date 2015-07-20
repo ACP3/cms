@@ -1,5 +1,5 @@
 <?php
-namespace ACP3\Modules\ACP3\Menus\View\Renderer\Smarty\Functions;
+namespace ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
@@ -7,7 +7,7 @@ use ACP3\Modules\ACP3\Menus;
 
 /**
  * Class Navbar
- * @package ACP3\Modules\ACP3\Menus\View\Renderer\Smarty\Functions
+ * @package ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions
  */
 class Navbar extends AbstractFunction
 {

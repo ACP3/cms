@@ -8,7 +8,7 @@ parameters:
   menus.validator.fqdn: 'ACP3\Modules\ACP3\Menus\Validator'
   menus.installer.schema.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Schema'
   menus.installer.migration.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Migration'
-  smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\View\Renderer\Smarty\Functions\Navbar'
+  smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar'
 
 services:
   core.breadcrumb:
