@@ -41,7 +41,7 @@ class Install extends AbstractController
     protected $installHelper;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\Context                    $context
+     * @param \ACP3\Installer\Core\Modules\Controller\Context $context
      * @param \ACP3\Installer\Core\Date                       $date
      * @param \ACP3\Core\Helpers\Secure                       $secureHelper
      * @param \ACP3\Installer\Modules\Install\Helpers\Install $installHelper
@@ -101,6 +101,7 @@ class Install extends AbstractController
             // Admin-User, Menüpunkte, News, etc. in die DB schreiben
             if ($bool === true) {
                 $this->_installSampleData($formData);
+                $this->configureModules($formData);
             }
 
             $this->setTemplate('install/install.result.tpl');
@@ -204,63 +205,90 @@ class Install extends AbstractController
      */
     private function _installSampleData(array $formData)
     {
+        $bool = $this->createSuperUser($formData);
+
+        // Install module sample data
+        $bool2 = $this->installModuleSampleData();
+
+        if ($bool === false || $bool2 === false) {
+            $this->view->assign('install_error', true);
+        }
+    }
+
+    /**
+     * Set the module settings
+     *
+     * @param array $formData
+     */
+    private function configureModules(array $formData)
+    {
+        $settings = [
+            'system' => [
+                'date_format_long' => Functions::strEncode($formData['date_format_long']),
+                'date_format_short' => Functions::strEncode($formData['date_format_short']),
+                'date_time_zone' => $formData['date_time_zone'],
+                'maintenance_message' => $this->lang->t('install', 'offline_message'),
+                'lang' => LANG
+            ],
+            'seo' => [
+                'title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
+            ],
+            'users' => [
+                'mail' => $formData['mail']
+            ],
+            'newsletter' => [
+                'mail' => $formData['mail'],
+                'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')
+            ],
+            'contact' => [
+                'mail' => $formData['mail'],
+                'disclaimer' => $this->lang->t('install', 'disclaimer')
+            ]
+        ];
+
+        foreach ($settings as $module => $data) {
+            $this->get('core.config')->setSettings($data, $module);
+        }
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return bool
+     */
+    private function createSuperUser(array $formData)
+    {
         /** @var \ACP3\Core\DB db */
         $this->db = $this->get('core.db');
 
         $salt = $this->secureHelper->salt(12);
         $currentDate = gmdate('Y-m-d H:i:s');
 
-        $newsModuleId = $this->db->getConnection()->fetchColumn("SELECT `id` FROM `{$this->db->getPrefix()}modules` WHERE `name` = ?", ['news']);
         $queries = [
-            "INSERT INTO `{pre}users` VALUES ('', 1, " . $this->db->getConnection()->quote($formData["user_name"]) . ", '" . $this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $formData["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . $this->db->getConnection()->quote($formData["date_format_long"]) . ", " . $this->db->getConnection()->quote($formData["date_format_short"]) . ", '" . $formData["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
-            'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('install', 'category_name') . '\', \'\', \'' . $this->lang->t('install', 'category_description') . '\', \'' . $newsModuleId . '\');',
-            'INSERT INTO `{pre}news` VALUES (\'\', \'' . $currentDate . '\', \'' . $currentDate . '\', \'' . $this->lang->t('install', 'news_headline') . '\', \'' . $this->lang->t('install', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $this->lang->t('install', 'pages_news') . '\', \'news\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 1, 2, 3, 1, \'' . $this->lang->t('install', 'pages_newsletter') . '\', \'newsletter\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 3, 0, 5, 6, 1, \'' . $this->lang->t('install', 'pages_files') . '\', \'files\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 4, 0, 7, 8, 1, \'' . $this->lang->t('install', 'pages_gallery') . '\', \'gallery\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 5, 0, 9, 10, 1, \'' . $this->lang->t('install', 'pages_guestbook') . '\', \'guestbook\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 6, 0, 11, 12, 1, \'' . $this->lang->t('install', 'pages_polls') . '\', \'polls\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 7, 0, 13, 14, 1, \'' . $this->lang->t('install', 'pages_search') . '\', \'search\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 2, 8, 0, 15, 16, 1, \'' . $this->lang->t('install', 'pages_contact') . '\', \'contact\', 1);',
-            'INSERT INTO `{pre}menu_items` VALUES (\'\', 2, 2, 9, 0, 17, 18, 1, \'' . $this->lang->t('install', 'pages_imprint') . '\', \'contact/index/imprint/\', 1);',
-            'INSERT INTO `{pre}menus` VALUES (1, \'main\', \'' . $this->lang->t('install', 'pages_main') . '\');',
-            'INSERT INTO `{pre}menus` VALUES (2, \'sidebar\', \'' . $this->lang->t('install', 'pages_sidebar') . '\');',
+            "INSERT INTO
+                `{pre}users`
+            VALUES
+                ('', 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"])}:{$salt}', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{LANG}', '20', '', '{$currentDate}');",
         ];
 
-        if ($this->installHelper->executeSqlQueries($queries, $this->db) === false) {
-            $this->view->assign('install_error', true);
+        return $this->get('core.modules.schemaHelper')->executeSqlQueries($queries);
+    }
+
+    /**
+     * @return bool
+     */
+    private function installModuleSampleData()
+    {
+        $modules = array_diff(scandir(MODULES_DIR . 'ACP3/'), ['.', '..']);
+
+        foreach ($modules as $module) {
+            $module = strtolower($module);
+
+            if ($this->installHelper->installSampleData($module, $this->container, $this->get('core.modules.schemaHelper')) === false) {
+                return false;
+            }
         }
 
-        // Modulkonfigurationsdateien schreiben
-        $systemSettings = [
-            'date_format_long' => Functions::strEncode($formData['date_format_long']),
-            'date_format_short' => Functions::strEncode($formData['date_format_short']),
-            'date_time_zone' => $formData['date_time_zone'],
-            'maintenance_message' => $this->lang->t('install', 'offline_message'),
-            'lang' => LANG
-        ];
-
-        $this->get('core.config')->setSettings($systemSettings, 'system');
-
-        $this->get('core.config')->setSettings(
-            ['title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'],
-            'seo'
-        );
-
-        $this->get('core.config')->setSettings(
-            ['mail' => $formData['mail']],
-            'users'
-        );
-
-        $this->get('core.config')->setSettings(
-            ['mail' => $formData['mail'], 'disclaimer' => $this->lang->t('install', 'disclaimer')],
-            'contact'
-        );
-
-        $this->get('core.config')->setSettings(
-            ['mail' => $formData['mail'], 'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')],
-            'newsletter'
-        );
+        return true;
     }
 }

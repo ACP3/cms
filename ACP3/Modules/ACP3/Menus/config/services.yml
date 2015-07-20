@@ -8,6 +8,7 @@ parameters:
   menus.validator.fqdn: 'ACP3\Modules\ACP3\Menus\Validator'
   menus.installer.schema.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Schema'
   menus.installer.migration.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Migration'
+  menus.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\SampleData'
   smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar'
 
 services:
@@ -52,6 +53,10 @@ services:
 
   menus.installer.migration:
     class: %menus.installer.migration.fqdn%
+
+  menus.installer.sampleData:
+    class: %menus.installer.sampledata.fqdn%
+    parent: core.modules.installer.abstractSampleData
 
   smarty.plugin.navbar:
     class: %smarty.plugin.navbar.fqdn%

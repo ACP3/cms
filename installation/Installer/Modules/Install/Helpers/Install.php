@@ -3,6 +3,7 @@
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core;
+use ACP3\Core\Modules\SchemaHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 
@@ -56,33 +57,24 @@ class Install
     }
 
     /**
-     * @param array         $queries
-     * @param \ACP3\Core\DB $db
+     * @param string                                                    $module
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\Modules\SchemaHelper                           $schemaHelper
      *
      * @return bool
-     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executeSqlQueries(array $queries, Core\DB $db)
+    public function installSampleData($module, ContainerInterface $container, SchemaHelper $schemaHelper)
     {
-        if (count($queries) > 0) {
-            $search = ['{pre}', '{engine}', '{charset}'];
-            $replace = [$db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
+        $bool = true;
+        $serviceId = $module . '.installer.sampleData';
 
-            $db->getConnection()->beginTransaction();
-            try {
-                foreach ($queries as $query) {
-                    if (!empty($query)) {
-                        $db->getConnection()->query(str_replace($search, $replace, $query));
-                    }
-                }
-                $db->getConnection()->commit();
-            } catch (\Exception $e) {
-                $db->getConnection()->rollBack();
+        if ($container->has($serviceId)) {
+            /** @var Core\Modules\Installer\SampleDataInterface $moduleSampleData */
+            $moduleSampleData = $container->get($serviceId);
 
-                Core\Logger::warning('installer', $e);
-                return false;
-            }
+            $bool = $schemaHelper->executeSqlQueries($moduleSampleData->sampleData());
         }
-        return true;
+
+        return $bool;
     }
 }

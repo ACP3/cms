@@ -159,7 +159,7 @@ class Auth
      * @param int $userId
      *    Der angeforderte Benutzer
      *
-     * @return mixed
+     * @return array
      */
     public function getUserInfo($userId = 0)
     {
@@ -178,7 +178,7 @@ class Auth
             }
         }
 
-        return !empty($this->userInfo[$userId]) ? $this->userInfo[$userId] : false;
+        return !empty($this->userInfo[$userId]) ? $this->userInfo[$userId] : [];
     }
 
     /**

@@ -7,6 +7,7 @@ parameters:
   news.validator.fqdn: 'ACP3\Modules\ACP3\News\Validator'
   news.installer.schema.fqdn: 'ACP3\Modules\ACP3\News\Installer\Schema'
   news.installer.migration.fqdn: 'ACP3\Modules\ACP3\News\Installer\Migration'
+  news.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\News\Installer\SampleData'
 
 services:
   news.controller.admin.index:
@@ -45,3 +46,7 @@ services:
   news.installer.migration:
     class: %news.installer.migration.fqdn%
     parent: core.modules.installer.abstractMigration
+
+  news.installer.sampleData:
+    class: %news.installer.sampledata.fqdn%
+    parent: core.modules.installer.abstractSampleData

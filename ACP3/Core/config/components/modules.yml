@@ -38,6 +38,10 @@ services:
     abstract: true
     arguments: [@core.modules.schemaHelper]
 
+  core.modules.installer.abstractSampleData:
+    abstract: true
+    arguments: [@core.modules.schemaHelper]
+
   core.modules.controller:
     abstract: true
     arguments: ['@core.context']

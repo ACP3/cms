@@ -195,7 +195,7 @@ class Model extends Core\Model
     public function getLeftIdByUris($menu, $uris)
     {
         return $this->db->executeQuery(
-            "SELECT m.left_id FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} AS m JOIN {$this->getTableName(static::TABLE_NAME_ITEMS)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
+            "SELECT m.left_id FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} AS m JOIN {$this->getTableName()} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
             [$menu, $uris],
             [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN
         );
