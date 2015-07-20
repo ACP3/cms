@@ -96,12 +96,11 @@ class Navbar extends AbstractFunction
         $menu,
         Menus\Helpers\MenuConfiguration $menuConfig)
     {
-        // Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
         if (isset($this->menus[$menu])) {
             return $this->menus[$menu];
-        } else { // ...ansonsten Verarbeitung starten
-            return $this->generateMenu($menu, $menuConfig);
         }
+
+        return $this->generateMenu($menu, $menuConfig);
     }
 
     /**
@@ -121,20 +120,18 @@ class Navbar extends AbstractFunction
             $this->menus[$menu] = '';
 
             for ($i = 0; $i < $c_items; ++$i) {
-                $cssSelectors = $this->getMenuItemSelector($items[$i], $selected);
-
                 if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
                     $this->menus[$menu] .= $this->_processMenuItemWithChildren(
                         $menu,
                         $menuConfig,
                         $items[$i],
-                        $cssSelectors
+                        $this->getMenuItemSelector($items[$i], $selected)
                     );
                 } else {
                     $this->menus[$menu] .= $this->_processMenuItemWithoutChildren(
                         $menuConfig,
                         $items[$i],
-                        $cssSelectors
+                        $this->getMenuItemSelector($items[$i], $selected)
                     );
                     $this->menus[$menu] .= $this->closeOpenedMenus(
                         $menuConfig,
@@ -345,8 +342,8 @@ class Navbar extends AbstractFunction
     protected function prepareMenuHtmlAttributes($menu, Menus\Helpers\MenuConfiguration $menuConfig)
     {
         $bootstrapSelector = $menuConfig->isUseBootstrap() === true ? ' nav navbar-nav' : '';
-        $vavigationSelectors = !empty($menuConfig->getSelector()) ? ' ' . $menuConfig->getSelector() : $bootstrapSelector;
-        $attributes = ' class="navigation-' . $menu . $vavigationSelectors . '"';
+        $navigationSelectors = !empty($menuConfig->getSelector()) ? ' ' . $menuConfig->getSelector() : $bootstrapSelector;
+        $attributes = ' class="navigation-' . $menu . $navigationSelectors . '"';
         $attributes .= !empty($menuConfig->getInlineStyle()) ? ' style="' . $menuConfig->getInlineStyle() . '"' : '';
 
         return $attributes;

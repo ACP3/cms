@@ -19,7 +19,7 @@ class Model extends Core\Model
      */
     public function menuExists($id)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id", ['id' => $id]) > 0);
     }
 
     /**
@@ -31,7 +31,7 @@ class Model extends Core\Model
     public function menuExistsByName($indexName, $id = 0)
     {
         $where = !empty($id) ? ' AND id != :id' : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE index_name = :indexName' . $where, ['indexName' => $indexName, 'id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE index_name = :indexName" . $where, ['indexName' => $indexName, 'id' => $id]) > 0);
     }
 
     /**
@@ -41,7 +41,7 @@ class Model extends Core\Model
      */
     public function menuItemExists($id)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' WHERE id = :id', ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE id = :id", ['id' => $id]) > 0);
     }
 
     /**
@@ -51,7 +51,10 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc(
+            "SELECT * FROM {$this->getTableName()} WHERE id = ?",
+            [$id]
+        );
     }
 
     /**
@@ -61,7 +64,10 @@ class Model extends Core\Model
      */
     public function getOneMenuItemById($id)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc(
+            "SELECT * FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE id = ?",
+            [$id]
+        );
     }
 
     /**
@@ -71,7 +77,10 @@ class Model extends Core\Model
      */
     public function getOneMenuItemUri($uri)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' WHERE uri = ?', [$uri]);
+        return $this->db->fetchAssoc(
+            "SELECT * FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE uri = ?",
+            [$uri]
+        );
     }
 
     /**
@@ -81,47 +90,62 @@ class Model extends Core\Model
      */
     public function getAllItemsByBlockId($blockId)
     {
-        return $this->db->fetchAll('SELECT id FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' WHERE block_id = ?', [$blockId]);
+        return $this->db->fetchAll(
+            "SELECT `id` FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE block_id = ?",
+            [$blockId]
+        );
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return mixed
      */
     public function getMenuNameById($id)
     {
-        return $this->db->fetchColumn('SELECT index_name FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn(
+            "SELECT `index_name` FROM {$this->getTableName()} WHERE id = ?",
+            [$id]
+        );
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return mixed
      */
     public function getMenuItemUriById($id)
     {
-        return $this->db->fetchColumn('SELECT uri FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn(
+            "SELECT `uri` FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE id = ?",
+            [$id]
+        );
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return mixed
      */
     public function getMenuItemBlockIdById($id)
     {
-        return $this->db->fetchColumn('SELECT block_id FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn(
+            "SELECT `block_id` FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE id = ?",
+            [$id]
+        );
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      *
      * @return mixed
      */
     public function getMenuItemIdByUri($uri)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' WHERE uri = ?', [$uri]);
+        return $this->db->fetchColumn(
+            "SELECT `id` FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE uri = ?",
+            [$uri]
+        );
     }
 
     /**
@@ -132,8 +156,10 @@ class Model extends Core\Model
      */
     public function getAllMenus($limitStart = '', $resultsPerPage = '')
     {
-        $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY title ASC, id ASC' . $limitStmt);
+        return $this->db->fetchAll(
+            "SELECT *  FROM {$this->getTableName()} ORDER BY title ASC, id ASC" .
+            $this->buildLimitStmt($limitStart, $resultsPerPage)
+        );
     }
 
     /**
@@ -141,7 +167,9 @@ class Model extends Core\Model
      */
     public function getAllMenuItems()
     {
-        return $this->db->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' AS p, ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+        return $this->db->fetchAll(
+            "SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} AS p, {$this->getTableName(static::TABLE_NAME_ITEMS)} AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id"
+        );
     }
 
     /**
@@ -151,7 +179,10 @@ class Model extends Core\Model
      */
     public function getVisibleMenuItemsByBlockName($blockName)
     {
-        return $this->db->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' AS p, ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' AS n JOIN ' . $this->getTableName() . ' AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id', [$blockName]);
+        return $this->db->fetchAll(
+            "SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} AS p, {$this->getTableName(static::TABLE_NAME_ITEMS)} AS n JOIN {$this->getTableName()} AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id",
+            [$blockName]
+        );
     }
 
     /**
@@ -163,7 +194,11 @@ class Model extends Core\Model
      */
     public function getLeftIdByUris($menu, $uris)
     {
-        return $this->db->executeQuery('SELECT m.left_id FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' AS m JOIN ' . $this->getTableName() . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', [$menu, $uris], [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN);
+        return $this->db->executeQuery(
+            "SELECT m.left_id FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} AS m JOIN {$this->getTableName(static::TABLE_NAME_ITEMS)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
+            [$menu, $uris],
+            [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN
+        );
     }
 
     /**
@@ -174,6 +209,10 @@ class Model extends Core\Model
      */
     public function getMenuItemsByUri(array $in)
     {
-        return $this->db->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' AS c, ' . $this->getTableName(static::TABLE_NAME_ITEMS) . ' AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', [$in], [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetchAll();
+        return $this->db->executeQuery(
+            "SELECT p.title, p.uri, p.left_id, p.right_id FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} AS c, {$this->getTableName(static::TABLE_NAME_ITEMS)} AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC",
+            [$in],
+            [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY]
+        )->fetchAll();
     }
 }
