@@ -82,7 +82,7 @@ class SchemaHelper extends ContainerAware
                         }
                     } elseif (!empty($query)) {
                         if (strpos($query, '{moduleId}') !== false) {
-                            str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
+                            $query = str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
                         }
                         $this->db->getConnection()->query(str_ireplace($search, $replace, $query));
                     }
