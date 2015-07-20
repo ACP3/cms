@@ -113,4 +113,18 @@ class Model extends \ACP3\Core\Model
     {
         return (int)$this->db->fetchColumn("SELECT MAX(`right_id`) FROM {$tableName}");
     }
+
+    /**
+     * @param string $tableName
+     * @param int    $id
+     *
+     * @return int
+     */
+    public function fetchMinimumLeftIdByBlockId($tableName, $id)
+    {
+        return (int)$this->db->fetchColumn(
+            "SELECT MIN(`left_id`) AS left_id FROM {$tableName} WHERE block_id = ?",
+            [$id]
+        );
+    }
 }

@@ -30,7 +30,7 @@ class Insert extends AbstractNestedSetOperation
                 $insertValues['left_id'] = $maxRightId + 1;
                 $insertValues['right_id'] = $maxRightId + 2;
 
-                $this->adjustFollowingNodes($insertValues['left_id']);
+                $this->adjustFollowingNodesAfterInsert(2, $insertValues['left_id']);
 
                 $this->db->getConnection()->insert($this->tableName, $insertValues);
                 $rootId = $this->db->getConnection()->lastInsertId();
@@ -38,13 +38,10 @@ class Insert extends AbstractNestedSetOperation
             } else { // a parent item for the node has been assigned
                 $parent = $this->nestedSetModel->fetchNodeById($this->tableName, $parentId);
 
-                $this->adjustFollowingNodes($parent['right_id']);
+                $this->adjustFollowingNodesAfterInsert(2, $parent['right_id']);
 
                 // Adjust parent nodes
-                $this->db->getConnection()->executeUpdate(
-                    "UPDATE {$this->tableName} SET right_id = right_id + 2 WHERE root_id = ? AND left_id <= ? AND right_id >= ?",
-                    [$parent['root_id'], $parent['left_id'], $parent['right_id']]
-                );
+                $this->adjustParentNodesAfterInsert(2, $parent['left_id'], $parent['right_id']);
 
                 $insertValues['root_id'] = $parent['root_id'];
                 $insertValues['left_id'] = $parent['right_id'];
@@ -60,17 +57,6 @@ class Insert extends AbstractNestedSetOperation
         }
 
         return false;
-    }
-
-    /**
-     * @param int $itemLeftId
-     *
-     * @return int
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    protected function adjustFollowingNodes($itemLeftId)
-    {
-        return $this->db->getConnection()->executeUpdate("UPDATE {$this->tableName} SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id >= ?", [$itemLeftId]);
     }
 
     /**

@@ -63,4 +63,62 @@ abstract class AbstractNestedSetOperation
 
         return $this;
     }
+
+    /**
+     * @param int $diff
+     * @param int $leftId
+     * @param int $rightId
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function adjustParentNodesAfterSeparation($diff, $leftId, $rightId)
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->tableName} SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?",
+            [$diff, $leftId, $rightId]
+        );
+    }
+
+    /**
+     * @param int $diff
+     * @param int $leftId
+     * @param int $rightId
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function adjustParentNodesAfterInsert($diff, $leftId, $rightId)
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->tableName} SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?",
+            [$diff, $leftId, $rightId]
+        );
+    }
+
+    /**
+     * @param int $diff
+     * @param int $leftId
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function adjustFollowingNodesAfterSeparation($diff, $leftId)
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->tableName} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?",
+            [$diff, $diff, $leftId]
+        );
+    }
+
+    /**
+     * @param int $diff
+     * @param int $leftId
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function adjustFollowingNodesAfterInsert($diff, $leftId)
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->tableName} SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?",
+            [$diff, $diff, $leftId]
+        );
+    }
 }

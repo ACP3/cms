@@ -36,17 +36,8 @@ class Delete extends AbstractNestedSetOperation
                     );
                 }
 
-                // Übergeordnete Knoten aktualiseren
-                $this->db->getConnection()->executeUpdate(
-                    "UPDATE {$this->tableName} SET right_id = right_id - 2 WHERE left_id < ? AND right_id > ?",
-                    [$nodes[0]['left_id'], $nodes[0]['right_id']]
-                );
-
-                // Nachfolgende Knoten
-                $this->db->getConnection()->executeUpdate(
-                    "UPDATE {$this->tableName} SET left_id = left_id - 2, right_id = right_id - 2 WHERE left_id > ?",
-                    [$nodes[0]['right_id']]
-                );
+                $this->adjustParentNodesAfterSeparation(2, $nodes[0]['left_id'], $nodes[0]['right_id']);
+                $this->adjustFollowingNodesAfterSeparation(2, $nodes[0]['right_id']);
 
                 $this->db->getConnection()->commit();
 
