@@ -67,7 +67,6 @@ class Install extends AbstractController
             $this->_indexPost($this->request->getPost()->getAll());
         }
 
-        // Zeitzonen
         $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones(date_default_timezone_get()));
 
         $defaults = [
@@ -228,7 +227,7 @@ class Install extends AbstractController
                 'date_format_short' => Functions::strEncode($formData['date_format_short']),
                 'date_time_zone' => $formData['date_time_zone'],
                 'maintenance_message' => $this->lang->t('install', 'offline_message'),
-                'lang' => LANG
+                'lang' => $this->lang->getLanguage()
             ],
             'seo' => [
                 'title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
@@ -268,7 +267,7 @@ class Install extends AbstractController
             "INSERT INTO
                 `{pre}users`
             VALUES
-                ('', 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"])}:{$salt}', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{LANG}', '20', '', '{$currentDate}');",
+                ('', 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"])}:{$salt}', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->lang->getLanguage()}', '20', '', '{$currentDate}');",
         ];
 
         return $this->get('core.modules.schemaHelper')->executeSqlQueries($queries);

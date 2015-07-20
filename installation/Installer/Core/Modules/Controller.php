@@ -82,20 +82,10 @@ class Controller implements ControllerInterface
             $this->redirect()->temporary($this->request->getFullPath());
         }
 
-        if (defined('LANG') === false) {
-            if (!preg_match('=/=', $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '')) &&
-                is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
-            ) {
-                define('LANG', $this->request->getCookie()->get('ACP3_INSTALLER_LANG', ''));
-            } else {
-                define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
-            }
-        }
-
-        $this->lang->setLanguage(LANG);
+        $this->setLanguage();
 
         // Einige Template Variablen setzen
-        $this->view->assign('LANGUAGES', $this->_languagesDropdown(LANG));
+        $this->view->assign('LANGUAGES', $this->_languagesDropdown($this->lang->getLanguage()));
         $this->view->assign('PHP_SELF', PHP_SELF);
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
         $this->view->assign('ROOT_DIR', ROOT_DIR);
@@ -306,5 +296,18 @@ class Controller implements ControllerInterface
     public function getContentAppend()
     {
         return $this->contentAppend;
+    }
+
+    private function setLanguage()
+    {
+        if (!preg_match('=/=', $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '')) &&
+            is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
+        ) {
+            $language = $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '');
+        } else {
+            $language = \ACP3\Core\Lang::parseAcceptLanguage();
+        }
+
+        $this->lang->setLanguage($language);
     }
 }
