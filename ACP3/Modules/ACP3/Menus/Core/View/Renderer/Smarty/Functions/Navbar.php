@@ -105,8 +105,8 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param                                                      $menu
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration   $menuConfig
+     * @param string                                             $menu
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      *
      * @return string
      */
@@ -337,8 +337,8 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param                                                      $menu
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration   $menuConfig
+     * @param string                                             $menu
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      *
      * @return string
      */

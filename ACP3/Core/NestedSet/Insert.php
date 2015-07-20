@@ -16,14 +16,9 @@ class Insert extends AbstractNestedSetOperation
      */
     public function execute(array $insertValues, $parentId = 0)
     {
-        $parentId = (int)$parentId;
-
-        $this->db->getConnection()->beginTransaction();
-        try {
+        $callback = function() use ($insertValues, $parentId) {
             // No parent item has been assigned
-            if (empty($parentId) ||
-                $this->nestedSetModel->nodeExists($this->tableName, $parentId) === false
-            ) {
+            if ($this->nestedSetModel->nodeExists($this->tableName, (int) $parentId) === false) {
                 // Select the last result set
                 $maxRightId = $this->fetchMaximumRightId($insertValues['block_id']);
 
@@ -36,11 +31,9 @@ class Insert extends AbstractNestedSetOperation
                 $rootId = $this->db->getConnection()->lastInsertId();
                 $this->db->getConnection()->update($this->tableName, ['root_id' => $rootId], ['id' => $rootId]);
             } else { // a parent item for the node has been assigned
-                $parent = $this->nestedSetModel->fetchNodeById($this->tableName, $parentId);
+                $parent = $this->nestedSetModel->fetchNodeById($this->tableName, (int) $parentId);
 
                 $this->adjustFollowingNodesAfterInsert(2, $parent['right_id']);
-
-                // Adjust parent nodes
                 $this->adjustParentNodesAfterInsert(2, $parent['left_id'], $parent['right_id']);
 
                 $insertValues['root_id'] = $parent['root_id'];
@@ -52,11 +45,9 @@ class Insert extends AbstractNestedSetOperation
 
             $this->db->getConnection()->commit();
             return true;
-        } catch (\Exception $e) {
-            $this->db->getConnection()->rollback();
-        }
+        };
 
-        return false;
+        return $this->db->executeTransactionalQuery($callback);
     }
 
     /**
