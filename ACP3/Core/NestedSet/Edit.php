@@ -22,9 +22,8 @@ class Edit extends AbstractNestedSetOperation
      */
     public function execute($id, $parentId, $blockId, array $updateValues)
     {
-        $this->db->getConnection()->beginTransaction();
-        try {
-            $nodes = $this->nestedSetModel->fetchNodeWithSiblings($this->tableName, $id, $this->enableBlocks);
+        $callback = function() use ($id, $parentId, $blockId, $updateValues) {
+            $nodes = $this->nestedSetModel->fetchNodeWithSiblings($this->tableName, $id);
 
             // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
             if ($this->nodeIsRootItemAndNoChangeNeed($parentId, $blockId, $nodes[0])) {
@@ -40,42 +39,24 @@ class Edit extends AbstractNestedSetOperation
                 if (!empty($currentParent) && $currentParent == $parentId) {
                     $bool = $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $id]);
                 } else { // ...ansonsten den Baum bearbeiten...
-                    // Differenz zwischen linken und rechten Wert bilden
-                    $itemDiff = $nodes[0]['right_id'] - $nodes[0]['left_id'] + 1;
-
                     // Neues Elternelement
                     $newParent = $this->nestedSetModel->fetchNodeById($this->tableName, $parentId);
 
-                    // Knoten werden eigenes Root-Element
                     if (empty($newParent)) {
-                        list($rootId, $diff) = $this->nodeBecomesRootNode($id, $blockId, $nodes, $itemDiff);
-                    } else { // Knoten werden Kinder von einem anderen Knoten
-                        // Teilbaum nach unten...
-                        if ($newParent['left_id'] > $nodes[0]['left_id']) {
-                            $newParent['left_id'] -= $itemDiff;
-                            $newParent['right_id'] -= $itemDiff;
-                        }
-
-                        $diff = $newParent['left_id'] - $nodes[0]['left_id'] + 1;
-                        $rootId = $newParent['root_id'];
-
-                        $this->adjustParentNodesAfterSeparation($itemDiff, $nodes[0]['left_id'], $nodes[0]['right_id']);
-                        $this->adjustFollowingNodesAfterSeparation($itemDiff, $nodes[0]['right_id']);
-                        $this->adjustParentNodesAfterInsert($itemDiff, $newParent['left_id'], $newParent['right_id']);
-                        $this->adjustFollowingNodesAfterInsert($itemDiff, $newParent['left_id'] + 1);
+                        list($rootId, $diff) = $this->nodeBecomesRootNode($id, $blockId, $nodes);
+                    } else {
+                        list($diff, $rootId) = $this->moveNodeToNewParent($newParent, $nodes);
                     }
 
                     $bool = $this->adjustNodeSiblings($blockId, $nodes, $diff, $rootId);
 
                     $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $id]);
-                    $this->db->getConnection()->commit();
                 }
             }
             return $bool;
-        } catch (\Exception $e) {
-            $this->db->getConnection()->rollback();
-            return false;
-        }
+        };
+
+        return $this->db->executeTransactionalQuery($callback);
     }
 
     /**
@@ -96,19 +77,17 @@ class Edit extends AbstractNestedSetOperation
      * @param int   $id
      * @param int   $blockId
      * @param array $nodes
-     * @param int   $itemDiff
      *
      * @return array
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNode($id, $blockId, array $nodes, $itemDiff)
+    protected function nodeBecomesRootNode($id, $blockId, array $nodes)
     {
-        $rootId = $id;
+        $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
         if ($this->enableBlocks === true) {
-            // Knoten in anderen Block verschieben
             if ($nodes[0]['block_id'] != $blockId) {
                 $diff = $this->nodeBecomesRootNodeInNewBlock($blockId, $nodes, $itemDiff);
-            } else { // Element zum neuen Wurzelknoten machen
+            } else {
                 $diff = $this->nodeBecomesRootNodeInSameBlock($nodes, $itemDiff);
             }
         } else {
@@ -119,7 +98,7 @@ class Edit extends AbstractNestedSetOperation
             $this->adjustFollowingNodesAfterSeparation($itemDiff, $nodes[0]['right_id']);
         }
 
-        return [$rootId, $diff];
+        return [$id, $diff];
     }
 
     /**
@@ -224,5 +203,42 @@ class Edit extends AbstractNestedSetOperation
             }
         }
         return $bool;
+    }
+
+    /**
+     * @param int $leftId
+     * @param int $rightId
+     *
+     * @return int
+     */
+    protected function calcDiffBetweenNodes($leftId, $rightId)
+    {
+        return $rightId - $leftId + 1;
+    }
+
+    /**
+     * @param array $newParent
+     * @param array $nodes
+     *
+     * @return array
+     */
+    protected function moveNodeToNewParent(array $newParent, array $nodes)
+    {
+        $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
+
+        // Teilbaum nach unten...
+        if ($newParent['left_id'] > $nodes[0]['left_id']) {
+            $newParent['left_id'] -= $itemDiff;
+            $newParent['right_id'] -= $itemDiff;
+        }
+
+        $diff = $newParent['left_id'] - $nodes[0]['left_id'] + 1;
+        $rootId = $newParent['root_id'];
+
+        $this->adjustParentNodesAfterSeparation($itemDiff, $nodes[0]['left_id'], $nodes[0]['right_id']);
+        $this->adjustFollowingNodesAfterSeparation($itemDiff, $nodes[0]['right_id']);
+        $this->adjustParentNodesAfterInsert($itemDiff, $newParent['left_id'], $newParent['right_id']);
+        $this->adjustFollowingNodesAfterInsert($itemDiff, $newParent['left_id'] + 1);
+        return [$diff, $rootId];
     }
 }

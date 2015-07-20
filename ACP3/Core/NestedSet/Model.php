@@ -14,15 +14,42 @@ class Model extends \ACP3\Core\Model
      *
      * @param string $tableName
      * @param int    $id
-     * @param bool   $enableBlocks
      *
      * @return array
      */
-    public function fetchNodeWithSiblings($tableName, $id, $enableBlocks)
+    public function fetchNodeWithSiblings($tableName, $id)
     {
         return $this->db->fetchAll(
-            'SELECT n.id, n.root_id, n.left_id, n.right_id' . ($enableBlocks === true ? ', n.block_id' : '') . " FROM {$tableName} AS p, {$tableName} AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id ORDER BY n.left_id ASC",
+            "SELECT n.* FROM {$tableName} AS p, {$tableName} AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id ORDER BY n.left_id ASC",
             [$id]
+        );
+    }
+
+    /**
+     * @param string $tableName
+     * @param int    $leftId
+     *
+     * @return array
+     */
+    public function fetchNextNodeWithSiblings($tableName, $leftId)
+    {
+        return $this->db->fetchAll(
+            "SELECT c.* FROM {$tableName} AS p, {$tableName} AS c WHERE p.left_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC",
+            [$leftId]
+        );
+    }
+
+    /**
+     * @param string $tableName
+     * @param int    $rightId
+     *
+     * @return array
+     */
+    public function fetchPrevNodeWithSiblings($tableName, $rightId)
+    {
+        return $this->db->fetchAll(
+            "SELECT c.* FROM {$tableName} AS p, {$tableName} AS c WHERE p.right_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC",
+            [$rightId]
         );
     }
 
@@ -35,6 +62,32 @@ class Model extends \ACP3\Core\Model
     public function nodeExists($tableName, $id)
     {
         return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE id = ?", [$id]) > 0;
+    }
+
+    /**
+     * @param string $tableName
+     * @param int    $rightId
+     * @param int    $blockId
+     *
+     * @return bool
+     */
+    public function nextNodeExists($tableName, $rightId, $blockId = 0)
+    {
+        $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE right_id = ? {$where}", [$rightId, $blockId]) > 0;
+    }
+
+    /**
+     * @param string $tableName
+     * @param int    $rightId
+     * @param int    $blockId
+     *
+     * @return bool
+     */
+    public function previousNodeExists($tableName, $rightId, $blockId = 0)
+    {
+        $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE left_id = ? {$where}", [$rightId, $blockId]) > 0;
     }
 
     /**
