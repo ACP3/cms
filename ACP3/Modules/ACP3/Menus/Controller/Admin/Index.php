@@ -16,6 +16,10 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
+     * @var \ACP3\Core\NestedSet
+     */
+    protected $nestedSet;
+    /**
      * @var \ACP3\Modules\ACP3\Menus\Helpers
      */
     protected $menusHelpers;

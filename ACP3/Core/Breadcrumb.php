@@ -2,7 +2,6 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Modules\ACP3\Menus;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -360,6 +359,6 @@ class Breadcrumb
      */
     private function getControllerIndexActionTitle()
     {
-        return $languageKeyIndex = $this->request->getArea() . '_' . $this->request->getController() . '_index';
+        return $this->request->getArea() . '_' . $this->request->getController() . '_index';
     }
 }

@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Generates the breadcrumb and page title
- * @package ACP3\Core
+ * @package ACP3\Modules\ACP3\Menus\Core
  */
 class Breadcrumb extends Core\Breadcrumb
 {
