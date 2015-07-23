@@ -125,20 +125,23 @@ class Image
             $height = $picInfo[1];
             $type = $picInfo[2];
 
-            header('Cache-Control: public');
-            header('Pragma: public');
-            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($this->file)) . ' GMT');
-            header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
-            header('Content-type: ' . $picInfo['mime']);
+            $this->sendHeaders($picInfo['mime']);
 
             // Falls Cache aktiviert ist und das Bild bereits gecachet wurde, dieses direkt ausgeben
-            if ($this->enableCache === true && file_exists($cacheFile) === true) {
+            if ($this->enableCache === true && is_file($cacheFile) === true) {
                 $this->file = $cacheFile;
                 $this->readFromFile();
-            } elseif (($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight)) && ($type === 1 || $type === 2 || $type === 3)) { // Bild resampeln
+            } elseif ($this->resamplingIsNecessary($width, $height, $type)) { // Bild resampeln
                 $dimensions = $this->calcNewDimensions($width, $height);
 
-                $this->resample($dimensions['width'], $dimensions['height'], $width, $height, $type, $cacheFile);
+                $this->resample(
+                    $dimensions['width'],
+                    $dimensions['height'],
+                    $width,
+                    $height,
+                    $type,
+                    $cacheFile
+                );
                 $this->file = $cacheFile;
                 $this->readFromFile();
             } else {
@@ -215,22 +218,58 @@ class Image
         $this->image = imagecreatetruecolor($newWidth, $newHeight);
         switch ($type) {
             case 1:
-                $oldPic = imagecreatefromgif($this->file);
-                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                $origPicture = imagecreatefromgif($this->file);
+                $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
                 imagegif($this->image, $cacheFile);
                 break;
             case 2:
-                $oldPic = imagecreatefromjpeg($this->file);
-                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                $origPicture = imagecreatefromjpeg($this->file);
+                $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
                 imagejpeg($this->image, $cacheFile, $this->jpgQuality);
                 break;
             case 3:
                 imagealphablending($this->image, false);
-                $oldPic = imagecreatefrompng($this->file);
-                imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                $origPicture = imagecreatefrompng($this->file);
+                $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
                 imagesavealpha($this->image, true);
                 imagepng($this->image, $cacheFile, 9);
                 break;
         }
+    }
+
+    /**
+     * @param string $mimeType
+     */
+    protected function sendHeaders($mimeType)
+    {
+        header('Cache-Control: public');
+        header('Pragma: public');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($this->file)) . ' GMT');
+        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
+        header('Content-type: ' . $mimeType);
+    }
+
+    /**
+     * @param int $newWidth
+     * @param int $newHeight
+     * @param int $width
+     * @param int $height
+     * @param resource $origPicture
+     */
+    protected function scalePicture($newWidth, $newHeight, $width, $height, $origPicture)
+    {
+        imagecopyresampled($this->image, $origPicture, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+    }
+
+    /**
+     * @param int $width
+     * @param int $height
+     * @param int $type
+     *
+     * @return bool
+     */
+    protected function resamplingIsNecessary($width, $height, $type)
+    {
+        return ($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight)) && ($type === 1 || $type === 2 || $type === 3);
     }
 }

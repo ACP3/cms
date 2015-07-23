@@ -227,10 +227,10 @@ class Modules
                         'installed' => (!empty($moduleInfoDb)),
                         'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
+                        'description' => $this->getModuleDescription($moduleInfo, $moduleName),
                         'author' => $moduleInfo['author'],
                         'version' => $moduleInfo['version'],
-                        'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
+                        'name' => $this->getModuleName($moduleInfo, $moduleName),
                         'categories' => isset($moduleInfo['categories']),
                         'protected' => isset($moduleInfo['protected']),
                         'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
@@ -313,5 +313,35 @@ class Modules
         }
 
         return $this->allModules;
+    }
+
+    /**
+     * @param array  $moduleInfo
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function getModuleDescription(array $moduleInfo, $moduleName)
+    {
+        if (isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true') {
+            return $this->lang->t($moduleName, 'mod_description');
+        }
+
+        return $moduleInfo['description']['lang'];
+    }
+
+    /**
+     * @param array  $moduleInfo
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function getModuleName(array $moduleInfo, $moduleName)
+    {
+        if (isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true') {
+            return $this->lang->t($moduleName, $moduleName);
+        }
+
+        return $moduleInfo['name'];
     }
 }
