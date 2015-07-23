@@ -274,12 +274,12 @@ class Index extends Core\Modules\AdminController
                 'id' => '',
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
-                'category_id' => !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
+                'category_id' => $this->fetchCategoryId($formData),
                 'file' => $newFile,
                 'size' => $filesize,
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
-                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
+                'comments' => $this->useComments($formData, $settings),
                 'user_id' => $this->auth->getUserId(),
             ];
 
@@ -325,10 +325,10 @@ class Index extends Core\Modules\AdminController
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
-                'category_id' => !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'],
+                'category_id' => $this->fetchCategoryId($formData),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
-                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
+                'comments' => $this->useComments($formData, $settings),
                 'user_id' => $this->auth->getUserId(),
             ];
 
@@ -405,5 +405,26 @@ class Index extends Core\Modules\AdminController
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return int
+     */
+    protected function fetchCategoryId(array $formData)
+    {
+        return !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'];
+    }
+
+    /**
+     * @param array $formData
+     * @param array $settings
+     *
+     * @return int
+     */
+    protected function useComments(array $formData, array $settings)
+    {
+        return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
     }
 }

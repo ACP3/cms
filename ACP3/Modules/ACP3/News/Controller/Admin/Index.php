@@ -281,9 +281,9 @@ class Index extends Core\Modules\AdminController
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
-                'readmore' => $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0,
-                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
-                'category_id' => !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
+                'readmore' => $this->useReadMore($formData, $settings),
+                'comments' => $this->useComments($formData, $settings),
+                'category_id' => $this->fetchCategoryIdForSave($formData),
                 'uri' => Core\Functions::strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
                 'link_title' => Core\Functions::strEncode($formData['link_title']),
@@ -328,9 +328,9 @@ class Index extends Core\Modules\AdminController
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
-                'readmore' => $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0,
-                'comments' => $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0,
-                'category_id' => strlen($formData['cat_create']) >= 3 ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'],
+                'readmore' => $this->useReadMore($formData, $settings),
+                'comments' => $this->useComments($formData, $settings),
+                'category_id' => $this->fetchCategoryIdForSave($formData),
                 'uri' => Core\Functions::strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
                 'link_title' => Core\Functions::strEncode($formData['link_title']),
@@ -389,5 +389,37 @@ class Index extends Core\Modules\AdminController
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return int
+     */
+    protected function fetchCategoryIdForSave(array $formData)
+    {
+        return !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'];
+    }
+
+    /**
+     * @param array $formData
+     * @param array $settings
+     *
+     * @return int
+     */
+    protected function useReadMore(array $formData, array $settings)
+    {
+        return $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0;
+    }
+
+    /**
+     * @param array $formData
+     * @param array $settings
+     *
+     * @return int
+     */
+    protected function useComments(array $formData, array $settings)
+    {
+        return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
     }
 }
