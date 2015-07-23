@@ -192,7 +192,7 @@ class DB
     /**
      * @param callable $callback
      *
-     * @return bool
+     * @return bool|int
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executeTransactionalQuery(callable $callback)

@@ -11,7 +11,7 @@ class Insert extends AbstractNestedSetOperation
      * @param array $insertValues
      * @param int   $parentId
      *
-     * @return bool
+     * @return int|bool
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function execute(array $insertValues, $parentId = 0)
@@ -29,7 +29,7 @@ class Insert extends AbstractNestedSetOperation
 
                 $this->db->getConnection()->insert($this->tableName, $insertValues);
                 $rootId = $this->db->getConnection()->lastInsertId();
-                $this->db->getConnection()->update($this->tableName, ['root_id' => $rootId], ['id' => $rootId]);
+                $result = $this->db->getConnection()->update($this->tableName, ['root_id' => $rootId], ['id' => $rootId]);
             } else { // a parent item for the node has been assigned
                 $parent = $this->nestedSetModel->fetchNodeById($this->tableName, (int) $parentId);
 
@@ -41,10 +41,11 @@ class Insert extends AbstractNestedSetOperation
                 $insertValues['right_id'] = $parent['right_id'] + 1;
 
                 $this->db->getConnection()->insert($this->tableName, $insertValues);
+
+                $result = (int) $this->db->getConnection()->lastInsertId();
             }
 
-            $this->db->getConnection()->commit();
-            return true;
+            return $result;
         };
 
         return $this->db->executeTransactionalQuery($callback);

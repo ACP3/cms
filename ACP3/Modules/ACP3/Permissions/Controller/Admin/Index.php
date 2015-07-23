@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\Permissions;
 class Index extends Core\Modules\AdminController
 {
     /**
-     * @var \ACP3\Core\DB
-     */
-    protected $db;
-    /**
      * @var \ACP3\Core\NestedSet
      */
     protected $nestedSet;
@@ -38,7 +34,7 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\DB                              $db
+     * @param \ACP3\Core\NestedSet                       $nestedSet
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model       $permissionsModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
@@ -46,7 +42,6 @@ class Index extends Core\Modules\AdminController
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
-        Core\DB $db,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model $permissionsModel,
@@ -55,7 +50,6 @@ class Index extends Core\Modules\AdminController
     {
         parent::__construct($context);
 
-        $this->db = $db;
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->permissionsModel = $permissionsModel;
@@ -84,20 +78,14 @@ class Index extends Core\Modules\AdminController
         $c_privileges = count($privileges);
         $this->view->assign('privileges', $privileges);
 
-        foreach ($modules as $module => $params) {
+        foreach ($modules as $module => $moduleInfo) {
             for ($j = 0; $j < $c_privileges; ++$j) {
-                // Für jede Privilegie ein Input-Feld zuweisen
-                $select = [];
-                $select[0]['value'] = 0;
-                $select[0]['selected'] = $this->request->getPost()->isEmpty() === false && $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
-                $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');
-                $select[1]['value'] = 1;
-                $select[1]['selected'] = $this->request->getPost()->isEmpty() === false && $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
-                $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
-                $select[2]['value'] = 2;
-                $select[2]['selected'] = $this->request->getPost()->isEmpty() || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
-                $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
-                $privileges[$j]['select'] = $select;
+                $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
+                    0,
+                    $moduleInfo['id'],
+                    $privileges[$j]['id'],
+                    2
+                );
             }
             $modules[$module]['privileges'] = $privileges;
         }
@@ -133,12 +121,14 @@ class Index extends Core\Modules\AdminController
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
             if ($levelNotDeletable === true) {
+                $result = !$levelNotDeletable;
                 $text = $this->lang->t('permissions', 'role_not_deletable');
             } else {
-                $text = $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error');
+                $result = $bool !== false && $bool2 !== false && $bool3 !== false;
+                $text = $this->lang->t('system', $result ? 'delete_success' : 'delete_error');
             }
 
-            $this->redirectMessages()->setMessage($bool && $bool2 && $bool3, $text);
+            $this->redirectMessages()->setMessage($result, $text);
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -180,24 +170,17 @@ class Index extends Core\Modules\AdminController
             $c_privileges = count($privileges);
             $this->view->assign('privileges', $privileges);
 
-            foreach ($modules as $name => $params) {
-                $moduleDir = strtolower($params['dir']);
+            foreach ($modules as $name => $moduleInfo) {
+                $moduleDir = strtolower($moduleInfo['dir']);
                 for ($j = 0; $j < $c_privileges; ++$j) {
                     $privilegeValue = isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? $rules[$moduleDir][$privileges[$j]['key']]['permission'] : 0;
-                    $select = [];
-                    $select[0]['value'] = 0;
-                    $select[0]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 0 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
-                    $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');
-                    $select[1]['value'] = 1;
-                    $select[1]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 1 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
-                    $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
-                    if ($id !== 1) {
-                        $select[2]['value'] = 2;
-                        $select[2]['selected'] = $this->request->getPost()->isEmpty() && $privilegeValue == 2 || $this->request->getPost()->get('privileges')[$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
-                        $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
-                        //$privileges[$j]['calculated'] = sprintf($this->lang->t('permissions', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $this->lang->t('permissions', 'allow_access') :  $this->lang->t('permissions', 'deny_access'));
-                    }
-                    $privileges[$j]['select'] = $select;
+                    $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
+                        $id,
+                        $moduleInfo['id'],
+                        $privileges[$j]['id'],
+                        (int) $privilegeValue
+                    );
+                    //$privileges[$j]['calculated'] = sprintf($this->lang->t('permissions', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $this->lang->t('permissions', 'allow_access') :  $this->lang->t('permissions', 'deny_access'));
                 }
                 $modules[$name]['privileges'] = $privileges;
             }
@@ -260,21 +243,18 @@ class Index extends Core\Modules\AdminController
         try {
             $this->permissionsValidator->validate($formData);
 
-            $this->db->getConnection()->beginTransaction();
-
             $insertValues = [
                 'id' => '',
                 'name' => Core\Functions::strEncode($formData['name']),
                 'parent_id' => $formData['parent_id'],
             ];
 
-            $bool = $this->nestedSet->insertNode(
+            $roleId = $this->nestedSet->insertNode(
                 (int)$formData['parent_id'],
                 $insertValues,
                 Permissions\Model::TABLE_NAME,
                 true
             );
-            $roleId = $this->db->getConnection()->lastInsertId();
 
             foreach ($formData['privileges'] as $moduleId => $privileges) {
                 foreach ($privileges as $id => $permission) {
@@ -289,13 +269,11 @@ class Index extends Core\Modules\AdminController
                 }
             }
 
-            $this->db->getConnection()->commit();
-
             $this->permissionsCache->saveRolesCache();
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
+            $this->redirectMessages()->setMessage($roleId, $this->lang->t('system', $roleId !== false ? 'create_success' : 'create_error'));
         } catch (Core\Exceptions\InvalidFormToken $e) {
             $this->redirectMessages()->setMessage(false, $e->getMessage());
         } catch (Core\Exceptions\ValidationFailed $e) {
@@ -305,7 +283,6 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
-     *
      * @param int   $id
      *
      * @throws \Doctrine\DBAL\ConnectionException
@@ -328,7 +305,6 @@ class Index extends Core\Modules\AdminController
                 Permissions\Model::TABLE_NAME
             );
 
-            $this->db->getConnection()->beginTransaction();
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
             $this->permissionsModel->delete($id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
             foreach ($formData['privileges'] as $moduleId => $privileges) {
@@ -343,7 +319,6 @@ class Index extends Core\Modules\AdminController
                     $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                 }
             }
-            $this->db->getConnection()->commit();
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
@@ -356,4 +331,54 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }
+
+    /**
+     * @param int $roleId
+     * @param int $moduleId
+     * @param int $privilegeId
+     * @param int $defaultValue
+     *
+     * @return array
+     */
+    protected function generatePrivilegeCheckboxes($roleId, $moduleId, $privilegeId, $defaultValue)
+    {
+        $permissions = [
+            0 => $this->lang->t('permissions', 'deny_access'),
+            1 => $this->lang->t('permissions', 'allow_access'),
+            2 => $this->lang->t('permissions', 'inherit_access')
+        ];
+
+        $select = [];
+        foreach ($permissions as $value => $lang) {
+            if ($roleId === 1 && $value === 2) {
+                continue;
+            }
+
+            $select[$value]['value'] = $value;
+            $select[$value]['selected'] = $this->privilegeIsChecked($moduleId, $privilegeId, $value, $defaultValue);
+            $select[$value]['lang'] = $lang;
+        }
+
+        return $select;
+    }
+
+    /**
+     * @param int      $moduleId
+     * @param int      $privilegeId
+     * @param int      $value
+     * @param null|int $defaultValue
+     *
+     * @return string
+     */
+    protected function privilegeIsChecked($moduleId, $privilegeId, $value = 0, $defaultValue = null)
+    {
+        if ($this->request->getPost()->isEmpty() && $defaultValue === $value ||
+            !$this->request->getPost()->isEmpty() && (int) $this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
+        ) {
+            return ' checked="checked"';
+        }
+
+        return '';
+    }
+
 }
