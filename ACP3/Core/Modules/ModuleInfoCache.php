@@ -166,7 +166,7 @@ class ModuleInfoCache
             return $this->lang->t($moduleName, 'mod_description');
         }
 
-        return $moduleInfo['description']['lang'];
+        return $moduleInfo['description'];
     }
 
     /**
