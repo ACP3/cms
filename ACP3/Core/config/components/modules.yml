@@ -16,34 +16,7 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@service_container', '@core.lang', '@core.xml', '@core.cache.system', @core.modules.vendors, '@system.model']
-
-  core.modules.vendors:
-    class: ACP3\Core\Modules\Vendors
-
-  core.modules.schemaHelper:
-    class: ACP3\Core\Modules\SchemaHelper
-    arguments: [@core.db, @system.model]
-    calls:
-      - ['setContainer', ['@service_container']]
-
-  core.modules.schemaInstaller:
-    class: ACP3\Core\Modules\SchemaInstaller
-    arguments: ['@core.db', '@core.xml', '@core.cache.system', '@system.model', '@permissions.model']
-    calls:
-      - ['setContainer', ['@service_container']]
-
-  core.modules.schemaUpdater:
-    class: ACP3\Core\Modules\SchemaUpdater
-    parent: core.modules.schemaHelper
-
-  core.modules.installer.abstractMigration:
-    abstract: true
-    arguments: [@core.modules.schemaHelper]
-
-  core.modules.installer.abstractSampleData:
-    abstract: true
-    arguments: [@core.modules.schemaHelper]
+    arguments: ['@service_container', @core.modules.moduleInfoCache, @core.modules.vendors]
 
   core.modules.controller:
     abstract: true
@@ -57,3 +30,33 @@ services:
     abstract: true
     arguments: ['@core.context.admin']
 
+  core.modules.moduleInfoCache:
+    class: ACP3\Core\Modules\ModuleInfoCache
+    arguments: [@core.cache.system, @core.lang, @core.modules.vendors, @core.xml, @system.model]
+
+  core.modules.schemaHelper:
+    class: ACP3\Core\Modules\SchemaHelper
+    arguments: [@core.db, @system.model]
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.modules.installer.abstractMigration:
+    abstract: true
+    arguments: [@core.modules.schemaHelper]
+
+  core.modules.installer.abstractSampleData:
+    abstract: true
+    arguments: [@core.modules.schemaHelper]
+
+  core.modules.schemaInstaller:
+    class: ACP3\Core\Modules\SchemaInstaller
+    arguments: ['@core.db', '@core.xml', '@core.cache.system', '@system.model', '@permissions.model']
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.modules.schemaUpdater:
+    class: ACP3\Core\Modules\SchemaUpdater
+    parent: core.modules.schemaHelper
+
+  core.modules.vendors:
+    class: ACP3\Core\Modules\Vendors

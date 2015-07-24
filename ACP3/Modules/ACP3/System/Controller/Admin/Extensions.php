@@ -13,6 +13,10 @@ use ACP3\Modules\ACP3\System;
 class Extensions extends Core\Modules\AdminController
 {
     /**
+     * @var \ACP3\Core\Modules\ModuleInfoCache
+     */
+    protected $moduleInfoCache;
+    /**
      * @var \ACP3\Core\XML
      */
     protected $xml;
@@ -31,6 +35,7 @@ class Extensions extends Core\Modules\AdminController
 
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Modules\ModuleInfoCache         $moduleInfoCache
      * @param \ACP3\Core\XML                             $xml
      * @param \ACP3\Modules\ACP3\System\Model            $systemModel
      * @param \ACP3\Modules\ACP3\System\Helpers          $systemHelpers
@@ -38,6 +43,7 @@ class Extensions extends Core\Modules\AdminController
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
+        Core\Modules\ModuleInfoCache $moduleInfoCache,
         Core\XML $xml,
         System\Model $systemModel,
         System\Helpers $systemHelpers,
@@ -45,6 +51,7 @@ class Extensions extends Core\Modules\AdminController
     {
         parent::__construct($context);
 
+        $this->moduleInfoCache = $moduleInfoCache;
         $this->xml = $xml;
         $this->systemModel = $systemModel;
         $this->systemHelpers = $systemHelpers;
@@ -188,7 +195,7 @@ class Extensions extends Core\Modules\AdminController
     protected function _renewCaches()
     {
         $this->get('core.lang.cache')->saveLanguageCache($this->lang->getLanguage());
-        $this->modules->saveModulesCache();
+        $this->moduleInfoCache->saveModulesInfoCache();
         $this->permissionsCache->saveResourcesCache();
     }
 

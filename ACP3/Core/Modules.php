@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendors;
 use ACP3\Modules\ACP3\System;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,21 +17,9 @@ class Modules
      */
     protected $container;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\Modules\ModuleInfoCache
      */
-    protected $lang;
-    /**
-     * @var \ACP3\Core\XML
-     */
-    protected $xml;
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    protected $modulesCache;
-    /**
-     * @var \ACP3\Modules\ACP3\System\Model
-     */
-    protected $systemModel;
+    protected $moduleInfoCache;
     /**
      * @var \ACP3\Core\Modules\Vendors
      */
@@ -38,7 +27,7 @@ class Modules
     /**
      * @var array
      */
-    private $parseModules = [];
+    private $modulesInfo = [];
     /**
      * @var array
      */
@@ -46,31 +35,22 @@ class Modules
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\Lang                                           $lang
-     * @param \ACP3\Core\XML                                            $xml
-     * @param \ACP3\Core\Cache                                          $cache
+     * @param \ACP3\Core\Modules\ModuleInfoCache                        $moduleInfoCache
      * @param \ACP3\Core\Modules\Vendors                                $vendors
-     * @param \ACP3\Modules\ACP3\System\Model                           $systemModel
      */
     public function __construct(
         ContainerInterface $container,
-        Lang $lang,
-        XML $xml,
-        Cache $cache,
-        Vendors $vendors,
-        System\Model $systemModel
+        ModuleInfoCache $moduleInfoCache,
+        Vendors $vendors
     )
     {
         $this->container = $container;
-        $this->lang = $lang;
-        $this->xml = $xml;
-        $this->modulesCache = $cache;
+        $this->moduleInfoCache = $moduleInfoCache;
         $this->vendors = $vendors;
-        $this->systemModel = $systemModel;
     }
 
     /**
-     * Überprüft, ob eine Modulaktion überhaupt existiert
+     * Returns, whether the given module controller action exists
      *
      * @param string $path
      *
@@ -78,9 +58,7 @@ class Modules
      */
     public function controllerActionExists($path)
     {
-        $pathArray = array_map(function ($value) {
-            return str_replace(' ', '', strtolower(str_replace('_', ' ', $value)));
-        }, explode('/', $path));
+        $pathArray = explode('/', strtolower(str_replace('_', '', $path)));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';
@@ -99,7 +77,7 @@ class Modules
     }
 
     /**
-     * Gibt zurück, ob ein Modul aktiv ist oder nicht
+     * Returns, whether a module is active or not
      *
      * @param string $module
      *
@@ -112,8 +90,7 @@ class Modules
     }
 
     /**
-     * Durchläuft für das angeforderte Modul den <info> Abschnitt in der
-     * module.xml und gibt die gefundenen Informationen als Array zurück
+     * Returns the available information about the given module
      *
      * @param string $module
      *
@@ -122,14 +99,10 @@ class Modules
     public function getModuleInfo($module)
     {
         $module = strtolower($module);
-        if (empty($this->parseModules)) {
-            $filename = $this->_getCacheKey();
-            if ($this->modulesCache->contains($filename) === false) {
-                $this->saveModulesCache();
-            }
-            $this->parseModules = $this->modulesCache->fetch($filename);
+        if (empty($this->modulesInfo)) {
+            $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
-        return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : [];
+        return !empty($this->modulesInfo[$module]) ? $this->modulesInfo[$module] : [];
     }
 
     /**
@@ -141,93 +114,6 @@ class Modules
     {
         $info = $this->getModuleInfo($module);
         return !empty($info) ? $info['id'] : 0;
-    }
-
-    /**
-     * @return string
-     */
-    protected function _getCacheKey()
-    {
-        return 'infos_' . $this->lang->getLanguage();
-    }
-
-    /**
-     * Saves a modules info cache
-     */
-    public function saveModulesCache()
-    {
-        $infos = [];
-
-        // 1. fetch all core modules
-        // 2. Fetch all 3rd party modules
-        // 3. Fetch all local module customizations
-        foreach ($this->vendors->getVendors() as $namespace) {
-            $infos += $this->_fetchModulesInVendors($namespace);
-        }
-
-        $this->modulesCache->save($this->_getCacheKey(), $infos);
-    }
-
-    /**
-     * @param string $vendor
-     *
-     * @return array
-     */
-    protected function _fetchModulesInVendors($vendor)
-    {
-        $infos = [];
-
-        $modules = array_diff(scandir(MODULES_DIR . $vendor . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
-
-        if (!empty($modules)) {
-            foreach ($modules as $module) {
-                $moduleInfo = $this->_fetchModuleInfo($module);
-
-                if (!empty($moduleInfo)) {
-                    $infos[strtolower($module)] = $moduleInfo;
-                }
-            }
-        }
-
-        return $infos;
-    }
-
-    /**
-     * @param string $moduleDirectory
-     *
-     * @return array
-     */
-    protected function _fetchModuleInfo($moduleDirectory)
-    {
-        $namespaces = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
-        foreach ($namespaces as $namespace) {
-            $path = MODULES_DIR . $namespace . '/' . $moduleDirectory . '/config/module.xml';
-            if (is_file($path) === true) {
-                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
-
-                if (!empty($moduleInfo)) {
-                    $moduleName = strtolower($moduleDirectory);
-                    $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
-
-                    return [
-                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                        'dir' => $moduleDirectory,
-                        'installed' => (!empty($moduleInfoDb)),
-                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => $this->getModuleDescription($moduleInfo, $moduleName),
-                        'author' => $moduleInfo['author'],
-                        'version' => $moduleInfo['version'],
-                        'name' => $this->getModuleName($moduleInfo, $moduleName),
-                        'categories' => isset($moduleInfo['categories']),
-                        'protected' => isset($moduleInfo['protected']),
-                        'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
-                    ];
-                }
-            }
-        }
-
-        return [];
     }
 
     /**
@@ -301,35 +187,5 @@ class Modules
         }
 
         return $this->allModules;
-    }
-
-    /**
-     * @param array  $moduleInfo
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getModuleDescription(array $moduleInfo, $moduleName)
-    {
-        if (isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true') {
-            return $this->lang->t($moduleName, 'mod_description');
-        }
-
-        return $moduleInfo['description']['lang'];
-    }
-
-    /**
-     * @param array  $moduleInfo
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getModuleName(array $moduleInfo, $moduleName)
-    {
-        if (isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true') {
-            return $this->lang->t($moduleName, $moduleName);
-        }
-
-        return $moduleInfo['name'];
     }
 }
