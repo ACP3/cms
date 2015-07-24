@@ -31,7 +31,7 @@ class Cache
     }
 
     /**
-     * Gibt die gecacheten Sprachstrings aus
+     * Returns the cached language strings
      *
      * @param string $language
      *
@@ -47,7 +47,7 @@ class Cache
     }
 
     /**
-     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
+     * Saves the language cache
      *
      * @param string $language
      *
@@ -57,8 +57,8 @@ class Cache
     {
         $data = [];
 
-        foreach ($this->vendors->getVendors() as $namespace) {
-            $languageFiles = glob(MODULES_DIR . $namespace . '/*/Languages/' . $language . '.xml');
+        foreach ($this->vendors->getVendors() as $vendor) {
+            $languageFiles = glob(MODULES_DIR . $vendor . '/*/Languages/' . $language . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -81,7 +81,7 @@ class Cache
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @return string
      */
@@ -115,12 +115,12 @@ class Cache
     {
         $languagePacks = [];
 
-        foreach ($this->vendors->getVendors() as $namespace) {
-            $languageFiles = glob(MODULES_DIR . $namespace . '/*/Languages/*.xml');
+        foreach ($this->vendors->getVendors() as $vendors) {
+            $languageFiles = glob(MODULES_DIR . $vendors . '/*/Languages/*.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
-                    $languagePack = $this->_registerLanguagePack($file);
+                    $languagePack = $this->registerLanguagePack($file);
 
                     if (!empty($languagePack)) {
                         $languagePacks += $languagePack;
@@ -137,11 +137,13 @@ class Cache
      *
      * @return array
      */
-    protected function _registerLanguagePack($file)
+    protected function registerLanguagePack($file)
     {
         $xml = simplexml_load_file($file);
-        $languageIso = $this->getLanguagePackIsoCode($file);
+
         if (!empty($xml)) {
+            $languageIso = $this->getLanguagePackIsoCode($file);
+
             return [
                 $languageIso => [
                     'iso' => $languageIso,
@@ -162,6 +164,5 @@ class Cache
     {
         return substr($file, strrpos($file, '/') + 1, -4);
     }
-
 
 }
