@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\Modules;
+use ACP3\Core\Filesystem;
 
 /**
  * Class Vendors
@@ -20,7 +21,7 @@ class Vendors
         if ($this->vendors === []) {
             $this->vendors = array_merge(
                 ['ACP3'],
-                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
+                Filesystem::scandir(MODULES_DIR, ['ACP3', 'Custom']),
                 ['Custom']
             );
         }

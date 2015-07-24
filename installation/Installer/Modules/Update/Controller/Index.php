@@ -3,6 +3,7 @@
 namespace ACP3\Installer\Modules\Update\Controller;
 
 use ACP3\Core\Cache;
+use ACP3\Core\Filesystem;
 use ACP3\Core\Modules;
 use ACP3\Installer\Core;
 
@@ -64,8 +65,7 @@ class Index extends Core\Modules\Controller
 
         // ...danach die Restlichen
         foreach ($this->vendors->getVendors() as $vendor) {
-            $modules = array_diff(scandir(MODULES_DIR . $vendor . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
-            foreach ($modules as $module) {
+            foreach (Filesystem::scandir(MODULES_DIR . $vendor . '/') as $module) {
                 if (in_array(strtolower($module), $coreModules) === false) {
                     $results[$module] = $this->_returnModuleUpdateResult($module);
                 }

@@ -173,9 +173,8 @@ class Modules
     public function getAllModules()
     {
         if (empty($this->allModules)) {
-            foreach ($this->vendors->getVendors() as $namespace) {
-                $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
-                foreach ($modules as $module) {
+            foreach ($this->vendors->getVendors() as $vendor) {
+                foreach (Filesystem::scandir(MODULES_DIR . $vendor . '/') as $module) {
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
                         $this->allModules[$info['name']] = $info;

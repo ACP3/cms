@@ -2,6 +2,7 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Cache;
+use ACP3\Core\Filesystem;
 use ACP3\Core\Lang;
 use ACP3\Core\XML;
 use ACP3\Modules\ACP3\System\Model;
@@ -101,7 +102,7 @@ class ModuleInfoCache
     {
         $infos = [];
 
-        $modules = array_diff(scandir(MODULES_DIR . $vendor . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
+        $modules = Filesystem::scandir(MODULES_DIR . $vendor . '/');
 
         if (!empty($modules)) {
             foreach ($modules as $module) {
@@ -177,7 +178,7 @@ class ModuleInfoCache
      */
     protected function getModuleName(array $moduleInfo, $moduleName)
     {
-        if (isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true') {
+        if (isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] === 'true') {
             return $this->lang->t($moduleName, $moduleName);
         }
 
