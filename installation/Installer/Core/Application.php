@@ -85,12 +85,12 @@ class Application extends Core\AbstractApplication
 
         // When in updater context, also include "normal" module services
         if (defined('IN_UPDATER') === true) {
-            $moduleNamespaces = $this->container->get('core.modules')->getModuleNamespaces();
+            $vendors = $this->container->get('core.modules.vendors')->getVendors();
 
-            foreach ($moduleNamespaces as $namespace) {
-                $namespaceModules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
+            foreach ($vendors as $vendor) {
+                $namespaceModules = array_diff(scandir(MODULES_DIR . $vendor . '/'), ['.', '..']);
                 foreach ($namespaceModules as $module) {
-                    $path = MODULES_DIR . $namespace . '/' . $module . '/config/services.yml';
+                    $path = MODULES_DIR . $vendor . '/' . $module . '/config/services.yml';
                     if (is_file($path) === true) {
                         $loader->load($path);
                     }

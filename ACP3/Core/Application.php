@@ -149,11 +149,11 @@ class Application extends AbstractApplication
             /** @var Modules $modules */
             $modules = $containerBuilder->get('core.modules');
             $activeModules = $modules->getActiveModules();
-            $moduleNamespaces = $modules->getModuleNamespaces();
+            $vendors = $containerBuilder->get('core.modules.vendors')->getVendors();
 
             foreach ($activeModules as $module) {
-                foreach ($moduleNamespaces as $namespace) {
-                    $path = MODULES_DIR . $namespace . '/' . $module['dir'] . '/config/services.yml';
+                foreach ($vendors as $vendor) {
+                    $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/config/services.yml';
 
                     if (is_file($path)) {
                         $loader->load($path);

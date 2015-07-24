@@ -18,6 +18,10 @@ class ThemeResolver
      */
     protected $resourcesCache;
     /**
+     * @var \ACP3\Core\Modules\Vendors
+     */
+    protected $vendors;
+    /**
      * @var array
      */
     protected $cachedPaths = [];
@@ -33,22 +37,21 @@ class ThemeResolver
      * @var string
      */
     protected $designAssetsPath = DESIGN_PATH_INTERNAL;
-    /**
-     * @var array
-     */
-    protected $moduleNamespaces = [];
 
     /**
-     * @param \ACP3\Core\XML          $xml
-     * @param \ACP3\Core\Assets\Cache $resourcesCache
+     * @param \ACP3\Core\XML             $xml
+     * @param \ACP3\Core\Assets\Cache    $resourcesCache
+     * @param \ACP3\Core\Modules\Vendors $vendors
      */
     public function __construct(
         Core\XML $xml,
-        Core\Assets\Cache $resourcesCache
+        Core\Assets\Cache $resourcesCache,
+        Core\Modules\Vendors $vendors
     )
     {
         $this->xml = $xml;
         $this->resourcesCache = $resourcesCache;
+        $this->vendors = $vendors;
         $this->cachedPaths = $resourcesCache->getCache();
     }
 
@@ -60,22 +63,6 @@ class ThemeResolver
         if ($this->newAssetPathsAdded === true) {
             $this->resourcesCache->saveCache($this->cachedPaths);
         }
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getModuleNamespaces()
-    {
-        if ($this->moduleNamespaces === []) {
-            $this->moduleNamespaces = array_merge(
-                ['ACP3'],
-                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
-                ['Custom']
-            );
-        }
-
-        return $this->moduleNamespaces;
     }
 
     /**
@@ -135,8 +122,8 @@ class ThemeResolver
             }
 
             // No overrides have been found -> iterate over all possible module namespaces
-            foreach (array_reverse($this->_getModuleNamespaces()) as $namespace) {
-                $moduleAssetPath = $this->modulesAssetsPath . $namespace . '/' . $modulePath . $dir . $file;
+            foreach (array_reverse($this->vendors->getVendors()) as $vendor) {
+                $moduleAssetPath = $this->modulesAssetsPath . $vendor . '/' . $modulePath . $dir . $file;
                 if (is_file($moduleAssetPath) === true) {
                     $assetPath = $moduleAssetPath;
                     break;

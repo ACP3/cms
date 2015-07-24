@@ -50,7 +50,7 @@ services:
 
   core.lang.cache:
     class: ACP3\Core\Lang\Cache
-    arguments: ['@core.cache.system']
+    arguments: ['@core.cache.system', @core.modules.vendors]
 
   core.mailer:
     class: ACP3\Core\Mailer

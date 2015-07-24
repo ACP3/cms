@@ -16,7 +16,10 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@service_container', '@core.lang', '@core.xml', '@core.cache.system', '@system.model']
+    arguments: ['@service_container', '@core.lang', '@core.xml', '@core.cache.system', @core.modules.vendors, '@system.model']
+
+  core.modules.vendors:
+    class: ACP3\Core\Modules\Vendors
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper

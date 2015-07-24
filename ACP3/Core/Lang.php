@@ -39,10 +39,6 @@ class Lang
      * @var array
      */
     protected $buffer = [];
-    /**
-     * @var array
-     */
-    protected $moduleNamespaces = [];
 
     /**
      * @param \ACP3\Core\Auth       $auth
@@ -375,7 +371,7 @@ class Lang
     {
         if ($this->lang === '') {
             $lang = $this->auth->getUserLanguage();
-            $this->lang = $this->languagePackExists($lang) === true ? $lang : $this->config->getSettings('system')['lang'];
+            $this->lang = self::languagePackExists($lang) === true ? $lang : $this->config->getSettings('system')['lang'];
         }
 
         return $this->lang;

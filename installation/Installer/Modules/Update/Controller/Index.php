@@ -20,21 +20,28 @@ class Index extends Core\Modules\Controller
      * @var \ACP3\Core\Modules\SchemaUpdater
      */
     protected $schemaUpdater;
+    /**
+     * @var \ACP3\Core\Modules\Vendors
+     */
+    protected $vendors;
 
     /**
      * @param \ACP3\Installer\Core\Modules\Controller\Context $context
      * @param \ACP3\Core\Modules                              $modules
+     * @param \ACP3\Core\Modules\Vendors                      $vendors
      * @param \ACP3\Core\Modules\SchemaUpdater                $schemaUpdater
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Modules $modules,
+        Modules\Vendors $vendors,
         Modules\SchemaUpdater $schemaUpdater
     )
     {
         parent::__construct($context);
 
         $this->modules = $modules;
+        $this->vendors = $vendors;
         $this->schemaUpdater = $schemaUpdater;
     }
 
@@ -56,8 +63,8 @@ class Index extends Core\Modules\Controller
         }
 
         // ...danach die Restlichen
-        foreach ($this->modules->getModuleNamespaces() as $namespace) {
-            $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
+        foreach ($this->vendors->getVendors() as $vendor) {
+            $modules = array_diff(scandir(MODULES_DIR . $vendor . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
             foreach ($modules as $module) {
                 if (in_array(strtolower($module), $coreModules) === false) {
                     $results[$module] = $this->_returnModuleUpdateResult($module);

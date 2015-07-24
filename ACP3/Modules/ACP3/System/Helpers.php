@@ -25,20 +25,27 @@ class Helpers
      * @var \ACP3\Core\Modules\SchemaInstaller
      */
     protected $schemaInstaller;
+    /**
+     * @var \ACP3\Core\Modules\Vendors
+     */
+    protected $vendors;
 
     /**
      * @param Core\DB                            $db
      * @param Core\Modules                       $modules
+     * @param \ACP3\Core\Modules\Vendors         $vendors
      * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
      */
     public function __construct(
         Core\DB $db,
         Core\Modules $modules,
+        Core\Modules\Vendors $vendors,
         Core\Modules\SchemaInstaller $schemaInstaller
     )
     {
         $this->db = $db;
         $this->modules = $modules;
+        $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
     }
 
@@ -105,11 +112,11 @@ class Helpers
 
         // Try to get all available services
         $modules = ($allModules === true) ? $this->modules->getAllModules() : $this->modules->getInstalledModules();
-        $moduleNamespaces = $this->modules->getModuleNamespaces();
+        $vendors = $this->vendors->getVendors();
 
         foreach ($modules as $module) {
-            foreach ($moduleNamespaces as $namespace) {
-                $path = MODULES_DIR . $namespace . '/' . $module['dir'] . '/config/services.yml';
+            foreach ($vendors as $vendor) {
+                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/config/services.yml';
                 if (is_file($path)) {
                     $loader->load($path);
                 }

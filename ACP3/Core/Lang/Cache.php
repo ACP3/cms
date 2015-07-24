@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\Lang;
+use ACP3\Core\Modules\Vendors;
 
 /**
  * Class Cache
@@ -12,18 +13,21 @@ class Cache
      */
     protected $cache;
     /**
-     * @var array
+     * @var \ACP3\Core\Modules\Vendors
      */
-    protected $moduleNamespaces = [];
+    protected $vendors;
 
     /**
-     * @param \ACP3\Core\Cache $langCache
+     * @param \ACP3\Core\Cache           $cache
+     * @param \ACP3\Core\Modules\Vendors $vendors
      */
     public function __construct(
-        \ACP3\Core\Cache $langCache
+        \ACP3\Core\Cache $cache,
+        Vendors $vendors
     )
     {
-        $this->cache = $langCache;
+        $this->cache = $cache;
+        $this->vendors = $vendors;
     }
 
     /**
@@ -53,7 +57,7 @@ class Cache
     {
         $data = [];
 
-        foreach ($this->_getModuleNamespaces() as $namespace) {
+        foreach ($this->vendors->getVendors() as $namespace) {
             $languageFiles = glob(MODULES_DIR . $namespace . '/*/Languages/' . $language . '.xml');
 
             if ($languageFiles !== false) {
@@ -74,22 +78,6 @@ class Cache
         }
 
         return $this->cache->save($language, $data);
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getModuleNamespaces()
-    {
-        if ($this->moduleNamespaces === []) {
-            $this->moduleNamespaces = array_merge(
-                ['ACP3'],
-                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
-                ['Custom']
-            );
-        }
-
-        return $this->moduleNamespaces;
     }
 
     /**
@@ -127,7 +115,7 @@ class Cache
     {
         $languagePacks = [];
 
-        foreach ($this->_getModuleNamespaces() as $namespace) {
+        foreach ($this->vendors->getVendors() as $namespace) {
             $languageFiles = glob(MODULES_DIR . $namespace . '/*/Languages/*.xml');
 
             if ($languageFiles !== false) {

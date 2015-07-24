@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Modules\Vendors;
 use ACP3\Modules\ACP3\System;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -31,6 +32,10 @@ class Modules
      */
     protected $systemModel;
     /**
+     * @var \ACP3\Core\Modules\Vendors
+     */
+    protected $vendors;
+    /**
      * @var array
      */
     private $parseModules = [];
@@ -38,30 +43,29 @@ class Modules
      * @var array
      */
     private $allModules = [];
-    /**
-     * @var array
-     */
-    private $moduleNamespaces = [];
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \ACP3\Core\Lang                                           $lang
      * @param \ACP3\Core\XML                                            $xml
-     * @param \ACP3\Core\Cache                                          $modulesCache
+     * @param \ACP3\Core\Cache                                          $cache
+     * @param \ACP3\Core\Modules\Vendors                                $vendors
      * @param \ACP3\Modules\ACP3\System\Model                           $systemModel
      */
     public function __construct(
         ContainerInterface $container,
         Lang $lang,
         XML $xml,
-        Cache $modulesCache,
+        Cache $cache,
+        Vendors $vendors,
         System\Model $systemModel
     )
     {
         $this->container = $container;
         $this->lang = $lang;
         $this->xml = $xml;
-        $this->modulesCache = $modulesCache;
+        $this->modulesCache = $cache;
+        $this->vendors = $vendors;
         $this->systemModel = $systemModel;
     }
 
@@ -148,22 +152,6 @@ class Modules
     }
 
     /**
-     * @return array
-     */
-    public function getModuleNamespaces()
-    {
-        if ($this->moduleNamespaces === []) {
-            $this->moduleNamespaces = array_merge(
-                ['ACP3'],
-                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
-                ['Custom']
-            );
-        }
-
-        return $this->moduleNamespaces;
-    }
-
-    /**
      * Saves a modules info cache
      */
     public function saveModulesCache()
@@ -173,23 +161,23 @@ class Modules
         // 1. fetch all core modules
         // 2. Fetch all 3rd party modules
         // 3. Fetch all local module customizations
-        foreach ($this->getModuleNamespaces() as $namespace) {
-            $infos += $this->_fetchModulesInNamespaces($namespace);
+        foreach ($this->vendors->getVendors() as $namespace) {
+            $infos += $this->_fetchModulesInVendors($namespace);
         }
 
         $this->modulesCache->save($this->_getCacheKey(), $infos);
     }
 
     /**
-     * @param string $namespace
+     * @param string $vendor
      *
      * @return array
      */
-    protected function _fetchModulesInNamespaces($namespace)
+    protected function _fetchModulesInVendors($vendor)
     {
         $infos = [];
 
-        $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
+        $modules = array_diff(scandir(MODULES_DIR . $vendor . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
 
         if (!empty($modules)) {
             foreach ($modules as $module) {
@@ -211,7 +199,7 @@ class Modules
      */
     protected function _fetchModuleInfo($moduleDirectory)
     {
-        $namespaces = array_reverse($this->getModuleNamespaces()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        $namespaces = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($namespaces as $namespace) {
             $path = MODULES_DIR . $namespace . '/' . $moduleDirectory . '/config/module.xml';
             if (is_file($path) === true) {
@@ -299,7 +287,7 @@ class Modules
     public function getAllModules()
     {
         if (empty($this->allModules)) {
-            foreach ($this->getModuleNamespaces() as $namespace) {
+            foreach ($this->vendors->getVendors() as $namespace) {
                 $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd']);
                 foreach ($modules as $module) {
                     $info = $this->getModuleInfo($module);

@@ -21,7 +21,7 @@ services:
 
   core.assets.themeResolver:
     class: ACP3\Core\Assets\ThemeResolver
-    arguments: ['@core.xml', '@core.assets.cache']
+    arguments: ['@core.xml', '@core.assets.cache', @core.modules.vendors]
 
   core.assets.pageCssClasses:
     class: ACP3\Core\Assets\PageCssClasses
