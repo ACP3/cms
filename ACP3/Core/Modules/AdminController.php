@@ -105,7 +105,7 @@ abstract class AdminController extends Core\Modules\FrontendController
      *
      * @return string|array
      */
-    protected function _deleteItem($action, $moduleConfirmUrl = null, $moduleIndexUrl = null)
+    private function _deleteItem($action, $moduleConfirmUrl = null, $moduleIndexUrl = null)
     {
         if (is_array($this->request->getPost()->get('entries')) === true) {
             $entries = $this->request->getPost()->get('entries');
@@ -127,8 +127,6 @@ abstract class AdminController extends Core\Modules\FrontendController
                 'action' => 'confirmed',
                 'entries' => $entries
             ];
-
-            list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl);
 
             return $alerts->confirmBoxPost(
                 $this->fetchConfirmationBoxText($entries),

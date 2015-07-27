@@ -10,15 +10,19 @@ services:
   core.nestedSet.insert:
     class: ACP3\Core\NestedSet\Insert
     arguments: [@core.db, @core.nestedSet.model]
+    public: false
 
   core.nestedSet.delete:
     class: ACP3\Core\NestedSet\Delete
     arguments: [@core.db, @core.nestedSet.model]
+    public: false
 
   core.nestedSet.edit:
     class: ACP3\Core\NestedSet\Edit
     arguments: [@core.db, @core.nestedSet.model]
+    public: false
 
   core.nestedSet.sort:
     class: ACP3\Core\NestedSet\Sort
     arguments: [@core.db, @core.nestedSet.model]
+    public: false
