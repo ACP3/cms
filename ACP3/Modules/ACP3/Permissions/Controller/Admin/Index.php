@@ -102,36 +102,35 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleCustomDeleteAction(
+            $action,
+            function($items) {
+                $bool = $bool2 = $bool3 = false;
+                $levelNotDeletable = false;
 
-        if ($action === 'confirmed') {
-            $bool = $bool2 = $bool3 = false;
-            $levelNotDeletable = false;
-
-            foreach ($items as $item) {
-                if (in_array($item, [1, 2, 4]) === true) {
-                    $levelNotDeletable = true;
-                } else {
-                    $bool = $this->nestedSet->deleteNode($item, Permissions\Model::TABLE_NAME);
-                    $bool2 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_RULES);
-                    $bool3 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_USER_ROLES);
+                foreach ($items as $item) {
+                    if (in_array($item, [1, 2, 4]) === true) {
+                        $levelNotDeletable = true;
+                    } else {
+                        $bool = $this->nestedSet->deleteNode($item, Permissions\Model::TABLE_NAME);
+                        $bool2 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_RULES);
+                        $bool3 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_USER_ROLES);
+                    }
                 }
+
+                $this->permissionsCache->getCacheDriver()->deleteAll();
+
+                if ($levelNotDeletable === true) {
+                    $result = !$levelNotDeletable;
+                    $text = $this->lang->t('permissions', 'role_not_deletable');
+                } else {
+                    $result = $bool !== false && $bool2 !== false && $bool3 !== false;
+                    $text = $this->lang->t('system', $result ? 'delete_success' : 'delete_error');
+                }
+
+                $this->redirectMessages()->setMessage($result, $text);
             }
-
-            $this->permissionsCache->getCacheDriver()->deleteAll();
-
-            if ($levelNotDeletable === true) {
-                $result = !$levelNotDeletable;
-                $text = $this->lang->t('permissions', 'role_not_deletable');
-            } else {
-                $result = $bool !== false && $bool2 !== false && $bool3 !== false;
-                $text = $this->lang->t('system', $result ? 'delete_success' : 'delete_error');
-            }
-
-            $this->redirectMessages()->setMessage($result, $text);
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     /**
@@ -240,7 +239,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $this->permissionsValidator->validate($formData);
 
             $insertValues = [
@@ -273,12 +272,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($roleId, $this->lang->t('system', $roleId !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $roleId;
+        });
     }
 
     /**
@@ -289,7 +284,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $id) {
             $this->permissionsValidator->validate($formData, $id);
 
             $updateValues = [
@@ -324,12 +319,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**

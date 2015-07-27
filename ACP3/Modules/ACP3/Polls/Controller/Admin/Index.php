@@ -94,23 +94,19 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = $bool2 = $bool3 = false;
+                foreach ($items as $item) {
+                    $bool = $this->pollsModel->delete($item);
+                    $bool2 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
+                    $bool3 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                }
 
-        if ($action === 'confirmed') {
-            $bool = $bool2 = $bool3 = false;
-            foreach ($items as $item) {
-                $bool = $this->pollsModel->delete($item);
-                $bool2 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
-                $bool3 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                return $bool !== false && $bool2 !== false && $bool3 !== false;
             }
-
-            $this->redirectMessages()->setMessage(
-                $bool !== false && $bool2 !== false && $bool3 !== false,
-                $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error')
-            );
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     /**
@@ -203,7 +199,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $this->pollsValidator->validateCreate($formData);
 
             $insertValues = [
@@ -233,12 +229,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $pollId && $bool2;
+        });
     }
 
     /**
@@ -247,7 +239,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $id) {
             $this->pollsValidator->validateEdit($formData);
 
             // Frage aktualisieren
@@ -286,11 +278,7 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 }

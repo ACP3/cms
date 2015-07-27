@@ -61,7 +61,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _indexPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function () use ($formData) {
             $this->feedsValidator->validateSettings($formData);
 
             $data = [
@@ -69,15 +69,9 @@ class Index extends Core\Modules\AdminController
                 'feed_type' => $formData['feed_type']
             ];
 
-            $bool = $this->config->setSettings($data, 'feeds');
-
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $this->config->setSettings($data, 'feeds');
+        });
     }
 }

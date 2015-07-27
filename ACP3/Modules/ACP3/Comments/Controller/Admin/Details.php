@@ -75,33 +75,34 @@ class Details extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem(null, 'acp/comments');
+        $this->handleCustomDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
 
-        if ($action === 'confirmed') {
-            $bool = false;
-
-            // Get the module-ID of the first item
-            $moduleId = 0;
-            if (isset($items[0])) {
-                $comment = $this->commentsModel->getOneById($items[0]);
-                if (!empty($comment)) {
-                    $moduleId = $comment['module_id'];
+                // Get the module-ID of the first item
+                $moduleId = 0;
+                if (isset($items[0])) {
+                    $comment = $this->commentsModel->getOneById($items[0]);
+                    if (!empty($comment)) {
+                        $moduleId = $comment['module_id'];
+                    }
                 }
-            }
 
-            foreach ($items as $item) {
-                $bool = $this->commentsModel->delete($item);
-            }
+                foreach ($items as $item) {
+                    $bool = $this->commentsModel->delete($item);
+                }
 
-            // If there are no comments for the given module, redirect to the general comments admin panel page
-            if ($this->commentsModel->countAll($moduleId) == 0) {
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
-            } else {
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments/details/index/id_' . $moduleId);
-            }
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+                // If there are no comments for the given module, redirect to the general comments admin panel page
+                if ($this->commentsModel->countAll($moduleId) == 0) {
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+                } else {
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments/details/index/id_' . $moduleId);
+                }
+            },
+            null,
+            'acp/comments'
+        );
     }
 
     /**
@@ -189,7 +190,7 @@ class Details extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $comment, $id)
     {
-        try {
+        $this->handleEditPostAction(function () use ($formData, $comment, $id) {
             $this->commentsValidator->validateEdit($formData);
 
             $updateValues = [];
@@ -202,11 +203,7 @@ class Details extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments/details/index/id_' . $comment['module_id']);
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 }

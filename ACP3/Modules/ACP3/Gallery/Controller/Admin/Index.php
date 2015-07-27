@@ -85,34 +85,33 @@ class Index extends Core\Modules\AdminController
 
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = $bool2 = false;
 
-        if ($action === 'confirmed') {
-            $bool = $bool2 = false;
+                foreach ($items as $item) {
+                    if (!empty($item) && $this->galleryModel->galleryExists($item) === true) {
+                        // Hochgeladene Bilder löschen
+                        $pictures = $this->galleryModel->getPicturesByGalleryId($item);
+                        foreach ($pictures as $row) {
+                            $this->galleryHelpers->removePicture($row['file']);
+                        }
 
-            foreach ($items as $item) {
-                if (!empty($item) && $this->galleryModel->galleryExists($item) === true) {
-                    // Hochgeladene Bilder löschen
-                    $pictures = $this->galleryModel->getPicturesByGalleryId($item);
-                    foreach ($pictures as $row) {
-                        $this->galleryHelpers->removePicture($row['file']);
+                        // Galerie Cache löschen
+                        $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
+                        $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
+                        $this->galleryHelpers->deletePictureAliases($item);
+
+                        // Fotogalerie mitsamt Bildern löschen
+                        $bool = $this->galleryModel->delete($item);
+                        $bool2 = $this->galleryModel->delete($item, 'gallery_id', Gallery\Model::TABLE_NAME_PICTURES);
                     }
-
-                    // Galerie Cache löschen
-                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
-                    $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
-                    $this->galleryHelpers->deletePictureAliases($item);
-
-                    // Fotogalerie mitsamt Bildern löschen
-                    $bool = $this->galleryModel->delete($item);
-                    $bool2 = $this->galleryModel->delete($item, 'gallery_id', Gallery\Model::TABLE_NAME_PICTURES);
                 }
-            }
 
-            $this->redirectMessages()->setMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+                return $bool !== false && $bool2 !== false;
+            }
+        );
     }
 
     /**
@@ -213,7 +212,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $this->galleryValidator->validate($formData);
 
             $insertValues = [
@@ -236,12 +235,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $lastId;
+        });
     }
 
     /**
@@ -250,7 +245,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $id) {
             $this->galleryValidator->validate(
                 $formData,
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
@@ -276,12 +271,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**
@@ -290,7 +281,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData, array $settings)
     {
-        try {
+        $this->handleSettingsPostAction(function () use ($formData, $settings) {
             $this->galleryValidator->validateSettings($formData);
 
             $data = [
@@ -309,6 +300,8 @@ class Index extends Core\Modules\AdminController
                 $data['comments'] = (int)$formData['comments'];
             }
 
+            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+
             $bool = $this->config->setSettings($data, 'gallery');
 
             // Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
@@ -320,13 +313,7 @@ class Index extends Core\Modules\AdminController
                 $this->get('gallery.cache.core')->getDriver()->deleteAll();
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 }

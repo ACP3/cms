@@ -182,79 +182,82 @@ class Account extends Core\Modules\FrontendController
         $this->view->assign('draft', $user['draft']);
     }
 
+    /**
+     * @param array $formData
+     */
     protected function _editPost(array $formData)
     {
-        try {
-            $this->usersValidator->validateEditProfile($formData);
+        $this->handlePostAction(
+            function () use ($formData) {
+                $this->usersValidator->validateEditProfile($formData);
 
-            $updateValues = [
-                'nickname' => Core\Functions::strEncode($formData['nickname']),
-                'realname' => Core\Functions::strEncode($formData['realname']),
-                'gender' => (int)$formData['gender'],
-                'birthday' => $formData['birthday'],
-                'mail' => $formData['mail'],
-                'website' => Core\Functions::strEncode($formData['website']),
-                'icq' => $formData['icq'],
-                'skype' => Core\Functions::strEncode($formData['skype']),
-                'street' => Core\Functions::strEncode($formData['street']),
-                'house_number' => Core\Functions::strEncode($formData['house_number']),
-                'zip' => Core\Functions::strEncode($formData['zip']),
-                'city' => Core\Functions::strEncode($formData['city']),
-                'country' => Core\Functions::strEncode($formData['country']),
-            ];
+                $updateValues = [
+                    'nickname' => Core\Functions::strEncode($formData['nickname']),
+                    'realname' => Core\Functions::strEncode($formData['realname']),
+                    'gender' => (int)$formData['gender'],
+                    'birthday' => $formData['birthday'],
+                    'mail' => $formData['mail'],
+                    'website' => Core\Functions::strEncode($formData['website']),
+                    'icq' => $formData['icq'],
+                    'skype' => Core\Functions::strEncode($formData['skype']),
+                    'street' => Core\Functions::strEncode($formData['street']),
+                    'house_number' => Core\Functions::strEncode($formData['house_number']),
+                    'zip' => Core\Functions::strEncode($formData['zip']),
+                    'city' => Core\Functions::strEncode($formData['city']),
+                    'country' => Core\Functions::strEncode($formData['country']),
+                ];
 
-            // Neues Passwort
-            if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $salt = $this->secureHelper->salt(12);
-                $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd']);
-                $updateValues['pwd'] = $newPassword . ':' . $salt;
+                // Neues Passwort
+                if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
+                    $salt = $this->secureHelper->salt(12);
+                    $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd']);
+                    $updateValues['pwd'] = $newPassword . ':' . $salt;
+                }
+
+                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
+
+                $cookieArr = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
+                $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
+
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
             }
-
-            $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
-
-            $cookieArr = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
-            $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
-
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+        );
     }
 
+    /**
+     * @param array $formData
+     * @param array $settings
+     */
     protected function _settingsPost(array $formData, array $settings)
     {
-        try {
-            $this->usersValidator->validateUserSettings($formData, $settings);
+        $this->handlePostAction(
+            function () use ($formData, $settings) {
+                $this->usersValidator->validateUserSettings($formData, $settings);
 
-            $updateValues = [
-                'mail_display' => (int)$formData['mail_display'],
-                'birthday_display' => (int)$formData['birthday_display'],
-                'address_display' => (int)$formData['address_display'],
-                'country_display' => (int)$formData['country_display'],
-                'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
-                'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
-                'time_zone' => $formData['date_time_zone'],
-            ];
-            if ($settings['language_override'] == 1) {
-                $updateValues['language'] = $formData['language'];
+                $updateValues = [
+                    'mail_display' => (int)$formData['mail_display'],
+                    'birthday_display' => (int)$formData['birthday_display'],
+                    'address_display' => (int)$formData['address_display'],
+                    'country_display' => (int)$formData['country_display'],
+                    'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
+                    'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                    'time_zone' => $formData['date_time_zone'],
+                ];
+                if ($settings['language_override'] == 1) {
+                    $updateValues['language'] = $formData['language'];
+                }
+                if ($settings['entries_override'] == 1) {
+                    $updateValues['entries'] = (int)$formData['entries'];
+                }
+
+                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
+
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
             }
-            if ($settings['entries_override'] == 1) {
-                $updateValues['entries'] = (int)$formData['entries'];
-            }
-
-            $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
-
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+        );
     }
 }

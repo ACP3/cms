@@ -66,7 +66,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
@@ -87,12 +87,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**
@@ -102,27 +98,26 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
 
-        if ($action === 'confirmed') {
-            $bool = false;
-
-            $upload = new Core\Helpers\Upload('emoticons');
-            foreach ($items as $item) {
-                if (!empty($item) && $this->emoticonsModel->resultExists($item) === true) {
-                    // Datei ebenfalls löschen
-                    $file = $this->emoticonsModel->getOneImageById($item);
-                    $upload->removeUploadedFile($file);
-                    $bool = $this->emoticonsModel->delete($item);
+                $upload = new Core\Helpers\Upload('emoticons');
+                foreach ($items as $item) {
+                    if (!empty($item) && $this->emoticonsModel->resultExists($item) === true) {
+                        // Datei ebenfalls löschen
+                        $file = $this->emoticonsModel->getOneImageById($item);
+                        $upload->removeUploadedFile($file);
+                        $bool = $this->emoticonsModel->delete($item);
+                    }
                 }
+
+                $this->emoticonsCache->saveCache();
+
+                return $bool;
             }
-
-            $this->emoticonsCache->saveCache();
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     /**
@@ -154,7 +149,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $emoticon, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $emoticon, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateEdit($formData, $file, $this->config->getSettings('emoticons'));
@@ -177,12 +172,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     public function actionIndex()
@@ -220,7 +211,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function() use ($formData){
             $this->emoticonsValidator->validateSettings($formData);
 
             $data = [
@@ -228,15 +219,10 @@ class Index extends Core\Modules\AdminController
                 'height' => (int)$formData['height'],
                 'filesize' => (int)$formData['filesize'],
             ];
-            $bool = $this->config->setSettings($data, 'emoticons');
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $this->config->setSettings($data, 'emoticons');
+        });
     }
 }

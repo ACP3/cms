@@ -90,8 +90,8 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('roles', $roles);
 
         // Super User
-        $lang_super_user = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('super_user', $this->formsHelpers->selectGenerator('super_user', [1, 0], $lang_super_user, 0, 'checked'));
+        $lang_superUser = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
+        $this->view->assign('super_user', $this->formsHelpers->selectGenerator('super_user', [1, 0], $lang_superUser, 0, 'checked'));
 
         // Sprache
         $this->view->assign('languages', $this->lang->getLanguagePack($this->request->getPost()->get('language', $systemSettings['lang'])));
@@ -174,33 +174,32 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
-
-        if ($action === 'confirmed') {
-            $bool = $isAdminUser = $selfDelete = false;
-            foreach ($items as $item) {
-                if ($item == 1) {
-                    $isAdminUser = true;
-                } else {
-                    // Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-                    if ($item == $this->auth->getUserId()) {
-                        $this->auth->logout();
-                        $selfDelete = true;
+        $this->handleCustomDeleteAction(
+            $action,
+            function($items) {
+                $bool = $isAdminUser = $selfDelete = false;
+                foreach ($items as $item) {
+                    if ($item == 1) {
+                        $isAdminUser = true;
+                    } else {
+                        // Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
+                        if ($item == $this->auth->getUserId()) {
+                            $this->auth->logout();
+                            $selfDelete = true;
+                        }
+                        $bool = $this->usersModel->delete($item);
                     }
-                    $bool = $this->usersModel->delete($item);
                 }
-            }
-            if ($isAdminUser === true) {
-                $bool = false;
-                $text = $this->lang->t('users', 'admin_user_undeletable');
-            } else {
-                $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
-            }
+                if ($isAdminUser === true) {
+                    $bool = false;
+                    $text = $this->lang->t('users', 'admin_user_undeletable');
+                } else {
+                    $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
+                }
 
-            $this->redirectMessages()->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : '');
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+                $this->redirectMessages()->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : '');
+            }
+        );
     }
 
     /**
@@ -348,7 +347,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost($formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $this->usersValidator->validate($formData);
 
             $salt = $this->secureHelper->salt(12);
@@ -389,12 +388,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $lastId;
+        });
     }
 
     /**
@@ -403,7 +398,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $id) {
             $this->usersValidator->validate($formData, $id);
 
             $updateValues = [
@@ -451,12 +446,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**
@@ -464,7 +455,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function () use ($formData) {
             $this->usersValidator->validateSettings($formData);
 
             $data = [
@@ -473,16 +464,11 @@ class Index extends Core\Modules\AdminController
                 'language_override' => $formData['language_override'],
                 'mail' => $formData['mail']
             ];
-            $bool = $this->config->setSettings($data, 'users');
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $this->config->setSettings($data, 'users');
+        });
     }
 
     /**

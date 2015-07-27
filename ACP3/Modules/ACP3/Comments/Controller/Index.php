@@ -214,31 +214,29 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _createPost(array $formData)
     {
-        try {
-            $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
+        $this->handlePostAction(
+            function () use ($formData) {
+                $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
 
-            $this->commentsValidator->validateCreate($formData, $ip);
+                $this->commentsValidator->validateCreate($formData, $ip);
 
-            $insertValues = [
-                'id' => '',
-                'date' => $this->date->toSQL(),
-                'ip' => $ip,
-                'name' => Core\Functions::strEncode($formData['name']),
-                'user_id' => $this->auth->isUser() === true && $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
-                'message' => Core\Functions::strEncode($formData['message']),
-                'module_id' => $this->modules->getModuleId($this->module),
-                'entry_id' => $this->entryId,
-            ];
+                $insertValues = [
+                    'id' => '',
+                    'date' => $this->date->toSQL(),
+                    'ip' => $ip,
+                    'name' => Core\Functions::strEncode($formData['name']),
+                    'user_id' => $this->auth->isUser() === true && $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
+                    'message' => Core\Functions::strEncode($formData['message']),
+                    'module_id' => $this->modules->getModuleId($this->module),
+                    'entry_id' => $this->entryId,
+                ];
 
-            $bool = $this->commentsModel->insert($insertValues);
+                $bool = $this->commentsModel->insert($insertValues);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->request->getQuery());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
+            }
+        );
     }
 }

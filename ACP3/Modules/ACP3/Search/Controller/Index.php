@@ -52,7 +52,7 @@ class Index extends Core\Modules\FrontendController
         if ($this->request->getPost()->isEmpty() === false) {
             $this->_indexPost($this->request->getPost()->getAll());
         } elseif (!empty($q)) {
-            $this->_indexPost(['search_term' => (string) $q]);
+            $this->_indexPost(['search_term' => (string)$q]);
         }
 
         $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->getAll()));
@@ -112,34 +112,34 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _indexPost(array $formData)
     {
-        try {
-            if (isset($formData['search_term']) === true) {
-                if (isset($formData['mods']) === false) {
-                    $modules = $this->searchHelpers->getModules();
+        $this->handlePostAction(
+            function () use ($formData) {
+                if (isset($formData['search_term']) === true) {
+                    if (isset($formData['mods']) === false) {
+                        $modules = $this->searchHelpers->getModules();
 
-                    $formData['mods'] = [];
-                    foreach ($modules as $row) {
-                        $formData['mods'][] = $row['dir'];
+                        $formData['mods'] = [];
+                        foreach ($modules as $row) {
+                            $formData['mods'][] = $row['dir'];
+                        }
+                    }
+                    if (isset($formData['area']) === false) {
+                        $formData['area'] = 'title_content';
+                    }
+                    if (isset($formData['sort']) === false) {
+                        $formData['sort'] = 'asc';
                     }
                 }
-                if (isset($formData['area']) === false) {
-                    $formData['area'] = 'title_content';
-                }
-                if (isset($formData['sort']) === false) {
-                    $formData['sort'] = 'asc';
-                }
+
+                $this->searchValidator->validate($formData);
+
+                $this->_displaySearchResults(
+                    $formData['mods'],
+                    Core\Functions::strEncode($formData['search_term']),
+                    $formData['area'],
+                    strtoupper($formData['sort'])
+                );
             }
-
-            $this->searchValidator->validate($formData);
-
-            $this->_displaySearchResults(
-                $formData['mods'],
-                Core\Functions::strEncode($formData['search_term']),
-                $formData['area'],
-                strtoupper($formData['sort'])
-            );
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+        );
     }
 }

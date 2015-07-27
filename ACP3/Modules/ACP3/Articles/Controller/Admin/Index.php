@@ -140,7 +140,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function () use ($formData) {
             $this->articlesValidator->validate($formData);
 
             $insertValues = [
@@ -165,12 +165,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $lastId;
+        });
     }
 
     /**
@@ -180,32 +176,31 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function ($items) {
+                $bool = false;
 
-        if ($action === 'confirmed') {
-            $bool = false;
+                foreach ($items as $item) {
+                    $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
-            foreach ($items as $item) {
-                $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
+                    $bool = $this->articlesModel->delete($item);
 
-                $bool = $this->articlesModel->delete($item);
+                    if ($this->menusHelpers) {
+                        $this->menusHelpers->manageMenuItem($uri, false);
+                    }
 
-                if ($this->menusHelpers) {
-                    $this->menusHelpers->manageMenuItem($uri, false);
+                    $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
+                    $this->seo->deleteUriAlias($uri);
                 }
 
-                $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
-                $this->seo->deleteUriAlias($uri);
-            }
+                if ($this->menusCache) {
+                    $this->menusCache->saveMenusCache();
+                }
 
-            if ($this->menusCache) {
-                $this->menusCache->saveMenusCache();
+                return $bool;
             }
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     /**
@@ -263,7 +258,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        try {
+        $this->handleEditPostAction(function () use ($formData, $id) {
             $this->articlesValidator->validate(
                 $formData,
                 sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)
@@ -293,12 +288,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     public function actionIndex()
@@ -322,7 +313,7 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
-     * @param int $id
+     * @param int   $id
      */
     protected function createOrUpdateMenuItem(array $formData, $id)
     {

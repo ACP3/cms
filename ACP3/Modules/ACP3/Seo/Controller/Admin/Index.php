@@ -70,21 +70,20 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
 
-        if ($action === 'confirmed') {
-            $bool = false;
+                foreach ($items as $item) {
+                    $bool = $this->seoModel->delete($item);
+                }
 
-            foreach ($items as $item) {
-                $bool = $this->seoModel->delete($item);
+                $this->seoCache->saveCache();
+
+                return $bool;
             }
-
-            $this->seoCache->saveCache();
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     /**
@@ -137,7 +136,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $this->seoValidator->validate($formData);
 
             $bool = $this->seo->insertUriAlias(
@@ -150,12 +149,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**
@@ -165,7 +160,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $path, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $path, $id) {
             $this->seoValidator->validate($formData, $path);
 
             $updateValues = [
@@ -182,12 +177,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     public function actionSettings()
@@ -221,7 +212,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function() use ($formData) {
             $this->seoValidator->validateSettings($formData);
 
             // Config aktualisieren
@@ -237,11 +228,7 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 }

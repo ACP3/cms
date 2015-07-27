@@ -207,56 +207,54 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _createPost(array $formData)
     {
-        try {
-            $this->guestbookValidator->validateCreate($formData, $this->newsletterActive);
+        $this->handlePostAction(
+            function () use ($formData) {
+                $this->guestbookValidator->validateCreate($formData, $this->newsletterActive);
 
-            $insertValues = [
-                'id' => '',
-                'date' => $this->date->toSQL(),
-                'ip' => $this->request->getServer()->get('REMOTE_ADDR', ''),
-                'name' => Core\Functions::strEncode($formData['name']),
-                'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
-                'message' => Core\Functions::strEncode($formData['message']),
-                'website' => Core\Functions::strEncode($formData['website']),
-                'mail' => $formData['mail'],
-                'active' => $this->guestbookSettings['notify'] == 2 ? 0 : 1,
-            ];
+                $insertValues = [
+                    'id' => '',
+                    'date' => $this->date->toSQL(),
+                    'ip' => $this->request->getServer()->get('REMOTE_ADDR', ''),
+                    'name' => Core\Functions::strEncode($formData['name']),
+                    'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
+                    'message' => Core\Functions::strEncode($formData['message']),
+                    'website' => Core\Functions::strEncode($formData['website']),
+                    'mail' => $formData['mail'],
+                    'active' => $this->guestbookSettings['notify'] == 2 ? 0 : 1,
+                ];
 
-            $lastId = $this->guestbookModel->insert($insertValues);
+                $lastId = $this->guestbookModel->insert($insertValues);
 
-            // Send the notification E-mail if configured
-            if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
-                $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $lastId;
-                $body = sprintf(
-                    $this->guestbookSettings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'),
-                    $this->router->route('', true),
-                    $fullPath
-                );
-                $this->get('core.helpers.sendEmail')->execute(
-                    '',
-                    $this->guestbookSettings['notify_email'],
-                    $this->guestbookSettings['notify_email'],
-                    $this->lang->t('guestbook', 'notification_email_subject'),
-                    $body
-                );
+                // Send the notification E-mail if configured
+                if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
+                    $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $lastId;
+                    $body = sprintf(
+                        $this->guestbookSettings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'),
+                        $this->router->route('', true),
+                        $fullPath
+                    );
+                    $this->get('core.helpers.sendEmail')->execute(
+                        '',
+                        $this->guestbookSettings['notify_email'],
+                        $this->guestbookSettings['notify_email'],
+                        $this->lang->t('guestbook', 'notification_email_subject'),
+                        $body
+                    );
+                }
+
+                // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
+                if ($this->newsletterActive === true &&
+                    $this->newsletterHelpers &&
+                    isset($formData['subscribe_newsletter']) &&
+                    $formData['subscribe_newsletter'] == 1
+                ) {
+                    $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
+                }
+
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
             }
-
-            // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-            if ($this->newsletterActive === true &&
-                $this->newsletterHelpers &&
-                isset($formData['subscribe_newsletter']) &&
-                $formData['subscribe_newsletter'] == 1
-            ) {
-                $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
-            }
-
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
-
-            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+        );
     }
 }

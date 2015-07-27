@@ -81,21 +81,20 @@ class Resources extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
 
-        if ($action === 'confirmed') {
-            $bool = false;
+                foreach ($items as $item) {
+                    $bool = $this->permissionsModel->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
+                }
 
-            foreach ($items as $item) {
-                $bool = $this->permissionsModel->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
+                $this->permissionsCache->saveResourcesCache();
+
+                return $bool;
             }
-
-            $this->permissionsCache->saveResourcesCache();
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     /**
@@ -153,7 +152,7 @@ class Resources extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $this->permissionsValidator->validateResource($formData);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
@@ -172,12 +171,8 @@ class Resources extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**
@@ -186,7 +181,7 @@ class Resources extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $id) {
             $this->permissionsValidator->validateResource($formData);
 
             $updateValues = [
@@ -201,11 +196,7 @@ class Resources extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 }

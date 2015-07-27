@@ -131,29 +131,28 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
 
-        if ($action === 'confirmed') {
-            $bool = false;
+                $upload = new Core\Helpers\Upload('files');
+                foreach ($items as $item) {
+                    if (!empty($item)) {
+                        $upload->removeUploadedFile($this->filesModel->getFileById($item)); // Datei ebenfalls löschen
+                        $bool = $this->filesModel->delete($item);
+                        if ($this->commentsHelpers) {
+                            $this->commentsHelpers->deleteCommentsByModuleAndResult('files', $item);
+                        }
 
-            $upload = new Core\Helpers\Upload('files');
-            foreach ($items as $item) {
-                if (!empty($item)) {
-                    $upload->removeUploadedFile($this->filesModel->getFileById($item)); // Datei ebenfalls löschen
-                    $bool = $this->filesModel->delete($item);
-                    if ($this->commentsHelpers) {
-                        $this->commentsHelpers->deleteCommentsByModuleAndResult('files', $item);
+                        $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
+                        $this->seo->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                     }
-
-                    $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
-                    $this->seo->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                 }
-            }
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+                return $bool;
+            }
+        );
     }
 
     /**
@@ -250,7 +249,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData, $settings) {
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {
@@ -296,12 +295,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $lastId;
+        });
     }
 
     /**
@@ -312,7 +307,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, array $dl, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $settings, $dl, $id) {
             $file = [];
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
@@ -370,12 +365,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**
@@ -383,7 +374,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function () use ($formData) {
             $this->filesValidator->validateSettings($formData);
 
             $data = [
@@ -395,16 +386,10 @@ class Index extends Core\Modules\AdminController
                 $data['comments'] = $formData['comments'];
             }
 
-            $bool = $this->config->setSettings($data, 'files');
-
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $this->config->setSettings($data, 'files');
+        });
     }
 
     /**

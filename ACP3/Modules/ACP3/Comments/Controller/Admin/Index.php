@@ -57,18 +57,17 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
+                foreach ($items as $item) {
+                    $bool = $this->commentsModel->delete($item, 'module_id');
+                }
 
-        if ($action === 'confirmed') {
-            $bool = false;
-            foreach ($items as $item) {
-                $bool = $this->commentsModel->delete($item, 'module_id');
+                return $bool;
             }
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     public function actionIndex()
@@ -119,22 +118,17 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function () use ($formData) {
             $this->commentsValidator->validateSettings($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
                 'emoticons' => $formData['emoticons'],
             ];
-            $bool = $this->config->setSettings($data, 'comments');
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $this->config->setSettings($data, 'comments');
+        });
     }
 }

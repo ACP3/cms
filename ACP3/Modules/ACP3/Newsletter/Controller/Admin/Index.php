@@ -85,18 +85,17 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
+                foreach ($items as $item) {
+                    $bool = $this->newsletterModel->delete($item);
+                }
 
-        if ($action === 'confirmed') {
-            $bool = false;
-            foreach ($items as $item) {
-                $bool = $this->newsletterModel->delete($item);
+                return $bool;
             }
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'));
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+        );
     }
 
     /**
@@ -204,7 +203,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        try {
+        $this->handlePostAction(function() use ($formData, $settings) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -236,11 +235,7 @@ class Index extends Core\Modules\AdminController
                 $lang = $this->lang->t('newsletter', 'create_save_error');
             }
             $this->redirectMessages()->setMessage($result, $lang);
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+        });
     }
 
     /**
@@ -250,7 +245,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        try {
+        $this->handlePostAction(function() use ($formData, $settings, $id) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -279,12 +274,8 @@ class Index extends Core\Modules\AdminController
                 $lang = $this->lang->t('newsletter', 'create_save_error');
             }
 
-            $this->redirectMessages()->setMessage($result, $lang, 'acp/newsletter');
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/newsletter');
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            $this->redirectMessages()->setMessage($result, $lang);
+        });
     }
 
     /**
@@ -292,7 +283,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function () use ($formData) {
             $this->newsletterValidator->validateSettings($formData);
 
             $data = [
@@ -301,15 +292,9 @@ class Index extends Core\Modules\AdminController
                 'html' => (int)$formData['html']
             ];
 
-            $bool = $this->config->setSettings($data, 'newsletter');
-
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $this->config->setSettings($data, 'newsletter');
+        });
     }
 }

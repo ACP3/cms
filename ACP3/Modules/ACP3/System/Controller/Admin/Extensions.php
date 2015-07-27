@@ -101,7 +101,7 @@ class Extensions extends Core\Modules\AdminController
 
         $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
-        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/designs');
+        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     public function actionIndex()
@@ -189,7 +189,7 @@ class Extensions extends Core\Modules\AdminController
             }
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     protected function _renewCaches()
@@ -242,7 +242,7 @@ class Extensions extends Core\Modules\AdminController
             }
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     /**
@@ -282,7 +282,7 @@ class Extensions extends Core\Modules\AdminController
             $text = $this->lang->t('system', 'module_already_installed');
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     /**
@@ -328,6 +328,6 @@ class Extensions extends Core\Modules\AdminController
             $text = $this->lang->t('system', 'protected_module_description');
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, 'acp/system/extensions/modules');
+        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 }

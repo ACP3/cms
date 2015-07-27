@@ -116,28 +116,29 @@ class Pictures extends Core\Modules\AdminController
      */
     public function actionDelete($id, $action = '')
     {
-        $items = $this->_deleteItem(null, 'acp/gallery/index/edit/id_' . $id);
+        $this->handleDeleteAction(
+            $action,
+            function ($items) {
+                $bool = false;
+                foreach ($items as $item) {
+                    if (!empty($item) && $this->galleryModel->pictureExists($item) === true) {
+                        // Datei ebenfalls löschen
+                        $picture = $this->galleryModel->getPictureById($item);
+                        $this->galleryModel->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
+                        $this->galleryHelpers->removePicture($picture['file']);
 
-        if ($action === 'confirmed') {
-            $bool = false;
-            foreach ($items as $item) {
-                if (!empty($item) && $this->galleryModel->pictureExists($item) === true) {
-                    // Datei ebenfalls löschen
-                    $picture = $this->galleryModel->getPictureById($item);
-                    $this->galleryModel->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
-                    $this->galleryHelpers->removePicture($picture['file']);
+                        $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
+                        $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
 
-                    $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
-                    $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
-
-                    $this->galleryCache->saveCache($picture['gallery_id']);
+                        $this->galleryCache->saveCache($picture['gallery_id']);
+                    }
                 }
-            }
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/index/edit/id_' . $id);
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+                return $bool;
+            },
+            null,
+            'acp/gallery/index/edit/id_' . $id
+        );
     }
 
     /**
@@ -206,37 +207,36 @@ class Pictures extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings, $id)
     {
-        try {
-            $file = $this->request->getFiles()->get('file');
+        $this->handleCreatePostAction(
+            function () use ($formData, $settings, $id) {
+                $file = $this->request->getFiles()->get('file');
 
-            $this->galleryValidator->validateCreatePicture($file, $settings);
+                $this->galleryValidator->validateCreatePicture($file, $settings);
 
-            $upload = new Core\Helpers\Upload('gallery');
-            $result = $upload->moveFile($file['tmp_name'], $file['name']);
-            $picNum = $this->galleryModel->getLastPictureByGalleryId($id);
+                $upload = new Core\Helpers\Upload('gallery');
+                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $picNum = $this->galleryModel->getLastPictureByGalleryId($id);
 
-            $insertValues = [
-                'id' => '',
-                'pic' => !is_null($picNum) ? $picNum + 1 : 1,
-                'gallery_id' => $id,
-                'file' => $result['name'],
-                'description' => Core\Functions::strEncode($formData['description'], true),
-                'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
-            ];
+                $insertValues = [
+                    'id' => '',
+                    'pic' => !is_null($picNum) ? $picNum + 1 : 1,
+                    'gallery_id' => $id,
+                    'file' => $result['name'],
+                    'description' => Core\Functions::strEncode($formData['description'], true),
+                    'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
+                ];
 
-            $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
-            $bool2 = $this->galleryHelpers->generatePictureAlias($lastId);
+                $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
+                $bool2 = $this->galleryHelpers->generatePictureAlias($lastId);
 
-            $this->galleryCache->saveCache($id);
+                $this->galleryCache->saveCache($id);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $id);
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery/index/edit/id_' . $id);
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                return $lastId && $bool2;
+            },
+            'acp/gallery/index/edit/id_' . $id
+        );
     }
 
     /**
@@ -247,37 +247,36 @@ class Pictures extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, array $picture, $id)
     {
-        try {
-            $file = $this->request->getFiles()->get('file');
+        $this->handleEditPostAction(
+            function () use ($formData, $settings, $picture, $id) {
+                $file = $this->request->getFiles()->get('file');
 
-            $this->galleryValidator->validateEditPicture($file, $settings);
+                $this->galleryValidator->validateEditPicture($file, $settings);
 
-            $updateValues = [
-                'description' => Core\Functions::strEncode($formData['description'], true),
-                'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
-            ];
+                $updateValues = [
+                    'description' => Core\Functions::strEncode($formData['description'], true),
+                    'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
+                ];
 
-            if (!empty($file)) {
-                $upload = new Core\Helpers\Upload('gallery');
-                $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                $oldFile = $this->galleryModel->getFileById($id);
+                if (!empty($file)) {
+                    $upload = new Core\Helpers\Upload('gallery');
+                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                    $oldFile = $this->galleryModel->getFileById($id);
 
-                $this->galleryHelpers->removePicture($oldFile);
+                    $this->galleryHelpers->removePicture($oldFile);
 
-                $updateValues = array_merge($updateValues, ['file' => $result['name']]);
-            }
+                    $updateValues = array_merge($updateValues, ['file' => $result['name']]);
+                }
 
-            $bool = $this->galleryModel->update($updateValues, $id, Gallery\Model::TABLE_NAME_PICTURES);
+                $bool = $this->galleryModel->update($updateValues, $id, Gallery\Model::TABLE_NAME_PICTURES);
 
-            $this->galleryCache->saveCache($picture['gallery_id']);
+                $this->galleryCache->saveCache($picture['gallery_id']);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                return $bool;
+            },
+            'acp/gallery/index/edit/id_' . $picture['gallery_id']
+        );
     }
 }

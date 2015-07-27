@@ -127,24 +127,25 @@ class Items extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem(null, 'acp/menus');
+        $this->handleDeleteAction(
+            $action,
+            function($items) {
+                $bool = false;
 
-        if ($action === 'confirmed') {
-            $bool = false;
+                foreach ($items as $item) {
+                    // URI-Alias löschen
+                    $itemUri = $this->menusModel->getMenuItemUriById($item);
+                    $bool = $this->nestedSet->deleteNode($item, Menus\Model::TABLE_NAME_ITEMS, true);
+                    $this->seo->deleteUriAlias($itemUri);
+                }
 
-            foreach ($items as $item) {
-                // URI-Alias löschen
-                $itemUri = $this->menusModel->getMenuItemUriById($item);
-                $bool = $this->nestedSet->deleteNode($item, Menus\Model::TABLE_NAME_ITEMS, true);
-                $this->seo->deleteUriAlias($itemUri);
-            }
+                $this->menusCache->saveMenusCache();
 
-            $this->menusCache->saveMenusCache();
-
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+                return $bool;
+            },
+            null,
+            'acp/menus'
+        );
     }
 
     /**
@@ -229,58 +230,57 @@ class Items extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
-            $this->menusValidator->validateItem($formData);
+        $this->handlePostAction(
+            function () use ($formData) {
+                $this->menusValidator->validateItem($formData);
 
-            $insertValues = [
-                'id' => '',
-                'mode' => $this->fetchMenuItemModeForSave($formData),
-                'block_id' => (int)$formData['block_id'],
-                'parent_id' => (int)$formData['parent_id'],
-                'display' => $formData['display'],
-                'title' => Core\Functions::strEncode($formData['title']),
-                'uri' => $this->fetchMenuItemUriForSave($formData),
-                'target' => $formData['display'] == 0 ? 1 : $formData['target'],
-            ];
+                $insertValues = [
+                    'id' => '',
+                    'mode' => $this->fetchMenuItemModeForSave($formData),
+                    'block_id' => (int)$formData['block_id'],
+                    'parent_id' => (int)$formData['parent_id'],
+                    'display' => $formData['display'],
+                    'title' => Core\Functions::strEncode($formData['title']),
+                    'uri' => $this->fetchMenuItemUriForSave($formData),
+                    'target' => $formData['display'] == 0 ? 1 : $formData['target'],
+                ];
 
-            $bool = $this->nestedSet->insertNode(
-                (int)$formData['parent_id'],
-                $insertValues,
-                Menus\Model::TABLE_NAME_ITEMS,
-                true
-            );
-
-            // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
-            if ($formData['mode'] != 3) {
-                $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-                if ($this->aliases->uriAliasExists($formData['uri'])) {
-                    $alias = !empty($formData['alias']) ? $formData['alias'] : $this->aliases->getUriAlias($formData['uri']);
-                    $keywords = $this->seo->getKeywords($formData['uri']);
-                    $description = $this->seo->getDescription($formData['uri']);
-                } else {
-                    $alias = $formData['alias'];
-                    $keywords = $formData['seo_keywords'];
-                    $description = $formData['seo_description'];
-                }
-                $this->seo->insertUriAlias(
-                    $path,
-                    $formData['mode'] == 1 ? '' : $alias,
-                    $keywords,
-                    $description,
-                    (int)$formData['seo_robots']
+                $bool = $this->nestedSet->insertNode(
+                    (int)$formData['parent_id'],
+                    $insertValues,
+                    Menus\Model::TABLE_NAME_ITEMS,
+                    true
                 );
-            }
 
-            $this->menusCache->saveMenusCache();
+                // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
+                if ($formData['mode'] != 3) {
+                    $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
+                    if ($this->aliases->uriAliasExists($formData['uri'])) {
+                        $alias = !empty($formData['alias']) ? $formData['alias'] : $this->aliases->getUriAlias($formData['uri']);
+                        $keywords = $this->seo->getKeywords($formData['uri']);
+                        $description = $this->seo->getDescription($formData['uri']);
+                    } else {
+                        $alias = $formData['alias'];
+                        $keywords = $formData['seo_keywords'];
+                        $description = $formData['seo_description'];
+                    }
+                    $this->seo->insertUriAlias(
+                        $path,
+                        $formData['mode'] == 1 ? '' : $alias,
+                        $keywords,
+                        $description,
+                        (int)$formData['seo_robots']
+                    );
+                }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->menusCache->saveMenusCache();
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+            },
+            'acp/menus'
+        );
     }
 
     /**
@@ -290,53 +290,52 @@ class Items extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $menuItem, $id)
     {
-        try {
-            $this->menusValidator->validateItem($formData);
+        $this->handlePostAction(
+            function () use ($formData, $menuItem, $id) {
+                $this->menusValidator->validateItem($formData);
 
-            $updateValues = [
-                'mode' => $this->fetchMenuItemModeForSave($formData),
-                'block_id' => $formData['block_id'],
-                'parent_id' => $formData['parent_id'],
-                'display' => $formData['display'],
-                'title' => Core\Functions::strEncode($formData['title']),
-                'uri' => $this->fetchMenuItemUriForSave($formData),
-                'target' => $formData['display'] == 0 ? 1 : $formData['target'],
-            ];
+                $updateValues = [
+                    'mode' => $this->fetchMenuItemModeForSave($formData),
+                    'block_id' => $formData['block_id'],
+                    'parent_id' => $formData['parent_id'],
+                    'display' => $formData['display'],
+                    'title' => Core\Functions::strEncode($formData['title']),
+                    'uri' => $this->fetchMenuItemUriForSave($formData),
+                    'target' => $formData['display'] == 0 ? 1 : $formData['target'],
+                ];
 
-            $bool = $this->nestedSet->editNode(
-                $id,
-                (int)$formData['parent_id'],
-                (int)$formData['block_id'],
-                $updateValues,
-                Menus\Model::TABLE_NAME_ITEMS,
-                true
-            );
-
-            // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
-            if ($formData['mode'] != 3) {
-                $alias = $formData['alias'] === $menuItem['alias'] ? $menuItem['alias'] : $formData['alias'];
-                $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
-                $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
-                $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-                $this->seo->insertUriAlias(
-                    $path,
-                    $formData['mode'] == 1 ? '' : $alias,
-                    $keywords,
-                    $description,
-                    (int)$formData['seo_robots']
+                $bool = $this->nestedSet->editNode(
+                    $id,
+                    (int)$formData['parent_id'],
+                    (int)$formData['block_id'],
+                    $updateValues,
+                    Menus\Model::TABLE_NAME_ITEMS,
+                    true
                 );
-            }
 
-            $this->menusCache->saveMenusCache();
+                // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
+                if ($formData['mode'] != 3) {
+                    $alias = $formData['alias'] === $menuItem['alias'] ? $menuItem['alias'] : $formData['alias'];
+                    $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
+                    $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
+                    $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
+                    $this->seo->insertUriAlias(
+                        $path,
+                        $formData['mode'] == 1 ? '' : $alias,
+                        $keywords,
+                        $description,
+                        (int)$formData['seo_robots']
+                    );
+                }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->menusCache->saveMenusCache();
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+            },
+            'acp/menus'
+        );
     }
 
     /**

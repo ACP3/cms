@@ -76,7 +76,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        try {
+        $this->handleCreatePostAction(function() use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
@@ -100,12 +100,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     /**
@@ -115,44 +111,43 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $items = $this->_deleteItem();
-
-        if ($action === 'confirmed') {
-            $bool = false;
-            $isInUse = false;
-
-            foreach ($items as $item) {
-                if (!empty($item) && $this->categoriesModel->resultExists($item) === true) {
-                    $category = $this->categoriesModel->getCategoryDeleteInfosById($item);
-
-                    $serviceId = strtolower($category['module'] . '.model');
-                    if ($this->container->has($serviceId)) {
-                        if ($this->get($serviceId)->countAll('', $item) > 0) {
-                            $isInUse = true;
-                            continue;
-                        }
-                    }
-
-                    // Kategoriebild ebenfalls löschen
-                    $upload = new Core\Helpers\Upload('categories');
-                    $upload->removeUploadedFile($category['picture']);
-                    $bool = $this->categoriesModel->delete($item);
-                }
-            }
-
-            $this->categoriesCache->getCacheDriver()->deleteAll();
-
-            if ($isInUse === true) {
-                $text = $this->lang->t('categories', 'category_is_in_use');
+        $this->handleCustomDeleteAction(
+            $action,
+            function ($items) {
                 $bool = false;
-            } else {
-                $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
-            }
+                $isInUse = false;
 
-            $this->redirectMessages()->setMessage($bool, $text);
-        } elseif (is_string($items)) {
-            throw new Core\Exceptions\ResultNotExists();
-        }
+                foreach ($items as $item) {
+                    if (!empty($item) && $this->categoriesModel->resultExists($item) === true) {
+                        $category = $this->categoriesModel->getCategoryDeleteInfosById($item);
+
+                        $serviceId = strtolower($category['module'] . '.model');
+                        if ($this->container->has($serviceId)) {
+                            if ($this->get($serviceId)->countAll('', $item) > 0) {
+                                $isInUse = true;
+                                continue;
+                            }
+                        }
+
+                        // Kategoriebild ebenfalls löschen
+                        $upload = new Core\Helpers\Upload('categories');
+                        $upload->removeUploadedFile($category['picture']);
+                        $bool = $this->categoriesModel->delete($item);
+                    }
+                }
+
+                $this->categoriesCache->getCacheDriver()->deleteAll();
+
+                if ($isInUse === true) {
+                    $text = $this->lang->t('categories', 'category_is_in_use');
+                    $bool = false;
+                } else {
+                    $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
+                }
+
+                $this->redirectMessages()->setMessage($bool, $text);
+            }
+        );
     }
 
     /**
@@ -186,7 +181,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $category, $id)
     {
-        try {
+        $this->handleEditPostAction(function() use ($formData, $category, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $id);
@@ -209,12 +204,8 @@ class Index extends Core\Modules\AdminController
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $bool;
+        });
     }
 
     public function actionIndex()
@@ -258,7 +249,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        try {
+        $this->handleSettingsPostAction(function () use ($formData) {
             $this->categoriesValidator->validateSettings($formData);
 
             $data = [
@@ -266,15 +257,10 @@ class Index extends Core\Modules\AdminController
                 'height' => (int)$formData['height'],
                 'filesize' => (int)$formData['filesize'],
             ];
-            $bool = $this->config->setSettings($data, 'categories');
 
             $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'));
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage());
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+            return $this->config->setSettings($data, 'categories');
+        });
     }
 }

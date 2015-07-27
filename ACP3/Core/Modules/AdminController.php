@@ -45,16 +45,69 @@ abstract class AdminController extends Core\Modules\FrontendController
     }
 
     /**
-     * Little helper function for deleting an result set
-     *
+     * @param string      $action
+     * @param callable    $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
-     * @return array
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    protected function _deleteItem($moduleConfirmUrl = null, $moduleIndexUrl = null)
+    protected function handleDeleteAction(
+        $action,
+        callable $callback,
+        $moduleConfirmUrl = null,
+        $moduleIndexUrl = null
+    )
     {
-        if ($this->request->getPost()->has('entries') && is_array($this->request->getPost()->get('entries')) === true) {
+        $this->handleCustomDeleteAction(
+            $action,
+            function ($items) use ($callback) {
+                $callback($items);
+            },
+            $moduleConfirmUrl,
+            $moduleIndexUrl
+        );
+    }
+
+    /**
+     * @param string      $action
+     * @param callable    $callback
+     * @param string|null $moduleConfirmUrl
+     * @param string|null $moduleIndexUrl
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    protected function handleCustomDeleteAction(
+        $action,
+        callable $callback,
+        $moduleConfirmUrl = null,
+        $moduleIndexUrl = null
+    )
+    {
+        list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl);
+        $result = $this->_deleteItem($action, $moduleConfirmUrl, $moduleIndexUrl);
+
+        if (is_string($result)) {
+            $this->setTemplate($result);
+        } elseif ($action === 'confirmed' && is_array($result)) {
+            $callback($result);
+        } else {
+            throw new Core\Exceptions\ResultNotExists();
+        }
+    }
+
+    /**
+     * Little helper function for deleting an result set
+     *
+     * @param string      $action
+     * @param string|null $moduleConfirmUrl
+     * @param string|null $moduleIndexUrl
+     *
+     * @return string|array
+     */
+    protected function _deleteItem($action, $moduleConfirmUrl = null, $moduleIndexUrl = null)
+    {
+        if (is_array($this->request->getPost()->get('entries')) === true) {
             $entries = $this->request->getPost()->get('entries');
         } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
             $entries = $this->request->getParameters()->get('entries');
@@ -64,8 +117,8 @@ abstract class AdminController extends Core\Modules\FrontendController
         $alerts = $this->get('core.helpers.alerts');
 
         if (empty($entries)) {
-            $this->setTemplate($alerts->errorBoxContent($this->lang->t('system', 'no_entries_selected')));
-        } elseif (empty($entries) === false && $this->request->getParameters()->get('action') !== 'confirmed') {
+            return $alerts->errorBoxContent($this->lang->t('system', 'no_entries_selected'));
+        } elseif (empty($entries) === false && $action !== 'confirmed') {
             if (is_array($entries) === false) {
                 $entries = [$entries];
             }
@@ -77,14 +130,12 @@ abstract class AdminController extends Core\Modules\FrontendController
 
             list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl);
 
-            $confirmBox = $alerts->confirmBoxPost(
+            return $alerts->confirmBoxPost(
                 $this->fetchConfirmationBoxText($entries),
                 $data,
                 $this->router->route($moduleConfirmUrl),
                 $this->router->route($moduleIndexUrl)
             );
-
-            $this->setTemplate($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
         }
@@ -107,6 +158,59 @@ abstract class AdminController extends Core\Modules\FrontendController
         }
 
         return [$moduleConfirmUrl, $moduleIndexUrl];
+    }
+
+    /**
+     * @param callable    $callback
+     * @param null|string $path
+     */
+    protected function handleSettingsPostAction(callable $callback, $path = null)
+    {
+        $this->handlePostAction(function () use ($callback, $path) {
+            $result = $callback();
+
+            $this->setRedirectMessageAfterPost($result, 'settings', $path);
+        }, $path);
+    }
+
+    /**
+     * @param callable    $callback
+     * @param null|string $path
+     */
+    protected function handleCreatePostAction(callable $callback, $path = null)
+    {
+        $this->handlePostAction(function () use ($callback, $path) {
+            $result = $callback();
+
+            $this->setRedirectMessageAfterPost($result, 'create', $path);
+        });
+    }
+
+    /**
+     * @param callable    $callback
+     * @param null|string $path
+     */
+    protected function handleEditPostAction(callable $callback, $path = null)
+    {
+        $this->handlePostAction(function () use ($callback, $path) {
+            $result = $callback();
+
+            $this->setRedirectMessageAfterPost($result, 'edit', $path);
+        });
+    }
+
+    /**
+     * @param bool|int    $result
+     * @param string      $localization
+     * @param null|string $path
+     */
+    private function setRedirectMessageAfterPost($result, $localization, $path = null)
+    {
+        $this->redirectMessages()->setMessage(
+            $result,
+            $this->lang->t('system', $localization . ($result !== false ? 'success' : 'error')),
+            $path
+        );
     }
 
     /**

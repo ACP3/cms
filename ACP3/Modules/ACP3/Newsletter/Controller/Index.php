@@ -121,33 +121,31 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _indexPost(array $formData, $action)
     {
-        try {
-            switch ($action) {
-                case 'subscribe':
-                    $this->newsletterValidator->validateSubscribe($formData);
+        $this->handlePostAction(
+            function() use ($formData, $action) {
+                switch ($action) {
+                    case 'subscribe':
+                        $this->newsletterValidator->validateSubscribe($formData);
 
-                    $bool = $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
+                        $bool = $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
 
-                    $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                        $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-                    $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
-                    break;
-                case 'unsubscribe':
-                    $this->newsletterValidator->validateUnsubscribe($formData);
+                        $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+                        break;
+                    case 'unsubscribe':
+                        $this->newsletterValidator->validateUnsubscribe($formData);
 
-                    $bool = $this->newsletterModel->delete(['mail' => $formData['mail']], '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
+                        $bool = $this->newsletterModel->delete(['mail' => $formData['mail']], '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-                    $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                        $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-                    $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
-                    break;
-                default:
-                    throw new Core\Exceptions\ResultNotExists();
+                        $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+                        break;
+                    default:
+                        throw new Core\Exceptions\ResultNotExists();
+                }
             }
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+        );
     }
 }

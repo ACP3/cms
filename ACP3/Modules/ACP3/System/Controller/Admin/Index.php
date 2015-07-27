@@ -122,41 +122,40 @@ class Index extends Core\Modules\AdminController
      */
     protected function _configurationPost(array $formData)
     {
-        try {
-            $this->systemValidator->validateSettings($formData);
+        $this->handlePostAction(
+            function () use ($formData) {
+                $this->systemValidator->validateSettings($formData);
 
-            // Config aktualisieren
-            $data = [
-                'cache_images' => (int)$formData['cache_images'],
-                'cache_minify' => (int)$formData['cache_minify'],
-                'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
-                'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
-                'date_time_zone' => $formData['date_time_zone'],
-                'entries' => (int)$formData['entries'],
-                'flood' => (int)$formData['flood'],
-                'homepage' => $formData['homepage'],
-                'lang' => $formData['language'],
-                'mailer_smtp_auth' => (int)$formData['mailer_smtp_auth'],
-                'mailer_smtp_host' => $formData['mailer_smtp_host'],
-                'mailer_smtp_password' => $formData['mailer_smtp_password'],
-                'mailer_smtp_port' => (int)$formData['mailer_smtp_port'],
-                'mailer_smtp_security' => $formData['mailer_smtp_security'],
-                'mailer_smtp_user' => $formData['mailer_smtp_user'],
-                'mailer_type' => $formData['mailer_type'],
-                'maintenance_message' => $formData['maintenance_message'],
-                'maintenance_mode' => (int)$formData['maintenance_mode'],
-                'wysiwyg' => $formData['wysiwyg']
-            ];
+                // Config aktualisieren
+                $data = [
+                    'cache_images' => (int)$formData['cache_images'],
+                    'cache_minify' => (int)$formData['cache_minify'],
+                    'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
+                    'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                    'date_time_zone' => $formData['date_time_zone'],
+                    'entries' => (int)$formData['entries'],
+                    'flood' => (int)$formData['flood'],
+                    'homepage' => $formData['homepage'],
+                    'lang' => $formData['language'],
+                    'mailer_smtp_auth' => (int)$formData['mailer_smtp_auth'],
+                    'mailer_smtp_host' => $formData['mailer_smtp_host'],
+                    'mailer_smtp_password' => $formData['mailer_smtp_password'],
+                    'mailer_smtp_port' => (int)$formData['mailer_smtp_port'],
+                    'mailer_smtp_security' => $formData['mailer_smtp_security'],
+                    'mailer_smtp_user' => $formData['mailer_smtp_user'],
+                    'mailer_type' => $formData['mailer_type'],
+                    'maintenance_message' => $formData['maintenance_message'],
+                    'maintenance_mode' => (int)$formData['maintenance_mode'],
+                    'wysiwyg' => $formData['wysiwyg']
+                ];
 
-            $bool = $this->config->setSettings($data, 'system');
+                $bool = $this->config->setSettings($data, 'system');
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/index/configuration');
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), $this->request->getFullPath());
+            },
+            $this->request->getFullPath()
+        );
     }
 }

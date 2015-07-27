@@ -175,29 +175,26 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected function _sqlExportPost(array $formData)
     {
-        try {
-            $this->systemValidator->validateSqlExport($formData);
+        $this->handlePostAction(
+            function () use ($formData) {
+                $this->systemValidator->validateSqlExport($formData);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $export = $this->systemHelpers->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
+                $export = $this->systemHelpers->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
 
-            // Als Datei ausgeben
-            if ($formData['output'] === 'file') {
-                header('Content-Type: text/sql');
-                header('Content-Disposition: attachment; filename=' . $this->db->getName() . '_export.sql');
-                header('Content-Length: ' . strlen($export));
-                exit($export);
-            } else { // Im Browser ausgeben
-                $this->view->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
-            }
-
-            return;
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/maintenance/sql_export');
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                // Als Datei ausgeben
+                if ($formData['output'] === 'file') {
+                    header('Content-Type: text/sql');
+                    header('Content-Disposition: attachment; filename=' . $this->db->getName() . '_export.sql');
+                    header('Content-Length: ' . strlen($export));
+                    exit($export);
+                } else { // Im Browser ausgeben
+                    $this->view->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
+                }
+            },
+            $this->request->getFullPath()
+        );
     }
 
     /**
@@ -207,42 +204,41 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected function _sqlImportPost(array $formData)
     {
-        try {
-            $file = $this->request->getFiles()->get('file');
+        $this->handlePostAction(
+            function () use ($formData) {
+                $file = $this->request->getFiles()->get('file');
 
-            $this->systemValidator->validateSqlImport($formData, $file);
+                $this->systemValidator->validateSqlImport($formData, $file);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
 
-            $data = isset($file) ? file_get_contents($file['tmp_name']) : $formData['text'];
-            $importData = explode(";\n", str_replace(["\r\n", "\r", "\n"], "\n", $data));
-            $sqlQueries = [];
+                $data = isset($file) ? file_get_contents($file['tmp_name']) : $formData['text'];
+                $importData = explode(";\n", str_replace(["\r\n", "\r", "\n"], "\n", $data));
+                $sqlQueries = [];
 
-            $i = 0;
-            foreach ($importData as $row) {
-                if (!empty($row)) {
-                    $bool = $this->db->getConnection()->query($row);
-                    $sqlQueries[$i]['query'] = str_replace("\n", '<br />', $row);
-                    $sqlQueries[$i]['color'] = $bool !== null ? '090' : 'f00';
-                    ++$i;
+                $i = 0;
+                foreach ($importData as $row) {
+                    if (!empty($row)) {
+                        $bool = $this->db->getConnection()->query($row);
+                        $sqlQueries[$i]['query'] = str_replace("\n", '<br />', $row);
+                        $sqlQueries[$i]['color'] = $bool !== null ? '090' : 'f00';
+                        ++$i;
 
-                    if (!$bool) {
-                        break;
+                        if (!$bool) {
+                            break;
+                        }
                     }
                 }
-            }
 
-            $this->view->assign('sql_queries', $sqlQueries);
+                $this->view->assign('sql_queries', $sqlQueries);
 
-            Core\Cache::purge(CACHE_DIR . 'images');
-            Core\Cache::purge(CACHE_DIR . 'sql');
-            Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
-            Core\Cache::purge(CACHE_DIR . 'tpl_cached');
-            Core\Cache::purge(UPLOADS_DIR . 'assets');
-        } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/system/maintenance/sql_import');
-        } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
+                Core\Cache::purge(CACHE_DIR . 'images');
+                Core\Cache::purge(CACHE_DIR . 'sql');
+                Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
+                Core\Cache::purge(CACHE_DIR . 'tpl_cached');
+                Core\Cache::purge(UPLOADS_DIR . 'assets');
+            },
+            $this->request->getFullPath()
+        );
     }
 }
