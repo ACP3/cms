@@ -38,7 +38,7 @@ class FrontController
     {
         $request = $this->container->get('core.request');
 
-        $this->_checkForUriAlias($request);
+        $this->checkForUriAlias($request);
 
         if (empty($serviceId)) {
             $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController();
@@ -81,7 +81,7 @@ class FrontController
      *
      * @param \ACP3\Core\Http\RequestInterface $request
      */
-    protected function _checkForUriAlias(RequestInterface $request)
+    protected function checkForUriAlias(RequestInterface $request)
     {
         // Return early, if we are currently in the admin panel
         if ($request->getArea() !== 'admin') {

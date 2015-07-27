@@ -13,7 +13,7 @@ class FrontController extends \ACP3\Core\FrontController
     /**
      * @inheritdoc
      */
-    protected function _checkForUriAlias(RequestInterface $request)
+    protected function checkForUriAlias(RequestInterface $request)
     {
     }
 }

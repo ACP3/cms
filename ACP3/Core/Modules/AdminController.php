@@ -61,8 +61,12 @@ abstract class AdminController extends Core\Modules\FrontendController
     {
         $this->handleCustomDeleteAction(
             $action,
-            function ($items) use ($callback) {
-                $callback($items);
+            function ($items) use ($callback, $moduleIndexUrl) {
+                $result = $callback($items);
+
+                if (is_string($result) === false) {
+                    $this->setRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
+                }
             },
             $moduleConfirmUrl,
             $moduleIndexUrl
@@ -90,7 +94,7 @@ abstract class AdminController extends Core\Modules\FrontendController
         if (is_string($result)) {
             $this->setTemplate($result);
         } elseif ($action === 'confirmed' && is_array($result)) {
-            $callback($result);
+            return $callback($result);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -206,7 +210,7 @@ abstract class AdminController extends Core\Modules\FrontendController
     {
         $this->redirectMessages()->setMessage(
             $result,
-            $this->lang->t('system', $localization . ($result !== false ? 'success' : 'error')),
+            $this->lang->t('system', $localization . ($result !== false ? '_success' : '_error')),
             $path
         );
     }

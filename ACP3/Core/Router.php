@@ -46,63 +46,100 @@ class Router
     /**
      * Generates the internal ACP3 hyperlinks
      *
-     * @param      $path
-     * @param bool $absolute
-     * @param bool $forceSecure
+     * @param string $path
+     * @param bool   $isAbsolute
+     * @param bool   $forceSecure
      *
      * @return string
      */
-    public function route($path, $absolute = false, $forceSecure = false)
+    public function route($path, $isAbsolute = false, $forceSecure = false)
     {
-        $isAdminUrl = false;
-
         if ($path !== '') {
-            $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
-            if ($path === 'acp/') {
-                $path = 'acp/acp/index/index/';
-            }
-            $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
-            $isAdminUrl = preg_match(self::ADMIN_PANEL_PATTERN, $path) === true;
+            $path = $this->preparePath($path);
 
-            if ($isAdminUrl === true) {
-                if (isset($pathArray[2]) === false) {
-                    $path .= 'index/';
-                }
-                if (isset($pathArray[3]) === false) {
-                    $path .= 'index/';
-                }
-            } else {
-                if (isset($pathArray[1]) === false) {
-                    $path .= 'index/';
-                }
-                if (isset($pathArray[2]) === false) {
-                    $path .= 'index/';
-                }
-            }
-
-            if ($isAdminUrl === false) {
+            if ($this->isAdminUri($path) === false) {
                 $alias = $this->aliases->getUriAlias($path);
                 $path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
             }
         }
 
+        return $this->addUriPrefix($path, $isAbsolute, $forceSecure) . $path;
+    }
+
+    /**
+     * @param string $path
+     * @param bool   $isAbsolute
+     * @param bool   $forceSecure
+     *
+     * @return string
+     */
+    protected function addUriPrefix($path, $isAbsolute, $forceSecure)
+    {
         $prefix = '';
         // Append the current hostname to the URL
-        if ($absolute === true) {
+        if ($isAbsolute === true) {
             $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getProtocol();
             $prefix .= $this->request->getHostname();
         }
 
-        // Check, whether to use urls with mod_rewrite or not
-        if ((bool)$this->config->getSettings('seo')['mod_rewrite'] === false ||
-            $isAdminUrl === true ||
-            (defined('DEBUG') && DEBUG === true)
-        ) {
-            $prefix .= PHP_SELF . '/';
-        } else {
-            $prefix .= ROOT_DIR;
+        $prefix .= $this->useModRewrite($path) ? ROOT_DIR : PHP_SELF . '/';
+
+        return $prefix;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function addControllerAndAction($path)
+    {
+        $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
+        $indexes = ($this->isAdminUri($path) === true) ? [2, 3] : [1, 2];
+
+        foreach ($indexes as $index) {
+            if (isset($pathArray[$index]) === false) {
+                $path .= 'index/';
+            }
         }
 
-        return $prefix . $path;
+        return $path;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function isAdminUri($path)
+    {
+        return preg_match(self::ADMIN_PANEL_PATTERN, $path) === true;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function preparePath($path)
+    {
+        $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
+        if ($path === 'acp/') {
+            $path = 'acp/acp/index/index/';
+        }
+
+        return $this->addControllerAndAction($path);
+    }
+
+    /**
+     * Check, whether to use urls with mod_rewrite or not
+     *
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function useModRewrite($path)
+    {
+        return (bool)$this->config->getSettings('seo')['mod_rewrite'] === true && $this->isAdminUri($path) === false && (!defined('DEBUG') || DEBUG === false);
     }
 }
