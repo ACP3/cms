@@ -50,6 +50,9 @@
                                                 <label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn btn-default{if !empty($row.selected)} active{/if}">
                                                     <input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
                                                     {$row.lang}
+                                                    {if $row.value === 2 && isset($privilege.calculated)}
+                                                        <small>({$privilege.calculated})</small>
+                                                    {/if}
                                                 </label>
                                             {/foreach}
                                         </div>

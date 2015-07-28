@@ -97,7 +97,7 @@ class Model extends Core\Model
     public function getAllRulesByRoleIds(array $roles)
     {
         return $this->db->getConnection()->executeQuery(
-            'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName(static::TABLE_NAME_RULES) . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(static::TABLE_NAME_PRIVILEGES) . ' AS p ON(ru.privilege_id = p.id) WHERE m.active = 1 AND ru.role_id IN(?)',
+            'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName(static::TABLE_NAME_RULES) . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(static::TABLE_NAME_PRIVILEGES) . " AS p ON(ru.privilege_id = p.id) JOIN {$this->getTableName()} AS ro ON(ro.id = ru.role_id) WHERE m.active = 1 AND ro.id IN(?)",
             [$roles],
             [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
         )->fetchAll();

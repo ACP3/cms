@@ -64,33 +64,8 @@ class Index extends Core\Modules\AdminController
         }
 
         $this->view->assign('form', array_merge(['name' => ''], $this->request->getPost()->getAll()));
-
-        $roles = $this->acl->getAllRoles();
-        $c_roles = count($roles);
-        for ($i = 0; $i < $c_roles; ++$i) {
-            $roles[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
-            $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
-        }
-        $this->view->assign('parent', $roles);
-
-        $modules = $this->modules->getActiveModules();
-        $privileges = $this->acl->getAllPrivileges();
-        $c_privileges = count($privileges);
-        $this->view->assign('privileges', $privileges);
-
-        foreach ($modules as $module => $moduleInfo) {
-            for ($j = 0; $j < $c_privileges; ++$j) {
-                $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
-                    0,
-                    $moduleInfo['id'],
-                    $privileges[$j]['id'],
-                    2
-                );
-            }
-            $modules[$module]['privileges'] = $privileges;
-        }
-
-        $this->view->assign('modules', $modules);
+        $this->view->assign('parent', $this->fetchRoles());
+        $this->view->assign('modules', $this->fetchModulePermissions(0, 2));
 
         $this->formTokenHelper->generateFormToken($this->request->getQuery());
     }
@@ -149,43 +124,10 @@ class Index extends Core\Modules\AdminController
                 $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
-            if ($this->request->getParameters()->get('id', 0) != 1) {
-                $roles = $this->acl->getAllRoles();
-                $c_roles = count($roles);
-                for ($i = 0; $i < $c_roles; ++$i) {
-                    if ($roles[$i]['left_id'] >= $role['left_id'] && $roles[$i]['right_id'] <= $role['right_id']) {
-                        unset($roles[$i]);
-                    } else {
-                        $roles[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('roles', $roles[$i]['id'], $role['parent_id']);
-                        $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
-                    }
-                }
-                $this->view->assign('parent', $roles);
+            if ($id != 1) {
+                $this->view->assign('parent', $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id']));
             }
-
-            $rules = $this->acl->getRules([$id]);
-            $modules = $this->modules->getActiveModules();
-            $privileges = $this->acl->getAllPrivileges();
-            $c_privileges = count($privileges);
-            $this->view->assign('privileges', $privileges);
-
-            foreach ($modules as $name => $moduleInfo) {
-                $moduleDir = strtolower($moduleInfo['dir']);
-                for ($j = 0; $j < $c_privileges; ++$j) {
-                    $privilegeValue = isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? $rules[$moduleDir][$privileges[$j]['key']]['permission'] : 0;
-                    $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
-                        $id,
-                        $moduleInfo['id'],
-                        $privileges[$j]['id'],
-                        (int) $privilegeValue
-                    );
-                    //$privileges[$j]['calculated'] = sprintf($this->lang->t('permissions', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $this->lang->t('permissions', 'allow_access') :  $this->lang->t('permissions', 'deny_access'));
-                }
-                $modules[$name]['privileges'] = $privileges;
-            }
-
-            $this->view->assign('modules', $modules);
-
+            $this->view->assign('modules', $this->fetchModulePermissions($id));
             $this->view->assign('form', array_merge($role, $this->request->getPost()->getAll()));
 
             $this->formTokenHelper->generateFormToken($this->request->getQuery());
@@ -255,18 +197,7 @@ class Index extends Core\Modules\AdminController
                 true
             );
 
-            foreach ($formData['privileges'] as $moduleId => $privileges) {
-                foreach ($privileges as $id => $permission) {
-                    $ruleInsertValues = [
-                        'id' => '',
-                        'role_id' => $roleId,
-                        'module_id' => $moduleId,
-                        'privilege_id' => $id,
-                        'permission' => $permission
-                    ];
-                    $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
-                }
-            }
+            $this->saveRules($formData['privileges'], $roleId);
 
             $this->permissionsCache->saveRolesCache();
 
@@ -302,18 +233,7 @@ class Index extends Core\Modules\AdminController
 
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
             $this->permissionsModel->delete($id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
-            foreach ($formData['privileges'] as $moduleId => $privileges) {
-                foreach ($privileges as $privilegeId => $permission) {
-                    $ruleInsertValues = [
-                        'id' => '',
-                        'role_id' => $id,
-                        'module_id' => $moduleId,
-                        'privilege_id' => $privilegeId,
-                        'permission' => $permission
-                    ];
-                    $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
-                }
-            }
+            $this->saveRules($formData['privileges'], $id);
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
@@ -334,9 +254,9 @@ class Index extends Core\Modules\AdminController
     protected function generatePrivilegeCheckboxes($roleId, $moduleId, $privilegeId, $defaultValue)
     {
         $permissions = [
-            0 => $this->lang->t('permissions', 'deny_access'),
-            1 => $this->lang->t('permissions', 'allow_access'),
-            2 => $this->lang->t('permissions', 'inherit_access')
+            0 => 'deny_access',
+            1 => 'allow_access',
+            2 => 'inherit_access'
         ];
 
         $select = [];
@@ -345,9 +265,11 @@ class Index extends Core\Modules\AdminController
                 continue;
             }
 
-            $select[$value]['value'] = $value;
-            $select[$value]['selected'] = $this->privilegeIsChecked($moduleId, $privilegeId, $value, $defaultValue);
-            $select[$value]['lang'] = $lang;
+            $select[$value] = [
+                'value' => $value,
+                'selected' => $this->privilegeIsChecked($moduleId, $privilegeId, $value, $defaultValue),
+                'lang' => $this->lang->t('permissions', $lang)
+            ];
         }
 
         return $select;
@@ -364,12 +286,100 @@ class Index extends Core\Modules\AdminController
     protected function privilegeIsChecked($moduleId, $privilegeId, $value = 0, $defaultValue = null)
     {
         if ($this->request->getPost()->isEmpty() && $defaultValue === $value ||
-            !$this->request->getPost()->isEmpty() && (int) $this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
+            $this->request->getPost()->isEmpty() === false && (int)$this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
         ) {
             return ' checked="checked"';
         }
 
         return '';
+    }
+
+    /**
+     * @param array $privileges
+     * @param int   $roleId
+     */
+    protected function saveRules(array $privileges, $roleId)
+    {
+        foreach ($privileges as $moduleId => $modulePrivileges) {
+            foreach ($modulePrivileges as $privilegeId => $permission) {
+                $ruleInsertValues = [
+                    'id' => '',
+                    'role_id' => $roleId,
+                    'module_id' => $moduleId,
+                    'privilege_id' => $privilegeId,
+                    'permission' => $permission
+                ];
+                $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
+            }
+        }
+    }
+
+    /**
+     * @param array  $rules
+     * @param string $moduleDir
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function calculatePermission(array $rules, $moduleDir, $key)
+    {
+        return sprintf(
+            $this->lang->t('permissions', 'calculated_permission'),
+            $this->lang->t('permissions', isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access')
+        );
+    }
+
+    /**
+     * @param int $roleParentId
+     * @param int $roleLeftId
+     * @param int $roleRightId
+     *
+     * @return array
+     */
+    protected function fetchRoles($roleParentId = 0, $roleLeftId = 0, $roleRightId = 0)
+    {
+        $roles = $this->acl->getAllRoles();
+        $c_roles = count($roles);
+        for ($i = 0; $i < $c_roles; ++$i) {
+            if ($roles[$i]['left_id'] >= $roleLeftId && $roles[$i]['right_id'] <= $roleRightId) {
+                unset($roles[$i]);
+            } else {
+                $roles[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('roles', $roles[$i]['id'], $roleParentId);
+                $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
+            }
+        }
+        return $roles;
+    }
+
+    /**
+     * @param int $roleId
+     * @param int $defaultValue
+     *
+     * @return array
+     */
+    protected function fetchModulePermissions($roleId, $defaultValue = 0)
+    {
+        $rules = $this->acl->getRules([$roleId]);
+        $modules = $this->modules->getActiveModules();
+        $privileges = $this->acl->getAllPrivileges();
+        $c_privileges = count($privileges);
+
+        foreach ($modules as $name => $moduleInfo) {
+            $moduleDir = strtolower($moduleInfo['dir']);
+            for ($j = 0; $j < $c_privileges; ++$j) {
+                $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
+                    $roleId,
+                    $moduleInfo['id'],
+                    $privileges[$j]['id'],
+                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int)$rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
+                );
+                if ($roleId !== 0) {
+                    $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleDir, $privileges[$j]['key']);
+                }
+            }
+            $modules[$name]['privileges'] = $privileges;
+        }
+        return $modules;
     }
 
 }

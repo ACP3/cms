@@ -14,6 +14,7 @@
         <item key="allow_access">Allow</item>
         <item key="area">Area</item>
         <item key="assigned_privilege">Assigned privilege</item>
+        <item key="calculated_permission">Calculated: %s</item>
         <item key="controller">Controller</item>
         <item key="filename">Filename</item>
         <item key="deny_access">Deny</item>
