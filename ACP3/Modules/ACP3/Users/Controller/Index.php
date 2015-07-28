@@ -112,7 +112,7 @@ class Index extends Core\Modules\FrontendController
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         }
     }
 
@@ -195,7 +195,7 @@ class Index extends Core\Modules\FrontendController
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         }
     }
 
@@ -257,7 +257,7 @@ class Index extends Core\Modules\FrontendController
                     $bool = $this->usersModel->update($updateValues, $user['id']);
                 }
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'),
@@ -311,7 +311,7 @@ class Index extends Core\Modules\FrontendController
                 $lastId = $this->usersModel->insert($insertValues);
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'),

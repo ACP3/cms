@@ -93,7 +93,7 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -125,7 +125,7 @@ class Index extends Core\Modules\FrontendController
                     $this->sendEmailHelper->execute($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
                 }
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'),

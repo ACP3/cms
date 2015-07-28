@@ -132,7 +132,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -163,7 +163,7 @@ class Index extends Core\Modules\AdminController
 
             $this->createOrUpdateMenuItem($formData, $lastId);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $lastId;
         });
@@ -246,7 +246,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($article, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -286,7 +286,7 @@ class Index extends Core\Modules\AdminController
 
             $this->createOrUpdateMenuItem($formData, $id);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });

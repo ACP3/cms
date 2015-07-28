@@ -204,7 +204,7 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
 
         return $this->view->fetchTemplate('Comments/Frontend/index.create.tpl');
     }
@@ -233,7 +233,7 @@ class Index extends Core\Modules\FrontendController
 
                 $bool = $this->commentsModel->insert($insertValues);
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
             }

@@ -121,7 +121,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -198,7 +198,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id)));
             $this->view->assign('form', array_merge($file, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -240,7 +240,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -293,7 +293,7 @@ class Index extends Core\Modules\AdminController
                 (int)$formData['seo_robots']
             );
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $lastId;
         });
@@ -363,7 +363,7 @@ class Index extends Core\Modules\AdminController
 
             $this->filesCache->saveCache($id);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -386,7 +386,7 @@ class Index extends Core\Modules\AdminController
                 $data['comments'] = $formData['comments'];
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'files');
         });

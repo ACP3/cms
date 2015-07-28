@@ -68,7 +68,7 @@ class Index extends Core\Modules\AdminController
         }
         $this->view->assign('mod_list', $modules);
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -98,7 +98,7 @@ class Index extends Core\Modules\AdminController
 
             $this->categoriesCache->saveCache(strtolower($formData['module']));
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -168,7 +168,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($category, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -202,7 +202,7 @@ class Index extends Core\Modules\AdminController
 
             $this->categoriesCache->saveCache($this->categoriesModel->getModuleNameFromCategoryId($id));
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -241,7 +241,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -258,7 +258,7 @@ class Index extends Core\Modules\AdminController
                 'filesize' => (int)$formData['filesize'],
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'categories');
         });

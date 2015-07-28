@@ -44,11 +44,12 @@ class FormToken
      * @param string $path
      *    Optionaler ACP3 interner URI Pfad, für welchen das Token gelten soll
      */
-    public function generateFormToken($path)
+    public function generateFormToken($path = '')
     {
         $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
         $sessionTokens = $this->sessionHandler->get($tokenName, []);
 
+        $path = empty($path) ? $this->request->getQuery() : $path;
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
         if (!isset($sessionTokens[$path])) {
@@ -65,8 +66,9 @@ class FormToken
      * @param string $path
      * @param string $token
      */
-    public function unsetFormToken($path, $token = '')
+    public function unsetFormToken($path = '', $token = '')
     {
+        $path = empty($path) ? $this->request->getQuery() : $path;
         $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
         if (empty($token) && $this->request->getPost()->has($tokenName)) {
             $token = $this->request->getPost()->get($tokenName, '');

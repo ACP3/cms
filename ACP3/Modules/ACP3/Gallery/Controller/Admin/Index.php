@@ -80,7 +80,7 @@ class Index extends Core\Modules\AdminController
         ];
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionDelete($action = '')
@@ -138,7 +138,7 @@ class Index extends Core\Modules\AdminController
 
             $this->_actionEditPictures();
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -204,7 +204,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -233,7 +233,7 @@ class Index extends Core\Modules\AdminController
                 (int)$formData['seo_robots']
             );
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $lastId;
         });
@@ -269,7 +269,7 @@ class Index extends Core\Modules\AdminController
             );
             $this->galleryHelpers->generatePictureAliases($id);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -300,7 +300,7 @@ class Index extends Core\Modules\AdminController
                 $data['comments'] = (int)$formData['comments'];
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             $bool = $this->config->setSettings($data, 'gallery');
 

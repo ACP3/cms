@@ -102,7 +102,7 @@ class Pictures extends Core\Modules\AdminController
             $this->view->assign('form', array_merge(['description' => ''], $this->request->getPost()->getAll()));
             $this->view->assign('gallery_id', $id);
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -173,7 +173,7 @@ class Pictures extends Core\Modules\AdminController
             $this->view->assign('form', array_merge($picture, $this->request->getPost()->getAll()));
             $this->view->assign('gallery_id', $id);
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -231,7 +231,7 @@ class Pictures extends Core\Modules\AdminController
 
                 $this->galleryCache->saveCache($id);
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 return $lastId && $bool2;
             },
@@ -272,7 +272,7 @@ class Pictures extends Core\Modules\AdminController
 
                 $this->galleryCache->saveCache($picture['gallery_id']);
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 return $bool;
             },

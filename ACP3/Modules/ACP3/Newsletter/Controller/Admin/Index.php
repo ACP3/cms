@@ -75,7 +75,7 @@ class Index extends Core\Modules\AdminController
         $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
         $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -126,7 +126,7 @@ class Index extends Core\Modules\AdminController
             $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
             $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -194,7 +194,7 @@ class Index extends Core\Modules\AdminController
         ];
         $this->view->assign('html', $this->get('core.helpers.forms')->selectGenerator('html', [1, 0], $langHtml, $settings['html'], 'checked'));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -229,7 +229,7 @@ class Index extends Core\Modules\AdminController
                 $result = $lastId !== false;
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             if ($result === false) {
                 $lang = $this->lang->t('newsletter', 'create_save_error');
@@ -268,7 +268,7 @@ class Index extends Core\Modules\AdminController
                 $result = $bool !== false;
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             if ($result === false) {
                 $lang = $this->lang->t('newsletter', 'create_save_error');
@@ -292,7 +292,7 @@ class Index extends Core\Modules\AdminController
                 'html' => (int)$formData['html']
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'newsletter');
         });

@@ -164,7 +164,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -290,7 +290,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -315,7 +315,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge(['mail' => $settings['mail']], $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionIndex()
@@ -386,7 +386,7 @@ class Index extends Core\Modules\AdminController
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $lastId;
         });
@@ -444,7 +444,7 @@ class Index extends Core\Modules\AdminController
                 $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -465,7 +465,7 @@ class Index extends Core\Modules\AdminController
                 'mail' => $formData['mail']
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'users');
         });

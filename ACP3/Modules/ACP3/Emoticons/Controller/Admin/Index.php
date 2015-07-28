@@ -58,7 +58,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -85,7 +85,7 @@ class Index extends Core\Modules\AdminController
 
             $this->emoticonsCache->saveCache();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -136,7 +136,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -170,7 +170,7 @@ class Index extends Core\Modules\AdminController
 
             $this->emoticonsCache->saveCache();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -203,7 +203,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -220,7 +220,7 @@ class Index extends Core\Modules\AdminController
                 'filesize' => (int)$formData['filesize'],
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'emoticons');
         });

@@ -60,7 +60,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge(['uri' => ''], $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -106,7 +106,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge(['uri' => $seo['uri']], $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -147,7 +147,7 @@ class Index extends Core\Modules\AdminController
                 (int)$formData['seo_robots']
             );
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -175,7 +175,7 @@ class Index extends Core\Modules\AdminController
 
             $this->seoCache->saveCache();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -204,7 +204,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -226,7 +226,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->config->setSettings($data, 'seo');
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });

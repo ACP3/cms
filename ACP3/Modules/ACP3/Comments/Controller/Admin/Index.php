@@ -110,7 +110,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->selectGenerator('emoticons', [1, 0], $lang_allowEmoticons, $settings['emoticons'], 'checked'));
         }
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -126,7 +126,7 @@ class Index extends Core\Modules\AdminController
                 'emoticons' => $formData['emoticons'],
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'comments');
         });

@@ -120,7 +120,7 @@ class Account extends Core\Modules\FrontendController
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionSettings()
@@ -163,7 +163,7 @@ class Account extends Core\Modules\FrontendController
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionIndex()
@@ -219,7 +219,7 @@ class Account extends Core\Modules\FrontendController
                 $cookieArr = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
                 $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
             }
@@ -254,7 +254,7 @@ class Account extends Core\Modules\FrontendController
 
                 $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
             }

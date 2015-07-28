@@ -132,7 +132,7 @@ class Details extends Core\Modules\AdminController
             $this->view->assign('form', array_merge($comment, $this->request->getPost()->getAll()));
             $this->view->assign('module_id', (int)$comment['module_id']);
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -201,7 +201,7 @@ class Details extends Core\Modules\AdminController
 
             $bool = $this->commentsModel->update($updateValues, $id);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });

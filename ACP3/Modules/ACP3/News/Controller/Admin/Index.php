@@ -130,7 +130,7 @@ class Index extends Core\Modules\AdminController
         ];
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -212,7 +212,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($news, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -262,7 +262,7 @@ class Index extends Core\Modules\AdminController
         $lang_category_in_breadcrumb = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
         $this->view->assign('category_in_breadcrumb', $this->get('core.helpers.forms')->selectGenerator('category_in_breadcrumb', [1, 0], $lang_category_in_breadcrumb, $settings['category_in_breadcrumb'], 'checked'));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -299,7 +299,7 @@ class Index extends Core\Modules\AdminController
                 (int)$formData['seo_robots']
             );
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $lastId;
         });
@@ -344,7 +344,7 @@ class Index extends Core\Modules\AdminController
 
             $this->newsCache->saveCache($id);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -370,7 +370,7 @@ class Index extends Core\Modules\AdminController
                 $data['comments'] = $formData['comments'];
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'news');
         });

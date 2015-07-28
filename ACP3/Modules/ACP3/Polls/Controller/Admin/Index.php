@@ -84,7 +84,7 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('answers', $answers);
         $this->view->assign('multiple', $this->get('core.helpers.forms')->selectEntry('multiple', '1', '0', 'checked'));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -96,7 +96,7 @@ class Index extends Core\Modules\AdminController
     {
         $this->handleDeleteAction(
             $action,
-            function($items) {
+            function ($items) {
                 $bool = $bool2 = $bool3 = false;
                 foreach ($items as $item) {
                     $bool = $this->pollsModel->delete($item);
@@ -167,7 +167,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$poll['start'], $poll['end']]));
             $this->view->assign('title', $this->request->getPost()->get('title', $poll['title']));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -199,7 +199,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handleCreatePostAction(function() use ($formData) {
+        $this->handleCreatePostAction(function () use ($formData) {
             $this->pollsValidator->validateCreate($formData);
 
             $insertValues = [
@@ -227,7 +227,7 @@ class Index extends Core\Modules\AdminController
                 }
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $pollId && $bool2;
         });
@@ -239,10 +239,9 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $id) {
+        $this->handleEditPostAction(function () use ($formData, $id) {
             $this->pollsValidator->validateEdit($formData);
 
-            // Frage aktualisieren
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
@@ -258,25 +257,29 @@ class Index extends Core\Modules\AdminController
                 $this->pollsModel->delete($id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
             }
 
-            // Antworten
             foreach ($formData['answers'] as $row) {
                 // Neue Antwort hinzufügen
                 if (empty($row['id'])) {
                     // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                     if (!empty($row['value']) && !isset($row['delete'])) {
-                        $this->pollsModel->insert(['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $id], Polls\Model::TABLE_NAME_ANSWERS);
+                        $this->pollsModel->insert(
+                            ['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $id],
+                            Polls\Model::TABLE_NAME_ANSWERS
+                        );
                     }
-                    // Antwort mitsamt Stimmen löschen
-                } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
+                } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) { // Antwort mitsamt Stimmen löschen
                     $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
                     $this->pollsModel->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
-                    // Antwort aktualisieren
-                } elseif (!empty($row['value']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) {
-                    $bool = $this->pollsModel->update(['text' => Core\Functions::strEncode($row['value'])], $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
+                } elseif (!empty($row['value']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) { // Antwort aktualisieren
+                    $bool = $this->pollsModel->update(
+                        ['text' => Core\Functions::strEncode($row['value'])],
+                        $row['id'],
+                        Polls\Model::TABLE_NAME_ANSWERS
+                    );
                 }
             }
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });

@@ -116,7 +116,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($guestbook, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -187,7 +187,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -208,7 +208,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->guestbookModel->update($updateValues, $id);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -231,7 +231,7 @@ class Index extends Core\Modules\AdminController
                 'newsletter_integration' => $formData['newsletter_integration'],
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'guestbook');
         });

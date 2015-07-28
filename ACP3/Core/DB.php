@@ -18,43 +18,43 @@ class DB
     /**
      * @var string
      */
-    protected $name = '';
+    protected $database = '';
     /**
      * @var string
      */
     protected $prefix = '';
 
     /**
-     * @param        $dbHost
-     * @param        $dbName
-     * @param        $dbUser
-     * @param        $dbPassword
-     * @param string $dbTablePrefix
-     * @param string $dbDriver
-     * @param string $dbCharset
+     * @param string $host
+     * @param string $database
+     * @param string $userName
+     * @param string $password
+     * @param string $tablePrefix
+     * @param string $driver
+     * @param string $charset
      * @param string $cacheDriverName
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __construct(
-        $dbHost,
-        $dbName,
-        $dbUser,
-        $dbPassword,
-        $dbTablePrefix = '',
-        $dbDriver = 'pdo_mysql',
-        $dbCharset = 'utf8',
+        $host,
+        $database,
+        $userName,
+        $password,
+        $tablePrefix = '',
+        $driver = 'pdo_mysql',
+        $charset = 'utf8',
         $cacheDriverName = 'Array'
     )
     {
         $config = new DBAL\Configuration();
         $connectionParams = [
-            'dbname' => $dbName,
-            'user' => $dbUser,
-            'password' => $dbPassword,
-            'host' => $dbHost,
-            'driver' => $dbDriver,
-            'charset' => $dbCharset
+            'dbname' => $database,
+            'user' => $userName,
+            'password' => $password,
+            'host' => $host,
+            'driver' => $driver,
+            'charset' => $charset
         ];
         if (defined('DEBUG_SQL') === true && DEBUG_SQL === true) {
             $config->setSQLLogger(new SQLLogger());
@@ -74,8 +74,8 @@ class DB
 
         $this->connection = DBAL\DriverManager::getConnection($connectionParams, $config);
 
-        $this->prefix = $dbTablePrefix;
-        $this->name = $dbName;
+        $this->prefix = $tablePrefix;
+        $this->database = $database;
     }
 
     /**
@@ -89,9 +89,9 @@ class DB
     /**
      * @return string
      */
-    public function getName()
+    public function getDatabase()
     {
-        return $this->name;
+        return $this->database;
     }
 
     /**

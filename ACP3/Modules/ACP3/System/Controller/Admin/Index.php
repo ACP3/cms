@@ -109,7 +109,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($systemSettings, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionIndex()
@@ -151,7 +151,7 @@ class Index extends Core\Modules\AdminController
 
                 $bool = $this->config->setSettings($data, 'system');
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), $this->request->getFullPath());
             },

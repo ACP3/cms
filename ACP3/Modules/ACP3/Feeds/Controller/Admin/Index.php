@@ -53,7 +53,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -69,7 +69,7 @@ class Index extends Core\Modules\AdminController
                 'feed_type' => $formData['feed_type']
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'feeds');
         });

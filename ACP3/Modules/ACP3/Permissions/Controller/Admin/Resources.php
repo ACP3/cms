@@ -71,7 +71,7 @@ class Resources extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -125,7 +125,7 @@ class Resources extends Core\Modules\AdminController
             ];
             $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -169,7 +169,7 @@ class Resources extends Core\Modules\AdminController
 
             $this->permissionsCache->saveResourcesCache();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
@@ -194,7 +194,7 @@ class Resources extends Core\Modules\AdminController
 
             $this->permissionsCache->saveResourcesCache();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });

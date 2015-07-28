@@ -67,7 +67,7 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('parent', $this->fetchRoles());
         $this->view->assign('modules', $this->fetchModulePermissions(0, 2));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -130,7 +130,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('modules', $this->fetchModulePermissions($id));
             $this->view->assign('form', array_merge($role, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -201,7 +201,7 @@ class Index extends Core\Modules\AdminController
 
             $this->permissionsCache->saveRolesCache();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $roleId;
         });
@@ -237,7 +237,7 @@ class Index extends Core\Modules\AdminController
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });

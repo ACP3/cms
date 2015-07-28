@@ -46,7 +46,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     /**
@@ -67,7 +67,7 @@ class Index extends Core\Modules\AdminController
                 'vat_id' => Core\Functions::strEncode($formData['vat_id'], true),
             ];
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $this->config->setSettings($data, 'contact');
         });

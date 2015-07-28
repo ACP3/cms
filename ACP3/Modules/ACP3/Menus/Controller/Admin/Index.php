@@ -72,7 +72,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionDelete($action = '')
@@ -125,7 +125,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('form', array_merge($menu, $this->request->getPost()->getAll()));
 
-            $this->formTokenHelper->generateFormToken($this->request->getQuery());
+            $this->formTokenHelper->generateFormToken();
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -173,7 +173,7 @@ class Index extends Core\Modules\AdminController
 
             $lastId = $this->menusModel->insert($insertValues);
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $lastId;
         });
@@ -197,7 +197,7 @@ class Index extends Core\Modules\AdminController
 
             $this->menusCache->saveMenusCache();
 
-            $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+            $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });

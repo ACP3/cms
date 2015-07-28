@@ -175,7 +175,7 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionIndex()
@@ -251,7 +251,7 @@ class Index extends Core\Modules\FrontendController
                     $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
                 }
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
             }

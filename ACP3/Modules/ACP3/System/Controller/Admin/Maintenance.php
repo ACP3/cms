@@ -132,7 +132,7 @@ class Maintenance extends Core\Modules\AdminController
         $drop['lang'] = $this->lang->t('system', 'drop_tables');
         $this->view->assign('drop', $drop);
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionSqlImport()
@@ -143,7 +143,7 @@ class Maintenance extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge(['text' => ''], $this->request->getPost()->getAll()));
 
-        $this->formTokenHelper->generateFormToken($this->request->getQuery());
+        $this->formTokenHelper->generateFormToken();
     }
 
     public function actionUpdateCheck()
@@ -179,14 +179,14 @@ class Maintenance extends Core\Modules\AdminController
             function () use ($formData) {
                 $this->systemValidator->validateSqlExport($formData);
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $export = $this->systemHelpers->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
 
                 // Als Datei ausgeben
                 if ($formData['output'] === 'file') {
                     header('Content-Type: text/sql');
-                    header('Content-Disposition: attachment; filename=' . $this->db->getName() . '_export.sql');
+                    header('Content-Disposition: attachment; filename=' . $this->db->getDatabase() . '_export.sql');
                     header('Content-Length: ' . strlen($export));
                     exit($export);
                 } else { // Im Browser ausgeben
@@ -210,7 +210,7 @@ class Maintenance extends Core\Modules\AdminController
 
                 $this->systemValidator->validateSqlImport($formData, $file);
 
-                $this->formTokenHelper->unsetFormToken($this->request->getQuery());
+                $this->formTokenHelper->unsetFormToken();
 
                 $data = isset($file) ? file_get_contents($file['tmp_name']) : $formData['text'];
                 $importData = explode(";\n", str_replace(["\r\n", "\r", "\n"], "\n", $data));
