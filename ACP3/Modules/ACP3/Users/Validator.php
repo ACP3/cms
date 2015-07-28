@@ -178,7 +178,7 @@ class Validator extends Core\Validator\AbstractValidator
             !empty($formData[$passwordConfirmationField]) &&
             $formData[$passwordField] !== $formData[$passwordConfirmationField]
         ) {
-            $this->errors[$passwordField] = $this->lang->t('users', 'type_in_pwd');
+            $this->errors[str_replace('_', '-', $passwordField)] = $this->lang->t('users', 'type_in_pwd');
         }
     }
 
@@ -193,7 +193,7 @@ class Validator extends Core\Validator\AbstractValidator
             empty($formData[$passwordConfirmationField]) ||
             $formData[$passwordField] !== $formData[$passwordConfirmationField]
         ) {
-            $this->errors[$passwordField] = $this->lang->t('users', 'type_in_pwd');
+            $this->errors[str_replace('_', '-', $passwordField)] = $this->lang->t('users', 'type_in_pwd');
         }
     }
 
@@ -237,7 +237,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->errors = [];
         if (empty($formData['nickname'])) {
-            $this->errors['nnickname'] = $this->lang->t('system', 'name_to_short');
+            $this->errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }
         if ($this->userModel->resultExistsByUserName($formData['nickname'], $this->auth->getUserId()) === true) {
             $this->errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
