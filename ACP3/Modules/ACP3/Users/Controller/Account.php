@@ -75,32 +75,19 @@ class Account extends Core\Modules\FrontendController
 
         $user = $this->auth->getUserInfo();
 
-        // Geschlecht
-        $lang_gender = [
-            $this->lang->t('users', 'gender_not_specified'),
-            $this->lang->t('users', 'gender_female'),
-            $this->lang->t('users', 'gender_male')
-        ];
-        $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', [1, 2, 3], $lang_gender, $user['gender']));
-
-        // Geburtstag
-        $datepickerParams = [
-            'constrainInput' => 'true',
-            'changeMonth' => 'true',
-            'changeYear' => 'true',
-            'yearRange' => "'-50:+0'"
-        ];
-        $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, false, true));
-
-        // Kontaktangaben
         $this->view->assign('contact', $this->get('users.helpers.forms')->fetchContactDetails(
             $user['mail'],
             $user['website'],
             $user['icq'],
             $user['skype']
         ));
-
-        $this->view->assign('countries', $this->get('users.helpers.forms')->generateWorldCountriesSelect($user['country']));
+        $this->view->assign(
+            $this->get('users.helpers.forms')->fetchUserProfileFormFields(
+                $user['birthday'],
+                $user['country'],
+                $user['gender']
+            )
+        );
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
@@ -119,31 +106,17 @@ class Account extends Core\Modules\FrontendController
 
         $this->view->assign('language_override', $settings['language_override']);
         $this->view->assign('entries_override', $settings['entries_override']);
-
-        // Sprache
-        $this->view->assign('languages', $this->lang->getLanguagePack($this->request->getPost()->get('language', $user['language'])));
-
-        // Einträge pro Seite
-        $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage((int)$user['entries']));
-
-        // Zeitzonen
-        $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones($user['time_zone']));
-
-        $lang_mailDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mail_display', $this->get('core.helpers.forms')->checkboxGenerator('mail_display', [1, 0], $lang_mailDisplay, $user['mail_display']));
-
-        $lang_addressDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('address_display', $this->get('core.helpers.forms')->checkboxGenerator('address_display', [1, 0], $lang_addressDisplay, $user['address_display']));
-
-        $lang_countryDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('country_display', $this->get('core.helpers.forms')->checkboxGenerator('country_display', [1, 0], $lang_countryDisplay, $user['country_display']));
-
-        $lang_birthdayDisplay = [
-            $this->lang->t('users', 'birthday_hide'),
-            $this->lang->t('users', 'birthday_display_completely'),
-            $this->lang->t('users', 'birthday_hide_year')
-        ];
-        $this->view->assign('birthday_display', $this->get('core.helpers.forms')->checkboxGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $user['birthday_display']));
+        $this->view->assign(
+            $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
+                (int)$user['entries'],
+                $user['language'],
+                $user['time_zone'],
+                $user['address_display'],
+                $user['birthday_display'],
+                $user['country_display'],
+                $user['mail_display']
+            )
+        );
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 

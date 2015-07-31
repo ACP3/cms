@@ -29,7 +29,7 @@ services:
 
   users.helpers.forms:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
-    arguments: [@core.lang, @core.request, @core.helpers.forms]
+    arguments: [@core.lang, @core.request, @core.helpers.date, @core.helpers.forms]
 
   users.model:
     class: %users.model.fqdn%
