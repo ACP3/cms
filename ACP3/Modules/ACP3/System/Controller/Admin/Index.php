@@ -85,11 +85,11 @@ class Index extends Core\Modules\AdminController
 
         // Wartungsmodus an/aus
         $lang_maintenance = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('maintenance', $this->get('core.helpers.forms')->selectGenerator('maintenance_mode', [1, 0], $lang_maintenance, $systemSettings['maintenance_mode'], 'checked'));
+        $this->view->assign('maintenance', $this->get('core.helpers.forms')->checkboxGenerator('maintenance_mode', [1, 0], $lang_maintenance, $systemSettings['maintenance_mode']));
 
         // Caching von Bildern
         $lang_cacheImages = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('cache_images', $this->get('core.helpers.forms')->selectGenerator('cache_images', [1, 0], $lang_cacheImages, $systemSettings['cache_images'], 'checked'));
+        $this->view->assign('cache_images', $this->get('core.helpers.forms')->checkboxGenerator('cache_images', [1, 0], $lang_cacheImages, $systemSettings['cache_images']));
 
         // Mailertyp
         $lang_mailerType = [$this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp')];
@@ -97,7 +97,7 @@ class Index extends Core\Modules\AdminController
 
         // Mailer SMTP Authentifizierung
         $lang_mailerSmtpAuth = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mailer_smtp_auth', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_auth', [1, 0], $lang_mailerSmtpAuth, $systemSettings['mailer_smtp_auth'], 'checked'));
+        $this->view->assign('mailer_smtp_auth', $this->get('core.helpers.forms')->checkboxGenerator('mailer_smtp_auth', [1, 0], $lang_mailerSmtpAuth, $systemSettings['mailer_smtp_auth']));
 
         // Mailer SMTP Verschlüsselung
         $lang_mailerSmtpSecurity = [

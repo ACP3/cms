@@ -27,6 +27,10 @@ services:
     class: %users.controller.sidebar.index.fqdn%
     arguments: ['@core.context']
 
+  users.helpers.forms:
+    class: ACP3\Modules\ACP3\Users\Helpers\Forms
+    arguments: [@core.lang, @core.request, @core.helpers.forms]
+
   users.model:
     class: %users.model.fqdn%
     arguments: ['@core.db']

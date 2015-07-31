@@ -3,7 +3,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
+use ACP3\Core\Helpers\Country;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -84,39 +84,23 @@ class Account extends Core\Modules\FrontendController
         $this->view->assign('gender', $this->get('core.helpers.forms')->selectGenerator('gender', [1, 2, 3], $lang_gender, $user['gender']));
 
         // Geburtstag
-        $datepickerParams = ['constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''];
+        $datepickerParams = [
+            'constrainInput' => 'true',
+            'changeMonth' => 'true',
+            'changeYear' => 'true',
+            'yearRange' => "'-50:+0'"
+        ];
         $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, false, true));
 
         // Kontaktangaben
-        $contact = [];
-        $contact[0]['name'] = 'mail';
-        $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-        $contact[0]['value'] = $this->request->getPost()->get('mail', $user['mail']);
-        $contact[0]['maxlength'] = '120';
-        $contact[1]['name'] = 'website';
-        $contact[1]['lang'] = $this->lang->t('system', 'website');
-        $contact[1]['value'] = $this->request->getPost()->get('website', $user['website']);
-        $contact[1]['maxlength'] = '120';
-        $contact[2]['name'] = 'icq';
-        $contact[2]['lang'] = $this->lang->t('users', 'icq');
-        $contact[2]['value'] = $this->request->getPost()->get('icq', $user['icq']);
-        $contact[2]['maxlength'] = '9';
-        $contact[3]['name'] = 'skype';
-        $contact[3]['lang'] = $this->lang->t('users', 'skype');
-        $contact[3]['value'] = $this->request->getPost()->get('skype', $user['skype']);
-        $contact[3]['maxlength'] = '28';
-        $this->view->assign('contact', $contact);
+        $this->view->assign('contact', $this->get('users.helpers.forms')->fetchContactDetails(
+            $user['mail'],
+            $user['website'],
+            $user['icq'],
+            $user['skype']
+        ));
 
-        $countries = Core\Lang::worldCountries();
-        $countries_select = [];
-        foreach ($countries as $key => $value) {
-            $countries_select[] = [
-                'value' => $key,
-                'lang' => $value,
-                'selected' => $this->get('core.helpers.forms')->selectEntry('countries', $key, $user['country']),
-            ];
-        }
-        $this->view->assign('countries', $countries_select);
+        $this->view->assign('countries', $this->get('users.helpers.forms')->generateWorldCountriesSelect($user['country']));
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 
@@ -146,20 +130,20 @@ class Account extends Core\Modules\FrontendController
         $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones($user['time_zone']));
 
         $lang_mailDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mail_display', $this->get('core.helpers.forms')->selectGenerator('mail_display', [1, 0], $lang_mailDisplay, $user['mail_display'], 'checked'));
+        $this->view->assign('mail_display', $this->get('core.helpers.forms')->checkboxGenerator('mail_display', [1, 0], $lang_mailDisplay, $user['mail_display']));
 
         $lang_addressDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('address_display', $this->get('core.helpers.forms')->selectGenerator('address_display', [1, 0], $lang_addressDisplay, $user['address_display'], 'checked'));
+        $this->view->assign('address_display', $this->get('core.helpers.forms')->checkboxGenerator('address_display', [1, 0], $lang_addressDisplay, $user['address_display']));
 
         $lang_countryDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('country_display', $this->get('core.helpers.forms')->selectGenerator('country_display', [1, 0], $lang_countryDisplay, $user['country_display'], 'checked'));
+        $this->view->assign('country_display', $this->get('core.helpers.forms')->checkboxGenerator('country_display', [1, 0], $lang_countryDisplay, $user['country_display']));
 
         $lang_birthdayDisplay = [
             $this->lang->t('users', 'birthday_hide'),
             $this->lang->t('users', 'birthday_display_completely'),
             $this->lang->t('users', 'birthday_hide_year')
         ];
-        $this->view->assign('birthday_display', $this->get('core.helpers.forms')->selectGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $user['birthday_display'], 'checked'));
+        $this->view->assign('birthday_display', $this->get('core.helpers.forms')->checkboxGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $user['birthday_display']));
 
         $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
 

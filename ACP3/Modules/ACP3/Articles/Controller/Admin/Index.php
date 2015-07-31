@@ -114,7 +114,7 @@ class Index extends Core\Modules\AdminController
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true && $this->menusHelpers) {
             $lang_options = [$this->lang->t('articles', 'create_menu_item')];
-            $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', [1], $lang_options, 0, 'checked'));
+            $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $lang_options, 0));
             $this->view->assign($this->menusHelpers->createMenuItemFormFields());
         }
 
@@ -223,7 +223,7 @@ class Index extends Core\Modules\AdminController
                 $menuItem = $this->menusModel->getOneMenuItemByUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
 
                 $lang_options = [$this->lang->t('articles', 'create_menu_item')];
-                $this->view->assign('options', $this->get('core.helpers.forms')->selectGenerator('create', [1], $lang_options, !empty($menuItem) ? 1 : 0, 'checked'));
+                $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $lang_options, !empty($menuItem) ? 1 : 0));
 
                 $this->view->assign(
                     $this->menusHelpers->createMenuItemFormFields(

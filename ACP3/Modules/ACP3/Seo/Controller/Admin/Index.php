@@ -200,7 +200,7 @@ class Index extends Core\Modules\AdminController
 
         // Sef-URIs
         $lang_modRewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->selectGenerator('mod_rewrite', [1, 0], $lang_modRewrite, $seoSettings['mod_rewrite'], 'checked'));
+        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->checkboxGenerator('mod_rewrite', [1, 0], $lang_modRewrite, $seoSettings['mod_rewrite']));
 
         $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->getAll()));
 

@@ -117,7 +117,7 @@ class Maintenance extends Core\Modules\AdminController
 
         // Ausgabe
         $lang_output = [$this->lang->t('system', 'output_as_file'), $this->lang->t('system', 'output_as_text')];
-        $this->view->assign('output', $this->get('core.helpers.forms')->selectGenerator('output', ['file', 'text'], $lang_output, 'file', 'checked'));
+        $this->view->assign('output', $this->get('core.helpers.forms')->checkboxGenerator('output', ['file', 'text'], $lang_output, 'file'));
 
         // Exportart
         $lang_exportType = [
@@ -125,7 +125,7 @@ class Maintenance extends Core\Modules\AdminController
             $this->lang->t('system', 'export_structure'),
             $this->lang->t('system', 'export_data')
         ];
-        $this->view->assign('export_type', $this->get('core.helpers.forms')->selectGenerator('export_type', ['complete', 'structure', 'data'], $lang_exportType, 'complete', 'checked'));
+        $this->view->assign('export_type', $this->get('core.helpers.forms')->checkboxGenerator('export_type', ['complete', 'structure', 'data'], $lang_exportType, 'complete'));
 
         $drop = [];
         $drop['checked'] = $this->get('core.helpers.forms')->selectEntry('drop', '1', '', 'checked');

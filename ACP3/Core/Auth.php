@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Helpers\Country;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Modules\ACP3\Users;
 
@@ -170,7 +171,7 @@ class Auth
         $userId = (int)$userId;
 
         if (empty($this->userInfo[$userId])) {
-            $countries = Lang::worldCountries();
+            $countries = Country::worldCountries();
             $info = $this->usersModel->getOneById($userId);
             if (!empty($info)) {
                 $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';

@@ -104,7 +104,7 @@ class Index extends Core\Modules\FrontendController
             $this->lang->t('newsletter', 'subscribe'),
             $this->lang->t('newsletter', 'unsubscribe')
         ];
-        $this->view->assign('actions', $this->get('core.helpers.forms')->selectGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $fieldValue, 'checked'));
+        $this->view->assign('actions', $this->get('core.helpers.forms')->checkboxGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $fieldValue));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());

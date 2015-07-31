@@ -46,27 +46,23 @@ class Forms
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
      *
-     * @param string $name
-     *  Name des Feldes im Formular
-     * @param mixed  $defValue
-     *  Abzugleichender Parameter mit $currentValue
-     * @param mixed  $currentValue
-     *  Wert aus der SQL Tabelle
-     * @param string $attr
-     *  HTML-Attribut, um Eintrag zu selektieren
+     * @param string               $name
+     * @param mixed                $value
+     * @param string|integer|array $currentValue
+     * @param string               $attr
      *
      * @return string
      */
-    public function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
+    public function selectEntry($name, $value, $currentValue = '', $attr = 'selected')
     {
         $attr = ' ' . $attr . '="' . $attr . '"';
         $currentValue = $this->request->getPost()->get($name, $currentValue);
 
-        if (is_array($currentValue) === false && $currentValue == $defValue) {
+        if (is_array($currentValue) === false && $currentValue == $value) {
             return $attr;
         } elseif (is_array($currentValue) === true) {
             foreach ($currentValue as $row) {
-                if ($row == $defValue) {
+                if ($row == $value) {
                     return $attr;
                 }
             }
@@ -77,11 +73,11 @@ class Forms
 
     /**
      *
-     * @param string         $name
-     * @param array          $values
-     * @param array          $lang
-     * @param string|integer $currentValue
-     * @param string         $selected
+     * @param string               $name
+     * @param array                $values
+     * @param array                $lang
+     * @param string|integer|array $currentValue
+     * @param string               $selected
      *
      * @return array
      */
@@ -101,5 +97,18 @@ class Forms
             }
         }
         return $select;
+    }
+
+    /**
+     * @param string               $name
+     * @param array                $values
+     * @param array                $lang
+     * @param string|integer|array $currentValue
+     *
+     * @return array
+     */
+    public function checkboxGenerator($name, array $values, array $lang, $currentValue = '')
+    {
+        return $this->selectGenerator($name, $values, $lang, $currentValue, 'checked');
     }
 }

@@ -248,19 +248,19 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
 
         $lang_readmore = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('readmore', $this->get('core.helpers.forms')->selectGenerator('readmore', [1, 0], $lang_readmore, $settings['readmore'], 'checked'));
+        $this->view->assign('readmore', $this->get('core.helpers.forms')->checkboxGenerator('readmore', [1, 0], $lang_readmore, $settings['readmore']));
 
         $this->view->assign('readmore_chars', $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']));
 
         if ($this->modules->isActive('comments') === true) {
             $lang_allow_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('allow_comments', $this->get('core.helpers.forms')->selectGenerator('comments', [1, 0], $lang_allow_comments, $settings['comments'], 'checked'));
+            $this->view->assign('allow_comments', $this->get('core.helpers.forms')->checkboxGenerator('comments', [1, 0], $lang_allow_comments, $settings['comments']));
         }
 
         $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
 
         $lang_category_in_breadcrumb = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('category_in_breadcrumb', $this->get('core.helpers.forms')->selectGenerator('category_in_breadcrumb', [1, 0], $lang_category_in_breadcrumb, $settings['category_in_breadcrumb'], 'checked'));
+        $this->view->assign('category_in_breadcrumb', $this->get('core.helpers.forms')->checkboxGenerator('category_in_breadcrumb', [1, 0], $lang_category_in_breadcrumb, $settings['category_in_breadcrumb']));
 
         $this->formTokenHelper->generateFormToken();
     }

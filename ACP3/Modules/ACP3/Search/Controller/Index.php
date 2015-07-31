@@ -65,11 +65,11 @@ class Index extends Core\Modules\FrontendController
             $this->lang->t('search', 'title_only'),
             $this->lang->t('search', 'content_only')
         ];
-        $this->view->assign('search_areas', $this->get('core.helpers.forms')->selectGenerator('area', ['title_content', 'title', 'content'], $langSearchAreas, 'title_content', 'checked'));
+        $this->view->assign('search_areas', $this->get('core.helpers.forms')->checkboxGenerator('area', ['title_content', 'title', 'content'], $langSearchAreas, 'title_content'));
 
         // Treffer sortieren
         $langSortHits = [$this->lang->t('search', 'asc'), $this->lang->t('search', 'desc')];
-        $this->view->assign('sort_hits', $this->get('core.helpers.forms')->selectGenerator('sort', ['asc', 'desc'], $langSortHits, 'asc', 'checked'));
+        $this->view->assign('sort_hits', $this->get('core.helpers.forms')->checkboxGenerator('sort', ['asc', 'desc'], $langSortHits, 'asc'));
     }
 
     /**

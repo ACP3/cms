@@ -70,10 +70,10 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('form', array_merge(['title' => '', 'text' => ''], $this->request->getPost()->getAll()));
 
         $lang_test = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', [1, 0], $lang_test, 0, 'checked'));
+        $this->view->assign('test', $this->get('core.helpers.forms')->checkboxGenerator('test', [1, 0], $lang_test, 0));
 
         $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
-        $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
+        $this->view->assign('action', $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -121,10 +121,10 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('form', array_merge($newsletter, $this->request->getPost()->getAll()));
 
             $lang_test = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('test', $this->get('core.helpers.forms')->selectGenerator('test', [1, 0], $lang_test, 0, 'checked'));
+            $this->view->assign('test', $this->get('core.helpers.forms')->checkboxGenerator('test', [1, 0], $lang_test, 0));
 
             $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
-            $this->view->assign('action', $this->get('core.helpers.forms')->selectGenerator('action', [1, 0], $lang_action, 1, 'checked'));
+            $this->view->assign('action', $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1));
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -192,7 +192,7 @@ class Index extends Core\Modules\AdminController
             $this->lang->t('system', 'yes'),
             $this->lang->t('system', 'no')
         ];
-        $this->view->assign('html', $this->get('core.helpers.forms')->selectGenerator('html', [1, 0], $langHtml, $settings['html'], 'checked'));
+        $this->view->assign('html', $this->get('core.helpers.forms')->checkboxGenerator('html', [1, 0], $langHtml, $settings['html']));
 
         $this->formTokenHelper->generateFormToken();
     }

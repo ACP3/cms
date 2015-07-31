@@ -192,11 +192,11 @@ class Index extends Core\Modules\AdminController
 
         if ($this->modules->isActive('comments') === true) {
             $lang_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', [1, 0], $lang_comments, $settings['comments'], 'checked'));
+            $this->view->assign('comments', $this->get('core.helpers.forms')->checkboxGenerator('comments', [1, 0], $lang_comments, $settings['comments']));
         }
 
         $lang_overlay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('overlay', $this->get('core.helpers.forms')->selectGenerator('overlay', [1, 0], $lang_overlay, $settings['overlay'], 'checked'));
+        $this->view->assign('overlay', $this->get('core.helpers.forms')->checkboxGenerator('overlay', [1, 0], $lang_overlay, $settings['overlay']));
 
         $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
 

@@ -233,7 +233,7 @@ class Index extends Core\Modules\AdminController
 
         if ($this->commentsHelpers) {
             $lang_comments = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('comments', $this->get('core.helpers.forms')->selectGenerator('comments', [1, 0], $lang_comments, $settings['comments'], 'checked'));
+            $this->view->assign('comments', $this->get('core.helpers.forms')->checkboxGenerator('comments', [1, 0], $lang_comments, $settings['comments']));
         }
 
         $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
