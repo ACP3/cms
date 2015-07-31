@@ -13,7 +13,7 @@ class Model extends Core\Model
     const TABLE_NAME_ITEMS = 'menu_items';
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */
@@ -23,8 +23,8 @@ class Model extends Core\Model
     }
 
     /**
-     * @param     $indexName
-     * @param int $id
+     * @param string $indexName
+     * @param int    $id
      *
      * @return bool
      */
@@ -35,7 +35,7 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */
@@ -45,7 +45,7 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
@@ -58,7 +58,7 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
@@ -71,11 +71,11 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      *
      * @return mixed
      */
-    public function getOneMenuItemUri($uri)
+    public function getOneMenuItemByUri($uri)
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} WHERE uri = ?",
@@ -84,7 +84,7 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $blockId
+     * @param int $blockId
      *
      * @return array
      */
@@ -173,7 +173,7 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $blockName
+     * @param string $blockName
      *
      * @return array
      */
@@ -186,13 +186,13 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $menu
-     * @param $uris
+     * @param string $menu
+     * @param array $uris
      *
      * @return mixed
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLeftIdByUris($menu, $uris)
+    public function getLeftIdByUris($menu, array $uris)
     {
         return $this->db->executeQuery(
             "SELECT m.left_id FROM {$this->getTableName(static::TABLE_NAME_ITEMS)} AS m JOIN {$this->getTableName()} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
@@ -202,7 +202,7 @@ class Model extends Core\Model
     }
 
     /**
-     * @param $in
+     * @param array $in
      *
      * @return array
      * @throws \Doctrine\DBAL\DBALException

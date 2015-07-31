@@ -85,7 +85,7 @@ class Account extends Core\Modules\FrontendController
 
         // Geburtstag
         $datepickerParams = ['constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''];
-        $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
+        $this->view->assign('birthday_datepicker', $this->get('core.helpers.date')->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, false, true));
 
         // Kontaktangaben
         $contact = [];
