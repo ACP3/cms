@@ -29,24 +29,31 @@ class Helpers
      * @var \ACP3\Core\Modules\Vendors
      */
     protected $vendors;
+    /**
+     * @var \ACP3\Core\XML
+     */
+    protected $xml;
 
     /**
-     * @param Core\DB                            $db
-     * @param Core\Modules                       $modules
+     * @param \ACP3\Core\DB                      $db
+     * @param \ACP3\Core\Modules                 $modules
      * @param \ACP3\Core\Modules\Vendors         $vendors
      * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
+     * @param \ACP3\Core\XML                     $xml
      */
     public function __construct(
         Core\DB $db,
         Core\Modules $modules,
         Core\Modules\Vendors $vendors,
-        Core\Modules\SchemaInstaller $schemaInstaller
+        Core\Modules\SchemaInstaller $schemaInstaller,
+        Core\XML $xml
     )
     {
         $this->db = $db;
         $this->modules = $modules;
         $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
+        $this->xml = $xml;
     }
 
     /**
@@ -58,7 +65,7 @@ class Helpers
      */
     public function checkInstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
     {
-        $dependencies = $this->schemaInstaller->getDependencies($schema->getModuleName());
+        $dependencies = $this->getDependencies($schema->getModuleName());
         $modulesToEnable = [];
         if (!empty($dependencies)) {
             foreach ($dependencies as $dependency) {
@@ -88,7 +95,7 @@ class Helpers
                 $service = $moduleName . '.installer.schema';
 
                 if ($container->has($service) === true) {
-                    $deps = $this->schemaInstaller->getDependencies($moduleToBeUninstalled);
+                    $deps = $this->getDependencies($moduleToBeUninstalled);
                     if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
                         $moduleDependencies[] = $module['name'];
                     }
@@ -96,6 +103,25 @@ class Helpers
             }
         }
         return $moduleDependencies;
+    }
+
+    /**
+     * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
+     *
+     * @param string $moduleName
+     *
+     * @return array
+     */
+    public function getDependencies($moduleName)
+    {
+        if ((bool)preg_match('=/=', $moduleName) === false) {
+            $path = MODULES_DIR . ucfirst($moduleName) . '/config/module.xml';
+            if (is_file($path) === true) {
+                return array_values($this->xml->parseXmlFile($path, '/module/info/dependencies'));
+            }
+        }
+
+        return [];
     }
 
     /**

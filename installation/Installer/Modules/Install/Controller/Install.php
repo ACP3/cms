@@ -2,6 +2,7 @@
 
 namespace ACP3\Installer\Modules\Install\Controller;
 
+use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Installer\Core\Date;
@@ -95,10 +96,15 @@ class Install extends AbstractController
 
             $this->_writeConfigFile($formData);
             $this->_setContainer();
-            $bool = $this->_installModules();
+            $resultModules = $this->_installModules();
+            $resultAcl = false;
+
+            if ($resultModules === true) {
+                $resultAcl = $this->_installAclResources();
+            }
 
             // Admin-User, Menüpunkte, News, etc. in die DB schreiben
-            if ($bool === true) {
+            if ($resultModules === true && $resultAcl === true) {
                 $this->_installSampleData($formData);
                 $this->configureModules($formData);
             }
@@ -183,16 +189,32 @@ class Install extends AbstractController
 
         // Install "normal" modules
         if ($bool === true) {
-            $modules = array_diff(scandir(MODULES_DIR . 'ACP3/'), ['.', '..']);
-
-            foreach ($modules as $module) {
+            foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
                 $module = strtolower($module);
                 if (in_array(strtolower($module), $installFirst) === false) {
-                    if ($this->installHelper->installModule($module, $this->container) === false) {
+                    $bool = $this->installHelper->installModule($module, $this->container);
+                    if ($bool === false) {
                         $this->view->assign('install_error', true);
                         break;
                     }
                 }
+            }
+        }
+
+        return $bool;
+    }
+
+    /**
+     * @return bool
+     */
+    private function _installAclResources()
+    {
+        $bool = false;
+        foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
+            $bool = $this->installHelper->installResources($module, $this->container);
+            if ($bool === false) {
+                $this->view->assign('install_error', true);
+                break;
             }
         }
 

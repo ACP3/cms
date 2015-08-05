@@ -267,11 +267,12 @@ class Extensions extends Core\Modules\AdminController
                 // Modul installieren
                 if (empty($deps)) {
                     $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
+                    $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
-                    $text = $this->lang->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
+                    $text = $this->lang->t('system', 'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
                 } else {
                     $text = sprintf($this->lang->t('system', 'enable_following_modules_first'), implode(', ', $deps));
                 }
@@ -311,13 +312,14 @@ class Extensions extends Core\Modules\AdminController
                 // Modul deinstallieren
                 if (empty($deps)) {
                     $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
+                    $bool2 = $this->container->get('core.modules.aclInstaller')->uninstall($moduleSchema);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
                     Core\Cache::purge(CACHE_DIR . 'tpl_cached');
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
-                    $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
+                    $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
                 } else {
                     $text = sprintf($this->lang->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
                 }

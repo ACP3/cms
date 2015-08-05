@@ -134,10 +134,14 @@ class Migration extends Modules\Installer\AbstractMigration
                 $this->schemaHelper->getSystemModel()->moduleExists('seo') === false
             ) {
                 $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
-                $result = $installer->install($this->schemaHelper->getContainer()->get('seo.installer.schema'));
+                $moduleSchema = $this->schemaHelper->getContainer()->get('seo.installer.schema');
+                $result = $installer->install($moduleSchema);
+                $aclResult = $this->schemaHelper->getContainer()->get('core.modules.aclInstaller')->install($moduleSchema);
 
-                if ($result === true) {
-                    $seoModuleId = $this->schemaHelper->getDb()->fetchColumn("SELECT `id` FROM `{$this->schemaHelper->getDb()->getPrefixedTableName('modules')}` WHERE `name` = 'seo'");
+                if ($result === true && $aclResult === true) {
+                    $seoModuleId = $this->schemaHelper->getDb()->fetchColumn(
+                        "SELECT `id` FROM `{$this->schemaHelper->getDb()->getPrefixedTableName('modules')}` WHERE `name` = 'seo'"
+                    );
                     $result = $this->schemaHelper->executeSqlQueries([
                         "DELETE FROM `{pre}settings` WHERE `module_id` = {$seoModuleId};",
                         "UPDATE `{pre}settings` SET `module_id` = {$seoModuleId}, `name` = SUBSTRING(`name`, 5) WHERE `module_id` = '{moduleId}' AND `name` LIKE 'seo_%';",
@@ -155,15 +159,17 @@ class Migration extends Modules\Installer\AbstractMigration
     protected function migrationToVersion52()
     {
         return function () {
-            $result = true;
+            $result = $aclResult = true;
             if ($this->schemaHelper->getContainer()->has('minify.installer.schema') &&
                 $this->schemaHelper->getSystemModel()->moduleExists('minify') === false
             ) {
                 $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
-                $result = $installer->install($this->schemaHelper->getContainer()->get('minify.installer.schema'));
+                $moduleSchema = $this->schemaHelper->getContainer()->get('minify.installer.schema');
+                $result = $installer->install($moduleSchema);
+                $aclResult = $this->schemaHelper->getContainer()->get('core.modules.aclInstaller')->install($moduleSchema);
             }
 
-            return $result;
+            return $result && $aclResult;
         };
     }
 

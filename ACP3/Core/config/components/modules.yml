@@ -18,6 +18,10 @@ services:
     class: ACP3\Core\Modules
     arguments: ['@service_container', @core.modules.moduleInfoCache, @core.modules.vendors]
 
+  core.modules.aclInstaller:
+    class: ACP3\Core\Modules\AclInstaller
+    arguments: [@service_container, @core.cache.system, @core.modules.schemaHelper, @permissions.model]
+
   core.modules.controller:
     abstract: true
     arguments: ['@core.context']
@@ -50,9 +54,7 @@ services:
 
   core.modules.schemaInstaller:
     class: ACP3\Core\Modules\SchemaInstaller
-    arguments: ['@core.db', '@core.xml', '@core.cache.system', '@system.model', '@permissions.model']
-    calls:
-      - ['setContainer', ['@service_container']]
+    parent: core.modules.schemaHelper
 
   core.modules.schemaUpdater:
     class: ACP3\Core\Modules\SchemaUpdater

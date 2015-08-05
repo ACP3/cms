@@ -43,6 +43,29 @@ class Install
      */
     public function installModule($module, ContainerInterface $container)
     {
+        return $this->install($module, $container, 'core.modules.schemaInstaller');
+    }
+
+    /**
+     * @param string                                                    $module
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     *
+     * @return bool
+     */
+    public function installResources($module, ContainerInterface $container)
+    {
+        return $this->install($module, $container, 'core.modules.aclInstaller');
+    }
+
+    /**
+     * @param string                                                    $module
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param string                                                    $installerServiceId
+     *
+     * @return bool
+     */
+    private function install($module, ContainerInterface $container, $installerServiceId)
+    {
         $bool = false;
         $serviceId = $module . '.installer.schema';
 
@@ -50,7 +73,7 @@ class Install
             /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
             $moduleSchema = $container->get($serviceId);
 
-            $bool = $container->get('core.modules.schemaInstaller')->install($moduleSchema);
+            $bool = $container->get($installerServiceId)->install($moduleSchema);
         }
 
         return $bool;

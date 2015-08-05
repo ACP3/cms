@@ -14,13 +14,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID_RULES = 'acl_rules_';
 
     /**
-     * @var Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model
      */
     protected $permissionsModel;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model      $permissionsModel
+     * @param \ACP3\Core\Cache                     $cache
+     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
      */
     public function __construct(
         Core\Cache $cache,

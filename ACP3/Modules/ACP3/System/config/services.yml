@@ -27,7 +27,7 @@ services:
 
   system.helpers:
     class: %system.helpers.fqdn%
-    arguments: ['@core.db', '@core.modules', @core.modules.vendors, @core.modules.schemaInstaller]
+    arguments: ['@core.db', '@core.modules', @core.modules.vendors, @core.modules.schemaInstaller, @core.xml]
 
   system.validator:
     class: %system.validator.fqdn%
