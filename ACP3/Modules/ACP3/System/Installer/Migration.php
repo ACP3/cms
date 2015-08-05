@@ -19,21 +19,21 @@ class Migration extends Modules\Installer\AbstractMigration
     {
         return [
             31 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId', 'extra_css', '');",
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId', 'extra_js', '');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'extra_css', '');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'extra_js', '');",
             ],
             32 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId', 'icons_path', 'libraries/crystal_project/');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'icons_path', 'libraries/crystal_project/');",
             ],
             33 => [
-                "UPDATE `{pre}acl_resources` SET `privilege_id` = 3 WHERE module_id = '{moduleId' AND `page` = 'acp_maintenance';",
+                "UPDATE `{pre}acl_resources` SET `privilege_id` = 3 WHERE module_id = '{moduleId}' AND `page` = 'acp_maintenance';",
             ],
             34 => [
-                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId', 'functions', '', 1);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'functions', '', 1);",
             ],
             35 => [
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId' AND page = \"functions\";",
-                "UPDATE `{pre}settings` SET `value` = \"4.0-dev\" WHERE `module_id` = '{moduleId' AND `name` = \"version\";",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = 'functions';",
+                "UPDATE `{pre}settings` SET `value` = \"4.0-dev\" WHERE `module_id` = '{moduleId}' AND `name` = 'version';",
             ],
             36 => [
                 'ALTER TABLE `{pre}acl_resources` ADD COLUMN `area` VARCHAR(255) NOT NULL AFTER `module_id`;',
@@ -72,7 +72,7 @@ class Migration extends Modules\Installer\AbstractMigration
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'extensions' AND `page` = 'languages';",
             ],
             44 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId', 'cache_driver', 'PhpFile');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cache_driver', 'PhpFile');",
             ],
             45 => [
                 "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'seo_aliases';",
@@ -97,7 +97,7 @@ class Migration extends Modules\Installer\AbstractMigration
                 $this->migrateToVersion50()
             ],
             51 => [
-                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId', 'admin', 'maintenance', 'cache', '', 7);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'maintenance', 'cache', '', 7);",
             ],
             52 => [
                 $this->migrationToVersion52()
