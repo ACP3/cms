@@ -16,7 +16,7 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@service_container', @core.modules.moduleInfoCache, @core.modules.vendors]
+    arguments: ['@service_container', @core.modules.controllerActionsExists, @core.modules.moduleInfoCache, @core.modules.vendors]
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
@@ -33,6 +33,10 @@ services:
   core.modules.controller.admin:
     abstract: true
     arguments: ['@core.context.admin']
+
+  core.modules.controllerActionsExists:
+    class: ACP3\Core\Modules\Helper\ControllerActionExists
+    arguments: [@service_container]
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache

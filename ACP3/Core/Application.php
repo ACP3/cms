@@ -140,47 +140,11 @@ class Application extends AbstractApplication
         $containerConfigCache = new ConfigCache($file, (defined('DEBUG') && DEBUG === true));
 
         if (!$containerConfigCache->isFresh()) {
-            $containerBuilder = new ContainerBuilder();
-            $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
-            $loader->load(CLASSES_DIR . 'config/services.yml');
-            $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
-
-            // Try to get all available services
-            /** @var Modules $modules */
-            $modules = $containerBuilder->get('core.modules');
-            $activeModules = $modules->getActiveModules();
-            $vendors = $containerBuilder->get('core.modules.vendors')->getVendors();
-
-            foreach ($activeModules as $module) {
-                foreach ($vendors as $vendor) {
-                    $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/config/services.yml';
-
-                    if (is_file($path)) {
-                        $loader->load($path);
-                    }
-                }
-            }
-
-            $containerBuilder->compile();
-
-            $dumper = new PhpDumper($containerBuilder);
-            $containerConfigCache->write(
-                $dumper->dump(['class' => 'ACP3ServiceContainer']),
-                $containerBuilder->getResources()
-            );
+            $this->dumpContainer($containerConfigCache);
         }
 
         require_once $file;
         $this->container = new \ACP3ServiceContainer();
-
-        // Load system settings
-        $this->systemSettings = $this->container->get('core.config')->getSettings('system');
-
-        $this->container->get('core.auth')->authenticate();
-
-        $this->_setThemeConstants();
-
-        $this->container->get('core.view')->setRenderer('smarty');
     }
 
     /**
@@ -198,6 +162,12 @@ class Application extends AbstractApplication
      */
     public function outputPage()
     {
+        // Load system settings
+        $this->systemSettings = $this->container->get('core.config')->getSettings('system');
+        $this->_setThemeConstants();
+        $this->container->get('core.auth')->authenticate();
+        $this->container->get('core.view')->setRenderer('smarty');
+
         /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.request');
         $request->processQuery();
@@ -272,5 +242,40 @@ class Application extends AbstractApplication
         } else {
             $redirect->temporary($path);
         }
+    }
+
+    /**
+     * @param $containerConfigCache
+     */
+    protected function dumpContainer($containerConfigCache)
+    {
+        $containerBuilder = new ContainerBuilder();
+        $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
+        $loader->load(CLASSES_DIR . 'config/services.yml');
+        $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
+
+        // Try to get all available services
+        /** @var Modules $modules */
+        $modules = $containerBuilder->get('core.modules');
+        $activeModules = $modules->getActiveModules();
+        $vendors = $containerBuilder->get('core.modules.vendors')->getVendors();
+
+        foreach ($activeModules as $module) {
+            foreach ($vendors as $vendor) {
+                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/config/services.yml';
+
+                if (is_file($path)) {
+                    $loader->load($path);
+                }
+            }
+        }
+
+        $containerBuilder->compile();
+
+        $dumper = new PhpDumper($containerBuilder);
+        $containerConfigCache->write(
+            $dumper->dump(['class' => 'ACP3ServiceContainer']),
+            $containerBuilder->getResources()
+        );
     }
 }

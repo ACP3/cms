@@ -140,7 +140,7 @@ class Index extends Core\Modules\FrontendController
             $result = $this->auth->login(
                 Core\Functions::strEncode($this->request->getPost()->get('nickname', '')),
                 $this->request->getPost()->get('pwd', ''),
-                $this->request->getPost()->has('remember') ? 31104000 : 3600
+                $this->request->getPost()->has('remember')
             );
             if ($result == 1) {
                 if ($this->request->getParameters()->has('redirect')) {

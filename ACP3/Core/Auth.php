@@ -3,6 +3,7 @@ namespace ACP3\Core;
 
 use ACP3\Core\Helpers\Country;
 use ACP3\Core\Helpers\Secure;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -14,7 +15,7 @@ class Auth
     /**
      * Name des Authentifizierungscookies
      */
-    const COOKIE_NAME = 'ACP3_AUTH';
+    const AUTH_NAME = 'ACP3_AUTH';
     /**
      * Anzuzeigende Datensätze  pro Seite
      *
@@ -50,6 +51,10 @@ class Auth
      */
     protected $userInfo = [];
     /**
+     * @var \ACP3\Core\Http\RequestInterface
+     */
+    protected $request;
+    /**
      * @var \ACP3\Core\SessionHandler
      */
     protected $sessionHandler;
@@ -67,18 +72,21 @@ class Auth
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\SessionHandler      $sessionHandler
-     * @param \ACP3\Core\Helpers\Secure      $secureHelper
-     * @param \ACP3\Core\Config              $config
-     * @param \ACP3\Modules\ACP3\Users\Model $usersModel
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * @param \ACP3\Core\Helpers\Secure        $secureHelper
+     * @param \ACP3\Core\Config                $config
+     * @param \ACP3\Modules\ACP3\Users\Model   $usersModel
      */
     public function __construct(
+        RequestInterface $request,
         SessionHandler $sessionHandler,
         Secure $secureHelper,
         Config $config,
         Users\Model $usersModel
     )
     {
+        $this->request = $request;
         $this->sessionHandler = $sessionHandler;
         $this->secureHelper = $secureHelper;
         $this->config = $config;
@@ -86,8 +94,7 @@ class Auth
     }
 
     /**
-     * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
-     * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
+     * Authenticates the user
      */
     public function authenticate()
     {
@@ -96,31 +103,50 @@ class Auth
         $this->entries = $settings['entries'];
         $this->language = $settings['lang'];
 
-        if (isset($_COOKIE[self::COOKIE_NAME])) {
-            $cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
-            $cookieData = explode('|', $cookie);
+        if ($this->sessionHandler->has(self::AUTH_NAME)) {
+            $authData = $this->sessionHandler->get(self::AUTH_NAME, []);
 
-            $user = $this->usersModel->getOneActiveUserByNickname($cookieData[0]);
-            if (!empty($user)) {
-                $dbPassword = substr($user['pwd'], 0, 40);
-                if ($dbPassword === $cookieData[1]) {
-                    $this->isUser = true;
-                    $this->userId = (int)$user['id'];
-                    $this->superUser = (bool)$user['super_user'];
+            if (!$this->validate($authData['username'], $authData['password'])) {
+                $this->logout();
+            }
+        } elseif ($this->request->getCookie()->has(self::AUTH_NAME)) {
+            $cookie = base64_decode($this->request->getCookie()->get(self::AUTH_NAME, ''));
+            $authData = explode('|', $cookie);
 
-                    $settings = $this->config->getSettings('users');
-
-                    if ($settings['entries_override'] == 1 && $user['entries'] > 0) {
-                        $this->entries = (int)$user['entries'];
-                    }
-                    if ($settings['language_override'] == 1) {
-                        $this->language = $user['language'];
-                    }
-                }
-            } else {
+            if (!$this->validate($authData[0], $authData[1])) {
                 $this->logout();
             }
         }
+    }
+
+    /**
+     * @param string $username
+     * @param string $passwordHash
+     *
+     * @return bool
+     */
+    protected function validate($username, $passwordHash)
+    {
+        $user = $this->usersModel->getOneActiveUserByNickname($username);
+        if (!empty($user)) {
+            $dbPassword = substr($user['pwd'], 0, 40);
+            if ($dbPassword === $passwordHash) {
+                $this->successfulAuthentication($user);
+
+                $settings = $this->config->getSettings('users');
+
+                if ($settings['entries_override'] == 1 && $user['entries'] > 0) {
+                    $this->entries = (int)$user['entries'];
+                }
+                if ($settings['language_override'] == 1) {
+                    $this->language = $user['language'];
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -151,7 +177,7 @@ class Auth
         $value = base64_encode($nickname . '|' . $password);
         $expiry = time() + $expiry;
         $domain = strpos($_SERVER['HTTP_HOST'], '.') !== false ? $_SERVER['HTTP_HOST'] : '';
-        return setcookie(self::COOKIE_NAME, $value, $expiry, ROOT_DIR, $domain);
+        return setcookie(self::AUTH_NAME, $value, $expiry, ROOT_DIR, $domain);
     }
 
     /**
@@ -225,15 +251,12 @@ class Auth
      * Loggt einen User ein
      *
      * @param string  $username
-     *    Der zu verwendente Username
      * @param string  $password
-     *    Das zu verwendente Passwort
-     * @param integer $expiry
-     *    Gibt die Zeit in Sekunden an, wie lange der User eingeloggt bleiben soll
+     * @param bool $rememberMe
      *
      * @return integer
      */
-    public function login($username, $password, $expiry)
+    public function login($username, $password, $rememberMe)
     {
         $user = $this->usersModel->getOneByNickname($username);
 
@@ -243,38 +266,69 @@ class Auth
                 return -1;
             }
 
-            // Passwort aus Datenbank
+            // The hashed password (without the salt) from the database
             $dbHash = substr($user['pwd'], 0, 40);
 
-            // Hash für eingegebenes Passwort generieren
+            // Get the salt of the password
             $salt = substr($user['pwd'], 41, 53);
-
+            // Generate the hash for the typed in password
             $formPasswordHash = $this->secureHelper->generateSaltedPassword($salt, $password);
 
-            // Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
             if ($dbHash === $formPasswordHash) {
-                // Login-Fehler zurücksetzen
                 if ($user['login_errors'] > 0) {
                     $this->usersModel->update(['login_errors' => 0], (int)$user['id']);
                 }
 
-                $this->setCookie($username, $dbHash, $expiry);
+                if ($rememberMe === true) {
+                    $this->setCookie($username, $dbHash, 31104000);
+                }
 
-                // Neue Session-ID generieren
-                $this->sessionHandler->secureSession(true);
+                $this->sessionHandler->secureSession();
 
-                $this->isUser = true;
-                $this->userId = (int)$user['id'];
+                $this->setSessionValues($username, $dbHash);
+                $this->successfulAuthentication($user);
 
                 return 1;
-            } else { // Beim dritten falschen Login den Account sperren
-                $loginErrors = $user['login_errors'] + 1;
-                $this->usersModel->update(['login_errors' => $loginErrors], (int)$user['id']);
-                if ($loginErrors === 3) {
+            } else {
+                if ($this->saveFailedLoginAttempts($user) === 3) {
                     return -1;
                 }
             }
         }
         return 0;
+    }
+
+    /**
+     * @param string $username
+     * @param string $dbHash
+     */
+    private function setSessionValues($username, $dbHash)
+    {
+        $this->sessionHandler->set(self::AUTH_NAME, [
+            'username' => $username,
+            'password' => $dbHash
+        ]);
+    }
+
+    /**
+     * @param array $user
+     *
+     * @return int
+     */
+    protected function saveFailedLoginAttempts(array $user)
+    {
+        $loginErrors = $user['login_errors'] + 1;
+        $this->usersModel->update(['login_errors' => $loginErrors], (int)$user['id']);
+        return $loginErrors;
+    }
+
+    /**
+     * @param array $user
+     */
+    protected function successfulAuthentication(array $user)
+    {
+        $this->isUser = true;
+        $this->userId = (int)$user['id'];
+        $this->superUser = (bool)$user['super_user'];
     }
 }

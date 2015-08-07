@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3\Core;
+use ACP3\Core\Http\RequestInterface;
 
 /**
  * @package ACP3\Core
@@ -26,13 +27,22 @@ class SessionHandler implements \SessionHandlerInterface
      * @var \ACP3\Core\DB
      */
     protected $db;
+    /**
+     * @var \ACP3\Core\Http\RequestInterface
+     */
+    protected $request;
 
     /**
-     * @param \ACP3\Core\DB $db
+     * @param \ACP3\Core\DB                    $db
+     * @param \ACP3\Core\Http\RequestInterface $request
      */
-    public function __construct(DB $db)
+    public function __construct(
+        DB $db,
+        RequestInterface $request
+    )
     {
         $this->db = $db;
+        $this->request = $request;
 
         $this->configureSession();
     }
@@ -58,10 +68,12 @@ class SessionHandler implements \SessionHandlerInterface
 
             // Start the session and secure it
             $this->startSession();
-            $this->secureSession();
-
-            register_shutdown_function('session_write_close');
         }
+    }
+
+    public function __destruct()
+    {
+        session_write_close();
     }
 
     /**
@@ -72,23 +84,20 @@ class SessionHandler implements \SessionHandlerInterface
         // Set the session cookie parameters
         session_set_cookie_params(0, ROOT_DIR);
 
+        session_write_close();
+
         // Start the session
         session_start();
     }
 
     /**
      * Secures the current session
-     *
-     * @param boolean $force
      */
-    public function secureSession($force = false)
+    public function secureSession()
     {
         // Prevent from session fixations
-        if ($this->get('acp3_init', false) === false || $force === true) {
-            session_regenerate_id(true);
-            $this->resetSessionData();
-            $this->set('acp3_init', true);
-        }
+        session_regenerate_id(true);
+        $this->resetSessionData();
     }
 
     /**
@@ -129,7 +138,7 @@ class SessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return bool
      */
@@ -139,8 +148,8 @@ class SessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed  $value
      *
      * @return $this
      */
@@ -151,6 +160,11 @@ class SessionHandler implements \SessionHandlerInterface
         return $this;
     }
 
+    /**
+     * @param string $key
+     *
+     * @return $this
+     */
     public function remove($key)
     {
         if (isset($_SESSION[$key])) {
@@ -196,7 +210,7 @@ class SessionHandler implements \SessionHandlerInterface
         $this->resetSessionData();
 
         // Session-Cookie löschen
-        if (isset($_COOKIE[self::SESSION_NAME])) {
+        if ($this->request->getCookie()->has(self::SESSION_NAME)) {
             setcookie(self::SESSION_NAME, '', time() - 3600, ROOT_DIR);
         }
 

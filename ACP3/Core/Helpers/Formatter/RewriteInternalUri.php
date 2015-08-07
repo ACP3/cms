@@ -10,9 +10,9 @@ use ACP3\Core;
 class RewriteInternalUri
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Helper\ControllerActionExists
      */
-    protected $modules;
+    protected $controllerActionExists;
     /**
      * @var \ACP3\Core\Router
      */
@@ -23,17 +23,17 @@ class RewriteInternalUri
     protected $aliasesValidator;
 
     /**
-     * @param \ACP3\Core\Modules                        $modules
-     * @param \ACP3\Core\Router                         $router
-     * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasValidator
+     * @param \ACP3\Core\Modules\Helper\ControllerActionExists $controllerActionExists
+     * @param \ACP3\Core\Router                                $router
+     * @param \ACP3\Core\Validator\Rules\Router\Aliases        $aliasValidator
      */
     public function __construct(
-        Core\Modules $modules,
+        Core\Modules\Helper\ControllerActionExists $controllerActionExists,
         Core\Router $router,
         Core\Validator\Rules\Router\Aliases $aliasValidator
     )
     {
-        $this->modules = $modules;
+        $this->controllerActionExists = $controllerActionExists;
         $this->router = $router;
         $this->aliasesValidator = $aliasValidator;
     }
@@ -76,7 +76,7 @@ class RewriteInternalUri
                 $path .= '/' . $uriArray[3];
             }
 
-            if ($this->modules->controllerActionExists($path) === true) {
+            if ($this->controllerActionExists->controllerActionExists($path) === true) {
                 return '<a' . $matches[1] . 'href="' . $this->router->route($matches[7]) . '"';
             } else {
                 return $matches[0];

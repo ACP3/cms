@@ -11,19 +11,19 @@ use ACP3\Modules\ACP3\Permissions;
 class ACL
 {
     /**
-     * @var Auth
+     * @var \ACP3\Core\Auth
      */
     protected $auth;
     /**
-     * @var Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
     /**
-     * @var Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
     /**
-     * @var Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model
      */
     protected $permissionsModel;
     /**

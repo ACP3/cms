@@ -15,9 +15,9 @@ class Request extends AbstractRequest
     const ADMIN_PANEL_PATTERN = '=^acp/=';
 
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Helper\ControllerActionExists
      */
-    protected $modules;
+    protected $controllerActionExists;
     /**
      * @var \ACP3\Core\Config
      */
@@ -61,17 +61,17 @@ class Request extends AbstractRequest
     protected $isHomepage;
 
     /**
-     * @param \ACP3\Core\Modules           $modules
-     * @param \ACP3\Core\Config            $config
-     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
+     * @param \ACP3\Core\Modules\Helper\ControllerActionExists $controllerActionExists
+     * @param \ACP3\Core\Config                                $config
+     * @param \ACP3\Modules\ACP3\Seo\Model                     $seoModel
      */
     public function __construct(
-        Modules $modules,
+        Modules\Helper\ControllerActionExists $controllerActionExists,
         Config $config,
         Seo\Model $seoModel
     )
     {
-        $this->modules = $modules;
+        $this->controllerActionExists = $controllerActionExists;
         $this->config = $config;
         $this->seoModel = $seoModel;
 
@@ -341,7 +341,7 @@ class Request extends AbstractRequest
             }
 
             // Keine entsprechende Module-Action gefunden -> muss Alias sein
-            if ($this->modules->controllerActionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
+            if ($this->controllerActionExists->controllerActionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
                 $length = 0;
                 foreach ($query as $row) {
                     if (strpos($row, '_') !== false) {
