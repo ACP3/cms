@@ -103,47 +103,30 @@ class Auth
         $this->entries = $settings['entries'];
         $this->language = $settings['lang'];
 
+        $credentials = [];
         if ($this->sessionHandler->has(self::AUTH_NAME)) {
-            $authData = $this->sessionHandler->get(self::AUTH_NAME, []);
-
-            if (!$this->validate($authData['username'], $authData['password'])) {
-                $this->logout();
-            }
+            $credentials = $this->sessionHandler->get(self::AUTH_NAME, []);
         } elseif ($this->request->getCookie()->has(self::AUTH_NAME)) {
-            $cookie = base64_decode($this->request->getCookie()->get(self::AUTH_NAME, ''));
-            $authData = explode('|', $cookie);
+            $cookie = $this->request->getCookie()->get(self::AUTH_NAME, '');
+            $credentials = explode('|', $cookie);
+        }
 
-            if (!$this->validate($authData[0], $authData[1])) {
-                $this->logout();
-            }
+        if (!empty($credentials) && !$this->verifyCredentials($credentials)) {
+            $this->logout();
         }
     }
 
     /**
-     * @param string $username
-     * @param string $passwordHash
+     * @param array $credentials
      *
      * @return bool
      */
-    protected function validate($username, $passwordHash)
+    protected function verifyCredentials(array $credentials)
     {
-        $user = $this->usersModel->getOneActiveUserByNickname($username);
-        if (!empty($user)) {
-            $dbPassword = substr($user['pwd'], 0, 40);
-            if ($dbPassword === $passwordHash) {
-                $this->successfulAuthentication($user);
-
-                $settings = $this->config->getSettings('users');
-
-                if ($settings['entries_override'] == 1 && $user['entries'] > 0) {
-                    $this->entries = (int)$user['entries'];
-                }
-                if ($settings['language_override'] == 1) {
-                    $this->language = $user['language'];
-                }
-
-                return true;
-            }
+        $user = $this->usersModel->getOneActiveUserByNickname($credentials[0]);
+        if (!empty($user) && $this->getPasswordHash($user['pwd']) === $credentials[1]) {
+            $this->successfulAuthentication($user);
+            return true;
         }
 
         return false;
@@ -174,10 +157,9 @@ class Auth
      */
     public function setCookie($nickname, $password, $expiry)
     {
-        $value = base64_encode($nickname . '|' . $password);
+        $value = $nickname . '|' . $password;
         $expiry = time() + $expiry;
-        $domain = strpos($_SERVER['HTTP_HOST'], '.') !== false ? $_SERVER['HTTP_HOST'] : '';
-        return setcookie(self::AUTH_NAME, $value, $expiry, ROOT_DIR, $domain);
+        return setcookie(self::AUTH_NAME, $value, $expiry, ROOT_DIR, $this->getCookieDomain());
     }
 
     /**
@@ -250,9 +232,9 @@ class Auth
     /**
      * Loggt einen User ein
      *
-     * @param string  $username
-     * @param string  $password
-     * @param bool $rememberMe
+     * @param string $username
+     * @param string $password
+     * @param bool   $rememberMe
      *
      * @return integer
      */
@@ -267,10 +249,10 @@ class Auth
             }
 
             // The hashed password (without the salt) from the database
-            $dbHash = substr($user['pwd'], 0, 40);
+            $dbHash = $this->getPasswordHash($user['pwd']);
 
             // Get the salt of the password
-            $salt = substr($user['pwd'], 41, 53);
+            $salt = $this->getPasswordSalt($user['pwd']);
             // Generate the hash for the typed in password
             $formPasswordHash = $this->secureHelper->generateSaltedPassword($salt, $password);
 
@@ -305,8 +287,8 @@ class Auth
     private function setSessionValues($username, $dbHash)
     {
         $this->sessionHandler->set(self::AUTH_NAME, [
-            'username' => $username,
-            'password' => $dbHash
+            $username,
+            $dbHash
         ]);
     }
 
@@ -330,5 +312,45 @@ class Auth
         $this->isUser = true;
         $this->userId = (int)$user['id'];
         $this->superUser = (bool)$user['super_user'];
+
+        $settings = $this->config->getSettings('users');
+
+        if ($settings['entries_override'] == 1 && $user['entries'] > 0) {
+            $this->entries = (int)$user['entries'];
+        }
+        if ($settings['language_override'] == 1) {
+            $this->language = $user['language'];
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCookieDomain()
+    {
+        if (strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
+            return $this->request->getServer()->get('HTTP_HOST', '');
+        }
+        return '';
+    }
+
+    /**
+     * @param string $passwordAndSalt
+     *
+     * @return string
+     */
+    protected function getPasswordHash($passwordAndSalt)
+    {
+        return substr($passwordAndSalt, 0, 40);
+    }
+
+    /**
+     * @param string $passwordAndSalt
+     *
+     * @return string
+     */
+    protected function getPasswordSalt($passwordAndSalt)
+    {
+        return substr($passwordAndSalt, 41, 53);
     }
 }
