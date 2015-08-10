@@ -2,6 +2,7 @@
 
 namespace ACP3\Installer\Modules\Install\Controller;
 
+use ACP3\Core\Auth;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
@@ -282,14 +283,14 @@ class Install extends AbstractController
         /** @var \ACP3\Core\DB db */
         $this->db = $this->get('core.db');
 
-        $salt = $this->secureHelper->salt(12);
+        $salt = $this->secureHelper->salt(Auth::SALT_LENGTH);
         $currentDate = gmdate('Y-m-d H:i:s');
 
         $queries = [
             "INSERT INTO
                 `{pre}users`
             VALUES
-                ('', 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"])}:{$salt}', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->lang->getLanguage()}', '20', '', '{$currentDate}');",
+                ('', 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->lang->getLanguage()}', '20', '', '{$currentDate}');",
         ];
 
         return $this->get('core.modules.schemaHelper')->executeSqlQueries($queries);

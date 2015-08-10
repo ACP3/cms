@@ -166,15 +166,20 @@ class Account extends Core\Modules\FrontendController
 
                 // Neues Passwort
                 if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                    $salt = $this->secureHelper->salt(12);
-                    $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd']);
-                    $updateValues['pwd'] = $newPassword . ':' . $salt;
+                    $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
+                    $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
+                    $updateValues['pwd'] = $newPassword;
+                    $updateValues['pwd_salt'] = $salt;
                 }
 
                 $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
-                $cookieArr = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
-                $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArr[1], 3600);
+                $user = $this->usersModel->getOneById($this->auth->getUserId());
+                $this->auth->setCookie(
+                    $this->auth->getUserId(),
+                    $user['remember_me_token'],
+                    Core\Auth::REMEMBER_ME_COOKIE_LIFETIME
+                );
 
                 $this->formTokenHelper->unsetFormToken();
 

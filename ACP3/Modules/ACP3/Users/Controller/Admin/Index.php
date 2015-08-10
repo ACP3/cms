@@ -252,13 +252,14 @@ class Index extends Core\Modules\AdminController
         $this->handleCreatePostAction(function() use ($formData) {
             $this->usersValidator->validate($formData);
 
-            $salt = $this->secureHelper->salt(12);
+            $salt = $this->secureHelper->salt(15);
 
             $insertValues = [
                 'id' => '',
                 'super_user' => (int)$formData['super_user'],
                 'nickname' => Core\Functions::strEncode($formData['nickname']),
-                'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
+                'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
+                'pwd_salt' => $salt,
                 'realname' => Core\Functions::strEncode($formData['realname']),
                 'gender' => (int)$formData['gender'],
                 'birthday' => $formData['birthday'],
@@ -333,17 +334,22 @@ class Index extends Core\Modules\AdminController
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $salt = $this->secureHelper->salt(12);
-                $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd']);
-                $updateValues['pwd'] = $newPassword . ':' . $salt;
+                $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
+                $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
+                $updateValues['pwd'] = $newPassword;
+                $updateValues['pwd_salt'] = $salt;
             }
 
             $bool = $this->usersModel->update($updateValues, $id);
 
             // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-            if ($this->request->getParameters()->get('id') == $this->auth->getUserId()) {
-                $cookieArray = explode('|', base64_decode($this->request->getCookie()->get('ACP3_AUTH', '')));
-                $this->auth->setCookie($formData['nickname'], isset($newPassword) ? $newPassword : $cookieArray[1], 3600);
+            if ($id == $this->auth->getUserId() && $this->request->getCookie()->has(Core\Auth::AUTH_NAME)) {
+                $user = $this->usersModel->getOneById($id);
+                $this->auth->setCookie(
+                    $id,
+                    $user['remember_me_token'],
+                    Core\Auth::REMEMBER_ME_COOKIE_LIFETIME
+                );
             }
 
             $this->formTokenHelper->unsetFormToken();

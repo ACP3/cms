@@ -66,14 +66,11 @@ class SessionHandler implements \SessionHandlerInterface
             ini_set('session.save_handler', 'user');
             session_set_save_handler($this, true);
 
+            session_register_shutdown();
+
             // Start the session and secure it
             $this->startSession();
         }
-    }
-
-    public function __destruct()
-    {
-        session_write_close();
     }
 
     /**
@@ -83,8 +80,6 @@ class SessionHandler implements \SessionHandlerInterface
     {
         // Set the session cookie parameters
         session_set_cookie_params(0, ROOT_DIR);
-
-        session_write_close();
 
         // Start the session
         session_start();

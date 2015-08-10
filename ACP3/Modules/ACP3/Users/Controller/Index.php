@@ -226,7 +226,7 @@ class Index extends Core\Modules\FrontendController
                 $this->usersValidator->validateForgotPassword($formData);
 
                 // Neues Passwort und neuen Zufallsschlüssel erstellen
-                $newPassword = $this->secureHelper->salt(8);
+                $newPassword = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
                 $host = $this->request->getHostname();
 
                 // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
@@ -249,9 +249,10 @@ class Index extends Core\Modules\FrontendController
 
                 // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                 if ($mailIsSent === true) {
-                    $salt = $this->secureHelper->salt(12);
+                    $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
                     $updateValues = [
-                        'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
+                        'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword, 'sha512'),
+                        'pwd_salt' => $salt,
                         'login_errors' => 0
                     ];
                     $bool = $this->usersModel->update($updateValues, $user['id']);
@@ -294,11 +295,12 @@ class Index extends Core\Modules\FrontendController
                 );
                 $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
-                $salt = $this->secureHelper->salt(12);
+                $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
                 $insertValues = [
                     'id' => '',
                     'nickname' => Core\Functions::strEncode($formData['nickname']),
-                    'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd']) . ':' . $salt,
+                    'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
+                    'pwd_salt' => $salt,
                     'mail' => $formData['mail'],
                     'date_format_long' => $systemSettings['date_format_long'],
                     'date_format_short' => $systemSettings['date_format_short'],

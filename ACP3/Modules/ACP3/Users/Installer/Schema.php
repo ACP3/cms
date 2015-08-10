@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 39;
+        return 40;
     }
 
     /**
@@ -44,7 +44,9 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `super_user` TINYINT(1) UNSIGNED NOT NULL,
                 `nickname` VARCHAR(30) NOT NULL,
-                `pwd` VARCHAR(53) NOT NULL,
+                `pwd` VARCHAR(128) NOT NULL,
+                `pwd_salt` VARCHAR(16) NOT NULL,
+                `remember_me_token` VARCHAR(128) NOT NULL,
                 `login_errors` TINYINT(1) UNSIGNED NOT NULL,
                 `realname` VARCHAR(80) NOT NULL,
                 `gender` TINYINT(1) NOT NULL,

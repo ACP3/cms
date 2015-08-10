@@ -17,6 +17,14 @@ class Auth
      */
     const AUTH_NAME = 'ACP3_AUTH';
     /**
+     * Length of the password salt
+     */
+    const SALT_LENGTH = 16;
+    /**
+     * Lifetime of the remember me cookie
+     */
+    const REMEMBER_ME_COOKIE_LIFETIME = 31104000;
+    /**
      * Anzuzeigende Datensätze  pro Seite
      *
      * @var integer
@@ -98,34 +106,33 @@ class Auth
      */
     public function authenticate()
     {
-        $settings = $this->config->getSettings('system');
-
-        $this->entries = $settings['entries'];
-        $this->language = $settings['lang'];
-
-        $credentials = [];
         if ($this->sessionHandler->has(self::AUTH_NAME)) {
-            $credentials = $this->sessionHandler->get(self::AUTH_NAME, []);
+            $this->populateUserData($this->sessionHandler->get(self::AUTH_NAME, []));
         } elseif ($this->request->getCookie()->has(self::AUTH_NAME)) {
-            $cookie = $this->request->getCookie()->get(self::AUTH_NAME, '');
-            $credentials = explode('|', $cookie);
-        }
+            list($userId, $token) = explode('|', $this->request->getCookie()->get(self::AUTH_NAME, ''));
 
-        if (!empty($credentials) && !$this->verifyCredentials($credentials)) {
-            $this->logout();
+            if (!$this->verifyCredentials($userId, $token)) {
+                $this->logout($userId);
+            }
+        } else { // Guest user
+            $settings = $this->config->getSettings('system');
+
+            $this->entries = $settings['entries'];
+            $this->language = $settings['lang'];
         }
     }
 
     /**
-     * @param array $credentials
+     * @param int    $userId
+     * @param string $token
      *
      * @return bool
      */
-    protected function verifyCredentials(array $credentials)
+    protected function verifyCredentials($userId, $token)
     {
-        $user = $this->usersModel->getOneActiveUserByNickname($credentials[0]);
-        if (!empty($user) && $this->getPasswordHash($user['pwd']) === $credentials[1]) {
-            $this->successfulAuthentication($user);
+        $user = $this->usersModel->getOneById($userId);
+        if (!empty($user) && $user['remember_me_token'] === $token) {
+            $this->populateUserData($user);
             return true;
         }
 
@@ -133,31 +140,31 @@ class Auth
     }
 
     /**
-     * Loggt einen User aus
+     * Logs out the current user
      *
-     * @return boolean
+     * @param int $userId
+     *
+     * @return bool
      */
-    public function logout()
+    public function logout($userId = 0)
     {
+        $this->saveRememberMeToken($userId, '');
         $this->sessionHandler->destroy(session_id());
-        return $this->setCookie('', '', -50400);
+        return $this->setCookie(0, '', -50400);
     }
 
     /**
      * Setzt den internen Authentifizierungscookie
      *
-     * @param string  $nickname
-     *  Der Loginname des Users
-     * @param string  $password
-     *  Die Hashsumme des Passwortes
+     * @param int     $userId
+     * @param string  $token
      * @param integer $expiry
-     *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
      *
      * @return bool
      */
-    public function setCookie($nickname, $password, $expiry)
+    public function setCookie($userId, $token, $expiry)
     {
-        $value = $nickname . '|' . $password;
+        $value = $userId . '|' . $token;
         $expiry = time() + $expiry;
         return setcookie(self::AUTH_NAME, $value, $expiry, ROOT_DIR, $this->getCookieDomain());
     }
@@ -166,7 +173,6 @@ class Auth
      * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
      *
      * @param int $userId
-     *    Der angeforderte Benutzer
      *
      * @return array
      */
@@ -243,32 +249,30 @@ class Auth
         $user = $this->usersModel->getOneByNickname($username);
 
         if (!empty($user)) {
-            // Useraccount ist gesperrt
+            // The user account has been locked
             if ($user['login_errors'] >= 3) {
                 return -1;
             }
 
-            // The hashed password (without the salt) from the database
-            $dbHash = $this->getPasswordHash($user['pwd']);
+            if ($this->userHasOldPassword($password, $user)) {
+                $user = $this->migratePasswordHashToSha512($user['id'], $password);
+            }
 
-            // Get the salt of the password
-            $salt = $this->getPasswordSalt($user['pwd']);
-            // Generate the hash for the typed in password
-            $formPasswordHash = $this->secureHelper->generateSaltedPassword($salt, $password);
-
-            if ($dbHash === $formPasswordHash) {
+            if ($user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password, 'sha512')) {
                 if ($user['login_errors'] > 0) {
                     $this->usersModel->update(['login_errors' => 0], (int)$user['id']);
                 }
 
                 if ($rememberMe === true) {
-                    $this->setCookie($username, $dbHash, 31104000);
+                    $token = $this->generateRememberMeToken($user);
+                    $this->saveRememberMeToken($user['id'], $token);
+                    $this->setCookie($user['id'], $token, self::REMEMBER_ME_COOKIE_LIFETIME);
                 }
 
                 $this->sessionHandler->secureSession();
 
-                $this->setSessionValues($username, $dbHash);
-                $this->successfulAuthentication($user);
+                $this->setSessionValues($user);
+                $this->populateUserData($this->sessionHandler->get(self::AUTH_NAME));
 
                 return 1;
             } else {
@@ -281,46 +285,40 @@ class Auth
     }
 
     /**
-     * @param string $username
-     * @param string $dbHash
+     * @param array $userData
      */
-    private function setSessionValues($username, $dbHash)
+    private function setSessionValues(array $userData)
     {
         $this->sessionHandler->set(self::AUTH_NAME, [
-            $username,
-            $dbHash
+            'id' => $userData['id'],
+            'super_user' => (bool)$userData['super_user'],
+            'entries' => $this->setUserEntriesPerPage($userData),
+            'language' => $this->setUserLanguage($userData)
         ]);
     }
 
     /**
-     * @param array $user
+     * @param array $userData
      *
      * @return int
      */
-    protected function saveFailedLoginAttempts(array $user)
+    protected function saveFailedLoginAttempts(array $userData)
     {
-        $loginErrors = $user['login_errors'] + 1;
-        $this->usersModel->update(['login_errors' => $loginErrors], (int)$user['id']);
+        $loginErrors = $userData['login_errors'] + 1;
+        $this->usersModel->update(['login_errors' => $loginErrors], (int)$userData['id']);
         return $loginErrors;
     }
 
     /**
-     * @param array $user
+     * @param array $data
      */
-    protected function successfulAuthentication(array $user)
+    protected function populateUserData(array $data)
     {
         $this->isUser = true;
-        $this->userId = (int)$user['id'];
-        $this->superUser = (bool)$user['super_user'];
-
-        $settings = $this->config->getSettings('users');
-
-        if ($settings['entries_override'] == 1 && $user['entries'] > 0) {
-            $this->entries = (int)$user['entries'];
-        }
-        if ($settings['language_override'] == 1) {
-            $this->language = $user['language'];
-        }
+        $this->userId = (int)$data['id'];
+        $this->superUser = (bool)$data['super_user'];
+        $this->entries = (int)$data['entries'];
+        $this->language = $data['language'];
     }
 
     /**
@@ -335,22 +333,89 @@ class Auth
     }
 
     /**
-     * @param string $passwordAndSalt
+     * @param array $user
      *
-     * @return string
+     * @return int
      */
-    protected function getPasswordHash($passwordAndSalt)
+    private function setUserEntriesPerPage(array $user)
     {
-        return substr($passwordAndSalt, 0, 40);
+        $userSettings = $this->config->getSettings('users');
+        $systemSettings = $this->config->getSettings('system');
+
+        if ($userSettings['entries_override'] == 1 && $user['entries'] > 0) {
+            return (int)$user['entries'];
+        }
+
+        return (int)$systemSettings['entries'];
     }
 
     /**
-     * @param string $passwordAndSalt
+     * @param array $user
      *
      * @return string
      */
-    protected function getPasswordSalt($passwordAndSalt)
+    private function setUserLanguage(array $user)
     {
-        return substr($passwordAndSalt, 41, 53);
+        $userSettings = $this->config->getSettings('users');
+        $systemSettings = $this->config->getSettings('system');
+
+        if ($userSettings['language_override'] == 1) {
+            return $user['language'];
+        }
+
+        return $systemSettings['lang'];
+    }
+
+    /**
+     * @param array $user
+     *
+     * @return string
+     */
+    protected function generateRememberMeToken(array $user)
+    {
+        return hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . uniqid(mt_rand()));
+    }
+
+    /**
+     * @param int    $userId
+     * @param string $token
+     *
+     * @return bool|int
+     */
+    private function saveRememberMeToken($userId, $token)
+    {
+        return $this->usersModel->update(['remember_me_token' => $token], $userId);
+    }
+
+    /**
+     * Migrates the old sha1 based password hash to sha512 hashes and returns the updated user information
+     *
+     * @param int    $userId
+     * @param string $password
+     *
+     * @return bool|int
+     */
+    private function migratePasswordHashToSha512($userId, $password)
+    {
+        $salt = $this->secureHelper->salt(self::SALT_LENGTH);
+        $updateValues = [
+            'pwd' => $this->secureHelper->generateSaltedPassword($salt, $password, 'sha512'),
+            'pwd_salt' => $salt
+        ];
+
+        $this->usersModel->update($updateValues, $userId);
+
+        return $this->usersModel->getOneById($userId);
+    }
+
+    /**
+     * @param string $password
+     * @param array  $user
+     *
+     * @return bool
+     */
+    protected function userHasOldPassword($password, array $user)
+    {
+        return strlen($user['pwd']) === 40 && $user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password);
     }
 }

@@ -73,6 +73,12 @@ class Migration extends Modules\Installer\AbstractMigration
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "users/logout/", "users/index/logout/") WHERE `uri` LIKE "users/logout/%";' : '',
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "users/register/", "users/index/register/") WHERE `uri` LIKE "users/register/%";' : '',
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "users/view_profile/", "users/index/view_profile/") WHERE `uri` LIKE "users/view_profile/%";' : '',
+            ],
+            40 => [
+                "ALTER TABLE `{pre}users` ADD `pwd_salt` VARCHAR(16) NOT NULL AFTER `pwd`;",
+                "UPDATE `{pre}users` SET `pwd_salt` = SUBSTRING(`pwd`, 42), `pwd` = SUBSTRING(`pwd`, 1, 40);",
+                "ALTER TABLE `{pre}users` ADD `remember_me_token` VARCHAR(128) NOT NULL AFTER `pwd_salt`;",
+                "ALTER TABLE `{pre}users` CHANGE `pwd` `pwd` VARCHAR(128) NOT NULL;",
             ]
         ];
     }
