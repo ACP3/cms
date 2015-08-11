@@ -12,7 +12,7 @@
     "acp3/module-seo": "dev-master",
     "acp3/module-system": "dev-master",
     "acp3/module-users": "dev-master",
-    "mibe/feedwriter": "1.0.1"
+    "mibe/feedwriter": "1.0.2"
   },
   "suggest": {
     "acp3/module-files": "Makes it possible to show feeds for the Downloads module.",
