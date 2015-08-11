@@ -1,4 +1,6 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ACP3/cms/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ACP3/cms/?branch=develop)
+[![Code Climate](https://codeclimate.com/github/ACP3/cms/badges/gpa.svg)](https://codeclimate.com/github/ACP3/cms)
+[![Dependency Status](https://www.versioneye.com/user/projects/55c9a66f812cc4001b000001/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55c9a66f812cc4001b000001)
 
 # ACP3 CMS
 The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP5 and MySQL. 
