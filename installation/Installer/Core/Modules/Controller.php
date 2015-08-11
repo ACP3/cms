@@ -91,7 +91,7 @@ class Controller implements ControllerInterface
         $this->view->assign('ROOT_DIR', ROOT_DIR);
         $this->view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
-        $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
+        $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
 
         $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->lang->getLanguage() . '.xml');
         $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
@@ -182,7 +182,7 @@ class Controller implements ControllerInterface
                 $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));
                 $this->view->assign('TITLE', $this->lang->t($this->request->getModule(), $this->request->getController() . '_' . $this->request->getControllerAction()));
                 $this->view->assign('CONTENT', $this->getContentAppend());
-                $this->view->assign('IS_AJAX', $this->request->getIsAjax());
+                $this->view->assign('IS_AJAX', $this->request->isAjax());
 
                 $this->view->displayTemplate($this->getTemplate());
             } else {
@@ -300,12 +300,12 @@ class Controller implements ControllerInterface
 
     private function setLanguage()
     {
-        if (!preg_match('=/=', $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '')) &&
-            is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
+        if (!preg_match('=/=', $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '')) &&
+            is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
         ) {
-            $language = $this->request->getCookie()->get('ACP3_INSTALLER_LANG', '');
+            $language = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
         } else {
-            $language = \ACP3\Core\Lang::parseAcceptLanguage();
+            $language = $this->request->getUserAgent()->parseAcceptLanguage();
         }
 
         $this->lang->setLanguage($language);

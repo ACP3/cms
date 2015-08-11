@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Core\Http;
 
-use ACP3\Core\http\Request\ParameterBag;
-
 /**
  * Interface RequestInterface
  * @package ACP3\Core\Http
@@ -22,6 +20,13 @@ interface RequestInterface
      * @return string
      */
     public function getHostname();
+
+    /**
+     * Returns the protocol with the hostname
+     *
+     * @return string
+     */
+    public function getDomain();
 
     /**
      * @return string
@@ -86,20 +91,12 @@ interface RequestInterface
     /**
      * @return bool
      */
-    public function getIsHomepage();
-
-    /**
-     * Gibt zurück, ob der aktuelle User Agent ein mobiler Browser ist, oder nicht.
-     *
-     * @return boolean
-     * @see http://detectmobilebrowsers.com/download/php
-     */
-    public function isMobileBrowser();
+    public function isHomepage();
 
     /**
      * Gibt die URI-Parameter aus
      *
-     * @return ParameterBag
+     * @return \ACP3\Core\Http\Request\ParameterBag
      */
     public function getParameters();
 
@@ -113,33 +110,33 @@ interface RequestInterface
     /**
      * @return bool
      */
-    public function getIsAjax();
+    public function isAjax();
 
     /**
      * Returns the parameter bag of the $_COOKIE superglobal
      *
-     * @return ParameterBag
+     * @return \ACP3\Core\Http\Request\CookiesParameterBag
      */
-    public function getCookie();
+    public function getCookies();
 
     /**
      * Returns the parameter bag of the uploaded files ($_FILES superglobal)
      *
-     * @return \ACP3\Core\http\Request\ParameterBag
+     * @return \ACP3\Core\Http\Request\FilesParameterBag
      */
     public function getFiles();
 
     /**
      * Returns the parameter bag of the $_POST superglobal
      *
-     * @return ParameterBag
+     * @return \ACP3\Core\Http\Request\ParameterBag
      */
     public function getPost();
 
     /**
      * Returns the parameter bag of the $_SERVER superglobal
      *
-     * @return \ACP3\Core\http\Request\ParameterBag
+     * @return \ACP3\Core\Http\Request\ParameterBag
      */
     public function getServer();
 }

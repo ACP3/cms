@@ -343,9 +343,9 @@ class Index extends Core\Modules\AdminController
             $bool = $this->usersModel->update($updateValues, $id);
 
             // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-            if ($id == $this->auth->getUserId() && $this->request->getCookie()->has(Core\Auth::AUTH_NAME)) {
+            if ($id == $this->auth->getUserId() && $this->request->getCookies()->has(Core\Auth::AUTH_NAME)) {
                 $user = $this->usersModel->getOneById($id);
-                $this->auth->setCookie(
+                $this->auth->setRememberMeCookie(
                     $id,
                     $user['remember_me_token'],
                     Core\Auth::REMEMBER_ME_COOKIE_LIFETIME

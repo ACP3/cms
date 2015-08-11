@@ -37,7 +37,7 @@ class Alerts extends \ACP3\Core\Helpers\Alerts
         $this->view->assign('error_box', ['non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors]);
         $content = $this->view->fetchTemplate('error_box.tpl');
 
-        if ($this->request->getIsAjax() === true) {
+        if ($this->request->isAjax() === true) {
             $return = [
                 'success' => false,
                 'content' => $content,

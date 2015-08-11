@@ -60,8 +60,6 @@ class Application extends AbstractApplication
     {
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
         define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
-        define('HOST_NAME', 'http://' . $_SERVER['HTTP_HOST']);
-        define('ROOT_DIR_ABSOLUTE', HOST_NAME . ROOT_DIR);
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
@@ -154,7 +152,7 @@ class Application extends AbstractApplication
     {
         define('DESIGN_PATH', ROOT_DIR . 'designs/' . $this->systemSettings['design'] . '/');
         define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . $this->systemSettings['design'] . '/');
-        define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
+        define('DESIGN_PATH_ABSOLUTE', $this->container->get('core.request')->getDomain() . DESIGN_PATH);
     }
 
     /**

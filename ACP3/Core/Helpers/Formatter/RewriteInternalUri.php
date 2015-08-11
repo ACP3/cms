@@ -14,6 +14,10 @@ class RewriteInternalUri
      */
     protected $controllerActionExists;
     /**
+     * @var \ACP3\Core\Http\Request
+     */
+    protected $request;
+    /**
      * @var \ACP3\Core\Router
      */
     protected $router;
@@ -24,16 +28,19 @@ class RewriteInternalUri
 
     /**
      * @param \ACP3\Core\Modules\Helper\ControllerActionExists $controllerActionExists
+     * @param \ACP3\Core\Http\Request                          $request
      * @param \ACP3\Core\Router                                $router
      * @param \ACP3\Core\Validator\Rules\Router\Aliases        $aliasValidator
      */
     public function __construct(
         Core\Modules\Helper\ControllerActionExists $controllerActionExists,
+        Core\Http\Request $request,
         Core\Router $router,
         Core\Validator\Rules\Router\Aliases $aliasValidator
     )
     {
         $this->controllerActionExists = $controllerActionExists;
+        $this->request = $request;
         $this->router = $router;
         $this->aliasesValidator = $aliasValidator;
     }
@@ -48,8 +55,12 @@ class RewriteInternalUri
     public function rewriteInternalUri($text)
     {
         $rootDir = str_replace('/', '\/', ROOT_DIR);
-        $host = $_SERVER['HTTP_HOST'];
-        return preg_replace_callback('/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i', [$this, "_rewriteInternalUriCallback"], $text);
+        $host = $this->request->getServer()->get('HTTP_HOST');
+        return preg_replace_callback(
+            '/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i',
+            [$this, "_rewriteInternalUriCallback"],
+            $text
+        );
     }
 
     /**

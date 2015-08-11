@@ -69,45 +69,6 @@ class Lang
     }
 
     /**
-     * Parst den ACCEPT-LANGUAGE Header des Browsers
-     * und selektiert die präferierte Sprache
-     *
-     * @return string
-     */
-    final public static function parseAcceptLanguage()
-    {
-        $languages = [];
-
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $matches = [];
-            preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
-
-            if (!empty($matches[1])) {
-                $languages = array_combine($matches[1], $matches[4]);
-
-                // Für Einträge ohne q-Faktor, Wert auf 1 setzen
-                foreach ($languages as $lang => $val) {
-                    if ($val === '') {
-                        $languages[$lang] = 1;
-                    }
-                }
-
-                // Liste nach Sprachpräferenz sortieren
-                arsort($languages, SORT_NUMERIC);
-            }
-        }
-
-        // Über die Sprachen iterieren und das passende Sprachpaket auswählen
-        foreach ($languages as $lang => $val) {
-            if (self::languagePackExists($lang) === true) {
-                return $lang;
-            }
-        }
-
-        return 'en_US';
-    }
-
-    /**
      * Gibt die aktuell eingestellte Sprache zurück
      *
      * @return string

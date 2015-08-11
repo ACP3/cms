@@ -184,14 +184,14 @@ class Date
      *
      * @return array
      */
-    protected function fetchRangeDatePickerValues($name, array $value, $format)
+    protected function fetchRangeDatePickerValues(array $name, $value, $format)
     {
         if ($this->request->getPost()->has($name[0]) && $this->request->getPost()->has($name[1])) {
             $valueStart = $this->request->getPost()->get($name[0]);
             $valueEnd = $this->request->getPost()->get($name[1]);
             $valueStartR = $this->date->format($valueStart, 'r', false);
             $valueEndR = $this->date->format($valueEnd, 'r', false);
-        } elseif ($this->dateValidator->date($value[0], $value[1]) === true) {
+        } elseif (is_array($value) && $this->dateValidator->date($value[0], $value[1]) === true) {
             $valueStart = $this->date->format($value[0], $format);
             $valueEnd = $this->date->format($value[1], $format);
             $valueStartR = $this->date->format($value[0], 'r');

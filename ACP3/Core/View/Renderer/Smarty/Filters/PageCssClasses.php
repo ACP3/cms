@@ -56,7 +56,7 @@ class PageCssClasses extends AbstractFilter
 
                 if ($this->request->getArea() === 'admin') {
                     $pieces[] = 'in-admin';
-                } elseif ($this->request->getIsHomepage() === true) {
+                } elseif ($this->request->isHomepage() === true) {
                     $pieces[] = 'is-homepage';
                 } else {
                     $pieces[] = $this->pageCssClasses->getDetails();

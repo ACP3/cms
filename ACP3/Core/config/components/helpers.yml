@@ -54,4 +54,4 @@ services:
 
   core.helpers.formatter.rewriteInternalUri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
-    arguments: [@core.modules.controllerActionsExists, '@core.router', '@core.validator.rules.router.aliases']
+    arguments: [@core.modules.controllerActionsExists, @core.request, '@core.router', '@core.validator.rules.router.aliases']

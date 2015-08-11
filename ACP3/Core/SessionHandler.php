@@ -205,7 +205,7 @@ class SessionHandler implements \SessionHandlerInterface
         $this->resetSessionData();
 
         // Session-Cookie löschen
-        if ($this->request->getCookie()->has(self::SESSION_NAME)) {
+        if ($this->request->getCookies()->has(self::SESSION_NAME)) {
             setcookie(self::SESSION_NAME, '', time() - 3600, ROOT_DIR);
         }
 

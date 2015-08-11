@@ -68,15 +68,14 @@ abstract class FrontendController extends Core\Modules\Controller
         $this->view->assign('PHP_SELF', PHP_SELF);
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
         $this->view->assign('ROOT_DIR', ROOT_DIR);
-        $this->view->assign('ROOT_DIR_ABSOLUTE', ROOT_DIR_ABSOLUTE);
-        $this->view->assign('HOST_NAME', HOST_NAME);
+        $this->view->assign('HOST_NAME', $this->request->getDomain());
+        $this->view->assign('ROOT_DIR_ABSOLUTE', $this->request->getDomain() . ROOT_DIR);
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
-        $this->view->assign('UA_IS_MOBILE', $this->request->isMobileBrowser());
+        $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
         $this->view->assign('IN_ADM', $this->request->getArea() === 'admin');
-        $this->view->assign('IS_HOMEPAGE', $this->request->getIsHomepage());
-        $this->view->assign('IS_AJAX', $this->request->getIsAjax());
-
+        $this->view->assign('IS_HOMEPAGE', $this->request->isHomepage());
+        $this->view->assign('IS_AJAX', $this->request->isAjax());
         $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
         $this->view->assign('LANG', $this->lang->getLanguage2Characters());
 

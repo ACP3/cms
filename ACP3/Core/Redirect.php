@@ -38,7 +38,7 @@ class Redirect
      */
     public function toNewPage($url)
     {
-        if ($this->request->getIsAjax() === true) {
+        if ($this->request->isAjax() === true) {
             $this->_ajax($url);
         }
 
@@ -67,7 +67,7 @@ class Redirect
     {
         $path = $this->router->route($path, true);
 
-        if ($this->request->getIsAjax() === true) {
+        if ($this->request->isAjax() === true) {
             $this->_ajax($path);
         }
 
@@ -88,7 +88,7 @@ class Redirect
      */
     private function _ajax($path)
     {
-        if ($this->request->getIsAjax() === true) {
+        if ($this->request->isAjax() === true) {
             $return = [
                 'redirect_url' => $path
             ];

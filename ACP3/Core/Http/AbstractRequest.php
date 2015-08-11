@@ -1,8 +1,10 @@
 <?php
 namespace ACP3\Core\Http;
 
+use ACP3\Core\Http\Request\CookiesParameterBag;
 use ACP3\Core\Http\Request\FilesParameterBag;
-use ACP3\Core\http\Request\ParameterBag;
+use ACP3\Core\Http\Request\ParameterBag;
+use ACP3\Core\Http\Request\UserAgent;
 
 /**
  * Class AbstractRequest
@@ -23,21 +25,25 @@ abstract class AbstractRequest implements RequestInterface
      */
     protected $isAjax;
     /**
-     * @var ParameterBag
+     * @var \ACP3\Core\Http\Request\FilesParameterBag
      */
     protected $files;
     /**
-     * @var ParameterBag
+     * @var \ACP3\Core\Http\Request\ParameterBag
      */
     protected $post;
     /**
-     * @var ParameterBag
+     * @var \ACP3\Core\Http\Request\ParameterBag
      */
     protected $server;
     /**
-     * @var ParameterBag
+     * @var \ACP3\Core\Http\Request\CookiesParameterBag
      */
-    protected $cookie;
+    protected $cookies;
+    /**
+     * @var \ACP3\Core\Http\Request\UserAgent
+     */
+    protected $userAgent;
 
     public function __construct()
     {
@@ -75,9 +81,19 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
+     * Returns the protocol with the hostname
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->protocol . $this->hostname;
+    }
+
+    /**
      * @return bool
      */
-    public function getIsAjax()
+    public function isAjax()
     {
         if ($this->isAjax === null) {
             $this->isAjax = !empty($this->server->get('HTTP_X_REQUESTED_WITH')) && strtolower($this->server->get('HTTP_X_REQUESTED_WITH', '')) == 'xmlhttprequest';
@@ -89,17 +105,17 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the $_COOKIE superglobal
      *
-     * @return ParameterBag
+     * @return \ACP3\Core\Http\Request\CookiesParameterBag
      */
-    public function getCookie()
+    public function getCookies()
     {
-        return $this->cookie;
+        return $this->cookies;
     }
 
     /**
      * Returns the parameter bag of the uploaded files ($_FILES superglobal)
      *
-     * @return \ACP3\Core\http\Request\ParameterBag
+     * @return \ACP3\Core\Http\Request\FilesParameterBag
      */
     public function getFiles()
     {
@@ -109,7 +125,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the $_POST superglobal
      *
-     * @return ParameterBag
+     * @return \ACP3\Core\Http\Request\ParameterBag
      */
     public function getPost()
     {
@@ -119,7 +135,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the $_SERVER superglobal
      *
-     * @return \ACP3\Core\http\Request\ParameterBag
+     * @return \ACP3\Core\Http\Request\ParameterBag
      */
     public function getServer()
     {
@@ -127,17 +143,25 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
+     * @return \ACP3\Core\Http\Request\UserAgent
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    /**
      * @param array $server
      * @param array $post
      * @param array $files
-     * @param array $cookie
+     * @param array $cookies
      */
-    protected function fillParameterBags(array $server, array $post, array $files, array $cookie)
+    protected function fillParameterBags(array $server, array $post, array $files, array $cookies)
     {
         $this->files = new FilesParameterBag($files);
         $this->post = new ParameterBag($post);
         $this->server = new ParameterBag($server);
-        $this->cookie = new ParameterBag($cookie);
+        $this->cookies = new CookiesParameterBag($cookies);
+        $this->userAgent = new UserAgent($this->server);
     }
-
 }

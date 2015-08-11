@@ -90,7 +90,7 @@ class Helpers
             ->setBcc($bcc)
             ->setFrom($from)
             ->setSubject($newsletter['title'])
-            ->setUrlWeb(HOST_NAME . $this->router->route('newsletter/archive/details/id_' . $newsletterId))
+            ->setUrlWeb($this->router->route('newsletter/archive/details/id_' . $newsletterId, true))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {

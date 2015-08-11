@@ -108,8 +108,8 @@ class Auth
     {
         if ($this->sessionHandler->has(self::AUTH_NAME)) {
             $this->populateUserData($this->sessionHandler->get(self::AUTH_NAME, []));
-        } elseif ($this->request->getCookie()->has(self::AUTH_NAME)) {
-            list($userId, $token) = explode('|', $this->request->getCookie()->get(self::AUTH_NAME, ''));
+        } elseif ($this->request->getCookies()->has(self::AUTH_NAME)) {
+            list($userId, $token) = explode('|', $this->request->getCookies()->get(self::AUTH_NAME, ''));
 
             if (!$this->verifyCredentials($userId, $token)) {
                 $this->logout($userId);
@@ -143,14 +143,12 @@ class Auth
      * Logs out the current user
      *
      * @param int $userId
-     *
-     * @return bool
      */
     public function logout($userId = 0)
     {
         $this->saveRememberMeToken($userId, '');
         $this->sessionHandler->destroy(session_id());
-        return $this->setCookie(0, '', -50400);
+        $this->setRememberMeCookie(0, '', -1 * self::REMEMBER_ME_COOKIE_LIFETIME);
     }
 
     /**
@@ -162,11 +160,15 @@ class Auth
      *
      * @return bool
      */
-    public function setCookie($userId, $token, $expiry)
+    public function setRememberMeCookie($userId, $token, $expiry)
     {
-        $value = $userId . '|' . $token;
-        $expiry = time() + $expiry;
-        return setcookie(self::AUTH_NAME, $value, $expiry, ROOT_DIR, $this->getCookieDomain());
+        $this->request->getCookies()->set(
+            self::AUTH_NAME,
+            $userId . '|' . $token,
+            time() + $expiry,
+            ROOT_DIR,
+            $this->getCookieDomain()
+        );
     }
 
     /**
@@ -266,7 +268,7 @@ class Auth
                 if ($rememberMe === true) {
                     $token = $this->generateRememberMeToken($user);
                     $this->saveRememberMeToken($user['id'], $token);
-                    $this->setCookie($user['id'], $token, self::REMEMBER_ME_COOKIE_LIFETIME);
+                    $this->setRememberMeCookie($user['id'], $token, self::REMEMBER_ME_COOKIE_LIFETIME);
                 }
 
                 $this->sessionHandler->secureSession();

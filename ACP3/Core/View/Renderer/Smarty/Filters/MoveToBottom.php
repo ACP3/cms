@@ -55,7 +55,7 @@ class MoveToBottom extends AbstractFilter
             $tpl_output = preg_replace($pattern, '', $tpl_output);
 
             $minifyJs = '';
-            if (!$this->request->getIsAjax()) {
+            if (!$this->request->isAjax()) {
                 $minifyJs = '<script type="text/javascript" src="' . $this->minifier->getURI() . '"></script>' . "\n";
             }
 

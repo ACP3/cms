@@ -137,14 +137,14 @@ class Alerts
      */
     public function errorBox($errors, $contentOnly = true)
     {
-        if ($this->request->getIsAjax() === true) {
+        if ($this->request->isAjax() === true) {
             $contentOnly = true;
         }
 
         $this->view->assign('CONTENT_ONLY', $contentOnly);
         $content = $this->view->fetchTemplate($this->errorBoxContent($errors));
 
-        if ($this->request->getIsAjax() === true) {
+        if ($this->request->isAjax() === true) {
             $return = [
                 'success' => false,
                 'content' => $content,

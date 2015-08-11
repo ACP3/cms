@@ -175,7 +175,7 @@ class Account extends Core\Modules\FrontendController
                 $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
 
                 $user = $this->usersModel->getOneById($this->auth->getUserId());
-                $this->auth->setCookie(
+                $this->auth->setRememberMeCookie(
                     $this->auth->getUserId(),
                     $user['remember_me_token'],
                     Core\Auth::REMEMBER_ME_COOKIE_LIFETIME
