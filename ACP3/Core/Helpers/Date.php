@@ -110,9 +110,7 @@ class Date
      *
      * @param string|array $name
      * @param string|array $value
-     * @param string       $format
-     * @param array        $params
-     * @param bool         $withTime
+     * @param bool         $showTime
      * @param bool         $inputFieldOnly
      *
      * @return array
@@ -120,27 +118,21 @@ class Date
     public function datepicker(
         $name,
         $value = '',
-        $format = 'Y-m-d H:i',
-        array $params = [],
-        $withTime = true,
+        $showTime = true,
         $inputFieldOnly = false
     )
     {
         $datePicker = [
             'range' => $this->isRange($name),
-            'with_time' => (bool)$withTime,
-            'length' => $withTime === true ? 16 : 10,
+            'with_time' => (bool)$showTime,
+            'length' => $showTime === true ? 16 : 10,
             'input_only' => (bool)$inputFieldOnly,
             'params' => [
-                'format' => $this->getPickerDateFormat($withTime),
+                'format' => $this->getPickerDateFormat($showTime),
                 'changeMonth' => 'true',
                 'changeYear' => 'true',
             ]
         ];
-
-        if (!empty($params)) {
-            $datePicker['params'] = array_merge($datePicker['params'], $params);
-        }
 
         if ($this->isRange($name) === true) {
             $datePicker['name_start'] = $name[0];
@@ -148,7 +140,7 @@ class Date
             $datePicker['id_start'] = $this->getInputId($name[0]);
             $datePicker['id_end'] = $this->getInputId($name[1]);
 
-            $datePicker = array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $format));
+            $datePicker = array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
 
             $datePicker['range_json'] = json_encode(
                 [
@@ -161,7 +153,7 @@ class Date
         } else { // Einfaches Inputfeld mit Datepicker
             $datePicker['name'] = $name;
             $datePicker['id'] = $this->getInputId($name);
-            $datePicker['value'] = $this->fetchSimpleDatePickerValue($name, $value, $format);
+            $datePicker['value'] = $this->fetchSimpleDatePickerValue($name, $value, $showTime);
         }
 
         return $datePicker;
@@ -178,13 +170,13 @@ class Date
     }
 
     /**
-     * @param array  $name
-     * @param array  $value
-     * @param string $format
+     * @param array $name
+     * @param array $value
+     * @param bool  $showTime
      *
      * @return array
      */
-    protected function fetchRangeDatePickerValues(array $name, $value, $format)
+    protected function fetchRangeDatePickerValues(array $name, $value, $showTime)
     {
         if ($this->request->getPost()->has($name[0]) && $this->request->getPost()->has($name[1])) {
             $valueStart = $this->request->getPost()->get($name[0]);
@@ -192,13 +184,13 @@ class Date
             $valueStartR = $this->date->format($valueStart, 'r', false);
             $valueEndR = $this->date->format($valueEnd, 'r', false);
         } elseif (is_array($value) && $this->dateValidator->date($value[0], $value[1]) === true) {
-            $valueStart = $this->date->format($value[0], $format);
-            $valueEnd = $this->date->format($value[1], $format);
+            $valueStart = $this->date->format($value[0], $this->getDateFormat($showTime));
+            $valueEnd = $this->date->format($value[1], $this->getDateFormat($showTime));
             $valueStartR = $this->date->format($value[0], 'r');
             $valueEndR = $this->date->format($value[1], 'r');
         } else {
-            $valueStart = $this->date->format('now', $format, false);
-            $valueEnd = $this->date->format('now', $format, false);
+            $valueStart = $this->date->format('now', $this->getDateFormat($showTime), false);
+            $valueEnd = $this->date->format('now', $this->getDateFormat($showTime), false);
             $valueStartR = $this->date->format('now', 'r', false);
             $valueEndR = $this->date->format('now', 'r', false);
         }
@@ -214,29 +206,29 @@ class Date
     /**
      * @param string $name
      * @param string $value
-     * @param string $format
+     * @param bool $showTime
      *
      * @return string
      */
-    protected function fetchSimpleDatePickerValue($name, $value, $format)
+    protected function fetchSimpleDatePickerValue($name, $value, $showTime)
     {
         if ($this->request->getPost()->has($name)) {
             return $this->request->getPost()->get($name, '');
         } elseif ($this->dateValidator->date($value) === true) {
-            return $this->date->format($value, $format);
+            return $this->date->format($value, $this->getDateFormat($showTime));
         }
 
-        return $this->date->format('now', $format, false);
+        return $this->date->format('now', $this->getDateFormat($showTime), false);
     }
 
     /**
-     * @param bool $withTime
+     * @param bool $showTime
      *
      * @return string
      */
-    protected function getPickerDateFormat($withTime)
+    protected function getPickerDateFormat($showTime)
     {
-        return 'YYYY-MM-DD' . ($withTime === true ? ' HH:mm' : '');
+        return 'YYYY-MM-DD' . ($showTime === true ? ' HH:mm' : '');
     }
 
     /**
@@ -247,6 +239,16 @@ class Date
     protected function isRange($name)
     {
         return (is_array($name) === true);
+    }
+
+    /**
+     * @param bool $showTime
+     *
+     * @return string
+     */
+    protected function getDateFormat($showTime)
+    {
+        return $showTime === true ? \ACP3\Core\Date::DEFAULT_DATE_FORMAT_LONG : \ACP3\Core\Date::DEFAULT_DATE_FORMAT_SHORT;
     }
 
 }

@@ -8,6 +8,10 @@ namespace ACP3\Core;
  */
 class Date
 {
+    const DEFAULT_DATE_FORMAT_LONG = 'Y-m-d H:i';
+    const DEFAULT_DATE_FORMAT_FULL = 'Y-m-d H:i:s';
+    const DEFAULT_DATE_FORMAT_SHORT = 'Y-m-d';
+
     /**
      * @var string
      */
@@ -264,7 +268,7 @@ class Date
      */
     public function getCurrentDateTime($isLocalTime = false)
     {
-        return $this->format('now', 'Y-m-d H:i:s', true, $isLocalTime);
+        return $this->format('now', self::DEFAULT_DATE_FORMAT_FULL, true, $isLocalTime);
     }
 
     /**
@@ -276,7 +280,7 @@ class Date
      */
     public function toSQL($value = '')
     {
-        return $this->format(empty($value) === true ? 'now' : $value, 'Y-m-d H:i:s', true, false);
+        return $this->format(empty($value) === true ? 'now' : $value, self::DEFAULT_DATE_FORMAT_FULL, true, false);
     }
 
     /**
@@ -289,6 +293,6 @@ class Date
      */
     public function timestampToDateTime($value, $isLocalTime = false)
     {
-        return $this->format($value, 'Y-m-d H:i:s', true, $isLocalTime);
+        return $this->format($value, self::DEFAULT_DATE_FORMAT_FULL, true, $isLocalTime);
     }
 }

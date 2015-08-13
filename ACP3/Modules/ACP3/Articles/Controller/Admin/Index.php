@@ -112,17 +112,17 @@ class Index extends Core\Modules\AdminController
             $this->_createPost($this->request->getPost()->getAll());
         }
 
-        if ($this->acl->hasPermission('admin/menus/items/create') === true && $this->menusHelpers) {
+        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
             $lang_options = [$this->lang->t('articles', 'create_menu_item')];
             $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $lang_options, 0));
             $this->view->assign($this->menusHelpers->createMenuItemFormFields());
         }
 
-        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
-
         $defaults = [
             'title' => '',
-            'text' => ''
+            'text' => '',
+            'start' => '',
+            'end' => ''
         ];
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
@@ -217,10 +217,7 @@ class Index extends Core\Modules\AdminController
                 $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
-            if ($this->acl->hasPermission('admin/menus/items/create') === true &&
-                $this->menusHelpers &&
-                $this->menusModel
-            ) {
+            if ($this->acl->hasPermission('admin/menus/items/create') === true) {
                 $menuItem = $this->menusModel->getOneMenuItemByUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
 
                 $lang_options = [$this->lang->t('articles', 'create_menu_item')];
@@ -236,9 +233,6 @@ class Index extends Core\Modules\AdminController
                     )
                 );
             }
-
-            // Datumsauswahl
-            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$article['start'], $article['end']]));
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)));
 

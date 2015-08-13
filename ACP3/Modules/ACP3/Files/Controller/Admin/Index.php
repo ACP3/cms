@@ -90,9 +90,6 @@ class Index extends Core\Modules\AdminController
             $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
-        // Datumsauswahl
-        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
-
         $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
         $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''));
 
@@ -115,6 +112,8 @@ class Index extends Core\Modules\AdminController
             'file_external' => '',
             'filesize' => '',
             'text' => '',
+            'start' => '',
+            'end' => ''
         ];
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
@@ -173,9 +172,6 @@ class Index extends Core\Modules\AdminController
             if ($this->request->getPost()->isEmpty() === false) {
                 $this->_editPost($this->request->getPost()->getAll(), $settings, $file, $id);
             }
-
-            // Datumsauswahl
-            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$file['start'], $file['end']]));
 
             $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
             $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($file['size'], ' '))));

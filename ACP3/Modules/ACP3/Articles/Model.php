@@ -28,7 +28,7 @@ class Model extends Core\Model
     public function resultExists($id, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period, ['id' => $id, 'time' => $time]) > 0;
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}", ['id' => $id, 'time' => $time]) > 0;
     }
 
     /**
@@ -38,7 +38,7 @@ class Model extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$id]);
     }
 
     /**
@@ -62,7 +62,7 @@ class Model extends Core\Model
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY title ASC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}{$where} ORDER BY title ASC{$limitStmt}", ['time' => $time]);
     }
 
     /**
@@ -76,7 +76,7 @@ class Model extends Core\Model
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}{$where} ORDER BY `start` DESC{$limitStmt}", ['time' => $time]);
     }
 
 
@@ -85,7 +85,7 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY title ASC');
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY title ASC");
     }
 
     /**
@@ -98,7 +98,9 @@ class Model extends Core\Model
      */
     public function getAllSearchResults($fields, $searchTerm, $sort, $time)
     {
-        $period = ' AND ' . $this->_getPeriod();
-        return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->getTableName() . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY START ' . $sort . ', END ' . $sort . ', title ' . $sort, ['time' => $time]);
+        return $this->db->fetchAll(
+            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->_getPeriod()} ORDER BY START {$sort}, END {$sort}, title {$sort}",
+            ['time' => $time]
+        );
     }
 }

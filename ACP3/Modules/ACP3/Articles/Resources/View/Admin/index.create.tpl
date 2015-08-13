@@ -13,7 +13,7 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    {include file="asset:system/datepicker.tpl" datepicker=$publication_period}
+                    {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">

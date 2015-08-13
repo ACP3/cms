@@ -70,13 +70,12 @@ class Index extends Core\Modules\AdminController
             $this->_createPost($this->request->getPost()->getAll());
         }
 
-        // Datumsauswahl
-        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
-
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
         $defaults = [
             'title' => '',
+            'start' => '',
+            'end' => ''
         ];
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
@@ -134,7 +133,6 @@ class Index extends Core\Modules\AdminController
             }
 
             $this->view->assign('gallery_id', $id);
-            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$gallery['start'], $gallery['end']]));
             $this->view->assign('form', array_merge($gallery, $this->request->getPost()->getAll()));
 
             $this->_actionEditPictures();

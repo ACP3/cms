@@ -186,7 +186,7 @@ class Forms
     public function fetchUserProfileFormFields($birthday = '', $country = '', $gender = 1)
     {
         return [
-            'birthday_datepicker' => $this->fetchBirthdayDatepicker($birthday),
+            'birthday' => $birthday,
             'countries' => $this->generateWorldCountriesSelect($country),
             'gender' => $this->fetchGenderField($gender),
         ];
@@ -205,22 +205,6 @@ class Forms
             $this->lang->t('users', 'gender_male')
         ];
         return $this->formsHelpers->selectGenerator('gender', [1, 2, 3], $lang_gender, $value);
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return array
-     */
-    protected function fetchBirthdayDatepicker($value)
-    {
-        $datepickerParams = [
-            'constrainInput' => 'true',
-            'changeMonth' => 'true',
-            'changeYear' => 'true',
-            'yearRange' => "'-50:+0'"
-        ];
-        return $this->dateHelpers->datepicker('birthday', $value, 'Y-m-d', $datepickerParams, false, true);
     }
 
 }

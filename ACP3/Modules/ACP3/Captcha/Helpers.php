@@ -63,7 +63,6 @@ class Helpers
      * Erzeugt das Captchafeld für das Template
      *
      * @param integer $captchaLength
-     *  Anzahl der Zeichen, welche das Captcha haben soll
      * @param string  $id
      * @param bool    $inputOnly
      * @param string  $path

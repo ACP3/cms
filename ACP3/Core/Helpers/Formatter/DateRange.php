@@ -34,7 +34,7 @@ class DateRange
     }
 
     /**
-     * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
+     * Gibt die Formularfelder fï¿½r den Verï¿½ffentlichungszeitraum aus
      *
      * @param string $start
      * @param string $end
@@ -44,17 +44,16 @@ class DateRange
      */
     public function formatTimeRange($start, $end = '', $format = 'long')
     {
-        $datetimeFormat = 'Y-m-d H:i';
         if ($end === '' || $start >= $end) {
             if ($end === '') {
                 $title = $this->date->format($start, $format);
             } else {
                 $title = sprintf($this->lang->t('system', 'date_published_since'), $this->date->format($start, $format));
             }
-            return '<time datetime="' . $start . '" title="' . $title . '">' . $this->date->format($start, $datetimeFormat) . '</time>';
+            return '<time datetime="' . $start . '" title="' . $title . '">' . $this->date->format($start, Date::DEFAULT_DATE_FORMAT_LONG) . '</time>';
         } else {
             $title = sprintf($this->lang->t('system', 'date_time_range'), $this->date->format($start, $format), $this->date->format($end, $format));
-            return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->date->format($start, $datetimeFormat) . '&ndash;' . $this->date->format($end, $datetimeFormat) . '</time>';
+            return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->date->format($start, Date::DEFAULT_DATE_FORMAT_LONG) . '&ndash;' . $this->date->format($end, $datetimeFormat) . '</time>';
         }
     }
 

@@ -90,9 +90,6 @@ class Index extends Core\Modules\AdminController
             $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
-        // Datumsauswahl
-        $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end']));
-
         // Kategorien
         $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', '', true));
 
@@ -126,7 +123,9 @@ class Index extends Core\Modules\AdminController
             'title' => '',
             'text' => '',
             'uri' => '',
-            'link_title' => ''
+            'link_title' => '',
+            'start' => '',
+            'end' => ''
         ];
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
@@ -178,9 +177,6 @@ class Index extends Core\Modules\AdminController
             if ($this->request->getPost()->isEmpty() === false) {
                 $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
-
-            // Datumsauswahl
-            $this->view->assign('publication_period', $this->get('core.helpers.date')->datepicker(['start', 'end'], [$news['start'], $news['end']]));
 
             // Kategorien
             $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $news['category_id'], true));

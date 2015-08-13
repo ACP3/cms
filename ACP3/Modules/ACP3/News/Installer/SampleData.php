@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Modules\ACP3\News\Installer;
 
+use ACP3\Core\Date;
 use ACP3\Core\Modules\Installer\AbstractSampleData;
 
 /**
@@ -15,7 +16,7 @@ class SampleData extends AbstractSampleData
      */
     public function sampleData()
     {
-        $currentDate = gmdate('Y-m-d H:i:s');
+        $currentDate = gmdate(Date::DEFAULT_DATE_FORMAT_FULL);
         $lang = $this->schemaHelper->getContainer()->get('core.lang');
 
         return [

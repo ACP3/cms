@@ -7,6 +7,10 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateFormat
     arguments: ['@core.date']
 
+  smarty.plugin.date_picker:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Datepicker
+    arguments: [@core.view, @core.helpers.date]
+
   smarty.plugin.date_ramge:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
     arguments: [@core.helpers.formatter.dateRange]
