@@ -101,7 +101,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _indexPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function() use ($formData) {
                 $seoSettings = $this->config->getSettings('seo');
                 $settings = $this->config->getSettings('contact');

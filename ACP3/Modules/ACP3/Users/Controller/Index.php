@@ -221,7 +221,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _forgotPasswordPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function() use ($formData) {
                 $this->usersValidator->validateForgotPassword($formData);
 
@@ -275,7 +275,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _registerPost(array $formData, array $settings)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function() use ($formData, $settings) {
                 $this->usersValidator->validateRegistration($formData);
 

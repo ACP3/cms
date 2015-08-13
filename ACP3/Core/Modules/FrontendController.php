@@ -28,6 +28,11 @@ abstract class FrontendController extends Core\Modules\Controller
      */
     protected $redirectMessages;
     /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    protected $actionHelper;
+
+    /**
      * Der auszugebende Content-Type der Seite
      *
      * @var string
@@ -44,6 +49,7 @@ abstract class FrontendController extends Core\Modules\Controller
         $this->assets = $frontendContext->getAssets();
         $this->breadcrumb = $frontendContext->getBreadcrumb();
         $this->seo = $frontendContext->getSeo();
+        $this->actionHelper = $frontendContext->getActionHelper();
     }
 
     /**

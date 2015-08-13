@@ -94,7 +94,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function ($items) {
                 $bool = $bool2 = $bool3 = false;
@@ -199,7 +200,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handleCreatePostAction(function () use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->pollsValidator->validateCreate($formData);
 
             $insertValues = [
@@ -239,7 +240,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->handleEditPostAction(function () use ($formData, $id) {
+        $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->pollsValidator->validateEdit($formData);
 
             $updateValues = [

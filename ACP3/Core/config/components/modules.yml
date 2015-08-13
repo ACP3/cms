@@ -11,12 +11,12 @@ services:
 
   core.context.frontend:
     class: ACP3\Core\Modules\Controller\FrontendContext
-    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo']
+    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo', @core.modules.helper.action]
     public: false
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@service_container', @core.modules.controllerActionsExists, @core.modules.moduleInfoCache, @core.modules.vendors]
+    arguments: ['@service_container', @core.modules.helper.controllerActionExists, @core.modules.moduleInfoCache, @core.modules.vendors]
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
@@ -34,7 +34,11 @@ services:
     abstract: true
     arguments: ['@core.context.admin']
 
-  core.modules.controllerActionsExists:
+  core.modules.helper.action:
+    class: ACP3\Core\Modules\Helper\Action
+    arguments: [@core.lang, @core.request, @core.router, @core.view, @core.helpers.alerts, @core.helpers.redirect]
+
+  core.modules.helper.controllerActionExists:
     class: ACP3\Core\Modules\Helper\ControllerActionExists
     arguments: [@service_container]
 

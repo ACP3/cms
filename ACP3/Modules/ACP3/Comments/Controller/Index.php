@@ -214,7 +214,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _createPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
 

@@ -66,7 +66,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
@@ -98,7 +98,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -149,7 +150,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $emoticon, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $emoticon, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $emoticon, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateEdit($formData, $file, $this->config->getSettings('emoticons'));
@@ -211,7 +212,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function() use ($formData){
+        $this->actionHelper->handleSettingsPostAction(function() use ($formData){
             $this->emoticonsValidator->validateSettings($formData);
 
             $data = [

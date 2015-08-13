@@ -118,7 +118,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleCustomDeleteAction(
+        $this->actionHelper->handleCustomDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = $isAdminUser = $selfDelete = false;
@@ -249,7 +250,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost($formData)
     {
-        $this->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $this->usersValidator->validate($formData);
 
             $salt = $this->secureHelper->salt(15);
@@ -301,7 +302,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
             $this->usersValidator->validate($formData, $id);
 
             $updateValues = [
@@ -363,7 +364,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function () use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->usersValidator->validateSettings($formData);
 
             $data = [

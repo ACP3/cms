@@ -75,7 +75,8 @@ class Details extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleCustomDeleteAction(
+        $this->actionHelper->handleCustomDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -190,7 +191,7 @@ class Details extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $comment, $id)
     {
-        $this->handleEditPostAction(function () use ($formData, $comment, $id) {
+        $this->actionHelper->handleEditPostAction(function () use ($formData, $comment, $id) {
             $this->commentsValidator->validateEdit($formData);
 
             $updateValues = [];

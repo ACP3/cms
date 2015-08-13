@@ -175,7 +175,7 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected function _sqlExportPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->systemValidator->validateSqlExport($formData);
 
@@ -204,7 +204,7 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected function _sqlImportPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $file = $this->request->getFiles()->get('file');
 

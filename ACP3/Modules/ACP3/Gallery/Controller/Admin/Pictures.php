@@ -116,7 +116,8 @@ class Pictures extends Core\Modules\AdminController
      */
     public function actionDelete($id, $action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function ($items) {
                 $bool = false;
@@ -207,7 +208,7 @@ class Pictures extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings, $id)
     {
-        $this->handleCreatePostAction(
+        $this->actionHelper->handleCreatePostAction(
             function () use ($formData, $settings, $id) {
                 $file = $this->request->getFiles()->get('file');
 
@@ -247,7 +248,7 @@ class Pictures extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, array $picture, $id)
     {
-        $this->handleEditPostAction(
+        $this->actionHelper->handleEditPostAction(
             function () use ($formData, $settings, $picture, $id) {
                 $file = $this->request->getFiles()->get('file');
 

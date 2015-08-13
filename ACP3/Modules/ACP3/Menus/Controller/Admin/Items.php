@@ -127,7 +127,8 @@ class Items extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -230,7 +231,7 @@ class Items extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->menusValidator->validateItem($formData);
 
@@ -290,7 +291,7 @@ class Items extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $menuItem, $id)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData, $menuItem, $id) {
                 $this->menusValidator->validateItem($formData);
 

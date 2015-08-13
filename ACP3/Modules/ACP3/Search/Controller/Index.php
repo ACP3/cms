@@ -112,7 +112,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _indexPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 if (isset($formData['search_term']) === true) {
                     if (isset($formData['mods']) === false) {

@@ -144,7 +144,7 @@ class Account extends Core\Modules\FrontendController
      */
     protected function _editPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->usersValidator->validateEditProfile($formData);
 
@@ -194,7 +194,7 @@ class Account extends Core\Modules\FrontendController
      */
     protected function _settingsPost(array $formData, array $settings)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData, $settings) {
                 $this->usersValidator->validateUserSettings($formData, $settings);
 

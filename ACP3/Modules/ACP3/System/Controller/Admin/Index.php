@@ -122,7 +122,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _configurationPost(array $formData)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->systemValidator->validateSettings($formData);
 

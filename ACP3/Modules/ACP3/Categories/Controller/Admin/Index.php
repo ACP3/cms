@@ -76,7 +76,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
@@ -111,7 +111,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleCustomDeleteAction(
+        $this->actionHelper->handleCustomDeleteAction(
+            $this,
             $action,
             function ($items) {
                 $bool = false;
@@ -181,7 +182,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $category, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $category, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $category, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $id);
@@ -249,7 +250,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function () use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->categoriesValidator->validateSettings($formData);
 
             $data = [

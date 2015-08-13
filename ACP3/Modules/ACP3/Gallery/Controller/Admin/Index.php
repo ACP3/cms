@@ -85,7 +85,8 @@ class Index extends Core\Modules\AdminController
 
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = $bool2 = false;
@@ -212,7 +213,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $this->galleryValidator->validate($formData);
 
             $insertValues = [
@@ -245,7 +246,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
             $this->galleryValidator->validate(
                 $formData,
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
@@ -281,7 +282,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData, array $settings)
     {
-        $this->handleSettingsPostAction(function () use ($formData, $settings) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData, $settings) {
             $this->galleryValidator->validateSettings($formData);
 
             $data = [

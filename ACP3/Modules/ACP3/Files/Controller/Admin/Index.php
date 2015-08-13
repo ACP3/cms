@@ -131,7 +131,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -249,7 +250,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->handleCreatePostAction(function() use ($formData, $settings) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData, $settings) {
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {
@@ -307,7 +308,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, array $dl, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $settings, $dl, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $settings, $dl, $id) {
             $file = [];
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
@@ -374,7 +375,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function () use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->filesValidator->validateSettings($formData);
 
             $data = [

@@ -2,7 +2,6 @@
 namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Controller\Context;
 
 /**
  * Class FrontendContext
@@ -22,18 +21,24 @@ class FrontendContext extends Core\Modules\Controller\Context
      * @var \ACP3\Core\SEO
      */
     protected $seo;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    protected $actionHelper;
 
     /**
      * @param \ACP3\Core\Modules\Controller\Context $context
      * @param \ACP3\Core\Assets                     $assets
      * @param \ACP3\Core\Breadcrumb                 $breadcrumb
      * @param \ACP3\Core\SEO                        $seo
+     * @param \ACP3\Core\Modules\Helper\Action      $actionHelper
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Core\Assets $assets,
         Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo
+        Core\SEO $seo,
+        Core\Modules\Helper\Action $actionHelper
     )
     {
         parent::__construct(
@@ -50,6 +55,7 @@ class FrontendContext extends Core\Modules\Controller\Context
         $this->assets = $assets;
         $this->breadcrumb = $breadcrumb;
         $this->seo = $seo;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -74,5 +80,13 @@ class FrontendContext extends Core\Modules\Controller\Context
     public function getSeo()
     {
         return $this->seo;
+    }
+
+    /**
+     * @return Core\Modules\Helper\Action
+     */
+    public function getActionHelper()
+    {
+        return $this->actionHelper;
     }
 }

@@ -74,7 +74,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function ($items) {
                 $bool = false;
@@ -197,7 +198,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->handleEditPostAction(function () use ($formData, $settings, $id) {
+        $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
             $this->guestbookValidator->validateEdit($formData, $settings);
 
             $updateValues = [
@@ -219,7 +220,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function () use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->guestbookValidator->validateSettings($formData);
 
             $data = [

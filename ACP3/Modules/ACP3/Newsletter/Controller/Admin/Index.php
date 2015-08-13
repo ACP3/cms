@@ -85,7 +85,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -203,7 +204,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->handlePostAction(function() use ($formData, $settings) {
+        $this->actionHelper->handlePostAction(function() use ($formData, $settings) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -245,7 +246,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->handlePostAction(function() use ($formData, $settings, $id) {
+        $this->actionHelper->handlePostAction(function() use ($formData, $settings, $id) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -283,7 +284,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function () use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->newsletterValidator->validateSettings($formData);
 
             $data = [

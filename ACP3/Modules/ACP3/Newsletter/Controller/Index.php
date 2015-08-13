@@ -121,7 +121,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected function _indexPost(array $formData, $action)
     {
-        $this->handlePostAction(
+        $this->actionHelper->handlePostAction(
             function() use ($formData, $action) {
                 switch ($action) {
                     case 'subscribe':

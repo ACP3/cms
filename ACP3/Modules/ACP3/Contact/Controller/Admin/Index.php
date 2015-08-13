@@ -54,7 +54,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _indexPost(array $formData)
     {
-        $this->handleSettingsPostAction(function () use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->contactValidator->validateSettings($formData);
 
             $data = [

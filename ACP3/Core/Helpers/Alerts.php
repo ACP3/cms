@@ -41,14 +41,14 @@ class Alerts
     /**
      * Displays a confirm box
      *
-     * @param string           $text
-     * @param int|string|array $forward
-     * @param int|string       $backward
-     * @param integer          $overlay
+     * @param string       $text
+     * @param string|array $forward
+     * @param string       $backward
+     * @param integer      $overlay
      *
      * @return string
      */
-    public function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
+    public function confirmBox($text, $forward = '', $backward = '', $overlay = 0)
     {
         if (!empty($text)) {
             $confirm = [
@@ -70,14 +70,14 @@ class Alerts
     /**
      * Displays a confirm box, where the forward button triggers a form submit using POST
      *
-     * @param       $text
-     * @param array $data
-     * @param       $forward
-     * @param int   $backward
+     * @param string $text
+     * @param array  $data
+     * @param string $forward
+     * @param string $backward
      *
      * @return string
      */
-    public function confirmBoxPost($text, array $data, $forward, $backward = 0)
+    public function confirmBoxPost($text, array $data, $forward, $backward = '')
     {
         if (!empty($text) && !empty($data)) {
             $confirm = [
@@ -97,7 +97,7 @@ class Alerts
     }
 
     /**
-     * @param $errors
+     * @param string|array $errors
      */
     protected function _setErrorBoxData($errors)
     {

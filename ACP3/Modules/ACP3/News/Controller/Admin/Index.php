@@ -140,7 +140,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -271,7 +272,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->handleCreatePostAction(function() use ($formData, $settings) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData, $settings) {
             $this->newsValidator->validate($formData);
 
             $insertValues = [
@@ -312,7 +313,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $settings, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $settings, $id) {
             $this->newsValidator->validate(
                 $formData,
                 sprintf(News\Helpers::URL_KEY_PATTERN, $id)
@@ -355,7 +356,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function () use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->newsValidator->validateSettings($formData);
 
             $data = [

@@ -70,7 +70,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -136,7 +137,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $this->seoValidator->validate($formData);
 
             $bool = $this->seo->insertUriAlias(
@@ -160,7 +161,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $path, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $path, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $path, $id) {
             $this->seoValidator->validate($formData, $path);
 
             $updateValues = [
@@ -212,7 +213,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        $this->handleSettingsPostAction(function() use ($formData) {
+        $this->actionHelper->handleSettingsPostAction(function() use ($formData) {
             $this->seoValidator->validateSettings($formData);
 
             // Config aktualisieren

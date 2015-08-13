@@ -81,7 +81,8 @@ class Resources extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->handleDeleteAction(
+        $this->actionHelper->handleDeleteAction(
+            $this,
             $action,
             function($items) {
                 $bool = false;
@@ -152,7 +153,7 @@ class Resources extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $this->permissionsValidator->validateResource($formData);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
@@ -181,7 +182,7 @@ class Resources extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->handleEditPostAction(function() use ($formData, $id) {
+        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
             $this->permissionsValidator->validateResource($formData);
 
             $updateValues = [
