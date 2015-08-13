@@ -60,8 +60,8 @@ class Index extends Core\Modules\AdminController
             $answers = $this->addNewAnswer($this->request->getPost()->get('answers', []));
         } else {
             $answers = [
-                ['number' => 0, 'value' => ''],
-                ['number' => 1, 'value' => '']
+                ['text' => ''],
+                ['text' => '']
             ];
         }
 
@@ -124,12 +124,6 @@ class Index extends Core\Modules\AdminController
                 $answers = $this->addNewAnswer($this->request->getPost()->get('answers', []));
             } else {
                 $answers = $this->pollsModel->getAnswersByPollId($id);
-                $c_answers = count($answers);
-
-                for ($i = 0; $i < $c_answers; ++$i) {
-                    $answers[$i]['number'] = $i;
-                    $answers[$i]['value'] = $answers[$i]['text'];
-                }
             }
             $this->view->assign('answers', $answers);
 
@@ -247,18 +241,16 @@ class Index extends Core\Modules\AdminController
         // Bisherige Antworten
         $i = 0;
         foreach ($currentAnswers as $row) {
-            $answers[$i]['number'] = $i;
             if (isset($row['id'])) {
                 $answers[$i]['id'] = $row['id'];
             }
-            $answers[$i]['value'] = $row['value'];
+            $answers[$i]['text'] = $row['text'];
             ++$i;
         }
 
         // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-        if (!empty($currentAnswers[$i - 1]['value'])) {
-            $answers[$i]['number'] = $i;
-            $answers[$i]['value'] = '';
+        if (!empty($currentAnswers[$i - 1]['text'])) {
+            $answers[$i]['text'] = '';
         }
 
         return $answers;
@@ -277,18 +269,18 @@ class Index extends Core\Modules\AdminController
             // Neue Antwort hinzufügen
             if (empty($row['id'])) {
                 // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
-                if (!empty($row['value']) && !isset($row['delete'])) {
+                if (!empty($row['text']) && !isset($row['delete'])) {
                     $bool = $this->pollsModel->insert(
-                        ['text' => Core\Functions::strEncode($row['value']), 'poll_id' => $id],
+                        ['text' => Core\Functions::strEncode($row['text']), 'poll_id' => $id],
                         Polls\Model::TABLE_NAME_ANSWERS
                     );
                 }
             } elseif (isset($row['delete'])) { // Antwort mitsamt Stimmen löschen
                 $this->pollsModel->delete((int) $row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
                 $this->pollsModel->delete((int) $row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
-            } elseif (!empty($row['value'])) { // Antwort aktualisieren
+            } elseif (!empty($row['text'])) { // Antwort aktualisieren
                 $bool = $this->pollsModel->update(
-                    ['text' => Core\Functions::strEncode($row['value'])],
+                    ['text' => Core\Functions::strEncode($row['text'])],
                     (int) $row['id'],
                     Polls\Model::TABLE_NAME_ANSWERS
                 );

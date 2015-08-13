@@ -24,19 +24,19 @@
                     </div>
                     {foreach $answers as $row}
                         <div class="form-group">
-                            <label for="answer-{$row.number}" class="col-sm-2 control-label">{lang t="polls|answer"} {$row.number+1}</label>
+                            <label for="answer-{$row@index}" class="col-sm-2 control-label">{lang t="polls|answer"} {$row@index+1}</label>
 
                             <div class="col-sm-10">
                                 {if isset($row.id)}
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="answers[{$row.number}][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
+                                        <input class="form-control" type="text" name="answers[{$row@index}][text]" id="answer-{$row@index}" value="{$row.text}" maxlength="120">
                                         <div class="input-group-addon">
-                                            <input type="checkbox" name="answers[{$row.number}][delete]" value="1">
+                                            <input type="checkbox" name="answers[{$row@index}][delete]" value="1">
                                         </div>
                                     </div>
-                                    <input type="hidden" name="answers[{$row.number}][id]" value="{$row.id}" style="display:none">
+                                    <input type="hidden" name="answers[{$row@index}][id]" value="{$row.id}" style="display:none">
                                 {else}
-                                    <input class="form-control" type="text" name="answers[{$row.number}][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
+                                    <input class="form-control" type="text" name="answers[{$row@index}][text]" id="answer-{$row@index}" value="{$row.text}" maxlength="120">
                                 {/if}
                             </div>
                         </div>

@@ -33,9 +33,8 @@
                     {/if}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
-                    {$i=1}
                     {foreach $modules as $module => $values}
-                        {if $i % 2 !== 0}
+                        {if $values@iteration % 2 !== 0}
                             <div class="row">
                         {/if}
                         <fieldset class="col-sm-6">
@@ -60,10 +59,9 @@
                                 </div>
                             {/foreach}
                         </fieldset>
-                        {if $i % 2 === 0 || count($modules) === $i}
+                        {if $values@iteration % 2 === 0 || $values@last}
                             </div>
                         {/if}
-                        {$i=$i+1}
                     {/foreach}
                 </div>
             </div>

@@ -68,7 +68,7 @@ class Validator extends Core\Validator\AbstractValidator
         $markedAnswers = 0;
         $notEmptyAnswers = 0;
         foreach ($formData['answers'] as $row) {
-            if (!empty($row['value'])) {
+            if (!empty($row['text'])) {
                 ++$notEmptyAnswers;
             }
             if (isset($row['delete'])) {
