@@ -175,7 +175,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->pollsValidator->validateCreate($formData);
+            $this->pollsValidator->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -206,7 +206,7 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->pollsValidator->validateEdit($formData);
+            $this->pollsValidator->validate($formData);
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),

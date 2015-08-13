@@ -36,32 +36,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
-    public function validateCreate(array $formData)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $this->errors['date'] = $this->lang->t('system', 'select_date');
-        }
-        if (empty($formData['title'])) {
-            $this->errors['title'] = $this->lang->t('polls', 'type_in_question');
-        }
-        list(, $notEmptyAnswers) = $this->validateAnswers($formData);
-        if ($notEmptyAnswers < 2) {
-            $this->errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateEdit(array $formData)
+    public function validate(array $formData)
     {
         $this->validateFormKey();
 
