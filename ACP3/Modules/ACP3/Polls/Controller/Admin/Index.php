@@ -57,7 +57,7 @@ class Index extends Core\Modules\AdminController
         }
 
         if ($this->request->getPost()->has('add_answer')) {
-            $answers = $this->addNewAnswer();
+            $answers = $this->addNewAnswer($this->request->getPost()->get('answers', []));
         } else {
             $answers = [
                 ['number' => 0, 'value' => ''],
@@ -73,7 +73,10 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
         $this->view->assign('answers', $answers);
-        $this->view->assign('multiple', $this->get('core.helpers.forms')->selectEntry('multiple', '1', '0', 'checked'));
+
+        $options = [];
+        $options[] = $this->fetchMultipleChoiceOption(0);
+        $this->view->assign('options', $options);
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -117,9 +120,8 @@ class Index extends Core\Modules\AdminController
                 $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
-            // Neue Antworten hinzufügen
             if ($this->request->getPost()->has('add_answer')) {
-                $answers = $this->addNewAnswer();
+                $answers = $this->addNewAnswer($this->request->getPost()->get('answers', []));
             } else {
                 $answers = $this->pollsModel->getAnswersByPollId($id);
                 $c_answers = count($answers);
@@ -131,13 +133,15 @@ class Index extends Core\Modules\AdminController
             }
             $this->view->assign('answers', $answers);
 
-            $options = [];
-            $options[0]['name'] = 'reset';
-            $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('reset', '1', '0', 'checked');
-            $options[0]['lang'] = $this->lang->t('polls', 'reset_votes');
-            $options[1]['name'] = 'multiple';
-            $options[1]['checked'] = $this->get('core.helpers.forms')->selectEntry('multiple', '1', $poll['multiple'], 'checked');
-            $options[1]['lang'] = $this->lang->t('polls', 'multiple_choice');
+            $options = [
+                $this->fetchMultipleChoiceOption($poll['multiple']),
+                [
+                    'name' => 'reset',
+                    'checked' => $this->get('core.helpers.forms')->selectEntry('reset', '1', '0', 'checked'),
+                    'lang' => $this->lang->t('polls', 'reset_votes')
+                ]
+            ];
+
             $this->view->assign('options', $options);
 
             $this->view->assign('form', array_merge($poll, $this->request->getPost()->getAll()));
@@ -232,26 +236,28 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
+     * @param array $currentAnswers
+     *
      * @return array
      */
-    private function addNewAnswer()
+    private function addNewAnswer(array $currentAnswers)
     {
         $answers = [];
 
         // Bisherige Antworten
         $i = 0;
-        $answersPost = $this->request->getPost()->get('answers', []);
-        foreach ($answersPost as $row) {
+        foreach ($currentAnswers as $row) {
             $answers[$i]['number'] = $i;
-            $answers[$i]['id'] = isset($row['id']) ? $row['id'] : 0;
+            if (isset($row['id'])) {
+                $answers[$i]['id'] = $row['id'];
+            }
             $answers[$i]['value'] = $row['value'];
             ++$i;
         }
 
         // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-        if (!empty($answersPost[$i - 1]['value'])) {
+        if (!empty($currentAnswers[$i - 1]['value'])) {
             $answers[$i]['number'] = $i;
-            $answers[$i]['id'] = 0;
             $answers[$i]['value'] = '';
         }
 
@@ -277,18 +283,32 @@ class Index extends Core\Modules\AdminController
                         Polls\Model::TABLE_NAME_ANSWERS
                     );
                 }
-            } elseif (isset($row['delete']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) { // Antwort mitsamt Stimmen löschen
-                $this->pollsModel->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
-                $this->pollsModel->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
-            } elseif (!empty($row['value']) && $this->get('core.validator.rules.misc')->isNumber($row['id'])) { // Antwort aktualisieren
+            } elseif (isset($row['delete'])) { // Antwort mitsamt Stimmen löschen
+                $this->pollsModel->delete((int) $row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
+                $this->pollsModel->delete((int) $row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
+            } elseif (!empty($row['value'])) { // Antwort aktualisieren
                 $bool = $this->pollsModel->update(
                     ['text' => Core\Functions::strEncode($row['value'])],
-                    $row['id'],
+                    (int) $row['id'],
                     Polls\Model::TABLE_NAME_ANSWERS
                 );
             }
         }
 
         return $bool;
+    }
+
+    /**
+     * @param string $currentValue
+     *
+     * @return array
+     */
+    private function fetchMultipleChoiceOption($currentValue)
+    {
+        return [
+            'name' => 'multiple',
+            'checked' => $this->get('core.helpers.forms')->selectEntry('multiple', '1', $currentValue, 'checked'),
+            'lang' => $this->lang->t('polls', 'multiple_choice')
+        ];
     }
 }

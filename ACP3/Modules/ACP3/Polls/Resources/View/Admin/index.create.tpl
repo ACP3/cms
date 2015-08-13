@@ -27,20 +27,32 @@
                             <label for="answer-{$row.number}" class="col-sm-2 control-label">{lang t="polls|answer"} {$row.number+1}</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control" type="text" name="answers[][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
+                                {if isset($row.id)}
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="answers[{$row.number}][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
+                                        <div class="input-group-addon">
+                                            <input type="checkbox" name="answers[{$row.number}][delete]" value="1">
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="answers[{$row.number}][id]" value="{$row.id}" style="display:none">
+                                {else}
+                                    <input class="form-control" type="text" name="answers[{$row.number}][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
+                                {/if}
                             </div>
                         </div>
                     {/foreach}
                     <div class="form-group">
-                        <label for="multiple" class="col-sm-2 control-label">{lang t="system|options"}</label>
+                        <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 
                         <div class="col-sm-10">
-                            <div class="checkbox">
-                                <label for="multiple">
-                                    <input type="checkbox" name="multiple" id="multiple" value="1"{$multiple}>
-                                    {lang t="polls|multiple_choice"}
-                                </label>
-                            </div>
+                            {foreach $options as $row}
+                                <div class="checkbox">
+                                    <label for="{$row.name}">
+                                        <input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
+                                        {$row.lang}
+                                    </label>
+                                </div>
+                            {/foreach}
                         </div>
                     </div>
                 </div>
