@@ -207,14 +207,11 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('users');
 
-        $lang_languages = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('languages', $this->formsHelpers->checkboxGenerator('language_override', [1, 0], $lang_languages, $settings['language_override']));
+        $this->view->assign('languages', $this->formsHelpers->yesNoCheckboxGenerator('language_override', $settings['language_override']));
 
-        $lang_entries = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('entries', $this->formsHelpers->checkboxGenerator('entries_override', [1, 0], $lang_entries, $settings['entries_override']));
+        $this->view->assign('entries', $this->formsHelpers->yesNoCheckboxGenerator('entries_override', $settings['entries_override']));
 
-        $lang_registration = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('registration', $this->formsHelpers->checkboxGenerator('enable_registration', [1, 0], $lang_registration, $settings['enable_registration']));
+        $this->view->assign('registration', $this->formsHelpers->yesNoCheckboxGenerator('enable_registration', $settings['enable_registration']));
 
         $this->view->assign('form', array_merge(['mail' => $settings['mail']], $this->request->getPost()->getAll()));
 
@@ -403,7 +400,6 @@ class Index extends Core\Modules\AdminController
      */
     protected function fetchIsSuperUser($value = 0)
     {
-        $lang_superUser = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        return $this->formsHelpers->checkboxGenerator('super_user', [1, 0], $lang_superUser, $value);
+        return $this->formsHelpers->yesNoCheckboxGenerator('super_user', $value);
     }
 }

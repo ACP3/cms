@@ -200,8 +200,7 @@ class Index extends Core\Modules\AdminController
         $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots, $seoSettings['robots']));
 
         // Sef-URIs
-        $lang_modRewrite = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->checkboxGenerator('mod_rewrite', [1, 0], $lang_modRewrite, $seoSettings['mod_rewrite']));
+        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']));
 
         $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->getAll()));
 

@@ -24,7 +24,7 @@ services:
 
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
-    arguments: [@core.request]
+    arguments: [@core.lang, @core.request]
 
   core.helpers.output:
     class: ACP3\Core\Helpers\Output

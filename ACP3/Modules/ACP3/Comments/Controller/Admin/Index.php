@@ -107,8 +107,7 @@ class Index extends Core\Modules\AdminController
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
-            $lang_allowEmoticons = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->checkboxGenerator('emoticons', [1, 0], $lang_allowEmoticons, $settings['emoticons']));
+            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('emoticons', $settings['emoticons']));
         }
 
         $this->formTokenHelper->generateFormToken();

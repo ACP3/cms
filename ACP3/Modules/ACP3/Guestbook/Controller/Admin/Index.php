@@ -111,8 +111,7 @@ class Index extends Core\Modules\AdminController
             }
 
             if ($settings['notify'] == 2) {
-                $langActivate = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-                $this->view->assign('activate', $this->get('core.helpers.forms')->checkboxGenerator('active', [1, 0], $langActivate, $guestbook['active']));
+                $this->view->assign('activate', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('active', $guestbook['active']));
             }
 
             $this->view->assign('form', array_merge($guestbook, $this->request->getPost()->getAll()));
@@ -171,19 +170,16 @@ class Index extends Core\Modules\AdminController
         ];
         $this->view->assign('notify', $this->get('core.helpers.forms')->selectGenerator('notify', [0, 1, 2], $lang_notify, $settings['notify']));
 
-        $lang_overlay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        $this->view->assign('overlay', $this->get('core.helpers.forms')->checkboxGenerator('overlay', [1, 0], $lang_overlay, $settings['overlay']));
+        $this->view->assign('overlay', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']));
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
-            $lang_allow_emoticons = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->checkboxGenerator('emoticons', [1, 0], $lang_allow_emoticons, $settings['emoticons']));
+            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('emoticons', $settings['emoticons']));
         }
 
         // In Newsletter integrieren
         if ($this->modules->isActive('newsletter') === true) {
-            $lang_newsletter_integration = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-            $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->checkboxGenerator('newsletter_integration', [1, 0], $lang_newsletter_integration, $settings['newsletter_integration']));
+            $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration']));
         }
 
         $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->getAll()));

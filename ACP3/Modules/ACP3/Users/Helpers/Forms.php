@@ -138,8 +138,7 @@ class Forms
      */
     protected function displayAddress($value)
     {
-        $lang_addressDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        return $this->formsHelpers->checkboxGenerator('address_display', [1, 0], $lang_addressDisplay, $value);
+        return $this->formsHelpers->yesNoCheckboxGenerator('address_display', $value);
     }
 
     /**
@@ -164,8 +163,7 @@ class Forms
      */
     protected function displayCountry($value)
     {
-        $lang_countryDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        return $this->formsHelpers->checkboxGenerator('country_display', [1, 0], $lang_countryDisplay, $value);
+        return $this->formsHelpers->yesNoCheckboxGenerator('country_display', $value);
     }
 
     /**
@@ -175,8 +173,7 @@ class Forms
      */
     protected function displayMail($value)
     {
-        $lang_mailDisplay = [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')];
-        return $this->formsHelpers->checkboxGenerator('mail_display', [1, 0], $lang_mailDisplay, $value);
+        return $this->formsHelpers->yesNoCheckboxGenerator('mail_display', $value);
     }
 
     /**

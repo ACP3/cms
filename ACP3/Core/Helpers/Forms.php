@@ -3,6 +3,7 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\Request;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Lang;
 
 /**
  * Class Forms
@@ -11,15 +12,24 @@ use ACP3\Core\Http\RequestInterface;
 class Forms
 {
     /**
+     * @var \ACP3\Core\Lang
+     */
+    protected $lang;
+    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
 
     /**
+     * @param \ACP3\Core\Lang                  $lang
      * @param \ACP3\Core\Http\RequestInterface $request
      */
-    public function __construct(RequestInterface $request)
+    public function __construct(
+        Lang $lang,
+        RequestInterface $request
+    )
     {
+        $this->lang = $lang;
         $this->request = $request;
     }
 
@@ -100,6 +110,24 @@ class Forms
     }
 
     /**
+     * @param string $name
+     * @param string $currentValue
+     * @param string $selected
+     *
+     * @return array
+     */
+    public function yesNoSelectGenerator($name, $currentValue = '', $selected = 'selected')
+    {
+        return $this->selectGenerator(
+            $name,
+            [1, 0],
+            [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')],
+            $currentValue,
+            $selected
+        );
+    }
+
+    /**
      * @param string               $name
      * @param array                $values
      * @param array                $lang
@@ -110,5 +138,21 @@ class Forms
     public function checkboxGenerator($name, array $values, array $lang, $currentValue = '')
     {
         return $this->selectGenerator($name, $values, $lang, $currentValue, 'checked');
+    }
+
+    /**
+     * @param string $name
+     * @param string $currentValue
+     *
+     * @return array
+     */
+    public function yesNoCheckboxGenerator($name, $currentValue = '')
+    {
+        return $this->checkboxGenerator(
+            $name,
+            [1, 0],
+            [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')],
+            $currentValue
+        );
     }
 }
