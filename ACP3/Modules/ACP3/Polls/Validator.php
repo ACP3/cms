@@ -47,13 +47,8 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['title'])) {
             $this->errors['title'] = $this->lang->t('polls', 'type_in_question');
         }
-        $i = 0;
-        foreach ($formData['answers'] as $row) {
-            if (!empty($row)) {
-                ++$i;
-            }
-        }
-        if ($i <= 2) {
+        list(, $notEmptyAnswers) = $this->validateAnswers($formData);
+        if ($notEmptyAnswers < 2) {
             $this->errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
         }
 
@@ -77,17 +72,8 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['title'])) {
             $this->errors['title'] = $this->lang->t('polls', 'type_in_question');
         }
-        $markedAnswers = 0;
-        $allAnswersEmpty = true;
-        foreach ($formData['answers'] as $row) {
-            if (!empty($row['value'])) {
-                $allAnswersEmpty = false;
-            }
-            if (isset($row['delete'])) {
-                ++$markedAnswers;
-            }
-        }
-        if ($allAnswersEmpty === true) {
+        list($markedAnswers, $notEmptyAnswers) = $this->validateAnswers($formData);
+        if ($notEmptyAnswers === 0) {
             $this->errors['answer'] = $this->lang->t('polls', 'type_in_two_answers');
         }
         if (count($formData['answers']) - $markedAnswers < 2) {
@@ -95,5 +81,25 @@ class Validator extends Core\Validator\AbstractValidator
         }
 
         $this->_checkForFailedValidation();
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function validateAnswers(array $formData)
+    {
+        $markedAnswers = 0;
+        $notEmptyAnswers = 0;
+        foreach ($formData['answers'] as $row) {
+            if (!empty($row['value'])) {
+                ++$notEmptyAnswers;
+            }
+            if (isset($row['delete'])) {
+                ++$markedAnswers;
+            }
+        }
+        return [$markedAnswers, $notEmptyAnswers];
     }
 }

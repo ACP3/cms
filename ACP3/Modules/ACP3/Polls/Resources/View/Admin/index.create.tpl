@@ -27,7 +27,7 @@
                             <label for="answer-{$row.number}" class="col-sm-2 control-label">{lang t="polls|answer"} {$row.number+1}</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control" type="text" name="answers[]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
+                                <input class="form-control" type="text" name="answers[][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
                             </div>
                         </div>
                     {/foreach}
