@@ -34,7 +34,7 @@
 
                         <div class="col-sm-10">{$categories}</div>
                     </div>
-                    {if isset($options)}
+                    {if !empty($options)}
                         <div class="form-group">
                             <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 

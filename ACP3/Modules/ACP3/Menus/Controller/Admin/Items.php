@@ -94,15 +94,9 @@ class Items extends Core\Modules\AdminController
             $this->_createPost($this->request->getPost()->getAll());
         }
 
-        // Seitentyp
         $this->view->assign('mode', $this->fetchMenuItemModes());
-
-        // Module
         $this->view->assign('modules', $this->fetchModules());
-
-        // Ziel des Hyperlinks
-        $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
-        $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target));
+        $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'));
 
         if ($this->articlesHelpers) {
             $this->view->assign('articles', $this->articlesHelpers->articlesList());
@@ -169,15 +163,9 @@ class Items extends Core\Modules\AdminController
                 $this->_editPost($this->request->getPost()->getAll(), $menuItem, $id);
             }
 
-            // Seitentyp
             $this->view->assign('mode', $this->fetchMenuItemModes($menuItem['mode']));
-
-            // Module
             $this->view->assign('modules', $this->fetchModules($menuItem));
-
-            // Ziel des Hyperlinks
-            $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
-            $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target, $menuItem['target']));
+            $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $menuItem['target']));
 
             if ($this->articlesHelpers) {
                 $matches = [];

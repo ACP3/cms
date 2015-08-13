@@ -116,6 +116,19 @@ class Forms
      *
      * @return array
      */
+    public function linkTargetSelectGenerator($name, $currentValue = '', $selected = '')
+    {
+        $langTarget = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
+        return $this->selectGenerator($name, [1, 2], $langTarget, $currentValue, $selected);
+    }
+
+    /**
+     * @param string $name
+     * @param string $currentValue
+     * @param string $selected
+     *
+     * @return array
+     */
     public function yesNoSelectGenerator($name, $currentValue = '', $selected = 'selected')
     {
         return $this->selectGenerator(

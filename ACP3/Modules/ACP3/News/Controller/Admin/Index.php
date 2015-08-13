@@ -90,33 +90,9 @@ class Index extends Core\Modules\AdminController
             $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
-        // Kategorien
         $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', '', true));
-
-        // Weiterlesen & Kommentare
-        if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
-            $options = [];
-            if ($settings['readmore'] == 1) {
-                $options[] = [
-                    'name' => 'readmore',
-                    'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', '0', 'checked'),
-                    'lang' => $this->lang->t('news', 'activate_readmore')
-                ];
-            }
-            if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options[] = [
-                    'name' => 'comments',
-                    'checked' => $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked'),
-                    'lang' => $this->lang->t('system', 'allow_comments')
-                ];
-            }
-            $this->view->assign('options', $options);
-        }
-
-        // Linkziel
-        $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
-        $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target));
-
+        $this->view->assign('options', $this->fetchNewsOptions($settings, 0, 0));
+        $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'));
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
         $defaults = [
@@ -142,7 +118,7 @@ class Index extends Core\Modules\AdminController
         $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 foreach ($items as $item) {
@@ -178,35 +154,12 @@ class Index extends Core\Modules\AdminController
                 $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
-            // Kategorien
             $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $news['category_id'], true));
+            $this->view->assign('options', $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']));
 
-            // Weiterlesen & Kommentare
-            if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
-                $options = [];
-                if ($settings['readmore'] == 1) {
-                    $options[] = [
-                        'name' => 'readmore',
-                        'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $news['readmore'], 'checked'),
-                        'lang' => $this->lang->t('news', 'activate_readmore')
-                    ];
-                }
-                if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                    $options[] = [
-                        'name' => 'comments',
-                        'checked' => $this->get('core.helpers.forms')->selectEntry('comments', '1', $news['comments'], 'checked'),
-                        'lang' => $this->lang->t('system', 'allow_comments')
-                    ];
-                }
-                $this->view->assign('options', $options);
-            }
-
-            // Linkziel
-            $lang_target = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
-            $this->view->assign('target', $this->get('core.helpers.forms')->selectGenerator('target', [1, 2], $lang_target, $news['target']));
+            $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $news['target']));
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id)));
-
             $this->view->assign('form', array_merge($news, $this->request->getPost()->getAll()));
 
             $this->formTokenHelper->generateFormToken();
@@ -265,7 +218,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData, $settings) {
+        $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
             $this->newsValidator->validate($formData);
 
             $insertValues = [
@@ -306,7 +259,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $settings, $id) {
+        $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
             $this->newsValidator->validate(
                 $formData,
                 sprintf(News\Helpers::URL_KEY_PATTERN, $id)
@@ -400,5 +353,35 @@ class Index extends Core\Modules\AdminController
     protected function useComments(array $formData, array $settings)
     {
         return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
+    }
+
+    /**
+     * @param array $settings
+     * @param int   $readmoreValue
+     * @param int   $commentsValue
+     *
+     * @return array
+     */
+    protected function fetchNewsOptions(array $settings, $readmoreValue, $commentsValue)
+    {
+        $options = [];
+        if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
+            if ($settings['readmore'] == 1) {
+                $options[] = [
+                    'name' => 'readmore',
+                    'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $readmoreValue, 'checked'),
+                    'lang' => $this->lang->t('news', 'activate_readmore')
+                ];
+            }
+            if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
+                $options[] = [
+                    'name' => 'comments',
+                    'checked' => $this->get('core.helpers.forms')->selectEntry('comments', '1', $commentsValue, 'checked'),
+                    'lang' => $this->lang->t('system', 'allow_comments')
+                ];
+            }
+        }
+
+        return $options;
     }
 }
