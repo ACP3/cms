@@ -365,21 +365,19 @@ class Index extends Core\Modules\AdminController
     protected function fetchNewsOptions(array $settings, $readmoreValue, $commentsValue)
     {
         $options = [];
-        if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
-            if ($settings['readmore'] == 1) {
-                $options[] = [
-                    'name' => 'readmore',
-                    'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $readmoreValue, 'checked'),
-                    'lang' => $this->lang->t('news', 'activate_readmore')
-                ];
-            }
-            if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options[] = [
-                    'name' => 'comments',
-                    'checked' => $this->get('core.helpers.forms')->selectEntry('comments', '1', $commentsValue, 'checked'),
-                    'lang' => $this->lang->t('system', 'allow_comments')
-                ];
-            }
+        if ($settings['readmore'] == 1) {
+            $options[] = [
+                'name' => 'readmore',
+                'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $readmoreValue, 'checked'),
+                'lang' => $this->lang->t('news', 'activate_readmore')
+            ];
+        }
+        if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
+            $options[] = [
+                'name' => 'comments',
+                'checked' => $this->get('core.helpers.forms')->selectEntry('comments', '1', $commentsValue, 'checked'),
+                'lang' => $this->lang->t('system', 'allow_comments')
+            ];
         }
 
         return $options;
