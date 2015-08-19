@@ -18,6 +18,7 @@
         <item key="disclaimer">Disclaimer</item>
         <item key="disclaimer_to_short">The disclaimer should be at least 3 characters long.</item>
         <item key="fax">FAX number</item>
+        <item key="frontend_index_imprint">Imprint</item>
         <item key="imprint">Imprint</item>
         <item key="mod_description">This module is responsible for the contact form and the imprint.</item>
         <item key="powered_by">This website is powered by %s.</item>

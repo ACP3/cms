@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Enum\Environment;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -153,7 +154,7 @@ class Cache
             }
 
             // If debug mode is enabled, override the cache driver configuration
-            if (defined('DEBUG') && DEBUG === true) {
+            if ($this->container->getParameter('core.environment') === Environment::DEVELOPMENT) {
                 $driverName = 'Array';
             }
 

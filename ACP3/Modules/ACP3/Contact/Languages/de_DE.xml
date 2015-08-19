@@ -18,6 +18,7 @@
         <item key="disclaimer">Haftungshinweise</item>
         <item key="disclaimer_to_short">Die Haftungshinweise sollten mindestens 3 Zeichen lang sein.</item>
         <item key="fax">FAX Nummer</item>
+        <item key="frontend_index_imprint">Impressum</item>
         <item key="imprint">Impressum</item>
         <item key="mod_description">Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</item>
         <item key="powered_by">Diese Website wird angetrieben vom %s</item>

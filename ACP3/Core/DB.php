@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\DB\SQLLogger;
+use ACP3\Core\Enum\Environment;
 use \Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 
@@ -25,6 +26,7 @@ class DB
     protected $prefix = '';
 
     /**
+     * @param string $environment
      * @param string $host
      * @param string $database
      * @param string $userName
@@ -37,6 +39,7 @@ class DB
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __construct(
+        $environment,
         $host,
         $database,
         $userName,
@@ -56,7 +59,7 @@ class DB
             'driver' => $driver,
             'charset' => $charset
         ];
-        if (defined('DEBUG_SQL') === true && DEBUG_SQL === true) {
+        if ($environment === Environment::DEVELOPMENT) {
             $config->setSQLLogger(new SQLLogger());
         }
 

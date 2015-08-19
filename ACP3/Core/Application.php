@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Enum\Environment;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Logger as ACP3Logger;
@@ -27,6 +28,18 @@ class Application extends AbstractApplication
      * @var array
      */
     protected $systemSettings = [];
+    /**
+     * @var string
+     */
+    protected $environment;
+
+    /**
+     * @param string $environment
+     */
+    public function __construct($environment = Environment::PRODUCTION)
+    {
+        $this->environment = $environment;
+    }
 
     /**
      * @inheritdoc
@@ -65,7 +78,7 @@ class Application extends AbstractApplication
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
-        define('CACHE_DIR', UPLOADS_DIR . 'cache/');
+        define('CACHE_DIR', UPLOADS_DIR . 'cache/' . $this->environment . '/');
     }
 
     /**
@@ -91,7 +104,7 @@ class Application extends AbstractApplication
             E_USER_DEPRECATED => Logger::WARNING,
         ];
 
-        $stream = new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE);
+        $stream = new StreamHandler(CACHE_DIR . 'logs/system.log', Logger::NOTICE);
         $stream->setFormatter(new LineFormatter(null, null, true));
 
         $logger = new Logger('system', [$stream]);
@@ -135,7 +148,7 @@ class Application extends AbstractApplication
         Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
         $file = CACHE_DIR . 'sql/container.php';
-        $containerConfigCache = new ConfigCache($file, (defined('DEBUG') && DEBUG === true));
+        $containerConfigCache = new ConfigCache($file, ($this->environment === Environment::DEVELOPMENT));
 
         if (!$containerConfigCache->isFresh()) {
             $this->dumpContainer($containerConfigCache);
@@ -233,7 +246,7 @@ class Application extends AbstractApplication
      */
     protected function handleException(\Exception $exception, Redirect $redirect, $path)
     {
-        if (defined('DEBUG') && DEBUG === true) {
+        if ($this->environment === Environment::DEVELOPMENT) {
             $errorMessage = $exception->getMessage();
             $this->_renderApplicationException($errorMessage);
         } else {
@@ -250,6 +263,8 @@ class Application extends AbstractApplication
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
         $loader->load(CLASSES_DIR . 'config/services.yml');
         $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
+
+        $containerBuilder->setParameter('core.environment', $this->environment);
 
         // Try to get all available services
         /** @var Modules $modules */

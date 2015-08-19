@@ -140,6 +140,6 @@ class Router
      */
     protected function useModRewrite($path)
     {
-        return (bool)$this->config->getSettings('seo')['mod_rewrite'] === true && $this->isAdminUri($path) === false && (!defined('DEBUG') || DEBUG === false);
+        return (bool)$this->config->getSettings('seo')['mod_rewrite'] === true && $this->isAdminUri($path) === false;
     }
 }

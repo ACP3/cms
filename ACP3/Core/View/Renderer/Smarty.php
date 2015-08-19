@@ -2,6 +2,7 @@
 
 namespace ACP3\Core\View\Renderer;
 
+use ACP3\Core\Enum\Environment;
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter;
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
@@ -28,9 +29,9 @@ class Smarty extends AbstractRenderer
         $settings = $this->container->get('core.config')->getSettings('system');
 
         $this->renderer = new \Smarty();
-        $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
+        $this->renderer->error_reporting = defined('IN_INSTALL') === true || $this->isDevEnvironment() ? E_ALL : 0;
         $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : $settings['design'];
-        $this->renderer->compile_check = defined('DEBUG') === true && DEBUG === true;
+        $this->renderer->compile_check = $this->isDevEnvironment();
         $this->renderer->compile_dir = CACHE_DIR . 'tpl_compiled/';
         $this->renderer->cache_dir = CACHE_DIR . 'tpl_cached/';
 
@@ -103,5 +104,13 @@ class Smarty extends AbstractRenderer
                 $resource->registerResource($this->renderer);
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDevEnvironment()
+    {
+        return $this->container->getParameter('core.environment') === Environment::DEVELOPMENT;
     }
 }

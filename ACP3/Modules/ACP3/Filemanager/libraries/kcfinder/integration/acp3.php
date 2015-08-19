@@ -1,5 +1,6 @@
 <?php
 namespace kcfinder\cms;
+
 use ACP3\Core\Application;
 
 /**
@@ -16,7 +17,7 @@ class ACP3
     /**
      * @return bool
      */
-    static function checkAuth()
+    public static function checkAuth()
     {
         $currentCwd = getcwd();
         if (!self::$authenticated) {
@@ -34,10 +35,12 @@ class ACP3
 
                 chdir(ACP3_ROOT_DIR);
 
+                $application->getContainer()->get('core.user')->authenticate();
+
                 // if user has access permission...
-                if ($application->getContainer()->get('core.user')->isUser()) {
+                if ($application->getContainer()->get('core.user')->isAuthenticated()) {
                     if (!isset($_SESSION['KCFINDER'])) {
-                        $_SESSION['KCFINDER'] = array();
+                        $_SESSION['KCFINDER'] = [];
                         $_SESSION['KCFINDER']['disabled'] = false;
                     }
 
@@ -57,4 +60,3 @@ class ACP3
 }
 
 \kcfinder\cms\ACP3::checkAuth();
-?>

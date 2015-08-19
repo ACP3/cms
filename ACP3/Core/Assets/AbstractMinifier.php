@@ -36,6 +36,10 @@ abstract class AbstractMinifier implements MinifierInterface
      * @var \ACP3\Core\Assets\ThemeResolver
      */
     protected $themeResolver;
+    /**
+     * @var string
+     */
+    protected $environment;
 
     /**
      * @var string
@@ -56,13 +60,15 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param \ACP3\Core\Config               $config
      * @param \ACP3\Core\Modules              $modules
      * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
+     * @param string                          $environment
      */
     public function __construct(
         Assets $assets,
         Cache $systemCache,
         Config $config,
         Modules $modules,
-        ThemeResolver $themeResolver
+        ThemeResolver $themeResolver,
+        $environment
     )
     {
         $this->assets = $assets;
@@ -70,6 +76,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->config = $config;
         $this->modules = $modules;
         $this->themeResolver = $themeResolver;
+        $this->environment = $environment;
     }
 
     /**
@@ -111,7 +118,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     public function getURI($layout = 'layout')
     {
-        $debug = (defined('DEBUG') && DEBUG === true);
+        $debug = $this->environment === 'dev';
         $filenameHash = $this->generateFilenameHash($this->assetGroup, $layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 

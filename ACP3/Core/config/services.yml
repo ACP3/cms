@@ -35,7 +35,7 @@ services:
 
   core.db:
     class: ACP3\Core\DB
-    arguments: ['%db_host%', '%db_name%', '%db_user%', '%db_password%', '%db_table_prefix%', '%db_driver%', '%db_charset%', '%cache_driver%']
+    arguments: [%core.environment%, '%db_host%', '%db_name%', '%db_user%', '%db_password%', '%db_table_prefix%', '%db_driver%', '%db_charset%', '%cache_driver%']
 
   core.functions:
     class: ACP3\Core\Functions

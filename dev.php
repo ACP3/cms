@@ -1,6 +1,6 @@
 <?php
 /**
- * Index
+ * Debug
  *
  * @author Tino Goratsch
  */
@@ -10,4 +10,4 @@ define('ACP3_ROOT_DIR', realpath(__DIR__) . '/');
 
 require './vendor/autoload.php';
 
-(new \ACP3\Core\Application())->run();
+(new \ACP3\Core\Application(\ACP3\Core\Enum\Environment::DEVELOPMENT))->run();

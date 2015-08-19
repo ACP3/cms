@@ -7,8 +7,7 @@ services:
     arguments: ['@core.cache.system']
 
   core.assets.abstractMinifier:
-    class: ACP3\Core\Assets\AbstractMinifier
-    arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.themeResolver]
+    arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.themeResolver, %core.environment%]
     abstract: true
 
   core.assets.minifier.css:

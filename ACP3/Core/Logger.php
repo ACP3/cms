@@ -43,7 +43,7 @@ class Logger
         if (!isset(self::$channels[$channelName])) {
             $logger = new \Monolog\Logger($channelName);
 
-            $fileName = UPLOADS_DIR . 'logs/' . $channelName . '.log';
+            $fileName = CACHE_DIR . 'logs/' . $channelName . '.log';
             $logLevelConst = constant('\Monolog\Logger::' . strtoupper($level));
             $stream = new StreamHandler($fileName, $logLevelConst);
             $stream->setFormatter(new LineFormatter(null, null, true));
