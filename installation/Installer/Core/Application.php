@@ -20,10 +20,7 @@ class Application extends Core\AbstractApplication
     {
         $this->defineDirConstants();
 
-        if (defined('IN_UPDATER') &&
-            IN_UPDATER === true &&
-            $this->startupChecks() === false
-        ) {
+        if ($this->environment === Core\Enum\Environment::UPDATER && $this->startupChecks() === false) {
             return;
         }
 
@@ -45,11 +42,12 @@ class Application extends Core\AbstractApplication
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
-        define('CACHE_DIR', UPLOADS_DIR . 'cache/');
+        define('CACHE_DIR', ACP3_ROOT_DIR . 'cache/');
 
         define('INSTALLER_ACP3_DIR', realpath(ACP3_DIR . '../installation/') . '/Installer/');
         define('INSTALLER_MODULES_DIR', INSTALLER_ACP3_DIR . 'Modules/');
         define('INSTALLER_CLASSES_DIR', INSTALLER_ACP3_DIR . 'Core/');
+        define('INSTALLER_CACHE_DIR', CACHE_DIR . 'install/');
         define('INSTALLATION_DIR', ACP3_ROOT_DIR . 'installation/');
 
         // Set theme paths
@@ -66,7 +64,7 @@ class Application extends Core\AbstractApplication
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
 
-        if (defined('IN_UPDATER') === true) {
+        if ($this->environment === Core\Enum\Environment::UPDATER) {
             $loader->load(INSTALLER_CLASSES_DIR . 'config/update.yml');
             $excludedDirs = [];
         } else {
@@ -83,8 +81,10 @@ class Application extends Core\AbstractApplication
             }
         }
 
+        $this->container->setParameter('core.environment', $this->environment);
+
         // When in updater context, also include "normal" module services
-        if (defined('IN_UPDATER') === true) {
+        if ($this->environment === Core\Enum\Environment::UPDATER) {
             $vendors = $this->container->get('core.modules.vendors')->getVendors();
 
             foreach ($vendors as $vendor) {
@@ -134,7 +134,7 @@ class Application extends Core\AbstractApplication
 
         error_reporting(E_ALL);
 
-        if (defined('IN_UPDATER') === true) {
+        if ($this->environment === Core\Enum\Environment::UPDATER) {
             return $this->databaseConfigExists();
         }
 

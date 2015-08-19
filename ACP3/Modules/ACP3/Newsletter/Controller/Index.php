@@ -98,13 +98,11 @@ class Index extends Core\Modules\FrontendController
 
         $this->view->assign('form', array_merge(['mail' => ''], $this->request->getPost()->getAll()));
 
-        $fieldValue = $action;
-
         $actions_Lang = [
             $this->lang->t('newsletter', 'subscribe'),
             $this->lang->t('newsletter', 'unsubscribe')
         ];
-        $this->view->assign('actions', $this->get('core.helpers.forms')->checkboxGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $fieldValue));
+        $this->view->assign('actions', $this->get('core.helpers.forms')->checkboxGenerator('action', ['subscribe', 'unsubscribe'], $actions_Lang, $action));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());

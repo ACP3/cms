@@ -145,7 +145,7 @@ class Requirements
      */
     private function fetchRequiredFilesAndDirectories()
     {
-        $defaults = ['ACP3/config.yml'];
+        $defaults = ['ACP3/config.yml', 'cache/'];
 
         foreach (Filesystem::scandir(UPLOADS_DIR) as $row) {
             $path = 'uploads/' . $row . '/';

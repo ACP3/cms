@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+use ACP3\Core\Enum\Environment;
 
 /**
  * Class AbstractApplication
@@ -11,6 +12,18 @@ abstract class AbstractApplication implements ApplicationInterface
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
+    /**
+     * @var string
+     */
+    protected $environment;
+
+    /**
+     * @param string $environment
+     */
+    public function __construct($environment = Environment::PRODUCTION)
+    {
+        $this->environment = $environment;
+    }
 
     /**
      * @inheritdoc

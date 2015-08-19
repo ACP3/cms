@@ -22,7 +22,7 @@ $dirname = str_replace('/ACP3/Modules/ACP3/Filemanager/libraries/kcfinder/', '',
 $hostname = 'http://' . $_SERVER['HTTP_HOST'];
 $uploadURL = $hostname . $dirname . '/uploads/';
 $uploadDir = realpath(__DIR__ . '/../../../../../../../') . '/uploads/';
-$thumbsDir = "cache/images/kcfinder";
+$thumbsDir = "kcfinder";
 
 $_CONFIG = [
 

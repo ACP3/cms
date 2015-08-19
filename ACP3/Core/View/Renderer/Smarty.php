@@ -29,9 +29,9 @@ class Smarty extends AbstractRenderer
         $settings = $this->container->get('core.config')->getSettings('system');
 
         $this->renderer = new \Smarty();
-        $this->renderer->error_reporting = defined('IN_INSTALL') === true || $this->isDevEnvironment() ? E_ALL : 0;
+        $this->renderer->error_reporting = $this->isDevOrInstall() ? E_ALL : 0;
         $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : $settings['design'];
-        $this->renderer->compile_check = $this->isDevEnvironment();
+        $this->renderer->compile_check = $this->isDevOrInstall();
         $this->renderer->compile_dir = CACHE_DIR . 'tpl_compiled/';
         $this->renderer->cache_dir = CACHE_DIR . 'tpl_cached/';
 
@@ -109,8 +109,10 @@ class Smarty extends AbstractRenderer
     /**
      * @return bool
      */
-    protected function isDevEnvironment()
+    protected function isDevOrInstall()
     {
-        return $this->container->getParameter('core.environment') === Environment::DEVELOPMENT;
+        return $this->container->getParameter('core.environment') === Environment::DEVELOPMENT ||
+        $this->container->getParameter('core.environment') === Environment::INSTALLER ||
+        $this->container->getParameter('core.environment') === Environment::UPDATER;
     }
 }

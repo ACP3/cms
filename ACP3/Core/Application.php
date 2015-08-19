@@ -28,18 +28,6 @@ class Application extends AbstractApplication
      * @var array
      */
     protected $systemSettings = [];
-    /**
-     * @var string
-     */
-    protected $environment;
-
-    /**
-     * @param string $environment
-     */
-    public function __construct($environment = Environment::PRODUCTION)
-    {
-        $this->environment = $environment;
-    }
 
     /**
      * @inheritdoc
@@ -78,7 +66,7 @@ class Application extends AbstractApplication
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
-        define('CACHE_DIR', UPLOADS_DIR . 'cache/' . $this->environment . '/');
+        define('CACHE_DIR', ACP3_ROOT_DIR . 'cache/' . $this->environment . '/');
     }
 
     /**

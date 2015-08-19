@@ -9,4 +9,6 @@ final class Environment
 {
     const PRODUCTION = 'prod';
     const DEVELOPMENT = 'dev';
+    const INSTALLER = 'installer';
+    const UPDATER = 'updater';
 }

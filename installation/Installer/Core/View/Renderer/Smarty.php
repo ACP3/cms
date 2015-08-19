@@ -16,16 +16,16 @@ class Smarty extends \ACP3\Core\View\Renderer\Smarty
     public function configure(array $params = [])
     {
         $this->renderer = new \Smarty();
-        $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
+        $this->renderer->error_reporting = $this->isDevOrInstall() ? E_ALL : 0;
 
         if (!empty($params['compile_id'])) {
             $this->renderer->compile_id = $params['compile_id'];
         }
 
-        $this->renderer->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
+        $this->renderer->setCompileCheck($this->isDevOrInstall());
         $this->renderer
-            ->setCompileDir(CACHE_DIR . 'tpl_compiled/')
-            ->setCacheDir(CACHE_DIR . 'tpl_cached/');
+            ->setCompileDir(INSTALLER_CACHE_DIR . 'tpl_compiled/')
+            ->setCacheDir(INSTALLER_CACHE_DIR . 'tpl_cached/');
 
         $this->_registerPlugins();
     }

@@ -6,10 +6,8 @@
  */
 
 define('IN_ACP3', true);
-define('IN_INSTALL', true);
 define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../') . '/');
 
 require '../vendor/autoload.php';
 
-$application = new \ACP3\Installer\Core\Application();
-$application->run();
+(new \ACP3\Installer\Core\Application(\ACP3\Core\Enum\Environment::INSTALLER))->run();
