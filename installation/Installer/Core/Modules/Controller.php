@@ -96,7 +96,7 @@ class Controller implements ControllerInterface
 
         $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->lang->getLanguage() . '.xml');
         $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
-        $this->view->assign('LANG', $this->lang->getLanguage2Characters());
+        $this->view->assign('LANG', $this->lang->getShortIsoCode());
     }
 
     /**

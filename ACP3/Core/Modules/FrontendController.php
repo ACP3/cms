@@ -80,7 +80,7 @@ abstract class FrontendController extends Core\Modules\Controller
         $this->view->assign('IS_HOMEPAGE', $this->request->isHomepage());
         $this->view->assign('IS_AJAX', $this->request->isAjax());
         $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
-        $this->view->assign('LANG', $this->lang->getLanguage2Characters());
+        $this->view->assign('LANG', $this->lang->getShortIsoCode());
 
         return parent::preDispatch();
     }

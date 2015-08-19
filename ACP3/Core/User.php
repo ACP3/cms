@@ -19,7 +19,7 @@ class User
     /**
      * @var integer
      */
-    public $entriesPerPage = 0;
+    protected $entriesPerPage = 0;
     /**
      * @var string
      */

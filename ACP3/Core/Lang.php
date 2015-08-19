@@ -86,7 +86,7 @@ class Lang
     /**
      * @return string
      */
-    public function getLanguage2Characters()
+    public function getShortIsoCode()
     {
         return substr($this->getLanguage(), 0, strpos($this->getLanguage(), '_'));
     }
