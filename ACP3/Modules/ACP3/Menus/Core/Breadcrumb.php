@@ -45,6 +45,8 @@ class Breadcrumb extends Core\Breadcrumb
         parent::__construct($container, $lang, $request, $router, $config);
 
         $this->menusModel = $menusModel;
+
+        $this->prePopulate();
     }
 
     /**
@@ -52,8 +54,6 @@ class Breadcrumb extends Core\Breadcrumb
      */
     public function prePopulate()
     {
-        parent::prePopulate();
-
         if ($this->request->getArea() !== 'admin') {
             $in = [
                 $this->request->getQuery(),

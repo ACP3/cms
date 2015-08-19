@@ -99,7 +99,7 @@ class Index extends Core\Modules\FrontendController
 
     public function actionForgotPwd()
     {
-        if ($this->auth->isUser() === true) {
+        if ($this->user->isAuthenticated() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
         } else {
             if ($this->request->getPost()->isEmpty() === false) {
@@ -118,7 +118,7 @@ class Index extends Core\Modules\FrontendController
 
     public function actionIndex()
     {
-        $users = $this->usersModel->getAll(POS, $this->auth->entries);
+        $users = $this->usersModel->getAll(POS, $this->user->getEntriesPerPage());
         $c_users = count($users);
         $allUsers = $this->usersModel->countAll();
 
@@ -134,10 +134,10 @@ class Index extends Core\Modules\FrontendController
     public function actionLogin()
     {
         // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
-        if ($this->auth->isUser() === true) {
+        if ($this->user->isAuthenticated() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($this->request->getPost()->isEmpty() === false) {
-            $result = $this->auth->login(
+            $result = $this->user->login(
                 Core\Functions::strEncode($this->request->getPost()->get('nickname', '')),
                 $this->request->getPost()->get('pwd', ''),
                 $this->request->getPost()->has('remember')
@@ -159,7 +159,7 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionLogout($last = '')
     {
-        $this->auth->logout();
+        $this->user->logout();
 
         if (!empty($last)) {
             $lastPage = base64_decode($last);
@@ -175,7 +175,7 @@ class Index extends Core\Modules\FrontendController
     {
         $settings = $this->config->getSettings('users');
 
-        if ($this->auth->isUser() === true) {
+        if ($this->user->isAuthenticated() === true) {
             $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($settings['enable_registration'] == 0) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
@@ -207,7 +207,7 @@ class Index extends Core\Modules\FrontendController
     public function actionViewProfile($id)
     {
         if ($this->usersModel->resultExists($id) === true) {
-            $user = $this->auth->getUserInfo($id);
+            $user = $this->user->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
 
             $this->view->assign('user', $user);
@@ -226,7 +226,7 @@ class Index extends Core\Modules\FrontendController
                 $this->usersValidator->validateForgotPassword($formData);
 
                 // Neues Passwort und neuen Zufallsschlüssel erstellen
-                $newPassword = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
+                $newPassword = $this->secureHelper->salt(Core\User::SALT_LENGTH);
                 $host = $this->request->getHostname();
 
                 // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
@@ -249,7 +249,7 @@ class Index extends Core\Modules\FrontendController
 
                 // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                 if ($mailIsSent === true) {
-                    $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
+                    $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
                     $updateValues = [
                         'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword, 'sha512'),
                         'pwd_salt' => $salt,
@@ -295,7 +295,7 @@ class Index extends Core\Modules\FrontendController
                 );
                 $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
-                $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
+                $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
                 $insertValues = [
                     'id' => '',
                     'nickname' => Core\Functions::strEncode($formData['nickname']),

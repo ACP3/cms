@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Installer\Core\Lang;
+use ACP3\Core\Filesystem;
 
 /**
  * Class Cache
@@ -39,9 +40,7 @@ class Cache
     {
         $data = [];
 
-        $modules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..']);
-
-        foreach ($modules as $module) {
+        foreach (Filesystem::scandir(INSTALLER_MODULES_DIR) as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/Languages/' . $language . '.xml';
             if (is_file($path) === true) {
                 $xml = simplexml_load_file($path);

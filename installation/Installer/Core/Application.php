@@ -68,14 +68,14 @@ class Application extends Core\AbstractApplication
 
         if (defined('IN_UPDATER') === true) {
             $loader->load(INSTALLER_CLASSES_DIR . 'config/update.yml');
-            $excludedDirs = ['.', '..'];
+            $excludedDirs = [];
         } else {
             $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
-            $excludedDirs = ['.', '..', 'Update'];
+            $excludedDirs = ['Update'];
         }
 
         // Load installer modules services
-        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), $excludedDirs);
+        $installerModules = Core\Filesystem::scandir(INSTALLER_MODULES_DIR, $excludedDirs);
         foreach ($installerModules as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
@@ -88,7 +88,7 @@ class Application extends Core\AbstractApplication
             $vendors = $this->container->get('core.modules.vendors')->getVendors();
 
             foreach ($vendors as $vendor) {
-                $namespaceModules = array_diff(scandir(MODULES_DIR . $vendor . '/'), ['.', '..']);
+                $namespaceModules = Core\Filesystem::scandir(MODULES_DIR . $vendor . '/');
                 foreach ($namespaceModules as $module) {
                     $path = MODULES_DIR . $vendor . '/' . $module . '/config/services.yml';
                     if (is_file($path) === true) {

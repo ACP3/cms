@@ -35,12 +35,12 @@ class Date
     protected $config;
 
     /**
-     * @param \ACP3\Core\Auth   $auth
+     * @param \ACP3\Core\User   $user
      * @param \ACP3\Core\Lang   $lang
      * @param \ACP3\Core\Config $config
      */
     public function __construct(
-        Auth $auth,
+        User $user,
         Lang $lang,
         Config $config
     )
@@ -48,7 +48,7 @@ class Date
         $this->lang = $lang;
         $this->config = $config;
 
-        $this->_setFormatAndTimeZone($auth->getUserInfo());
+        $this->_setFormatAndTimeZone($user->getUserInfo());
     }
 
     /**

@@ -163,7 +163,7 @@ class Application extends AbstractApplication
         // Load system settings
         $this->systemSettings = $this->container->get('core.config')->getSettings('system');
         $this->_setThemeConstants();
-        $this->container->get('core.auth')->authenticate();
+        $this->container->get('core.user')->authenticate();
         $this->container->get('core.view')->setRenderer('smarty');
 
         /** @var \ACP3\Core\Http\Request $request */
@@ -178,8 +178,7 @@ class Application extends AbstractApplication
         $redirect = $this->container->get('core.redirect');
 
         try {
-            $frontController = new FrontController($this->container);
-            $frontController->dispatch();
+            (new FrontController($this->container))->dispatch();
         } catch (Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
                 ACP3Logger::error('404', $e);
@@ -243,9 +242,9 @@ class Application extends AbstractApplication
     }
 
     /**
-     * @param $containerConfigCache
+     * @param \Symfony\Component\Config\ConfigCache $containerConfigCache
      */
-    protected function dumpContainer($containerConfigCache)
+    protected function dumpContainer(ConfigCache $containerConfigCache)
     {
         $containerBuilder = new ContainerBuilder();
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));

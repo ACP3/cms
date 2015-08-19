@@ -146,7 +146,7 @@ class Index extends Core\Modules\AdminController
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
             $lastId = $this->articlesModel->insert($insertValues);
@@ -261,7 +261,7 @@ class Index extends Core\Modules\AdminController
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
             $bool = $this->articlesModel->update($updateValues, $id);
@@ -295,7 +295,7 @@ class Index extends Core\Modules\AdminController
                 'sort_col' => $canDelete === true ? 2 : 1,
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->auth->entries
+                'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('articles', $articles);

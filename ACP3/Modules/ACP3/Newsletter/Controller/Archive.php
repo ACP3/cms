@@ -63,6 +63,6 @@ class Archive extends Core\Modules\FrontendController
         $this->pagination->setTotalResults($this->newsletterModel->countAll(1));
         $this->pagination->display();
 
-        $this->view->assign('newsletters', $this->newsletterModel->getAll(1, POS, $this->auth->entries));
+        $this->view->assign('newsletters', $this->newsletterModel->getAll(1, POS, $this->user->getEntriesPerPage()));
     }
 }

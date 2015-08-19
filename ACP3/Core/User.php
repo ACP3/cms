@@ -7,50 +7,32 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Users;
 
 /**
- * Class Auth
+ * Class User
  * @package ACP3\Core
  */
-class Auth
+class User
 {
-    /**
-     * Name des Authentifizierungscookies
-     */
     const AUTH_NAME = 'ACP3_AUTH';
-    /**
-     * Length of the password salt
-     */
     const SALT_LENGTH = 16;
-    /**
-     * Lifetime of the remember me cookie
-     */
     const REMEMBER_ME_COOKIE_LIFETIME = 31104000;
+
     /**
-     * Anzuzeigende Datensätze  pro Seite
-     *
      * @var integer
      */
-    public $entries = '';
+    public $entriesPerPage = 0;
     /**
-     * Standardsprache des Benutzers
-     *
      * @var string
      */
-    public $language = '';
+    protected $language = '';
     /**
-     * Eingeloggter Benutzer oder nicht
-     *
      * @var boolean
      */
-    protected $isUser = false;
+    protected $isAuthenticated = false;
     /**
-     * ID des Benutzers
-     *
      * @var integer
      */
     protected $userId = 0;
     /**
-     * Super User oder nicht
-     *
      * @var boolean
      */
     protected $superUser = false;
@@ -117,7 +99,7 @@ class Auth
         } else { // Guest user
             $settings = $this->config->getSettings('system');
 
-            $this->entries = $settings['entries'];
+            $this->entriesPerPage = $settings['entries'];
             $this->language = $settings['lang'];
         }
     }
@@ -180,7 +162,7 @@ class Auth
      */
     public function getUserInfo($userId = 0)
     {
-        if (empty($userId) && $this->isUser() === true) {
+        if (empty($userId) && $this->isAuthenticated() === true) {
             $userId = $this->getUserId();
         }
 
@@ -203,9 +185,9 @@ class Auth
      *
      * @return boolean
      */
-    public function isUser()
+    public function isAuthenticated()
     {
-        return $this->isUser === true && $this->getUserId() !== 0;
+        return $this->isAuthenticated === true && $this->getUserId() !== 0;
     }
 
     /**
@@ -222,9 +204,17 @@ class Auth
      *
      * @return string
      */
-    public function getUserLanguage()
+    public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEntriesPerPage()
+    {
+        return $this->entriesPerPage;
     }
 
     /**
@@ -294,8 +284,8 @@ class Auth
         $this->sessionHandler->set(self::AUTH_NAME, [
             'id' => $userData['id'],
             'super_user' => (bool)$userData['super_user'],
-            'entries' => $this->setUserEntriesPerPage($userData),
-            'language' => $this->setUserLanguage($userData)
+            'entries' => $this->setEntriesPerPage($userData),
+            'language' => $this->setLanguage($userData)
         ]);
     }
 
@@ -316,10 +306,10 @@ class Auth
      */
     protected function populateUserData(array $data)
     {
-        $this->isUser = true;
+        $this->isAuthenticated = true;
         $this->userId = (int)$data['id'];
         $this->superUser = (bool)$data['super_user'];
-        $this->entries = (int)$data['entries'];
+        $this->entriesPerPage = (int)$data['entries'];
         $this->language = $data['language'];
     }
 
@@ -339,7 +329,7 @@ class Auth
      *
      * @return int
      */
-    private function setUserEntriesPerPage(array $user)
+    private function setEntriesPerPage(array $user)
     {
         $userSettings = $this->config->getSettings('users');
         $systemSettings = $this->config->getSettings('system');
@@ -356,7 +346,7 @@ class Auth
      *
      * @return string
      */
-    private function setUserLanguage(array $user)
+    private function setLanguage(array $user)
     {
         $userSettings = $this->config->getSettings('users');
         $systemSettings = $this->config->getSettings('system');

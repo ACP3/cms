@@ -142,9 +142,9 @@ class Index extends Core\Modules\FrontendController
         $time = $this->date->getCurrentDateTime();
         // Falls Kategorie angegeben, News nur aus eben dieser selektieren
         if (!empty($cat)) {
-            $news = $this->newsModel->getAllByCategoryId($cat, $time, POS, $this->auth->entries);
+            $news = $this->newsModel->getAllByCategoryId($cat, $time, POS, $this->user->getEntriesPerPage());
         } else {
-            $news = $this->newsModel->getAll($time, POS, $this->auth->entries);
+            $news = $this->newsModel->getAll($time, POS, $this->user->getEntriesPerPage());
         }
         $c_news = count($news);
 

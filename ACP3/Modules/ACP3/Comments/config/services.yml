@@ -37,7 +37,7 @@ services:
 
   comments.validator:
     class: %comments.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth', '@core.date', '@core.modules', '@comments.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@core.date', '@core.modules', '@comments.model']
 
   comments.installer.schema:
     class: %comments.installer.schema.fqdn%

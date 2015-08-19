@@ -65,11 +65,8 @@ abstract class FrontendController extends Core\Modules\Controller
 
         // Get the current resultset position
         if (!defined('POS')) {
-            define('POS', (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->auth->entries : 0);
+            define('POS', (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->user->getEntriesPerPage() : 0);
         }
-
-        // Initialize the breadcrumb
-        $this->breadcrumb->prePopulate();
 
         $this->view->assign('PHP_SELF', PHP_SELF);
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));

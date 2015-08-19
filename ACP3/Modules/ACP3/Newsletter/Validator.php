@@ -18,9 +18,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var Model
      */
@@ -31,7 +31,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Misc    $validate
      * @param Core\Validator\Rules\Captcha $captchaValidator
      * @param Core\ACL                     $acl
-     * @param Core\Auth                    $auth
+     * @param Core\User                    $user
      * @param Model                        $newsletterModel
      */
     public function __construct(
@@ -39,7 +39,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\ACL $acl,
-        Core\Auth $auth,
+        Core\User $user,
         Model $newsletterModel
     )
     {
@@ -47,7 +47,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->captchaValidator = $captchaValidator;
         $this->acl = $acl;
-        $this->auth = $auth;
+        $this->user = $user;
         $this->newsletterModel = $newsletterModel;
     }
 
@@ -88,7 +88,7 @@ class Validator extends Core\Validator\AbstractValidator
         } elseif ($this->newsletterModel->accountExists($formData['mail']) === true) {
             $this->errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->user->isAuthenticated() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -111,7 +111,7 @@ class Validator extends Core\Validator\AbstractValidator
         } elseif ($this->newsletterModel->accountExists($formData['mail']) === false) {
             $this->errors['mail'] = $this->lang->t('newsletter', 'account_not_exists');
         }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->user->isAuthenticated() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 

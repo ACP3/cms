@@ -2,6 +2,7 @@
 
 namespace ACP3\Installer\Core\Modules;
 
+use ACP3\Core\Filesystem;
 use ACP3\Core\Modules\ControllerInterface;
 use ACP3\Core\Redirect;
 use ACP3\Installer\Core\Modules\Controller\Context;
@@ -126,8 +127,8 @@ class Controller implements ControllerInterface
         // Dropdown-Menü für die Sprachen
         $languages = [];
         $path = INSTALLER_MODULES_DIR . 'Install/Languages/';
-        $files = array_diff(scandir($path), ['.', '..']);
-        foreach ($files as $row) {
+
+        foreach (Filesystem::scandir($path) as $row) {
             $langInfo = simplexml_load_file($path . $row);
             if (!empty($langInfo)) {
                 $languages[] = [

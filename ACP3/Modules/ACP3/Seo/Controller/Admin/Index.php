@@ -124,7 +124,7 @@ class Index extends Core\Modules\AdminController
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->auth->entries
+                'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('seo', $seo);

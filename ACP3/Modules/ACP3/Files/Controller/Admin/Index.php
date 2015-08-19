@@ -212,7 +212,7 @@ class Index extends Core\Modules\AdminController
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->auth->entries
+                'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('files', $files);
@@ -275,7 +275,7 @@ class Index extends Core\Modules\AdminController
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'comments' => $this->useComments($formData, $settings),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
 
@@ -320,7 +320,7 @@ class Index extends Core\Modules\AdminController
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'comments' => $this->useComments($formData, $settings),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
             // Falls eine neue Datei angegeben wurde, Änderungen durchführen

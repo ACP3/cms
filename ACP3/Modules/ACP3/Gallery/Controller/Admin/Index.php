@@ -173,7 +173,7 @@ class Index extends Core\Modules\AdminController
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->auth->entries
+                'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('galleries', $galleries);
@@ -217,7 +217,7 @@ class Index extends Core\Modules\AdminController
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
             $lastId = $this->galleryModel->insert($insertValues);
@@ -252,7 +252,7 @@ class Index extends Core\Modules\AdminController
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'title' => Core\Functions::strEncode($formData['title']),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
             $bool = $this->galleryModel->update($updateValues, $id);

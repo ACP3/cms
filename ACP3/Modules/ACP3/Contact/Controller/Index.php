@@ -76,8 +76,8 @@ class Index extends Core\Modules\FrontendController
         ];
 
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-        if ($this->auth->isUser() === true) {
-            $user = $this->auth->getUserInfo();
+        if ($this->user->isAuthenticated() === true) {
+            $user = $this->user->getUserInfo();
             $disabled = ' readonly="readonly"';
             $defaults['name'] = !empty($user['realname']) ? $user['realname'] : $user['nickname'];
             $defaults['name_disabled'] = $disabled;

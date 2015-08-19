@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\Container;
 class Breadcrumb
 {
     /**
-     * Enthält alle Schritte der Brotkrümelspur,
-     * welche von den Modulen festgelegt werden
-     *
      * @var array
      */
     protected $steps = [];
@@ -28,8 +25,6 @@ class Breadcrumb
     ];
 
     /**
-     * Enthält die gecachete Brotkrümelspur
-     *
      * @var array
      */
     protected $breadcrumbCache = [];
@@ -75,13 +70,6 @@ class Breadcrumb
         $this->request = $request;
         $this->router = $router;
         $this->config = $config;
-    }
-
-    /**
-     * Initializes and pre populates the breadcrumb
-     */
-    public function prePopulate()
-    {
     }
 
     /**

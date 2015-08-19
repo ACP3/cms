@@ -10,9 +10,9 @@ use ACP3\Core\Lang\Cache as LanguageCache;
 class Lang
 {
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Lang\Cache
      */
@@ -41,17 +41,17 @@ class Lang
     protected $buffer = [];
 
     /**
-     * @param \ACP3\Core\Auth       $auth
+     * @param \ACP3\Core\User       $user
      * @param \ACP3\Core\Lang\Cache $cache
      * @param \ACP3\Core\Config     $config
      */
     public function __construct(
-        Auth $auth,
+        User $user,
         LanguageCache $cache,
         Config $config
     )
     {
-        $this->auth = $auth;
+        $this->user = $user;
         $this->cache = $cache;
         $this->config = $config;
     }
@@ -76,7 +76,7 @@ class Lang
     public function getLanguage()
     {
         if ($this->lang === '') {
-            $lang = $this->auth->getUserLanguage();
+            $lang = $this->user->getLanguage();
             $this->lang = self::languagePackExists($lang) === true ? $lang : $this->config->getSettings('system')['lang'];
         }
 

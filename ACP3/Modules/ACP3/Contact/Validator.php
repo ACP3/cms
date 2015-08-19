@@ -15,9 +15,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $captchaValidator;
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var Core\ACL
      */
@@ -28,21 +28,21 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Misc    $validate
      * @param Core\Validator\Rules\Captcha $captchaValidator
      * @param Core\ACL                     $acl
-     * @param Core\Auth                    $auth
+     * @param Core\User                    $user
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\ACL $acl,
-        Core\Auth $auth
+        Core\User $user
     )
     {
         parent::__construct($lang, $validate);
 
         $this->captchaValidator = $captchaValidator;
         $this->acl = $acl;
-        $this->auth = $auth;
+        $this->user = $user;
     }
 
     /**
@@ -66,7 +66,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
-            $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false
+            $this->user->isAuthenticated() === false && $this->captchaValidator->captcha($formData['captcha']) === false
         ) {
             $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }

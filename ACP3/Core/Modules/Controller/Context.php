@@ -2,7 +2,7 @@
 namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Auth;
+use ACP3\Core\User;
 use ACP3\Core\Config;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Lang;
@@ -21,9 +21,9 @@ class Context
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Lang
      */
@@ -51,7 +51,7 @@ class Context
 
     /**
      * @param \ACP3\Core\ACL                   $acl
-     * @param \ACP3\Core\Auth                  $auth
+     * @param \ACP3\Core\User                  $user
      * @param \ACP3\Core\Lang                  $lang
      * @param \ACP3\Core\Modules               $modules
      * @param \ACP3\Core\Http\RequestInterface $request
@@ -61,7 +61,7 @@ class Context
      */
     public function __construct(
         ACL $acl,
-        Auth $auth,
+        User $user,
         Lang $lang,
         Modules $modules,
         RequestInterface $request,
@@ -71,7 +71,7 @@ class Context
     )
     {
         $this->acl = $acl;
-        $this->auth = $auth;
+        $this->user = $user;
         $this->lang = $lang;
         $this->modules = $modules;
         $this->request = $request;
@@ -89,11 +89,11 @@ class Context
     }
 
     /**
-     * @return \ACP3\Core\Auth
+     * @return \ACP3\Core\User
      */
-    public function getAuth()
+    public function getUser()
     {
-        return $this->auth;
+        return $this->user;
     }
 
     /**

@@ -16,9 +16,9 @@ abstract class Controller implements ControllerInterface
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
@@ -76,7 +76,7 @@ abstract class Controller implements ControllerInterface
     public function __construct(Controller\Context $context)
     {
         $this->acl = $context->getACL();
-        $this->auth = $context->getAuth();
+        $this->user = $context->getUser();
         $this->lang = $context->getLang();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();

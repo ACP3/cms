@@ -24,7 +24,7 @@ class Index extends Core\Modules\Controller
      */
     public function actionLogin()
     {
-        if ($this->auth->isUser() === false) {
+        if ($this->user->isAuthenticated() === false) {
             $currentPage = base64_encode(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getQuery());
 
             $settings = $this->config->getSettings('users');
@@ -43,7 +43,7 @@ class Index extends Core\Modules\Controller
      */
     public function actionUserMenu()
     {
-        if ($this->auth->isUser() === true) {
+        if ($this->user->isAuthenticated() === true) {
             $userSidebar = [];
             $userSidebar['page'] = base64_encode(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getQuery());
 

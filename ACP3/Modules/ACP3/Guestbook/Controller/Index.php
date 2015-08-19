@@ -158,8 +158,8 @@ class Index extends Core\Modules\FrontendController
         ];
 
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-        if ($this->auth->isUser() === true) {
-            $users = $this->auth->getUserInfo();
+        if ($this->user->isAuthenticated() === true) {
+            $users = $this->user->getUserInfo();
             $disabled = ' readonly="readonly"';
             $defaults['name'] = $users['nickname'];
             $defaults['name_disabled'] = $disabled;
@@ -182,7 +182,7 @@ class Index extends Core\Modules\FrontendController
     {
         $this->view->assign('overlay', $this->guestbookSettings['overlay']);
 
-        $guestbook = $this->guestbookModel->getAll($this->guestbookSettings['notify'], POS, $this->auth->entries);
+        $guestbook = $this->guestbookModel->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
@@ -216,7 +216,7 @@ class Index extends Core\Modules\FrontendController
                     'date' => $this->date->toSQL(),
                     'ip' => $this->request->getServer()->get('REMOTE_ADDR', ''),
                     'name' => Core\Functions::strEncode($formData['name']),
-                    'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
+                    'user_id' => $this->user->isAuthenticated() ? $this->user->getUserId() : '',
                     'message' => Core\Functions::strEncode($formData['message']),
                     'website' => Core\Functions::strEncode($formData['website']),
                     'mail' => $formData['mail'],

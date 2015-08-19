@@ -128,8 +128,8 @@ class Index extends Core\Modules\AdminController
                         $isAdminUser = true;
                     } else {
                         // Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-                        if ($item == $this->auth->getUserId()) {
-                            $this->auth->logout();
+                        if ($item == $this->user->getUserId()) {
+                            $this->user->logout();
                             $selfDelete = true;
                         }
                         $bool = $this->usersModel->delete($item);
@@ -155,7 +155,7 @@ class Index extends Core\Modules\AdminController
     public function actionEdit($id)
     {
         if ($this->usersModel->resultExists($id) === true) {
-            $user = $this->auth->getUserInfo($id);
+            $user = $this->user->getUserInfo($id);
 
             $this->breadcrumb->setTitlePostfix($user['nickname']);
 
@@ -230,7 +230,7 @@ class Index extends Core\Modules\AdminController
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->auth->entries
+                'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
 
@@ -332,7 +332,7 @@ class Index extends Core\Modules\AdminController
 
             // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
+                $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
                 $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
                 $updateValues['pwd'] = $newPassword;
                 $updateValues['pwd_salt'] = $salt;
@@ -341,12 +341,12 @@ class Index extends Core\Modules\AdminController
             $bool = $this->usersModel->update($updateValues, $id);
 
             // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-            if ($id == $this->auth->getUserId() && $this->request->getCookies()->has(Core\Auth::AUTH_NAME)) {
+            if ($id == $this->user->getUserId() && $this->request->getCookies()->has(Core\User::AUTH_NAME)) {
                 $user = $this->usersModel->getOneById($id);
-                $this->auth->setRememberMeCookie(
+                $this->user->setRememberMeCookie(
                     $id,
                     $user['remember_me_token'],
-                    Core\Auth::REMEMBER_ME_COOKIE_LIFETIME
+                    Core\User::REMEMBER_ME_COOKIE_LIFETIME
                 );
             }
 

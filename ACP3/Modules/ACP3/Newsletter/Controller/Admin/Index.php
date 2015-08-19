@@ -140,7 +140,7 @@ class Index extends Core\Modules\AdminController
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->auth->entries
+                'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('newsletter', $newsletter);
@@ -207,7 +207,7 @@ class Index extends Core\Modules\AdminController
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'html' => $settings['html'],
                 'status' => 0,
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
             $lastId = $this->newsletterModel->insert($insertValues);
 
@@ -246,7 +246,7 @@ class Index extends Core\Modules\AdminController
                 'date' => $this->date->toSQL($formData['date']),
                 'title' => Core\Functions::strEncode($formData['title']),
                 'text' => Core\Functions::strEncode($formData['text'], true),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
             $bool = $this->newsletterModel->update($updateValues, $id);
 

@@ -44,8 +44,8 @@ class Index extends Core\Modules\FrontendController
 
         if ($c_polls > 0) {
             for ($i = 0; $i < $c_polls; ++$i) {
-                if ($this->auth->isUser() === true) {
-                    $query = $this->pollsModel->getVotesByUserId($polls[$i]['id'], $this->auth->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
+                if ($this->user->isAuthenticated() === true) {
+                    $query = $this->pollsModel->getVotesByUserId($polls[$i]['id'], $this->user->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
                 } else {
                     $query = $this->pollsModel->getVotesByIpAddress($polls[$i]['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
                 }
@@ -123,15 +123,15 @@ class Index extends Core\Modules\FrontendController
         $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
         $answers = $formData['answer'];
 
-        if ($this->auth->isUser() === true) {
-            $query = $this->pollsModel->getVotesByUserId($id, $this->auth->getUserId(), $ip); // Check, whether the logged user has already voted
+        if ($this->user->isAuthenticated() === true) {
+            $query = $this->pollsModel->getVotesByUserId($id, $this->user->getUserId(), $ip); // Check, whether the logged user has already voted
         } else {
             $query = $this->pollsModel->getVotesByIpAddress($id, $ip); // For guest users check against the ip address
         }
 
         $bool = false;
         if ($query == 0) {
-            $userId = $this->auth->isUser() ? $this->auth->getUserId() : 0;
+            $userId = $this->user->isAuthenticated() ? $this->user->getUserId() : 0;
 
             // Multiple Answers
             if (is_array($answers) === false) {

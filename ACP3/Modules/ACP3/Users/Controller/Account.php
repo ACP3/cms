@@ -62,7 +62,7 @@ class Account extends Core\Modules\FrontendController
     {
         parent::preDispatch();
 
-        if ($this->auth->isUser() === false || $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId()) === false) {
+        if ($this->user->isAuthenticated() === false || $this->get('core.validator.rules.misc')->isNumber($this->user->getUserId()) === false) {
             $this->redirect()->temporary('users/index/login');
         }
     }
@@ -73,7 +73,7 @@ class Account extends Core\Modules\FrontendController
             $this->_editPost($this->request->getPost()->getAll());
         }
 
-        $user = $this->auth->getUserInfo();
+        $user = $this->user->getUserInfo();
 
         $this->view->assign('contact', $this->get('users.helpers.forms')->fetchContactDetails(
             $user['mail'],
@@ -102,7 +102,7 @@ class Account extends Core\Modules\FrontendController
             $this->_settingsPost($this->request->getPost()->getAll(), $settings);
         }
 
-        $user = $this->usersModel->getOneById($this->auth->getUserId());
+        $user = $this->usersModel->getOneById($this->user->getUserId());
 
         $this->view->assign('language_override', $settings['language_override']);
         $this->view->assign('entries_override', $settings['entries_override']);
@@ -129,12 +129,12 @@ class Account extends Core\Modules\FrontendController
             $updateValues = [
                 'draft' => Core\Functions::strEncode($this->request->getPost()->get('draft', ''), true)
             ];
-            $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
+            $bool = $this->usersModel->update($updateValues, $this->user->getUserId());
 
             $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         }
 
-        $user = $this->usersModel->getOneById($this->auth->getUserId());
+        $user = $this->usersModel->getOneById($this->user->getUserId());
 
         $this->view->assign('draft', $user['draft']);
     }
@@ -166,19 +166,19 @@ class Account extends Core\Modules\FrontendController
 
                 // Neues Passwort
                 if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                    $salt = $this->secureHelper->salt(Core\Auth::SALT_LENGTH);
+                    $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
                     $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
                     $updateValues['pwd'] = $newPassword;
                     $updateValues['pwd_salt'] = $salt;
                 }
 
-                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
+                $bool = $this->usersModel->update($updateValues, $this->user->getUserId());
 
-                $user = $this->usersModel->getOneById($this->auth->getUserId());
-                $this->auth->setRememberMeCookie(
-                    $this->auth->getUserId(),
+                $user = $this->usersModel->getOneById($this->user->getUserId());
+                $this->user->setRememberMeCookie(
+                    $this->user->getUserId(),
                     $user['remember_me_token'],
-                    Core\Auth::REMEMBER_ME_COOKIE_LIFETIME
+                    Core\User::REMEMBER_ME_COOKIE_LIFETIME
                 );
 
                 $this->formTokenHelper->unsetFormToken();
@@ -214,7 +214,7 @@ class Account extends Core\Modules\FrontendController
                     $updateValues['entries'] = (int)$formData['entries'];
                 }
 
-                $bool = $this->usersModel->update($updateValues, $this->auth->getUserId());
+                $bool = $this->usersModel->update($updateValues, $this->user->getUserId());
 
                 $this->formTokenHelper->unsetFormToken();
 

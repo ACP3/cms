@@ -37,7 +37,7 @@ services:
 
   users.validator:
     class: %users.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.captcha', '@core.validator.rules.date', '@core.acl', '@core.auth', '@users.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.captcha', '@core.validator.rules.date', '@core.acl', '@core.user', '@users.model']
 
   users.installer.schema:
     class: %users.installer.schema.fqdn%

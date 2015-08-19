@@ -43,7 +43,7 @@ class FrontendContext extends Core\Modules\Controller\Context
     {
         parent::__construct(
             $context->getACL(),
-            $context->getAuth(),
+            $context->getUser(),
             $context->getLang(),
             $context->getModules(),
             $context->getRequest(),

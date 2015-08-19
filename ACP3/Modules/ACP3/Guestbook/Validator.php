@@ -19,9 +19,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Date
      */
@@ -48,7 +48,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param \ACP3\Core\Validator\Rules\Misc    $validate
      * @param \ACP3\Core\Validator\Rules\Captcha $captchaValidator
      * @param \ACP3\Core\ACL                     $acl
-     * @param \ACP3\Core\Auth                    $auth
+     * @param \ACP3\Core\User                    $user
      * @param \ACP3\Core\Date                    $date
      * @param \ACP3\Core\Modules                 $modules
      * @param \ACP3\Core\Http\Request            $request
@@ -59,7 +59,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\ACL $acl,
-        Core\Auth $auth,
+        Core\User $user,
         Core\Date $date,
         Core\Modules $modules,
         Core\Http\Request $request,
@@ -69,7 +69,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->captchaValidator = $captchaValidator;
         $this->acl = $acl;
-        $this->auth = $auth;
+        $this->user = $user;
         $this->date = $date;
         $this->modules = $modules;
         $this->request = $request;
@@ -117,7 +117,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['message']) < 3) {
             $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->user->isAuthenticated() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
             $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {

@@ -11,9 +11,9 @@ use ACP3\Core\Validator\Rules\Misc;
 class Pagination
 {
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Breadcrumb
      */
@@ -80,7 +80,7 @@ class Pagination
     private $pagination = [];
 
     /**
-     * @param \ACP3\Core\Auth                  $auth
+     * @param \ACP3\Core\User                  $user
      * @param \ACP3\Core\Breadcrumb            $breadcrumb
      * @param \ACP3\Core\Lang                  $lang
      * @param \ACP3\Core\SEO                   $seo
@@ -90,7 +90,7 @@ class Pagination
      * @param \ACP3\Core\Validator\Rules\Misc  $miscValidator
      */
     public function __construct(
-        Auth $auth,
+        User $user,
         Breadcrumb $breadcrumb,
         Lang $lang,
         SEO $seo,
@@ -99,7 +99,7 @@ class Pagination
         View $view,
         Misc $miscValidator)
     {
-        $this->auth = $auth;
+        $this->user = $user;
         $this->breadcrumb = $breadcrumb;
         $this->lang = $lang;
         $this->seo = $seo;
@@ -108,7 +108,7 @@ class Pagination
         $this->view = $view;
         $this->miscValidator = $miscValidator;
 
-        $this->resultsPerPage = $auth->entries;
+        $this->resultsPerPage = $user->getEntriesPerPage();
     }
 
     /**

@@ -18,9 +18,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Date
      */
@@ -39,7 +39,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Misc    $validate
      * @param Core\Validator\Rules\Captcha $captchaValidator
      * @param Core\ACL                     $acl
-     * @param Core\Auth                    $auth
+     * @param Core\User                    $user
      * @param Core\Date                    $date
      * @param Core\Modules                 $modules
      * @param Model                        $commentsModel
@@ -49,7 +49,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\ACL $acl,
-        Core\Auth $auth,
+        Core\User $user,
         Core\Date $date,
         Core\Modules $modules,
         Model $commentsModel
@@ -59,7 +59,7 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->captchaValidator = $captchaValidator;
         $this->acl = $acl;
-        $this->auth = $auth;
+        $this->user = $user;
         $this->date = $date;
         $this->modules = $modules;
         $this->commentsModel = $commentsModel;
@@ -92,7 +92,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
-            $this->auth->isUser() === false &&
+            $this->user->isAuthenticated() === false &&
             $this->captchaValidator->captcha($formData['captcha']) === false
         ) {
             $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');

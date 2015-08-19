@@ -23,7 +23,7 @@ services:
 
   contact.validator:
     class: %contact.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.auth']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user']
 
   contact.installer.schema:
     class: %contact.installer.schema.fqdn%

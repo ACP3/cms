@@ -11,9 +11,9 @@ use ACP3\Modules\ACP3\Permissions;
 class ACL
 {
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -46,19 +46,19 @@ class ACL
     protected $resources = [];
 
     /**
-     * @param \ACP3\Core\Auth                      $auth
+     * @param \ACP3\Core\User                      $user
      * @param \ACP3\Core\Modules                   $modules
      * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
-        Auth $auth,
+        User $user,
         Modules $modules,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache
     )
     {
-        $this->auth = $auth;
+        $this->user = $user;
         $this->modules = $modules;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
@@ -70,7 +70,7 @@ class ACL
     protected function getPrivileges()
     {
         if ($this->privileges === []) {
-            $this->privileges = $this->getRules($this->getUserRoleIds($this->auth->getUserId()));
+            $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
         }
 
         return $this->privileges;
@@ -173,7 +173,7 @@ class ACL
      */
     public function userHasRole($roleId)
     {
-        return in_array($roleId, $this->getUserRoleIds($this->auth->getUserId()));
+        return in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
     }
 
     /**
@@ -204,7 +204,7 @@ class ACL
         } elseif (isset($this->getResources()[$area][$resource])) {
             $module = $resourceArray[1];
             $key = $this->getResources()[$area][$resource]['key'];
-            return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
+            return $this->userHasPrivilege($module, $key) === true || $this->user->isSuperUser() === true;
         }
 
         return false;

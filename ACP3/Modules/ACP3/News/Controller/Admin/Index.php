@@ -179,7 +179,7 @@ class Index extends Core\Modules\AdminController
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->auth->entries
+                'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
             $this->view->assign('news', $news);
@@ -233,7 +233,7 @@ class Index extends Core\Modules\AdminController
                 'uri' => Core\Functions::strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
                 'link_title' => Core\Functions::strEncode($formData['link_title']),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
             $lastId = $this->newsModel->insert($insertValues);
@@ -276,7 +276,7 @@ class Index extends Core\Modules\AdminController
                 'uri' => Core\Functions::strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
                 'link_title' => Core\Functions::strEncode($formData['link_title']),
-                'user_id' => $this->auth->getUserId(),
+                'user_id' => $this->user->getUserId(),
             ];
 
             $bool = $this->newsModel->update($updateValues, $id);

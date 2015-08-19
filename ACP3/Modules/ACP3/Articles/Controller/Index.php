@@ -62,7 +62,7 @@ class Index extends Core\Modules\FrontendController
     {
         $time = $this->date->getCurrentDateTime();
 
-        $articles = $this->articlesModel->getAll($time, POS, $this->auth->entries);
+        $articles = $this->articlesModel->getAll($time, POS, $this->user->getEntriesPerPage());
         $c_articles = count($articles);
 
         if ($c_articles > 0) {

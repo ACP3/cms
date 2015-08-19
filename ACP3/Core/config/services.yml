@@ -15,11 +15,7 @@ imports:
 services:
   core.acl:
     class: ACP3\Core\ACL
-    arguments: ['@core.auth', '@core.modules', '@permissions.model', '@permissions.cache']
-
-  core.auth:
-    class: ACP3\Core\Auth
-    arguments: [@core.request, '@core.session', '@core.helpers.secure', '@core.config', '@users.model']
+    arguments: ['@core.user', '@core.modules', '@permissions.model', '@permissions.cache']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
@@ -35,7 +31,7 @@ services:
 
   core.date:
     class: ACP3\Core\Date
-    arguments: ['@core.auth', '@core.lang', '@core.config']
+    arguments: ['@core.user', '@core.lang', '@core.config']
 
   core.db:
     class: ACP3\Core\DB
@@ -46,7 +42,7 @@ services:
 
   core.lang:
     class: ACP3\Core\Lang
-    arguments: ['@core.auth', @core.lang.cache, '@core.config']
+    arguments: ['@core.user', @core.lang.cache, '@core.config']
 
   core.lang.cache:
     class: ACP3\Core\Lang\Cache
@@ -58,7 +54,7 @@ services:
 
   core.pagination:
     class: ACP3\Core\Pagination
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
+    arguments: ['@core.user', '@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
 
   core.redirect:
     class: ACP3\Core\Redirect
@@ -83,6 +79,10 @@ services:
   core.session:
     class: ACP3\Core\SessionHandler
     arguments: ['@core.db', @core.request]
+
+  core.user:
+    class: ACP3\Core\User
+    arguments: [@core.request, '@core.session', '@core.helpers.secure', '@core.config', '@users.model']
 
   core.view:
     class: ACP3\Core\View

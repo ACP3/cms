@@ -160,7 +160,7 @@ class Index extends Core\Modules\FrontendController
         $this->pagination->setTotalResults($this->galleryModel->countAll($time));
         $this->pagination->display();
 
-        $this->view->assign('galleries', $this->galleryModel->getAll($time, POS, $this->auth->entries));
+        $this->view->assign('galleries', $this->galleryModel->getAll($time, POS, $this->user->getEntriesPerPage()));
         $this->view->assign('dateformat', $this->settings['dateformat']);
     }
 

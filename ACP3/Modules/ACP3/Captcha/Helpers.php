@@ -10,9 +10,9 @@ use ACP3\Core;
 class Helpers
 {
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -35,7 +35,7 @@ class Helpers
     protected $view;
 
     /**
-     * @param \ACP3\Core\Auth           $auth
+     * @param \ACP3\Core\User           $user
      * @param \ACP3\Core\Http\Request   $request
      * @param \ACP3\Core\Router         $router
      * @param \ACP3\Core\SessionHandler $sessionHandler
@@ -43,7 +43,7 @@ class Helpers
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      */
     public function __construct(
-        Core\Auth $auth,
+        Core\User $user,
         Core\Http\Request $request,
         Core\Router $router,
         Core\SessionHandler $sessionHandler,
@@ -51,7 +51,7 @@ class Helpers
         Core\Helpers\Secure $secureHelper
     )
     {
-        $this->auth = $auth;
+        $this->user = $user;
         $this->request = $request;
         $this->router = $router;
         $this->sessionHandler = $sessionHandler;
@@ -72,7 +72,7 @@ class Helpers
     public function captcha($captchaLength = 5, $id = 'captcha', $inputOnly = false, $path = '')
     {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
-        if ($this->auth->isUser() === false) {
+        if ($this->user->isAuthenticated() === false) {
             $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
             $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));

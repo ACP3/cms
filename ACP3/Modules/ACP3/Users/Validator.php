@@ -26,9 +26,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Core\User
      */
-    protected $auth;
+    protected $user;
     /**
      * @var Model
      */
@@ -41,7 +41,7 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Captcha $captchaValidator
      * @param Core\Validator\Rules\Date    $dateValidator
      * @param Core\ACL                     $acl
-     * @param Core\Auth                    $auth
+     * @param Core\User                    $user
      * @param Model                        $userModel
      */
     public function __construct(
@@ -51,7 +51,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\Validator\Rules\Date $dateValidator,
         Core\ACL $acl,
-        Core\Auth $auth,
+        Core\User $user,
         Model $userModel
     )
     {
@@ -61,7 +61,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->captchaValidator = $captchaValidator;
         $this->dateValidator = $dateValidator;
         $this->acl = $acl;
-        $this->auth = $auth;
+        $this->user = $user;
         $this->userModel = $userModel;
     }
 
@@ -239,7 +239,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['nickname'])) {
             $this->errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }
-        if ($this->userModel->resultExistsByUserName($formData['nickname'], $this->auth->getUserId()) === true) {
+        if ($this->userModel->resultExistsByUserName($formData['nickname'], $this->user->getUserId()) === true) {
             $this->errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
         if ($this->_gender($formData['gender']) === false) {
@@ -251,7 +251,7 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->validate->email($formData['mail']) === false) {
             $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
-        if ($this->userModel->resultExistsByEmail($formData['mail'], $this->auth->getUserId()) === true) {
+        if ($this->userModel->resultExistsByEmail($formData['mail'], $this->user->getUserId()) === true) {
             $this->errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
         if (!empty($formData['icq']) && $this->_icq($formData['icq']) === false) {

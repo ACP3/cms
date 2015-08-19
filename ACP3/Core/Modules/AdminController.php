@@ -36,7 +36,7 @@ abstract class AdminController extends Core\Modules\FrontendController
      */
     public function preDispatch()
     {
-        if ($this->auth->isUser() === false) {
+        if ($this->user->isAuthenticated() === false) {
             throw new Core\Exceptions\UnauthorizedAccess();
         }
 

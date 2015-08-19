@@ -161,7 +161,7 @@ class Details extends Core\Modules\AdminController
                     'sort_col' => $canDelete === true ? 5 : 4,
                     'sort_dir' => 'asc',
                     'hide_col_sort' => $canDelete === true ? 0 : '',
-                    'records_per_page' => $this->auth->entries
+                    'records_per_page' => $this->user->getEntriesPerPage()
                 ];
                 $this->view->assign('datatable_config', $config);
 

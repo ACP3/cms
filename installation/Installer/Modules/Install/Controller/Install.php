@@ -2,7 +2,7 @@
 
 namespace ACP3\Installer\Modules\Install\Controller;
 
-use ACP3\Core\Auth;
+use ACP3\Core\User;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
@@ -151,16 +151,14 @@ class Install extends AbstractController
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
         // Load installer modules services
-        $installerModules = array_diff(scandir(INSTALLER_MODULES_DIR), ['.', '..']);
-        foreach ($installerModules as $module) {
+        foreach (Filesystem::scandir(INSTALLER_MODULES_DIR) as $module) {
             $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
             if (is_file($path) === true) {
                 $loader->load($path);
             }
         }
 
-        $modules = array_diff(scandir(MODULES_DIR . 'ACP3/'), ['.', '..']);
-        foreach ($modules as $module) {
+        foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
             $path = MODULES_DIR . 'ACP3/' . $module . '/config/services.yml';
             if (is_file($path) === true) {
                 $loader->load($path);
@@ -283,7 +281,7 @@ class Install extends AbstractController
         /** @var \ACP3\Core\DB db */
         $this->db = $this->get('core.db');
 
-        $salt = $this->secureHelper->salt(Auth::SALT_LENGTH);
+        $salt = $this->secureHelper->salt(User::SALT_LENGTH);
         $currentDate = gmdate('Y-m-d H:i:s');
 
         $queries = [
@@ -301,9 +299,7 @@ class Install extends AbstractController
      */
     private function installModuleSampleData()
     {
-        $modules = array_diff(scandir(MODULES_DIR . 'ACP3/'), ['.', '..']);
-
-        foreach ($modules as $module) {
+        foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
             $module = strtolower($module);
 
             if ($this->installHelper->installSampleData($module, $this->container, $this->get('core.modules.schemaHelper')) === false) {

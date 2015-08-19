@@ -143,7 +143,7 @@ class Index extends Core\Modules\FrontendController
     public function actionIndex()
     {
         // Auflistung der Kommentare
-        $comments = $this->commentsModel->getAllByModule($this->modules->getModuleId($this->module), $this->entryId, POS, $this->auth->entries);
+        $comments = $this->commentsModel->getAllByModule($this->modules->getModuleId($this->module), $this->entryId, POS, $this->user->getEntriesPerPage());
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
@@ -190,8 +190,8 @@ class Index extends Core\Modules\FrontendController
         ];
 
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-        if ($this->auth->isUser() === true) {
-            $user = $this->auth->getUserInfo();
+        if ($this->user->isAuthenticated() === true) {
+            $user = $this->user->getUserInfo();
             $disabled = ' readonly="readonly"';
             $defaults['name'] = $user['nickname'];
             $defaults['name_disabled'] = $disabled;
@@ -225,7 +225,7 @@ class Index extends Core\Modules\FrontendController
                     'date' => $this->date->toSQL(),
                     'ip' => $ip,
                     'name' => Core\Functions::strEncode($formData['name']),
-                    'user_id' => $this->auth->isUser() === true && $this->get('core.validator.rules.misc')->isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
+                    'user_id' => $this->user->isAuthenticated() === true && $this->get('core.validator.rules.misc')->isNumber($this->user->getUserId() === true) ? $this->user->getUserId() : '',
                     'message' => Core\Functions::strEncode($formData['message']),
                     'module_id' => $this->modules->getModuleId($this->module),
                     'entry_id' => $this->entryId,

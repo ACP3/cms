@@ -2,6 +2,7 @@
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 
+use ACP3\Core\Filesystem;
 use ACP3\Installer\Core\Lang;
 
 /**
@@ -146,8 +147,7 @@ class Requirements
     {
         $defaults = ['ACP3/config.yml'];
 
-        $uploads = array_diff(scandir(UPLOADS_DIR), ['.', '..']);
-        foreach ($uploads as $row) {
+        foreach (Filesystem::scandir(UPLOADS_DIR) as $row) {
             $path = 'uploads/' . $row . '/';
             if (is_dir(ACP3_ROOT_DIR . $path) === true) {
                 $defaults[] = $path;
