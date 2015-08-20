@@ -1,14 +1,11 @@
 /.idea
 /ACP3/config.yml
-/uploads/cache/images/*
-/uploads/cache/sql/*
-/uploads/cache/tpl_cached/*
-/uploads/cache/tpl_compiled/*
+/cache/*
 /uploads/assets/*
 /uploads/categories/*
 /uploads/files/*
 /uploads/gallery/*
-/uploads/logs/*
+/uploads/kcfinder/*
 /vendor
 
 !.gitignore
