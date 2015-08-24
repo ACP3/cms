@@ -21,7 +21,6 @@ class ACP3
     {
         $currentCwd = getcwd();
         if (!self::$authenticated) {
-            define('IN_ACP3', true);
             if (!defined('ACP3_ROOT_DIR')) {
                 define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../../../../../../../') . '/');
             }

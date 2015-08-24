@@ -40,7 +40,6 @@ class Application extends Core\AbstractApplication
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
-        define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
         define('CACHE_DIR', ACP3_ROOT_DIR . 'cache/');
 
