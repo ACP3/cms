@@ -44,7 +44,6 @@ class Datepicker extends AbstractFunction
         $this->view->assign('datepicker', $this->dateHelper->datepicker(
             $params['name'],
             $params['value'],
-            $params['params'],
             $params['withTime'],
             $params['inputFieldOnly']
         ));
