@@ -56,7 +56,6 @@ class Datepicker extends AbstractFunction
         $defaults = [
             'name' => '',
             'value' => '',
-            'params' => [],
             'withTime' => true,
             'inputFieldOnly' => false
         ];
