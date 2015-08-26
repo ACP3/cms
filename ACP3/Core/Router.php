@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Enum\Environment;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\System;
@@ -26,21 +27,28 @@ class Router
      * @var \ACP3\Core\Config
      */
     protected $config;
+    /**
+     * @var string
+     */
+    protected $environment;
 
     /**
      * @param \ACP3\Core\Router\Aliases        $aliases
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Config                $config
+     * @param string                           $environment
      */
     public function __construct(
         Aliases $aliases,
         RequestInterface $request,
-        Config $config
+        Config $config,
+        $environment
     )
     {
         $this->aliases = $aliases;
         $this->request = $request;
         $this->config = $config;
+        $this->environment = $environment;
     }
 
     /**
@@ -140,6 +148,8 @@ class Router
      */
     protected function useModRewrite($path)
     {
-        return (bool)$this->config->getSettings('seo')['mod_rewrite'] === true && $this->isAdminUri($path) === false;
+        return $this->environment === Environment::PRODUCTION &&
+        (bool)$this->config->getSettings('seo')['mod_rewrite'] === true &&
+        $this->isAdminUri($path) === false;
     }
 }
