@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Feeds\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Feeds;
 
 /**
@@ -12,24 +11,6 @@ use ACP3\Modules\ACP3\Feeds;
  */
 class Index extends Core\Modules\FrontendController
 {
-    /**
-     * @var Feeds\Extensions
-     */
-    protected $feedsExtensions;
-
-    /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Feeds\Extensions           $feedsExtensions
-     */
-    public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
-        Feeds\Extensions $feedsExtensions)
-    {
-        parent::__construct($context);
-
-        $this->feedsExtensions = $feedsExtensions;
-    }
-
     public function preDispatch()
     {
         $settings = $this->config->getSettings('feeds');
@@ -54,13 +35,11 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionIndex($feed)
     {
-        $action = strtolower($feed) . 'Feed';
-
-        if ($this->acl->hasPermission('frontend/' . $feed) === true &&
-            method_exists($this->feedsExtensions, $action) === true
-        ) {
-            $items = $this->feedsExtensions->$action();
-            $this->view->assign($items);
+        if ($this->acl->hasPermission('frontend/' . $feed)) {
+            $this->eventDispatcher->dispatch(
+                'feeds.events.displayFeed',
+                new Feeds\Event\DisplayFeed($this->view, $feed)
+            );
 
             $this->setContentType('text/xml');
             $this->setTemplate($this->config->getSettings('feeds')['feed_type']);

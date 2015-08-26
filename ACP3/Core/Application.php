@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
  * Bootstraps the application
@@ -247,6 +248,8 @@ class Application extends AbstractApplication
     protected function dumpContainer(ConfigCache $containerConfigCache)
     {
         $containerBuilder = new ContainerBuilder();
+        $containerBuilder->addCompilerPass(new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber'));
+
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
         $loader->load(CLASSES_DIR . 'config/services.yml');
         $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');

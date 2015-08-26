@@ -1,3 +1,6 @@
+imports:
+  - { resource: events.yml }
+
 parameters:
   files.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index'
   files.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Index'

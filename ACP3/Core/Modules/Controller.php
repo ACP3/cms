@@ -12,6 +12,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class Controller implements ControllerInterface
 {
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+    /**
      * @var \ACP3\Core\ACL
      */
     protected $acl;
@@ -75,6 +79,7 @@ abstract class Controller implements ControllerInterface
      */
     public function __construct(Controller\Context $context)
     {
+        $this->eventDispatcher = $context->getEventDispatcher();
         $this->acl = $context->getACL();
         $this->user = $context->getUser();
         $this->lang = $context->getLang();

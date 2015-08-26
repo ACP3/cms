@@ -114,11 +114,11 @@ class Lang
      */
     public function getDirection()
     {
-        if (isset($this->buffer[$this->lang]) === false) {
-            $this->buffer[$this->lang] = $this->cache->getLanguageCache($this->getLanguage());
+        if (isset($this->buffer[$this->getLanguage()]) === false) {
+            $this->buffer[$this->getLanguage()] = $this->cache->getLanguageCache($this->getLanguage());
         }
 
-        return isset($this->buffer[$this->lang]['info']['direction']) ? $this->buffer[$this->lang]['info']['direction'] : 'ltr';
+        return isset($this->buffer[$this->getLanguage()]['info']['direction']) ? $this->buffer[$this->getLanguage()]['info']['direction'] : 'ltr';
     }
 
     /**
@@ -131,11 +131,11 @@ class Lang
      */
     public function t($module, $key)
     {
-        if (isset($this->buffer[$this->lang]) === false) {
-            $this->buffer[$this->lang] = $this->cache->getLanguageCache($this->getLanguage());
+        if (isset($this->buffer[$this->getLanguage()]) === false) {
+            $this->buffer[$this->getLanguage()] = $this->cache->getLanguageCache($this->getLanguage());
         }
 
-        return isset($this->buffer[$this->lang]['keys'][$module][$key]) ? $this->buffer[$this->lang]['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
+        return isset($this->buffer[$this->getLanguage()]['keys'][$module][$key]) ? $this->buffer[$this->getLanguage()]['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
     }
 
     /**

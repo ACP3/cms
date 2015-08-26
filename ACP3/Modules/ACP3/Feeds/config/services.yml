@@ -13,18 +13,11 @@ services:
 
   feeds.controller.frontend.index:
     class: %feeds.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@feeds.extensions']
+    parent: core.modules.controller.frontend
 
   feeds.validator:
     class: %feeds.validator.fqdn%
     parent: core.validator.abstract
-
-  feeds.extensions:
-    class: %feeds.extensions.fqdn%
-    arguments: ['@core.date', '@core.router', '@core.helpers.stringFormatter']
-    calls:
-      - ['setFilesModel', ['@?files.model']]
-      - ['setNewsModel', ['@?news.model']]
 
   feeds.installer.schema:
     class: %feeds.installer.schema.fqdn%

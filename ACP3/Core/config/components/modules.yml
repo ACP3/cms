@@ -1,7 +1,7 @@
 services:
   core.context:
     class: ACP3\Core\Modules\Controller\Context
-    arguments: ['@core.acl', '@core.user', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
+    arguments: [@core.eventDispatcher, '@core.acl', '@core.user', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
     public: false
 
   core.context.admin:

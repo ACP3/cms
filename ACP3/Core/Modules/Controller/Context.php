@@ -9,6 +9,7 @@ use ACP3\Core\Lang;
 use ACP3\Core\Modules;
 use ACP3\Core\Router;
 use ACP3\Core\View;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Context
@@ -16,6 +17,10 @@ use ACP3\Core\View;
  */
 class Context
 {
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
     /**
      * @var \ACP3\Core\ACL
      */
@@ -50,16 +55,18 @@ class Context
     protected $config;
 
     /**
-     * @param \ACP3\Core\ACL                   $acl
-     * @param \ACP3\Core\User                  $user
-     * @param \ACP3\Core\Lang                  $lang
-     * @param \ACP3\Core\Modules               $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router                $router
-     * @param \ACP3\Core\View                  $view
-     * @param \ACP3\Core\Config                $config
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \ACP3\Core\ACL                                              $acl
+     * @param \ACP3\Core\User                                             $user
+     * @param \ACP3\Core\Lang                                             $lang
+     * @param \ACP3\Core\Modules                                          $modules
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\Router                                           $router
+     * @param \ACP3\Core\View                                             $view
+     * @param \ACP3\Core\Config                                           $config
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         ACL $acl,
         User $user,
         Lang $lang,
@@ -70,6 +77,7 @@ class Context
         Config $config
     )
     {
+        $this->eventDispatcher = $eventDispatcher;
         $this->acl = $acl;
         $this->user = $user;
         $this->lang = $lang;
@@ -78,6 +86,14 @@ class Context
         $this->router = $router;
         $this->view = $view;
         $this->config = $config;
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    public function getEventDispatcher()
+    {
+        return $this->eventDispatcher;
     }
 
     /**

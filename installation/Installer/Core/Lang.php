@@ -40,21 +40,4 @@ class Lang extends \ACP3\Core\Lang
     {
         return !preg_match('=/=', $lang) && is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $lang . '.xml') === true;
     }
-
-    /**
-     * Gibt den angeforderten Sprachstring aus
-     *
-     * @param string $module
-     * @param string $key
-     *
-     * @return string
-     */
-    public function t($module, $key)
-    {
-        if (empty($this->buffer[$this->lang])) {
-            $this->buffer[$this->lang] = $this->cache->getLanguageCache($this->lang);
-        }
-
-        return isset($this->buffer[$this->lang]['keys'][$module][$key]) ? $this->buffer[$this->lang]['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
-    }
 }
