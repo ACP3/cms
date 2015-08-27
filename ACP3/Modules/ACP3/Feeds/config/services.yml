@@ -1,7 +1,6 @@
 parameters:
   feeds.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Admin\Index'
   feeds.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Index'
-  feeds.extensions.fqdn: 'ACP3\Modules\ACP3\Feeds\Extensions'
   feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validator'
   feeds.installer.schema.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Schema'
   feeds.installer.migration.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Migration'

@@ -1,7 +1,6 @@
 parameters:
   search.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Index'
   search.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Sidebar\Index'
-  search.extensions.fqdn: 'ACP3\Modules\ACP3\Search\Extensions'
   search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
   search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validator'
   search.installer.schema.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Schema'
@@ -10,7 +9,7 @@ parameters:
 services:
   search.controller.frontend.index:
     class: %search.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@search.helpers', '@search.validator', '@search.extensions']
+    arguments: ['@core.context.frontend', '@search.helpers', '@search.validator']
 
   search.controller.sidebar.index:
     class: %search.controller.sidebar.index.fqdn%
@@ -18,19 +17,11 @@ services:
 
   search.helpers:
     class: %search.helpers.fqdn%
-    arguments: ['@core.acl', '@core.modules', '@core.helpers.forms', '@search.extensions']
+    arguments: ['@core.acl', '@core.modules', '@core.helpers.forms', @core.eventDispatcher]
 
   search.validator:
     class: %search.validator.fqdn%
     parent: core.validator.abstract
-
-  search.extensions:
-    class: %search.extensions.fqdn%
-    arguments: ['@core.date', '@core.lang', '@core.router']
-    calls:
-      - ['setArticlesModel', ['@?articles.model']]
-      - ['setFilesModel', ['@?files.model']]
-      - ['setNewsModel', ['@?news.model']]
 
   search.installer.schema:
     class: %search.installer.schema.fqdn%

@@ -1,6 +1,17 @@
 services:
-  news.events.feed:
+  news.events.onDisplayFeedListener:
     class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplayFeedListener
     arguments: [@core.date, @core.router, @core.helpers.stringFormatter, @news.model]
     tags:
       - { name: core.eventListener, event: feeds.events.displayFeed, method: onDisplayFeed }
+
+  news.events.onAvailableModulesListener:
+    class: ACP3\Modules\ACP3\News\Event\Listener\OnAvailableModulesListener
+    tags:
+      - { name: core.eventListener, event: search.events.availableModules, method: onAvailableModules }
+
+  news.events.onDisplaySearchResultsListener:
+    class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplaySearchResultsListener
+    arguments: [@core.acl, @core.date, @core.lang, @core.router, @news.model]
+    tags:
+      - { name: core.eventListener, event: search.events.displaySearchResults, method: onDisplaySearchResults }

@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Search\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Search;
 
 /**
@@ -20,28 +19,21 @@ class Index extends Core\Modules\FrontendController
      * @var \ACP3\Modules\ACP3\Search\Validator
      */
     protected $searchValidator;
-    /**
-     * @var \ACP3\Modules\ACP3\Search\Extensions
-     */
-    protected $searchExtensions;
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Search\Helpers             $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validator           $searchValidator
-     * @param \ACP3\Modules\ACP3\Search\Extensions          $searchExtensions
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Search\Helpers $searchHelpers,
-        Search\Validator $searchValidator,
-        Search\Extensions $searchExtensions)
+        Search\Validator $searchValidator)
     {
         parent::__construct($context);
 
         $this->searchHelpers = $searchHelpers;
         $this->searchValidator = $searchValidator;
-        $this->searchExtensions = $searchExtensions;
     }
 
     /**
@@ -65,7 +57,15 @@ class Index extends Core\Modules\FrontendController
             $this->lang->t('search', 'title_only'),
             $this->lang->t('search', 'content_only')
         ];
-        $this->view->assign('search_areas', $this->get('core.helpers.forms')->checkboxGenerator('area', ['title_content', 'title', 'content'], $langSearchAreas, 'title_content'));
+        $this->view->assign(
+            'search_areas',
+            $this->get('core.helpers.forms')->checkboxGenerator(
+                'area',
+                ['title_content', 'title', 'content'],
+                $langSearchAreas,
+                'title_content'
+            )
+        );
 
         // Treffer sortieren
         $langSortHits = [$this->lang->t('search', 'asc'), $this->lang->t('search', 'desc')];
@@ -84,22 +84,12 @@ class Index extends Core\Modules\FrontendController
             ->append($this->lang->t('search', 'search'), 'search')
             ->append($this->lang->t('search', 'search_results'));
 
-        $searchResults = [];
-        foreach ($modules as $module) {
-            $action = $module . 'Search';
-            if (method_exists($this->searchExtensions, $action) &&
-                $this->acl->hasPermission('frontend/' . $module) === true
-            ) {
-                $this->searchExtensions
-                    ->setArea($area)
-                    ->setSort($sort)
-                    ->setSearchTerm($searchTerm);
-                $searchResults = array_merge($searchResults, $this->searchExtensions->$action());
-            }
-        }
-        if (!empty($searchResults)) {
-            ksort($searchResults);
-            $this->view->assign('results_mods', $searchResults);
+        $searchResultsEvent = new Search\Event\DisplaySearchResults($modules, $searchTerm, $area, $sort);
+        $this->eventDispatcher->dispatch('search.events.displaySearchResults', $searchResultsEvent);
+
+        if (!empty($searchResultsEvent->getSearchResults())) {
+            ksort($searchResultsEvent->getSearchResults());
+            $this->view->assign('results_mods', $searchResultsEvent->getSearchResults());
         } else {
             $this->view->assign('no_search_results', sprintf($this->lang->t('search', 'no_search_results'), $searchTerm));
         }
