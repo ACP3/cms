@@ -87,9 +87,10 @@ class Index extends Core\Modules\FrontendController
         $searchResultsEvent = new Search\Event\DisplaySearchResults($modules, $searchTerm, $area, $sort);
         $this->eventDispatcher->dispatch('search.events.displaySearchResults', $searchResultsEvent);
 
-        if (!empty($searchResultsEvent->getSearchResults())) {
-            ksort($searchResultsEvent->getSearchResults());
-            $this->view->assign('results_mods', $searchResultsEvent->getSearchResults());
+        $searchResults = $searchResultsEvent->getSearchResults();
+        if (!empty($searchResults)) {
+            ksort($searchResults);
+            $this->view->assign('results_mods', $searchResults);
         } else {
             $this->view->assign('no_search_results', sprintf($this->lang->t('search', 'no_search_results'), $searchTerm));
         }
