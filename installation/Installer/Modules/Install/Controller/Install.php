@@ -143,6 +143,7 @@ class Install extends AbstractController
      */
     private function _setContainer()
     {
+        $environment = $this->container->getParameter('core.environment');
         $this->container = new ContainerBuilder();
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
@@ -150,19 +151,16 @@ class Install extends AbstractController
         $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
-        // Load installer modules services
-        foreach (Filesystem::scandir(INSTALLER_MODULES_DIR) as $module) {
-            $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
-            if (is_file($path) === true) {
-                $loader->load($path);
-            }
+        $this->container->setParameter('core.environment', $environment);
+
+        $installerModulesServices = glob(INSTALLER_MODULES_DIR . '*/config/services.yml');
+        foreach ($installerModulesServices as $installerModuleServices) {
+            $loader->load($installerModuleServices);
         }
 
-        foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
-            $path = MODULES_DIR . 'ACP3/' . $module . '/config/services.yml';
-            if (is_file($path) === true) {
-                $loader->load($path);
-            }
+        $modulesServices = glob(MODULES_DIR . 'ACP3/*/config/services.yml');
+        foreach ($modulesServices as $moduleServices) {
+            $loader->load($moduleServices);
         }
 
         $this->container->setParameter('cache_driver', 'Array');
@@ -176,26 +174,17 @@ class Install extends AbstractController
     private function _installModules()
     {
         $bool = false;
-        // Install core modules
-        $installFirst = ['system', 'permissions', 'users'];
-        foreach ($installFirst as $module) {
-            $bool = $this->installHelper->installModule($module, $this->container);
-            if ($bool === false) {
-                $this->view->assign('install_error', true);
-                break;
-            }
-        }
+        $modules = array_merge(['system'], Filesystem::scandir(MODULES_DIR . 'ACP3/'));
+        $alreadyInstalled = [];
 
-        // Install "normal" modules
-        if ($bool === true) {
-            foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
-                $module = strtolower($module);
-                if (in_array(strtolower($module), $installFirst) === false) {
-                    $bool = $this->installHelper->installModule($module, $this->container);
-                    if ($bool === false) {
-                        $this->view->assign('install_error', true);
-                        break;
-                    }
+        foreach ($modules as $module) {
+            $module = strtolower($module);
+            if (!in_array($module, $alreadyInstalled)) {
+                $bool = $this->installHelper->installModule($module, $this->container);
+                $alreadyInstalled[] = $module;
+                if ($bool === false) {
+                    $this->view->assign('install_error', true);
+                    break;
                 }
             }
         }

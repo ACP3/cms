@@ -87,12 +87,9 @@ class Application extends Core\AbstractApplication
             $vendors = $this->container->get('core.modules.vendors')->getVendors();
 
             foreach ($vendors as $vendor) {
-                $namespaceModules = Core\Filesystem::scandir(MODULES_DIR . $vendor . '/');
+                $namespaceModules = glob(MODULES_DIR . $vendor . '/*/config/services.yml');
                 foreach ($namespaceModules as $module) {
-                    $path = MODULES_DIR . $vendor . '/' . $module . '/config/services.yml';
-                    if (is_file($path) === true) {
-                        $loader->load($path);
-                    }
+                    $loader->load($module);
                 }
             }
         }

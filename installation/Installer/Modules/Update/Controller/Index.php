@@ -124,8 +124,7 @@ class Index extends Core\Modules\Controller
 
     protected function _clearCaches()
     {
-        Cache::purge(CACHE_DIR . 'sql');
-        Cache::purge(CACHE_DIR . 'tpl_compiled');
+        Cache::purge(CACHE_DIR);
         Cache::purge(UPLOADS_DIR . 'assets');
     }
 }
