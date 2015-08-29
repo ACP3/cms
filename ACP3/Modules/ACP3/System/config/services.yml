@@ -2,7 +2,8 @@ parameters:
   system.controller.admin.extensions.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Extensions'
   system.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Index'
   system.controller.admin.maintenance.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance'
-  system.helpers.fqdn: 'ACP3\Modules\ACP3\System\Helpers'
+  system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
+  system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
   system.model.fqdn: 'ACP3\Modules\ACP3\System\Model'
   system.validator.fqdn: 'ACP3\Modules\ACP3\System\Validator'
   system.installer.schema.fqdn: 'ACP3\Modules\ACP3\System\Installer\Schema'
@@ -26,8 +27,12 @@ services:
     arguments: ['@core.db']
 
   system.helpers:
-    class: %system.helpers.fqdn%
-    arguments: ['@core.db', '@core.modules', @core.modules.vendors, @core.modules.schemaInstaller, @core.xml]
+    class: %system.helpers.installer.fqdn%
+    arguments: ['@core.modules', @core.modules.vendors, @core.modules.schemaInstaller, @core.xml]
+
+  system.helpers.export:
+    class: %system.helpers.export.fqdn%
+    arguments: ['@core.db']
 
   system.validator:
     class: %system.validator.fqdn%

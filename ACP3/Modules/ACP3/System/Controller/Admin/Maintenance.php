@@ -21,9 +21,9 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\System\Helpers
+     * @var \ACP3\Modules\ACP3\System\Helper\Export
      */
-    protected $systemHelpers;
+    protected $exportHelper;
     /**
      * @var \ACP3\Modules\ACP3\System\Model
      */
@@ -37,7 +37,7 @@ class Maintenance extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param \ACP3\Core\DB                              $db
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\System\Helpers          $systemHelpers
+     * @param \ACP3\Modules\ACP3\System\Helper\Export    $exportHeper
      * @param \ACP3\Modules\ACP3\System\Model            $systemModel
      * @param \ACP3\Modules\ACP3\System\Validator        $systemValidator
      */
@@ -45,7 +45,7 @@ class Maintenance extends Core\Modules\AdminController
         Core\Modules\Controller\AdminContext $context,
         Core\DB $db,
         Core\Helpers\FormToken $formTokenHelper,
-        System\Helpers $systemHelpers,
+        System\Helper\Export $exportHeper,
         System\Model $systemModel,
         System\Validator $systemValidator)
     {
@@ -53,7 +53,7 @@ class Maintenance extends Core\Modules\AdminController
 
         $this->db = $db;
         $this->formTokenHelper = $formTokenHelper;
-        $this->systemHelpers = $systemHelpers;
+        $this->exportHelper = $exportHeper;
         $this->systemModel = $systemModel;
         $this->systemValidator = $systemValidator;
     }
@@ -181,7 +181,7 @@ class Maintenance extends Core\Modules\AdminController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $export = $this->systemHelpers->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
+                $export = $this->exportHelper->exportDatabase($formData['tables'], $formData['export_type'], isset($formData['drop']) === true);
 
                 // Als Datei ausgeben
                 if ($formData['output'] === 'file') {

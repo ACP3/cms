@@ -25,9 +25,9 @@ class Extensions extends Core\Modules\AdminController
      */
     protected $systemModel;
     /**
-     * @var \ACP3\Modules\ACP3\System\Helpers
+     * @var \ACP3\Modules\ACP3\System\Helper\Installer
      */
-    protected $systemHelpers;
+    protected $installerHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
@@ -38,7 +38,7 @@ class Extensions extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\ModuleInfoCache         $moduleInfoCache
      * @param \ACP3\Core\XML                             $xml
      * @param \ACP3\Modules\ACP3\System\Model            $systemModel
-     * @param \ACP3\Modules\ACP3\System\Helpers          $systemHelpers
+     * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
      */
     public function __construct(
@@ -46,7 +46,7 @@ class Extensions extends Core\Modules\AdminController
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         Core\XML $xml,
         System\Model $systemModel,
-        System\Helpers $systemHelpers,
+        System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache)
     {
         parent::__construct($context);
@@ -54,7 +54,7 @@ class Extensions extends Core\Modules\AdminController
         $this->moduleInfoCache = $moduleInfoCache;
         $this->xml = $xml;
         $this->systemModel = $systemModel;
-        $this->systemHelpers = $systemHelpers;
+        $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
     }
 
@@ -68,9 +68,9 @@ class Extensions extends Core\Modules\AdminController
         } else {
             $designs = [];
             $path = ACP3_ROOT_DIR . 'designs/';
-            $directories = scandir($path);
-            $count_dir = count($directories);
-            for ($i = 0; $i < $count_dir; ++$i) {
+            $directories = Core\Filesystem::scandir($path);
+            $countDir = count($directories);
+            for ($i = 0; $i < $countDir; ++$i) {
                 $designInfo = $this->xml->parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
                 if (!empty($designInfo)) {
                     $designs[$i] = $designInfo;
@@ -164,14 +164,14 @@ class Extensions extends Core\Modules\AdminController
         } else {
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
-            $container = $this->systemHelpers->updateServiceContainer(true);
+            $container = $this->installerHelper->updateServiceContainer(true);
 
             if ($container->has($serviceId) === true) {
                 /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
                 $moduleSchema = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkInstallDependencies($moduleSchema);
+                $deps = $this->installerHelper->checkInstallDependencies($moduleSchema);
 
                 // Modul installieren
                 if (empty($deps)) {
@@ -220,7 +220,7 @@ class Extensions extends Core\Modules\AdminController
                 $moduleSchema = $this->container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkUninstallDependencies(
+                $deps = $this->installerHelper->checkUninstallDependencies(
                     $moduleSchema->getModuleName(),
                     $this->container
                 );
@@ -255,14 +255,14 @@ class Extensions extends Core\Modules\AdminController
         if ($this->modules->isInstalled($moduleDirectory) === false) {
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
-            $container = $this->systemHelpers->updateServiceContainer(true);
+            $container = $this->installerHelper->updateServiceContainer(true);
 
             if ($container->has($serviceId) === true) {
                 /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
                 $moduleSchema = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkInstallDependencies($moduleSchema);
+                $deps = $this->installerHelper->checkInstallDependencies($moduleSchema);
 
                 // Modul installieren
                 if (empty($deps)) {
@@ -297,14 +297,14 @@ class Extensions extends Core\Modules\AdminController
         if ($info['protected'] === false && $this->modules->isInstalled($moduleDirectory) === true) {
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
-            $container = $this->systemHelpers->updateServiceContainer();
+            $container = $this->installerHelper->updateServiceContainer();
 
             if ($container->has($serviceId) === true) {
                 /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
                 $moduleSchema = $container->get($serviceId);
 
                 // Modulabhängigkeiten prüfen
-                $deps = $this->systemHelpers->checkUninstallDependencies(
+                $deps = $this->installerHelper->checkUninstallDependencies(
                     $moduleSchema->getModuleName(),
                     $container
                 );
