@@ -24,6 +24,7 @@ class Application extends Core\AbstractApplication
             return;
         }
 
+        $this->setErrorHandler();
         $this->initializeClasses();
         $this->outputPage();
     }
@@ -65,19 +66,8 @@ class Application extends Core\AbstractApplication
 
         if ($this->environment === Core\Enum\Environment::UPDATER) {
             $loader->load(INSTALLER_CLASSES_DIR . 'config/update.yml');
-            $excludedDirs = [];
         } else {
             $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
-            $excludedDirs = ['Update'];
-        }
-
-        // Load installer modules services
-        $installerModules = Core\Filesystem::scandir(INSTALLER_MODULES_DIR, $excludedDirs);
-        foreach ($installerModules as $module) {
-            $path = INSTALLER_MODULES_DIR . $module . '/config/services.yml';
-            if (is_file($path) === true) {
-                $loader->load($path);
-            }
         }
 
         $this->container->setParameter('core.environment', $this->environment);

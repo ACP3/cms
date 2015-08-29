@@ -13,10 +13,11 @@ class Alerts extends \ACP3\Core\Helpers\Alerts
      * Gibt eine Box mit den aufgetretenen Fehlern aus
      *
      * @param string|array $errors
+     * @param bool         $contentOnly
      *
      * @return string
      */
-    public function errorBox($errors)
+    public function errorBox($errors, $contentOnly = true)
     {
         $hasNonIntegerKeys = false;
 

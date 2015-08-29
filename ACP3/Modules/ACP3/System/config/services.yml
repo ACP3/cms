@@ -12,7 +12,7 @@ parameters:
 services:
   system.controller.admin.extensions:
     class: %system.controller.admin.extensions.fqdn%
-    arguments: ['@core.context.admin', @core.modules.moduleInfoCache, '@core.xml', '@system.model', '@system.helpers', '@permissions.cache']
+    arguments: ['@core.context.admin', @core.modules.moduleInfoCache, '@core.xml', '@system.model', '@system.helpers.installer', '@permissions.cache']
 
   system.controller.admin.index:
     class: %system.controller.admin.index.fqdn%
@@ -20,13 +20,13 @@ services:
 
   system.controller.admin.maintenance:
     class: %system.controller.admin.maintenance.fqdn%
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers', '@system.model', '@system.validator']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers.export', '@system.model', '@system.validator']
 
   system.model:
     class: %system.model.fqdn%
     arguments: ['@core.db']
 
-  system.helpers:
+  system.helpers.installer:
     class: %system.helpers.installer.fqdn%
     arguments: ['@core.modules', @core.modules.vendors, @core.modules.schemaInstaller, @core.xml]
 

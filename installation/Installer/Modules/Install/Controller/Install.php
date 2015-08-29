@@ -114,6 +114,8 @@ class Install extends AbstractController
             return;
         } catch (ValidationFailed $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+        } catch (\Exception $e) {
+            $this->setTemplate('install/install.error.tpl');
         }
     }
 
@@ -149,14 +151,8 @@ class Install extends AbstractController
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load(CLASSES_DIR . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
-        $loader->load(INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
 
         $this->container->setParameter('core.environment', $environment);
-
-        $installerModulesServices = glob(INSTALLER_MODULES_DIR . '*/config/services.yml');
-        foreach ($installerModulesServices as $installerModuleServices) {
-            $loader->load($installerModuleServices);
-        }
 
         $modulesServices = glob(MODULES_DIR . 'ACP3/*/config/services.yml');
         foreach ($modulesServices as $moduleServices) {
@@ -170,6 +166,7 @@ class Install extends AbstractController
 
     /**
      * @return bool
+     * @throws \Exception
      */
     private function _installModules()
     {
@@ -183,8 +180,7 @@ class Install extends AbstractController
                 $bool = $this->installHelper->installModule($module, $this->container);
                 $alreadyInstalled[] = $module;
                 if ($bool === false) {
-                    $this->view->assign('install_error', true);
-                    break;
+                    throw new \Exception("Error while installing module {$module}.");
                 }
             }
         }
@@ -194,6 +190,8 @@ class Install extends AbstractController
 
     /**
      * @return bool
+     *
+     * @throws \Exception
      */
     private function _installAclResources()
     {
@@ -201,8 +199,7 @@ class Install extends AbstractController
         foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
             $bool = $this->installHelper->installResources($module, $this->container);
             if ($bool === false) {
-                $this->view->assign('install_error', true);
-                break;
+                throw new \Exception("Error while installing ACL resources of the module {$module}.");
             }
         }
 
@@ -211,6 +208,8 @@ class Install extends AbstractController
 
     /**
      * @param array $formData
+     *
+     * @throws \Exception
      */
     private function _installSampleData(array $formData)
     {
@@ -220,7 +219,7 @@ class Install extends AbstractController
         $bool2 = $this->installModuleSampleData();
 
         if ($bool === false || $bool2 === false) {
-            $this->view->assign('install_error', true);
+            throw new \Exception("Error while installing module sample data.");
         }
     }
 

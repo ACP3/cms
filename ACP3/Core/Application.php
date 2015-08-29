@@ -6,10 +6,6 @@ use ACP3\Core\Enum\Environment;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Logger as ACP3Logger;
-use Monolog\ErrorHandler;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -67,36 +63,6 @@ class Application extends AbstractApplication
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
         define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
         define('CACHE_DIR', ACP3_ROOT_DIR . 'cache/' . $this->environment . '/');
-    }
-
-    /**
-     * Set monolog as the default PHP error handler
-     */
-    public function setErrorHandler()
-    {
-        $errorLevelMap = [
-            E_ERROR => Logger::ERROR,
-            E_WARNING => Logger::WARNING,
-            E_PARSE => Logger::ERROR,
-            E_NOTICE => Logger::NOTICE,
-            E_CORE_ERROR => Logger::ERROR,
-            E_CORE_WARNING => Logger::WARNING,
-            E_COMPILE_ERROR => Logger::ERROR,
-            E_COMPILE_WARNING => Logger::WARNING,
-            E_USER_ERROR => Logger::ERROR,
-            E_USER_WARNING => Logger::WARNING,
-            E_USER_NOTICE => Logger::NOTICE,
-            E_STRICT => Logger::WARNING,
-            E_RECOVERABLE_ERROR => Logger::ERROR,
-            E_DEPRECATED => Logger::WARNING,
-            E_USER_DEPRECATED => Logger::WARNING,
-        ];
-
-        $stream = new StreamHandler(CACHE_DIR . 'logs/system.log', Logger::NOTICE);
-        $stream->setFormatter(new LineFormatter(null, null, true));
-
-        $logger = new Logger('system', [$stream]);
-        ErrorHandler::register($logger, $errorLevelMap);
     }
 
     /**

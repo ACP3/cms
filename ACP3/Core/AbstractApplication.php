@@ -1,6 +1,10 @@
 <?php
 namespace ACP3\Core;
+
 use ACP3\Core\Enum\Environment;
+use Monolog\Logger;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
 
 /**
  * Class AbstractApplication
@@ -23,6 +27,18 @@ abstract class AbstractApplication implements ApplicationInterface
     public function __construct($environment = Environment::PRODUCTION)
     {
         $this->environment = $environment;
+    }
+
+    /**
+     * Set monolog as the default PHP error handler
+     */
+    public function setErrorHandler()
+    {
+        $stream = new StreamHandler(CACHE_DIR . 'logs/system.log', Logger::NOTICE);
+        $stream->setFormatter(new LineFormatter(null, null, true));
+
+        $logger = new Logger('system', [$stream]);
+        ErrorHandler::register($logger);
     }
 
     /**

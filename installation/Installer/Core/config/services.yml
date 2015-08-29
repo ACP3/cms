@@ -2,7 +2,9 @@ parameters:
   default_request: 'install'
 
 imports:
-  - { resource: '../View/Renderer/Smarty/config/services.yml' }
+  - { resource: ../View/Renderer/Smarty/config/services.yml }
+  - { resource: ../../Modules/Errors/config/services.yml }
+  - { resource: ../../Modules/Install/config/services.yml }
 
 services:
   core.context.install:
