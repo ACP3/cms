@@ -105,7 +105,7 @@ class Installer
      *
      * @return array
      */
-    public function getDependencies($moduleName)
+    protected function getDependencies($moduleName)
     {
         if ((bool)preg_match('=/=', $moduleName) === false) {
             $path = MODULES_DIR . ucfirst($moduleName) . '/config/module.xml';
