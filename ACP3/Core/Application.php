@@ -135,7 +135,6 @@ class Application extends AbstractApplication
 
         /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.request');
-        $request->processQuery();
 
         if ($this->maintenanceModeIsEnabled($request)) {
             return;

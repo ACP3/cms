@@ -76,6 +76,8 @@ class Request extends AbstractRequest
         $this->seoModel = $seoModel;
 
         parent::__construct();
+
+        $this->processQuery();
     }
 
     /**
@@ -165,7 +167,7 @@ class Request extends AbstractRequest
     /**
      * Processes the URL of the current request
      */
-    public function processQuery()
+    protected function processQuery()
     {
         $this->setOriginalQuery();
 

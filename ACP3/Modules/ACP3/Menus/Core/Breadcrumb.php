@@ -62,6 +62,7 @@ class Breadcrumb extends Core\Breadcrumb
                 $this->request->getModuleAndController(),
                 $this->request->getModule()
             ];
+
             $items = $this->menusModel->getMenuItemsByUri($in);
             $c_items = count($items);
 

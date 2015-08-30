@@ -32,7 +32,7 @@ class Request extends Core\Http\Request
     /**
      * @inheritdoc
      */
-    public function processQuery()
+    protected function processQuery()
     {
         $this->setOriginalQuery();
 
