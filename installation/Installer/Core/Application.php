@@ -118,8 +118,6 @@ class Application extends Core\AbstractApplication
         // Standardzeitzone festlegen
         date_default_timezone_set('UTC');
 
-        error_reporting(E_ALL);
-
         if ($this->environment === Core\Enum\Environment::UPDATER) {
             return $this->databaseConfigExists();
         }
