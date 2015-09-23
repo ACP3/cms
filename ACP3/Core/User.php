@@ -96,9 +96,9 @@ class User
      */
     public function authenticate()
     {
-        $userId = $this->authentication->authenticate();
+        $userData = $this->authentication->authenticate();
 
-        switch ($userId) {
+        switch ($userData) {
             case 0:
                 $settings = $this->config->getSettings('system');
 
@@ -109,9 +109,7 @@ class User
                 $this->logout();
                 break;
             default:
-                $user = $this->usersModel->getOneById($userId);
-
-                $this->populateUserData($user);
+                $this->populateUserData($userData);
         }
     }
 

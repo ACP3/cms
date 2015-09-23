@@ -41,16 +41,16 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @return int
+     * @return array|int
      */
     public function authenticate()
     {
         if ($this->sessionHandler->has(User::AUTH_NAME)) {
-            return $this->sessionHandler->get(User::AUTH_NAME, [])['id'];
+            return $this->sessionHandler->get(User::AUTH_NAME, []);
         } elseif ($this->request->getCookies()->has(User::AUTH_NAME)) {
             list($userId, $token) = explode('|', $this->request->getCookies()->get(User::AUTH_NAME, ''));
 
-            return !$this->verifyCredentials($userId, $token) ? $userId : -1;
+            return $this->verifyCredentials($userId, $token);
         }
 
         return 0;
@@ -60,15 +60,15 @@ class Native implements AuthenticationInterface
      * @param int    $userId
      * @param string $token
      *
-     * @return bool
+     * @return array|int
      */
     protected function verifyCredentials($userId, $token)
     {
         $user = $this->usersModel->getOneById($userId);
         if (!empty($user) && $user['remember_me_token'] === $token) {
-            return true;
+            return $user;
         }
 
-        return false;
+        return -1;
     }
 }
