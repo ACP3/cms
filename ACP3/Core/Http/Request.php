@@ -15,10 +15,6 @@ class Request extends AbstractRequest
     const ADMIN_PANEL_PATTERN = '=^acp/=';
 
     /**
-     * @var \ACP3\Core\Modules\Helper\ControllerActionExists
-     */
-    protected $controllerActionExists;
-    /**
      * @var \ACP3\Core\Config
      */
     protected $config;
@@ -61,17 +57,14 @@ class Request extends AbstractRequest
     protected $isHomepage;
 
     /**
-     * @param \ACP3\Core\Modules\Helper\ControllerActionExists $controllerActionExists
-     * @param \ACP3\Core\Config                                $config
-     * @param \ACP3\Modules\ACP3\Seo\Model                     $seoModel
+     * @param \ACP3\Core\Config            $config
+     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
      */
     public function __construct(
-        Modules\Helper\ControllerActionExists $controllerActionExists,
         Config $config,
         Seo\Model $seoModel
     )
     {
-        $this->controllerActionExists = $controllerActionExists;
         $this->config = $config;
         $this->seoModel = $seoModel;
 
@@ -321,7 +314,7 @@ class Request extends AbstractRequest
     {
         $params = '';
         $probableQuery = $this->query;
-        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)*(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
             $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
             if (isset($query[1]) === false) {
                 $query[1] = 'index';
@@ -330,19 +323,16 @@ class Request extends AbstractRequest
                 $query[2] = 'index';
             }
 
-            // Keine entsprechende Module-Action gefunden -> muss Alias sein
-            if ($this->controllerActionExists->controllerActionExists($this->area . '/' . $query[0] . '/' . $query[1] . '/' . $query[2]) === false) {
-                $length = 0;
-                foreach ($query as $row) {
-                    if (strpos($row, '_') !== false) {
-                        break;
-                    }
-
-                    $length += strlen($row) + 1;
+            $length = 0;
+            foreach ($query as $row) {
+                if (strpos($row, '_') !== false) {
+                    break;
                 }
-                $params = substr($this->query, $length);
-                $probableQuery = substr($this->query, 0, $length);
+
+                $length += strlen($row) + 1;
             }
+            $params = substr($this->query, $length);
+            $probableQuery = substr($this->query, 0, $length);
         }
 
         return [$params, $probableQuery];

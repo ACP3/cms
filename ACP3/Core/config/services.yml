@@ -2,6 +2,7 @@ imports:
   - { resource: cache.yml }
   - { resource: ../../config.yml }
   - { resource: components/assets.yml }
+  - { resource: components/authentication.yml }
   - { resource: components/helpers.yml }
   - { resource: components/modules.yml }
   - { resource: components/nestedsets.yml }
@@ -62,7 +63,7 @@ services:
 
   core.request:
     class: ACP3\Core\Http\Request
-    arguments: ['@core.modules.helper.controllerActionExists', '@core.config', '@seo.model']
+    arguments: ['@core.config', '@seo.model']
 
   core.router:
     class: ACP3\Core\Router
@@ -82,7 +83,7 @@ services:
 
   core.user:
     class: ACP3\Core\User
-    arguments: [@core.request, '@core.session', '@core.helpers.secure', '@core.config', '@users.model']
+    arguments: [@core.request, @core.authentication, '@core.session', '@core.helpers.secure', '@core.config', '@users.model']
 
   core.view:
     class: ACP3\Core\View

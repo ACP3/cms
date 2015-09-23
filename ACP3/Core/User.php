@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Authentication\AuthenticationInterface;
 use ACP3\Core\Helpers\Country;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
@@ -45,6 +46,10 @@ class User
      */
     protected $request;
     /**
+     * @var \ACP3\Core\Authentication\AuthenticationInterface
+     */
+    protected $authentication;
+    /**
      * @var \ACP3\Core\SessionHandler
      */
     protected $sessionHandler;
@@ -62,14 +67,16 @@ class User
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
-     * @param \ACP3\Core\Helpers\Secure        $secureHelper
-     * @param \ACP3\Core\Config                $config
-     * @param \ACP3\Modules\ACP3\Users\Model   $usersModel
+     * @param \ACP3\Core\Http\RequestInterface                  $request
+     * @param \ACP3\Core\Authentication\AuthenticationInterface $authentication
+     * @param \ACP3\Core\SessionHandler                         $sessionHandler
+     * @param \ACP3\Core\Helpers\Secure                         $secureHelper
+     * @param \ACP3\Core\Config                                 $config
+     * @param \ACP3\Modules\ACP3\Users\Model                    $usersModel
      */
     public function __construct(
         RequestInterface $request,
+        AuthenticationInterface $authentication,
         SessionHandler $sessionHandler,
         Secure $secureHelper,
         Config $config,
@@ -77,6 +84,7 @@ class User
     )
     {
         $this->request = $request;
+        $this->authentication = $authentication;
         $this->sessionHandler = $sessionHandler;
         $this->secureHelper = $secureHelper;
         $this->config = $config;
@@ -88,37 +96,23 @@ class User
      */
     public function authenticate()
     {
-        if ($this->sessionHandler->has(self::AUTH_NAME)) {
-            $this->populateUserData($this->sessionHandler->get(self::AUTH_NAME, []));
-        } elseif ($this->request->getCookies()->has(self::AUTH_NAME)) {
-            list($userId, $token) = explode('|', $this->request->getCookies()->get(self::AUTH_NAME, ''));
+        $userId = $this->authentication->authenticate();
 
-            if (!$this->verifyCredentials($userId, $token)) {
-                $this->logout($userId);
-            }
-        } else { // Guest user
-            $settings = $this->config->getSettings('system');
+        switch ($userId) {
+            case 0:
+                $settings = $this->config->getSettings('system');
 
-            $this->entriesPerPage = $settings['entries'];
-            $this->language = $settings['lang'];
+                $this->entriesPerPage = $settings['entries'];
+                $this->language = $settings['lang'];
+                break;
+            case -1:
+                $this->logout();
+                break;
+            default:
+                $user = $this->usersModel->getOneById($userId);
+
+                $this->populateUserData($user);
         }
-    }
-
-    /**
-     * @param int    $userId
-     * @param string $token
-     *
-     * @return bool
-     */
-    protected function verifyCredentials($userId, $token)
-    {
-        $user = $this->usersModel->getOneById($userId);
-        if (!empty($user) && $user['remember_me_token'] === $token) {
-            $this->populateUserData($user);
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -264,7 +258,6 @@ class User
                 $this->sessionHandler->secureSession();
 
                 $this->setSessionValues($user);
-                $this->populateUserData($this->sessionHandler->get(self::AUTH_NAME));
 
                 return 1;
             } else {
