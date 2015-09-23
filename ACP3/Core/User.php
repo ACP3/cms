@@ -98,18 +98,15 @@ class User
     {
         $userData = $this->authentication->authenticate();
 
-        switch ($userData) {
-            case 0:
-                $settings = $this->config->getSettings('system');
+        if (is_array($userData)) {
+            $this->populateUserData($userData);
+        } else if ($userData === 0) {
+            $settings = $this->config->getSettings('system');
 
-                $this->entriesPerPage = $settings['entries'];
-                $this->language = $settings['lang'];
-                break;
-            case -1:
-                $this->logout();
-                break;
-            default:
-                $this->populateUserData($userData);
+            $this->entriesPerPage = $settings['entries'];
+            $this->language = $settings['lang'];
+        } else {
+            $this->logout();
         }
     }
 
