@@ -17,21 +17,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="area" class="col-sm-2 control-label">{lang t="permissions|area"}</label>
+            <label for="area" class="col-sm-2 control-label required">{lang t="permissions|area"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="area" id="area" value="{$form.area}" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="controller" class="col-sm-2 control-label">{lang t="permissions|controller"}</label>
+            <label for="controller" class="col-sm-2 control-label required">{lang t="permissions|controller"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="controller" id="controller" value="{$form.controller}" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="resource" class="col-sm-2 control-label">{lang t="permissions|resource_name"}</label>
+            <label for="resource" class="col-sm-2 control-label required">{lang t="permissions|resource_name"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="resource" id="resource" value="{$form.resource}" required>

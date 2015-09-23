@@ -6,7 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="nick-mail" class="col-sm-2 control-label">{lang t="users|nickname_or_email"}</label>
+            <label for="nick-mail" class="col-sm-2 control-label required">{lang t="users|nickname_or_email"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="nick_mail" id="nick-mail" value="{$form.nick_mail}" maxlength="120" required>

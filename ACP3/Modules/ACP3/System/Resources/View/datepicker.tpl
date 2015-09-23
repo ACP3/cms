@@ -42,7 +42,7 @@
         <span class="help-block">{lang t="system|date_description"}</span>
     {else}
         <div class="form-group">
-            <label for="{$datepicker.id_start}-input" class="col-sm-2 control-label">{lang t="system|publication_period"}</label>
+            <label for="{$datepicker.id_start}-input" class="col-sm-2 control-label required">{lang t="system|publication_period"}</label>
             <div class="col-sm-10">
                 <div class="row" data-datepicker-range='{$datepicker.range_json}'>
                     <div class="col-sm-6">

@@ -17,14 +17,14 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="articles|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="articles|title"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label">{lang t="articles|text"}</label>
+                        <label for="text" class="col-sm-2 control-label required">{lang t="articles|text"}</label>
 
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
                     </div>

@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="message" class="col-sm-2 control-label">{lang t="system|message"}</label>
+            <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
 
             <div class="col-sm-10">
                 <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>

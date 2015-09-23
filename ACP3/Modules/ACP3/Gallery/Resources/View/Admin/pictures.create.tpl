@@ -6,7 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="file" class="col-sm-2 control-label">{lang t="gallery|select_picture"}</label>
+            <label for="file" class="col-sm-2 control-label required">{lang t="gallery|select_picture"}</label>
             <div class="col-sm-10"><input type="file" name="file" id="file" required></div>
         </div>
         <div class="form-group">

@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label">{lang t="news|text"}</label>
+                        <label for="text" class="col-sm-2 control-label required">{lang t="news|text"}</label>
 
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250"}</div>
                     </div>

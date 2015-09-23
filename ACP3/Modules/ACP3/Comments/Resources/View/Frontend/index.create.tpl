@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="message" class="col-sm-2 control-label">{lang t="system|message"}</label>
+        <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
 
         <div class="col-sm-10">
             {if isset($emoticons)}{$emoticons}{/if}

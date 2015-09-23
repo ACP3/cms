@@ -6,13 +6,13 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">{lang t="system|name"}</label>
+            <label for="name" class="col-sm-2 control-label required">{lang t="system|name"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="name" id="name" value="{$form.name}" required></div>
         </div>
         <div class="form-group">
-            <label for="message" class="col-sm-2 control-label">{lang t="system|message"}</label>
+            <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
 
             <div class="col-sm-10">
                 {if isset($emoticons)}{$emoticons}{/if}

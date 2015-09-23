@@ -14,7 +14,7 @@
                 <div id="tab-1" class="tab-pane fade in active">
                     {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="gallery|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="gallery|title"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>

@@ -7,7 +7,7 @@
     </div>
 {else}
     <div class="form-group">
-        <label for="{$captcha.id}" class="col-sm-2 control-label">{lang t="captcha|captcha"}</label>
+        <label for="{$captcha.id}" class="col-sm-2 control-label required">{lang t="captcha|captcha"}</label>
 
         <div class="col-sm-10">
             <div class="input-group input-group-lg">
