@@ -19,7 +19,7 @@ services:
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
-      - ['setNewsletterHelpers', ['@?newsletter.helpers']]
+      - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
 
   guestbook.model:
     class: %guestbook.model.fqdn%

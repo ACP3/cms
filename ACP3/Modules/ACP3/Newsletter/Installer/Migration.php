@@ -70,6 +70,30 @@ class Migration extends Modules\Installer\AbstractMigration
                     `newsletter_id` INT(10) UNSIGNED NOT NULL,
                     INDEX (`newsletter_account_id`), INDEX (`newsletter_id`)
                 ) {ENGINE} {CHARSET};'
+            ],
+            44 => [
+                "ALTER TABLE `{pre}newsletter_accounts` CHANGE `mail` `mail` VARCHAR(255) NOT NULL;",
+                "ALTER TABLE `{pre}newsletter_accounts` CHANGE `hash` `hash` VARCHAR(128) NOT NULL;",
+                "ALTER TABLE `{pre}newsletter_accounts` ADD `salutation` TINYINT(1) NOT NULL AFTER `mail`;",
+                "ALTER TABLE `{pre}newsletter_accounts` ADD `first_name` VARCHAR(255) NOT NULL AFTER `salutation`;",
+                "ALTER TABLE `{pre}newsletter_accounts` ADD `last_name` VARCHAR(255) NOT NULL AFTER `first_name`;",
+                "ALTER TABLE `{pre}newsletter_accounts` ADD `status` TINYINT(1) NOT NULL AFTER `hash`;",
+                "UPDATE `{pre}newsletter_accounts` SET `status` = 1 WHERE `hash` = '' OR `hash` IS NULL;"
+            ],
+            45 => [
+                "CREATE TABLE `{pre}newsletter_account_history` (
+                    `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                    `date` DATETIME NOT NULL,
+                    `action` TINYINT(1) NOT NULL,
+                    INDEX (`newsletter_account_id`)
+                ) {ENGINE} {CHARSET};",
+            ],
+            46 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'frontend', 'index', 'unsubscribe', '', 1);",
+            ],
+            47 => [
+                "ALTER TABLE `{pre}newsletter_accounts` ADD INDEX (`mail`);",
+                "ALTER TABLE `{pre}newsletter_accounts` ADD INDEX (`hash`);",
             ]
         ];
     }

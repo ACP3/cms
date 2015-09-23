@@ -28,6 +28,9 @@
                         <th style="width:3%"><input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
                     {/if}
                     <th>{lang t="system|email_address"}</th>
+                    <th>{lang t="newsletter|salutation"}</th>
+                    <th>{lang t="newsletter|first_name"}</th>
+                    <th>{lang t="newsletter|last_name"}</th>
                     <th>{lang t="newsletter|status"}</th>
                     <th style="width:5%">{lang t="system|id"}</th>
                 </tr>
@@ -39,8 +42,11 @@
                             <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                         {/if}
                         <td>{$row.mail}</td>
+                        <td>{$row.salutation}</td>
+                        <td>{$row.first_name}</td>
+                        <td>{$row.last_name}</td>
                         <td>
-                            {if !empty($row.hash)}
+                            {if $row.status == 0}
                                 <a href="{uri args="acp/newsletter/accounts/activate/id_`$row.id`"}" title="{lang t="newsletter|activate_account"}">
                                     <i class="glyphicon glyphicon-remove text-danger"></i>
                                 </a>

@@ -25,9 +25,12 @@
         <item key="select_newsletter">To display a newsletter please select one from the above dropdown list.</item>
         <item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
         <item key="create_success">The newsletter has been successfully sent.</item>
+        <item key="first_name">First name</item>
         <item key="frontend_archive_index">Archive</item>
         <item key="frontend_index_activate">Activate newsletter account</item>
+        <item key="frontend_index_unsubscribe">Unsubscribe newsletter</item>
         <item key="index">Newsletter</item>
+        <item key="last_name">Last name</item>
         <item key="mailsig">E-mail signature</item>
         <item key="missed_out_newsletter">Missed out a newsletter edition?</item>
         <item key="mod_description">This module is responsible for the newsletter.</item>
@@ -36,7 +39,11 @@
         <item key="newsletter_archive">Newsletter archive</item>
         <item key="not_yet_sent">Not yet sent</item>
         <item key="only_save">Only save</item>
+        <item key="salutation">Salutation</item>
+        <item key="salutation_female">Mrs.</item>
+        <item key="salutation_male">Mr.</item>
         <item key="save_success">The newsletter has been successfully saved.</item>
+        <item key="select_salutation">Please select a salutation.</item>
         <item key="send">Send newsletter</item>
         <item key="send_and_save">Send and save</item>
         <item key="send_html_emails">Send HTML E-mails</item>

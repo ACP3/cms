@@ -37,7 +37,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 43;
+        return 47;
     }
 
     /**
@@ -48,9 +48,19 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             "CREATE TABLE `{pre}newsletter_accounts` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `mail` VARCHAR(120) NOT NULL,
-                `hash` VARCHAR(32) NOT NULL,
-                PRIMARY KEY (`id`)
+                `mail` VARCHAR(255) NOT NULL,
+                `salutation` TINYINT(1) NOT NULL,
+                `first_name` VARCHAR(255) NOT NULL,
+                `last_name` VARCHAR(255) NOT NULL,
+                `hash` VARCHAR(128) NOT NULL,
+                `status` TINYINT(1) NOT NULL,
+                PRIMARY KEY (`id`), INDEX(`mail`), INDEX(`hash`)
+            ) {ENGINE} {CHARSET};",
+            "CREATE TABLE `{pre}newsletter_account_history` (
+                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                `date` DATETIME NOT NULL,
+                `action` TINYINT(1) NOT NULL,
+                INDEX (`newsletter_account_id`)
             ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}newsletter_queue` (
                 `newsletter_account_id` INT(10) UNSIGNED NOT NULL,

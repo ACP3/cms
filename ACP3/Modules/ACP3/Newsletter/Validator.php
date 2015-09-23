@@ -83,12 +83,17 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $this->errors = [];
+        if (!empty($formData['salutation']) && !in_array($formData['salutation'], [1, 2])) {
+            $this->errors['salutation'] = $this->lang->t('newsletter', 'select_salutation');
+        }
         if ($this->validate->email($formData['mail']) === false) {
             $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         } elseif ($this->newsletterModel->accountExists($formData['mail']) === true) {
             $this->errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->user->isAuthenticated() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
+            $this->user->isAuthenticated() === false &&
+            $this->captchaValidator->captcha($formData['captcha']) === false) {
             $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -137,18 +142,14 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param $mail
-     * @param $hash
+     * @param string $hash
      *
      * @throws Core\Exceptions\ValidationFailed
      */
-    public function validateActivate($mail, $hash)
+    public function validateActivate($hash)
     {
         $this->errors = [];
-        if (!$this->validate->email($mail) || !$this->validate->isMD5($hash)) {
-            $this->errors[] = $this->lang->t('newsletter', 'account_activation_credentials_wrong');
-        }
-        if ($this->newsletterModel->accountExists($mail, $hash) === false) {
+        if ($this->newsletterModel->accountExistsByHash($hash) === false) {
             $this->errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }
 

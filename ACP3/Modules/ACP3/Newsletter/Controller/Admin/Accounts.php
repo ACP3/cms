@@ -34,7 +34,11 @@ class Accounts extends Core\Modules\AdminController
      */
     public function actionActivate($id)
     {
-        $bool = $this->newsletterModel->update(['hash' => ''], $id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
+        $bool = $this->newsletterModel->update(
+            ['status' => Newsletter\Helper\Subscribe::ACCOUNT_STATUS_CONFIRMED],
+            $id,
+            Newsletter\Model::TABLE_NAME_ACCOUNTS
+        );
 
         $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
     }
@@ -52,7 +56,11 @@ class Accounts extends Core\Modules\AdminController
             function($items) {
                 $bool = false;
                 foreach ($items as $item) {
-                    $bool = $this->newsletterModel->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
+                    $bool = $this->newsletterModel->update(
+                        ['status' => Newsletter\Helper\Subscribe::ACCOUNT_STATUS_DISABLED],
+                        $item,
+                        Newsletter\Model::TABLE_NAME_ACCOUNTS
+                    );
                 }
 
                 return $bool;
@@ -63,8 +71,9 @@ class Accounts extends Core\Modules\AdminController
     public function actionIndex()
     {
         $accounts = $this->newsletterModel->getAllAccounts();
+        $c_accounts = count($accounts);
 
-        if (count($accounts) > 0) {
+        if ($c_accounts > 0) {
             $canDelete = $this->acl->hasPermission('admin/newsletter/accounts/delete');
             $config = [
                 'element' => '#acp-table',
@@ -74,6 +83,17 @@ class Accounts extends Core\Modules\AdminController
                 'records_per_page' => $this->user->getEntriesPerPage()
             ];
             $this->view->assign('datatable_config', $config);
+
+            $search = [0, 1, 2];
+            $replace = [
+                '',
+                $this->lang->t('newsletter', 'salutation_female'),
+                $this->lang->t('newsletter', 'salutation_male'),
+            ];
+            for ($i = 0; $i < $c_accounts; ++$i) {
+                $accounts[$i]['salutation'] = str_replace($search, $replace, $accounts[$i]['salutation']);
+            }
+
             $this->view->assign('accounts', $accounts);
             $this->view->assign('can_delete', $canDelete);
         }

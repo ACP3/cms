@@ -48,9 +48,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $emoticonsHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helpers
+     * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
      */
-    protected $newsletterHelpers;
+    protected $newsletterSubscribeHelper;
     /**
      * @var bool
      */
@@ -119,13 +119,13 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Newsletter\Helpers $newsletterHelpers
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe $newsletterSubscribeHelper
      *
      * @return $this
      */
-    public function setNewsletterHelpers(Newsletter\Helpers $newsletterHelpers)
+    public function setNewsletterSubscribeHelper(Newsletter\Helper\Subscribe $newsletterSubscribeHelper)
     {
-        $this->newsletterHelpers = $newsletterHelpers;
+        $this->newsletterSubscribeHelper = $newsletterSubscribeHelper;
 
         return $this;
     }
@@ -142,7 +142,7 @@ class Index extends Core\Modules\FrontendController
         }
 
         // In Newsletter integrieren
-        if ($this->newsletterActive === true && $this->newsletterHelpers) {
+        if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
             $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
             $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->config->getSettings('seo')['title']));
         }
@@ -244,11 +244,11 @@ class Index extends Core\Modules\FrontendController
 
                 // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
                 if ($this->newsletterActive === true &&
-                    $this->newsletterHelpers &&
+                    $this->newsletterSubscribeHelper &&
                     isset($formData['subscribe_newsletter']) &&
                     $formData['subscribe_newsletter'] == 1
                 ) {
-                    $this->newsletterHelpers->subscribeToNewsletter($formData['mail']);
+                    $this->newsletterSubscribeHelper->subscribeToNewsletter($formData['mail']);
                 }
 
                 $this->formTokenHelper->unsetFormToken();
