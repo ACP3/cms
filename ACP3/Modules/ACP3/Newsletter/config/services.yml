@@ -4,9 +4,11 @@ parameters:
   newsletter.controller.frontend.archive.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Archive'
   newsletter.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Index'
   newsletter.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index'
+  newsletter.helper.accountstatus.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus'
   newsletter.helper.sendnewsletter.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter'
   newsletter.helper.subscribe.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\Subscribe'
-  newsletter.model.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model'
+  newsletter.model.newsletterrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository'
+  newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
   newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validator'
   newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
   newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
@@ -14,19 +16,19 @@ parameters:
 services:
   newsletter.controller.admin.accounts:
     class: %newsletter.controller.admin.accounts.fqdn%
-    arguments: ['@core.context.admin', '@newsletter.model']
+    arguments: ['@core.context.admin', @newsletter.helper.accountstatus, '@newsletter.model.accountrepository']
 
   newsletter.controller.admin.index:
     class: %newsletter.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@newsletter.model', '@newsletter.validator', '@newsletter.helper.sendnewsletter']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@newsletter.model.newsletterrepository', @newsletter.model.accountrepository, '@newsletter.validator', '@newsletter.helper.sendnewsletter']
 
   newsletter.controller.frontend.archive:
     class: %newsletter.controller.frontend.archive.fqdn%
-    arguments: ['@core.context.frontend', '@core.pagination', '@newsletter.model']
+    arguments: ['@core.context.frontend', '@core.pagination', '@newsletter.model.newsletterrepository']
 
   newsletter.controller.frontend.index:
     class: %newsletter.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.helpers.formToken', '@newsletter.helper.subscribe', '@newsletter.model', '@newsletter.validator']
+    arguments: ['@core.context.frontend', '@core.helpers.formToken', '@newsletter.helper.subscribe', '@newsletter.helper.accountstatus', '@newsletter.validator']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
@@ -36,21 +38,29 @@ services:
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
-  newsletter.model:
-    class: %newsletter.model.fqdn%
+  newsletter.model.newsletterrepository:
+    class: %newsletter.model.newsletterrepository.fqdn%
     arguments: ['@core.db']
+
+  newsletter.model.accountrepository:
+    class: %newsletter.model.accountrepository.fqdn%
+    arguments: [@core.db]
+
+  newsletter.helper.accountstatus:
+    class: %newsletter.helper.accountstatus.fqdn%
+    arguments: [@core.date, @newsletter.model.accountrepository]
 
   newsletter.helper.sendnewsletter:
     class: %newsletter.helper.sendnewsletter.fqdn%
-    arguments: ['@core.mailer', '@core.router', '@core.config', '@newsletter.model']
+    arguments: ['@core.mailer', '@core.router', '@core.config', '@newsletter.model.newsletterrepository']
 
   newsletter.helper.subscribe:
     class: %newsletter.helper.subscribe.fqdn%
-    arguments: [@core.date, '@core.lang', '@core.mailer', @core.request, '@core.router', '@core.helpers.stringFormatter', @core.helpers.secure, '@core.config', '@newsletter.model']
+    arguments: [@core.date, '@core.lang', '@core.mailer', @core.request, '@core.router', '@core.helpers.stringFormatter', @core.helpers.secure, '@core.config', @newsletter.helper.accountstatus, '@newsletter.model.accountrepository']
 
   newsletter.validator:
     class: %newsletter.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@newsletter.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@newsletter.model.accountrepository']
 
   newsletter.installer.schema:
     class: %newsletter.installer.schema.fqdn%

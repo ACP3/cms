@@ -39,9 +39,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $guestbookModel;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
      */
-    protected $newsletterModel;
+    protected $newsletterAccountRepository;
 
     /**
      * @param \ACP3\Core\Lang                    $lang
@@ -77,13 +77,13 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Newsletter\Model $newsletterModel
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository $newsletterAccountRepository
      *
      * @return $this
      */
-    public function setNewsletterModel(Newsletter\Model $newsletterModel)
+    public function setNewsletterAccountRepository(Newsletter\Model\AccountRepository $newsletterAccountRepository)
     {
-        $this->newsletterModel = $newsletterModel;
+        $this->newsletterAccountRepository = $newsletterAccountRepository;
 
         return $this;
     }
@@ -124,7 +124,7 @@ class Validator extends Core\Validator\AbstractValidator
             if ($this->validate->email($formData['mail']) === false) {
                 $this->errors['mail'] = $this->lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
             }
-            if ($this->validate->email($formData['mail']) === true && $this->newsletterModel->accountExists($formData['mail']) === true) {
+            if ($this->validate->email($formData['mail']) === true && $this->newsletterAccountRepository->accountExists($formData['mail']) === true) {
                 $this->errors['mail'] = $this->lang->t('newsletter', 'account_exists');
             }
         }

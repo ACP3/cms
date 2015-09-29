@@ -22,9 +22,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $subscribeHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model
+     * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
-    protected $newsletterModel;
+    protected $accountStatusHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validator
      */
@@ -35,24 +35,24 @@ class Index extends Core\Modules\FrontendController
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext  $context
-     * @param \ACP3\Core\Helpers\FormToken                   $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe $subscribeHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model            $newsletterModel
-     * @param \ACP3\Modules\ACP3\Newsletter\Validator        $newsletterValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext      $context
+     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe     $subscribeHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Validator            $newsletterValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\Subscribe $subscribeHelper,
-        Newsletter\Model $newsletterModel,
+        Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validator $newsletterValidator)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->subscribeHelper = $subscribeHelper;
-        $this->newsletterModel = $newsletterModel;
+        $this->accountStatusHelper = $accountStatusHelper;
         $this->newsletterValidator = $newsletterValidator;
     }
 
@@ -76,10 +76,9 @@ class Index extends Core\Modules\FrontendController
         try {
             $this->newsletterValidator->validateActivate($hash);
 
-            $bool = $this->newsletterModel->update(
-                ['status' => Newsletter\Helper\Subscribe::ACCOUNT_STATUS_CONFIRMED],
-                ['hash' => $hash],
-                Newsletter\Model::TABLE_NAME_ACCOUNTS
+            $bool = $this->accountStatusHelper->changeAccountStatus(
+                Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
+                ['hash' => $hash]
             );
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
@@ -163,10 +162,9 @@ class Index extends Core\Modules\FrontendController
             function () use ($formData) {
                 $this->newsletterValidator->validateUnsubscribe($formData);
 
-                $bool = $this->newsletterModel->update(
-                    ['status' => Newsletter\Helper\Subscribe::ACCOUNT_STATUS_DISABLED],
-                    ['mail' => $formData['mail']],
-                    Newsletter\Model::TABLE_NAME_ACCOUNTS
+                $bool = $this->accountStatusHelper->changeAccountStatus(
+                    Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
+                    ['mail' => $formData['mail']]
                 );
 
                 $this->formTokenHelper->unsetFormToken();

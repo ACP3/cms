@@ -29,7 +29,7 @@ services:
     class: %guestbook.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@core.date', '@core.modules', @core.request, '@guestbook.model']
     calls:
-      - ['setNewsletterModel', ['@?newsletter.model']]
+      - ['setNewsletterAccountRepository', ['@?newsletter.model.accountrepository']]
 
   guestbook.installer.schema:
     class: %guestbook.installer.schema.fqdn%

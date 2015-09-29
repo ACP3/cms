@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Newsletter\Model;
+use ACP3\Modules\ACP3\Newsletter\Model\AccountRepository;
 
 /**
  * Class Subscribe
@@ -11,10 +11,6 @@ use ACP3\Modules\ACP3\Newsletter\Model;
  */
 class Subscribe
 {
-    const ACCOUNT_STATUS_CONFIRMATION_NEEDED = 0;
-    const ACCOUNT_STATUS_CONFIRMED = 1;
-    const ACCOUNT_STATUS_DISABLED = 2;
-
     /**
      * @var \ACP3\Core\Date
      */
@@ -44,24 +40,29 @@ class Subscribe
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
      */
-    protected $newsletterModel;
+    protected $accountRepository;
     /**
      * @var \ACP3\Core\Config
      */
     protected $config;
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
+     */
+    protected $accountStatusHelper;
 
     /**
-     * @param \ACP3\Core\Date                     $date
-     * @param \ACP3\Core\Lang                     $lang
-     * @param \ACP3\Core\Mailer                   $mailer
-     * @param \ACP3\Core\Http\Request             $request
-     * @param \ACP3\Core\Router                   $router
-     * @param \ACP3\Core\Helpers\StringFormatter  $stringFormatter
-     * @param \ACP3\Core\Helpers\Secure           $secureHelper
-     * @param \ACP3\Core\Config                   $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Model $newsletterModel
+     * @param \ACP3\Core\Date                                       $date
+     * @param \ACP3\Core\Lang                                       $lang
+     * @param \ACP3\Core\Mailer                                     $mailer
+     * @param \ACP3\Core\Http\Request                               $request
+     * @param \ACP3\Core\Router                                     $router
+     * @param \ACP3\Core\Helpers\StringFormatter                    $stringFormatter
+     * @param \ACP3\Core\Helpers\Secure                             $secureHelper
+     * @param \ACP3\Core\Config                                     $config
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus    $accountStatusHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository $accountRepository
      */
     public function __construct(
         Core\Date $date,
@@ -72,7 +73,8 @@ class Subscribe
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Helpers\Secure $secureHelper,
         Core\Config $config,
-        Model $newsletterModel)
+        AccountStatus $accountStatusHelper,
+        AccountRepository $accountRepository)
     {
         $this->date = $date;
         $this->lang = $lang;
@@ -82,7 +84,8 @@ class Subscribe
         $this->stringFormatter = $stringFormatter;
         $this->secureHelper = $secureHelper;
         $this->config = $config;
-        $this->newsletterModel = $newsletterModel;
+        $this->accountStatusHelper = $accountStatusHelper;
+        $this->accountRepository = $accountRepository;
     }
 
     /**
@@ -119,20 +122,13 @@ class Subscribe
      */
     protected function addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash)
     {
-        $newsletterAccount = $this->newsletterModel->getOneByEmail($emailAddress);
+        $newsletterAccount = $this->accountRepository->getOneByEmail($emailAddress);
 
         if (!empty($newsletterAccount)) {
             $accountId = $this->updateExistingAccount($newsletterAccount, $salutation, $firstName, $lastName, $hash);
         } else {
             $accountId = $this->insertNewAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
         }
-
-        $historyInsertValues = [
-            'newsletter_account_id' => $accountId,
-            'date' => $this->date->toSQL(),
-            'action' => 1
-        ];
-        $this->newsletterModel->insert($historyInsertValues, Model::TABLE_NAME_ACCOUNT_HISTORY);
 
         return $accountId;
     }
@@ -194,11 +190,14 @@ class Subscribe
             'salutation' => $salutation,
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'hash' => $hash,
-            'status' => static::ACCOUNT_STATUS_CONFIRMATION_NEEDED
+            'hash' => $hash
         ];
 
-        $this->newsletterModel->update($updateValues, $newsletterAccount['id'], Model::TABLE_NAME_ACCOUNTS);
+        if ($newsletterAccount['status'] != AccountStatus::ACCOUNT_STATUS_CONFIRMED) {
+            $updateValues['status'] = AccountStatus::ACCOUNT_STATUS_CONFIRMATION_NEEDED;
+        }
+
+        $this->accountRepository->update($updateValues, $newsletterAccount['id']);
 
         return $newsletterAccount['id'];
     }
@@ -221,8 +220,9 @@ class Subscribe
             'first_name' => $firstName,
             'last_name' => $lastName,
             'hash' => $hash,
-            'status' => static::ACCOUNT_STATUS_CONFIRMATION_NEEDED
+            'status' => AccountStatus::ACCOUNT_STATUS_CONFIRMATION_NEEDED
         ];
-        return $this->newsletterModel->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
+
+        return $this->accountRepository->insert($insertValues);
     }
 }

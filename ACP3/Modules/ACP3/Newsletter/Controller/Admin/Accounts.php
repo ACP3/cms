@@ -12,21 +12,28 @@ use ACP3\Modules\ACP3\Newsletter;
 class Accounts extends Core\Modules\AdminController
 {
     /**
-     * @var Newsletter\Model
+     * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
-    protected $newsletterModel;
+    protected $accountStatusHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
+     */
+    protected $accountRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param Newsletter\Model                           $newsletterModel
+     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus    $accountStatusHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository $accountRepository
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
-        Newsletter\Model $newsletterModel)
+        Newsletter\Helper\AccountStatus $accountStatusHelper,
+        Newsletter\Model\AccountRepository $accountRepository)
     {
         parent::__construct($context);
 
-        $this->newsletterModel = $newsletterModel;
+        $this->accountStatusHelper = $accountStatusHelper;
+        $this->accountRepository = $accountRepository;
     }
 
     /**
@@ -34,10 +41,9 @@ class Accounts extends Core\Modules\AdminController
      */
     public function actionActivate($id)
     {
-        $bool = $this->newsletterModel->update(
-            ['status' => Newsletter\Helper\Subscribe::ACCOUNT_STATUS_CONFIRMED],
-            $id,
-            Newsletter\Model::TABLE_NAME_ACCOUNTS
+        $bool = $this->accountStatusHelper->changeAccountStatus(
+            Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
+            $id
         );
 
         $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
@@ -53,13 +59,12 @@ class Accounts extends Core\Modules\AdminController
         $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
                 foreach ($items as $item) {
-                    $bool = $this->newsletterModel->update(
-                        ['status' => Newsletter\Helper\Subscribe::ACCOUNT_STATUS_DISABLED],
-                        $item,
-                        Newsletter\Model::TABLE_NAME_ACCOUNTS
+                    $bool = $this->accountStatusHelper->changeAccountStatus(
+                        Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
+                        $item
                     );
                 }
 
@@ -70,7 +75,7 @@ class Accounts extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $accounts = $this->newsletterModel->getAllAccounts();
+        $accounts = $this->accountRepository->getAllAccounts();
         $c_accounts = count($accounts);
 
         if ($c_accounts > 0) {

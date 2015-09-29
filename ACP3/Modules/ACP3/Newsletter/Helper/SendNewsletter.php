@@ -3,7 +3,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Newsletter\Model;
+use ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository;
 
 /**
  * Class SendNewsletter
@@ -20,36 +20,36 @@ class SendNewsletter
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
      */
-    protected $newsletterModel;
+    protected $newsletterRepository;
     /**
      * @var \ACP3\Core\Config
      */
     protected $config;
 
     /**
-     * @param \ACP3\Core\Mailer                   $mailer
-     * @param \ACP3\Core\Router                   $router
-     * @param \ACP3\Core\Config                   $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Model $newsletterModel
+     * @param \ACP3\Core\Mailer                                        $mailer
+     * @param \ACP3\Core\Router                                        $router
+     * @param \ACP3\Core\Config                                        $config
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Mailer $mailer,
         Core\Router $router,
         Core\Config $config,
-        Model $newsletterModel)
+        NewsletterRepository $newsletterRepository)
     {
         $this->mailer = $mailer;
         $this->router = $router;
         $this->config = $config;
-        $this->newsletterModel = $newsletterModel;
+        $this->newsletterRepository = $newsletterRepository;
     }
 
     /**
      * Versendet einen Newsletter
      *
-     * @param      $newsletterId
+     * @param int  $newsletterId
      * @param null $recipients
      * @param bool $bcc
      *
@@ -59,7 +59,7 @@ class SendNewsletter
     {
         $settings = $this->config->getSettings('newsletter');
 
-        $newsletter = $this->newsletterModel->getOneById($newsletterId);
+        $newsletter = $this->newsletterRepository->getOneById($newsletterId);
         $from = [
             'email' => $settings['mail'],
             'name' => $this->config->getSettings('seo')['title']

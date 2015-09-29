@@ -17,24 +17,24 @@ class Archive extends Core\Modules\FrontendController
      */
     protected $pagination;
     /**
-     * @var Newsletter\Model
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
      */
-    protected $newsletterModel;
+    protected $newsletterRepository;
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
      * @param Core\Pagination                               $pagination
-     * @param Newsletter\Model                              $newsletterModel
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository                              $newsletterRepository
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Pagination $pagination,
-        Newsletter\Model $newsletterModel)
+        Newsletter\Model\NewsletterRepository $newsletterRepository)
     {
         parent::__construct($context);
 
         $this->pagination = $pagination;
-        $this->newsletterModel = $newsletterModel;
+        $this->newsletterRepository = $newsletterRepository;
     }
 
     /**
@@ -44,7 +44,7 @@ class Archive extends Core\Modules\FrontendController
      */
     public function actionDetails($id)
     {
-        $newsletter = $this->newsletterModel->getOneById($id, 1);
+        $newsletter = $this->newsletterRepository->getOneById($id, 1);
 
         if (!empty($newsletter)) {
             $this->breadcrumb
@@ -60,9 +60,9 @@ class Archive extends Core\Modules\FrontendController
 
     public function actionIndex()
     {
-        $this->pagination->setTotalResults($this->newsletterModel->countAll(1));
+        $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
         $this->pagination->display();
 
-        $this->view->assign('newsletters', $this->newsletterModel->getAll(1, POS, $this->user->getEntriesPerPage()));
+        $this->view->assign('newsletters', $this->newsletterRepository->getAll(1, POS, $this->user->getEntriesPerPage()));
     }
 }

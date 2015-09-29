@@ -20,9 +20,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
      */
-    protected $newsletterModel;
+    protected $newsletterRepository;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validator
      */
@@ -31,20 +31,26 @@ class Index extends Core\Modules\AdminController
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
      */
     protected $newsletterHelpers;
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
+     */
+    protected $accountRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model        $newsletterModel
-     * @param \ACP3\Modules\ACP3\Newsletter\Validator    $newsletterValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext               $context
+     * @param \ACP3\Core\Date                                          $date
+     * @param \ACP3\Core\Helpers\FormToken                             $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository    $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Validator                  $newsletterValidator
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter      $newsletterHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        Newsletter\Model $newsletterModel,
+        Newsletter\Model\NewsletterRepository $newsletterRepository,
+        Newsletter\Model\AccountRepository $accountRepository,
         Newsletter\Validator $newsletterValidator,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {
@@ -52,7 +58,8 @@ class Index extends Core\Modules\AdminController
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->newsletterModel = $newsletterModel;
+        $this->newsletterRepository = $newsletterRepository;
+        $this->accountRepository = $accountRepository;
         $this->newsletterValidator = $newsletterValidator;
         $this->newsletterHelpers = $newsletterHelpers;
     }
@@ -86,10 +93,10 @@ class Index extends Core\Modules\AdminController
         $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
                 foreach ($items as $item) {
-                    $bool = $this->newsletterModel->delete($item);
+                    $bool = $this->newsletterRepository->delete($item);
                 }
 
                 return $bool;
@@ -104,7 +111,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $newsletter = $this->newsletterModel->getOneById($id);
+        $newsletter = $this->newsletterRepository->getOneById($id);
 
         if (empty($newsletter) === false) {
             $this->breadcrumb->setTitlePostfix($newsletter['title']);
@@ -131,7 +138,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $newsletter = $this->newsletterModel->getAllInAcp();
+        $newsletter = $this->newsletterRepository->getAllInAcp();
 
         if (count($newsletter) > 0) {
             $canDelete = $this->acl->hasPermission('admin/newsletter/index/delete');
@@ -146,16 +153,16 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
             $this->view->assign('can_send', $this->acl->hasPermission('admin/newsletter/index/send'));
-            $this->view->assign('has_active_newsletter_accounts', $this->newsletterModel->countAllActiveAccounts() > 0);
+            $this->view->assign('has_active_newsletter_accounts', $this->accountRepository->countAllActiveAccounts() > 0);
         }
     }
 
     public function actionSend()
     {
         if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->newsletterModel->newsletterExists($this->request->getParameters()->get('id')) === true
+            $this->newsletterRepository->newsletterExists($this->request->getParameters()->get('id')) === true
         ) {
-            $accounts = $this->newsletterModel->getAllActiveAccounts();
+            $accounts = $this->accountRepository->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = [];
 
@@ -166,7 +173,7 @@ class Index extends Core\Modules\AdminController
             $bool = $this->newsletterHelpers->sendNewsletter($this->request->getParameters()->get('id'), $recipients);
             $bool2 = false;
             if ($bool === true) {
-                $bool2 = $this->newsletterModel->update(['status' => '1'], $this->request->getParameters()->get('id'));
+                $bool2 = $this->newsletterRepository->update(['status' => '1'], $this->request->getParameters()->get('id'));
             }
 
             $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'));
@@ -196,7 +203,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->actionHelper->handlePostAction(function() use ($formData, $settings) {
+        $this->actionHelper->handlePostAction(function () use ($formData, $settings) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -209,7 +216,7 @@ class Index extends Core\Modules\AdminController
                 'status' => 0,
                 'user_id' => $this->user->getUserId(),
             ];
-            $lastId = $this->newsletterModel->insert($insertValues);
+            $lastId = $this->newsletterRepository->insert($insertValues);
 
             // Test-Newsletter
             if ($formData['test'] == 1) {
@@ -238,7 +245,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->actionHelper->handlePostAction(function() use ($formData, $settings, $id) {
+        $this->actionHelper->handlePostAction(function () use ($formData, $settings, $id) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -248,7 +255,7 @@ class Index extends Core\Modules\AdminController
                 'text' => Core\Functions::strEncode($formData['text'], true),
                 'user_id' => $this->user->getUserId(),
             ];
-            $bool = $this->newsletterModel->update($updateValues, $id);
+            $bool = $this->newsletterRepository->update($updateValues, $id);
 
             // Test-Newsletter
             if ($formData['test'] == 1) {
