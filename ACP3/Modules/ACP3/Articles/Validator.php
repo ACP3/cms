@@ -78,29 +78,37 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['text'] = $this->lang->t('articles', 'text_to_short');
         }
         if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {
-            if ($formData['create'] == 1) {
-                if ($this->validate->isNumber($formData['block_id']) === false) {
-                    $this->errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
-                }
-                if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === false) {
-                    $this->errors['parent-id'] = $this->lang->t('menus', 'select_superior_page');
-                }
-                if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === true) {
-                    // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-                    $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent_id']);
-                    if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
-                        $this->errors['parent_id'] = $this->lang->t('menus', 'superior_page_not_allowed');
-                    }
-                }
-                if ($formData['display'] != 0 && $formData['display'] != 1) {
-                    $this->errors['display'] = $this->lang->t('menus', 'select_item_visibility');
-                }
-            }
+            $this->validateMenuItem($formData);
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $uriAlias) === true) {
             $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
 
         $this->_checkForFailedValidation();
+    }
+
+    /**
+     * @param array $formData
+     */
+    protected function validateMenuItem(array $formData)
+    {
+        if ($formData['create'] == 1) {
+            if ($this->validate->isNumber($formData['block_id']) === false) {
+                $this->errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
+            }
+            if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === false) {
+                $this->errors['parent-id'] = $this->lang->t('menus', 'select_superior_page');
+            }
+            if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === true) {
+                // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
+                $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent_id']);
+                if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
+                    $this->errors['parent_id'] = $this->lang->t('menus', 'superior_page_not_allowed');
+                }
+            }
+            if ($formData['display'] != 0 && $formData['display'] != 1) {
+                $this->errors['display'] = $this->lang->t('menus', 'select_item_visibility');
+            }
+        }
     }
 }
