@@ -21,9 +21,13 @@ class Index extends Core\Modules\FrontendController
      */
     protected $pagination;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model
+     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
      */
-    protected $galleryModel;
+    protected $galleryRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     */
+    protected $pictureRepository;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Cache
      */
@@ -34,24 +38,27 @@ class Index extends Core\Modules\FrontendController
     protected $settings = [];
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Pagination                         $pagination
-     * @param \ACP3\Modules\ACP3\Gallery\Model              $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Cache              $galleryCache
+     * @param \ACP3\Core\Modules\Controller\FrontendContext      $context
+     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Pagination                              $pagination
+     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Gallery\Model $galleryModel,
+        Gallery\Model\GalleryRepository $galleryRepository,
+        Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->pagination = $pagination;
-        $this->galleryModel = $galleryModel;
+        $this->galleryRepository = $galleryRepository;
+        $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
     }
 
@@ -69,8 +76,8 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionDetails($id)
     {
-        if ($this->galleryModel->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
-            $picture = $this->galleryModel->getPictureById($id);
+        if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
+            $picture = $this->pictureRepository->getPictureById($id);
 
             // Brotkrümelspur
             $this->breadcrumb
@@ -102,14 +109,14 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('picture', $picture);
 
             // Vorheriges Bild
-            $previousPicture = $this->galleryModel->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
+            $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
                 $this->seo->setPreviousPage($this->router->route('gallery/index/details/id_' . $previousPicture));
                 $this->view->assign('picture_back', $previousPicture);
             }
 
             // Nächstes Bild
-            $nextPicture = $this->galleryModel->getNextPictureId($picture['pic'], $picture['gallery_id']);
+            $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($nextPicture)) {
                 $this->seo->setNextPage($this->router->route('gallery/index/details/id_' . $nextPicture));
                 $this->view->assign('picture_next', $nextPicture);
@@ -137,7 +144,7 @@ class Index extends Core\Modules\FrontendController
         $this->setNoOutput(true);
 
         set_time_limit(20);
-        $picture = $this->galleryModel->getFileById($id);
+        $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
 
         $options = [
@@ -157,10 +164,10 @@ class Index extends Core\Modules\FrontendController
     {
         $time = $this->date->getCurrentDateTime();
 
-        $this->pagination->setTotalResults($this->galleryModel->countAll($time));
+        $this->pagination->setTotalResults($this->galleryRepository->countAll($time));
         $this->pagination->display();
 
-        $this->view->assign('galleries', $this->galleryModel->getAll($time, POS, $this->user->getEntriesPerPage()));
+        $this->view->assign('galleries', $this->galleryRepository->getAll($time, POS, $this->user->getEntriesPerPage()));
         $this->view->assign('dateformat', $this->settings['dateformat']);
     }
 
@@ -171,11 +178,11 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionPics($id)
     {
-        if ($this->galleryModel->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->lang->t('gallery', 'gallery'), 'gallery')
-                ->append($this->galleryModel->getGalleryTitle($id));
+                ->append($this->galleryRepository->getGalleryTitle($id));
 
             $this->view->assign('pictures', $this->galleryCache->getCache($id));
             $this->view->assign('overlay', (int)$this->settings['overlay']);

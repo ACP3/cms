@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Gallery\Model\PictureRepository;
 
 /**
  * Class Cache
@@ -14,28 +15,28 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     const CACHE_ID = 'pics_id_';
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model
+     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
-    protected $galleryModel;
+    protected $pictureRepository;
     /**
      * @var \ACP3\Core\Config
      */
     protected $config;
 
     /**
-     * @param Core\Cache  $cache
-     * @param Model       $galleryModel
-     * @param Core\Config $config
+     * @param \ACP3\Core\Cache                                   $cache
+     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Core\Config                                  $config
      */
     public function __construct(
         Core\Cache $cache,
-        Model $galleryModel,
+        PictureRepository $pictureRepository,
         Core\Config $config
     )
     {
         parent::__construct($cache);
 
-        $this->galleryModel = $galleryModel;
+        $this->pictureRepository = $pictureRepository;
         $this->config = $config;
     }
 
@@ -66,7 +67,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveCache($id)
     {
-        $pictures = $this->galleryModel->getPicturesByGalleryId($id);
+        $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
         $c_pictures = count($pictures);
 
         $settings = $this->config->getSettings('gallery');

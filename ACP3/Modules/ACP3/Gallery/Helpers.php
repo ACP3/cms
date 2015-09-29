@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Gallery\Model\PictureRepository;
 
 /**
  * Class Helpers
@@ -22,24 +23,24 @@ class Helpers
      */
     protected $seo;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model
+     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
-    protected $galleryModel;
+    protected $pictureRepository;
 
     /**
-     * @param \ACP3\Core\Router\Aliases        $aliases
-     * @param \ACP3\Core\SEO                   $seo
-     * @param \ACP3\Modules\ACP3\Gallery\Model $galleryModel
+     * @param \ACP3\Core\Router\Aliases                          $aliases
+     * @param \ACP3\Core\SEO                                     $seo
+     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      */
     public function __construct(
         Core\Router\Aliases $aliases,
         Core\SEO $seo,
-        Model $galleryModel
+        PictureRepository $pictureRepository
     )
     {
         $this->aliases = $aliases;
         $this->seo = $seo;
-        $this->galleryModel = $galleryModel;
+        $this->pictureRepository = $pictureRepository;
     }
 
     /**
@@ -51,7 +52,7 @@ class Helpers
      */
     public function generatePictureAlias($pictureId)
     {
-        $galleryId = $this->galleryModel->getGalleryIdFromPictureId($pictureId);
+        $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($pictureId);
         $alias = $this->aliases->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
         if (!empty($alias)) {
             $alias .= '/img-' . $pictureId;
@@ -76,7 +77,7 @@ class Helpers
      */
     public function generatePictureAliases($galleryId)
     {
-        $pictures = $this->galleryModel->getPicturesByGalleryId($galleryId);
+        $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
         $c_pictures = count($pictures);
 
         $alias = $this->aliases->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
@@ -108,7 +109,7 @@ class Helpers
      */
     public function deletePictureAliases($galleryId)
     {
-        $pictures = $this->galleryModel->getPicturesByGalleryId($galleryId);
+        $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
         $c_pictures = count($pictures);
 
         for ($i = 0; $i < $c_pictures; ++$i) {

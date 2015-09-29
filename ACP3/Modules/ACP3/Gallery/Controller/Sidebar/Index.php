@@ -16,19 +16,19 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model
+     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
      */
     protected $galleryModel;
 
     /**
      * @param \ACP3\Core\Modules\Controller\Context $context
      * @param \ACP3\Core\Date                       $date
-     * @param \ACP3\Modules\ACP3\Gallery\Model      $galleryModel
+     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository      $galleryModel
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Core\Date $date,
-        Gallery\Model $galleryModel)
+        Gallery\Model\GalleryRepository $galleryModel)
     {
         parent::__construct($context);
 

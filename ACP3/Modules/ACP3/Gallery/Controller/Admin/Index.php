@@ -28,9 +28,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model
+     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
      */
-    protected $galleryModel;
+    protected $galleryRepository;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validator\Gallery
      */
@@ -39,16 +39,21 @@ class Index extends Core\Modules\AdminController
      * @var \ACP3\Modules\ACP3\Gallery\Validator\Settings
      */
     protected $settingsValidator;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     */
+    protected $pictureRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext    $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Cache              $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers            $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model              $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Validator\Gallery  $galleryValidator
-     * @param \ACP3\Modules\ACP3\Gallery\Validator\Settings $settingsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
+     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Validator\Gallery       $galleryValidator
+     * @param \ACP3\Modules\ACP3\Gallery\Validator\Settings      $settingsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -56,7 +61,8 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model $galleryModel,
+        Gallery\Model\GalleryRepository $galleryRepository,
+        Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Validator\Gallery $galleryValidator,
         Gallery\Validator\Settings $settingsValidator)
     {
@@ -66,7 +72,8 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryCache = $galleryCache;
         $this->galleryHelpers = $galleryHelpers;
-        $this->galleryModel = $galleryModel;
+        $this->galleryRepository = $galleryRepository;
+        $this->pictureRepository = $pictureRepository;
         $this->galleryValidator = $galleryValidator;
         $this->settingsValidator = $settingsValidator;
     }
@@ -98,9 +105,9 @@ class Index extends Core\Modules\AdminController
                 $bool = $bool2 = false;
 
                 foreach ($items as $item) {
-                    if (!empty($item) && $this->galleryModel->galleryExists($item) === true) {
+                    if (!empty($item) && $this->galleryRepository->galleryExists($item) === true) {
                         // Hochgeladene Bilder löschen
-                        $pictures = $this->galleryModel->getPicturesByGalleryId($item);
+                        $pictures = $this->pictureRepository->getPicturesByGalleryId($item);
                         foreach ($pictures as $row) {
                             $this->galleryHelpers->removePicture($row['file']);
                         }
@@ -111,8 +118,8 @@ class Index extends Core\Modules\AdminController
                         $this->galleryHelpers->deletePictureAliases($item);
 
                         // Fotogalerie mitsamt Bildern löschen
-                        $bool = $this->galleryModel->delete($item);
-                        $bool2 = $this->galleryModel->delete($item, 'gallery_id', Gallery\Model::TABLE_NAME_PICTURES);
+                        $bool = $this->galleryRepository->delete($item);
+                        $bool2 = $this->pictureRepository->delete($item, 'gallery_id');
                     }
                 }
 
@@ -128,8 +135,8 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        if ($this->galleryModel->galleryExists($id) === true) {
-            $gallery = $this->galleryModel->getGalleryById($id);
+        if ($this->galleryRepository->galleryExists($id) === true) {
+            $gallery = $this->galleryRepository->getGalleryById($id);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)));
 
@@ -152,7 +159,7 @@ class Index extends Core\Modules\AdminController
 
     protected function _actionEditPictures()
     {
-        $pictures = $this->galleryModel->getPicturesByGalleryId((int)$this->request->getParameters()->get('id'));
+        $pictures = $this->pictureRepository->getPicturesByGalleryId((int)$this->request->getParameters()->get('id'));
         $c_pictures = count($pictures);
 
         if ($c_pictures > 0) {
@@ -171,7 +178,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $galleries = $this->galleryModel->getAllInAcp();
+        $galleries = $this->galleryRepository->getAllInAcp();
 
         if (count($galleries) > 0) {
             $canDelete = $this->acl->hasPermission('admin/gallery/index/delete');
@@ -227,7 +234,7 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $lastId = $this->galleryModel->insert($insertValues);
+            $lastId = $this->galleryRepository->insert($insertValues);
 
             $this->seo->insertUriAlias(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
@@ -262,7 +269,7 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $bool = $this->galleryModel->update($updateValues, $id);
+            $bool = $this->galleryRepository->update($updateValues, $id);
 
             $this->seo->insertUriAlias(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id),

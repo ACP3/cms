@@ -5,7 +5,8 @@ parameters:
   gallery.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Sidebar\Index'
   gallery.cache.fqdn: 'ACP3\Modules\ACP3\Gallery\Cache'
   gallery.helpers.fqdn: 'ACP3\Modules\ACP3\Gallery\Helpers'
-  gallery.model.fqdn: 'ACP3\Modules\ACP3\Gallery\Model'
+  gallery.model.galleryrepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\GalleryRepository'
+  gallery.model.picturerepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\PictureRepository'
   gallery.validator.gallery.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator\Gallery'
   gallery.validator.picture.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator\Picture'
   gallery.validator.settings.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator\Settings'
@@ -15,35 +16,39 @@ parameters:
 services:
   gallery.controller.admin.index:
     class: %gallery.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@gallery.cache', '@gallery.helpers', '@gallery.model', '@gallery.validator.gallery', @gallery.validator.settings]
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@gallery.cache', '@gallery.helpers', '@gallery.model.galleryrepository', @gallery.model.picturerepository, '@gallery.validator.gallery', @gallery.validator.settings]
 
   gallery.controller.admin.pictures:
     class: %gallery.controller.admin.pictures.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@core.helpers.sort', '@gallery.helpers', '@gallery.model', '@gallery.cache', '@gallery.validator.picture']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@core.helpers.sort', '@gallery.helpers', '@gallery.model.galleryrepository', @gallery.model.picturerepository, '@gallery.cache', '@gallery.validator.picture']
 
   gallery.controller.frontend.index:
     class: %gallery.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@gallery.model', '@gallery.cache']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@gallery.model.galleryrepository', @gallery.model.picturerepository, '@gallery.cache']
 
   gallery.controller.sidebar.index:
     class: %gallery.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.date', '@gallery.model']
+    arguments: ['@core.context', '@core.date', '@gallery.model.galleryrepository']
 
   gallery.cache:
     class: %gallery.cache.fqdn%
-    arguments: ['@gallery.cache.core', '@gallery.model', '@core.config']
+    arguments: ['@gallery.cache.core', '@gallery.model.picturerepository', '@core.config']
 
   gallery.cache.core:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'gallery']
 
-  gallery.model:
-    class: %gallery.model.fqdn%
+  gallery.model.galleryrepository:
+    class: %gallery.model.galleryrepository.fqdn%
+    arguments: ['@core.db']
+
+  gallery.model.picturerepository:
+    class: %gallery.model.picturerepository.fqdn%
     arguments: ['@core.db']
 
   gallery.helpers:
     class: %gallery.helpers.fqdn%
-    arguments: ['@core.router.aliases', '@core.seo', '@gallery.model']
+    arguments: ['@core.router.aliases', '@core.seo', '@gallery.model.picturerepository']
 
   gallery.validator.gallery:
     class: %gallery.validator.gallery.fqdn%

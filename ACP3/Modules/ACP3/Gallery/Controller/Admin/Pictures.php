@@ -28,9 +28,9 @@ class Pictures extends Core\Modules\AdminController
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model
+     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
      */
-    protected $galleryModel;
+    protected $galleryRepository;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Cache
      */
@@ -39,16 +39,21 @@ class Pictures extends Core\Modules\AdminController
      * @var \ACP3\Modules\ACP3\Gallery\Validator\Picture
      */
     protected $pictureValidator;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     */
+    protected $pictureRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext   $context
-     * @param \ACP3\Core\Date                              $date
-     * @param \ACP3\Core\Helpers\FormToken                 $formTokenHelper
-     * @param \ACP3\Core\Helpers\Sort                      $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers           $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model             $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Cache             $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Validator\Picture $pictureValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
+     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
+     * @param \ACP3\Core\Helpers\Sort                            $sortHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Validator\Picture       $pictureValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -56,7 +61,8 @@ class Pictures extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Sort $sortHelper,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model $galleryModel,
+        Gallery\Model\GalleryRepository $galleryRepository,
+        Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
         Gallery\Validator\Picture $pictureValidator)
     {
@@ -66,7 +72,8 @@ class Pictures extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->sortHelper = $sortHelper;
         $this->galleryHelpers = $galleryHelpers;
-        $this->galleryModel = $galleryModel;
+        $this->galleryRepository = $galleryRepository;
+        $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
         $this->pictureValidator = $pictureValidator;
     }
@@ -78,8 +85,8 @@ class Pictures extends Core\Modules\AdminController
      */
     public function actionCreate($id)
     {
-        if ($this->galleryModel->galleryExists($id) === true) {
-            $gallery = $this->galleryModel->getGalleryTitle($id);
+        if ($this->galleryRepository->galleryExists($id) === true) {
+            $gallery = $this->galleryRepository->getGalleryTitle($id);
 
             $this->breadcrumb
                 ->append($gallery, 'acp/gallery/index/edit/id_' . $id)
@@ -122,13 +129,13 @@ class Pictures extends Core\Modules\AdminController
             function ($items) {
                 $bool = false;
                 foreach ($items as $item) {
-                    if (!empty($item) && $this->galleryModel->pictureExists($item) === true) {
+                    if (!empty($item) && $this->pictureRepository->pictureExists($item) === true) {
                         // Datei ebenfalls löschen
-                        $picture = $this->galleryModel->getPictureById($item);
-                        $this->galleryModel->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
+                        $picture = $this->pictureRepository->getPictureById($item);
+                        $this->pictureRepository->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
                         $this->galleryHelpers->removePicture($picture['file']);
 
-                        $bool = $this->galleryModel->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
+                        $bool = $this->pictureRepository->delete($item);
                         $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
 
                         $this->galleryCache->saveCache($picture['gallery_id']);
@@ -149,8 +156,8 @@ class Pictures extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        if ($this->galleryModel->pictureExists($id) === true) {
-            $picture = $this->galleryModel->getPictureById($id);
+        if ($this->pictureRepository->pictureExists($id) === true) {
+            $picture = $this->pictureRepository->getPictureById($id);
 
             $this->breadcrumb
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
@@ -186,14 +193,14 @@ class Pictures extends Core\Modules\AdminController
      */
     public function actionOrder($id, $action)
     {
-        if (($action === 'up' || $action === 'down') && $this->galleryModel->pictureExists($id) === true) {
+        if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {
-                $this->sortHelper->up(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->up(Gallery\Model\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             } else {
-                $this->sortHelper->down(Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->down(Gallery\Model\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             }
 
-            $galleryId = $this->galleryModel->getGalleryIdFromPictureId($id);
+            $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($id);
 
             $this->galleryCache->saveCache($galleryId);
 
@@ -216,7 +223,7 @@ class Pictures extends Core\Modules\AdminController
 
                 $upload = new Core\Helpers\Upload('gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                $picNum = $this->galleryModel->getLastPictureByGalleryId($id);
+                $picNum = $this->pictureRepository->getLastPictureByGalleryId($id);
 
                 $insertValues = [
                     'id' => '',
@@ -227,7 +234,7 @@ class Pictures extends Core\Modules\AdminController
                     'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
                 ];
 
-                $lastId = $this->galleryModel->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
+                $lastId = $this->pictureRepository->insert($insertValues);
                 $bool2 = $this->galleryHelpers->generatePictureAlias($lastId);
 
                 $this->galleryCache->saveCache($id);
@@ -262,14 +269,14 @@ class Pictures extends Core\Modules\AdminController
                 if (!empty($file)) {
                     $upload = new Core\Helpers\Upload('gallery');
                     $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                    $oldFile = $this->galleryModel->getFileById($id);
+                    $oldFile = $this->pictureRepository->getFileById($id);
 
                     $this->galleryHelpers->removePicture($oldFile);
 
                     $updateValues = array_merge($updateValues, ['file' => $result['name']]);
                 }
 
-                $bool = $this->galleryModel->update($updateValues, $id, Gallery\Model::TABLE_NAME_PICTURES);
+                $bool = $this->pictureRepository->update($updateValues, $id);
 
                 $this->galleryCache->saveCache($picture['gallery_id']);
 
