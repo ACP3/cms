@@ -1,22 +1,18 @@
 <?php
-namespace ACP3\Modules\ACP3\Gallery;
+namespace ACP3\Modules\ACP3\Gallery\Validator;
 
 use ACP3\Core;
 
 /**
- * Class Validator
- * @package ACP3\Modules\ACP3\Gallery
+ * Class Gallery
+ * @package ACP3\Modules\ACP3\Gallery\Validator
  */
-class Validator extends Core\Validator\AbstractValidator
+class Gallery extends Core\Validator\AbstractValidator
 {
     /**
      * @var Core\Validator\Rules\Date
      */
     protected $dateValidator;
-    /**
-     * @var Core\Validator\Rules\Mime
-     */
-    protected $mimeValidator;
     /**
      * @var Core\Validator\Rules\Router\Aliases
      */
@@ -31,7 +27,6 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Misc           $validate
      * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
      * @param Core\Validator\Rules\Date           $dateValidator
-     * @param Core\Validator\Rules\Mime           $mimeValidator
      * @param Core\Modules                        $modules
      */
     public function __construct(
@@ -39,7 +34,6 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Date $dateValidator,
-        Core\Validator\Rules\Mime $mimeValidator,
         Core\Modules $modules
     )
     {
@@ -47,7 +41,6 @@ class Validator extends Core\Validator\AbstractValidator
 
         $this->aliasesValidator = $aliasesValidator;
         $this->dateValidator = $dateValidator;
-        $this->mimeValidator = $mimeValidator;
         $this->modules = $modules;
     }
 
@@ -71,53 +64,6 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $uriAlias) === true) {
             $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $file
-     * @param array $settings
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateCreatePicture(array $file, array $settings)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if (empty($file['tmp_name'])) {
-            $this->errors['file'] = $this->lang->t('gallery', 'no_picture_selected');
-        }
-        if (!empty($file['tmp_name']) &&
-            ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
-                $file['error'] !== UPLOAD_ERR_OK)
-        ) {
-            $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $file
-     * @param array $settings
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateEditPicture(array $file, array $settings)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if (!empty($file['tmp_name']) &&
-            ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
-                $file['error'] !== UPLOAD_ERR_OK)
-        ) {
-            $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
         }
 
         $this->_checkForFailedValidation();

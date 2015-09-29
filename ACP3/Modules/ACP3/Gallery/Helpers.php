@@ -14,22 +14,22 @@ class Helpers
     const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
 
     /**
-     * @var Core\Router\Aliases
+     * @var \ACP3\Core\Router\Aliases
      */
     protected $aliases;
     /**
-     * @var Core\SEO
+     * @var \ACP3\Core\SEO
      */
     protected $seo;
     /**
-     * @var Model
+     * @var \ACP3\Modules\ACP3\Gallery\Model
      */
     protected $galleryModel;
 
     /**
-     * @param Core\Router\Aliases $aliases
-     * @param Core\SEO            $seo
-     * @param Model               $galleryModel
+     * @param \ACP3\Core\Router\Aliases        $aliases
+     * @param \ACP3\Core\SEO                   $seo
+     * @param \ACP3\Modules\ACP3\Gallery\Model $galleryModel
      */
     public function __construct(
         Core\Router\Aliases $aliases,

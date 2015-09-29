@@ -32,18 +32,23 @@ class Index extends Core\Modules\AdminController
      */
     protected $galleryModel;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validator
+     * @var \ACP3\Modules\ACP3\Gallery\Validator\Gallery
      */
     protected $galleryValidator;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Validator\Settings
+     */
+    protected $settingsValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Cache           $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers         $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model           $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Validator       $galleryValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext    $context
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Cache              $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers            $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model              $galleryModel
+     * @param \ACP3\Modules\ACP3\Gallery\Validator\Gallery  $galleryValidator
+     * @param \ACP3\Modules\ACP3\Gallery\Validator\Settings $settingsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -52,7 +57,8 @@ class Index extends Core\Modules\AdminController
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model $galleryModel,
-        Gallery\Validator $galleryValidator)
+        Gallery\Validator\Gallery $galleryValidator,
+        Gallery\Validator\Settings $settingsValidator)
     {
         parent::__construct($context);
 
@@ -62,6 +68,7 @@ class Index extends Core\Modules\AdminController
         $this->galleryHelpers = $galleryHelpers;
         $this->galleryModel = $galleryModel;
         $this->galleryValidator = $galleryValidator;
+        $this->settingsValidator = $settingsValidator;
     }
 
     public function actionCreate()
@@ -87,7 +94,7 @@ class Index extends Core\Modules\AdminController
         $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = $bool2 = false;
 
                 foreach ($items as $item) {
@@ -209,7 +216,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->galleryValidator->validate($formData);
 
             $insertValues = [
@@ -242,7 +249,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
+        $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->galleryValidator->validate(
                 $formData,
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
@@ -279,7 +286,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData, array $settings)
     {
         $this->actionHelper->handleSettingsPostAction(function () use ($formData, $settings) {
-            $this->galleryValidator->validateSettings($formData);
+            $this->settingsValidator->validate($formData);
 
             $data = [
                 'width' => (int)$formData['width'],

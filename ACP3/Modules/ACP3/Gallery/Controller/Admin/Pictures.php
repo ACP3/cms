@@ -36,19 +36,19 @@ class Pictures extends Core\Modules\AdminController
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validator
+     * @var \ACP3\Modules\ACP3\Gallery\Validator\Picture
      */
-    protected $galleryValidator;
+    protected $pictureValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Core\Helpers\Sort                    $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers         $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model           $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Cache           $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Validator       $galleryValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext   $context
+     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Core\Helpers\FormToken                 $formTokenHelper
+     * @param \ACP3\Core\Helpers\Sort                      $sortHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers           $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model             $galleryModel
+     * @param \ACP3\Modules\ACP3\Gallery\Cache             $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Validator\Picture $pictureValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +58,7 @@ class Pictures extends Core\Modules\AdminController
         Gallery\Helpers $galleryHelpers,
         Gallery\Model $galleryModel,
         Gallery\Cache $galleryCache,
-        Gallery\Validator $galleryValidator)
+        Gallery\Validator\Picture $pictureValidator)
     {
         parent::__construct($context);
 
@@ -68,7 +68,7 @@ class Pictures extends Core\Modules\AdminController
         $this->galleryHelpers = $galleryHelpers;
         $this->galleryModel = $galleryModel;
         $this->galleryCache = $galleryCache;
-        $this->galleryValidator = $galleryValidator;
+        $this->pictureValidator = $pictureValidator;
     }
 
     /**
@@ -212,7 +212,7 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->galleryValidator->validateCreatePicture($file, $settings);
+                $this->pictureValidator->validateCreate($file, $settings);
 
                 $upload = new Core\Helpers\Upload('gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -252,7 +252,7 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $picture, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->galleryValidator->validateEditPicture($file, $settings);
+                $this->pictureValidator->validateEdit($file, $settings);
 
                 $updateValues = [
                     'description' => Core\Functions::strEncode($formData['description'], true),
