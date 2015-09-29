@@ -238,7 +238,7 @@
         <item key="previous">Previous</item>
         <item key="previous_page">Previous page</item>
         <item key="protected_module">Protected module</item>
-        <item key="protected_module_description">Protected module can't be disabled or uninstalled.</item>
+        <item key="protected_module_description">Protected modules can't be disabled or uninstalled.</item>
         <item key="publication_period">Publication period</item>
         <item key="records_per_page">Records per page</item>
         <item key="refresh">Refresh</item>
