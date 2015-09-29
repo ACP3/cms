@@ -15,9 +15,9 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $dateValidator;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */
-    protected $menusModel;
+    protected $menuItemRepository;
     /**
      * @var \ACP3\Core\ACL
      */
@@ -45,13 +45,13 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      *
      * @return $this
      */
-    public function setMenusModel(Menus\Model $menusModel)
+    public function setMenuItemRepository(Menus\Model\MenuItemRepository $menuItemRepository)
     {
-        $this->menusModel = $menusModel;
+        $this->menuItemRepository = $menuItemRepository;
 
         return $this;
     }
@@ -101,7 +101,7 @@ class Validator extends Core\Validator\AbstractValidator
             }
             if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === true) {
                 // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-                $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent_id']);
+                $parentBlock = $this->menuItemRepository->getMenuItemBlockIdById($formData['parent_id']);
                 if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
                     $this->errors['parent_id'] = $this->lang->t('menus', 'superior_page_not_allowed');
                 }

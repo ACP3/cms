@@ -33,17 +33,21 @@ class Index extends Core\Modules\AdminController
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Helpers
+     * @var \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
      */
-    protected $menusHelpers;
+    protected $manageMenuItemHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */
-    protected $menusModel;
+    protected $menuItemRepository;
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
+    /**
+     * @var Menus\Helpers\MenuItemFormFields
+     */
+    protected $menuItemFormFieldsHelper;
 
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
@@ -83,25 +87,37 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Menus\Helpers $menusHelpers
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
      *
      * @return $this
      */
-    public function setMenusHelpers(Menus\Helpers $menusHelpers)
+    public function setMenuItemFormFieldsHelper(Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper)
     {
-        $this->menusHelpers = $menusHelpers;
+        $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
 
         return $this;
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem $manageMenuItemHelper
      *
      * @return $this
      */
-    public function setMenusModel(Menus\Model $menusModel)
+    public function setManageMenuItemHelper(Menus\Helpers\ManageMenuItem $manageMenuItemHelper)
     {
-        $this->menusModel = $menusModel;
+        $this->manageMenuItemHelper = $manageMenuItemHelper;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     *
+     * @return $this
+     */
+    public function setMenuItemRepository(Menus\Model\MenuItemRepository $menuItemRepository)
+    {
+        $this->menuItemRepository = $menuItemRepository;
 
         return $this;
     }
@@ -115,7 +131,7 @@ class Index extends Core\Modules\AdminController
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
             $lang_options = [$this->lang->t('articles', 'create_menu_item')];
             $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $lang_options, 0));
-            $this->view->assign($this->menusHelpers->createMenuItemFormFields());
+            $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
         }
 
         $defaults = [
@@ -184,8 +200,8 @@ class Index extends Core\Modules\AdminController
 
                     $bool = $this->articlesModel->delete($item);
 
-                    if ($this->menusHelpers) {
-                        $this->menusHelpers->manageMenuItem($uri, false);
+                    if ($this->manageMenuItemHelper) {
+                        $this->manageMenuItemHelper->manageMenuItem($uri, false);
                     }
 
                     $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
@@ -218,13 +234,13 @@ class Index extends Core\Modules\AdminController
             }
 
             if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-                $menuItem = $this->menusModel->getOneMenuItemByUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
+                $menuItem = $this->menuItemRepository->getOneMenuItemByUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
 
                 $lang_options = [$this->lang->t('articles', 'create_menu_item')];
                 $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $lang_options, !empty($menuItem) ? 1 : 0));
 
                 $this->view->assign(
-                    $this->menusHelpers->createMenuItemFormFields(
+                    $this->menuItemFormFieldsHelper->createMenuItemFormFields(
                         $menuItem['block_id'],
                         $menuItem['parent_id'],
                         $menuItem['left_id'],
@@ -320,7 +336,7 @@ class Index extends Core\Modules\AdminController
                     'target' => 1
                 ];
 
-                $this->menusHelpers->manageMenuItem(
+                $this->manageMenuItemHelper->manageMenuItem(
                     sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
                     isset($formData['create']) === true,
                     $data

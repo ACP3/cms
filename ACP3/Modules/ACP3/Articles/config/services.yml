@@ -18,8 +18,9 @@ services:
     arguments: ['@core.context.admin', '@core.date', '@articles.model', '@articles.cache', '@articles.validator', '@core.helpers.formToken']
     calls:
       - ['setMenusCache', ['@?menus.cache']]
-      - ['setMenusHelpers', ['@?menus.helpers']]
-      - ['setMenusModel', ['@?menus.model']]
+      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+      - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
+      - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
 
   articles.controller.frontend.index:
     class: %articles.controller.frontend.index.fqdn%
@@ -49,7 +50,7 @@ services:
     class: %articles.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl']
     calls:
-      - ['setMenusModel', ['@?menus.model']]
+      - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
 
   articles.installer.schema:
     class: %articles.installer.schema.fqdn%

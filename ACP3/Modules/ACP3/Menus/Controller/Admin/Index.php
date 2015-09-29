@@ -20,11 +20,11 @@ class Index extends Core\Modules\AdminController
      */
     protected $nestedSet;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Helpers
+     * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
      */
     protected $menusHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
      */
     protected $menusModel;
     /**
@@ -32,27 +32,33 @@ class Index extends Core\Modules\AdminController
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Validator
+     * @var \ACP3\Modules\ACP3\Menus\Validator\Menu
      */
     protected $menusValidator;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     */
+    protected $menuItemRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\NestedSet                       $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Helpers           $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Model             $menusModel
-     * @param \ACP3\Modules\ACP3\Menus\Cache             $menusCache
-     * @param \ACP3\Modules\ACP3\Menus\Validator         $menusValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
+     * @param \ACP3\Core\NestedSet                              $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                      $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList    $menusHelpers
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository     $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Validator\Menu           $menusValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
-        Menus\Helpers $menusHelpers,
-        Menus\Model $menusModel,
+        Menus\Helpers\MenuItemsList $menusHelpers,
+        Menus\Model\MenuRepository $menusModel,
+        Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
-        Menus\Validator $menusValidator)
+        Menus\Validator\Menu $menusValidator)
     {
         parent::__construct($context);
 
@@ -60,6 +66,7 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->menusHelpers = $menusHelpers;
         $this->menusModel = $menusModel;
+        $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
         $this->menusValidator = $menusValidator;
     }
@@ -86,11 +93,11 @@ class Index extends Core\Modules\AdminController
                 foreach ($items as $item) {
                     if (!empty($item) && $this->menusModel->menuExists($item) === true) {
                         // Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
-                        $items = $this->menusModel->getAllItemsByBlockId($item);
+                        $items = $this->menuItemRepository->getAllItemsByBlockId($item);
                         foreach ($items as $row) {
                             $this->nestedSet->deleteNode(
                                 $row['id'],
-                                Menus\Model::TABLE_NAME_ITEMS,
+                                Menus\Model\MenuItemRepository::TABLE_NAME,
                                 true
                             );
                         }
@@ -146,15 +153,15 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('can_edit', $this->acl->hasPermission('admin/menus/index/edit'));
             $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
 
-            $pagesList = $this->menusHelpers->menuItemsList();
+            $menuItems = $this->menusHelpers->menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {
-                if (isset($pagesList[$menus[$i]['index_name']]) === false) {
-                    $pagesList[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
-                    $pagesList[$menus[$i]['index_name']]['menu_id'] = $menus[$i]['id'];
-                    $pagesList[$menus[$i]['index_name']]['items'] = [];
+                if (isset($menuItems[$menus[$i]['index_name']]) === false) {
+                    $menuItems[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
+                    $menuItems[$menus[$i]['index_name']]['menu_id'] = $menus[$i]['id'];
+                    $menuItems[$menus[$i]['index_name']]['items'] = [];
                 }
             }
-            $this->view->assign('pages_list', $pagesList);
+            $this->view->assign('pages_list', $menuItems);
         }
     }
 

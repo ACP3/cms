@@ -2,6 +2,8 @@
 namespace ACP3\Modules\ACP3\Menus;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
 
 /**
  * Class Cache
@@ -17,25 +19,32 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected $lang;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
      */
     protected $menuModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     */
+    protected $menuItemRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Core\Lang  $lang
-     * @param Model      $menuModel
+     * @param Core\Cache                                        $cache
+     * @param Core\Lang                                         $lang
+     * @param MenuRepository                                             $menuModel
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Core\Cache $cache,
         Core\Lang $lang,
-        Model $menuModel
+        MenuRepository $menuModel,
+        MenuItemRepository $menuItemRepository
     )
     {
         parent::__construct($cache);
 
         $this->lang = $lang;
         $this->menuModel = $menuModel;
+        $this->menuItemRepository = $menuItemRepository;
     }
 
     /**
@@ -59,7 +68,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveMenusCache()
     {
-        $items = $this->menuModel->getAllMenuItems();
+        $items = $this->menuItemRepository->getAllMenuItems();
         $c_items = count($items);
 
         if ($c_items > 0) {
@@ -107,7 +116,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     {
         return $this->cache->save(
             self::CACHE_ID_VISIBLE . $menuIdentifier,
-            $this->menuModel->getVisibleMenuItemsByBlockName($menuIdentifier)
+            $this->menuItemRepository->getVisibleMenuItemsByBlockName($menuIdentifier)
         );
     }
 

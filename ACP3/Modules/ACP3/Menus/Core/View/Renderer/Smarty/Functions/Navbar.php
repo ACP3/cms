@@ -28,30 +28,30 @@ class Navbar extends AbstractFunction
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */
-    protected $menusModel;
+    protected $menuItemRepository;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
     protected $menusCache;
 
     /**
-     * @param \ACP3\Core\Http\Request        $request
-     * @param \ACP3\Core\Router              $router
-     * @param \ACP3\Modules\ACP3\Menus\Model $menusModel
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
+     * @param \ACP3\Core\Http\Request                           $request
+     * @param \ACP3\Core\Router                                 $router
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
      */
     public function __construct(
         Core\Http\Request $request,
         Core\Router $router,
-        Menus\Model $menusModel,
+        Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
     )
     {
         $this->request = $request;
         $this->router = $router;
-        $this->menusModel = $menusModel;
+        $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
     }
 
@@ -173,7 +173,7 @@ class Navbar extends AbstractFunction
                 $this->request->getModuleAndController(),
                 $this->request->getModule()
             ];
-            return (int)$this->menusModel->getLeftIdByUris($menu, $in);
+            return (int)$this->menuItemRepository->getLeftIdByUris($menu, $in);
         }
 
         return 0;

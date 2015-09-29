@@ -25,7 +25,7 @@ class Items extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
      */
     protected $menusModel;
     /**
@@ -33,37 +33,49 @@ class Items extends Core\Modules\AdminController
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Helpers
+     * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
      */
     protected $menusHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Validator
+     * @var \ACP3\Modules\ACP3\Menus\Validator\MenuItem
      */
-    protected $menusValidator;
+    protected $menuItemValidator;
     /**
      * @var \ACP3\Modules\ACP3\Articles\Helpers
      */
     protected $articlesHelpers;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     */
+    protected $menuItemRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
+     */
+    protected $menuItemFormFieldsHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Router\Aliases                  $aliases
-     * @param \ACP3\Core\NestedSet                       $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model             $menusModel
-     * @param \ACP3\Modules\ACP3\Menus\Cache             $menusCache
-     * @param \ACP3\Modules\ACP3\Menus\Helpers           $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Validator         $menusValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Core\Router\Aliases                           $aliases
+     * @param \ACP3\Core\NestedSet                                $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository       $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository   $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Cache                      $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList      $menusHelpers
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
+     * @param \ACP3\Modules\ACP3\Menus\Validator\MenuItem         $menuItemValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Router\Aliases $aliases,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
-        Menus\Model $menusModel,
+        Menus\Model\MenuRepository $menusModel,
+        Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
-        Menus\Helpers $menusHelpers,
-        Menus\Validator $menusValidator)
+        Menus\Helpers\MenuItemsList $menusHelpers,
+        Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
+        Menus\Validator\MenuItem $menuItemValidator)
     {
         parent::__construct($context);
 
@@ -71,9 +83,11 @@ class Items extends Core\Modules\AdminController
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->menusModel = $menusModel;
+        $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
         $this->menusHelpers = $menusHelpers;
-        $this->menusValidator = $menusValidator;
+        $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
+        $this->menuItemValidator = $menuItemValidator;
     }
 
     /**
@@ -107,7 +121,7 @@ class Items extends Core\Modules\AdminController
             'uri' => '',
         ];
 
-        $this->view->assign($this->menusHelpers->createMenuItemFormFields());
+        $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
 
@@ -124,13 +138,13 @@ class Items extends Core\Modules\AdminController
         $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 foreach ($items as $item) {
                     // URI-Alias löschen
-                    $itemUri = $this->menusModel->getMenuItemUriById($item);
-                    $bool = $this->nestedSet->deleteNode($item, Menus\Model::TABLE_NAME_ITEMS, true);
+                    $itemUri = $this->menuItemRepository->getMenuItemUriById($item);
+                    $bool = $this->nestedSet->deleteNode($item, Menus\Model\MenuItemRepository::TABLE_NAME, true);
                     $this->seo->deleteUriAlias($itemUri);
                 }
 
@@ -150,7 +164,7 @@ class Items extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $menuItem = $this->menusModel->getOneMenuItemById($id);
+        $menuItem = $this->menuItemRepository->getOneMenuItemById($id);
 
         if (empty($menuItem) === false) {
             $this->breadcrumb->setTitlePostfix($menuItem['title']);
@@ -170,14 +184,14 @@ class Items extends Core\Modules\AdminController
             if ($this->articlesHelpers) {
                 $matches = [];
                 if ($this->request->getPost()->isEmpty() && $menuItem['mode'] == 4) {
-                    preg_match_all(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
+                    preg_match_all(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }
 
                 $this->view->assign('articles', $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
             }
 
             $this->view->assign(
-                $this->menusHelpers->createMenuItemFormFields(
+                $this->menuItemFormFieldsHelper->createMenuItemFormFields(
                     $menuItem['block_id'],
                     $menuItem['parent_id'],
                     $menuItem['left_id'],
@@ -194,15 +208,19 @@ class Items extends Core\Modules\AdminController
         }
     }
 
-    public function actionOrder()
+    /**
+     * @param int    $id
+     * @param string $action
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionOrder($id, $action)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->menusModel->menuItemExists($this->request->getParameters()->get('id')) === true
-        ) {
+        if ($this->menuItemRepository->menuItemExists($id) === true) {
             $this->nestedSet->sort(
-                $this->request->getParameters()->get('id'),
-                $this->request->getParameters()->get('action'),
-                Menus\Model::TABLE_NAME_ITEMS,
+                $id,
+                $action,
+                Menus\Model\MenuItemRepository::TABLE_NAME,
                 true
             );
 
@@ -221,7 +239,7 @@ class Items extends Core\Modules\AdminController
     {
         $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->menusValidator->validateItem($formData);
+                $this->menuItemValidator->validate($formData);
 
                 $insertValues = [
                     'id' => '',
@@ -237,7 +255,7 @@ class Items extends Core\Modules\AdminController
                 $bool = $this->nestedSet->insertNode(
                     (int)$formData['parent_id'],
                     $insertValues,
-                    Menus\Model::TABLE_NAME_ITEMS,
+                    Menus\Model\MenuItemRepository::TABLE_NAME,
                     true
                 );
 
@@ -281,7 +299,7 @@ class Items extends Core\Modules\AdminController
     {
         $this->actionHelper->handlePostAction(
             function () use ($formData, $menuItem, $id) {
-                $this->menusValidator->validateItem($formData);
+                $this->menuItemValidator->validate($formData);
 
                 $updateValues = [
                     'mode' => $this->fetchMenuItemModeForSave($formData),
@@ -298,7 +316,7 @@ class Items extends Core\Modules\AdminController
                     (int)$formData['parent_id'],
                     (int)$formData['block_id'],
                     $updateValues,
-                    Menus\Model::TABLE_NAME_ITEMS,
+                    Menus\Model\MenuItemRepository::TABLE_NAME,
                     true
                 );
 
@@ -334,7 +352,7 @@ class Items extends Core\Modules\AdminController
      */
     protected function fetchMenuItemModeForSave(array $formData)
     {
-        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
+        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
     }
 
     /**

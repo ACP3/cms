@@ -3,9 +3,13 @@ parameters:
   menus.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Index'
   menus.controller.admin.items.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Items'
   menus.cache.fqdn: 'ACP3\Modules\ACP3\Menus\Cache'
-  menus.helpers.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers'
-  menus.model.fqdn: 'ACP3\Modules\ACP3\Menus\Model'
-  menus.validator.fqdn: 'ACP3\Modules\ACP3\Menus\Validator'
+  menus.helpers.menuitemslist.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList'
+  menus.helpers.managemenuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem'
+  menus.helpers.menuitemformfields.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields'
+  menus.model.menurepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuRepository'
+  menus.model.menuitemrepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuItemRepository'
+  menus.validator.menu.fqdn: 'ACP3\Modules\ACP3\Menus\Validator\Menu'
+  menus.validator.menuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Validator\MenuItem'
   menus.installer.schema.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Schema'
   menus.installer.migration.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Migration'
   menus.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\SampleData'
@@ -14,37 +18,53 @@ parameters:
 services:
   core.breadcrumb:
     class: %core.breadcrumb.fqdn%
-    arguments: ['@service_container', '@core.lang', '@core.request', '@core.router', '@core.config', @menus.model]
+    arguments: ['@service_container', '@core.lang', '@core.request', '@core.router', '@core.config', @menus.model.menuitemrepository]
 
   menus.controller.admin.index:
     class: %menus.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.nestedSet', '@core.helpers.formToken', '@menus.helpers', '@menus.model', '@menus.cache', '@menus.validator']
+    arguments: ['@core.context.admin', '@core.nestedSet', '@core.helpers.formToken', '@menus.helpers.menuitemslist', '@menus.model.menurepository', @menus.model.menuitemrepository, '@menus.cache', '@menus.validator.menu']
 
   menus.controller.admin.items:
     class: %menus.controller.admin.items.fqdn%
-    arguments: ['@core.context.admin', '@core.router.aliases', '@core.nestedSet', '@core.helpers.formToken', '@menus.model', '@menus.cache', '@menus.helpers', '@menus.validator']
+    arguments: ['@core.context.admin', '@core.router.aliases', '@core.nestedSet', '@core.helpers.formToken', '@menus.model.menurepository', @menus.model.menuitemrepository, '@menus.cache', '@menus.helpers.menuitemslist', @menus.helpers.menuitemformfields, '@menus.validator.menuitem']
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.cache:
     class: %menus.cache.fqdn%
-    arguments: ['@menus.cache.core', '@core.lang', '@menus.model']
+    arguments: ['@menus.cache.core', '@core.lang', '@menus.model.menurepository', @menus.model.menuitemrepository]
 
   menus.cache.core:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'menus']
 
-  menus.helpers:
-    class: %menus.helpers.fqdn%
-    arguments: ['@core.lang', @core.nestedSet, '@core.helpers.forms', '@menus.model', '@menus.cache']
+  menus.helpers.menuitemslist:
+    class: %menus.helpers.menuitemslist.fqdn%
+    arguments: ['@core.helpers.forms', '@menus.cache']
 
-  menus.model:
-    class: %menus.model.fqdn%
+  menus.helpers.managemenuitem:
+    class: %menus.helpers.managemenuitem.fqdn%
+    arguments: [@core.nestedSet, '@menus.model.menuitemrepository']
+
+  menus.helpers.menuitemformfields:
+    class: %menus.helpers.menuitemformfields.fqdn%
+    arguments: ['@core.helpers.forms', @menus.helpers.menuitemslist, '@menus.model.menurepository']
+
+  menus.model.menurepository:
+    class: %menus.model.menurepository.fqdn%
     arguments: ['@core.db']
 
-  menus.validator:
-    class: %menus.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.router', '@core.modules', '@menus.model']
+  menus.model.menuitemrepository:
+    class: %menus.model.menuitemrepository.fqdn%
+    arguments: ['@core.db']
+
+  menus.validator.menu:
+    class: %menus.validator.menu.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@menus.model.menurepository']
+
+  menus.validator.menuitem:
+    class: %menus.validator.menuitem.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.router', '@core.modules', @menus.model.menuitemrepository]
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
@@ -60,4 +80,4 @@ services:
 
   smarty.plugin.navbar:
     class: %smarty.plugin.navbar.fqdn%
-    arguments: ['@core.request', '@core.router', '@menus.model', '@menus.cache']
+    arguments: ['@core.request', '@core.router', '@menus.model.menuitemrepository', '@menus.cache']

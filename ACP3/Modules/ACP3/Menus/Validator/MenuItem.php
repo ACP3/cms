@@ -1,14 +1,15 @@
 <?php
-namespace ACP3\Modules\ACP3\Menus;
+namespace ACP3\Modules\ACP3\Menus\Validator;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
+use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
 
 /**
- * Class Validator
- * @package ACP3\Modules\ACP3\Menus
+ * Class MenuItem
+ * @package ACP3\Modules\ACP3\Menus\Validator
  */
-class Validator extends Core\Validator\AbstractValidator
+class MenuItem extends Core\Validator\AbstractValidator
 {
     /**
      * @var \ACP3\Core\Validator\Rules\Router\Aliases
@@ -23,25 +24,21 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Http\Request
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
-     */
-    protected $menusModel;
-    /**
      * @var Articles\Helpers
      */
     protected $articlesHelpers;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     */
+    protected $menuItemRepository;
 
     /**
-     * @param \ACP3\Core\Lang                           $lang
-     * @param \ACP3\Core\Validator\Rules\Misc           $validate
-     * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasesValidator
-     * @param \ACP3\Core\Validator\Rules\Router         $routerValidator
-     * @param \ACP3\Core\Modules                        $modules
-     * @param \ACP3\Modules\ACP3\Menus\Model            $menusModel
+     * @param \ACP3\Core\Lang                                   $lang
+     * @param \ACP3\Core\Validator\Rules\Misc                   $validate
+     * @param \ACP3\Core\Validator\Rules\Router\Aliases         $aliasesValidator
+     * @param \ACP3\Core\Validator\Rules\Router                 $routerValidator
+     * @param \ACP3\Core\Modules                                $modules
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Core\Lang $lang,
@@ -49,7 +46,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
-        Model $menusModel
+        MenuItemRepository $menuItemRepository
     )
     {
         parent::__construct($lang, $validate);
@@ -57,7 +54,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->aliasesValidator = $aliasesValidator;
         $this->routerValidator = $routerValidator;
         $this->modules = $modules;
-        $this->menusModel = $menusModel;
+        $this->menuItemRepository = $menuItemRepository;
     }
 
     /**
@@ -74,36 +71,11 @@ class Validator extends Core\Validator\AbstractValidator
 
     /**
      * @param array $formData
-     * @param int   $menuId
      *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
-    public function validate(array $formData, $menuId = 0)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
-            $this->errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
-        }
-        if (!isset($this->errors) && $this->menusModel->menuExistsByName($formData['index_name'], $menuId) === true) {
-            $this->errors['index-name'] = $this->lang->t('menus', 'index_name_unique');
-        }
-        if (strlen($formData['title']) < 3) {
-            $this->errors['title'] = $this->lang->t('menus', 'menu_bar_title_to_short');
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateItem(array $formData)
+    public function validate(array $formData)
     {
         $this->validateFormKey();
 
@@ -122,7 +94,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
         if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === true) {
             // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-            $parentBlock = $this->menusModel->getMenuItemBlockIdById($formData['parent_id']);
+            $parentBlock = $this->menuItemRepository->getMenuItemBlockIdById($formData['parent_id']);
             if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
                 $this->errors['parent-id'] = $this->lang->t('menus', 'superior_page_not_allowed');
             }

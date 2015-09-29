@@ -21,17 +21,17 @@ class Breadcrumb extends Core\Breadcrumb
     protected $stepsFromDb = [];
 
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */
-    protected $menusModel;
+    protected $menuItemRepository;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\Lang                                  $lang
-     * @param \ACP3\Core\Http\RequestInterface                 $request
-     * @param \ACP3\Core\Router                                $router
-     * @param \ACP3\Core\Config                                $config
-     * @param \ACP3\Modules\ACP3\Menus\Model                   $menusModel
+     * @param \Symfony\Component\DependencyInjection\Container  $container
+     * @param \ACP3\Core\Lang                                   $lang
+     * @param \ACP3\Core\Http\RequestInterface                  $request
+     * @param \ACP3\Core\Router                                 $router
+     * @param \ACP3\Core\Config                                 $config
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Container $container,
@@ -39,12 +39,12 @@ class Breadcrumb extends Core\Breadcrumb
         RequestInterface $request,
         Core\Router $router,
         Core\Config $config,
-        Menus\Model $menusModel
+        Menus\Model\MenuItemRepository $menuItemRepository
     )
     {
         parent::__construct($container, $lang, $request, $router, $config);
 
-        $this->menusModel = $menusModel;
+        $this->menuItemRepository = $menuItemRepository;
 
         $this->prePopulate();
     }
@@ -63,7 +63,7 @@ class Breadcrumb extends Core\Breadcrumb
                 $this->request->getModule()
             ];
 
-            $items = $this->menusModel->getMenuItemsByUri($in);
+            $items = $this->menuItemRepository->getMenuItemsByUri($in);
             $c_items = count($items);
 
             // Populate the breadcrumb with internal pages
