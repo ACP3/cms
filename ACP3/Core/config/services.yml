@@ -51,7 +51,7 @@ services:
 
   core.mailer:
     class: ACP3\Core\Mailer
-    arguments: ['@core.view', '@core.config']
+    arguments: ['@core.view', '@core.config', @core.helpers.stringFormatter]
 
   core.pagination:
     class: ACP3\Core\Pagination

@@ -63,18 +63,25 @@ class Mailer
      * @var \ACP3\Core\Config
      */
     private $config;
+    /**
+     * @var \ACP3\Core\Helpers\StringFormatter
+     */
+    private $stringFormatter;
 
     /**
-     * @param \ACP3\Core\View   $view
-     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\View                    $view
+     * @param \ACP3\Core\Config                  $config
+     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(
         View $view,
-        Config $config
+        Config $config,
+        StringFormatter $stringFormatter
     )
     {
         $this->view = $view;
         $this->config = $config;
+        $this->stringFormatter = $stringFormatter;
     }
 
     /**
@@ -282,8 +289,7 @@ class Mailer
     {
         if (!empty($this->mailSignature)) {
             if ($this->mailSignature === strip_tags($this->mailSignature)) {
-                $formatter = new StringFormatter();
-                return $formatter->nl2p($this->mailSignature);
+                return $this->stringFormatter->nl2p($this->mailSignature);
             }
             return $this->mailSignature;
         }
