@@ -453,7 +453,7 @@ class Mailer
                 $this->phpMailer->set('Mailer', 'mail');
             }
             $this->phpMailer->CharSet = 'UTF-8';
-            $this->phpMailer->Encoding = '8bit';
+            $this->phpMailer->Encoding = 'quoted-printable';
             $this->phpMailer->WordWrap = 76;
         }
 

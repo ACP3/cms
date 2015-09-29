@@ -64,5 +64,6 @@
         <item key="unsubscribe">Austragen</item>
         <item key="unsubscribe_error">Beim Löschen des Newsletterkontos ist ein Fehler aufgetreten.</item>
         <item key="unsubscribe_success">Das Newsletterkonto wurde erfolgreich gelöscht.</item>
+        <item key="use_web_view">Wird der Newsletter nicht korrekt dargestellt? Klicken um Ihn im Browser zu öffnen.</item>
     </keys>
 </language>

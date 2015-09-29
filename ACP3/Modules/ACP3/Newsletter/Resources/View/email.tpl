@@ -12,6 +12,9 @@
 </head>
 
 <body>
+    <a href="{$mail.url_web_view}">{lang t="newsletter|use_web_view"}</a>
     {$mail.body}
+    <hr>
+    {$mail.signature}
 </body>
 </html>

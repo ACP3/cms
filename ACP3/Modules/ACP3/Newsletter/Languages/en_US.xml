@@ -10,7 +10,7 @@
         <item key="account_not_exists">For the stated E-mail address is no newsletter account registered.</item>
         <item key="action">Action</item>
         <item key="activate">Activate newsletter account</item>
-        <item key="activate_account">Active newsletter account</item>
+        <item key="activate_account">Activate newsletter account</item>
         <item key="activate_error">While activating the newsletter account an error has occured.</item>
         <item key="activate_success">The newsletter account has been successfully activated and may now be used.</item>
         <item key="admin_accounts_activate">Activate newsletter account</item>
@@ -64,5 +64,6 @@
         <item key="unsubscribe">Unsubscribe</item>
         <item key="unsubscribe_error">While deleting the newsletter account an error has occured.</item>
         <item key="unsubscribe_success">The newsletter account has been successfully deleted.</item>
+        <item key="use_web_view">Having problems displaying this newsletter? Click to open it in your Browser.</item>
     </keys>
 </language>

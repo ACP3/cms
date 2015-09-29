@@ -52,9 +52,13 @@
                         <td>{$row.status|replace:$statusSearch:$statusReplace}</td>
                         {if $can_send && $has_active_newsletter_accounts}
                             <td>
-                                <a href="{uri args="acp/newsletter/index/send/id_`$row.id`"}" title="{lang t="newsletter|send"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                    <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
-                                </a>
+                                {if $row.status != 1}
+                                    <a href="{uri args="acp/newsletter/index/send/id_`$row.id`"}" title="{lang t="newsletter|send"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
+                                        <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
+                                    </a>
+                                {else}
+                                    <i class="glyphicon glyphicon-remove-circle text-danger" aria-hidden="true" title="{lang t="newsletter|already_sent"}"></i>
+                                {/if}
                             </td>
                         {/if}
                         <td>{$row.id}</td>

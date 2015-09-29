@@ -73,7 +73,7 @@ class Index extends Core\Modules\AdminController
         }
 
         $this->view->assign('settings', $settings);
-        $this->view->assign('form', array_merge(['title' => '', 'text' => '', 'date'], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->getAll()));
 
         $this->view->assign('test', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0));
 
@@ -157,11 +157,14 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    public function actionSend()
+    /**
+     * @param int $id
+     *
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    public function actionSend($id)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($this->request->getParameters()->get('id')) === true &&
-            $this->newsletterRepository->newsletterExists($this->request->getParameters()->get('id')) === true
-        ) {
+        if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = [];
@@ -170,10 +173,10 @@ class Index extends Core\Modules\AdminController
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool = $this->newsletterHelpers->sendNewsletter($this->request->getParameters()->get('id'), $recipients);
+            $bool = $this->newsletterHelpers->sendNewsletter($id, $recipients);
             $bool2 = false;
             if ($bool === true) {
-                $bool2 = $this->newsletterRepository->update(['status' => '1'], $this->request->getParameters()->get('id'));
+                $bool2 = $this->newsletterRepository->update(['status' => '1'], $id);
             }
 
             $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'));
