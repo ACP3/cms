@@ -45,7 +45,7 @@
                         <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
-                            {datepicker name="birthday" value=$birthday}
+                            {datepicker name="birthday" value=$birthday inputFieldOnly=true}
                         </div>
                     </div>
                     <div class="form-group">
