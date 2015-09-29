@@ -121,7 +121,7 @@ class Index extends Core\Modules\AdminController
     {
         $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->systemValidator->validateSettings($formData);
+                $this->systemValidator->validate($formData);
 
                 // Config aktualisieren
                 $data = [

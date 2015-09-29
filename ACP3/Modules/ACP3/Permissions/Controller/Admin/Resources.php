@@ -24,30 +24,30 @@ class Resources extends Core\Modules\AdminController
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Validator
+     * @var \ACP3\Modules\ACP3\Permissions\Validator\Resource
      */
-    protected $permissionsValidator;
+    protected $resourceValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model       $permissionsModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validator   $permissionsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
+     * @param \ACP3\Core\Helpers\FormToken                      $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model              $permissionsModel
+     * @param \ACP3\Modules\ACP3\Permissions\Cache              $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validator\Resource $resourceValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache,
-        Permissions\Validator $permissionsValidator)
+        Permissions\Validator\Resource $resourceValidator)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
-        $this->permissionsValidator = $permissionsValidator;
+        $this->resourceValidator = $resourceValidator;
     }
 
     public function actionCreate()
@@ -154,7 +154,7 @@ class Resources extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         $this->actionHelper->handleCreatePostAction(function() use ($formData) {
-            $this->permissionsValidator->validateResource($formData);
+            $this->resourceValidator->validate($formData);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
             $insertValues = [
@@ -183,7 +183,7 @@ class Resources extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
-            $this->permissionsValidator->validateResource($formData);
+            $this->resourceValidator->validate($formData);
 
             $updateValues = [
                 'controller' => $formData['controller'],

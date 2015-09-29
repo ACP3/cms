@@ -2,7 +2,6 @@
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin;
 
-use ACP3\Application;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 

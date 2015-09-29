@@ -28,17 +28,17 @@ class Index extends Core\Modules\AdminController
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Validator
+     * @var \ACP3\Modules\ACP3\Permissions\Validator\Role
      */
-    protected $permissionsValidator;
+    protected $roleValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\NestedSet                       $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model       $permissionsModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validator   $permissionsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext    $context
+     * @param \ACP3\Core\NestedSet                          $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model          $permissionsModel
+     * @param \ACP3\Modules\ACP3\Permissions\Cache          $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validator\Role $roleValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -46,7 +46,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model $permissionsModel,
         Permissions\Cache $permissionsCache,
-        Permissions\Validator $permissionsValidator)
+        Permissions\Validator\Role $roleValidator)
     {
         parent::__construct($context);
 
@@ -54,7 +54,7 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->permissionsModel = $permissionsModel;
         $this->permissionsCache = $permissionsCache;
-        $this->permissionsValidator = $permissionsValidator;
+        $this->roleValidator = $roleValidator;
     }
 
     public function actionCreate()
@@ -80,7 +80,7 @@ class Index extends Core\Modules\AdminController
         $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = $bool2 = $bool3 = false;
                 $levelNotDeletable = false;
 
@@ -182,8 +182,8 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
-            $this->permissionsValidator->validate($formData);
+        $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+            $this->roleValidator->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -216,8 +216,8 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
-            $this->permissionsValidator->validate($formData, $id);
+        $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+            $this->roleValidator->validate($formData, $id);
 
             $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),

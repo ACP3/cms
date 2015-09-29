@@ -51,7 +51,7 @@ class Settings extends Core\Validator\AbstractValidator
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
-    public function validateSettings(array $formData)
+    public function validate(array $formData)
     {
         $this->validateFormKey();
 
