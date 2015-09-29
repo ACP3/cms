@@ -40,7 +40,7 @@ services:
 
   files.validator:
     class: %files.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@core.request', '@categories.helpers']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@categories.helpers']
 
   files.installer.schema:
     class: %files.installer.schema.fqdn%

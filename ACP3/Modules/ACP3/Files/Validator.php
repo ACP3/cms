@@ -23,10 +23,6 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Http\Request
-     */
-    protected $request;
-    /**
      * @var Categories\Helpers
      */
     protected $categoriesHelpers;
@@ -37,7 +33,6 @@ class Validator extends Core\Validator\AbstractValidator
      * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
      * @param Core\Validator\Rules\Date           $dateValidator
      * @param Core\Modules                        $modules
-     * @param \ACP3\Core\Http\Request             $request
      * @param Categories\Helpers                  $categoriesHelpers
      */
     public function __construct(
@@ -46,7 +41,6 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Date $dateValidator,
         Core\Modules $modules,
-        Core\Http\Request $request,
         Categories\Helpers $categoriesHelpers
     )
     {
@@ -55,7 +49,6 @@ class Validator extends Core\Validator\AbstractValidator
         $this->aliasesValidator = $aliasesValidator;
         $this->dateValidator = $dateValidator;
         $this->modules = $modules;
-        $this->request = $request;
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
@@ -99,13 +92,14 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array $formData
-     * @param       $file
+     * @param array  $formData
+     * @param array $file
+     * @param string $id
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\InvalidFormToken
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
-    public function validateEdit(array $formData, $file)
+    public function validateEdit(array $formData, $file, $id)
     {
         $this->validateFormKey();
 
@@ -130,7 +124,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['cat_create']) && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $this->errors['cat'] = $this->lang->t('files', 'select_category');
         }
-        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->request->getParameters()->get('id'))) === true) {
+        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $id)) === true) {
             $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
 

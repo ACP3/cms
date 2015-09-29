@@ -311,7 +311,7 @@ class Index extends Core\Modules\AdminController
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->filesValidator->validateEdit($formData, $file);
+            $this->filesValidator->validateEdit($formData, $file, $id);
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
