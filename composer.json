@@ -33,6 +33,6 @@
     "symfony/event-dispatcher": "2.7.*",
     "mibe/feedwriter": "1.0.2",
     "ckeditor/ckeditor": "dev-full/4.4.x",
-    "tinymce/tinymce": "4.2.5"
+    "tinymce/tinymce": "4.2.6"
   }
 }

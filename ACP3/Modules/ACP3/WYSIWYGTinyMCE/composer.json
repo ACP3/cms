@@ -12,7 +12,7 @@
     "acp3/module-seo": "dev-master",
     "acp3/module-system": "dev-master",
     "acp3/module-users": "dev-master",
-    "tinymce/tinymce": "4.2.4"
+    "tinymce/tinymce": "4.2.6"
   },
   "extra": {
     "installer-name": "ACP3/WYSIWYGTinyMCE"
