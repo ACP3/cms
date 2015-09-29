@@ -1,23 +1,19 @@
 <?php
-namespace ACP3\Modules\ACP3\System;
+namespace ACP3\Modules\ACP3\System\Validator;
 
 use ACP3\Core;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class Validator
- * @package ACP3\Modules\ACP3\System
+ * Class Settings
+ * @package ACP3\Modules\ACP3\System\Validator
  */
-class Validator extends Core\Validator\AbstractValidator
+class Settings extends Core\Validator\AbstractValidator
 {
     /**
      * @var Core\Validator\Rules\Date
      */
     protected $dateValidator;
-    /**
-     * @var Core\Validator\Rules\Mime
-     */
-    protected $mimeValidator;
     /**
      * @var Core\Validator\Rules\Router
      */
@@ -31,7 +27,6 @@ class Validator extends Core\Validator\AbstractValidator
      * @param \ACP3\Core\Lang                                           $lang
      * @param \ACP3\Core\Validator\Rules\Misc                           $validate
      * @param \ACP3\Core\Validator\Rules\Date                           $dateValidator
-     * @param \ACP3\Core\Validator\Rules\Mime                           $mimeValidator
      * @param \ACP3\Core\Validator\Rules\Router                         $routerValidator
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
@@ -39,7 +34,6 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Date $dateValidator,
-        Core\Validator\Rules\Mime $mimeValidator,
         Core\Validator\Rules\Router $routerValidator,
         ContainerInterface $container
     )
@@ -47,7 +41,6 @@ class Validator extends Core\Validator\AbstractValidator
         parent::__construct($lang, $validate);
 
         $this->dateValidator = $dateValidator;
-        $this->mimeValidator = $mimeValidator;
         $this->routerValidator = $routerValidator;
         $this->container = $container;
     }
@@ -112,55 +105,6 @@ class Validator extends Core\Validator\AbstractValidator
             if ($formData['mailer_smtp_auth'] == 1 && empty($formData['mailer_smtp_user'])) {
                 $this->errors['mailer-smtp-username'] = $this->lang->t('system', 'type_in_mailer_smtp_username');
             }
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSqlExport(array $formData)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if (empty($formData['tables']) || is_array($formData['tables']) === false) {
-            $this->errors['tables'] = $this->lang->t('system', 'select_sql_tables');
-        }
-        if ($formData['output'] !== 'file' && $formData['output'] !== 'text') {
-            $this->errors['output'] = $this->lang->t('system', 'select_output');
-        }
-        if (in_array($formData['export_type'], ['complete', 'structure', 'data']) === false) {
-            $this->errors['export-type'] = $this->lang->t('system', 'select_export_type');
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $formData
-     * @param array $file
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSqlImport(array $formData, array $file)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if (empty($formData['text']) && empty($file['size'])) {
-            $this->errors['upload'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
-        }
-        if (!empty($file['size']) &&
-            (!$this->mimeValidator->mimeType($file['tmp_name'], 'text/plain') ||
-                $file['error'] !== UPLOAD_ERR_OK)
-        ) {
-            $this->errors['upload-file'] = $this->lang->t('system', 'select_sql_file');
         }
 
         $this->_checkForFailedValidation();

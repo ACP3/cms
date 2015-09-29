@@ -29,17 +29,17 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected $systemModel;
     /**
-     * @var \ACP3\Modules\ACP3\System\Validator
+     * @var \ACP3\Modules\ACP3\System\Validator\SqlImportExport
      */
-    protected $systemValidator;
+    protected $sqlImportExportValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\DB                              $db
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\System\Helper\Export    $exportHeper
-     * @param \ACP3\Modules\ACP3\System\Model            $systemModel
-     * @param \ACP3\Modules\ACP3\System\Validator        $systemValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Core\DB                                       $db
+     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
+     * @param \ACP3\Modules\ACP3\System\Helper\Export             $exportHeper
+     * @param \ACP3\Modules\ACP3\System\Model                     $systemModel
+     * @param \ACP3\Modules\ACP3\System\Validator\SqlImportExport $sqlImportExportValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -47,7 +47,7 @@ class Maintenance extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         System\Helper\Export $exportHeper,
         System\Model $systemModel,
-        System\Validator $systemValidator)
+        System\Validator\SqlImportExport $sqlImportExportValidator)
     {
         parent::__construct($context);
 
@@ -55,7 +55,7 @@ class Maintenance extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->exportHelper = $exportHeper;
         $this->systemModel = $systemModel;
-        $this->systemValidator = $systemValidator;
+        $this->sqlImportExportValidator = $sqlImportExportValidator;
     }
 
     /**
@@ -177,7 +177,7 @@ class Maintenance extends Core\Modules\AdminController
     {
         $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->systemValidator->validateSqlExport($formData);
+                $this->sqlImportExportValidator->validateSqlExport($formData);
 
                 $this->formTokenHelper->unsetFormToken();
 
@@ -208,7 +208,7 @@ class Maintenance extends Core\Modules\AdminController
             function () use ($formData) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->systemValidator->validateSqlImport($formData, $file);
+                $this->sqlImportExportValidator->validateSqlImport($formData, $file);
 
                 $this->formTokenHelper->unsetFormToken();
 

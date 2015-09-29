@@ -5,7 +5,8 @@ parameters:
   system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
   system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
   system.model.fqdn: 'ACP3\Modules\ACP3\System\Model'
-  system.validator.fqdn: 'ACP3\Modules\ACP3\System\Validator'
+  system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validator\Settings'
+  system.validator.sqlimportexport.fqdn: 'ACP3\Modules\ACP3\System\Validator\SqlImportExport'
   system.installer.schema.fqdn: 'ACP3\Modules\ACP3\System\Installer\Schema'
   system.installer.migration.fqdn: 'ACP3\Modules\ACP3\System\Installer\Migration'
 
@@ -16,11 +17,11 @@ services:
 
   system.controller.admin.index:
     class: %system.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@system.model', '@system.validator']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@system.model', '@system.validator.settings']
 
   system.controller.admin.maintenance:
     class: %system.controller.admin.maintenance.fqdn%
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers.export', '@system.model', '@system.validator']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers.export', '@system.model', '@system.validator.sqlimportexport']
 
   system.model:
     class: %system.model.fqdn%
@@ -34,9 +35,13 @@ services:
     class: %system.helpers.export.fqdn%
     arguments: ['@core.db']
 
-  system.validator:
-    class: %system.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.mime', '@core.validator.rules.router', '@service_container']
+  system.validator.settings:
+    class: %system.validator.settings.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.router', '@service_container']
+
+  system.validator.sqlimportexport:
+    class: %system.validator.sqlimportexport.fqdn%
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime']
 
   system.installer.schema:
     class: %system.installer.schema.fqdn%
