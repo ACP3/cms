@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core\Date;
+use ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository;
 use ACP3\Modules\ACP3\Newsletter\Model\AccountRepository;
 
 /**
@@ -21,19 +22,26 @@ class AccountStatus
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
      */
-    protected $newsletterAccountRepository;
+    protected $accountRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository
+     */
+    protected $accountHistoryRepository;
 
     /**
-     * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository $newsletterAccountRepository
+     * @param \ACP3\Core\Date                                              $date
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository        $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository $accountHistoryRepository
      */
     public function __construct(
         Date $date,
-        AccountRepository $newsletterAccountRepository
+        AccountRepository $accountRepository,
+        AccountHistoryRepository $accountHistoryRepository
     )
     {
         $this->date = $date;
-        $this->newsletterAccountRepository = $newsletterAccountRepository;
+        $this->accountRepository = $accountRepository;
+        $this->accountHistoryRepository = $accountHistoryRepository;
     }
 
     /**
@@ -44,7 +52,7 @@ class AccountStatus
      */
     public function changeAccountStatus($status, $id)
     {
-        $bool = $this->newsletterAccountRepository->update(
+        $bool = $this->accountRepository->update(
             ['status' => $status],
             $id
         );
@@ -73,7 +81,7 @@ class AccountStatus
             'date' => $this->date->toSQL(),
             'action' => $status
         ];
-        return $this->newsletterAccountRepository->insert($historyInsertValues, Model\AccountRepository::TABLE_NAME_ACCOUNT_HISTORY);
+        return $this->accountHistoryRepository->insert($historyInsertValues);
     }
 
     /**
@@ -85,10 +93,10 @@ class AccountStatus
     {
         switch (key($id)) {
             case 'mail':
-                $account = $this->newsletterAccountRepository->getOneByEmail($id['mail']);
+                $account = $this->accountRepository->getOneByEmail($id['mail']);
                 break;
             case 'hash':
-                $account = $this->newsletterAccountRepository->getOneByHash($id['hash']);
+                $account = $this->accountRepository->getOneByHash($id['hash']);
         }
 
         return (!empty($account)) ? $account['id'] : 0;

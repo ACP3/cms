@@ -9,6 +9,7 @@ parameters:
   newsletter.helper.subscribe.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\Subscribe'
   newsletter.model.newsletterrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository'
   newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
+  newsletter.model.accounthistoryrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository'
   newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validator'
   newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
   newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
@@ -46,9 +47,13 @@ services:
     class: %newsletter.model.accountrepository.fqdn%
     arguments: [@core.db]
 
+  newsletter.model.accounthistoryrepository:
+    class: %newsletter.model.accounthistoryrepository.fqdn%
+    arguments: [@core.db]
+
   newsletter.helper.accountstatus:
     class: %newsletter.helper.accountstatus.fqdn%
-    arguments: [@core.date, @newsletter.model.accountrepository]
+    arguments: [@core.date, @newsletter.model.accountrepository, @newsletter.model.accounthistoryrepository]
 
   newsletter.helper.sendnewsletter:
     class: %newsletter.helper.sendnewsletter.fqdn%

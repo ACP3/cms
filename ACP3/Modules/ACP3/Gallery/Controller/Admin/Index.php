@@ -149,7 +149,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('gallery_id', $id);
             $this->view->assign('form', array_merge($gallery, $this->request->getPost()->getAll()));
 
-            $this->_actionEditPictures();
+            $this->_actionEditPictures($id);
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -157,9 +157,12 @@ class Index extends Core\Modules\AdminController
         }
     }
 
-    protected function _actionEditPictures()
+    /**
+     * @param int $id
+     */
+    protected function _actionEditPictures($id)
     {
-        $pictures = $this->pictureRepository->getPicturesByGalleryId((int)$this->request->getParameters()->get('id'));
+        $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
         $c_pictures = count($pictures);
 
         if ($c_pictures > 0) {

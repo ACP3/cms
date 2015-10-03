@@ -126,7 +126,7 @@ class Index extends Core\Modules\FrontendController
                 $comments = $this->get('comments.controller.frontend.index');
                 $comments
                     ->setModule('gallery')
-                    ->setEntryId($this->request->getParameters()->get('id'));
+                    ->setEntryId($id);
 
                 $this->view->assign('comments', $comments->actionIndex());
             }

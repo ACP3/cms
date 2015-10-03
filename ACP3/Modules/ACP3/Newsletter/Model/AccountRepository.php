@@ -11,7 +11,6 @@ use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
 class AccountRepository extends Model
 {
     const TABLE_NAME = 'newsletter_accounts';
-    const TABLE_NAME_ACCOUNT_HISTORY = 'newsletter_account_history';
 
     /**
      * @param string $emailAddress
