@@ -44,11 +44,11 @@ services:
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache
-    arguments: [@core.cache.system, @core.lang, @core.modules.vendors, @core.xml, @system.model]
+    arguments: [@core.cache.system, @core.lang, @core.modules.vendors, @core.xml, @system.model.modulerepository]
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
-    arguments: [@core.db, @system.model]
+    arguments: [@core.db, @system.model.modulerepository, @system.model.settingsrepository]
     calls:
       - ['setContainer', ['@service_container']]
 

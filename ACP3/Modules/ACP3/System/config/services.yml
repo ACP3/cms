@@ -4,7 +4,8 @@ parameters:
   system.controller.admin.maintenance.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance'
   system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
   system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
-  system.model.fqdn: 'ACP3\Modules\ACP3\System\Model'
+  system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
+  system.model.settingsrepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SettingsRepository'
   system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validator\Settings'
   system.validator.sqlimportexport.fqdn: 'ACP3\Modules\ACP3\System\Validator\SqlImportExport'
   system.installer.schema.fqdn: 'ACP3\Modules\ACP3\System\Installer\Schema'
@@ -13,18 +14,22 @@ parameters:
 services:
   system.controller.admin.extensions:
     class: %system.controller.admin.extensions.fqdn%
-    arguments: ['@core.context.admin', @core.modules.moduleInfoCache, '@core.xml', '@system.model', '@system.helpers.installer', '@permissions.cache']
+    arguments: ['@core.context.admin', @core.modules.moduleInfoCache, '@core.xml', '@system.model.modulerepository', '@system.helpers.installer', '@permissions.cache']
 
   system.controller.admin.index:
     class: %system.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@system.model', '@system.validator.settings']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@system.model.modulerepository', '@system.validator.settings']
 
   system.controller.admin.maintenance:
     class: %system.controller.admin.maintenance.fqdn%
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers.export', '@system.model', '@system.validator.sqlimportexport']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers.export', '@system.model.modulerepository', '@system.validator.sqlimportexport']
 
-  system.model:
-    class: %system.model.fqdn%
+  system.model.modulerepository:
+    class: %system.model.modulerepository.fqdn%
+    arguments: ['@core.db']
+
+  system.model.settingsrepository:
+    class: %system.model.settingsrepository.fqdn%
     arguments: ['@core.db']
 
   system.helpers.installer:

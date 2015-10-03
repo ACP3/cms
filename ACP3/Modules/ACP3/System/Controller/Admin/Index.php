@@ -20,7 +20,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
     protected $systemModel;
     /**
@@ -32,14 +32,14 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param \ACP3\Core\Date                            $date
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\System\Model            $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModel
      * @param \ACP3\Modules\ACP3\System\Validator\Settings        $systemValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        System\Model $systemModel,
+        System\Model\ModuleRepository $systemModel,
         System\Validator\Settings $systemValidator)
     {
         parent::__construct($context);

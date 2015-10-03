@@ -1,16 +1,15 @@
 <?php
-namespace ACP3\Modules\ACP3\System;
+namespace ACP3\Modules\ACP3\System\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\System
+ * Class ModuleRepository
+ * @package ACP3\Modules\ACP3\System\Model
  */
-class Model extends Core\Model
+class ModuleRepository extends Core\Model
 {
     const TABLE_NAME = 'modules';
-    const TABLE_NAME_SETTINGS = 'settings';
 
     /**
      * @return array
@@ -28,24 +27,6 @@ class Model extends Core\Model
     public function getModuleId($moduleName)
     {
         return $this->db->fetchColumn('SELECT `id` FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllModuleSettings()
-    {
-        return $this->db->fetchAll('SELECT m.name AS module_name, s.name, s.value FROM ' . $this->getTableName(static::TABLE_NAME_SETTINGS) . ' AS s JOIN ' . $this->getTableName() . ' AS m ON(m.id = s.module_id) ORDER BY s.module_id');
-    }
-
-    /**
-     * @param $moduleName
-     *
-     * @return array
-     */
-    public function getSettingsByModuleName($moduleName)
-    {
-        return $this->db->fetchAll('SELECT s.name, s.value FROM ' . $this->getTableName(static::TABLE_NAME_SETTINGS) . ' AS s JOIN ' . $this->getTableName() . ' AS m ON(m.id = s.module_id) WHERE m.name = ?', [$moduleName]);
     }
 
     /**

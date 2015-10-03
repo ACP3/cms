@@ -28,7 +28,7 @@ services:
 
   core.config:
     class: ACP3\Core\Config
-    arguments: ['@core.cache.system', '@system.model']
+    arguments: ['@core.cache.system', '@system.model.modulerepository', @system.model.settingsrepository]
 
   core.date:
     class: ACP3\Core\Date

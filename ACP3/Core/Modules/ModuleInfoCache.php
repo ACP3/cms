@@ -5,7 +5,7 @@ use ACP3\Core\Cache;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Lang;
 use ACP3\Core\XML;
-use ACP3\Modules\ACP3\System\Model;
+use ACP3\Modules\ACP3\System\Model\ModuleRepository;
 
 /**
  * Class ModuleInfoCache
@@ -30,7 +30,7 @@ class ModuleInfoCache
      */
     protected $xml;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
     protected $systemModel;
 
@@ -39,14 +39,14 @@ class ModuleInfoCache
      * @param \ACP3\Core\Lang                 $lang
      * @param \ACP3\Core\Modules\Vendors      $vendors
      * @param \ACP3\Core\XML                  $xml
-     * @param \ACP3\Modules\ACP3\System\Model $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModel
      */
     public function __construct(
         Cache $cache,
         Lang $lang,
         Vendors $vendors,
         XML $xml,
-        Model $systemModel
+        ModuleRepository $systemModel
     )
     {
         $this->cache = $cache;

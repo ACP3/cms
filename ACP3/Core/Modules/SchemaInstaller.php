@@ -45,7 +45,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             'active' => 1
         ];
 
-        return $this->systemModel->insert($insertValues) !== false;
+        return $this->systemModuleRepository->insert($insertValues) !== false;
     }
 
     /**
@@ -70,7 +70,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                         'name' => $key,
                         'value' => $value
                     ];
-                    $this->systemModel->insert($insertValues, System\Model::TABLE_NAME_SETTINGS);
+                    $this->systemSettingsRepository->insert($insertValues);
                 }
                 $this->db->getConnection()->commit();
             } catch (\Exception $e) {
@@ -106,7 +106,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function removeFromModulesTable($moduleName)
     {
-        return $this->systemModel->delete((int)$this->getModuleId($moduleName)) !== false;
+        return $this->systemModuleRepository->delete((int)$this->getModuleId($moduleName)) !== false;
     }
 
     /**
@@ -118,6 +118,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function removeSettings($moduleName)
     {
-        return $this->systemModel->delete((int)$this->getModuleId($moduleName), 'module_id', System\Model::TABLE_NAME_SETTINGS) !== false;
+        return $this->systemSettingsRepository->delete((int)$this->getModuleId($moduleName), 'module_id') !== false;
     }
 }

@@ -97,7 +97,7 @@ class Model extends Core\Model
     public function getAllRulesByRoleIds(array $roles)
     {
         return $this->db->getConnection()->executeQuery(
-            'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName(static::TABLE_NAME_RULES) . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(static::TABLE_NAME_PRIVILEGES) . " AS p ON(ru.privilege_id = p.id) JOIN {$this->getTableName()} AS ro ON(ro.id = ru.role_id) WHERE m.active = 1 AND ro.id IN(?)",
+            'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName(static::TABLE_NAME_RULES) . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(static::TABLE_NAME_PRIVILEGES) . " AS p ON(ru.privilege_id = p.id) JOIN {$this->getTableName()} AS ro ON(ro.id = ru.role_id) WHERE m.active = 1 AND ro.id IN(?)",
             [$roles],
             [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
         )->fetchAll();
@@ -110,7 +110,7 @@ class Model extends Core\Model
      */
     public function getResourceById($id)
     {
-        return $this->db->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->getTableName(static::TABLE_NAME_RESOURCES) . ' AS r JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->getTableName(static::TABLE_NAME_RESOURCES) . ' AS r JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', [$id]);
     }
 
     /**
@@ -118,7 +118,7 @@ class Model extends Core\Model
      */
     public function getAllResources()
     {
-        return $this->db->fetchAll('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id, p.key AS privilege_name FROM ' . $this->getTableName(static::TABLE_NAME_RESOURCES) . ' AS r JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model::TABLE_NAME) . ' AS m ON(r.module_id = m.id) JOIN ' . $this->getTableName(static::TABLE_NAME_PRIVILEGES) . ' AS p ON(r.privilege_id = p.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC');
+        return $this->db->fetchAll('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id, p.key AS privilege_name FROM ' . $this->getTableName(static::TABLE_NAME_RESOURCES) . ' AS r JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(r.module_id = m.id) JOIN ' . $this->getTableName(static::TABLE_NAME_PRIVILEGES) . ' AS p ON(r.privilege_id = p.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC');
     }
 
     /**

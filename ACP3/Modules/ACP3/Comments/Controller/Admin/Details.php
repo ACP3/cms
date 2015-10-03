@@ -22,7 +22,7 @@ class Details extends Core\Modules\AdminController
      */
     protected $commentsValidator;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
     protected $systemModel;
     /**
@@ -38,14 +38,14 @@ class Details extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param \ACP3\Modules\ACP3\Comments\Model          $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validator      $commentsValidator
-     * @param \ACP3\Modules\ACP3\System\Model            $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModel
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
-        System\Model $systemModel,
+        System\Model\ModuleRepository $systemModel,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

@@ -11,7 +11,7 @@ parameters:
 services:
   comments.controller.admin.details:
     class: %comments.controller.admin.details.fqdn%
-    arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@system.model', '@core.helpers.formToken']
+    arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@system.model.modulerepository', '@core.helpers.formToken']
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 

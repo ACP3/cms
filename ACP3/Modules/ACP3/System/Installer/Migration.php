@@ -131,7 +131,7 @@ class Migration extends Modules\Installer\AbstractMigration
         return function () {
             $result = true;
             if ($this->schemaHelper->getContainer()->has('seo.installer.schema') &&
-                $this->schemaHelper->getSystemModel()->moduleExists('seo') === false
+                $this->schemaHelper->getSystemModuleRepository()->moduleExists('seo') === false
             ) {
                 $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
                 $moduleSchema = $this->schemaHelper->getContainer()->get('seo.installer.schema');
@@ -161,7 +161,7 @@ class Migration extends Modules\Installer\AbstractMigration
         return function () {
             $result = $aclResult = true;
             if ($this->schemaHelper->getContainer()->has('minify.installer.schema') &&
-                $this->schemaHelper->getSystemModel()->moduleExists('minify') === false
+                $this->schemaHelper->getSystemModuleRepository()->moduleExists('minify') === false
             ) {
                 $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
                 $moduleSchema = $this->schemaHelper->getContainer()->get('minify.installer.schema');
@@ -180,7 +180,7 @@ class Migration extends Modules\Installer\AbstractMigration
     {
         return function () {
             $result = true;
-            if ($this->schemaHelper->getSystemModel()->moduleExists('minify') === true) {
+            if ($this->schemaHelper->getSystemModuleRepository()->moduleExists('minify') === true) {
                 $minifyModuleId = $this->schemaHelper->getDb()->fetchColumn("SELECT `id` FROM `{$this->schemaHelper->getDb()->getPrefixedTableName('modules')}` WHERE `name` = 'minify'");
                 $result = $this->schemaHelper->executeSqlQueries([
                     "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {$minifyModuleId};",

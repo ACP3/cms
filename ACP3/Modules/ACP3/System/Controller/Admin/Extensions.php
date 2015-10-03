@@ -21,7 +21,7 @@ class Extensions extends Core\Modules\AdminController
      */
     protected $xml;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
     protected $systemModel;
     /**
@@ -37,7 +37,7 @@ class Extensions extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param \ACP3\Core\Modules\ModuleInfoCache         $moduleInfoCache
      * @param \ACP3\Core\XML                             $xml
-     * @param \ACP3\Modules\ACP3\System\Model            $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModel
      * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
      */
@@ -45,7 +45,7 @@ class Extensions extends Core\Modules\AdminController
         Core\Modules\Controller\AdminContext $context,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         Core\XML $xml,
-        System\Model $systemModel,
+        System\Model\ModuleRepository $systemModel,
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache)
     {

@@ -24,7 +24,7 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected $exportHelper;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
     protected $systemModel;
     /**
@@ -37,7 +37,7 @@ class Maintenance extends Core\Modules\AdminController
      * @param \ACP3\Core\DB                                       $db
      * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      * @param \ACP3\Modules\ACP3\System\Helper\Export             $exportHeper
-     * @param \ACP3\Modules\ACP3\System\Model                     $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository                     $systemModel
      * @param \ACP3\Modules\ACP3\System\Validator\SqlImportExport $sqlImportExportValidator
      */
     public function __construct(
@@ -45,7 +45,7 @@ class Maintenance extends Core\Modules\AdminController
         Core\DB $db,
         Core\Helpers\FormToken $formTokenHelper,
         System\Helper\Export $exportHeper,
-        System\Model $systemModel,
+        System\Model\ModuleRepository $systemModel,
         System\Validator\SqlImportExport $sqlImportExportValidator)
     {
         parent::__construct($context);

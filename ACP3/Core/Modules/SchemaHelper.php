@@ -16,21 +16,28 @@ class SchemaHelper extends ContainerAware
      */
     protected $db;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
-    protected $systemModel;
+    protected $systemModuleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\System\Model\SettingsRepository
+     */
+    protected $systemSettingsRepository;
 
     /**
-     * @param \ACP3\Core\DB                   $db
-     * @param \ACP3\Modules\ACP3\System\Model $systemModel
+     * @param \ACP3\Core\DB                                      $db
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository   $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Model\SettingsRepository $systemSettingsRepository
      */
     public function __construct(
         Core\DB $db,
-        System\Model $systemModel
+        System\Model\ModuleRepository $systemModuleRepository,
+        System\Model\SettingsRepository $systemSettingsRepository
     )
     {
         $this->db = $db;
-        $this->systemModel = $systemModel;
+        $this->systemModuleRepository = $systemModuleRepository;
+        $this->systemSettingsRepository = $systemSettingsRepository;
     }
 
     /**
@@ -50,11 +57,11 @@ class SchemaHelper extends ContainerAware
     }
 
     /**
-     * @return \ACP3\Modules\ACP3\System\Model
+     * @return \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
-    public function getSystemModel()
+    public function getSystemModuleRepository()
     {
-        return $this->systemModel;
+        return $this->systemModuleRepository;
     }
 
     /**
@@ -107,7 +114,7 @@ class SchemaHelper extends ContainerAware
      */
     public function getModuleId($moduleName)
     {
-        return $this->systemModel->getModuleId($moduleName) ?: 0;
+        return $this->systemModuleRepository->getModuleId($moduleName) ?: 0;
     }
 
     /**
@@ -117,7 +124,7 @@ class SchemaHelper extends ContainerAware
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->db->getPrefixedTableName(System\Model::TABLE_NAME)} WHERE `name` = ?", [$moduleName]) == 1;
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->db->getPrefixedTableName(System\Model\ModuleRepository::TABLE_NAME)} WHERE `name` = ?", [$moduleName]) == 1;
     }
 
 }

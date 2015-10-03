@@ -10,9 +10,13 @@ use ACP3\Modules\ACP3\System;
 class Config
 {
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
-    protected $systemModel;
+    protected $systemModuleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\System\Model\SettingsRepository
+     */
+    protected $systemSettingsRepository;
     /**
      * @var \ACP3\Core\Cache
      */
@@ -23,16 +27,19 @@ class Config
     protected $settings = [];
 
     /**
-     * @param \ACP3\Core\Cache                $coreCache
-     * @param \ACP3\Modules\ACP3\System\Model $systemModel
+     * @param \ACP3\Core\Cache                                   $coreCache
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository   $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Model\SettingsRepository $systemSettingsRepository
      */
     public function __construct(
         Cache $coreCache,
-        System\Model $systemModel
+        System\Model\ModuleRepository $systemModuleRepository,
+        System\Model\SettingsRepository $systemSettingsRepository
     )
     {
         $this->coreCache = $coreCache;
-        $this->systemModel = $systemModel;
+        $this->systemModuleRepository = $systemModuleRepository;
+        $this->systemSettingsRepository = $systemSettingsRepository;
     }
 
     /**
@@ -46,7 +53,7 @@ class Config
     public function setSettings($data, $module)
     {
         $bool = $bool2 = false;
-        $moduleId = $this->systemModel->getModuleId($module);
+        $moduleId = $this->systemModuleRepository->getModuleId($module);
         if (!empty($moduleId)) {
             foreach ($data as $key => $value) {
                 $updateValues = [
@@ -56,7 +63,7 @@ class Config
                     'module_id' => $moduleId,
                     'name' => $key
                 ];
-                $bool = $this->systemModel->update($updateValues, $where, System\Model::TABLE_NAME_SETTINGS);
+                $bool = $this->systemSettingsRepository->update($updateValues, $where);
             }
             $bool2 = $this->saveCache();
         }
@@ -71,7 +78,7 @@ class Config
      */
     protected function saveCache()
     {
-        $settings = $this->systemModel->getAllModuleSettings();
+        $settings = $this->systemSettingsRepository->getAllModuleSettings();
 
         $data = [];
         foreach ($settings as $setting) {
