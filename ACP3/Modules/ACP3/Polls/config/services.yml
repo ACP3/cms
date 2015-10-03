@@ -2,7 +2,9 @@ parameters:
   polls.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Admin\Index'
   polls.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Index'
   polls.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Sidebar\Index'
-  polls.model.fqdn: 'ACP3\Modules\ACP3\Polls\Model'
+  polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
+  polls.model.answerrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\AnswerRepository'
+  polls.model.voterepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\VoteRepository'
   polls.validator.fqdn: 'ACP3\Modules\ACP3\Polls\Validator'
   polls.installer.schema.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Schema'
   polls.installer.migration.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Migration'
@@ -10,18 +12,26 @@ parameters:
 services:
   polls.controller.admin.index:
     class: %polls.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@polls.model', '@polls.validator']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@polls.model', @polls.model.answerrepository, @polls.model.voterepository, '@polls.validator']
 
   polls.controller.frontend.index:
     class: %polls.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@polls.model']
+    arguments: ['@core.context.frontend', '@core.date', '@polls.model', @polls.model.answerrepository, @polls.model.voterepository]
 
   polls.controller.sidebar.index:
     class: %polls.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.date', '@polls.model']
+    arguments: ['@core.context', '@core.date', '@polls.model', @polls.model.answerrepository, @polls.model.voterepository]
 
   polls.model:
-    class: %polls.model.fqdn%
+    class: %polls.model.pollrepository.fqdn%
+    arguments: ['@core.db']
+
+  polls.model.answerrepository:
+    class: %polls.model.answerrepository.fqdn%
+    arguments: ['@core.db']
+
+  polls.model.voterepository:
+    class: %polls.model.voterepository.fqdn%
     arguments: ['@core.db']
 
   polls.validator:

@@ -20,33 +20,47 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var Polls\Model
+     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
      */
-    protected $pollsModel;
+    protected $pollRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Polls\Model\AnswerRepository
+     */
+    protected $answerRepository;
     /**
      * @var \ACP3\Modules\ACP3\Polls\Validator
      */
     protected $pollsValidator;
+    /**
+     * @var \ACP3\Modules\ACP3\Polls\Model\VoteRepository
+     */
+    protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model             $pollsModel
-     * @param \ACP3\Modules\ACP3\Polls\Validator         $pollsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext      $context
+     * @param \ACP3\Core\Date                                 $date
+     * @param \ACP3\Core\Helpers\FormToken                    $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
+     * @param \ACP3\Modules\ACP3\Polls\Validator              $pollsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        Polls\Model $pollsModel,
+        Polls\Model\PollRepository $pollRepository,
+        Polls\Model\AnswerRepository $answerRepository,
+        Polls\Model\VoteRepository $voteRepository,
         Polls\Validator $pollsValidator)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->pollsModel = $pollsModel;
+        $this->pollRepository = $pollRepository;
+        $this->answerRepository = $answerRepository;
+        $this->voteRepository = $voteRepository;
         $this->pollsValidator = $pollsValidator;
     }
 
@@ -94,9 +108,9 @@ class Index extends Core\Modules\AdminController
             function ($items) {
                 $bool = $bool2 = $bool3 = false;
                 foreach ($items as $item) {
-                    $bool = $this->pollsModel->delete($item);
-                    $bool2 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
-                    $bool3 = $this->pollsModel->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                    $bool = $this->pollRepository->delete($item);
+                    $bool2 = $this->answerRepository->delete($item, 'poll_id');
+                    $bool3 = $this->voteRepository->delete($item, 'poll_id');
                 }
 
                 return $bool !== false && $bool2 !== false && $bool3 !== false;
@@ -111,7 +125,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $poll = $this->pollsModel->getOneById($id);
+        $poll = $this->pollRepository->getOneById($id);
 
         if (empty($poll) === false) {
             $this->breadcrumb->setTitlePostfix($poll['title']);
@@ -123,7 +137,7 @@ class Index extends Core\Modules\AdminController
             if ($this->request->getPost()->has('add_answer')) {
                 $answers = $this->addNewAnswer($this->request->getPost()->get('answers', []));
             } else {
-                $answers = $this->pollsModel->getAnswersByPollId($id);
+                $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);
             }
             $this->view->assign('answers', $answers);
 
@@ -148,7 +162,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $polls = $this->pollsModel->getAllInAcp();
+        $polls = $this->pollRepository->getAllInAcp();
         $c_polls = count($polls);
 
         if ($c_polls > 0) {
@@ -184,7 +198,7 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $pollId = $this->pollsModel->insert($insertValues);
+            $pollId = $this->pollRepository->insert($insertValues);
             $bool2 = false;
 
             if ($pollId !== false) {
@@ -214,11 +228,11 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $bool = $this->pollsModel->update($updateValues, $id);
+            $bool = $this->pollRepository->update($updateValues, $id);
 
             // Stimmen zurücksetzen
             if (!empty($formData['reset'])) {
-                $this->pollsModel->delete($id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                $this->voteRepository->delete($id, 'poll_id');
             }
 
             $bool2 = $this->saveAnswers($formData['answers'], $id);
@@ -270,19 +284,17 @@ class Index extends Core\Modules\AdminController
             if (empty($row['id'])) {
                 // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                 if (!empty($row['text']) && !isset($row['delete'])) {
-                    $bool = $this->pollsModel->insert(
-                        ['text' => Core\Functions::strEncode($row['text']), 'poll_id' => $id],
-                        Polls\Model::TABLE_NAME_ANSWERS
+                    $bool = $this->answerRepository->insert(
+                        ['text' => Core\Functions::strEncode($row['text']), 'poll_id' => $id]
                     );
                 }
             } elseif (isset($row['delete'])) { // Antwort mitsamt Stimmen löschen
-                $this->pollsModel->delete((int) $row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
-                $this->pollsModel->delete((int) $row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
+                $this->answerRepository->delete((int) $row['id']);
+                $this->voteRepository->delete((int) $row['id'], 'answer_id');
             } elseif (!empty($row['text'])) { // Antwort aktualisieren
-                $bool = $this->pollsModel->update(
+                $bool = $this->answerRepository->update(
                     ['text' => Core\Functions::strEncode($row['text'])],
-                    (int) $row['id'],
-                    Polls\Model::TABLE_NAME_ANSWERS
+                    (int) $row['id']
                 );
             }
         }

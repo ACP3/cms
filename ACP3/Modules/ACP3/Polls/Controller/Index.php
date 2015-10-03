@@ -17,37 +17,51 @@ class Index extends Core\Modules\FrontendController
      */
     protected $date;
     /**
-     * @var Polls\Model
+     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
      */
-    protected $pollsModel;
+    protected $pollRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Polls\Model\AnswerRepository
+     */
+    protected $answerRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Polls\Model\VoteRepository
+     */
+    protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param Core\Date                                     $date
-     * @param Polls\Model                                   $pollsModel
+     * @param \ACP3\Core\Modules\Controller\FrontendContext   $context
+     * @param Core\Date                                       $date
+     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
-        Polls\Model $pollsModel)
+        Polls\Model\PollRepository $pollRepository,
+        Polls\Model\AnswerRepository $answerRepository,
+        Polls\Model\VoteRepository $voteRepository)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->pollsModel = $pollsModel;
+        $this->pollRepository = $pollRepository;
+        $this->answerRepository = $answerRepository;
+        $this->voteRepository = $voteRepository;
     }
 
     public function actionIndex()
     {
-        $polls = $this->pollsModel->getAll($this->date->getCurrentDateTime());
+        $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
         $c_polls = count($polls);
 
         if ($c_polls > 0) {
             for ($i = 0; $i < $c_polls; ++$i) {
                 if ($this->user->isAuthenticated() === true) {
-                    $query = $this->pollsModel->getVotesByUserId($polls[$i]['id'], $this->user->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
+                    $query = $this->voteRepository->getVotesByUserId($polls[$i]['id'], $this->user->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
                 } else {
-                    $query = $this->pollsModel->getVotesByIpAddress($polls[$i]['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
+                    $query = $this->voteRepository->getVotesByIpAddress($polls[$i]['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
                 }
 
                 if ($query != 0 ||
@@ -69,9 +83,9 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionResult($id)
     {
-        if ($this->pollsModel->pollExists($id, $this->date->getCurrentDateTime()) === true) {
-            $question = $this->pollsModel->getOneByIdWithTotalVotes($id);
-            $answers = $this->pollsModel->getAnswersByPollId($id);
+        if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
+            $question = $this->pollRepository->getOneByIdWithTotalVotes($id);
+            $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);
             $c_answers = count($answers);
             $totalVotes = $question['total_votes'];
 
@@ -96,17 +110,17 @@ class Index extends Core\Modules\FrontendController
     public function actionVote($id, $answer)
     {
         $time = $this->date->getCurrentDateTime();
-        if ($this->pollsModel->pollExists($id, $time, is_array($answer)) === true
+        if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true
         ) {
             // Wenn abgestimmt wurde
             if (is_array($answer) === true || $this->get('core.validator.rules.misc')->isNumber($answer) === true) {
                 $this->_votePost($this->request->getPost()->getAll(), $time, $id);
             } else {
-                $poll = $this->pollsModel->getOneById($id);
+                $poll = $this->pollRepository->getOneById($id);
 
                 $this->view->assign('question', $poll['title']);
                 $this->view->assign('multiple', $poll['multiple']);
-                $this->view->assign('answers', $this->pollsModel->getAnswersById($id));
+                $this->view->assign('answers', $this->answerRepository->getAnswersByPollId($id));
             }
         } else {
             throw new Core\Exceptions\ResultNotExists();
@@ -124,9 +138,9 @@ class Index extends Core\Modules\FrontendController
         $answers = $formData['answer'];
 
         if ($this->user->isAuthenticated() === true) {
-            $query = $this->pollsModel->getVotesByUserId($id, $this->user->getUserId(), $ip); // Check, whether the logged user has already voted
+            $query = $this->voteRepository->getVotesByUserId($id, $this->user->getUserId(), $ip); // Check, whether the logged user has already voted
         } else {
-            $query = $this->pollsModel->getVotesByIpAddress($id, $ip); // For guest users check against the ip address
+            $query = $this->voteRepository->getVotesByIpAddress($id, $ip); // For guest users check against the ip address
         }
 
         $bool = false;
@@ -147,7 +161,7 @@ class Index extends Core\Modules\FrontendController
                         'ip' => $ip,
                         'time' => $time,
                     ];
-                    $bool = $this->pollsModel->insert($insertValues, Polls\Model::TABLE_NAME_VOTES);
+                    $bool = $this->voteRepository->insert($insertValues);
                 }
             }
             $text = $bool !== false ? $this->lang->t('polls', 'poll_success') : $this->lang->t('polls', 'poll_error');

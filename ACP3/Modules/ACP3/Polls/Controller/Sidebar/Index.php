@@ -16,39 +16,53 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var Polls\Model
+     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
      */
-    protected $pollsModel;
+    protected $pollRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Polls\Model\AnswerRepository
+     */
+    protected $answerRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Polls\Model\VoteRepository
+     */
+    protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context $context
-     * @param Core\Date                             $date
-     * @param Polls\Model                           $pollsModel
+     * @param \ACP3\Core\Modules\Controller\Context           $context
+     * @param Core\Date                                       $date
+     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Core\Date $date,
-        Polls\Model $pollsModel)
+        Polls\Model\PollRepository $pollRepository,
+        Polls\Model\AnswerRepository $answerRepository,
+        Polls\Model\VoteRepository $voteRepository)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->pollsModel = $pollsModel;
+        $this->pollRepository = $pollRepository;
+        $this->answerRepository = $answerRepository;
+        $this->voteRepository = $voteRepository;
     }
 
     public function actionIndex()
     {
-        $poll = $this->pollsModel->getLatestPoll($this->date->getCurrentDateTime());
+        $poll = $this->pollRepository->getLatestPoll($this->date->getCurrentDateTime());
 
         if (!empty($poll)) {
-            $answers = $this->pollsModel->getAnswersByPollId($poll['id']);
+            $answers = $this->answerRepository->getAnswersWithVotesByPollId($poll['id']);
 
             $this->view->assign('sidebar_polls', $poll);
 
             if ($this->user->isAuthenticated() === true) {
-                $query = $this->pollsModel->getVotesByUserId($poll['id'], $this->user->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
+                $query = $this->voteRepository->getVotesByUserId($poll['id'], $this->user->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
             } else {
-                $query = $this->pollsModel->getVotesByIpAddress($poll['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
+                $query = $this->voteRepository->getVotesByIpAddress($poll['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
             }
 
             if ($query > 0) {
