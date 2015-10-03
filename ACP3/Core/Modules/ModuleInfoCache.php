@@ -32,28 +32,28 @@ class ModuleInfoCache
     /**
      * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
-    protected $systemModel;
+    protected $systemModuleRepository;
 
     /**
-     * @param \ACP3\Core\Cache                $cache
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\Modules\Vendors      $vendors
-     * @param \ACP3\Core\XML                  $xml
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModel
+     * @param \ACP3\Core\Cache                                 $cache
+     * @param \ACP3\Core\Lang                                  $lang
+     * @param \ACP3\Core\Modules\Vendors                       $vendors
+     * @param \ACP3\Core\XML                                   $xml
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
      */
     public function __construct(
         Cache $cache,
         Lang $lang,
         Vendors $vendors,
         XML $xml,
-        ModuleRepository $systemModel
+        ModuleRepository $systemModuleRepository
     )
     {
         $this->cache = $cache;
         $this->lang = $lang;
         $this->vendors = $vendors;
         $this->xml = $xml;
-        $this->systemModel = $systemModel;
+        $this->systemModuleRepository = $systemModuleRepository;
     }
 
     /**
@@ -132,7 +132,7 @@ class ModuleInfoCache
 
                 if (!empty($moduleInfo)) {
                     $moduleName = strtolower($moduleDirectory);
-                    $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
+                    $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
                     return [
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,

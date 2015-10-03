@@ -22,31 +22,31 @@ class Index extends Core\Modules\AdminController
     /**
      * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
-    protected $systemModel;
+    protected $systemModuleRepository;
     /**
      * @var \ACP3\Modules\ACP3\System\Validator\Settings
      */
     protected $systemValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModel
-     * @param \ACP3\Modules\ACP3\System\Validator\Settings        $systemValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext       $context
+     * @param \ACP3\Core\Date                                  $date
+     * @param \ACP3\Core\Helpers\FormToken                     $formTokenHelper
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Validator\Settings     $systemValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        System\Model\ModuleRepository $systemModel,
+        System\Model\ModuleRepository $systemModuleRepository,
         System\Validator\Settings $systemValidator)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->systemModel = $systemModel;
+        $this->systemModuleRepository = $systemModuleRepository;
         $this->systemValidator = $systemValidator;
     }
 

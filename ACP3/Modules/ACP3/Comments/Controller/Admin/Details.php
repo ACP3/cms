@@ -24,7 +24,7 @@ class Details extends Core\Modules\AdminController
     /**
      * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
-    protected $systemModel;
+    protected $systemModuleRepository;
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -38,21 +38,21 @@ class Details extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param \ACP3\Modules\ACP3\Comments\Model          $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validator      $commentsValidator
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModel
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModuleRepository
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Comments\Model $commentsModel,
         Comments\Validator $commentsValidator,
-        System\Model\ModuleRepository $systemModel,
+        System\Model\ModuleRepository $systemModuleRepository,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->commentsModel = $commentsModel;
         $this->commentsValidator = $commentsValidator;
-        $this->systemModel = $systemModel;
+        $this->systemModuleRepository = $systemModuleRepository;
         $this->formTokenHelper = $formTokenHelper;
     }
 
@@ -147,7 +147,7 @@ class Details extends Core\Modules\AdminController
         $comments = $this->commentsModel->getAllByModuleInAcp($id);
 
         if (empty($comments) === false) {
-            $moduleName = $this->systemModel->getModuleNameById($id);
+            $moduleName = $this->systemModuleRepository->getModuleNameById($id);
 
             //Brotkrümelspur
             $this->breadcrumb->append($this->lang->t($moduleName, $moduleName));

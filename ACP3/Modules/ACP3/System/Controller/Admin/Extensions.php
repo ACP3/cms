@@ -23,7 +23,7 @@ class Extensions extends Core\Modules\AdminController
     /**
      * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
-    protected $systemModel;
+    protected $systemModuleRepository;
     /**
      * @var \ACP3\Modules\ACP3\System\Helper\Installer
      */
@@ -34,18 +34,18 @@ class Extensions extends Core\Modules\AdminController
     protected $permissionsCache;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Modules\ModuleInfoCache         $moduleInfoCache
-     * @param \ACP3\Core\XML                             $xml
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModel
-     * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
+     * @param \ACP3\Core\Modules\Controller\AdminContext       $context
+     * @param \ACP3\Core\Modules\ModuleInfoCache               $moduleInfoCache
+     * @param \ACP3\Core\XML                                   $xml
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Helper\Installer       $installerHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Cache             $permissionsCache
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         Core\XML $xml,
-        System\Model\ModuleRepository $systemModel,
+        System\Model\ModuleRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache)
     {
@@ -53,7 +53,7 @@ class Extensions extends Core\Modules\AdminController
 
         $this->moduleInfoCache = $moduleInfoCache;
         $this->xml = $xml;
-        $this->systemModel = $systemModel;
+        $this->systemModuleRepository = $systemModuleRepository;
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
     }
@@ -175,7 +175,7 @@ class Extensions extends Core\Modules\AdminController
 
                 // Modul installieren
                 if (empty($deps)) {
-                    $bool = $this->systemModel->update(['active' => 1], ['name' => $moduleDirectory]);
+                    $bool = $this->systemModuleRepository->update(['active' => 1], ['name' => $moduleDirectory]);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
@@ -226,7 +226,7 @@ class Extensions extends Core\Modules\AdminController
                 );
 
                 if (empty($deps)) {
-                    $bool = $this->systemModel->update(['active' => 0], ['name' => $moduleDirectory]);
+                    $bool = $this->systemModuleRepository->update(['active' => 0], ['name' => $moduleDirectory]);
 
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'tpl_compiled');
