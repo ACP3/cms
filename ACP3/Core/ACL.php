@@ -27,6 +27,10 @@ class ACL
      */
     protected $roleRepository;
     /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository
+     */
+    protected $userRoleRepository;
+    /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
      */
     protected $privilegeRepository;
@@ -53,6 +57,7 @@ class ACL
      * @param \ACP3\Core\User                                          $user
      * @param \ACP3\Core\Modules                                       $modules
      * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository  $userRoleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                     $permissionsCache
      */
@@ -60,6 +65,7 @@ class ACL
         User $user,
         Modules $modules,
         Permissions\Model\RoleRepository $roleRepository,
+        Permissions\Model\UserRoleRepository $userRoleRepository,
         Permissions\Model\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache
     )
@@ -67,6 +73,7 @@ class ACL
         $this->user = $user;
         $this->modules = $modules;
         $this->roleRepository = $roleRepository;
+        $this->userRoleRepository = $userRoleRepository;
         $this->privilegeRepository = $privilegeRepository;
         $this->permissionsCache = $permissionsCache;
     }
@@ -94,7 +101,7 @@ class ACL
     public function getUserRoleIds($userId)
     {
         if (isset($this->userRoles[$userId]) === false) {
-            $userRoles = $this->roleRepository->getRolesByUserId($userId);
+            $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
             $c_userRoles = count($userRoles);
 
             for ($i = 0; $i < $c_userRoles; ++$i) {
@@ -114,7 +121,7 @@ class ACL
      */
     public function getUserRoleNames($userId)
     {
-        $userRoles = $this->roleRepository->getRolesByUserId($userId);
+        $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
         $c_userRoles = count($userRoles);
         $roles = [];
 

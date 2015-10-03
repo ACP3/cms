@@ -24,6 +24,10 @@ class Index extends Core\Modules\AdminController
      */
     protected $roleRepository;
     /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository
+     */
+    protected $userRoleRepository;
+    /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
      */
     protected $ruleRepository;
@@ -37,19 +41,21 @@ class Index extends Core\Modules\AdminController
     protected $roleValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
-     * @param \ACP3\Core\NestedSet                                $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository $ruleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validator\Role       $roleValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
+     * @param \ACP3\Core\NestedSet                                    $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository     $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository $userRoleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository     $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validator\Role           $roleValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\RoleRepository $roleRepository,
+        Permissions\Model\UserRoleRepository $userRoleRepository,
         Permissions\Model\RuleRepository $ruleRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validator\Role $roleValidator)
@@ -59,6 +65,7 @@ class Index extends Core\Modules\AdminController
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->roleRepository = $roleRepository;
+        $this->userRoleRepository = $userRoleRepository;
         $this->ruleRepository = $ruleRepository;
         $this->permissionsCache = $permissionsCache;
         $this->roleValidator = $roleValidator;
@@ -97,7 +104,7 @@ class Index extends Core\Modules\AdminController
                     } else {
                         $bool = $this->nestedSet->deleteNode($item, Permissions\Model\RoleRepository::TABLE_NAME);
                         $bool2 = $this->ruleRepository->delete($item, 'role_id');
-                        $bool3 = $this->roleRepository->delete($item, 'role_id', Permissions\Model\RoleRepository::TABLE_NAME_USER_ROLES);
+                        $bool3 = $this->userRoleRepository->delete($item, 'role_id');
                     }
                 }
 
