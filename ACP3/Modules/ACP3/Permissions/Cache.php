@@ -2,6 +2,9 @@
 namespace ACP3\Modules\ACP3\Permissions;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Permissions\Model\ResourceRepository;
+use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\RuleRepository;
 
 /**
  * Class Cache
@@ -14,22 +17,36 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID_RULES = 'acl_rules_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
      */
-    protected $permissionsModel;
+    protected $roleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
+     */
+    protected $resourceRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
+     */
+    protected $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache                     $cache
-     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
+     * @param \ACP3\Core\Cache                                        $cache
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository     $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository     $ruleRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $permissionsModel
+        RoleRepository $roleRepository,
+        ResourceRepository $resourceRepository,
+        RuleRepository $ruleRepository
     )
     {
         parent::__construct($cache);
 
-        $this->permissionsModel = $permissionsModel;
+        $this->roleRepository = $roleRepository;
+        $this->resourceRepository = $resourceRepository;
+        $this->ruleRepository = $ruleRepository;
     }
 
     /**
@@ -51,7 +68,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveResourcesCache()
     {
-        $resources = $this->permissionsModel->getAllResources();
+        $resources = $this->resourceRepository->getAllResources();
         $c_resources = count($resources);
         $data = [];
 
@@ -90,7 +107,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveRolesCache()
     {
-        $roles = $this->permissionsModel->getAllRoles();
+        $roles = $this->roleRepository->getAllRoles();
         $c_roles = count($roles);
 
         for ($i = 0; $i < $c_roles; ++$i) {
@@ -145,7 +162,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveRulesCache(array $roles)
     {
         // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-        $rules = $this->permissionsModel->getAllRulesByRoleIds($roles);
+        $rules = $this->ruleRepository->getAllRulesByRoleIds($roles);
         $c_rules = count($rules);
         $privileges = [];
         for ($i = 0; $i < $c_rules; ++$i) {
@@ -173,7 +190,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected function _getPermissionValue($key, $roleId)
     {
-        $value = $this->permissionsModel->getPermissionByKeyAndRoleId($key, $roleId);
+        $value = $this->roleRepository->getPermissionByKeyAndRoleId($key, $roleId);
         return isset($value['permission']) ? $value['permission'] : 0;
     }
 }

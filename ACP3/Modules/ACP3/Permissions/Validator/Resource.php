@@ -2,7 +2,8 @@
 namespace ACP3\Modules\ACP3\Permissions\Validator;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions\Model;
+use ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
 
 /**
  * Class Resource
@@ -19,30 +20,30 @@ class Resource extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
      */
-    protected $permissionsModel;
+    protected $privilegeRepository;
 
     /**
-     * @param \ACP3\Core\Lang                      $lang
-     * @param \ACP3\Core\Validator\Rules\Misc      $validate
-     * @param \ACP3\Core\Validator\Rules\Router    $routerValidator
-     * @param \ACP3\Core\Modules                   $modules
-     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
+     * @param \ACP3\Core\Lang                                          $lang
+     * @param \ACP3\Core\Validator\Rules\Misc                          $validate
+     * @param \ACP3\Core\Validator\Rules\Router                        $routerValidator
+     * @param \ACP3\Core\Modules                                       $modules
+     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Router $routerValidator,
         Core\Modules $modules,
-        Model $permissionsModel
+        PrivilegeRepository $privilegeRepository
     )
     {
         parent::__construct($lang, $validate);
 
         $this->routerValidator = $routerValidator;
         $this->modules = $modules;
-        $this->permissionsModel = $permissionsModel;
+        $this->privilegeRepository = $privilegeRepository;
     }
 
     /**
@@ -70,7 +71,7 @@ class Resource extends Core\Validator\AbstractValidator
         }
         if (empty($formData['privileges']) || $this->validate->isNumber($formData['privileges']) === false) {
             $this->errors['privileges'] = $this->lang->t('permissions', 'select_privilege');
-        } elseif ($this->permissionsModel->privilegeExists($formData['privileges']) === false) {
+        } elseif ($this->privilegeRepository->privilegeExists($formData['privileges']) === false) {
             $this->errors['privileges'] = $this->lang->t('permissions', 'privilege_does_not_exist');
         }
 

@@ -3,7 +3,10 @@ parameters:
   permissions.controller.admin.resources.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources'
   permissions.cache.fqdn: 'ACP3\Modules\ACP3\Permissions\Cache'
   permissions.helpers.fqdn: 'ACP3\Modules\ACP3\Permissions\Helpers'
-  permissions.model.fqdn: 'ACP3\Modules\ACP3\Permissions\Model'
+  permissions.model.rolerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\RoleRepository'
+  permissions.model.resourcerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\ResourceRepository'
+  permissions.model.privilegerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository'
+  permissions.model.rulerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\RuleRepository'
   permissions.validator.role.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\Role'
   permissions.validator.resource.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\Resource'
   permissions.installer.schema.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Schema'
@@ -12,31 +15,43 @@ parameters:
 services:
   permissions.controller.admin.index:
     class: %permissions.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', @core.nestedSet, '@core.helpers.formToken', '@permissions.model', '@permissions.cache', '@permissions.validator.role']
+    arguments: ['@core.context.admin', @core.nestedSet, '@core.helpers.formToken', '@permissions.model.rolerepository', @permissions.model.rulerepository, '@permissions.cache', '@permissions.validator.role']
 
   permissions.controller.admin.resources:
     class: %permissions.controller.admin.resources.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.formToken', '@permissions.model', '@permissions.cache', '@permissions.validator.resource']
+    arguments: ['@core.context.admin', '@core.helpers.formToken', '@permissions.model.resourcerepository', '@permissions.cache', '@permissions.validator.resource']
 
   permissions.cache:
     class: %permissions.cache.fqdn%
-    arguments: ['@core.cache.system', '@permissions.model']
+    arguments: ['@core.cache.system', '@permissions.model.rolerepository', @permissions.model.resourcerepository, @permissions.model.rulerepository]
 
   permissions.helpers:
     class: %permissions.helpers.fqdn%
-    arguments: ['@permissions.model']
+    arguments: ['@permissions.model.rolerepository']
 
-  permissions.model:
-    class: %permissions.model.fqdn%
+  permissions.model.rolerepository:
+    class: %permissions.model.rolerepository.fqdn%
+    arguments: ['@core.db']
+
+  permissions.model.rulerepository:
+    class: %permissions.model.rulerepository.fqdn%
+    arguments: ['@core.db']
+
+  permissions.model.resourcerepository:
+    class: %permissions.model.resourcerepository.fqdn%
+    arguments: ['@core.db']
+
+  permissions.model.privilegerepository:
+    class: %permissions.model.privilegerepository.fqdn%
     arguments: ['@core.db']
 
   permissions.validator.role:
     class: %permissions.validator.role.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@permissions.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@permissions.model.rolerepository']
 
   permissions.validator.resource:
     class: %permissions.validator.resource.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.modules', '@permissions.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.modules', '@permissions.model.privilegerepository']
 
   permissions.installer.schema:
     class: %permissions.installer.schema.fqdn%

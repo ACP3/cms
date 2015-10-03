@@ -20,7 +20,7 @@ services:
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
-    arguments: [@service_container, @core.cache.system, @core.modules.schemaHelper, @permissions.model]
+    arguments: [@service_container, @core.cache.system, @core.modules.schemaHelper, @permissions.model.rolerepository, @permissions.model.rulerepository, @permissions.model.resourcerepository, @permissions.model.privilegerepository]
 
   core.modules.controller:
     abstract: true

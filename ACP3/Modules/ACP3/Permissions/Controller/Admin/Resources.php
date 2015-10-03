@@ -16,9 +16,9 @@ class Resources extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
      */
-    protected $permissionsModel;
+    protected $resourceRepository;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
@@ -29,23 +29,23 @@ class Resources extends Core\Modules\AdminController
     protected $resourceValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
-     * @param \ACP3\Core\Helpers\FormToken                      $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model              $permissionsModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache              $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validator\Resource $resourceValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validator\Resource       $resourceValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model $permissionsModel,
+        Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validator\Resource $resourceValidator)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->permissionsModel = $permissionsModel;
+        $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
         $this->resourceValidator = $resourceValidator;
     }
@@ -84,11 +84,11 @@ class Resources extends Core\Modules\AdminController
         $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 foreach ($items as $item) {
-                    $bool = $this->permissionsModel->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
+                    $bool = $this->resourceRepository->delete($item);
                 }
 
                 $this->permissionsCache->saveResourcesCache();
@@ -105,7 +105,7 @@ class Resources extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $resource = $this->permissionsModel->getResourceById($id);
+        $resource = $this->resourceRepository->getResourceById($id);
         if (!empty($resource)) {
             if ($this->request->getPost()->isEmpty() === false) {
                 $this->_editPost($this->request->getPost()->getAll(), $id);
@@ -134,7 +134,7 @@ class Resources extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $resources = $this->permissionsModel->getAllResources();
+        $resources = $this->resourceRepository->getAllResources();
         $c_resources = count($resources);
         $output = [];
         for ($i = 0; $i < $c_resources; ++$i) {
@@ -153,7 +153,7 @@ class Resources extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->resourceValidator->validate($formData);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
@@ -166,7 +166,7 @@ class Resources extends Core\Modules\AdminController
                 'params' => '',
                 'privilege_id' => $formData['privileges'],
             ];
-            $bool = $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
+            $bool = $this->resourceRepository->insert($insertValues);
 
             $this->permissionsCache->saveResourcesCache();
 
@@ -182,7 +182,7 @@ class Resources extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
+        $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->resourceValidator->validate($formData);
 
             $updateValues = [
@@ -191,7 +191,7 @@ class Resources extends Core\Modules\AdminController
                 'page' => $formData['resource'],
                 'privilege_id' => $formData['privileges'],
             ];
-            $bool = $this->permissionsModel->update($updateValues, $id, Permissions\Model::TABLE_NAME_RESOURCES);
+            $bool = $this->resourceRepository->update($updateValues, $id);
 
             $this->permissionsCache->saveResourcesCache();
 

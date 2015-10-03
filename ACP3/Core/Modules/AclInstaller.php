@@ -21,31 +21,52 @@ class AclInstaller implements InstallerInterface
      */
     protected $aclCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model
-     */
-    protected $permissionsModel;
-    /**
      * @var \ACP3\Core\Modules\SchemaHelper
      */
     protected $schemaHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     */
+    protected $roleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     */
+    protected $privilegeRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
+     */
+    protected $resourceRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
+     */
+    protected $ruleRepository;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\Cache                                 $aclCache
-     * @param \ACP3\Core\Modules\SchemaHelper                  $schemaHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model             $permissionsModel
+     * @param \Symfony\Component\DependencyInjection\Container         $container
+     * @param \ACP3\Core\Cache                                         $aclCache
+     * @param \ACP3\Core\Modules\SchemaHelper                          $schemaHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository      $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository  $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
      */
     public function __construct(
         Container $container,
         Cache $aclCache,
         SchemaHelper $schemaHelper,
-        Permissions\Model $permissionsModel
+        Permissions\Model\RoleRepository $roleRepository,
+        Permissions\Model\RuleRepository $ruleRepository,
+        Permissions\Model\ResourceRepository $resourceRepository,
+        Permissions\Model\PrivilegeRepository $privilegeRepository
     )
     {
         $this->container = $container;
         $this->aclCache = $aclCache;
         $this->schemaHelper = $schemaHelper;
-        $this->permissionsModel = $permissionsModel;
+        $this->roleRepository = $roleRepository;
+        $this->ruleRepository = $ruleRepository;
+        $this->resourceRepository = $resourceRepository;
+        $this->privilegeRepository = $privilegeRepository;
     }
 
     /**
@@ -116,7 +137,7 @@ class AclInstaller implements InstallerInterface
                     'params' => '',
                     'privilege_id' => (int)$privilegeId
                 ];
-                $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
+                $this->resourceRepository->insert($insertValues);
             }
         }
     }
@@ -128,8 +149,8 @@ class AclInstaller implements InstallerInterface
      */
     protected function _insertAclRules($moduleName)
     {
-        $roles = $this->permissionsModel->getAllRoles();
-        $privileges = $this->permissionsModel->getAllResourceIds();
+        $roles = $this->roleRepository->getAllRoles();
+        $privileges = $this->privilegeRepository->getAllPrivilegeIds();
         $moduleId = $this->schemaHelper->getModuleId($moduleName);
 
         foreach ($roles as $role) {
@@ -141,7 +162,7 @@ class AclInstaller implements InstallerInterface
                     'privilege_id' => $privilege['id'],
                     'permission' => $this->getDefaultAclRulePermission($role, $privilege)
                 ];
-                $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RULES);
+                $this->ruleRepository->insert($insertValues);
             }
         }
     }
@@ -210,8 +231,8 @@ class AclInstaller implements InstallerInterface
      */
     public function uninstall(SchemaInterface $schema)
     {
-        $bool = $this->permissionsModel->delete($this->schemaHelper->getModuleId($schema->getModuleName()), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
-        $bool2 = $this->permissionsModel->delete($this->schemaHelper->getModuleId($schema->getModuleName()), 'module_id', Permissions\Model::TABLE_NAME_RULES);
+        $bool = $this->resourceRepository->delete($this->schemaHelper->getModuleId($schema->getModuleName()), 'module_id');
+        $bool2 = $this->ruleRepository->delete($this->schemaHelper->getModuleId($schema->getModuleName()), 'module_id');
 
         $this->aclCache->getDriver()->deleteAll();
 

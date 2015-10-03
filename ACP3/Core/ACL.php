@@ -23,9 +23,13 @@ class ACL
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
      */
-    protected $permissionsModel;
+    protected $roleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     */
+    protected $privilegeRepository;
     /**
      * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen
      *
@@ -46,21 +50,24 @@ class ACL
     protected $resources = [];
 
     /**
-     * @param \ACP3\Core\User                      $user
-     * @param \ACP3\Core\Modules                   $modules
-     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Core\User                                          $user
+     * @param \ACP3\Core\Modules                                       $modules
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                     $permissionsCache
      */
     public function __construct(
         User $user,
         Modules $modules,
-        Permissions\Model $permissionsModel,
+        Permissions\Model\RoleRepository $roleRepository,
+        Permissions\Model\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache
     )
     {
         $this->user = $user;
         $this->modules = $modules;
-        $this->permissionsModel = $permissionsModel;
+        $this->roleRepository = $roleRepository;
+        $this->privilegeRepository = $privilegeRepository;
         $this->permissionsCache = $permissionsCache;
     }
 
@@ -87,7 +94,7 @@ class ACL
     public function getUserRoleIds($userId)
     {
         if (isset($this->userRoles[$userId]) === false) {
-            $userRoles = $this->permissionsModel->getRolesByUserId($userId);
+            $userRoles = $this->roleRepository->getRolesByUserId($userId);
             $c_userRoles = count($userRoles);
 
             for ($i = 0; $i < $c_userRoles; ++$i) {
@@ -107,7 +114,7 @@ class ACL
      */
     public function getUserRoleNames($userId)
     {
-        $userRoles = $this->permissionsModel->getRolesByUserId($userId);
+        $userRoles = $this->roleRepository->getRolesByUserId($userId);
         $c_userRoles = count($userRoles);
         $roles = [];
 
@@ -160,7 +167,7 @@ class ACL
      */
     public function getAllPrivileges()
     {
-        return $this->permissionsModel->getAllPrivileges();
+        return $this->privilegeRepository->getAllPrivileges();
     }
 
     /**

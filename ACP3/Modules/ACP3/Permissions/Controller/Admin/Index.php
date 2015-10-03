@@ -20,9 +20,13 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
      */
-    protected $permissionsModel;
+    protected $roleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
+     */
+    protected $ruleRepository;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
@@ -33,18 +37,20 @@ class Index extends Core\Modules\AdminController
     protected $roleValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext    $context
-     * @param \ACP3\Core\NestedSet                          $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model          $permissionsModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache          $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validator\Role $roleValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Core\NestedSet                                $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validator\Role       $roleValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model $permissionsModel,
+        Permissions\Model\RoleRepository $roleRepository,
+        Permissions\Model\RuleRepository $ruleRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validator\Role $roleValidator)
     {
@@ -52,7 +58,8 @@ class Index extends Core\Modules\AdminController
 
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
-        $this->permissionsModel = $permissionsModel;
+        $this->roleRepository = $roleRepository;
+        $this->ruleRepository = $ruleRepository;
         $this->permissionsCache = $permissionsCache;
         $this->roleValidator = $roleValidator;
     }
@@ -88,9 +95,9 @@ class Index extends Core\Modules\AdminController
                     if (in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
-                        $bool = $this->nestedSet->deleteNode($item, Permissions\Model::TABLE_NAME);
-                        $bool2 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_RULES);
-                        $bool3 = $this->permissionsModel->delete($item, 'role_id', Permissions\Model::TABLE_NAME_USER_ROLES);
+                        $bool = $this->nestedSet->deleteNode($item, Permissions\Model\RoleRepository::TABLE_NAME);
+                        $bool2 = $this->ruleRepository->delete($item, 'role_id');
+                        $bool3 = $this->roleRepository->delete($item, 'role_id', Permissions\Model\RoleRepository::TABLE_NAME_USER_ROLES);
                     }
                 }
 
@@ -116,7 +123,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $role = $this->permissionsModel->getRoleById($id);
+        $role = $this->roleRepository->getRoleById($id);
 
         if (!empty($role)) {
             $this->breadcrumb->setTitlePostfix($role['name']);
@@ -160,11 +167,11 @@ class Index extends Core\Modules\AdminController
      */
     public function actionOrder($id, $action)
     {
-        if ($this->permissionsModel->roleExists($id) === true) {
+        if ($this->roleRepository->roleExists($id) === true) {
             $this->nestedSet->sort(
                 $id,
                 $action,
-                Permissions\Model::TABLE_NAME
+                Permissions\Model\RoleRepository::TABLE_NAME
             );
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
@@ -194,7 +201,7 @@ class Index extends Core\Modules\AdminController
             $roleId = $this->nestedSet->insertNode(
                 (int)$formData['parent_id'],
                 $insertValues,
-                Permissions\Model::TABLE_NAME,
+                Permissions\Model\RoleRepository::TABLE_NAME,
                 true
             );
 
@@ -229,11 +236,11 @@ class Index extends Core\Modules\AdminController
                 $id === 1 ? '' : (int)$formData['parent_id'],
                 0,
                 $updateValues,
-                Permissions\Model::TABLE_NAME
+                Permissions\Model\RoleRepository::TABLE_NAME
             );
 
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
-            $this->permissionsModel->delete($id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
+            $this->ruleRepository->delete($id, 'role_id');
             $this->saveRules($formData['privileges'], $id);
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
@@ -310,7 +317,7 @@ class Index extends Core\Modules\AdminController
                     'privilege_id' => $privilegeId,
                     'permission' => $permission
                 ];
-                $this->permissionsModel->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
+                $this->ruleRepository->insert($ruleInsertValues);
             }
         }
     }

@@ -16,7 +16,7 @@ imports:
 services:
   core.acl:
     class: ACP3\Core\ACL
-    arguments: ['@core.user', '@core.modules', '@permissions.model', '@permissions.cache']
+    arguments: ['@core.user', '@core.modules', '@permissions.model.rolerepository', @permissions.model.privilegerepository, '@permissions.cache']
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
