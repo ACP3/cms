@@ -12,14 +12,6 @@ class ModuleRepository extends Core\Model
     const TABLE_NAME = 'modules';
 
     /**
-     * @return array
-     */
-    public function getSchemaTables()
-    {
-        return $this->db->fetchAll('SELECT `TABLE_NAME` FROM information_schema.TABLES WHERE `TABLE_TYPE` = ? AND `TABLE_SCHEMA` = ?', ['BASE TABLE', $this->db->getDatabase()]);
-    }
-
-    /**
      * @param $moduleName
      *
      * @return mixed

@@ -24,9 +24,9 @@ class Maintenance extends Core\Modules\AdminController
      */
     protected $exportHelper;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @var \ACP3\Modules\ACP3\System\Model\SchemaRepository
      */
-    protected $systemModel;
+    protected $systemSchemaRepository;
     /**
      * @var \ACP3\Modules\ACP3\System\Validator\SqlImportExport
      */
@@ -36,24 +36,24 @@ class Maintenance extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext          $context
      * @param \ACP3\Core\DB                                       $db
      * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\System\Helper\Export             $exportHeper
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository                     $systemModel
+     * @param \ACP3\Modules\ACP3\System\Helper\Export             $exportHelper
+     * @param \ACP3\Modules\ACP3\System\Model\SchemaRepository    $systemSchemaRepository
      * @param \ACP3\Modules\ACP3\System\Validator\SqlImportExport $sqlImportExportValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\DB $db,
         Core\Helpers\FormToken $formTokenHelper,
-        System\Helper\Export $exportHeper,
-        System\Model\ModuleRepository $systemModel,
+        System\Helper\Export $exportHelper,
+        System\Model\SchemaRepository $systemSchemaRepository,
         System\Validator\SqlImportExport $sqlImportExportValidator)
     {
         parent::__construct($context);
 
         $this->db = $db;
         $this->formTokenHelper = $formTokenHelper;
-        $this->exportHelper = $exportHeper;
-        $this->systemModel = $systemModel;
+        $this->exportHelper = $exportHelper;
+        $this->systemSchemaRepository = $systemSchemaRepository;
         $this->sqlImportExportValidator = $sqlImportExportValidator;
     }
 
@@ -102,7 +102,7 @@ class Maintenance extends Core\Modules\AdminController
             $this->_sqlExportPost($this->request->getPost()->getAll());
         }
 
-        $dbTables = $this->systemModel->getSchemaTables();
+        $dbTables = $this->systemSchemaRepository->getSchemaTables();
         $tables = [];
         foreach ($dbTables as $row) {
             $table = $row['TABLE_NAME'];

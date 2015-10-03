@@ -5,6 +5,7 @@ parameters:
   system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
   system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
   system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
+  system.model.schemarepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SchemaRepository'
   system.model.settingsrepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SettingsRepository'
   system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validator\Settings'
   system.validator.sqlimportexport.fqdn: 'ACP3\Modules\ACP3\System\Validator\SqlImportExport'
@@ -22,10 +23,14 @@ services:
 
   system.controller.admin.maintenance:
     class: %system.controller.admin.maintenance.fqdn%
-    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers.export', '@system.model.modulerepository', '@system.validator.sqlimportexport']
+    arguments: ['@core.context.admin', '@core.db', '@core.helpers.formToken', '@system.helpers.export', '@system.model.schemarepository', '@system.validator.sqlimportexport']
 
   system.model.modulerepository:
     class: %system.model.modulerepository.fqdn%
+    arguments: ['@core.db']
+
+  system.model.schemarepository:
+    class: %system.model.schemarepository.fqdn%
     arguments: ['@core.db']
 
   system.model.settingsrepository:
