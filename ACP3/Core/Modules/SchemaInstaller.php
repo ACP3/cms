@@ -93,8 +93,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     public function uninstall(SchemaInterface $schema)
     {
         return $this->executeSqlQueries($schema->removeTables(), $schema->getModuleName()) &&
-        $this->removeFromModulesTable($schema->getModuleName()) &&
-        $this->removeSettings($schema->getModuleName());
+        $this->removeFromModulesTable($schema->getModuleName());
     }
 
     /**
@@ -107,17 +106,5 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     protected function removeFromModulesTable($moduleName)
     {
         return $this->systemModuleRepository->delete((int)$this->getModuleId($moduleName)) !== false;
-    }
-
-    /**
-     * Löscht die zu einem Module zugehörigen Einstellungen
-     *
-     * @param string $moduleName
-     *
-     * @return bool
-     */
-    protected function removeSettings($moduleName)
-    {
-        return $this->systemSettingsRepository->delete((int)$this->getModuleId($moduleName), 'module_id') !== false;
     }
 }

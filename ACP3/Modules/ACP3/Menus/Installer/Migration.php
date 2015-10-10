@@ -48,6 +48,9 @@ class Migration implements Modules\Installer\MigrationInterface
             34 => [
                 "ALTER TABLE `{pre}menu_items` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}menus` ENGINE = InnoDB",
+            ],
+            35 => [
+                "ALTER TABLE `{pre}menu_items` ADD FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE"
             ]
         ];
     }

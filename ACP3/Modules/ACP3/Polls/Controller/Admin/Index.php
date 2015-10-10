@@ -106,14 +106,12 @@ class Index extends Core\Modules\AdminController
             $this,
             $action,
             function ($items) {
-                $bool = $bool2 = $bool3 = false;
+                $bool = false;
                 foreach ($items as $item) {
                     $bool = $this->pollRepository->delete($item);
-                    $bool2 = $this->answerRepository->delete($item, 'poll_id');
-                    $bool3 = $this->voteRepository->delete($item, 'poll_id');
                 }
 
-                return $bool !== false && $bool2 !== false && $bool3 !== false;
+                return $bool !== false;
             }
         );
     }
@@ -230,7 +228,7 @@ class Index extends Core\Modules\AdminController
 
             $bool = $this->pollRepository->update($updateValues, $id);
 
-            // Stimmen zurücksetzen
+            // Reset votes
             if (!empty($formData['reset'])) {
                 $this->voteRepository->delete($id, 'poll_id');
             }

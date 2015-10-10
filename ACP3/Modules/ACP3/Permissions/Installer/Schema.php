@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 33;
+        return 34;
     }
 
     /**
@@ -47,17 +47,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `key` (`key`)
             ) {ENGINE} {CHARSET};",
-            "CREATE TABLE`{pre}acl_resources` (
-                `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                `module_id` int(10) unsigned NOT NULL,
-                `area` VARCHAR(255) NOT NULL,
-                `controller` VARCHAR(255) NOT NULL,
-                `page` varchar(255) NOT NULL,
-                `params` varchar(255) NOT NULL,
-                `privilege_id` int(10) unsigned NOT NULL,
-                PRIMARY KEY (`id`)
-            ) {engine} {charset};",
-            "CREATE TABLE`{pre}acl_roles` (
+            "CREATE TABLE `{pre}acl_roles` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `name` varchar(100) NOT NULL,
                 `root_id` int(10) unsigned NOT NULL,
@@ -66,19 +56,39 @@ class Schema implements Modules\Installer\SchemaInterface
                 `right_id` int(10) unsigned NOT NULL,
                 PRIMARY KEY (`id`)
             ) {engine} {charset};",
-            "CREATE TABLE`{pre}acl_rules` (
+            "CREATE TABLE `{pre}acl_resources` (
+                `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                `module_id` int(10) unsigned NOT NULL,
+                `area` VARCHAR(255) NOT NULL,
+                `controller` VARCHAR(255) NOT NULL,
+                `page` varchar(255) NOT NULL,
+                `params` varchar(255) NOT NULL,
+                `privilege_id` int(10) unsigned NOT NULL,
+                PRIMARY KEY (`id`),
+                INDEX (`privilege_id`),
+                FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE
+            ) {engine} {charset};",
+            "CREATE TABLE `{pre}acl_rules` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `role_id` int(10) unsigned NOT NULL,
                 `module_id` int(10) unsigned NOT NULL,
                 `privilege_id` int(10) unsigned NOT NULL,
                 `permission` tinyint(1) unsigned NOT NULL,
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)
+                UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`),
+                INDEX (`role_id`),
+                INDEX (`privilege_id`),
+                INDEX (`module_id`),
+                FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
             ) {engine} {charset};",
-            "CREATE TABLE`{pre}acl_user_roles` (
+            "CREATE TABLE `{pre}acl_user_roles` (
                 `user_id` int(10) unsigned NOT NULL,
                 `role_id` int(10) unsigned NOT NULL,
-                PRIMARY KEY (`user_id`,`role_id`)
+                PRIMARY KEY (`user_id`,`role_id`),
+                INDEX (`role_id`),
+                FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE
             ) {engine} {charset};",
             // Default Privileges and user roles
             "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (1, 'view', '')",

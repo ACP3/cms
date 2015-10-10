@@ -42,6 +42,9 @@ class Migration extends Modules\Installer\AbstractMigration
             36 => [
                 "ALTER TABLE `{pre}gallery` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}gallery_pictures` ENGINE = InnoDB",
+            ],
+            37 => [
+                "ALTER TABLE `{pre}gallery_pictures` ADD FOREIGN KEY (`gallery_id`) REFERENCES `{pre}gallery` (`id`) ON DELETE CASCADE"
             ]
         ];
     }

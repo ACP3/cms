@@ -114,6 +114,11 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}modules` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}sessions` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}settings` ENGINE = InnoDB",
+            ],
+            56 => [
+                "ALTER TABLE `{pre}settings` CHANGE `module_id` `module_id` INT(10) UNSIGNED NOT NULL",
+                "ALTER TABLE `{pre}settings` ADD INDEX (`module_id`)",
+                "ALTER TABLE `{pre}settings` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
             ]
         ];
     }

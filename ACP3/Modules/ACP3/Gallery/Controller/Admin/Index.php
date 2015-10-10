@@ -102,7 +102,7 @@ class Index extends Core\Modules\AdminController
             $this,
             $action,
             function ($items) {
-                $bool = $bool2 = false;
+                $bool = false;
 
                 foreach ($items as $item) {
                     if (!empty($item) && $this->galleryRepository->galleryExists($item) === true) {
@@ -119,11 +119,10 @@ class Index extends Core\Modules\AdminController
 
                         // Fotogalerie mitsamt Bildern löschen
                         $bool = $this->galleryRepository->delete($item);
-                        $bool2 = $this->pictureRepository->delete($item, 'gallery_id');
                     }
                 }
 
-                return $bool !== false && $bool2 !== false;
+                return $bool !== false;
             }
         );
     }

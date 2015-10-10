@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 34;
+        return 35;
     }
 
     /**
@@ -40,6 +40,12 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
+            "CREATE TABLE `{pre}menus` (
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `index_name` VARCHAR(10) NOT NULL,
+                `title` VARCHAR(120) NOT NULL,
+                PRIMARY KEY (`id`)
+            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}menu_items` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `mode` TINYINT(1) UNSIGNED NOT NULL,
@@ -52,13 +58,9 @@ class Schema implements Modules\Installer\SchemaInterface
                 `title` VARCHAR(120) NOT NULL,
                 `uri` VARCHAR(120) NOT NULL,
                 `target` TINYINT(1) UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`), INDEX `foreign_block_id` (`block_id`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}menus` (
-                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `index_name` VARCHAR(10) NOT NULL,
-                `title` VARCHAR(120) NOT NULL,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`),
+                INDEX `foreign_block_id` (`block_id`),
+                FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
     }

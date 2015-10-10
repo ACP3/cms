@@ -33,6 +33,15 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}polls` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}poll_answers` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}poll_votes` ENGINE = InnoDB",
+            ],
+            35 => [
+                "ALTER TABLE `{pre}poll_answers` ADD FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE;",
+                "ALTER TABLE `{pre}poll_votes` DROP INDEX `poll_id`",
+                "ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`)",
+                "ALTER TABLE `{pre}poll_votes` ADD INDEX (`answer_id`)",
+                "ALTER TABLE `{pre}poll_votes` ADD INDEX (`user_id`)",
+                "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE;",
+                "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`answer_id`) REFERENCES `{pre}poll_answers` (`id`) ON DELETE CASCADE;",
             ]
         ];
     }

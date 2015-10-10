@@ -26,7 +26,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
      */
-    protected $menusModel;
+    protected $menuRepository;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
@@ -45,7 +45,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\NestedSet                              $nestedSet
      * @param \ACP3\Core\Helpers\FormToken                      $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList    $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository     $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository     $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
      * @param \ACP3\Modules\ACP3\Menus\Validator\Menu           $menusValidator
@@ -55,7 +55,7 @@ class Index extends Core\Modules\AdminController
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Helpers\MenuItemsList $menusHelpers,
-        Menus\Model\MenuRepository $menusModel,
+        Menus\Model\MenuRepository $menuRepository,
         Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
         Menus\Validator\Menu $menusValidator)
@@ -65,7 +65,7 @@ class Index extends Core\Modules\AdminController
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->menusHelpers = $menusHelpers;
-        $this->menusModel = $menusModel;
+        $this->menuRepository = $menuRepository;
         $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
         $this->menusValidator = $menusValidator;
@@ -91,8 +91,8 @@ class Index extends Core\Modules\AdminController
                 $bool = false;
 
                 foreach ($items as $item) {
-                    if (!empty($item) && $this->menusModel->menuExists($item) === true) {
-                        // Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
+                    if (!empty($item) && $this->menuRepository->menuExists($item) === true) {
+                        // Delete the assigned menu items and update the nested set tree
                         $items = $this->menuItemRepository->getAllItemsByBlockId($item);
                         foreach ($items as $row) {
                             $this->nestedSet->deleteNode(
@@ -102,8 +102,8 @@ class Index extends Core\Modules\AdminController
                             );
                         }
 
-                        $block = $this->menusModel->getMenuNameById($item);
-                        $bool = $this->menusModel->delete($item);
+                        $block = $this->menuRepository->getMenuNameById($item);
+                        $bool = $this->menuRepository->delete($item);
                         $this->menusCache->getCacheDriver()->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
                     }
                 }
@@ -122,7 +122,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $menu = $this->menusModel->getOneById($id);
+        $menu = $this->menuRepository->getOneById($id);
 
         if (empty($menu) === false) {
             $this->breadcrumb->setTitlePostfix($menu['title']);
@@ -141,7 +141,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $menus = $this->menusModel->getAllMenus();
+        $menus = $this->menuRepository->getAllMenus();
         $c_menus = count($menus);
 
         if ($c_menus > 0) {
@@ -179,7 +179,7 @@ class Index extends Core\Modules\AdminController
                 'title' => Core\Functions::strEncode($formData['title']),
             ];
 
-            $lastId = $this->menusModel->insert($insertValues);
+            $lastId = $this->menuRepository->insert($insertValues);
 
             $this->formTokenHelper->unsetFormToken();
 
@@ -201,7 +201,7 @@ class Index extends Core\Modules\AdminController
                 'title' => Core\Functions::strEncode($formData['title']),
             ];
 
-            $bool = $this->menusModel->update($updateValues, $id);
+            $bool = $this->menuRepository->update($updateValues, $id);
 
             $this->menusCache->saveMenusCache();
 

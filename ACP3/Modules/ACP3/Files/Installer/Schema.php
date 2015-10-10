@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 36;
+        return 37;
     }
 
     /**
@@ -51,7 +51,10 @@ class Schema implements Modules\Installer\SchemaInterface
                 `text` TEXT NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`), INDEX `foreign_category_id` (`category_id`)
+                PRIMARY KEY (`id`),
+                FULLTEXT KEY `index` (`title`, `text`),
+                INDEX `foreign_category_id` (`category_id`),
+                FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
     }
@@ -62,8 +65,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE `{pre}files`;",
-            "DELETE FROM `{pre}categories` WHERE `module_id` = '{moduleId}';"
+            "DROP TABLE `{pre}files`;"
         ];
     }
 

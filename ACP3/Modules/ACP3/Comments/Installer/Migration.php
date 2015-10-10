@@ -33,6 +33,10 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             34 => [
                 "ALTER TABLE `{pre}comments` ENGINE = InnoDB",
+            ],
+            35 => [
+                "ALTER TABLE `{pre}comments` ADD INDEX (`module_id`)",
+                "ALTER TABLE `{pre}comments` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
             ]
         ];
     }

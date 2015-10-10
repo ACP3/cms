@@ -48,7 +48,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 55;
+        return 56;
     }
 
     /**
@@ -72,10 +72,13 @@ class Schema implements Modules\Installer\SchemaInterface
             ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}settings` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `module_id` INT(10) NOT NULL,
+                `module_id` INT(10) UNSIGNED NOT NULL,
                 `name` VARCHAR(40) NOT NULL,
                 `value` TEXT NOT NULL,
-                PRIMARY KEY (`id`), UNIQUE KEY (`module_id`,`name`)
+                PRIMARY KEY (`id`),
+                UNIQUE KEY (`module_id`,`name`),
+                INDEX (`module_id`),
+                FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
     }

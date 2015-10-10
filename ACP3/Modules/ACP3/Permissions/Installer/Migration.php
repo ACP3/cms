@@ -41,6 +41,18 @@ class Migration implements Modules\Installer\MigrationInterface
                 "ALTER TABLE `{pre}acl_roles` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}acl_rules` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}acl_user_roles` ENGINE = InnoDB",
+            ],
+            34 => [
+                "ALTER TABLE `{pre}acl_resources` ADD INDEX (`privilege_id`)",
+                "ALTER TABLE `{pre}acl_resources` ADD FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE",
+                "ALTER TABLE `{pre}acl_rules` ADD INDEX (`role_id`)",
+                "ALTER TABLE `{pre}acl_rules` ADD INDEX (`privilege_id`)",
+                "ALTER TABLE `{pre}acl_rules` ADD INDEX (`module_id`)",
+                "ALTER TABLE `{pre}acl_rules` ADD FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE",
+                "ALTER TABLE `{pre}acl_rules` ADD FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE",
+                "ALTER TABLE `{pre}acl_rules` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE",
+                "ALTER TABLE `{pre}acl_user_roles` ADD INDEX (`role_id`)",
+                "ALTER TABLE `{pre}acl_user_roles` ADD FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE",
             ]
         ];
     }

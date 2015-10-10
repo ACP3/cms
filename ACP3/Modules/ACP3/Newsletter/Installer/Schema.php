@@ -37,7 +37,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 48;
+        return 49;
     }
 
     /**
@@ -46,27 +46,6 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}newsletter_accounts` (
-                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `mail` VARCHAR(255) NOT NULL,
-                `salutation` TINYINT(1) NOT NULL,
-                `first_name` VARCHAR(255) NOT NULL,
-                `last_name` VARCHAR(255) NOT NULL,
-                `hash` VARCHAR(128) NOT NULL,
-                `status` TINYINT(1) NOT NULL,
-                PRIMARY KEY (`id`), INDEX(`mail`), INDEX(`hash`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}newsletter_account_history` (
-                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
-                `date` DATETIME NOT NULL,
-                `action` TINYINT(1) NOT NULL,
-                INDEX (`newsletter_account_id`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}newsletter_queue` (
-                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
-                `newsletter_id` INT(10) UNSIGNED NOT NULL,
-                INDEX (`newsletter_account_id`), INDEX (`newsletter_id`)
-            ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}newsletters` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
@@ -76,6 +55,34 @@ class Schema implements Modules\Installer\SchemaInterface
                 `status` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
+            ) {ENGINE} {CHARSET};",
+            "CREATE TABLE `{pre}newsletter_accounts` (
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `mail` VARCHAR(255) NOT NULL,
+                `salutation` TINYINT(1) NOT NULL,
+                `first_name` VARCHAR(255) NOT NULL,
+                `last_name` VARCHAR(255) NOT NULL,
+                `hash` VARCHAR(128) NOT NULL,
+                `status` TINYINT(1) NOT NULL,
+                PRIMARY KEY (`id`),
+                INDEX(`mail`),
+                INDEX(`hash`)
+            ) {ENGINE} {CHARSET};",
+            "CREATE TABLE `{pre}newsletter_account_history` (
+                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                `date` DATETIME NOT NULL,
+                `action` TINYINT(1) NOT NULL,
+                INDEX (`newsletter_account_id`),
+                FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`)
+            ) {ENGINE} {CHARSET};",
+            "CREATE TABLE `{pre}newsletter_queue` (
+                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                `newsletter_id` INT(10) UNSIGNED NOT NULL,
+                UNIQUE KEY (`newsletter_account_id`, `newsletter_id`),
+                INDEX (`newsletter_account_id`),
+                INDEX (`newsletter_id`),
+                FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`),
+                FOREIGN KEY (`newsletter_id`) REFERENCES `{pre}newsletters` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
     }
@@ -86,6 +93,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
+            "DROP TABLE `{pre}newsletter_account_history`;",
             "DROP TABLE `{pre}newsletter_accounts`;",
             "DROP TABLE `{pre}newsletter_queue`;",
             "DROP TABLE `{pre}newsletters`;"

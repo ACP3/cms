@@ -25,7 +25,10 @@ class Schema implements Modules\Installer\SchemaInterface
                 `message` TEXT NOT NULL,
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 `entry_id` INT(10) UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`), INDEX (`module_id`, `entry_id`)
+                PRIMARY KEY (`id`),
+                INDEX (`module_id`, `entry_id`),
+                INDEX (`module_id`),
+                FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
     }
@@ -70,6 +73,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 34;
+        return 35;
     }
 }

@@ -95,16 +95,13 @@ class Index extends Core\Modules\AdminController
             $this,
             $action,
             function ($items) {
-                $bool = $bool2 = $bool3 = false;
-                $levelNotDeletable = false;
+                $bool = $levelNotDeletable = false;
 
                 foreach ($items as $item) {
                     if (in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
                         $bool = $this->nestedSet->deleteNode($item, Permissions\Model\RoleRepository::TABLE_NAME);
-                        $bool2 = $this->ruleRepository->delete($item, 'role_id');
-                        $bool3 = $this->userRoleRepository->delete($item, 'role_id');
                     }
                 }
 
@@ -114,7 +111,7 @@ class Index extends Core\Modules\AdminController
                     $result = !$levelNotDeletable;
                     $text = $this->lang->t('permissions', 'role_not_deletable');
                 } else {
-                    $result = $bool !== false && $bool2 !== false && $bool3 !== false;
+                    $result = $bool !== false;
                     $text = $this->lang->t('system', $result ? 'delete_success' : 'delete_error');
                 }
 

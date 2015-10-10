@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 34;
+        return 35;
     }
 
     /**
@@ -53,7 +53,9 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `text` VARCHAR(120) NOT NULL,
                 `poll_id` INT(10) UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`), INDEX `foreign_poll_id` (`poll_id`)
+                PRIMARY KEY (`id`),
+                INDEX `foreign_poll_id` (`poll_id`),
+                FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}poll_votes` (
                 `poll_id` INT(10) UNSIGNED NOT NULL,
@@ -61,7 +63,11 @@ class Schema implements Modules\Installer\SchemaInterface
                 `user_id` INT(10) UNSIGNED NOT NULL,
                 `ip` VARCHAR(40) NOT NULL,
                 `time` DATETIME NOT NULL,
-                INDEX (`poll_id`, `answer_id`, `user_id`)
+                INDEX (`poll_id`),
+                INDEX (`answer_id`),
+                INDEX (`user_id`),
+                FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`answer_id`) REFERENCES `{pre}poll_answers` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
     }

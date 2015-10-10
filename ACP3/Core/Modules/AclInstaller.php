@@ -231,12 +231,9 @@ class AclInstaller implements InstallerInterface
      */
     public function uninstall(SchemaInterface $schema)
     {
-        $bool = $this->resourceRepository->delete($this->schemaHelper->getModuleId($schema->getModuleName()), 'module_id');
-        $bool2 = $this->ruleRepository->delete($this->schemaHelper->getModuleId($schema->getModuleName()), 'module_id');
-
         $this->aclCache->getDriver()->deleteAll();
 
-        return $bool !== false && $bool2 !== false;
+        return true;
     }
 
 }

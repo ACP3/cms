@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 36;
+        return 37;
     }
 
     /**
@@ -57,7 +57,9 @@ class Schema implements Modules\Installer\SchemaInterface
                 `file` VARCHAR(120) NOT NULL,
                 `description` TEXT NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
+                PRIMARY KEY (`id`),
+                INDEX `foreign_gallery_id` (`gallery_id`),
+                FOREIGN KEY (`gallery_id`) REFERENCES `{pre}gallery` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
     }

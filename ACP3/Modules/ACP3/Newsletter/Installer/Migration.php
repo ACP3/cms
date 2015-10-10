@@ -100,6 +100,12 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}newsletter_account_history` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}newsletter_queue` ENGINE = InnoDB",
                 "ALTER TABLE `{pre}newsletters` ENGINE = InnoDB",
+            ],
+            49 => [
+                "ALTER TABLE `{pre}newsletter_account_history` ADD FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`)",
+                "ALTER TABLE `{pre}newsletter_queue` ADD UNIQUE KEY (`newsletter_account_id`, `newsletter_id`)",
+                "ALTER TABLE `{pre}newsletter_queue` ADD FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`)",
+                "ALTER TABLE `{pre}newsletter_queue` ADD FOREIGN KEY (`newsletter_id`) REFERENCES `{pre}newsletters` (`id`) ON DELETE CASCADE",
             ]
         ];
     }
