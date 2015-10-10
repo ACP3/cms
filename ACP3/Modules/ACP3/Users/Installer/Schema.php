@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 41;
+        return 42;
     }
 
     /**
@@ -41,7 +41,7 @@ class Schema implements Modules\Installer\SchemaInterface
     {
         return [
             "CREATE TABLE `{pre}users` (
-                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `id` INT(10) UNSIGNED AUTO_INCREMENT,
                 `super_user` TINYINT(1) UNSIGNED NOT NULL,
                 `nickname` VARCHAR(30) NOT NULL,
                 `pwd` VARCHAR(128) NOT NULL,

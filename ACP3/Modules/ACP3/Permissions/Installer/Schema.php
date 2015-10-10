@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 34;
+        return 35;
     }
 
     /**
@@ -84,11 +84,13 @@ class Schema implements Modules\Installer\SchemaInterface
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
             ) {engine} {charset};",
             "CREATE TABLE `{pre}acl_user_roles` (
-                `user_id` int(10) unsigned NOT NULL,
+                `user_id` int(10) unsigned,
                 `role_id` int(10) unsigned NOT NULL,
                 PRIMARY KEY (`user_id`,`role_id`),
+                INDEX (`user_id`),
                 INDEX (`role_id`),
-                FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE
+                FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE CASCADE
             ) {engine} {charset};",
             // Default Privileges and user roles
             "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (1, 'view', '')",
@@ -102,8 +104,6 @@ class Schema implements Modules\Installer\SchemaInterface
             "INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (2, 'Mitglied', 1, 1, 2, 7)",
             "INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (3, 'Autor', 1, 2, 3, 6)",
             "INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (4, 'Administrator', 1, 3, 4, 5);",
-            "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1)",
-            "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
         ];
     }
 

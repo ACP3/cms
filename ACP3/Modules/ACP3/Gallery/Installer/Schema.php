@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 37;
+        return 38;
     }
 
     /**
@@ -47,8 +47,10 @@ class Schema implements Modules\Installer\SchemaInterface
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
-                `user_id` INT UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`)
+                `user_id` INT UNSIGNED,
+                PRIMARY KEY (`id`),
+                INDEX (`user_id`),
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}gallery_pictures` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

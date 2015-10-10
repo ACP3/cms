@@ -225,7 +225,7 @@ class Index extends Core\Modules\FrontendController
                     'date' => $this->date->toSQL(),
                     'ip' => $ip,
                     'name' => Core\Functions::strEncode($formData['name']),
-                    'user_id' => $this->user->isAuthenticated() === true && $this->get('core.validator.rules.misc')->isNumber($this->user->getUserId() === true) ? $this->user->getUserId() : '',
+                    'user_id' => $this->user->isAuthenticated() === true ? $this->user->getUserId() : null,
                     'message' => Core\Functions::strEncode($formData['message']),
                     'module_id' => $this->modules->getModuleId($this->module),
                     'entry_id' => $this->entryId,

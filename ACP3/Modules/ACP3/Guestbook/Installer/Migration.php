@@ -27,6 +27,11 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             33 => [
                 "ALTER TABLE `{pre}guestbook` ENGINE = InnoDB",
+            ],
+            34 => [
+                "ALTER TABLE `{pre}guestbook` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
+                "UPDATE `{pre}guestbook` SET `user_id` = NULL WHERE `user_id` = 0",
+                "ALTER TABLE `{pre}guestbook` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
             ]
         ];
     }

@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 35;
+        return 36;
     }
 
     /**
@@ -46,8 +46,10 @@ class Schema implements Modules\Installer\SchemaInterface
                 `end` DATETIME NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 `multiple` TINYINT(1) UNSIGNED NOT NULL,
-                `user_id` INT UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`)
+                `user_id` INT(10) UNSIGNED,
+                PRIMARY KEY (`id`),
+                INDEX (`user_id`),
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}poll_answers` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -60,14 +62,15 @@ class Schema implements Modules\Installer\SchemaInterface
             "CREATE TABLE `{pre}poll_votes` (
                 `poll_id` INT(10) UNSIGNED NOT NULL,
                 `answer_id` INT(10) UNSIGNED NOT NULL,
-                `user_id` INT(10) UNSIGNED NOT NULL,
+                `user_id` INT(10) UNSIGNED,
                 `ip` VARCHAR(40) NOT NULL,
                 `time` DATETIME NOT NULL,
                 INDEX (`poll_id`),
                 INDEX (`answer_id`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE,
-                FOREIGN KEY (`answer_id`) REFERENCES `{pre}poll_answers` (`id`) ON DELETE CASCADE
+                FOREIGN KEY (`answer_id`) REFERENCES `{pre}poll_answers` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
         ];
     }

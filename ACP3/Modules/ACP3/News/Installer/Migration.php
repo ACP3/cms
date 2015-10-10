@@ -42,6 +42,12 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             37 => [
                 "ALTER TABLE `{pre}news` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE CASCADE"
+            ],
+            38 => [
+                "ALTER TABLE `{pre}news` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
+                "ALTER TABLE `{pre}news` ADD INDEX (`user_id`)",
+                "UPDATE `{pre}news` SET `user_id` = NULL WHERE `user_id` = 0",
+                "ALTER TABLE `{pre}news` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
             ]
         ];
     }

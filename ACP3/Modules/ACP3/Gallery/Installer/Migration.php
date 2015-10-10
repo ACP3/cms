@@ -45,6 +45,12 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             37 => [
                 "ALTER TABLE `{pre}gallery_pictures` ADD FOREIGN KEY (`gallery_id`) REFERENCES `{pre}gallery` (`id`) ON DELETE CASCADE"
+            ],
+            38 => [
+                "ALTER TABLE `{pre}gallery` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
+                "ALTER TABLE `{pre}gallery` ADD INDEX (`user_id`)",
+                "UPDATE `{pre}gallery` SET `user_id` = NULL WHERE `user_id` = 0",
+                "ALTER TABLE `{pre}gallery` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
             ]
         ];
     }

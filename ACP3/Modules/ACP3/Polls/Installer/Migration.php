@@ -42,6 +42,14 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}poll_votes` ADD INDEX (`user_id`)",
                 "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE;",
                 "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`answer_id`) REFERENCES `{pre}poll_answers` (`id`) ON DELETE CASCADE;",
+            ],
+            36 => [
+                "ALTER TABLE `{pre}polls` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
+                "ALTER TABLE `{pre}polls` ADD INDEX (`user_id`)",
+                "UPDATE `{pre}polls` SET `user_id` = NULL WHERE `user_id` = 0",
+                "ALTER TABLE `{pre}polls` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL",
+                "ALTER TABLE `{pre}poll_votes` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
+                "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
             ]
         ];
     }

@@ -145,7 +145,7 @@ class Index extends Core\Modules\FrontendController
 
         $bool = false;
         if ($query == 0) {
-            $userId = $this->user->isAuthenticated() ? $this->user->getUserId() : 0;
+            $userId = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
 
             // Multiple Answers
             if (is_array($answers) === false) {

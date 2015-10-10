@@ -23,7 +23,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 37;
+        return 38;
     }
 
     /**
@@ -46,8 +46,11 @@ class Schema implements Modules\Installer\SchemaInterface
                 `end` DATETIME NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 `text` TEXT NOT NULL,
-                `user_id` INT(10) UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`)
+                `user_id` INT(10) UNSIGNED,
+                PRIMARY KEY (`id`),
+                FULLTEXT KEY `index` (`title`, `text`),
+                INDEX (`user_id`),
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
         ];
     }

@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 33;
+        return 34;
     }
 
     /**
@@ -45,12 +45,14 @@ class Schema implements Modules\Installer\SchemaInterface
                 `date` DATETIME NOT NULL,
                 `ip` VARCHAR(40) NOT NULL,
                 `name` VARCHAR(20) NOT NULL,
-                `user_id` INT(10) UNSIGNED NOT NULL,
+                `user_id` INT(10) UNSIGNED,
                 `message` TEXT NOT NULL,
                 `website` VARCHAR(120) NOT NULL,
                 `mail` VARCHAR(120) NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`), INDEX `foreign_user_id` (`user_id`)
+                PRIMARY KEY (`id`),
+                INDEX `foreign_user_id` (`user_id`),
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
         ];
     }

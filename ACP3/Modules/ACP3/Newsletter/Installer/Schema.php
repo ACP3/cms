@@ -37,7 +37,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 49;
+        return 50;
     }
 
     /**
@@ -53,8 +53,10 @@ class Schema implements Modules\Installer\SchemaInterface
                 `text` TEXT NOT NULL,
                 `html` TINYINT(1) NOT NULL,
                 `status` TINYINT(1) UNSIGNED NOT NULL,
-                `user_id` INT UNSIGNED NOT NULL,
-                PRIMARY KEY (`id`)
+                `user_id` INT UNSIGNED,
+                PRIMARY KEY (`id`),
+                INDEX (`user_id`),
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}newsletter_accounts` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

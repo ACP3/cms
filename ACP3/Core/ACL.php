@@ -101,11 +101,16 @@ class ACL
     public function getUserRoleIds($userId)
     {
         if (isset($this->userRoles[$userId]) === false) {
-            $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
-            $c_userRoles = count($userRoles);
+            // Special case for guest user
+            if ($userId == 0) {
+                $this->userRoles[$userId][] = 1; // @TODO: Add config option for this
+            } else {
+                $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
+                $c_userRoles = count($userRoles);
 
-            for ($i = 0; $i < $c_userRoles; ++$i) {
-                $this->userRoles[$userId][] = $userRoles[$i]['id'];
+                for ($i = 0; $i < $c_userRoles; ++$i) {
+                    $this->userRoles[$userId][] = $userRoles[$i]['id'];
+                }
             }
         }
         return $this->userRoles[$userId];

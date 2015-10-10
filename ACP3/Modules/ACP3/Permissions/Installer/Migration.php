@@ -53,6 +53,12 @@ class Migration implements Modules\Installer\MigrationInterface
                 "ALTER TABLE `{pre}acl_rules` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE",
                 "ALTER TABLE `{pre}acl_user_roles` ADD INDEX (`role_id`)",
                 "ALTER TABLE `{pre}acl_user_roles` ADD FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE",
+            ],
+            35 => [
+                "DELETE FROM `{pre}acl_user_roles` WHERE `user_id` = 0",
+                "ALTER TABLE `{pre}acl_user_roles` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
+                "ALTER TABLE `{pre}acl_user_roles` ADD INDEX (`user_id`)",
+                "ALTER TABLE `{pre}acl_user_roles` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE CASCADE"
             ]
         ];
     }

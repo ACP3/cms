@@ -106,6 +106,12 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}newsletter_queue` ADD UNIQUE KEY (`newsletter_account_id`, `newsletter_id`)",
                 "ALTER TABLE `{pre}newsletter_queue` ADD FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`)",
                 "ALTER TABLE `{pre}newsletter_queue` ADD FOREIGN KEY (`newsletter_id`) REFERENCES `{pre}newsletters` (`id`) ON DELETE CASCADE",
+            ],
+            50 => [
+                "ALTER TABLE `{pre}newsletters` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
+                "ALTER TABLE `{pre}newsletters` ADD INDEX (`user_id`)",
+                "UPDATE `{pre}newsletters` SET `user_id` = NULL WHERE `user_id` = 0",
+                "ALTER TABLE `{pre}newsletters` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
             ]
         ];
     }

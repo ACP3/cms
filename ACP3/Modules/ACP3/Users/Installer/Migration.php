@@ -83,6 +83,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             41 => [
                 "ALTER TABLE `{pre}users` ENGINE = InnoDB",
+            ],
+            42 => [
+                "ALTER TABLE `{pre}users` CHANGE `id` `id` INT(10) UNSIGNED AUTO_INCREMENT",
             ]
         ];
     }

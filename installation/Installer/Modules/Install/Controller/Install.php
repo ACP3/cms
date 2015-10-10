@@ -171,7 +171,7 @@ class Install extends AbstractController
     private function _installModules()
     {
         $bool = false;
-        $modules = array_merge(['system'], Filesystem::scandir(MODULES_DIR . 'ACP3/'));
+        $modules = array_merge(['system', 'users'], Filesystem::scandir(MODULES_DIR . 'ACP3/'));
         $alreadyInstalled = [];
 
         foreach ($modules as $module) {
@@ -276,7 +276,8 @@ class Install extends AbstractController
             "INSERT INTO
                 `{pre}users`
             VALUES
-                ('', 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->lang->getLanguage()}', '20', '', '{$currentDate}');",
+                (1, 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->lang->getLanguage()}', '20', '', '{$currentDate}');",
+            "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
         ];
 
         return $this->get('core.modules.schemaHelper')->executeSqlQueries($queries);

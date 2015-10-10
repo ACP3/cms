@@ -21,14 +21,16 @@ class Schema implements Modules\Installer\SchemaInterface
                 `ip` VARCHAR(40) NOT NULL,
                 `date` DATETIME NOT NULL,
                 `name` VARCHAR(20) NOT NULL,
-                `user_id` INT(10) UNSIGNED NOT NULL,
+                `user_id` INT(10) UNSIGNED,
                 `message` TEXT NOT NULL,
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 `entry_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`),
                 INDEX (`module_id`, `entry_id`),
                 INDEX (`module_id`),
-                FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
+                INDEX (`user_id`),
+                FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
         ];
     }
@@ -73,6 +75,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 35;
+        return 36;
     }
 }
