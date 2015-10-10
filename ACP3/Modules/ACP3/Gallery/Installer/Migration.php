@@ -38,6 +38,10 @@ class Migration extends Modules\Installer\AbstractMigration
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "gallery/list/", "gallery/index/index/") WHERE `uri` LIKE "gallery/list/%";' : '',
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "gallery/pics/", "gallery/index/pics/") WHERE `uri` LIKE "gallery/pics/%";' : '',
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "gallery/details/", "gallery/index/details/") WHERE `uri` LIKE "gallery/details/%";' : '',
+            ],
+            36 => [
+                "ALTER TABLE `{pre}gallery` ENGINE = InnoDB",
+                "ALTER TABLE `{pre}gallery_pictures` ENGINE = InnoDB",
             ]
         ];
     }

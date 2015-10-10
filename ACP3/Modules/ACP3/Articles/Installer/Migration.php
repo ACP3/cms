@@ -44,6 +44,9 @@ class Migration extends AbstractMigration
             36 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'sidebar', 'index', 'index', '', 1);",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'sidebar', 'index', 'single', '', 1);",
+            ],
+            37 => [
+                "ALTER TABLE `{pre}articles` ENGINE = InnoDB",
             ]
         ];
     }

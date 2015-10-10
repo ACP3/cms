@@ -44,6 +44,10 @@ class Migration implements Modules\Installer\MigrationInterface
                 "UPDATE `{pre}acl_resources` SET `controller` = 'items' WHERE `module_id` = '{moduleId}' AND `page` LIKE '%_item';",
                 "UPDATE `{pre}acl_resources` SET `page` = REPLACE(`page`, '_item', '') WHERE `module_id` = '{moduleId}' AND `page` LIKE '%_item';",
                 "UPDATE `{pre}acl_resources` SET `controller` = 'items' WHERE `module_id` = '{moduleId}' AND `page` = 'order';",
+            ],
+            34 => [
+                "ALTER TABLE `{pre}menu_items` ENGINE = InnoDB",
+                "ALTER TABLE `{pre}menus` ENGINE = InnoDB",
             ]
         ];
     }

@@ -36,6 +36,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             35 => [
                 "ALTER TABLE `{pre}files` CHANGE `title` `title` VARCHAR(255) NOT NULL;",
+            ],
+            36 => [
+                "ALTER TABLE `{pre}files` ENGINE = InnoDB",
             ]
         ];
     }

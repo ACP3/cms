@@ -27,6 +27,9 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             4 => [
                 "UPDATE `{pre}settings` SET `name` = SUBSTRING(`name`, 5) WHERE `module_id` = '{moduleId}' AND `name` LIKE 'seo_%';",
+            ],
+            5 => [
+                "ALTER TABLE `{pre}seo` ENGINE = InnoDB",
             ]
         ];
     }

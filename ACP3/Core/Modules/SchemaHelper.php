@@ -78,7 +78,7 @@ class SchemaHelper extends ContainerAware
     {
         if (count($queries) > 0) {
             $search = ['{pre}', '{engine}', '{charset}'];
-            $replace = [$this->db->getPrefix(), 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
+            $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
 
             $this->db->getConnection()->beginTransaction();
             try {

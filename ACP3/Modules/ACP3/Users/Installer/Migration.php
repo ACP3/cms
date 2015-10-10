@@ -80,6 +80,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 "UPDATE `{pre}users` SET `pwd_salt` = SUBSTRING(`pwd`, 42), `pwd` = SUBSTRING(`pwd`, 1, 40);",
                 "ALTER TABLE `{pre}users` ADD `remember_me_token` VARCHAR(128) NOT NULL AFTER `pwd_salt`;",
                 "ALTER TABLE `{pre}users` CHANGE `pwd` `pwd` VARCHAR(128) NOT NULL;",
+            ],
+            41 => [
+                "ALTER TABLE `{pre}users` ENGINE = InnoDB",
             ]
         ];
     }

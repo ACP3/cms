@@ -30,6 +30,9 @@ class Migration implements Modules\Installer\MigrationInterface
                 "UPDATE `{pre}acl_resources` SET `controller` = 'details' WHERE `module_id` = '{moduleId}' AND `page` LIKE '%_comments';",
                 "UPDATE `{pre}acl_resources` SET `page` = REPLACE(`page`, '_comments', '') WHERE `module_id` = '{moduleId}' AND `page` LIKE '%_comments';",
                 "UPDATE `{pre}acl_resources` SET `controller` = 'details' WHERE `module_id` = '{moduleId}' AND `page` = 'edit';",
+            ],
+            34 => [
+                "ALTER TABLE `{pre}comments` ENGINE = InnoDB",
             ]
         ];
     }

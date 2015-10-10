@@ -109,6 +109,11 @@ class Migration extends Modules\Installer\AbstractMigration
                 "UPDATE `{pre}settings` SET `value` = 'core.wysiwyg.ckeditor' WHERE `module_id` = '{moduleId}' AND `name` = 'wysiwyg' AND `value` = 'CKEditor';",
                 "UPDATE `{pre}settings` SET `value` = 'core.wysiwyg.textarea' WHERE `module_id` = '{moduleId}' AND `name` = 'wysiwyg' AND `value` = 'Textarea';",
                 "UPDATE `{pre}settings` SET `value` = 'core.wysiwyg.tinymce' WHERE `module_id` = '{moduleId}' AND `name` = 'wysiwyg' AND `value` = 'TinyMCE';",
+            ],
+            55 => [
+                "ALTER TABLE `{pre}modules` ENGINE = InnoDB",
+                "ALTER TABLE `{pre}sessions` ENGINE = InnoDB",
+                "ALTER TABLE `{pre}settings` ENGINE = InnoDB",
             ]
         ];
     }

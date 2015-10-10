@@ -36,6 +36,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             35 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'sidebar', 'index', 'latest', '', 1);",
+            ],
+            36 => [
+                "ALTER TABLE `{pre}news` ENGINE = InnoDB",
             ]
         ];
     }

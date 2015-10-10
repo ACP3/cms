@@ -20,6 +20,9 @@ class Migration implements Modules\Installer\MigrationInterface
         return [
             31 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = 'functions';",
+            ],
+            32 => [
+                "ALTER TABLE `{pre}emoticons` ENGINE = InnoDB",
             ]
         ];
     }

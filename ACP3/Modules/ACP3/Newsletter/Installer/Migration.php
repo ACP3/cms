@@ -94,6 +94,12 @@ class Migration extends Modules\Installer\AbstractMigration
             47 => [
                 "ALTER TABLE `{pre}newsletter_accounts` ADD INDEX (`mail`);",
                 "ALTER TABLE `{pre}newsletter_accounts` ADD INDEX (`hash`);",
+            ],
+            48 => [
+                "ALTER TABLE `{pre}newsletter_accounts` ENGINE = InnoDB",
+                "ALTER TABLE `{pre}newsletter_account_history` ENGINE = InnoDB",
+                "ALTER TABLE `{pre}newsletter_queue` ENGINE = InnoDB",
+                "ALTER TABLE `{pre}newsletters` ENGINE = InnoDB",
             ]
         ];
     }
