@@ -214,7 +214,7 @@ class Mailer
         try {
             $this->configure();
 
-            $this->phpMailer->Subject = $this->subject;
+            $this->phpMailer->Subject = $this->generateSubject();
 
             if (is_array($this->from) === true) {
                 $this->phpMailer->SetFrom($this->from['email'], $this->from['name']);
@@ -245,6 +245,14 @@ class Mailer
             Logger::error('mailer', $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateSubject()
+    {
+        return "=?utf-8?b?" . base64_encode($this->_decodeHtmlEntities($this->subject)) . "?=";
     }
 
     /**
