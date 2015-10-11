@@ -71,24 +71,24 @@ class RedirectMessages
      * @param int|bool    $success
      * @param string      $text
      * @param string|null $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function setMessage($success, $text, $path = null)
     {
-        if (empty($text) === false) {
-            $this->sessionHandler->set(
-                'redirect_message',
-                [
-                    'success' => is_int($success) ? true : (bool)$success,
-                    'text' => $text
-                ]
-            );
+        $this->sessionHandler->set(
+            'redirect_message',
+            [
+                'success' => is_int($success) ? true : (bool)$success,
+                'text' => $text
+            ]
+        );
 
-            // If no path has been given, guess it automatically
-            if ($path === null) {
-                $path = $this->request->getModuleAndController();
-            }
-
-            $this->redirect->temporary($path);
+        // If no path has been given, guess it automatically
+        if ($path === null) {
+            $path = $this->request->getModuleAndController();
         }
+
+        return $this->redirect->temporary($path);
     }
 }

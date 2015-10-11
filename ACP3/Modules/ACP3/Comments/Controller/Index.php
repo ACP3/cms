@@ -136,10 +136,6 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('dateformat', $this->commentsSettings['dateformat']);
         }
 
-        if ($this->acl->hasPermission('frontend/comments/index/create') === true) {
-            $this->view->assign('comments_create_form', $this->actionCreate($module, $entryId));
-        }
-
         return $this->view->fetchTemplate('Comments/Frontend/index.index.tpl');
     }
 
@@ -152,7 +148,7 @@ class Index extends Core\Modules\FrontendController
     public function actionCreate($module, $entryId)
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll(), $module, $entryId);
+            return $this->_createPost($this->request->getPost()->getAll(), $module, $entryId);
         }
 
         // Add emoticons if they are active
@@ -190,10 +186,12 @@ class Index extends Core\Modules\FrontendController
      * @param array  $formData
      * @param string $module
      * @param int    $entryId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData, $module, $entryId)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData, $module, $entryId) {
                 $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
 
@@ -214,7 +212,7 @@ class Index extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
+                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
             }
         );
     }

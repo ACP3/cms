@@ -78,10 +78,13 @@ class Index extends Core\Modules\AdminController
         $this->settingsValidator = $settingsValidator;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
@@ -96,9 +99,14 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken();
     }
 
+    /**
+     * @param string $action
+     *
+     * @return mixed
+     */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -130,6 +138,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -142,7 +151,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($gallery['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             $this->view->assign('gallery_id', $id);
@@ -197,12 +206,15 @@ class Index extends Core\Modules\AdminController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         $settings = $this->config->getSettings('gallery');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll(), $settings);
+            return $this->_settingsPost($this->request->getPost()->getAll(), $settings);
         }
 
         if ($this->modules->isActive('comments') === true) {
@@ -222,10 +234,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->galleryValidator->validate($formData);
 
             $insertValues = [
@@ -255,10 +269,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->galleryValidator->validate(
                 $formData,
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
@@ -291,10 +307,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $settings
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData, array $settings)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData, $settings) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData, $settings) {
             $this->settingsValidator->validate($formData);
 
             $data = [

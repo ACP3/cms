@@ -31,7 +31,10 @@
             </footer>
         </section>
         {if $comments_allowed === true}
-            {load_module module="frontend/comments" args=['gallery', $picture.id]}
+            <section id="comments">
+                {load_module module="frontend/comments" args=['gallery', $picture.id]}
+                {load_module module="frontend/comments/index/create" args=['gallery', $picture.id]}
+            </section>
         {/if}
     </article>
 {/block}

@@ -103,10 +103,10 @@ class Application extends Core\AbstractApplication
             $serviceId = $request->getModule() . '.controller.install.' . $request->getController();
             $frontController->dispatch($serviceId, $request->getControllerAction());
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
-            $redirect->temporary('errors/index/404');
+            $redirect->temporary('errors/index/404')->send();
         } catch (\Exception $e) {
             Core\Logger::critical('installer', $e->getMessage());
-            $redirect->temporary('errors/index/500');
+            $redirect->temporary('errors/index/500')->send();
         }
     }
 

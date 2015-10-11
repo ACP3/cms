@@ -61,10 +61,13 @@ class Index extends Core\Modules\FrontendController
         return $this;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->getAll());
         }
 
         $defaults = [
@@ -98,10 +101,12 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _indexPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function() use ($formData) {
                 $seoSettings = $this->config->getSettings('seo');
                 $settings = $this->config->getSettings('contact');

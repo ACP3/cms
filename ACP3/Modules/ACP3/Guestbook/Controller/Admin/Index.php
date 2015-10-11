@@ -70,11 +70,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -91,6 +92,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -102,7 +104,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($guestbook['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             if ($settings['emoticons'] == 1 && $this->emoticonsHelpers) {
@@ -153,10 +155,13 @@ class Index extends Core\Modules\AdminController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('guestbook');
@@ -191,10 +196,12 @@ class Index extends Core\Modules\AdminController
      * @param array $formData
      * @param array $settings
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
             $this->guestbookValidator->validateEdit($formData, $settings);
 
             $updateValues = [
@@ -212,10 +219,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->guestbookValidator->validateSettings($formData);
 
             $data = [

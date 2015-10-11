@@ -62,15 +62,18 @@ class Account extends Core\Modules\FrontendController
     {
         parent::preDispatch();
 
-        if ($this->user->isAuthenticated() === false || $this->get('core.validator.rules.misc')->isNumber($this->user->getUserId()) === false) {
-            $this->redirect()->temporary('users/index/login');
+        if ($this->user->isAuthenticated() === false) {
+            $this->redirect()->temporary('users/index/login')->send();
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionEdit()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_editPost($this->request->getPost()->getAll());
+            return $this->_editPost($this->request->getPost()->getAll());
         }
 
         $user = $this->user->getUserInfo();
@@ -94,12 +97,15 @@ class Account extends Core\Modules\FrontendController
         $this->formTokenHelper->generateFormToken();
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         $settings = $this->config->getSettings('users');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll(), $settings);
+            return $this->_settingsPost($this->request->getPost()->getAll(), $settings);
         }
 
         $user = $this->usersModel->getOneById($this->user->getUserId());
@@ -123,6 +129,9 @@ class Account extends Core\Modules\FrontendController
         $this->formTokenHelper->generateFormToken();
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
@@ -131,7 +140,7 @@ class Account extends Core\Modules\FrontendController
             ];
             $bool = $this->usersModel->update($updateValues, $this->user->getUserId());
 
-            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
+            return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         }
 
         $user = $this->usersModel->getOneById($this->user->getUserId());
@@ -141,10 +150,12 @@ class Account extends Core\Modules\FrontendController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->usersValidator->validateEditProfile($formData);
 
@@ -183,7 +194,7 @@ class Account extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
+                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
             }
         );
     }
@@ -191,10 +202,12 @@ class Account extends Core\Modules\FrontendController
     /**
      * @param array $formData
      * @param array $settings
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData, array $settings)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData, $settings) {
                 $this->usersValidator->validateUserSettings($formData, $settings);
 
@@ -218,7 +231,7 @@ class Account extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
+                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
             }
         );
     }

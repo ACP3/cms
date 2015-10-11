@@ -38,6 +38,8 @@ class Accounts extends Core\Modules\AdminController
 
     /**
      * @param int $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionActivate($id)
     {
@@ -46,17 +48,18 @@ class Accounts extends Core\Modules\AdminController
             $id
         );
 
-        $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
+        return $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
     }
 
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {

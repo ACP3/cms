@@ -86,24 +86,27 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelprs
+     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
      *
      * @return $this
      */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelprs)
+    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
     {
-        $this->captchaHelpers = $captchaHelprs;
+        $this->captchaHelpers = $captchaHelpers;
 
         return $this;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionForgotPwd()
     {
         if ($this->user->isAuthenticated() === true) {
-            $this->redirect()->toNewPage(ROOT_DIR);
+            return $this->redirect()->toNewPage(ROOT_DIR);
         } else {
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_forgotPasswordPost($this->request->getPost()->getAll());
+                return $this->_forgotPasswordPost($this->request->getPost()->getAll());
             }
 
             $this->view->assign('form', array_merge(['nick_mail' => ''], $this->request->getPost()->getAll()));
@@ -131,11 +134,14 @@ class Index extends Core\Modules\FrontendController
         $this->view->assign('LANG_users_found', sprintf($this->lang->t('users', 'users_found'), $allUsers));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionLogin()
     {
         // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
         if ($this->user->isAuthenticated() === true) {
-            $this->redirect()->toNewPage(ROOT_DIR);
+            return $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($this->request->getPost()->isEmpty() === false) {
             $result = $this->user->login(
                 Core\Functions::strEncode($this->request->getPost()->get('nickname', '')),
@@ -144,9 +150,9 @@ class Index extends Core\Modules\FrontendController
             );
             if ($result == 1) {
                 if ($this->request->getParameters()->has('redirect')) {
-                    $this->redirect()->temporary(base64_decode($this->request->getParameters()->get('redirect')));
+                    return $this->redirect()->temporary(base64_decode($this->request->getParameters()->get('redirect')));
                 } else {
-                    $this->redirect()->toNewPage(ROOT_DIR);
+                    return $this->redirect()->toNewPage(ROOT_DIR);
                 }
             } else {
                 $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
@@ -156,6 +162,8 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param string $last
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionLogout($last = '')
     {
@@ -165,23 +173,26 @@ class Index extends Core\Modules\FrontendController
             $lastPage = base64_decode($last);
 
             if (!preg_match('/^((acp|users)\/)/', $lastPage)) {
-                $this->redirect()->temporary($lastPage);
+                return $this->redirect()->temporary($lastPage);
             }
         }
-        $this->redirect()->toNewPage(ROOT_DIR);
+        return $this->redirect()->toNewPage(ROOT_DIR);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionRegister()
     {
         $settings = $this->config->getSettings('users');
 
         if ($this->user->isAuthenticated() === true) {
-            $this->redirect()->toNewPage(ROOT_DIR);
+            return $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($settings['enable_registration'] == 0) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_registerPost($this->request->getPost()->getAll(), $settings);
+                return $this->_registerPost($this->request->getPost()->getAll(), $settings);
             }
 
             $defaults = [
@@ -218,10 +229,12 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _forgotPasswordPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function() use ($formData) {
                 $this->usersValidator->validateForgotPassword($formData);
 
@@ -272,10 +285,12 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param array $formData
      * @param array $settings
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _registerPost(array $formData, array $settings)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function() use ($formData, $settings) {
                 $this->usersValidator->validateRegistration($formData);
 

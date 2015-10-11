@@ -50,10 +50,13 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $this->request->getPost()->getAll()));
@@ -73,10 +76,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
@@ -107,11 +112,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleCustomDeleteAction(
+        return $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -154,6 +160,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -164,7 +171,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($category['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $category, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $category, $id);
             }
 
             $this->view->assign('form', array_merge($category, $this->request->getPost()->getAll()));
@@ -179,10 +186,12 @@ class Index extends Core\Modules\AdminController
      * @param array $formData
      * @param array $category
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $category, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $category, $id) {
+        return $this->actionHelper->handleEditPostAction(function() use ($formData, $category, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $id);
@@ -232,10 +241,13 @@ class Index extends Core\Modules\AdminController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('categories');
@@ -247,10 +259,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->categoriesValidator->validateSettings($formData);
 
             $data = [

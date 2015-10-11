@@ -50,10 +50,13 @@ class Index extends Core\Modules\AdminController
         $this->seoValidator = $seoValidator;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
@@ -66,11 +69,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function($items) {
@@ -90,6 +94,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -100,7 +105,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($seo['alias']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $seo['uri'], $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $seo['uri'], $id);
             }
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($seo['uri']));
@@ -134,10 +139,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $this->seoValidator->validate($formData);
 
             $bool = $this->seo->insertUriAlias(
@@ -158,10 +165,12 @@ class Index extends Core\Modules\AdminController
      * @param array  $formData
      * @param string $path
      * @param int    $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, $path, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $path, $id) {
+        return $this->actionHelper->handleEditPostAction(function() use ($formData, $path, $id) {
             $this->seoValidator->validate($formData, $path);
 
             $updateValues = [
@@ -182,10 +191,13 @@ class Index extends Core\Modules\AdminController
         });
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $seoSettings = $this->config->getSettings('seo');
@@ -209,10 +221,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function() use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function() use ($formData) {
             $this->seoValidator->validateSettings($formData);
 
             // Config aktualisieren

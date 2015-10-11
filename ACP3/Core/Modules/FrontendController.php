@@ -111,6 +111,8 @@ abstract class FrontendController extends Core\Modules\Controller
         if ($controllerActionResult instanceof Response) {
             $controllerActionResult->send();
             return;
+        } else if (is_array($controllerActionResult)) {
+            $this->view->assign($controllerActionResult);
         } else if (is_string($controllerActionResult)) {
             echo $controllerActionResult;
             return;

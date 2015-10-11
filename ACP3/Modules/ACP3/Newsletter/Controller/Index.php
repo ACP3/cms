@@ -88,12 +88,12 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->getAll());
         }
 
         $defaults = [
@@ -116,10 +116,13 @@ class Index extends Core\Modules\FrontendController
         $this->formTokenHelper->generateFormToken();
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionUnsubscribe()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_unsubscribePost($this->request->getPost()->getAll());
+            return $this->_unsubscribePost($this->request->getPost()->getAll());
         }
 
         $defaults = [
@@ -132,10 +135,12 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _indexPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->newsletterValidator->validateSubscribe($formData);
 
@@ -155,10 +160,12 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _unsubscribePost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->newsletterValidator->validateUnsubscribe($formData);
 

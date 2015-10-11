@@ -71,10 +71,13 @@ class Index extends Core\Modules\AdminController
         $this->roleValidator = $roleValidator;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['name' => ''], $this->request->getPost()->getAll()));
@@ -87,11 +90,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleCustomDeleteAction(
+        return $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -115,7 +119,7 @@ class Index extends Core\Modules\AdminController
                     $text = $this->lang->t('system', $result ? 'delete_success' : 'delete_error');
                 }
 
-                $this->redirectMessages()->setMessage($result, $text);
+                return $this->redirectMessages()->setMessage($result, $text);
             }
         );
     }
@@ -123,6 +127,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -133,7 +138,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($role['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             if ($id != 1) {
@@ -167,6 +172,7 @@ class Index extends Core\Modules\AdminController
      * @param int    $id
      * @param string $action
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionOrder($id, $action)
@@ -180,20 +186,21 @@ class Index extends Core\Modules\AdminController
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
-            $this->redirect()->temporary('acp/permissions');
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return $this->redirect()->temporary('acp/permissions');
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
      * @param array $formData
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->roleValidator->validate($formData);
 
             $insertValues = [
@@ -223,11 +230,12 @@ class Index extends Core\Modules\AdminController
      * @param array $formData
      * @param int   $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->roleValidator->validate($formData, $id);
 
             $updateValues = [

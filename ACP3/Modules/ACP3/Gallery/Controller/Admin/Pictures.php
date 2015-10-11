@@ -81,6 +81,7 @@ class Pictures extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionCreate($id)
@@ -95,7 +96,7 @@ class Pictures extends Core\Modules\AdminController
             $settings = $this->config->getSettings('gallery');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_createPost($this->request->getPost()->getAll(), $settings, $id);
+                return $this->_createPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -119,11 +120,12 @@ class Pictures extends Core\Modules\AdminController
      * @param int    $id
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($id, $action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -152,6 +154,7 @@ class Pictures extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -167,7 +170,7 @@ class Pictures extends Core\Modules\AdminController
             $settings = $this->config->getSettings('gallery');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings, $picture, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $settings, $picture, $id);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -190,6 +193,9 @@ class Pictures extends Core\Modules\AdminController
     /**
      * @param int    $id
      * @param string $action
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionOrder($id, $action)
     {
@@ -204,18 +210,22 @@ class Pictures extends Core\Modules\AdminController
 
             $this->galleryCache->saveCache($galleryId);
 
-            $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
+            return $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
      * @param array $formData
      * @param array $settings
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData, array $settings, $id)
     {
-        $this->actionHelper->handleCreatePostAction(
+        return $this->actionHelper->handleCreatePostAction(
             function () use ($formData, $settings, $id) {
                 $file = $this->request->getFiles()->get('file');
 
@@ -252,10 +262,12 @@ class Pictures extends Core\Modules\AdminController
      * @param array $settings
      * @param array $picture
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $settings, array $picture, $id)
     {
-        $this->actionHelper->handleEditPostAction(
+        return $this->actionHelper->handleEditPostAction(
             function () use ($formData, $settings, $picture, $id) {
                 $file = $this->request->getFiles()->get('file');
 

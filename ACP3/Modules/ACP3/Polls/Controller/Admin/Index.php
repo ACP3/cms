@@ -64,10 +64,13 @@ class Index extends Core\Modules\AdminController
         $this->pollsValidator = $pollsValidator;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->has('submit')) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         if ($this->request->getPost()->has('add_answer')) {
@@ -98,11 +101,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -119,6 +123,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -129,7 +134,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($poll['title']);
 
             if ($this->request->getPost()->has('submit')) {
-                $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             if ($this->request->getPost()->has('add_answer')) {
@@ -181,10 +186,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->pollsValidator->validate($formData);
 
             $insertValues = [
@@ -212,10 +219,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->pollsValidator->validate($formData);
 
             $updateValues = [

@@ -105,6 +105,7 @@ class Index extends Core\Modules\FrontendController
      *
      * @param int|array $answer
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionVote($id, $answer)
@@ -114,14 +115,14 @@ class Index extends Core\Modules\FrontendController
         ) {
             // Wenn abgestimmt wurde
             if (is_array($answer) === true || $this->get('core.validator.rules.misc')->isNumber($answer) === true) {
-                $this->_votePost($this->request->getPost()->getAll(), $time, $id);
-            } else {
-                $poll = $this->pollRepository->getOneById($id);
-
-                $this->view->assign('question', $poll['title']);
-                $this->view->assign('multiple', $poll['multiple']);
-                $this->view->assign('answers', $this->answerRepository->getAnswersByPollId($id));
+                return $this->_votePost($this->request->getPost()->getAll(), $time, $id);
             }
+
+            $poll = $this->pollRepository->getOneById($id);
+
+            $this->view->assign('question', $poll['title']);
+            $this->view->assign('multiple', $poll['multiple']);
+            $this->view->assign('answers', $this->answerRepository->getAnswersByPollId($id));
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -131,6 +132,8 @@ class Index extends Core\Modules\FrontendController
      * @param array  $formData
      * @param string $time
      * @param int    $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _votePost(array $formData, $time, $id)
     {
@@ -169,6 +172,6 @@ class Index extends Core\Modules\FrontendController
             $text = $this->lang->t('polls', 'already_voted');
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $id);
+        return $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $id);
     }
 }

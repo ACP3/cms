@@ -59,6 +59,8 @@ class Maintenance extends Core\Modules\AdminController
 
     /**
      * @param string $action
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCache($action = '')
     {
@@ -85,10 +87,8 @@ class Maintenance extends Core\Modules\AdminController
                     $text = $this->lang->t('system', 'cache_type_not_found');
             }
 
-            $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
+            return $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
         }
-
-        return;
     }
 
     public function actionIndex()
@@ -96,10 +96,13 @@ class Maintenance extends Core\Modules\AdminController
         return;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSqlExport()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_sqlExportPost($this->request->getPost()->getAll());
+            return $this->_sqlExportPost($this->request->getPost()->getAll());
         }
 
         $dbTables = $this->systemSchemaRepository->getSchemaTables();
@@ -134,10 +137,13 @@ class Maintenance extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken();
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSqlImport()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_sqlImportPost($this->request->getPost()->getAll());
+            return $this->_sqlImportPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['text' => ''], $this->request->getPost()->getAll()));
@@ -171,10 +177,12 @@ class Maintenance extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _sqlExportPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->sqlImportExportValidator->validateSqlExport($formData);
 
@@ -199,11 +207,12 @@ class Maintenance extends Core\Modules\AdminController
     /**
      * @param array $formData
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function _sqlImportPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $file = $this->request->getFiles()->get('file');
 

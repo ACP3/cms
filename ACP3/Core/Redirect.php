@@ -34,27 +34,29 @@ class Redirect
     }
 
     /**
-     * @param $url
+     * @param string $url
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function toNewPage($url)
     {
         if ($this->request->isAjax() === true) {
-            $this->_ajax($url);
+            return $this->_ajax($url);
         }
 
-        $response = new RedirectResponse($url);
-        $response->send();
-        exit;
+        return new RedirectResponse($url);
     }
 
     /**
      * Executes a temporary redirect
      *
-     * @param $path
+     * @param string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function temporary($path)
     {
-        $this->_redirect($path, false);
+        return $this->_redirect($path, false);
     }
 
     /**
@@ -62,13 +64,15 @@ class Redirect
      *
      * @param string $path
      * @param bool   $movedPermanently
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function _redirect($path, $movedPermanently)
+    protected function _redirect($path, $movedPermanently)
     {
         $path = $this->router->route($path, true);
 
         if ($this->request->isAjax() === true) {
-            $this->_ajax($path);
+            return $this->_ajax($path);
         }
 
         $status = 302;
@@ -76,36 +80,38 @@ class Redirect
             $status = 301;
         }
 
-        $response = new RedirectResponse($path, $status);
-        $response->send();
-        exit;
+        return new RedirectResponse($path, $status);
     }
 
     /**
      * Outputs a JSON response with redirect url
      *
      * @param $path
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    private function _ajax($path)
+    protected function _ajax($path)
     {
         if ($this->request->isAjax() === true) {
             $return = [
                 'redirect_url' => $path
             ];
 
-            $response = new JsonResponse($return);
-            $response->send();
-            exit;
+            return new JsonResponse($return);
         }
+
+        return new JsonResponse();
     }
 
     /**
      * Executes a permanent redirect
      *
      * @param $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function permanent($path)
     {
-        $this->_redirect($path, true);
+        return $this->_redirect($path, true);
     }
 }

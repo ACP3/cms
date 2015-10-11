@@ -71,10 +71,13 @@ class Index extends Core\Modules\AdminController
         $this->menusValidator = $menusValidator;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->getAll()));
@@ -82,9 +85,14 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken();
     }
 
+    /**
+     * @param string $action
+     *
+     * @return mixed
+     */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function($items) {
@@ -118,6 +126,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -128,7 +137,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($menu['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             $this->view->assign('form', array_merge($menu, $this->request->getPost()->getAll()));
@@ -167,10 +176,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $this->menusValidator->validate($formData);
 
             $insertValues = [
@@ -190,10 +201,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
             $this->menusValidator->validate($formData, $id);
 
             $updateValues = [

@@ -63,15 +63,19 @@ class Action
     /**
      * @param callable    $callback
      * @param null|string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handlePostAction(callable $callback, $path = null)
     {
         try {
-            $callback();
+            return $callback();
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            $this->redirectMessages->setMessage(false, $e->getMessage(), $path);
+            return $this->redirectMessages->setMessage(false, $e->getMessage(), $path);
         } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $this->alerts->errorBox($e->getMessage()));
+            return [
+                'error_msg' => $this->alerts->errorBox($e->getMessage())
+            ];
         }
     }
 
@@ -82,6 +86,7 @@ class Action
      * @param string|null                           $moduleConfirmUrl
      * @param string|null                           $moduleIndexUrl
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function handleDeleteAction(
@@ -92,14 +97,14 @@ class Action
         $moduleIndexUrl = null
     )
     {
-        $this->handleCustomDeleteAction(
+        return $this->handleCustomDeleteAction(
             $context,
             $action,
             function ($items) use ($callback, $moduleIndexUrl) {
                 $result = $callback($items);
 
                 if (is_string($result) === false) {
-                    $this->setRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
+                    return $this->setRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
                 }
             },
             $moduleConfirmUrl,
@@ -114,7 +119,7 @@ class Action
      * @param string|null                           $moduleConfirmUrl
      * @param string|null                           $moduleIndexUrl
      *
-     * @return
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function handleCustomDeleteAction(
@@ -140,39 +145,45 @@ class Action
     /**
      * @param callable    $callback
      * @param null|string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handleSettingsPostAction(callable $callback, $path = null)
     {
-        $this->handlePostAction(function () use ($callback, $path) {
+        return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
 
-            $this->setRedirectMessageAfterPost($result, 'settings', $path);
+            return $this->setRedirectMessageAfterPost($result, 'settings', $path);
         }, $path);
     }
 
     /**
      * @param callable    $callback
      * @param null|string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handleCreatePostAction(callable $callback, $path = null)
     {
-        $this->handlePostAction(function () use ($callback, $path) {
+        return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
 
-            $this->setRedirectMessageAfterPost($result, 'create', $path);
+            return $this->setRedirectMessageAfterPost($result, 'create', $path);
         });
     }
 
     /**
      * @param callable    $callback
      * @param null|string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handleEditPostAction(callable $callback, $path = null)
     {
-        $this->handlePostAction(function () use ($callback, $path) {
+        return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
 
-            $this->setRedirectMessageAfterPost($result, 'edit', $path);
+            return $this->setRedirectMessageAfterPost($result, 'edit', $path);
         });
     }
 
@@ -180,10 +191,12 @@ class Action
      * @param bool|int    $result
      * @param string      $localization
      * @param null|string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     private function setRedirectMessageAfterPost($result, $localization, $path = null)
     {
-        $this->redirectMessages->setMessage(
+        return $this->redirectMessages->setMessage(
             $result,
             $this->lang->t('system', $localization . ($result !== false ? '_success' : '_error')),
             $path

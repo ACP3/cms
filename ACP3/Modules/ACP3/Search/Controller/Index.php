@@ -38,13 +38,15 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param string $q
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex($q = '')
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->getAll());
         } elseif (!empty($q)) {
-            $this->_indexPost(['search_term' => (string)$q]);
+            return $this->_indexPost(['search_term' => (string)$q]);
         }
 
         $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->getAll()));
@@ -100,10 +102,12 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _indexPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 if (isset($formData['search_term']) === true) {
                     if (isset($formData['mods']) === false) {

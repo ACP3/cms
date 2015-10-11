@@ -50,10 +50,13 @@ class Index extends Core\Modules\AdminController
         $this->emoticonsCache = $emoticonsCache;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->getAll()));
@@ -63,10 +66,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
@@ -98,7 +103,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function($items) {
@@ -124,6 +129,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -132,7 +138,7 @@ class Index extends Core\Modules\AdminController
 
         if (empty($emoticon) === false) {
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $emoticon, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $emoticon, $id);
             }
 
             $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->getAll()));
@@ -147,10 +153,12 @@ class Index extends Core\Modules\AdminController
      * @param array $formData
      * @param array $emoticon
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $emoticon, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $emoticon, $id) {
+        return $this->actionHelper->handleEditPostAction(function() use ($formData, $emoticon, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateEdit($formData, $file, $this->config->getSettings('emoticons'));
@@ -196,10 +204,13 @@ class Index extends Core\Modules\AdminController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->getAll()));
@@ -209,10 +220,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function() use ($formData){
+        return $this->actionHelper->handleSettingsPostAction(function() use ($formData){
             $this->emoticonsValidator->validateSettings($formData);
 
             $data = [

@@ -82,12 +82,15 @@ class Index extends Core\Modules\AdminController
         return $this;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         $settings = $this->config->getSettings('files');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll(), $settings);
+            return $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
         $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
@@ -126,11 +129,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function($items) {
@@ -158,6 +162,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -170,7 +175,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($file['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings, $file, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $settings, $file, $id);
             }
 
             $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
@@ -220,10 +225,13 @@ class Index extends Core\Modules\AdminController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('files');
@@ -242,10 +250,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $settings
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData, $settings) {
+        return $this->actionHelper->handleCreatePostAction(function() use ($formData, $settings) {
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {
@@ -300,10 +310,12 @@ class Index extends Core\Modules\AdminController
      * @param array $settings
      * @param array $dl
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $settings, array $dl, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $settings, $dl, $id) {
+        return $this->actionHelper->handleEditPostAction(function() use ($formData, $settings, $dl, $id) {
             $file = [];
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
@@ -367,10 +379,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->filesValidator->validateSettings($formData);
 
             $data = [

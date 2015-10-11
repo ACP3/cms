@@ -50,10 +50,13 @@ class Index extends Core\Modules\AdminController
         $this->systemValidator = $systemValidator;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionConfiguration()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_configurationPost($this->request->getPost()->getAll());
+            return $this->_configurationPost($this->request->getPost()->getAll());
         }
 
         $systemSettings = $this->config->getSettings('system');
@@ -116,14 +119,16 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _configurationPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->systemValidator->validate($formData);
 
-                // Config aktualisieren
+                // Update the system config
                 $data = [
                     'cache_images' => (int)$formData['cache_images'],
                     'cache_minify' => (int)$formData['cache_minify'],
@@ -150,7 +155,7 @@ class Index extends Core\Modules\AdminController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), $this->request->getFullPath());
+                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), $this->request->getFullPath());
             },
             $this->request->getFullPath()
         );

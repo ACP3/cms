@@ -152,10 +152,10 @@ class Application extends AbstractApplication
                 ACP3Logger::error('404', 'Could not find any results for request: ' . $request->getQuery());
             }
 
-            $redirect->temporary('errors/index/404');
+            $redirect->temporary('errors/index/404')->send();
         } catch (Exceptions\UnauthorizedAccess $e) {
             $redirectUri = base64_encode($request->getOriginalQuery());
-            $redirect->temporary('users/index/login/redirect_' . $redirectUri);
+            $redirect->temporary('users/index/login/redirect_' . $redirectUri)->send();
         } catch (Exceptions\AccessForbidden $e) {
             $redirect->temporary('errors/index/403');
         } catch (Exceptions\ControllerActionNotFound $e) {
@@ -203,7 +203,7 @@ class Application extends AbstractApplication
             $errorMessage = $exception->getMessage();
             $this->_renderApplicationException($errorMessage);
         } else {
-            $redirect->temporary($path);
+            $redirect->temporary($path)->send();
         }
     }
 

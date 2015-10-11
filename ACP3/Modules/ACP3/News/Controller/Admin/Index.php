@@ -82,12 +82,15 @@ class Index extends Core\Modules\AdminController
         return $this;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         $settings = $this->config->getSettings('news');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll(), $settings);
+            return $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
         $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', '', true));
@@ -111,11 +114,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -139,6 +143,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -151,7 +156,7 @@ class Index extends Core\Modules\AdminController
             $settings = $this->config->getSettings('news');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $news['category_id'], true));
@@ -187,10 +192,13 @@ class Index extends Core\Modules\AdminController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('news');
@@ -215,10 +223,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $settings
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
             $this->newsValidator->validate($formData);
 
             $insertValues = [
@@ -256,10 +266,12 @@ class Index extends Core\Modules\AdminController
      * @param array $formData
      * @param array $settings
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
             $this->newsValidator->validate(
                 $formData,
                 sprintf(News\Helpers::URL_KEY_PATTERN, $id)
@@ -299,10 +311,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->newsValidator->validateSettings($formData);
 
             $data = [

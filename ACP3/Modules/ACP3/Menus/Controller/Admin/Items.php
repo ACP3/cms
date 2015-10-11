@@ -102,10 +102,13 @@ class Items extends Core\Modules\AdminController
         return $this;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $this->view->assign('mode', $this->fetchMenuItemModes());
@@ -131,11 +134,12 @@ class Items extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -160,6 +164,7 @@ class Items extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -174,7 +179,7 @@ class Items extends Core\Modules\AdminController
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $menuItem, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $menuItem, $id);
             }
 
             $this->view->assign('mode', $this->fetchMenuItemModes($menuItem['mode']));
@@ -212,6 +217,7 @@ class Items extends Core\Modules\AdminController
      * @param int    $id
      * @param string $action
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionOrder($id, $action)
@@ -226,18 +232,20 @@ class Items extends Core\Modules\AdminController
 
             $this->menusCache->saveMenusCache();
 
-            $this->redirect()->temporary('acp/menus');
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return $this->redirect()->temporary('acp/menus');
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData) {
                 $this->menuItemValidator->validate($formData);
 
@@ -284,7 +292,7 @@ class Items extends Core\Modules\AdminController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
             },
             'acp/menus'
         );
@@ -294,10 +302,12 @@ class Items extends Core\Modules\AdminController
      * @param array $formData
      * @param array $menuItem
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $menuItem, $id)
     {
-        $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handlePostAction(
             function () use ($formData, $menuItem, $id) {
                 $this->menuItemValidator->validate($formData);
 
@@ -339,7 +349,7 @@ class Items extends Core\Modules\AdminController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
             },
             'acp/menus'
         );

@@ -35,11 +35,11 @@ class Details extends Core\Modules\AdminController
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Modules\ACP3\Comments\Model          $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Validator      $commentsValidator
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository            $systemModuleRepository
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext       $context
+     * @param \ACP3\Modules\ACP3\Comments\Model                $commentsModel
+     * @param \ACP3\Modules\ACP3\Comments\Validator            $commentsValidator
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
+     * @param \ACP3\Core\Helpers\FormToken                     $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -71,14 +71,15 @@ class Details extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleCustomDeleteAction(
+        return $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 // Get the module-ID of the first item
@@ -96,10 +97,10 @@ class Details extends Core\Modules\AdminController
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
                 if ($this->commentsModel->countAll($moduleId) == 0) {
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
-                } else {
-                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments/details/index/id_' . $moduleId);
+                    return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
                 }
+
+                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments/details/index/id_' . $moduleId);
             },
             null,
             'acp/comments'
@@ -109,6 +110,7 @@ class Details extends Core\Modules\AdminController
     /**
      * @param $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -122,7 +124,7 @@ class Details extends Core\Modules\AdminController
                 ->setTitlePostfix($comment['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $comment, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $comment, $id);
             }
 
             if ($this->emoticonsHelpers) {
@@ -188,10 +190,12 @@ class Details extends Core\Modules\AdminController
      * @param array $formData
      * @param array $comment
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $comment, $id)
     {
-        $this->actionHelper->handleEditPostAction(function () use ($formData, $comment, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $comment, $id) {
             $this->commentsValidator->validateEdit($formData);
 
             $updateValues = [];

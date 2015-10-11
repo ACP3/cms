@@ -22,7 +22,10 @@
             {/if}
         </section>
         {if $comments_allowed === true}
-            {load_module module="frontend/comments/index/index" args=['news', $news.id]}
+            <section id="comments">
+                {load_module module="frontend/comments/" args=['news', $news.id]}
+                {load_module module="frontend/comments/index/create" args=['news', $news.id]}
+            </section>
         {/if}
     </article>
 {/block}

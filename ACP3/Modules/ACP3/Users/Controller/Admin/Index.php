@@ -73,10 +73,13 @@ class Index extends Core\Modules\AdminController
         $this->permissionsHelpers = $permissionsHelpers;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->getAll());
         }
 
         $systemSettings = $this->config->getSettings('system');
@@ -114,11 +117,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleCustomDeleteAction(
+        return $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
             function($items) {
@@ -142,7 +146,7 @@ class Index extends Core\Modules\AdminController
                     $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
                 }
 
-                $this->redirectMessages()->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : '');
+                return $this->redirectMessages()->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : '');
             }
         );
     }
@@ -150,6 +154,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -160,7 +165,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($user['nickname']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $id);
             }
 
             $userRoles = $this->acl->getUserRoleIds($id);
@@ -199,10 +204,13 @@ class Index extends Core\Modules\AdminController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('users');
@@ -244,10 +252,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost($formData)
     {
-        $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
             $this->usersValidator->validate($formData);
 
             $salt = $this->secureHelper->salt(15);
@@ -296,10 +306,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, $id)
     {
-        $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
             $this->usersValidator->validate($formData, $id);
 
             $updateValues = [
@@ -358,10 +370,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->usersValidator->validateSettings($formData);
 
             $data = [

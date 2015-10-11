@@ -60,30 +60,34 @@ class Extensions extends Core\Modules\AdminController
 
     /**
      * @param string $dir
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionDesigns($dir = '')
     {
         if (!empty($dir)) {
-            $this->_designsPost($dir);
-        } else {
-            $designs = [];
-            $path = ACP3_ROOT_DIR . 'designs/';
-            $directories = Core\Filesystem::scandir($path);
-            $countDir = count($directories);
-            for ($i = 0; $i < $countDir; ++$i) {
-                $designInfo = $this->xml->parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
-                if (!empty($designInfo)) {
-                    $designs[$i] = $designInfo;
-                    $designs[$i]['selected'] = $this->config->getSettings('system')['design'] === $directories[$i] ? 1 : 0;
-                    $designs[$i]['dir'] = $directories[$i];
-                }
-            }
-            $this->view->assign('designs', $designs);
+            return $this->_designsPost($dir);
         }
+
+        $designs = [];
+        $path = ACP3_ROOT_DIR . 'designs/';
+        $directories = Core\Filesystem::scandir($path);
+        $countDir = count($directories);
+        for ($i = 0; $i < $countDir; ++$i) {
+            $designInfo = $this->xml->parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
+            if (!empty($designInfo)) {
+                $designs[$i] = $designInfo;
+                $designs[$i]['selected'] = $this->config->getSettings('system')['design'] === $directories[$i] ? 1 : 0;
+                $designs[$i]['dir'] = $directories[$i];
+            }
+        }
+        $this->view->assign('designs', $designs);
     }
 
     /**
      * @param $design
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _designsPost($design)
     {
@@ -101,7 +105,7 @@ class Extensions extends Core\Modules\AdminController
 
         $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
-        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     public function actionIndex()
@@ -113,22 +117,23 @@ class Extensions extends Core\Modules\AdminController
      * @param string $action
      * @param string $dir
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionModules($action = '', $dir = '')
     {
         switch ($action) {
             case 'activate':
-                $this->_enableModule($dir);
+                return $this->_enableModule($dir);
                 break;
             case 'deactivate':
-                $this->_disableModule($dir);
+                return $this->_disableModule($dir);
                 break;
             case 'install':
-                $this->_installModule($dir);
+                return $this->_installModule($dir);
                 break;
             case 'uninstall':
-                $this->_uninstallModule($dir);
+                return $this->_uninstallModule($dir);
                 break;
             default:
                 $this->_renewCaches();
@@ -152,6 +157,8 @@ class Extensions extends Core\Modules\AdminController
 
     /**
      * @param string $moduleDirectory
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _enableModule($moduleDirectory)
     {
@@ -189,7 +196,7 @@ class Extensions extends Core\Modules\AdminController
             }
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     protected function _renewCaches()
@@ -202,6 +209,7 @@ class Extensions extends Core\Modules\AdminController
     /**
      * @param string $moduleDirectory
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     protected function _disableModule($moduleDirectory)
@@ -242,11 +250,13 @@ class Extensions extends Core\Modules\AdminController
             }
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     /**
      * @param string $moduleDirectory
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _installModule($moduleDirectory)
     {
@@ -283,11 +293,13 @@ class Extensions extends Core\Modules\AdminController
             $text = $this->lang->t('system', 'module_already_installed');
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     /**
      * @param string $moduleDirectory
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _uninstallModule($moduleDirectory)
     {
@@ -330,6 +342,6 @@ class Extensions extends Core\Modules\AdminController
             $text = $this->lang->t('system', 'protected_module_description');
         }
 
-        $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 }

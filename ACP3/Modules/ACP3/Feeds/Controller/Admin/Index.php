@@ -36,10 +36,13 @@ class Index extends Core\Modules\AdminController
         $this->feedsValidator = $feedsValidator;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('feeds');
@@ -58,10 +61,12 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _indexPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->feedsValidator->validateSettings($formData);
 
             $data = [

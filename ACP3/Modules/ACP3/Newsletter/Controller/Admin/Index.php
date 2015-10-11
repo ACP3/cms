@@ -64,12 +64,15 @@ class Index extends Core\Modules\AdminController
         $this->newsletterHelpers = $newsletterHelpers;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         $settings = $this->config->getSettings('newsletter');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll(), $settings);
+            return $this->_createPost($this->request->getPost()->getAll(), $settings);
         }
 
         $this->view->assign('settings', $settings);
@@ -86,11 +89,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
     {
-        $this->actionHelper->handleDeleteAction(
+        return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
             function ($items) {
@@ -107,6 +111,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -119,7 +124,7 @@ class Index extends Core\Modules\AdminController
             $settings = $this->config->getSettings('newsletter');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
+                return $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
             }
 
             $this->view->assign('settings', array_merge($settings, ['html' => $newsletter['html']]));
@@ -160,6 +165,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionSend($id)
@@ -179,16 +185,19 @@ class Index extends Core\Modules\AdminController
                 $bool2 = $this->newsletterRepository->update(['status' => '1'], $id);
             }
 
-            $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'));
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'));
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->getAll());
         }
 
         $settings = $this->config->getSettings('newsletter');
@@ -203,10 +212,12 @@ class Index extends Core\Modules\AdminController
     /**
      * @param array $formData
      * @param array $settings
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _createPost(array $formData, array $settings)
     {
-        $this->actionHelper->handlePostAction(function () use ($formData, $settings) {
+        return $this->actionHelper->handlePostAction(function () use ($formData, $settings) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -237,7 +248,8 @@ class Index extends Core\Modules\AdminController
             if ($result === false) {
                 $lang = $this->lang->t('newsletter', 'create_save_error');
             }
-            $this->redirectMessages()->setMessage($result, $lang);
+
+            return $this->redirectMessages()->setMessage($result, $lang);
         });
     }
 
@@ -245,10 +257,12 @@ class Index extends Core\Modules\AdminController
      * @param array $formData
      * @param array $settings
      * @param int   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _editPost(array $formData, array $settings, $id)
     {
-        $this->actionHelper->handlePostAction(function () use ($formData, $settings, $id) {
+        return $this->actionHelper->handlePostAction(function () use ($formData, $settings, $id) {
             $this->newsletterValidator->validate($formData);
 
             // Newsletter archivieren
@@ -277,16 +291,18 @@ class Index extends Core\Modules\AdminController
                 $lang = $this->lang->t('newsletter', 'create_save_error');
             }
 
-            $this->redirectMessages()->setMessage($result, $lang);
+            return $this->redirectMessages()->setMessage($result, $lang);
         });
     }
 
     /**
      * @param array $formData
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _settingsPost(array $formData)
     {
-        $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->newsletterValidator->validateSettings($formData);
 
             $data = [
