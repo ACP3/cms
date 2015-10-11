@@ -23,7 +23,6 @@ services:
     class: %comments.controller.frontend.index.fqdn%
     arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@core.helpers.formToken']
     calls:
-      - ['setContainer', ['@service_container']]
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 

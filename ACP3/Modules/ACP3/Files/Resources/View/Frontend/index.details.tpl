@@ -24,8 +24,8 @@
                 </a>
             </footer>
         </section>
-        {if isset($comments)}
-            {$comments}
+        {if $comments_allowed === true}
+            {load_module module="frontend/comments" args=['files', $file.id]}
         {/if}
     </article>
 {/block}

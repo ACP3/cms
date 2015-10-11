@@ -43,14 +43,6 @@ class Index extends Core\Modules\FrontendController
      */
     protected $captchaHelpers;
     /**
-     * @var string
-     */
-    protected $module;
-    /**
-     * @var int
-     */
-    protected $entryId;
-    /**
      * @var bool
      */
     protected $emoticonsActive;
@@ -118,44 +110,24 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param string $module
+     * @param int    $entryId
      *
-     * @return $this
+     * @return string
      */
-    public function setModule($module)
-    {
-        $this->module = $module;
-
-        return $this;
-    }
-
-    /**
-     * @param int $entryId
-     *
-     * @return $this
-     */
-    public function setEntryId($entryId)
-    {
-        $this->entryId = $entryId;
-
-        return $this;
-    }
-
-    public function actionIndex()
+    public function actionIndex($module, $entryId)
     {
         // Auflistung der Kommentare
-        $comments = $this->commentsModel->getAllByModule($this->modules->getModuleId($this->module), $this->entryId, POS, $this->user->getEntriesPerPage());
+        $comments = $this->commentsModel->getAllByModule($this->modules->getModuleId($module), $entryId, POS, $this->user->getEntriesPerPage());
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
-            $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->modules->getModuleId($this->module), $this->entryId));
+            $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->modules->getModuleId($module), $entryId));
             $this->pagination->display();
 
             for ($i = 0; $i < $c_comments; ++$i) {
-                if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
+                if (empty($comments[$i]['name'])) {
                     $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
-                    $comments[$i]['user_id'] = 0;
                 }
-                $comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
                 if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
                     $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
                 }
@@ -165,21 +137,26 @@ class Index extends Core\Modules\FrontendController
         }
 
         if ($this->acl->hasPermission('frontend/comments/index/create') === true) {
-            $this->view->assign('comments_create_form', $this->actionCreate());
+            $this->view->assign('comments_create_form', $this->actionCreate($module, $entryId));
         }
 
         return $this->view->fetchTemplate('Comments/Frontend/index.index.tpl');
     }
 
-    public function actionCreate()
+    /**
+     * @param string $module
+     * @param int    $entryId
+     *
+     * @return string
+     */
+    public function actionCreate($module, $entryId)
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_createPost($this->request->getPost()->getAll());
+            $this->_createPost($this->request->getPost()->getAll(), $module, $entryId);
         }
 
-        // Emoticons einbinden, falls diese aktiv sind
+        // Add emoticons if they are active
         if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
-            // Emoticons im Formular anzeigen
             $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
         }
 
@@ -189,7 +166,7 @@ class Index extends Core\Modules\FrontendController
             'message' => ''
         ];
 
-        // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
+        // If the user is already logged in, prepopulate the form
         if ($this->user->isAuthenticated() === true) {
             $user = $this->user->getUserInfo();
             $disabled = ' readonly="readonly"';
@@ -210,12 +187,14 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @param array $formData
+     * @param array  $formData
+     * @param string $module
+     * @param int    $entryId
      */
-    protected function _createPost(array $formData)
+    protected function _createPost(array $formData, $module, $entryId)
     {
         $this->actionHelper->handlePostAction(
-            function () use ($formData) {
+            function () use ($formData, $module, $entryId) {
                 $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
 
                 $this->commentsValidator->validateCreate($formData, $ip);
@@ -227,8 +206,8 @@ class Index extends Core\Modules\FrontendController
                     'name' => Core\Functions::strEncode($formData['name']),
                     'user_id' => $this->user->isAuthenticated() === true ? $this->user->getUserId() : null,
                     'message' => Core\Functions::strEncode($formData['message']),
-                    'module_id' => $this->modules->getModuleId($this->module),
-                    'entry_id' => $this->entryId,
+                    'module_id' => $this->modules->getModuleId($module),
+                    'entry_id' => $entryId,
                 ];
 
                 $bool = $this->commentsModel->insert($insertValues);

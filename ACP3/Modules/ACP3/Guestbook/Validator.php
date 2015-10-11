@@ -144,9 +144,6 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $this->errors = [];
-        if (empty($formData['name'])) {
-            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
-        }
         if (strlen($formData['message']) < 3) {
             $this->errors['message'] = $this->lang->t('system', 'message_to_short');
         }

@@ -169,7 +169,7 @@ abstract class Controller implements ControllerInterface
     /**
      * @inheritdoc
      */
-    public function display()
+    public function display($controllerActionResult)
     {
         if ($this->getNoOutput() === false && $this->getTemplate() !== '') {
             $this->view->displayTemplate($this->getTemplate());

@@ -104,14 +104,7 @@ class Index extends Core\Modules\FrontendController
 
                 $this->view->assign('file', $file);
                 $this->view->assign('dateformat', $settings['dateformat']);
-
-                if ($settings['comments'] == 1 && $file['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true) {
-                    $comments = $this->get('comments.controller.frontend.index');
-                    $comments
-                        ->setModule('files')
-                        ->setEntryId($id);
-                    $this->view->assign('comments', $comments->actionIndex());
-                }
+                $this->view->assign('comments_allowed', $settings['comments'] == 1 && $file['comments'] == 1);
             }
         } else {
             throw new Core\Exceptions\ResultNotExists();

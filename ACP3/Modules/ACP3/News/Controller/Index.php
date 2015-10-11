@@ -107,16 +107,7 @@ class Index extends Core\Modules\FrontendController
 
             $this->view->assign('news', $news);
             $this->view->assign('dateformat', $this->newsSettings['dateformat']);
-
-            if ($this->commentsActive === true && $news['comments'] == 1) {
-                /** @var \ACP3\Modules\ACP3\Comments\Controller\Index $comments */
-                $comments = $this->get('comments.controller.frontend.index');
-                $comments
-                    ->setModule('news')
-                    ->setEntryId($id);
-
-                $this->view->assign('comments', $comments->actionIndex());
-            }
+            $this->view->assign('comments_allowed', $this->commentsActive === true && $news['comments'] == 1);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

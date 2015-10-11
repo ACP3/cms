@@ -53,7 +53,7 @@ class Model extends Core\Model
     {
         $where = ($notify == 2) ? 'WHERE active = 1' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT u.id AS user_id_real, u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.* FROM ' . $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model::TABLE_NAME) . ' AS u ON(u.id = g.user_id) ' . $where . ' ORDER BY DATE DESC' . $limitStmt);
+        return $this->db->fetchAll('SELECT IF(g.user_id IS NULL, g.name, u.nickname) AS `name`, IF(g.user_id IS NULL, g.website, u.website) AS `website`, IF(g.user_id IS NULL, g.mail, u.mail) AS `mail`, g.id, g.date, g.user_id, g.message FROM ' . $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model::TABLE_NAME) . ' AS u ON(u.id = g.user_id) ' . $where . ' ORDER BY DATE DESC' . $limitStmt);
     }
 
     /**
@@ -71,6 +71,6 @@ class Model extends Core\Model
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY DATE DESC, id DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY `date` DESC, id DESC');
     }
 }

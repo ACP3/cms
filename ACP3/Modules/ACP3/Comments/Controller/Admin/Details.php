@@ -171,7 +171,7 @@ class Details extends Core\Modules\AdminController
                 $emoticonsActive = ($settings['emoticons'] == 1 && $this->emoticonsHelpers);
 
                 for ($i = 0; $i < $c_comments; ++$i) {
-                    if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
+                    if (empty($comments[$i]['name'])) {
                         $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
                     }
                     if ($emoticonsActive === true) {

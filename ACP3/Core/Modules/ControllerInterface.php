@@ -27,5 +27,8 @@ interface ControllerInterface
      */
     public function setContainer(ContainerInterface $container);
 
-    public function display();
+    /**
+     * @param $controllerActionResult
+     */
+    public function display($controllerActionResult);
 }

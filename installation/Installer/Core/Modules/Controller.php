@@ -168,7 +168,7 @@ class Controller implements ControllerInterface
     /**
      * @inheritdoc
      */
-    public function display()
+    public function display($controllerActionResult)
     {
         if ($this->getNoOutput() === false) {
             // Evtl. gesetzten Content-Type des Servers überschreiben

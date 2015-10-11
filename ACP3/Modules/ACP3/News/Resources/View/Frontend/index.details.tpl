@@ -21,8 +21,8 @@
                 </footer>
             {/if}
         </section>
-        {if isset($comments)}
-            {$comments}
+        {if $comments_allowed === true}
+            {load_module module="frontend/comments/index/index" args=['news', $news.id]}
         {/if}
     </article>
 {/block}

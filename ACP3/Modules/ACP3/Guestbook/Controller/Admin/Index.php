@@ -198,7 +198,6 @@ class Index extends Core\Modules\AdminController
             $this->guestbookValidator->validateEdit($formData, $settings);
 
             $updateValues = [
-                'name' => Core\Functions::strEncode($formData['name']),
                 'message' => Core\Functions::strEncode($formData['message']),
                 'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
             ];

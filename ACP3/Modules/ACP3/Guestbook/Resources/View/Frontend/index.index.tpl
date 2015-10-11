@@ -24,7 +24,7 @@
                 <header class="navbar navbar-default">
                     <div class="navbar-header">
                         <strong class="navbar-text">
-                            {if !empty($row.user_id) && !empty($row.user_id_real)}
+                            {if !is_null($row.user_id)}
                                 <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
                             {else}
                                 {$row.name}

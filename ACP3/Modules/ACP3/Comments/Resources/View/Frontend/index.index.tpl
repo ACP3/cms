@@ -10,7 +10,7 @@
                 <header class="navbar navbar-default">
                     <div class="navbar-header">
                         <strong class="navbar-brand">
-                            {if !empty($row.user_id)}
+                            {if !is_null($row.user_id)}
                                 <a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
                             {else}
                                 {$row.name}

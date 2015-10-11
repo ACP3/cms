@@ -4,6 +4,7 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core;
 use ACP3\Core\Modules\Controller\Context;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FrontendController
@@ -102,9 +103,19 @@ abstract class FrontendController extends Core\Modules\Controller
 
     /**
      * Outputs the requested module controller action
+     *
+     * @param $controllerActionResult
      */
-    public function display()
+    public function display($controllerActionResult)
     {
+        if ($controllerActionResult instanceof Response) {
+            $controllerActionResult->send();
+            return;
+        } else if (is_string($controllerActionResult)) {
+            echo $controllerActionResult;
+            return;
+        }
+
         // Output content through the controller
         if ($this->getNoOutput() === false) {
             // Evtl. gesetzten Content-Type des Servers überschreiben

@@ -190,12 +190,9 @@ class Index extends Core\Modules\FrontendController
             $this->pagination->display();
 
             for ($i = 0; $i < $c_guestbook; ++$i) {
-                $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
                 if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
                     $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($guestbook[$i]['message']);
                 }
-                $guestbook[$i]['website'] = strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'];
-                $guestbook[$i]['mail'] = !empty($guestbook[$i]['user_mail']) ? substr($guestbook[$i]['user_mail'], 0, -2) : $guestbook[$i]['mail'];
             }
             $this->view->assign('guestbook', $guestbook);
             $this->view->assign('dateformat', $this->guestbookSettings['dateformat']);

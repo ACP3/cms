@@ -58,7 +58,7 @@ class FrontController
                 $controller->setContainer($this->container);
                 $controller->preDispatch();
 
-                $this->executeControllerAction(
+                $result = $this->executeControllerAction(
                     $request,
                     $controller,
                     $action,
@@ -66,7 +66,7 @@ class FrontController
                     $resolveArguments
                 );
 
-                $controller->display();
+                $controller->display($result);
             } else {
                 throw new Exceptions\ControllerActionNotFound('Controller action ' . get_class($controller) . '::' . $action . '() was not found!');
             }
@@ -105,6 +105,7 @@ class FrontController
      * @param array                                  $arguments
      * @param bool                                   $resolveArguments
      *
+     * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     private function executeControllerAction(RequestInterface $request, ControllerInterface $controller, $action, array $arguments, $resolveArguments)
@@ -120,7 +121,7 @@ class FrontController
             }
         }
 
-        call_user_func_array([$controller, $action], $arguments);
+        return call_user_func_array([$controller, $action], $arguments);
     }
 
     /**

@@ -79,7 +79,6 @@ class Index extends Core\Modules\FrontendController
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
             $picture = $this->pictureRepository->getPictureById($id);
 
-            // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->lang->t('gallery', 'gallery'), 'gallery')
                 ->append($picture['title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
@@ -108,28 +107,21 @@ class Index extends Core\Modules\FrontendController
 
             $this->view->assign('picture', $picture);
 
-            // Vorheriges Bild
+            // Previous picture
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
                 $this->seo->setPreviousPage($this->router->route('gallery/index/details/id_' . $previousPicture));
                 $this->view->assign('picture_back', $previousPicture);
             }
 
-            // Nächstes Bild
+            // Next picture
             $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($nextPicture)) {
                 $this->seo->setNextPage($this->router->route('gallery/index/details/id_' . $nextPicture));
                 $this->view->assign('picture_next', $nextPicture);
             }
 
-            if ($this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true) {
-                $comments = $this->get('comments.controller.frontend.index');
-                $comments
-                    ->setModule('gallery')
-                    ->setEntryId($id);
-
-                $this->view->assign('comments', $comments->actionIndex());
-            }
+            $this->view->assign('comments_allowed', $this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1);
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

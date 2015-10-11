@@ -30,8 +30,8 @@
                 </ul>
             </footer>
         </section>
-        {if isset($comments)}
-            {$comments}
+        {if $comments_allowed === true}
+            {load_module module="frontend/comments" args=['gallery', $picture.id]}
         {/if}
     </article>
 {/block}
