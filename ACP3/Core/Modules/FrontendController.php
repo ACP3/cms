@@ -32,13 +32,19 @@ abstract class FrontendController extends Core\Modules\Controller
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
+    /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    protected $response;
 
     /**
-     * Der auszugebende Content-Type der Seite
-     *
      * @var string
      */
-    protected $contentType = 'Content-Type: text/html; charset=UTF-8';
+    private $contentType = 'text/html';
+    /**
+     * @var string
+     */
+    private $charset = "UTF-8";
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
@@ -51,6 +57,7 @@ abstract class FrontendController extends Core\Modules\Controller
         $this->breadcrumb = $frontendContext->getBreadcrumb();
         $this->seo = $frontendContext->getSeo();
         $this->actionHelper = $frontendContext->getActionHelper();
+        $this->response = $frontendContext->getResponse();
     }
 
     /**
@@ -119,24 +126,22 @@ abstract class FrontendController extends Core\Modules\Controller
         }
 
         // Output content through the controller
-        if ($this->getNoOutput() === false) {
-            // Evtl. gesetzten Content-Type des Servers überschreiben
-            header($this->getContentType());
+        $this->response->headers->set('Content-Type', $this->getContentType());
+        $this->response->setCharset($this->getCharset());
 
-            if ($this->getContent() == '') {
-                // Set the template automatically
-                if ($this->getTemplate() === '') {
-                    $this->setTemplate($this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
-                }
-
-                $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
-                $this->view->assign('META', $this->seo->getMetaTags());
-
-                $this->view->displayTemplate($this->getTemplate());
-            } else {
-                echo $this->getContent();
+        if (!$this->getContent()) {
+            // Set the template automatically
+            if ($this->getTemplate() === '') {
+                $this->setTemplate($this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
             }
+
+            $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
+            $this->view->assign('META', $this->seo->getMetaTags());
+
+            $this->response->setContent($this->view->fetchTemplate($this->getTemplate()));
         }
+
+        $this->response->send();
     }
 
     /**
@@ -162,6 +167,51 @@ abstract class FrontendController extends Core\Modules\Controller
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getCharset()
+    {
+        return $this->charset;
+    }
+
+    /**
+     * @param string $charset
+     *
+     * @return $this
+     */
+    public function setCharset($charset)
+    {
+        $this->charset = $charset;
+
+        return $this;
+    }
+
+    /**
+     * Gibt den auszugebenden Seiteninhalt zurück
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->response->getContent();
+    }
+
+    /**
+     * Weist dem Template den auszugebenden Inhalt zu
+     *
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function setContent($data)
+    {
+        $this->response->setContent($data);
+
+        return $this;
+    }
+
 
     /**
      * @return Core\Helpers\RedirectMessages

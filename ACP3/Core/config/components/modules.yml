@@ -11,7 +11,7 @@ services:
 
   core.context.frontend:
     class: ACP3\Core\Modules\Controller\FrontendContext
-    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo', @core.modules.helper.action]
+    arguments: ['@core.context', '@core.assets', '@core.breadcrumb', '@core.seo', @core.modules.helper.action, @core.response]
     public: false
 
   core.modules:

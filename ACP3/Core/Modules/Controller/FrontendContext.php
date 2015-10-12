@@ -2,6 +2,7 @@
 namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FrontendContext
@@ -25,20 +26,26 @@ class FrontendContext extends Core\Modules\Controller\Context
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
+    /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    protected $response;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context $context
-     * @param \ACP3\Core\Assets                     $assets
-     * @param \ACP3\Core\Breadcrumb                 $breadcrumb
-     * @param \ACP3\Core\SEO                        $seo
-     * @param \ACP3\Core\Modules\Helper\Action      $actionHelper
+     * @param \ACP3\Core\Modules\Controller\Context      $context
+     * @param \ACP3\Core\Assets                          $assets
+     * @param \ACP3\Core\Breadcrumb                      $breadcrumb
+     * @param \ACP3\Core\SEO                             $seo
+     * @param \ACP3\Core\Modules\Helper\Action           $actionHelper
+     * @param \Symfony\Component\HttpFoundation\Response $response
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Core\Assets $assets,
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo,
-        Core\Modules\Helper\Action $actionHelper
+        Core\Modules\Helper\Action $actionHelper,
+        Response $response
     )
     {
         parent::__construct(
@@ -57,6 +64,7 @@ class FrontendContext extends Core\Modules\Controller\Context
         $this->breadcrumb = $breadcrumb;
         $this->seo = $seo;
         $this->actionHelper = $actionHelper;
+        $this->response = $response;
     }
 
     /**
@@ -89,5 +97,13 @@ class FrontendContext extends Core\Modules\Controller\Context
     public function getActionHelper()
     {
         return $this->actionHelper;
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

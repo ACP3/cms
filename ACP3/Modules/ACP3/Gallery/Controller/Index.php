@@ -130,11 +130,11 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param int    $id
      * @param string $action
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function actionImage($id, $action = '')
     {
-        $this->setNoOutput(true);
-
         set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
@@ -148,8 +148,8 @@ class Index extends Core\Modules\FrontendController
             'prefer_height' => $action === 'thumb'
         ];
 
-        $image = new Core\Image($options);
-        $image->output();
+        $image = new Core\Image($this->response, $options);
+        return $image->output();
     }
 
     public function actionIndex()

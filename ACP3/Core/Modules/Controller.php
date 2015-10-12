@@ -56,23 +56,11 @@ abstract class Controller implements ControllerInterface
      */
     protected $noOutput = false;
     /**
-     * Der auszugebende Content-Type der Seite
-     *
-     * @var string
-     */
-    protected $contentType = 'Content-Type: text/html; charset=UTF-8';
-    /**
      * Das zu verwendende Template
      *
      * @var string
      */
     protected $template = '';
-    /**
-     * Der auszugebende Seiteninhalt
-     *
-     * @var string
-     */
-    protected $content = '';
 
     /**
      * @param \ACP3\Core\Modules\Controller\Context $context
@@ -125,30 +113,6 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * Gibt den auszugebenden Seiteninhalt zurück
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Weist dem Template den auszugebenden Inhalt zu
-     *
-     * @param string $data
-     *
-     * @return $this
-     */
-    public function setContent($data)
-    {
-        $this->content = $data;
-
-        return $this;
-    }
-
-    /**
      * @inheritdoc
      */
     public function get($serviceId)
@@ -188,7 +152,7 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * Setter Methode für die $this->no_output Variable
+     * Setter Methode für die $this->noOutput Variable
      *
      * @param boolean $value
      *

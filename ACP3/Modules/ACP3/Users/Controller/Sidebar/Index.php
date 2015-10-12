@@ -1,9 +1,7 @@
 <?php
-
 namespace ACP3\Modules\ACP3\Users\Controller\Sidebar;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Users;
 
 /**
  * Class Index
@@ -11,14 +9,6 @@ use ACP3\Modules\ACP3\Users;
  */
 class Index extends Core\Modules\Controller
 {
-    /**
-     * @param \ACP3\Core\Modules\Controller\Context $context
-     */
-    public function __construct(Core\Modules\Controller\Context $context)
-    {
-        parent::__construct($context);
-    }
-
     /**
      * Displays the login mask, if the user is not already logged in
      */
@@ -63,6 +53,7 @@ class Index extends Core\Modules\Controller
                     }
                 }
             }
+
             if (!empty($navMods)) {
                 $userSidebar['modules'] = $navMods;
             }

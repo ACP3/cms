@@ -41,7 +41,7 @@ class Index extends Core\Modules\FrontendController
                 new Feeds\Event\DisplayFeed($this->view, $feed)
             );
 
-            $this->setContentType('text/xml');
+            $this->$this->setContentType('text/xml');
             $this->setTemplate($this->config->getSettings('feeds')['feed_type']);
         } else {
             throw new Core\Exceptions\ResultNotExists();

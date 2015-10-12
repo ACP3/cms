@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Klasse zum beliebigen Skalieren und Ausgeben von Bildern
  * @package ACP3\Core
@@ -47,19 +49,30 @@ class Image
      * @var boolean
      */
     protected $forceResample = false;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    protected $response;
     /**
      * @var resource
      */
-    protected $image = null;
+    protected $image;
 
     /**
      * Konstruktor der Klasse.
      * Überschreibt die Defaultwerte mit denen im $options-array enthaltenen Werten
      *
-     * @param array $options
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param array                                      $options
      */
-    public function __construct(array $options)
+    public function __construct(
+        Response $response,
+        array $options
+    )
     {
+        $this->response = $response;
+
         if (isset($options['enable_cache'])) {
             $this->enableCache = (bool)$options['enable_cache'];
         }
@@ -102,7 +115,7 @@ class Image
     }
 
     /**
-     * Gibt das Bild aus
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function output()
     {
@@ -113,14 +126,15 @@ class Image
             $height = $picInfo[1];
             $type = $picInfo[2];
 
-            $this->sendHeaders($picInfo['mime']);
+            $this->setHeaders($picInfo['mime']);
 
             // Falls Cache aktiviert ist und das Bild bereits gecachet wurde, dieses direkt ausgeben
             if ($this->enableCache === true && is_file($cacheFile) === true) {
                 $this->file = $cacheFile;
-                $this->readFromFile();
             } elseif ($this->resamplingIsNecessary($width, $height, $type)) { // Bild resampeln
                 $dimensions = $this->calcNewDimensions($width, $height);
+
+                $this->createCacheDir();
 
                 $this->resample(
                     $dimensions['width'],
@@ -131,11 +145,14 @@ class Image
                     $cacheFile
                 );
                 $this->file = $cacheFile;
-                $this->readFromFile();
-            } else {
-                $this->readFromFile(); // Bild direkt ausgeben
             }
+
+            $this->response->setContent($this->readFromFile());
+        } else {
+            $this->setHeaders('image/jpeg');
         }
+
+        return $this->response;
     }
 
     /**
@@ -228,13 +245,15 @@ class Image
     /**
      * @param string $mimeType
      */
-    protected function sendHeaders($mimeType)
+    protected function setHeaders($mimeType)
     {
-        header('Cache-Control: public');
-        header('Pragma: public');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($this->file)) . ' GMT');
-        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
-        header('Content-type: ' . $mimeType);
+        $this->response->headers->add([
+            'Content-type' => $mimeType,
+            'Cache-Control' => 'public',
+            'Pragma' => 'public',
+            'Last-Modified' => gmdate('D, d M Y H:i:s', filemtime($this->file)) . ' GMT',
+            'Expires' => gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT'
+        ]);
     }
 
     /**
@@ -259,5 +278,15 @@ class Image
     protected function resamplingIsNecessary($width, $height, $type)
     {
         return ($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight)) && ($type === 1 || $type === 2 || $type === 3);
+    }
+
+    /**
+     * Creates the cache directory if it's not already present
+     */
+    protected function createCacheDir()
+    {
+        if (!is_dir($this->cacheDir) && is_writable($this->cacheDir)) {
+            mkdir(CACHE_DIR . $this->cacheDir);
+        }
     }
 }

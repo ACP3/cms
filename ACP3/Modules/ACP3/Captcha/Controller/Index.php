@@ -32,15 +32,18 @@ class Index extends Core\Modules\FrontendController
 
     /**
      * @param string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function actionImage($path)
     {
-        $this->setNoOutput(true);
+        $this->setContentType('image/gif');
+        $this->response->headers->addCacheControlDirective('no-cache', true);
+        $this->response->headers->addCacheControlDirective('must-revalidate', true);
+        $this->response->headers->add(['Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT']);
+        $this->response->sendHeaders();
 
         if ($this->sessionHandler->has('captcha_' . $path)) {
-            header('Cache-Control: no-cache, must-revalidate');
-            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-            header('Content-Type: image/gif');
             $captcha = $this->sessionHandler->get('captcha_' . $path);
             $captchaLength = strlen($captcha);
             $width = $captchaLength * 25;
@@ -48,7 +51,7 @@ class Index extends Core\Modules\FrontendController
 
             $im = imagecreate($width, $height);
 
-            // Hintergrundfarbe
+            // Background color
             imagecolorallocate($im, 255, 255, 255);
 
             $textColor = imagecolorallocate($im, 0, 0, 0);
@@ -61,6 +64,9 @@ class Index extends Core\Modules\FrontendController
             }
             imagegif($im);
             imagedestroy($im);
+
         }
+
+        return $this->response;
     }
 }

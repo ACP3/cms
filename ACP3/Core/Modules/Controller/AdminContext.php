@@ -34,7 +34,8 @@ class AdminContext extends FrontendContext
             $frontendContext->getAssets(),
             $frontendContext->getBreadcrumb(),
             $frontendContext->getSeo(),
-            $frontendContext->getActionHelper()
+            $frontendContext->getActionHelper(),
+            $frontendContext->getResponse()
         );
 
         $this->validate = $validate;

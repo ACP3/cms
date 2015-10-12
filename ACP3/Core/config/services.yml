@@ -65,6 +65,9 @@ services:
     class: ACP3\Core\Http\Request
     arguments: ['@core.config', '@seo.model']
 
+  core.response:
+    class: Symfony\Component\HttpFoundation\Response
+
   core.router:
     class: ACP3\Core\Router
     arguments: ['@core.router.aliases', '@core.request', '@core.config', %core.environment%]
