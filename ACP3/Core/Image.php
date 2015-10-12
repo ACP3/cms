@@ -3,63 +3,51 @@ namespace ACP3\Core;
 
 /**
  * Klasse zum beliebigen Skalieren und Ausgeben von Bildern
- *
- * @author Tino Goratsch
+ * @package ACP3\Core
  */
 class Image
 {
     /**
-     *
      * @var boolean
      */
     protected $enableCache = false;
     /**
-     *
      * @var string
      */
     protected $cacheDir = 'images/';
     /**
-     *
      * @var string
      */
     protected $cachePrefix = '';
     /**
-     *
      * @var integer
      */
     protected $maxWidth = 0;
     /**
-     *
      * @var integer
      */
     protected $maxHeight = 0;
     /**
-     *
      * @var integer
      */
     protected $jpgQuality = 85;
     /**
-     *
      * @var boolean
      */
     protected $preferWidth = false;
     /**
-     *
      * @var boolean
      */
     protected $preferHeight = false;
     /**
-     *
      * @var string
      */
     protected $file = '';
     /**
-     *
      * @var boolean
      */
     protected $forceResample = false;
     /**
-     *
      * @var resource
      */
     protected $image = null;
@@ -72,8 +60,8 @@ class Image
      */
     public function __construct(array $options)
     {
-        if (isset($options['enable_cache']) && is_bool($options['enable_cache']) === true) {
-            $this->enableCache = $options['enable_cache'];
+        if (isset($options['enable_cache'])) {
+            $this->enableCache = (bool)$options['enable_cache'];
         }
         if (isset($options['cache_prefix'])) {
             $this->cachePrefix = $options['cache_prefix'];
@@ -87,17 +75,17 @@ class Image
         if (isset($options['max_height'])) {
             $this->maxHeight = (int)$options['max_height'];
         }
-        if (isset($options['prefer_width']) && is_bool($options['prefer_width']) === true) {
-            $this->preferWidth = $options['prefer_width'];
+        if (isset($options['prefer_width'])) {
+            $this->preferWidth = (bool)$options['prefer_width'];
         }
-        if (isset($options['prefer_height']) && is_bool($options['prefer_height']) === true) {
-            $this->preferHeight = $options['prefer_height'];
+        if (isset($options['prefer_height'])) {
+            $this->preferHeight = (bool)$options['prefer_height'];
         }
         if (isset($options['jpg_quality'])) {
             $this->jpgQuality = (int)$options['jpg_quality'];
         }
-        if (isset($options['force_resample']) && is_bool($options['force_resample']) === true) {
-            $this->forceResample = $options['force_resample'];
+        if (isset($options['force_resample'])) {
+            $this->forceResample = (bool)$options['force_resample'];
         }
 
         $this->file = $options['file'];
