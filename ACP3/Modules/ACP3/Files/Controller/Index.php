@@ -6,6 +6,7 @@ use ACP3\Core;
 use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 
 /**
@@ -53,12 +54,17 @@ class Index extends Core\Modules\FrontendController
         $this->categoriesModel = $categoriesModel;
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         if ($this->modules->isActive('categories') === true) {
             $categories = $this->get('categories.cache')->getCache('files');
             if (count($categories) > 0) {
-                $this->view->assign('categories', $categories);
+                return [
+                    'categories' => $categories
+                ];
             }
         }
     }
@@ -67,6 +73,7 @@ class Index extends Core\Modules\FrontendController
      * @param int    $id
      * @param string $action
      *
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDetails($id, $action = '')
@@ -75,45 +82,30 @@ class Index extends Core\Modules\FrontendController
             $file = $this->filesCache->getCache($id);
 
             if ($action === 'download') {
-                $path = UPLOADS_DIR . 'files/';
-                if (is_file($path . $file['file'])) {
-                    $formatter = $this->get('core.helpers.stringFormatter');
-                    // Schönen Dateinamen generieren
-                    $ext = strrchr($file['file'], '.');
-                    $filename = $formatter->makeStringUrlSafe($file['title']) . $ext;
-
-                    header('Content-Type: application/force-download');
-                    header('Content-Transfer-Encoding: binary');
-                    header('Content-Length:' . filesize($path . $file['file']));
-                    header('Content-Disposition: attachment; filename="' . $filename . '"');
-                    readfile($path . $file['file']);
-                    exit;
-                } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) {
-                    $this->redirect()->toNewPage($file['file']); // Externe Datei
-                } else {
-                    throw new Core\Exceptions\ResultNotExists();
-                }
-            } else {
-                // Brotkrümelspur
-                $this->breadcrumb
-                    ->append($this->lang->t('files', 'files'), 'files')
-                    ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
-                    ->append($file['title']);
-
-                $settings = $this->config->getSettings('files');
-
-                $this->view->assign('file', $file);
-                $this->view->assign('dateformat', $settings['dateformat']);
-                $this->view->assign('comments_allowed', $settings['comments'] == 1 && $file['comments'] == 1);
+                return $this->downloadFile($file);
             }
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            $this->breadcrumb
+                ->append($this->lang->t('files', 'files'), 'files')
+                ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
+                ->append($file['title']);
+
+            $settings = $this->config->getSettings('files');
+
+            return [
+                'file' => $file,
+                'dateformat' => $settings['dateformat'],
+                'comments_allowed' => $settings['comments'] == 1 && $file['comments'] == 1
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
      * @param int $cat
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionFiles($cat)
@@ -127,10 +119,43 @@ class Index extends Core\Modules\FrontendController
 
             $settings = $this->config->getSettings('files');
 
-            $this->view->assign('dateformat', $settings['dateformat']);
-            $this->view->assign('files', $this->filesModel->getAllByCategoryId($cat, $this->date->getCurrentDateTime()));
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'dateformat' => $settings['dateformat'],
+                'files' => $this->filesModel->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
+    }
+
+    /**
+     * @param $file
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     */
+    protected function downloadFile($file)
+    {
+        $path = UPLOADS_DIR . 'files/';
+        if (is_file($path . $file['file'])) {
+            $formatter = $this->get('core.helpers.stringFormatter');
+
+            $ext = strrchr($file['file'], '.');
+            $filename = $formatter->makeStringUrlSafe($file['title']) . $ext;
+
+            $disposition = $this->response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
+            $this->setContentType('application/force-download');
+            $this->response->headers->add([
+                'Content-Disposition' => $disposition,
+                'Content-Transfer-Encoding' => 'binary',
+                'Content-Length' => filesize($path . $file['file'])
+            ]);
+
+            return $this->response->setContent(file_get_contents($path . $file['file']));
+        } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
+            return $this->redirect()->toNewPage($file['file']);
+        }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 }

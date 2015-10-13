@@ -128,10 +128,10 @@ class Image
 
             $this->setHeaders($picInfo['mime']);
 
-            // Falls Cache aktiviert ist und das Bild bereits gecachet wurde, dieses direkt ausgeben
+            // Direct output of the picture, if it is already cached
             if ($this->enableCache === true && is_file($cacheFile) === true) {
                 $this->file = $cacheFile;
-            } elseif ($this->resamplingIsNecessary($width, $height, $type)) { // Bild resampeln
+            } elseif ($this->resamplingIsNecessary($width, $height, $type)) { // Resize the picture
                 $dimensions = $this->calcNewDimensions($width, $height);
 
                 $this->createCacheDir();
@@ -176,13 +176,13 @@ class Image
     }
 
     /**
-     * Gibt ein Bild direkt aus, ohne dieses in der Größe zu bearbeiten
+     * Reads the contents of the requested picture
      *
-     * @return integer
+     * @return string
      */
     protected function readFromFile()
     {
-        return readfile($this->file);
+        return file_get_contents($this->file);
     }
 
     /**
@@ -285,8 +285,9 @@ class Image
      */
     protected function createCacheDir()
     {
-        if (!is_dir($this->cacheDir) && is_writable($this->cacheDir)) {
-            mkdir(CACHE_DIR . $this->cacheDir);
+        $path = CACHE_DIR . $this->cacheDir;
+        if (!is_dir($path) && is_writable(CACHE_DIR)) {
+            mkdir($path);
         }
     }
 }

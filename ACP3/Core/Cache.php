@@ -50,6 +50,10 @@ class Cache
      */
     public static function purge($dir, $cacheId = '')
     {
+        if (!is_file($dir) && !is_dir($dir)) {
+            return true;
+        }
+
         if (is_file($dir) === true) {
             return @unlink($dir);
         }

@@ -39,7 +39,7 @@ services:
 
   system.helpers.installer:
     class: %system.helpers.installer.fqdn%
-    arguments: ['@core.modules', @core.modules.vendors, @core.modules.schemaInstaller, @core.xml]
+    arguments: ['@core.modules', @core.modules.vendors, @core.modules.schemaInstaller, @core.xml, %core.environment%]
 
   system.helpers.export:
     class: %system.helpers.export.fqdn%

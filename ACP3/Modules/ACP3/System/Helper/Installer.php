@@ -29,24 +29,31 @@ class Installer
      * @var \ACP3\Core\XML
      */
     protected $xml;
+    /**
+     * @var string
+     */
+    protected $environment;
 
     /**
      * @param \ACP3\Core\Modules                 $modules
      * @param \ACP3\Core\Modules\Vendors         $vendors
      * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
      * @param \ACP3\Core\XML                     $xml
+     * @param string                             $environment
      */
     public function __construct(
         Core\Modules $modules,
         Core\Modules\Vendors $vendors,
         Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\XML $xml
+        Core\XML $xml,
+        $environment
     )
     {
         $this->modules = $modules;
         $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
         $this->xml = $xml;
+        $this->environment = $environment;
     }
 
     /**
@@ -88,7 +95,8 @@ class Installer
                 $service = $moduleName . '.installer.schema';
 
                 if ($container->has($service) === true) {
-                    $deps = $this->getDependencies($moduleToBeUninstalled);
+                    $deps = $this->getDependencies($moduleName);
+
                     if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
                         $moduleDependencies[] = $module['name'];
                     }
@@ -108,9 +116,12 @@ class Installer
     protected function getDependencies($moduleName)
     {
         if ((bool)preg_match('=/=', $moduleName) === false) {
-            $path = MODULES_DIR . ucfirst($moduleName) . '/config/module.xml';
-            if (is_file($path) === true) {
-                return array_values($this->xml->parseXmlFile($path, '/module/info/dependencies'));
+            foreach ($this->vendors->getVendors() as $vendor) {
+                $path = MODULES_DIR . $vendor . '/' . ucfirst($moduleName) . '/config/module.xml';
+
+                if (is_file($path) === true) {
+                    return array_values($this->xml->parseXmlFile($path, '/module/info/dependencies'));
+                }
             }
         }
 
@@ -128,6 +139,8 @@ class Installer
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
         $loader->load(CLASSES_DIR . 'config/services.yml');
         $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
+
+        $container->setParameter('core.environment', $this->environment);
 
         // Try to get all available services
         $modules = ($allModules === true) ? $this->modules->getAllModules() : $this->modules->getInstalledModules();
