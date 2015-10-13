@@ -2,6 +2,7 @@
 namespace ACP3\Core\Http\Request;
 
 use ACP3\Core\Lang;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 /**
  * Class UserAgent
@@ -10,14 +11,14 @@ use ACP3\Core\Lang;
 class UserAgent
 {
     /**
-     * @var \ACP3\Core\Http\Request\ParameterBag
+     * @var \Symfony\Component\HttpFoundation\ServerBag
      */
     protected $server;
 
     /**
-     * @param \ACP3\Core\Http\Request\ParameterBag $server
+     * @param \Symfony\Component\HttpFoundation\ServerBag $server
      */
-    public function __construct(ParameterBag $server)
+    public function __construct(ServerBag $server)
     {
         $this->server = $server;
     }

@@ -104,7 +104,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($guestbook['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
+                return $this->_editPost($this->request->getPost()->all(), $settings, $id);
             }
 
             if ($settings['emoticons'] == 1 && $this->emoticonsHelpers) {
@@ -116,7 +116,7 @@ class Index extends Core\Modules\AdminController
                 $this->view->assign('activate', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('active', $guestbook['active']));
             }
 
-            $this->view->assign('form', array_merge($guestbook, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($guestbook, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -161,7 +161,7 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('guestbook');
@@ -187,7 +187,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration']));
         }
 
-        $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

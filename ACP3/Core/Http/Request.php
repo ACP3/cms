@@ -271,12 +271,12 @@ class Request extends AbstractRequest
             for ($i = 3; $i < $c_query; ++$i) {
                 // Position
                 if (preg_match('/^(page_(\d+))$/', $query[$i])) {
-                    $this->parameters->add('page', (int)substr($query[$i], 5));
+                    $this->parameters->add(['page' => (int)substr($query[$i], 5)]);
                 } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // ID eines Datensatzes
-                    $this->parameters->add('id', (int)substr($query[$i], 3));
+                    $this->parameters->add(['id' => (int)substr($query[$i], 3)]);
                 } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);
-                    $this->parameters->add($param[0], $param[1]);
+                    $this->parameters->add([$param[0] => $param[1]]);
                 }
             }
         }

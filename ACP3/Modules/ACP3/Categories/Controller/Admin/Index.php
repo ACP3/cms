@@ -56,10 +56,10 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()));
 
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
@@ -171,10 +171,10 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($category['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $category, $id);
+                return $this->_editPost($this->request->getPost()->all(), $category, $id);
             }
 
-            $this->view->assign('form', array_merge($category, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($category, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -247,12 +247,12 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('categories');
 
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

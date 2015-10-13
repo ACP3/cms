@@ -103,7 +103,7 @@ class Maintenance extends Core\Modules\AdminController
     public function actionSqlExport()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_sqlExportPost($this->request->getPost()->getAll());
+            return $this->_sqlExportPost($this->request->getPost()->all());
         }
 
         $dbTables = $this->systemSchemaRepository->getSchemaTables();
@@ -144,10 +144,10 @@ class Maintenance extends Core\Modules\AdminController
     public function actionSqlImport()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_sqlImportPost($this->request->getPost()->getAll());
+            return $this->_sqlImportPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['text' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['text' => ''], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

@@ -108,7 +108,7 @@ class Items extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
         $this->view->assign('mode', $this->fetchMenuItemModes());
@@ -126,7 +126,7 @@ class Items extends Core\Modules\AdminController
 
         $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -179,7 +179,7 @@ class Items extends Core\Modules\AdminController
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $menuItem, $id);
+                return $this->_editPost($this->request->getPost()->all(), $menuItem, $id);
             }
 
             $this->view->assign('mode', $this->fetchMenuItemModes($menuItem['mode']));
@@ -205,7 +205,7 @@ class Items extends Core\Modules\AdminController
                 )
             );
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
-            $this->view->assign('form', array_merge($menuItem, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($menuItem, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {

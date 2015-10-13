@@ -136,7 +136,7 @@ class Index extends Core\Modules\FrontendController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
         // Emoticons einbinden
@@ -172,7 +172,7 @@ class Index extends Core\Modules\FrontendController
             $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
         }
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());

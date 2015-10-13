@@ -96,7 +96,7 @@ class Pictures extends Core\Modules\AdminController
             $settings = $this->config->getSettings('gallery');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_createPost($this->request->getPost()->getAll(), $settings, $id);
+                return $this->_createPost($this->request->getPost()->all(), $settings, $id);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -107,7 +107,7 @@ class Pictures extends Core\Modules\AdminController
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', array_merge(['description' => ''], $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge(['description' => ''], $this->request->getPost()->all()));
             $this->view->assign('gallery_id', $id);
 
             $this->formTokenHelper->generateFormToken();
@@ -170,7 +170,7 @@ class Pictures extends Core\Modules\AdminController
             $settings = $this->config->getSettings('gallery');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $settings, $picture, $id);
+                return $this->_editPost($this->request->getPost()->all(), $settings, $picture, $id);
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
@@ -181,7 +181,7 @@ class Pictures extends Core\Modules\AdminController
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', array_merge($picture, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($picture, $this->request->getPost()->all()));
             $this->view->assign('gallery_id', $id);
 
             $this->formTokenHelper->generateFormToken();

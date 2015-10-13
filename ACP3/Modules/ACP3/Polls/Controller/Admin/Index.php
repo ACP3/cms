@@ -70,7 +70,7 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->has('submit')) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
         if ($this->request->getPost()->has('add_answer')) {
@@ -88,7 +88,7 @@ class Index extends Core\Modules\AdminController
             'end' => ''
         ];
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
         $this->view->assign('answers', $answers);
 
         $options = [];
@@ -134,7 +134,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($poll['title']);
 
             if ($this->request->getPost()->has('submit')) {
-                return $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
             if ($this->request->getPost()->has('add_answer')) {
@@ -155,7 +155,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('options', $options);
 
-            $this->view->assign('form', array_merge($poll, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($poll, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {

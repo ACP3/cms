@@ -66,7 +66,7 @@ class Install extends AbstractController
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost($this->request->getPost()->getAll());
+            $this->_indexPost($this->request->getPost()->all());
         }
 
         $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones(date_default_timezone_get()));
@@ -83,7 +83,7 @@ class Install extends AbstractController
             'title' => 'ACP3',
         ];
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
     }
 
     /**

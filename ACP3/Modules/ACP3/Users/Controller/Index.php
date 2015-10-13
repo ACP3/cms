@@ -106,10 +106,10 @@ class Index extends Core\Modules\FrontendController
             return $this->redirect()->toNewPage(ROOT_DIR);
         } else {
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_forgotPasswordPost($this->request->getPost()->getAll());
+                return $this->_forgotPasswordPost($this->request->getPost()->all());
             }
 
-            $this->view->assign('form', array_merge(['nick_mail' => ''], $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge(['nick_mail' => ''], $this->request->getPost()->all()));
 
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
@@ -192,7 +192,7 @@ class Index extends Core\Modules\FrontendController
             $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_registerPost($this->request->getPost()->getAll(), $settings);
+                return $this->_registerPost($this->request->getPost()->all(), $settings);
             }
 
             $defaults = [
@@ -200,7 +200,7 @@ class Index extends Core\Modules\FrontendController
                 'mail' => '',
             ];
 
-            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());

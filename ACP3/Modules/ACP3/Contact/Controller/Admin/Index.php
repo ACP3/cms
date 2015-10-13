@@ -42,12 +42,12 @@ class Index extends Core\Modules\AdminController
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('contact');
 
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

@@ -44,12 +44,12 @@ class Index extends Core\Modules\FrontendController
     public function actionIndex($q = '')
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->all());
         } elseif (!empty($q)) {
             return $this->_indexPost(['search_term' => (string)$q]);
         }
 
-        $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->all()));
 
         $this->view->assign('search_mods', $this->searchHelpers->getModules());
 

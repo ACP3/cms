@@ -124,7 +124,7 @@ class Details extends Core\Modules\AdminController
                 ->setTitlePostfix($comment['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $comment, $id);
+                return $this->_editPost($this->request->getPost()->all(), $comment, $id);
             }
 
             if ($this->emoticonsHelpers) {
@@ -132,7 +132,7 @@ class Details extends Core\Modules\AdminController
                 $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
             }
 
-            $this->view->assign('form', array_merge($comment, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($comment, $this->request->getPost()->all()));
             $this->view->assign('module_id', (int)$comment['module_id']);
 
             $this->formTokenHelper->generateFormToken();

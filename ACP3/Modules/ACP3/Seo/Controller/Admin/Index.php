@@ -56,12 +56,12 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', array_merge(['uri' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['uri' => ''], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -105,12 +105,12 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($seo['alias']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $seo['uri'], $id);
+                return $this->_editPost($this->request->getPost()->all(), $seo['uri'], $id);
             }
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($seo['uri']));
 
-            $this->view->assign('form', array_merge(['uri' => $seo['uri']], $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -197,7 +197,7 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
         $seoSettings = $this->config->getSettings('seo');
@@ -214,7 +214,7 @@ class Index extends Core\Modules\AdminController
         // Sef-URIs
         $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']));
 
-        $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

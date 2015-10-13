@@ -102,7 +102,7 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('comments');

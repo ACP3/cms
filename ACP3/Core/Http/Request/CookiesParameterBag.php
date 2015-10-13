@@ -15,13 +15,11 @@ class CookiesParameterBag extends ParameterBag
      * @param string $domain
      * @param bool   $isSecure
      * @param bool   $isHttpOnly
-     *
-     * @return $this
      */
     public function set($key, $value, $expire = 0, $path = '', $domain = '', $isSecure = false, $isHttpOnly = true)
     {
         setcookie($key, $value, $expire, $path, $domain, $isSecure, $isHttpOnly);
 
-        return parent::set($key, $value);
+        parent::set($key, $value);
     }
 }

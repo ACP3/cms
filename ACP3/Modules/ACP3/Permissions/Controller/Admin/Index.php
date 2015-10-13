@@ -77,10 +77,10 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['name' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['name' => ''], $this->request->getPost()->all()));
         $this->view->assign('parent', $this->fetchRoles());
         $this->view->assign('modules', $this->fetchModulePermissions(0, 2));
 
@@ -138,14 +138,14 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($role['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
             if ($id != 1) {
                 $this->view->assign('parent', $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id']));
             }
             $this->view->assign('modules', $this->fetchModulePermissions($id));
-            $this->view->assign('form', array_merge($role, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($role, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {

@@ -148,7 +148,7 @@ class Index extends Core\Modules\FrontendController
     public function actionCreate($module, $entryId)
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll(), $module, $entryId);
+            return $this->_createPost($this->request->getPost()->all(), $module, $entryId);
         }
 
         // Add emoticons if they are active
@@ -171,7 +171,7 @@ class Index extends Core\Modules\FrontendController
             $defaults['message'] = '';
         }
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());

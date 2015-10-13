@@ -56,10 +56,10 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -138,10 +138,10 @@ class Index extends Core\Modules\AdminController
 
         if (empty($emoticon) === false) {
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $emoticon, $id);
+                return $this->_editPost($this->request->getPost()->all(), $emoticon, $id);
             }
 
-            $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -210,10 +210,10 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

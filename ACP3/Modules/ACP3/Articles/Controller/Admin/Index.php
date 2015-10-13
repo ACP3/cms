@@ -125,7 +125,7 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
@@ -143,7 +143,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -234,7 +234,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($article['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
             if ($this->acl->hasPermission('admin/menus/items/create') === true) {
@@ -256,7 +256,7 @@ class Index extends Core\Modules\AdminController
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)));
 
-            $this->view->assign('form', array_merge($article, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($article, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {

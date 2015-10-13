@@ -90,7 +90,7 @@ class Index extends Core\Modules\AdminController
         $settings = $this->config->getSettings('files');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll(), $settings);
+            return $this->_createPost($this->request->getPost()->all(), $settings);
         }
 
         $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
@@ -121,7 +121,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -175,7 +175,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($file['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $settings, $file, $id);
+                return $this->_editPost($this->request->getPost()->all(), $settings, $file, $id);
             }
 
             $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
@@ -198,7 +198,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('current_file', $file['file']);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id)));
-            $this->view->assign('form', array_merge($file, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($file, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -231,7 +231,7 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('files');

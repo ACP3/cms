@@ -56,7 +56,7 @@ class Resources extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
         $modules = $this->modules->getActiveModules();
@@ -72,7 +72,7 @@ class Resources extends Core\Modules\AdminController
         }
         $this->view->assign('privileges', $privileges);
 
-        $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -113,7 +113,7 @@ class Resources extends Core\Modules\AdminController
         $resource = $this->resourceRepository->getResourceById($id);
         if (!empty($resource)) {
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
             $privileges = $this->acl->getAllPrivileges();
@@ -129,7 +129,7 @@ class Resources extends Core\Modules\AdminController
                 'controller' => $resource['controller'],
                 'modules' => $resource['module_name']
             ];
-            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {

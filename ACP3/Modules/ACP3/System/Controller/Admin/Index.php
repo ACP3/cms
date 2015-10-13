@@ -56,7 +56,7 @@ class Index extends Core\Modules\AdminController
     public function actionConfiguration()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_configurationPost($this->request->getPost()->getAll());
+            return $this->_configurationPost($this->request->getPost()->all());
         }
 
         $systemSettings = $this->config->getSettings('system');
@@ -107,7 +107,7 @@ class Index extends Core\Modules\AdminController
         ];
         $this->view->assign('mailer_smtp_security', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailerSmtpSecurity, $systemSettings['mailer_smtp_security']));
 
-        $this->view->assign('form', array_merge($systemSettings, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($systemSettings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

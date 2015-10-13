@@ -115,7 +115,7 @@ class Index extends Core\Modules\FrontendController
         ) {
             // Wenn abgestimmt wurde
             if (is_array($answer) === true || $this->get('core.validator.rules.misc')->isNumber($answer) === true) {
-                return $this->_votePost($this->request->getPost()->getAll(), $time, $id);
+                return $this->_votePost($this->request->getPost()->all(), $time, $id);
             }
 
             $poll = $this->pollRepository->getOneById($id);

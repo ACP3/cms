@@ -15,7 +15,7 @@ class FilesParameterBag extends ParameterBag
      */
     public function get($key, $default = [])
     {
-        return $this->has($key) ? $this->getAll()[$key] : $default;
+        return $this->has($key) ? $this->all()[$key] : $default;
     }
 
     /**
@@ -25,6 +25,6 @@ class FilesParameterBag extends ParameterBag
      */
     public function has($key)
     {
-        return array_key_exists($key, $this->getAll()) && !empty($this->getAll()[$key]['name']);
+        return array_key_exists($key, $this->all()) && !empty($this->all()[$key]['name']);
     }
 }

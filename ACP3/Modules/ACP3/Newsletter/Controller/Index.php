@@ -93,7 +93,7 @@ class Index extends Core\Modules\FrontendController
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->all());
         }
 
         $defaults = [
@@ -101,7 +101,7 @@ class Index extends Core\Modules\FrontendController
             'last_name' => '',
             'mail' => ''
         ];
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $salutationsLang = [
             $this->lang->t('newsletter', 'salutation_female'),
@@ -122,13 +122,13 @@ class Index extends Core\Modules\FrontendController
     public function actionUnsubscribe()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_unsubscribePost($this->request->getPost()->getAll());
+            return $this->_unsubscribePost($this->request->getPost()->all());
         }
 
         $defaults = [
             'mail' => ''
         ];
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

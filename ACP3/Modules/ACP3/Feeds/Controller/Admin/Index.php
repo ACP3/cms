@@ -42,7 +42,7 @@ class Index extends Core\Modules\AdminController
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('feeds');
@@ -54,7 +54,7 @@ class Index extends Core\Modules\AdminController
         ];
         $this->view->assign('feed_types', $this->get('core.helpers.forms')->selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']));
 
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

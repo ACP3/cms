@@ -77,10 +77,10 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -137,10 +137,10 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($menu['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
-            $this->view->assign('form', array_merge($menu, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($menu, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {

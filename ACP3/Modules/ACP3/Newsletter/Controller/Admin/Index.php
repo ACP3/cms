@@ -72,11 +72,11 @@ class Index extends Core\Modules\AdminController
         $settings = $this->config->getSettings('newsletter');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll(), $settings);
+            return $this->_createPost($this->request->getPost()->all(), $settings);
         }
 
         $this->view->assign('settings', $settings);
-        $this->view->assign('form', array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()));
 
         $this->view->assign('test', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0));
 
@@ -124,11 +124,11 @@ class Index extends Core\Modules\AdminController
             $settings = $this->config->getSettings('newsletter');
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $settings, $id);
+                return $this->_editPost($this->request->getPost()->all(), $settings, $id);
             }
 
             $this->view->assign('settings', array_merge($settings, ['html' => $newsletter['html']]));
-            $this->view->assign('form', array_merge($newsletter, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($newsletter, $this->request->getPost()->all()));
 
             $this->view->assign('test', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0));
 
@@ -197,12 +197,12 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('newsletter');
 
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
 
         $this->view->assign('html', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('html', $settings['html']));
 

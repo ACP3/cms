@@ -73,7 +73,7 @@ class Account extends Core\Modules\FrontendController
     public function actionEdit()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_editPost($this->request->getPost()->getAll());
+            return $this->_editPost($this->request->getPost()->all());
         }
 
         $user = $this->user->getUserInfo();
@@ -92,7 +92,7 @@ class Account extends Core\Modules\FrontendController
             )
         );
 
-        $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($user, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -105,7 +105,7 @@ class Account extends Core\Modules\FrontendController
         $settings = $this->config->getSettings('users');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll(), $settings);
+            return $this->_settingsPost($this->request->getPost()->all(), $settings);
         }
 
         $user = $this->usersModel->getOneById($this->user->getUserId());
@@ -124,7 +124,7 @@ class Account extends Core\Modules\FrontendController
             )
         );
 
-        $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($user, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

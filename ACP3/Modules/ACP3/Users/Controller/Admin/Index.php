@@ -79,7 +79,7 @@ class Index extends Core\Modules\AdminController
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->getAll());
+            return $this->_createPost($this->request->getPost()->all());
         }
 
         $systemSettings = $this->config->getSettings('system');
@@ -109,7 +109,7 @@ class Index extends Core\Modules\AdminController
             'date_format_short' => $systemSettings['date_format_short']
         ];
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }
@@ -165,7 +165,7 @@ class Index extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($user['nickname']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->getAll(), $id);
+                return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
             $userRoles = $this->acl->getUserRoleIds($id);
@@ -196,7 +196,7 @@ class Index extends Core\Modules\AdminController
                 )
             );
 
-            $this->view->assign('form', array_merge($user, $this->request->getPost()->getAll()));
+            $this->view->assign('form', array_merge($user, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
         } else {
@@ -210,7 +210,7 @@ class Index extends Core\Modules\AdminController
     public function actionSettings()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->getAll());
+            return $this->_settingsPost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('users');
@@ -221,7 +221,7 @@ class Index extends Core\Modules\AdminController
 
         $this->view->assign('registration', $this->formsHelpers->yesNoCheckboxGenerator('enable_registration', $settings['enable_registration']));
 
-        $this->view->assign('form', array_merge(['mail' => $settings['mail']], $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
     }

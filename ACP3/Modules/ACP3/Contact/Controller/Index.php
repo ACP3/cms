@@ -67,7 +67,7 @@ class Index extends Core\Modules\FrontendController
     public function actionIndex()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_indexPost($this->request->getPost()->getAll());
+            return $this->_indexPost($this->request->getPost()->all());
         }
 
         $defaults = [
@@ -88,7 +88,7 @@ class Index extends Core\Modules\FrontendController
             $defaults['mail_disabled'] = $disabled;
         }
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->getAll()));
+        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
         $this->view->assign('copy_checked', $this->get('core.helpers.forms')->selectEntry('copy', 1, 0, 'checked'));
         $this->view->assign('contact', $this->config->getSettings('contact'));
 

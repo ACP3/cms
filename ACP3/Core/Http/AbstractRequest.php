@@ -5,6 +5,7 @@ use ACP3\Core\Http\Request\CookiesParameterBag;
 use ACP3\Core\Http\Request\FilesParameterBag;
 use ACP3\Core\Http\Request\ParameterBag;
 use ACP3\Core\Http\Request\UserAgent;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 /**
  * Class AbstractRequest
@@ -33,7 +34,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     protected $post;
     /**
-     * @var \ACP3\Core\Http\Request\ParameterBag
+     * @var \Symfony\Component\HttpFoundation\ServerBag
      */
     protected $server;
     /**
@@ -160,7 +161,7 @@ abstract class AbstractRequest implements RequestInterface
     {
         $this->files = new FilesParameterBag($files);
         $this->post = new ParameterBag($post);
-        $this->server = new ParameterBag($server);
+        $this->server = new ServerBag($server);
         $this->cookies = new CookiesParameterBag($cookies);
         $this->userAgent = new UserAgent($this->server);
     }
