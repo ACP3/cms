@@ -52,7 +52,7 @@ class Redirect
      *
      * @param string $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function temporary($path)
     {
@@ -65,7 +65,7 @@ class Redirect
      * @param string $path
      * @param bool   $movedPermanently
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function _redirect($path, $movedPermanently)
     {
@@ -86,7 +86,7 @@ class Redirect
     /**
      * Outputs a JSON response with redirect url
      *
-     * @param $path
+     * @param string $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -106,9 +106,9 @@ class Redirect
     /**
      * Executes a permanent redirect
      *
-     * @param $path
+     * @param string $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function permanent($path)
     {

@@ -72,7 +72,7 @@ class RedirectMessages
      * @param string      $text
      * @param string|null $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function setMessage($success, $text, $path = null)
     {

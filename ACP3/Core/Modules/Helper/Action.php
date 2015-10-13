@@ -64,7 +64,7 @@ class Action
      * @param callable    $callback
      * @param null|string $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handlePostAction(callable $callback, $path = null)
     {
@@ -86,7 +86,7 @@ class Action
      * @param string|null                           $moduleConfirmUrl
      * @param string|null                           $moduleIndexUrl
      *
-     * @return mixed
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function handleDeleteAction(
@@ -119,7 +119,7 @@ class Action
      * @param string|null                           $moduleConfirmUrl
      * @param string|null                           $moduleIndexUrl
      *
-     * @return mixed
+     * @return void|string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function handleCustomDeleteAction(
@@ -146,7 +146,7 @@ class Action
      * @param callable    $callback
      * @param null|string $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handleSettingsPostAction(callable $callback, $path = null)
     {
@@ -161,7 +161,7 @@ class Action
      * @param callable    $callback
      * @param null|string $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handleCreatePostAction(callable $callback, $path = null)
     {
@@ -176,7 +176,7 @@ class Action
      * @param callable    $callback
      * @param null|string $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function handleEditPostAction(callable $callback, $path = null)
     {
@@ -192,7 +192,7 @@ class Action
      * @param string      $localization
      * @param null|string $path
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     private function setRedirectMessageAfterPost($result, $localization, $path = null)
     {
