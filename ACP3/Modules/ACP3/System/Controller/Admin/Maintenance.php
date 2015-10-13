@@ -4,6 +4,7 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Class Maintenance
@@ -192,12 +193,18 @@ class Maintenance extends Core\Modules\AdminController
 
                 // Als Datei ausgeben
                 if ($formData['output'] === 'file') {
-                    header('Content-Type: text/sql');
-                    header('Content-Disposition: attachment; filename=' . $this->db->getDatabase() . '_export.sql');
-                    header('Content-Length: ' . strlen($export));
-                    exit($export);
+                    $this->setContentType('text/sql');
+                    $disposition = $this->response->headers->makeDisposition(
+                        ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                        $this->db->getDatabase() . '_export.sql'
+                    );
+                    $this->response->headers->add([
+                        'Content-Disposition' => $disposition,
+                        'Content-Length' => strlen($export)
+                    ]);
+                    return $this->response->setContent($export);
                 } else { // Im Browser ausgeben
-                    $this->view->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
+                    return ['export', htmlentities($export, ENT_QUOTES, 'UTF-8')];
                 }
             },
             $this->request->getFullPath()

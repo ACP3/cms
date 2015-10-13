@@ -12,16 +12,16 @@ class Index extends Core\Modules\FrontendController
 {
     public function action403()
     {
-        header('HTTP/1.0 403 Access Forbidden');
+        $this->response->setStatusCode(403);
     }
 
     public function action404()
     {
-        header('HTTP/1.0 404 Not Found');
+        $this->response->setStatusCode(404);
     }
 
     public function action500()
     {
-        header('HTTP/1.0 500 Internal Server Error');
+        $this->response->setStatusCode(500);
     }
 }
