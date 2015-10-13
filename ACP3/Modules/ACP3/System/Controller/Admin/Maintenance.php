@@ -204,7 +204,7 @@ class Maintenance extends Core\Modules\AdminController
                     ]);
                     return $this->response->setContent($export);
                 } else { // Im Browser ausgeben
-                    return ['export', htmlentities($export, ENT_QUOTES, 'UTF-8')];
+                    return ['export' => htmlentities($export, ENT_QUOTES, 'UTF-8')];
                 }
             },
             $this->request->getFullPath()
