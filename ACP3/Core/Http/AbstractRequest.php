@@ -136,7 +136,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the $_SERVER superglobal
      *
-     * @return \ACP3\Core\Http\Request\ParameterBag
+     * @return \ACP3\Core\Http\Request\ServerBag
      */
     public function getServer()
     {
