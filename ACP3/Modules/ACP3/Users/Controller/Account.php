@@ -29,7 +29,7 @@ class Account extends Core\Modules\FrontendController
      */
     protected $userRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validator
+     * @var \ACP3\Modules\ACP3\Users\Validator\Account
      */
     protected $usersValidator;
 
@@ -39,7 +39,7 @@ class Account extends Core\Modules\FrontendController
      * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                     $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validator            $usersValidator
+     * @param \ACP3\Modules\ACP3\Users\Validator\Account    $usersValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -47,7 +47,7 @@ class Account extends Core\Modules\FrontendController
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UserRepository $userRepository,
-        Users\Validator $usersValidator)
+        Users\Validator\Account $usersValidator)
     {
         parent::__construct($context);
 

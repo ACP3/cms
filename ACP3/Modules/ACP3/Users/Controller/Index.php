@@ -35,7 +35,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $userRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validator
+     * @var \ACP3\Modules\ACP3\Users\Validator\Register
      */
     protected $usersValidator;
     /**
@@ -58,7 +58,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                     $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validator            $usersValidator
+     * @param \ACP3\Modules\ACP3\Users\Validator\Register   $usersValidator
      * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
      * @param \ACP3\Core\Helpers\SendEmail                  $sendEmail
      */
@@ -69,7 +69,7 @@ class Index extends Core\Modules\FrontendController
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UserRepository $userRepository,
-        Users\Validator $usersValidator,
+        Users\Validator\Register $usersValidator,
         Permissions\Helpers $permissionsHelpers,
         Core\Helpers\SendEmail $sendEmail)
     {
