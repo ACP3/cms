@@ -1,7 +1,7 @@
 parameters:
   guestbook.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index'
   guestbook.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Guestbook\Controller\Index'
-  guestbook.model.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model'
+  guestbook.model.guestbookrepository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository'
   guestbook.validator.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validator'
   guestbook.installer.schema.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Schema'
   guestbook.installer.migration.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Migration'
@@ -9,25 +9,25 @@ parameters:
 services:
   guestbook.controller.admin.index:
     class: %guestbook.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@guestbook.model', '@guestbook.validator']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@guestbook.model.guestbookrepository', '@guestbook.validator']
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   guestbook.controller.frontend.index:
     class: %guestbook.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.formToken', '@guestbook.model', '@guestbook.validator']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.formToken', '@guestbook.model.guestbookrepository', '@guestbook.validator']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
 
-  guestbook.model:
-    class: %guestbook.model.fqdn%
+  guestbook.model.guestbookrepository:
+    class: %guestbook.model.guestbookrepository.fqdn%
     arguments: ['@core.db']
 
   guestbook.validator:
     class: %guestbook.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@core.date', '@core.modules', @core.request, '@guestbook.model']
+    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@core.date', '@core.modules', @core.request, '@guestbook.model.guestbookrepository']
     calls:
       - ['setNewsletterAccountRepository', ['@?newsletter.model.accountrepository']]
 

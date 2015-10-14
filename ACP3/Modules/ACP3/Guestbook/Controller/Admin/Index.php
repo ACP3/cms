@@ -21,9 +21,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
      */
-    protected $guestbookModel;
+    protected $guestbookRepository;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validator
      */
@@ -34,24 +34,24 @@ class Index extends Core\Modules\AdminController
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model         $guestbookModel
-     * @param \ACP3\Modules\ACP3\Guestbook\Validator     $guestbookValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
+     * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Guestbook\Validator                 $guestbookValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        Guestbook\Model $guestbookModel,
+        Guestbook\Model\GuestbookRepository $guestbookRepository,
         Guestbook\Validator $guestbookValidator)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->guestbookModel = $guestbookModel;
+        $this->guestbookRepository = $guestbookRepository;
         $this->guestbookValidator = $guestbookValidator;
     }
 
@@ -81,7 +81,7 @@ class Index extends Core\Modules\AdminController
             function ($items) {
                 $bool = false;
                 foreach ($items as $item) {
-                    $bool = $this->guestbookModel->delete($item);
+                    $bool = $this->guestbookRepository->delete($item);
                 }
 
                 return $bool;
@@ -97,7 +97,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $guestbook = $this->guestbookModel->getOneById($id);
+        $guestbook = $this->guestbookRepository->getOneById($id);
         if (empty($guestbook) === false) {
             $settings = $this->config->getSettings('guestbook');
 
@@ -126,7 +126,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $guestbook = $this->guestbookModel->getAllInAcp();
+        $guestbook = $this->guestbookRepository->getAllInAcp();
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
@@ -209,7 +209,7 @@ class Index extends Core\Modules\AdminController
                 'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
             ];
 
-            $bool = $this->guestbookModel->update($updateValues, $id);
+            $bool = $this->guestbookRepository->update($updateValues, $id);
 
             $this->formTokenHelper->unsetFormToken();
 

@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Guestbook;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository;
 use ACP3\Modules\ACP3\Newsletter;
 
 /**
@@ -35,24 +36,24 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $request;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
      */
-    protected $guestbookModel;
+    protected $guestbookRepository;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
      */
     protected $newsletterAccountRepository;
 
     /**
-     * @param \ACP3\Core\Lang                    $lang
-     * @param \ACP3\Core\Validator\Rules\Misc    $validate
-     * @param \ACP3\Core\Validator\Rules\Captcha $captchaValidator
-     * @param \ACP3\Core\ACL                     $acl
-     * @param \ACP3\Core\User                    $user
-     * @param \ACP3\Core\Date                    $date
-     * @param \ACP3\Core\Modules                 $modules
-     * @param \ACP3\Core\Http\Request            $request
-     * @param \ACP3\Modules\ACP3\Guestbook\Model $guestbookModel
+     * @param \ACP3\Core\Lang                                        $lang
+     * @param \ACP3\Core\Validator\Rules\Misc                        $validate
+     * @param \ACP3\Core\Validator\Rules\Captcha                     $captchaValidator
+     * @param \ACP3\Core\ACL                                         $acl
+     * @param \ACP3\Core\User                                        $user
+     * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Modules                                     $modules
+     * @param \ACP3\Core\Http\Request                                $request
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
      */
     public function __construct(
         Core\Lang $lang,
@@ -63,7 +64,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Date $date,
         Core\Modules $modules,
         Core\Http\Request $request,
-        Model $guestbookModel)
+        GuestbookRepository $guestbookRepository)
     {
         parent::__construct($lang, $validate);
 
@@ -73,7 +74,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->date = $date;
         $this->modules = $modules;
         $this->request = $request;
-        $this->guestbookModel = $guestbookModel;
+        $this->guestbookRepository = $guestbookRepository;
     }
 
     /**
@@ -100,7 +101,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         // Flood Sperre
-        $flood = $this->guestbookModel->getLastDateFromIp($this->request->getServer()->get('REMOTE_ADDR', ''));
+        $flood = $this->guestbookRepository->getLastDateFromIp($this->request->getServer()->get('REMOTE_ADDR', ''));
         $floodTime = !empty($flood) ? $this->date->timestamp($flood, true) + 30 : 0;
         $time = $this->date->timestamp('now', true);
 

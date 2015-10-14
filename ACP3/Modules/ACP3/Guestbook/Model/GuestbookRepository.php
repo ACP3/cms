@@ -1,14 +1,14 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Guestbook;
+namespace ACP3\Modules\ACP3\Guestbook\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\Guestbook
+ * Class GuestbookRepository
+ * @package ACP3\Modules\ACP3\Guestbook\Model
  */
-class Model extends Core\Model
+class GuestbookRepository extends Core\Model
 {
     const TABLE_NAME = 'guestbook';
 

@@ -28,9 +28,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
      */
-    protected $guestbookModel;
+    protected $guestbookRepository;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validator
      */
@@ -61,19 +61,19 @@ class Index extends Core\Modules\FrontendController
     protected $newsletterActive;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Pagination                         $pagination
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model            $guestbookModel
-     * @param \ACP3\Modules\ACP3\Guestbook\Validator        $guestbookValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
+     * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Pagination                                  $pagination
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Guestbook\Validator                 $guestbookValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
         Core\Helpers\FormToken $formTokenHelper,
-        Guestbook\Model $guestbookModel,
+        Guestbook\Model\GuestbookRepository $guestbookRepository,
         Guestbook\Validator $guestbookValidator)
     {
         parent::__construct($context);
@@ -81,7 +81,7 @@ class Index extends Core\Modules\FrontendController
         $this->date = $date;
         $this->pagination = $pagination;
         $this->formTokenHelper = $formTokenHelper;
-        $this->guestbookModel = $guestbookModel;
+        $this->guestbookRepository = $guestbookRepository;
         $this->guestbookValidator = $guestbookValidator;
     }
 
@@ -185,11 +185,11 @@ class Index extends Core\Modules\FrontendController
     {
         $this->view->assign('overlay', $this->guestbookSettings['overlay']);
 
-        $guestbook = $this->guestbookModel->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
+        $guestbook = $this->guestbookRepository->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $this->pagination->setTotalResults($this->guestbookModel->countAll($this->guestbookSettings['notify']));
+            $this->pagination->setTotalResults($this->guestbookRepository->countAll($this->guestbookSettings['notify']));
             $this->pagination->display();
 
             for ($i = 0; $i < $c_guestbook; ++$i) {
@@ -225,7 +225,7 @@ class Index extends Core\Modules\FrontendController
                     'active' => $this->guestbookSettings['notify'] == 2 ? 0 : 1,
                 ];
 
-                $lastId = $this->guestbookModel->insert($insertValues);
+                $lastId = $this->guestbookRepository->insert($insertValues);
 
                 // Send the notification E-mail if configured
                 if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
