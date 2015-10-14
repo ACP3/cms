@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Articles\Model\ArticleRepository;
 
 /**
  * Class Cache
@@ -12,22 +13,22 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID = 'list_id_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model
+     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
      */
-    protected $articlesModel;
+    protected $articleRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model      $articlesModel
+     * @param Core\Cache        $cache
+     * @param ArticleRepository $articleRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $articlesModel
+        ArticleRepository $articleRepository
     )
     {
         parent::__construct($cache);
 
-        $this->articlesModel = $articlesModel;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -57,6 +58,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveCache($id)
     {
-        return $this->cache->save(self::CACHE_ID . $id, $this->articlesModel->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $id, $this->articleRepository->getOneById($id));
     }
 }

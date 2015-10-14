@@ -17,9 +17,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model
+     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
      */
-    protected $articlesModel;
+    protected $articleRepository;
     /**
      * @var \ACP3\Modules\ACP3\Articles\Cache
      */
@@ -50,17 +50,17 @@ class Index extends Core\Modules\AdminController
     protected $menuItemFormFieldsHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Modules\ACP3\Articles\Model          $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Cache          $articlesCache
-     * @param \ACP3\Modules\ACP3\Articles\Validator      $articlesValidator
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Core\Date                                     $date
+     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Validator               $articlesValidator
+     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
-        Articles\Model $articlesModel,
+        Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
         Articles\Validator $articlesValidator,
         Core\Helpers\FormToken $formTokenHelper)
@@ -68,7 +68,7 @@ class Index extends Core\Modules\AdminController
         parent::__construct($context);
 
         $this->date = $date;
-        $this->articlesModel = $articlesModel;
+        $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;
         $this->articlesValidator = $articlesValidator;
         $this->formTokenHelper = $formTokenHelper;
@@ -167,7 +167,7 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $lastId = $this->articlesModel->insert($insertValues);
+            $lastId = $this->articleRepository->insert($insertValues);
 
             $this->seo->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                 $formData['alias'],
@@ -201,7 +201,7 @@ class Index extends Core\Modules\AdminController
                 foreach ($items as $item) {
                     $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
-                    $bool = $this->articlesModel->delete($item);
+                    $bool = $this->articleRepository->delete($item);
 
                     if ($this->manageMenuItemHelper) {
                         $this->manageMenuItemHelper->manageMenuItem($uri, false);
@@ -228,7 +228,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $article = $this->articlesModel->getOneById($id);
+        $article = $this->articleRepository->getOneById($id);
 
         if (empty($article) === false) {
             $this->breadcrumb->setTitlePostfix($article['title']);
@@ -286,7 +286,7 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $bool = $this->articlesModel->update($updateValues, $id);
+            $bool = $this->articleRepository->update($updateValues, $id);
 
             $this->seo->insertUriAlias(
                 sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
@@ -308,7 +308,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $articles = $this->articlesModel->getAllInAcp();
+        $articles = $this->articleRepository->getAllInAcp();
 
         if (count($articles) > 0) {
             $canDelete = $this->acl->hasPermission('admin/articles/index/delete');

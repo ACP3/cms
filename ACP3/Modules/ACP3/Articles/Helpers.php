@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Articles\Model\ArticleRepository;
 
 /**
  * Class Helpers
@@ -15,21 +16,21 @@ class Helpers
      */
     protected $formsHelper;
     /**
-     * @var Model
+     * @var ArticleRepository
      */
-    protected $articlesModel;
+    protected $articleRepository;
 
     /**
      * @param Core\Helpers\Forms $formsHelper
-     * @param Model              $articlesModel
+     * @param ArticleRepository  $articleRepository
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
-        Model $articlesModel
+        ArticleRepository $articleRepository
     )
     {
         $this->formsHelper = $formsHelper;
-        $this->articlesModel = $articlesModel;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -41,7 +42,7 @@ class Helpers
      */
     public function articlesList($id = 0)
     {
-        $articles = $this->articlesModel->getAll();
+        $articles = $this->articleRepository->getAll();
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
@@ -59,6 +60,6 @@ class Helpers
      */
     public function articleExists($id)
     {
-        return $this->articlesModel->resultExists($id);
+        return $this->articleRepository->resultExists($id);
     }
 }

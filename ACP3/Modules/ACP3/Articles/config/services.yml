@@ -7,7 +7,7 @@ parameters:
   articles.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index'
   articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
-  articles.model.fqdn: 'ACP3\Modules\ACP3\Articles\Model'
+  articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
   articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validator'
   articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
   articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
@@ -15,7 +15,7 @@ parameters:
 services:
   articles.controller.admin.index:
     class: %articles.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@articles.model', '@articles.cache', '@articles.validator', '@core.helpers.formToken']
+    arguments: ['@core.context.admin', '@core.date', '@articles.model.articlerepository', '@articles.cache', '@articles.validator', '@core.helpers.formToken']
     calls:
       - ['setMenusCache', ['@?menus.cache']]
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
@@ -24,15 +24,15 @@ services:
 
   articles.controller.frontend.index:
     class: %articles.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.pageBreaks', '@articles.model', '@articles.cache']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.pageBreaks', '@articles.model.articlerepository', '@articles.cache']
 
   articles.controller.sidebar.index:
     class: %articles.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.date', '@articles.model', '@articles.cache']
+    arguments: ['@core.context', '@core.date', '@articles.model.articlerepository', '@articles.cache']
 
   articles.cache:
     class: %articles.cache.fqdn%
-    arguments: ['@articles.cache.core', '@articles.model']
+    arguments: ['@articles.cache.core', '@articles.model.articlerepository']
 
   articles.cache.core:
     class: ACP3\Core\Cache
@@ -40,10 +40,10 @@ services:
 
   articles.helpers:
     class: %articles.helpers.fqdn%
-    arguments: ['@core.helpers.forms', '@articles.model']
+    arguments: ['@core.helpers.forms', '@articles.model.articlerepository']
 
-  articles.model:
-    class: %articles.model.fqdn%
+  articles.model.articlerepository:
+    class: %articles.model.articlerepository.fqdn%
     arguments: ['@core.db']
 
   articles.validator:

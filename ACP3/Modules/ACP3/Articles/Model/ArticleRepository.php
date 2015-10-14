@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Modules\ACP3\Articles;
+namespace ACP3\Modules\ACP3\Articles\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\Articles
+ * Class ArticleRepository
+ * @package ACP3\Modules\ACP3\Articles\Model
  */
-class Model extends Core\Model
+class ArticleRepository extends Core\Model
 {
     const TABLE_NAME = 'articles';
 
