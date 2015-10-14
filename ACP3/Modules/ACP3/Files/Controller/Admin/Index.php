@@ -22,9 +22,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model
+     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
      */
-    protected $filesModel;
+    protected $filesRepository;
     /**
      * @var \ACP3\Modules\ACP3\Files\Cache
      */
@@ -43,19 +43,19 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model             $filesModel
-     * @param \ACP3\Modules\ACP3\Files\Cache             $filesCache
-     * @param \ACP3\Modules\ACP3\Files\Validator         $filesValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers      $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext     $context
+     * @param \ACP3\Core\Date                                $date
+     * @param \ACP3\Core\Helpers\FormToken                   $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Validator             $filesValidator
+     * @param \ACP3\Modules\ACP3\Categories\Helpers          $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        Files\Model $filesModel,
+        Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
         Files\Validator $filesValidator,
         Categories\Helpers $categoriesHelpers)
@@ -64,7 +64,7 @@ class Index extends Core\Modules\AdminController
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->filesModel = $filesModel;
+        $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
         $this->filesValidator = $filesValidator;
         $this->categoriesHelpers = $categoriesHelpers;
@@ -137,14 +137,14 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 $upload = new Core\Helpers\Upload('files');
                 foreach ($items as $item) {
                     if (!empty($item)) {
-                        $upload->removeUploadedFile($this->filesModel->getFileById($item)); // Datei ebenfalls löschen
-                        $bool = $this->filesModel->delete($item);
+                        $upload->removeUploadedFile($this->filesRepository->getFileById($item)); // Datei ebenfalls löschen
+                        $bool = $this->filesRepository->delete($item);
                         if ($this->commentsHelpers) {
                             $this->commentsHelpers->deleteCommentsByModuleAndResult('files', $item);
                         }
@@ -167,7 +167,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $file = $this->filesModel->getOneById($id);
+        $file = $this->filesRepository->getOneById($id);
 
         if (empty($file) === false) {
             $settings = $this->config->getSettings('files');
@@ -208,7 +208,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $files = $this->filesModel->getAllInAcp();
+        $files = $this->filesRepository->getAllInAcp();
 
         if (count($files) > 0) {
             $canDelete = $this->acl->hasPermission('admin/files/index/delete');
@@ -255,7 +255,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData, array $settings)
     {
-        return $this->actionHelper->handleCreatePostAction(function() use ($formData, $settings) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {
@@ -289,7 +289,7 @@ class Index extends Core\Modules\AdminController
             ];
 
 
-            $lastId = $this->filesModel->insert($insertValues);
+            $lastId = $this->filesRepository->insert($insertValues);
 
             $this->seo->insertUriAlias(
                 sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
@@ -315,7 +315,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $settings, array $dl, $id)
     {
-        return $this->actionHelper->handleEditPostAction(function() use ($formData, $settings, $dl, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $dl, $id) {
             $file = [];
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
@@ -359,7 +359,7 @@ class Index extends Core\Modules\AdminController
                 $updateValues = array_merge($updateValues, $newFileSql);
             }
 
-            $bool = $this->filesModel->update($updateValues, $id);
+            $bool = $this->filesRepository->update($updateValues, $id);
 
             $this->seo->insertUriAlias(
                 sprintf(Files\Helpers::URL_KEY_PATTERN, $id),

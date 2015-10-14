@@ -17,24 +17,24 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model
+     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
      */
-    protected $filesModel;
+    protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context $context
-     * @param \ACP3\Core\Date                       $date
-     * @param \ACP3\Modules\ACP3\Files\Model        $filesModel
+     * @param \ACP3\Core\Modules\Controller\Context          $context
+     * @param \ACP3\Core\Date                                $date
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Core\Date $date,
-        Files\Model $filesModel)
+        Files\Model\FilesRepository $filesRepository)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->filesModel = $filesModel;
+        $this->filesRepository = $filesRepository;
     }
 
     /**
@@ -46,9 +46,9 @@ class Index extends Core\Modules\Controller
         $settings = $this->config->getSettings('files');
 
         if (!empty($categoryId)) {
-            $categories = $this->filesModel->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
+            $categories = $this->filesRepository->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
         } else {
-            $categories = $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
+            $categories = $this->filesRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
 
         $this->view->assign('sidebar_files', $categories);

@@ -20,9 +20,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model
+     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
      */
-    protected $filesModel;
+    protected $filesRepository;
     /**
      * @var \ACP3\Modules\ACP3\Files\Cache
      */
@@ -33,23 +33,23 @@ class Index extends Core\Modules\FrontendController
     protected $categoriesModel;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Modules\ACP3\Files\Model                $filesModel
-     * @param \ACP3\Modules\ACP3\Files\Cache                $filesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model           $categoriesModel
+     * @param \ACP3\Core\Modules\Controller\FrontendContext  $context
+     * @param \ACP3\Core\Date                                $date
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
+     * @param \ACP3\Modules\ACP3\Categories\Model            $categoriesModel
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
-        Files\Model $filesModel,
+        Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
         Categories\Model $categoriesModel)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->filesModel = $filesModel;
+        $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
         $this->categoriesModel = $categoriesModel;
     }
@@ -78,7 +78,7 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionDetails($id, $action = '')
     {
-        if ($this->filesModel->resultExists($id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesCache->getCache($id);
 
             if ($action === 'download') {
@@ -121,7 +121,7 @@ class Index extends Core\Modules\FrontendController
 
             return [
                 'dateformat' => $settings['dateformat'],
-                'files' => $this->filesModel->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
+                'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
             ];
         }
 

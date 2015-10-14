@@ -5,7 +5,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Date;
 use ACP3\Core\Lang;
 use ACP3\Core\Router;
-use ACP3\Modules\ACP3\Files\Model;
+use ACP3\Modules\ACP3\Files\Model\FilesRepository;
 use ACP3\Modules\ACP3\Search\Event\DisplaySearchResults;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -32,30 +32,30 @@ class OnDisplaySearchResultsListener extends Event
      */
     private $router;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model
+     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
      */
-    private $filesModel;
+    private $filesRepository;
 
     /**
      * @param \ACP3\Core\ACL                    $acl
      * @param \ACP3\Core\Date                   $date
      * @param \ACP3\Core\Lang                   $lang
      * @param \ACP3\Core\Router                 $router
-     * @param \ACP3\Modules\ACP3\Files\Model $filesModel
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
         ACL $acl,
         Date $date,
         Lang $lang,
         Router $router,
-        Model $filesModel
+        FilesRepository $filesRepository
     )
     {
         $this->acl = $acl;
         $this->date = $date;
         $this->lang = $lang;
         $this->router = $router;
-        $this->filesModel = $filesModel;
+        $this->filesRepository = $filesRepository;
     }
 
     /**
@@ -66,7 +66,7 @@ class OnDisplaySearchResultsListener extends Event
         if (in_array('files', $displaySearchResults->getModules()) && $this->acl->hasPermission('frontend/files')) {
             $fields = $this->mapSearchAreasToFields($displaySearchResults->getAreas());
 
-            $results = $this->filesModel->getAllSearchResults(
+            $results = $this->filesRepository->getAllSearchResults(
                 $fields,
                 $displaySearchResults->getSearchTerm(),
                 $displaySearchResults->getSortDirection(),

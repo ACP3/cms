@@ -1,14 +1,14 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Files;
+namespace ACP3\Modules\ACP3\Files\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\Files
+ * Class FilesRepository
+ * @package ACP3\Modules\ACP3\Files\Model
  */
-class Model extends Core\Model
+class FilesRepository extends Core\Model
 {
     const TABLE_NAME = 'files';
 
