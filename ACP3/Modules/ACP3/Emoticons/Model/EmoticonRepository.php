@@ -1,14 +1,14 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Emoticons;
+namespace ACP3\Modules\ACP3\Emoticons\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\Emoticons
+ * Class EmoticonRepository
+ * @package ACP3\Modules\ACP3\Emoticons\Model
  */
-class Model extends Core\Model
+class EmoticonRepository extends Core\Model
 {
     const TABLE_NAME = 'emoticons';
 

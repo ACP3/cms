@@ -10,14 +10,14 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Mime
+     * @var \ACP3\Core\Validator\Rules\Mime
      */
     protected $mimeValidator;
 
     /**
-     * @param Core\Lang                 $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Mime $mimeValidator
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
+     * @param \ACP3\Core\Validator\Rules\Mime $mimeValidator
      */
     public function __construct(
         Core\Lang $lang,
@@ -31,12 +31,12 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array $formData
-     * @param       $file
-     * @param array $settings
+     * @param array      $formData
+     * @param null|array $file
+     * @param array      $settings
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\InvalidFormToken
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData, $file, array $settings)
     {
@@ -58,12 +58,12 @@ class Validator extends Core\Validator\AbstractValidator
     }
 
     /**
-     * @param array $formData
-     * @param       $file
-     * @param array $settings
+     * @param array      $formData
+     * @param null|array $file
+     * @param array      $settings
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\InvalidFormToken
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateEdit(array $formData, $file, array $settings)
     {
@@ -85,8 +85,8 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\InvalidFormToken
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {

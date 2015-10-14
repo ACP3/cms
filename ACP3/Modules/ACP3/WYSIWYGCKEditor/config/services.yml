@@ -14,5 +14,5 @@ services:
     class: %core.wysiwyg.ckeditor.fqdn%
     arguments: ['@core.modules', '@core.view']
     calls:
-      - ['setEmoticonsModel', ['@?emoticons.model']]
+      - ['setemoticonRepository', ['@?emoticons.model.emoticonrepository']]
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]

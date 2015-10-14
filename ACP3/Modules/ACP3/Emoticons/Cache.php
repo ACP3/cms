@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Emoticons;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository;
 
 /**
  * Class Cache
@@ -11,22 +12,22 @@ class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'list';
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model
+     * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
      */
-    protected $emoticonsModel;
+    protected $emoticonRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model      $emoticonsModel
+     * @param \ACP3\Core\Cache                                      $cache
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $emoticonsModel
+        EmoticonRepository $emoticonRepository
     )
     {
         parent::__construct($cache);
 
-        $this->emoticonsModel = $emoticonsModel;
+        $this->emoticonRepository = $emoticonRepository;
     }
 
     /**
@@ -50,7 +51,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveCache()
     {
-        $emoticons = $this->emoticonsModel->getAll();
+        $emoticons = $this->emoticonRepository->getAll();
         $c_emoticons = count($emoticons);
 
         $data = [];

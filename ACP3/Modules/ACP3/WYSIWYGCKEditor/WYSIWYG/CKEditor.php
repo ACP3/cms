@@ -20,9 +20,9 @@ class CKEditor extends Textarea
      */
     private $view;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model
+     * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
      */
-    private $emoticonsModel;
+    private $emoticonRepository;
 
     /**
      * @var \ACP3\Modules\ACP3\Filemanager\Helpers
@@ -55,13 +55,13 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Emoticons\Model $emoticonsModel
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository
      *
      * @return $this
      */
-    public function setEmoticonsModel(\ACP3\Modules\ACP3\Emoticons\Model $emoticonsModel)
+    public function setemoticonRepository(\ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository)
     {
-        $this->emoticonsModel = $emoticonsModel;
+        $this->emoticonRepository = $emoticonRepository;
 
         return $this;
     }
@@ -179,7 +179,7 @@ class CKEditor extends Textarea
             if ($this->modules->isActive('emoticons') === true) {
                 $this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
                 $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
-                $emoticons = $this->emoticonsModel->getAll();
+                $emoticons = $this->emoticonRepository->getAll();
                 $c_emoticons = count($emoticons);
 
                 $images = $descriptions = [];

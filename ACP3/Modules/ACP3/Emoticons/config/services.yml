@@ -2,7 +2,7 @@ parameters:
   emoticons.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index'
   emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
-  emoticons.model.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model'
+  emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
   emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validator'
   emoticons.installer.sampledata.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\SampleData'
   emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
@@ -11,15 +11,15 @@ parameters:
 services:
   emoticons.controller.admin.index:
     class: %emoticons.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.formToken', '@emoticons.model', '@emoticons.validator', '@emoticons.cache']
+    arguments: ['@core.context.admin', '@core.helpers.formToken', '@emoticons.model.emoticonrepository', '@emoticons.validator', '@emoticons.cache']
 
-  emoticons.model:
-    class: %emoticons.model.fqdn%
+  emoticons.model.emoticonrepository:
+    class: %emoticons.model.emoticonrepository.fqdn%
     arguments: ['@core.db']
 
   emoticons.cache:
     class: %emoticons.cache.fqdn%
-    arguments: ['@emoticons.cache.core', '@emoticons.model']
+    arguments: ['@emoticons.cache.core', '@emoticons.model.emoticonrepository']
 
   emoticons.cache.core:
     class: ACP3\Core\Cache

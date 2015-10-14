@@ -16,9 +16,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model
+     * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
      */
-    protected $emoticonsModel;
+    protected $emoticonRepository;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Validator
      */
@@ -29,23 +29,23 @@ class Index extends Core\Modules\AdminController
     protected $emoticonsCache;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Emoticons\Model         $emoticonsModel
-     * @param \ACP3\Modules\ACP3\Emoticons\Validator     $emoticonsValidator
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache         $emoticonsCache
+     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
+     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Validator                $emoticonsValidator
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache                    $emoticonsCache
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Emoticons\Model $emoticonsModel,
+        Emoticons\Model\EmoticonRepository $emoticonRepository,
         Emoticons\Validator $emoticonsValidator,
         Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->emoticonsModel = $emoticonsModel;
+        $this->emoticonRepository = $emoticonRepository;
         $this->emoticonsValidator = $emoticonsValidator;
         $this->emoticonsCache = $emoticonsCache;
     }
@@ -71,7 +71,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
@@ -86,7 +86,7 @@ class Index extends Core\Modules\AdminController
                 'img' => $result['name'],
             ];
 
-            $bool = $this->emoticonsModel->insert($insertValues);
+            $bool = $this->emoticonRepository->insert($insertValues);
 
             $this->emoticonsCache->saveCache();
 
@@ -106,16 +106,16 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 $upload = new Core\Helpers\Upload('emoticons');
                 foreach ($items as $item) {
-                    if (!empty($item) && $this->emoticonsModel->resultExists($item) === true) {
+                    if (!empty($item) && $this->emoticonRepository->resultExists($item) === true) {
                         // Datei ebenfalls löschen
-                        $file = $this->emoticonsModel->getOneImageById($item);
+                        $file = $this->emoticonRepository->getOneImageById($item);
                         $upload->removeUploadedFile($file);
-                        $bool = $this->emoticonsModel->delete($item);
+                        $bool = $this->emoticonRepository->delete($item);
                     }
                 }
 
@@ -134,7 +134,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $emoticon = $this->emoticonsModel->getOneById($id);
+        $emoticon = $this->emoticonRepository->getOneById($id);
 
         if (empty($emoticon) === false) {
             if ($this->request->getPost()->isEmpty() === false) {
@@ -158,7 +158,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $emoticon, $id)
     {
-        return $this->actionHelper->handleEditPostAction(function() use ($formData, $emoticon, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $emoticon, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->emoticonsValidator->validateEdit($formData, $file, $this->config->getSettings('emoticons'));
@@ -175,7 +175,7 @@ class Index extends Core\Modules\AdminController
                 $updateValues['img'] = $result['name'];
             }
 
-            $bool = $this->emoticonsModel->update($updateValues, $id);
+            $bool = $this->emoticonRepository->update($updateValues, $id);
 
             $this->emoticonsCache->saveCache();
 
@@ -187,7 +187,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $emoticons = $this->emoticonsModel->getAll();
+        $emoticons = $this->emoticonRepository->getAll();
 
         if (count($emoticons) > 0) {
             $canDelete = $this->acl->hasPermission('admin/emoticons/index/delete');
@@ -225,7 +225,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        return $this->actionHelper->handleSettingsPostAction(function() use ($formData){
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->emoticonsValidator->validateSettings($formData);
 
             $data = [
