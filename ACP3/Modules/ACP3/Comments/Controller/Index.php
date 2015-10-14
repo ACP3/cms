@@ -27,9 +27,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model
+     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
      */
-    protected $commentsModel;
+    protected $commentRepository;
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validator
      */
@@ -52,18 +52,18 @@ class Index extends Core\Modules\FrontendController
     protected $commentsSettings;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Pagination                         $pagination
-     * @param \ACP3\Modules\ACP3\Comments\Model             $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Validator         $commentsValidator
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\FrontendContext       $context
+     * @param \ACP3\Core\Date                                     $date
+     * @param \ACP3\Core\Pagination                               $pagination
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validator               $commentsValidator
+     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Comments\Model $commentsModel,
+        Comments\Model\CommentRepository $commentRepository,
         Comments\Validator $commentsValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
@@ -71,7 +71,7 @@ class Index extends Core\Modules\FrontendController
 
         $this->date = $date;
         $this->pagination = $pagination;
-        $this->commentsModel = $commentsModel;
+        $this->commentRepository = $commentRepository;
         $this->commentsValidator = $commentsValidator;
         $this->formTokenHelper = $formTokenHelper;
     }
@@ -117,11 +117,11 @@ class Index extends Core\Modules\FrontendController
     public function actionIndex($module, $entryId)
     {
         // Auflistung der Kommentare
-        $comments = $this->commentsModel->getAllByModule($this->modules->getModuleId($module), $entryId, POS, $this->user->getEntriesPerPage());
+        $comments = $this->commentRepository->getAllByModule($this->modules->getModuleId($module), $entryId, POS, $this->user->getEntriesPerPage());
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
-            $this->pagination->setTotalResults($this->commentsModel->countAllByModule($this->modules->getModuleId($module), $entryId));
+            $this->pagination->setTotalResults($this->commentRepository->countAllByModule($this->modules->getModuleId($module), $entryId));
             $this->pagination->display();
 
             for ($i = 0; $i < $c_comments; ++$i) {
@@ -208,7 +208,7 @@ class Index extends Core\Modules\FrontendController
                     'entry_id' => $entryId,
                 ];
 
-                $bool = $this->commentsModel->insert($insertValues);
+                $bool = $this->commentRepository->insert($insertValues);
 
                 $this->formTokenHelper->unsetFormToken();
 

@@ -3,7 +3,7 @@ parameters:
   comments.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Index'
   comments.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Index'
   comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
-  comments.model.fqdn: 'ACP3\Modules\ACP3\Comments\Model'
+  comments.model.commentrepository.fqdn: 'ACP3\Modules\ACP3\Comments\Model\CommentRepository'
   comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validator'
   comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'
   comments.installer.migration.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Migration'
@@ -11,27 +11,27 @@ parameters:
 services:
   comments.controller.admin.details:
     class: %comments.controller.admin.details.fqdn%
-    arguments: ['@core.context.admin', '@comments.model', '@comments.validator', '@system.model.modulerepository', '@core.helpers.formToken']
+    arguments: ['@core.context.admin', '@comments.model.commentrepository', '@comments.validator', '@system.model.modulerepository', '@core.helpers.formToken']
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.admin.index:
     class: %comments.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@comments.model', '@comments.validator', '@core.helpers.formToken']
+    arguments: ['@core.context.admin', '@core.date', '@comments.model.commentrepository', '@comments.validator', '@core.helpers.formToken']
 
   comments.controller.frontend.index:
     class: %comments.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model', '@comments.validator', '@core.helpers.formToken']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model.commentrepository', '@comments.validator', '@core.helpers.formToken']
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.helpers:
     class: %comments.helpers.fqdn%
-    arguments: ['@core.modules', '@comments.model']
+    arguments: ['@core.modules', '@comments.model.commentrepository']
 
-  comments.model:
-    class: %comments.model.fqdn%
+  comments.model.commentrepository:
+    class: %comments.model.commentrepository.fqdn%
     arguments: ['@core.db']
 
   comments.validator:

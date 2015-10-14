@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Comments\Model\CommentRepository;
 
 /**
  * Class Validator
@@ -10,11 +11,11 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Captcha
+     * @var \ACP3\Core\Validator\Rules\Captcha
      */
     protected $captchaValidator;
     /**
-     * @var Core\ACL
+     * @var \ACP3\Core\ACL
      */
     protected $acl;
     /**
@@ -30,19 +31,19 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var Model
+     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
      */
-    protected $commentsModel;
+    protected $commentRepository;
 
     /**
-     * @param Core\Lang                    $lang
-     * @param Core\Validator\Rules\Misc    $validate
-     * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\ACL                     $acl
-     * @param Core\User                    $user
-     * @param Core\Date                    $date
-     * @param Core\Modules                 $modules
-     * @param Model                        $commentsModel
+     * @param \ACP3\Core\Lang                                     $lang
+     * @param \ACP3\Core\Validator\Rules\Misc                     $validate
+     * @param \ACP3\Core\Validator\Rules\Captcha                  $captchaValidator
+     * @param \ACP3\Core\ACL                                      $acl
+     * @param \ACP3\Core\User                                     $user
+     * @param \ACP3\Core\Date                                     $date
+     * @param \ACP3\Core\Modules                                  $modules
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Lang $lang,
@@ -52,7 +53,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\User $user,
         Core\Date $date,
         Core\Modules $modules,
-        Model $commentsModel
+        CommentRepository $commentRepository
     )
     {
         parent::__construct($lang, $validate);
@@ -62,7 +63,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->user = $user;
         $this->date = $date;
         $this->modules = $modules;
-        $this->commentsModel = $commentsModel;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -77,7 +78,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         // Flood Sperre
-        $flood = $this->commentsModel->getLastDateFromIp($ip);
+        $flood = $this->commentRepository->getLastDateFromIp($ip);
         $floodTime = !empty($flood) ? $this->date->timestamp($flood, true) + 30 : 0;
         $time = $this->date->timestamp('now', true);
 

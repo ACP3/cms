@@ -16,9 +16,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model
+     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
      */
-    protected $commentsModel;
+    protected $commentRepository;
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validator
      */
@@ -29,23 +29,23 @@ class Index extends Core\Modules\AdminController
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Modules\ACP3\Comments\Model          $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Validator      $commentsValidator
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Core\Date                                     $date
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validator               $commentsValidator
+     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
-        Comments\Model $commentsModel,
+        Comments\Model\CommentRepository $commentRepository,
         Comments\Validator $commentsValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->commentsModel = $commentsModel;
+        $this->commentRepository = $commentRepository;
         $this->commentsValidator = $commentsValidator;
         $this->formTokenHelper = $formTokenHelper;
     }
@@ -61,10 +61,10 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
                 foreach ($items as $item) {
-                    $bool = $this->commentsModel->delete($item, 'module_id');
+                    $bool = $this->commentRepository->delete($item, 'module_id');
                 }
 
                 return $bool;
@@ -74,7 +74,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $comments = $this->commentsModel->getCommentsGroupedByModule();
+        $comments = $this->commentRepository->getCommentsGroupedByModule();
         $c_comments = count($comments);
 
         if ($c_comments > 0) {

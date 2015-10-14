@@ -1,14 +1,14 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Comments;
+namespace ACP3\Modules\ACP3\Comments\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\Comments
+ * Class CommentRepository
+ * @package ACP3\Modules\ACP3\Comments\Model
  */
-class Model extends Core\Model
+class CommentRepository extends Core\Model
 {
     const TABLE_NAME = 'comments';
 

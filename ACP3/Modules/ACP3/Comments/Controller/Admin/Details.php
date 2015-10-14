@@ -14,9 +14,9 @@ use ACP3\Modules\ACP3\System;
 class Details extends Core\Modules\AdminController
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model
+     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
      */
-    protected $commentsModel;
+    protected $commentRepository;
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validator
      */
@@ -35,22 +35,22 @@ class Details extends Core\Modules\AdminController
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext       $context
-     * @param \ACP3\Modules\ACP3\Comments\Model                $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Validator            $commentsValidator
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
-     * @param \ACP3\Core\Helpers\FormToken                     $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validator               $commentsValidator
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository    $systemModuleRepository
+     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
-        Comments\Model $commentsModel,
+        Comments\Model\CommentRepository $commentRepository,
         Comments\Validator $commentsValidator,
         System\Model\ModuleRepository $systemModuleRepository,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
-        $this->commentsModel = $commentsModel;
+        $this->commentRepository = $commentRepository;
         $this->commentsValidator = $commentsValidator;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->formTokenHelper = $formTokenHelper;
@@ -85,18 +85,18 @@ class Details extends Core\Modules\AdminController
                 // Get the module-ID of the first item
                 $moduleId = 0;
                 if (isset($items[0])) {
-                    $comment = $this->commentsModel->getOneById($items[0]);
+                    $comment = $this->commentRepository->getOneById($items[0]);
                     if (!empty($comment)) {
                         $moduleId = $comment['module_id'];
                     }
                 }
 
                 foreach ($items as $item) {
-                    $bool = $this->commentsModel->delete($item);
+                    $bool = $this->commentRepository->delete($item);
                 }
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
-                if ($this->commentsModel->countAll($moduleId) == 0) {
+                if ($this->commentRepository->countAll($moduleId) == 0) {
                     return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
                 }
 
@@ -115,7 +115,7 @@ class Details extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $comment = $this->commentsModel->getOneById($id);
+        $comment = $this->commentRepository->getOneById($id);
 
         if (empty($comment) === false) {
             $this->breadcrumb
@@ -146,7 +146,7 @@ class Details extends Core\Modules\AdminController
      */
     public function actionIndex($id)
     {
-        $comments = $this->commentsModel->getAllByModuleInAcp($id);
+        $comments = $this->commentRepository->getAllByModuleInAcp($id);
 
         if (empty($comments) === false) {
             $moduleName = $this->systemModuleRepository->getModuleNameById($id);
@@ -204,7 +204,7 @@ class Details extends Core\Modules\AdminController
                 $updateValues['name'] = Core\Functions::strEncode($formData['name']);
             }
 
-            $bool = $this->commentsModel->update($updateValues, $id);
+            $bool = $this->commentRepository->update($updateValues, $id);
 
             $this->formTokenHelper->unsetFormToken();
 
