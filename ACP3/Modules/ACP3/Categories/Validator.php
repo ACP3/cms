@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\CategoryRepository;
 
 /**
  * Class Validator
@@ -14,41 +15,41 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $mimeValidator;
     /**
-     * @var Model
+     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
      */
-    protected $categoriesModel;
+    protected $categoryRepository;
     /**
-     * @var Helpers
+     * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
     protected $categoriesHelpers;
 
     /**
-     * @param Core\Lang                 $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Mime $mimeValidator
-     * @param Helpers                   $categoriesHelpers
-     * @param Model                     $categoriesModel
+     * @param \ACP3\Core\Lang                                        $lang
+     * @param \ACP3\Core\Validator\Rules\Misc                        $validate
+     * @param \ACP3\Core\Validator\Rules\Mime                        $mimeValidator
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Mime $mimeValidator,
         Helpers $categoriesHelpers,
-        Model $categoriesModel
+        CategoryRepository $categoryRepository
     )
     {
         parent::__construct($lang, $validate);
 
         $this->mimeValidator = $mimeValidator;
         $this->categoriesHelpers = $categoriesHelpers;
-        $this->categoriesModel = $categoriesModel;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
-     * @param array  $formData
-     * @param        $file
-     * @param array  $settings
-     * @param string $categoryId
+     * @param array      $formData
+     * @param null|array $file
+     * @param array      $settings
+     * @param string     $categoryId
      *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
@@ -74,7 +75,7 @@ class Validator extends Core\Validator\AbstractValidator
             $this->errors['module'] = $this->lang->t('categories', 'select_module');
         }
 
-        $categoryName = empty($categoryId) ? $formData['module'] : $this->categoriesModel->getModuleNameFromCategoryId($categoryId);
+        $categoryName = empty($categoryId) ? $formData['module'] : $this->categoryRepository->getModuleNameFromCategoryId($categoryId);
         if (strlen($formData['title']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['title'], $categoryName, $categoryId)) {
             $this->errors['title'] = $this->lang->t('categories', 'category_already_exists');
         }

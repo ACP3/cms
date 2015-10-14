@@ -2,7 +2,7 @@ parameters:
   categories.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index'
   categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
-  categories.model.fqdn: 'ACP3\Modules\ACP3\Categories\Model'
+  categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
   categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validator'
   categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'
   categories.installer.migration.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Migration'
@@ -13,7 +13,7 @@ services:
     arguments: ['@core.context.admin', '@categories.model', '@categories.cache', '@categories.validator', '@core.helpers.formToken']
 
   categories.model:
-    class: %categories.model.fqdn%
+    class: %categories.model.categoryrepository.fqdn%
     arguments: ['@core.db']
 
   categories.cache:

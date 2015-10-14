@@ -38,9 +38,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $categoriesHelpers;
     /**
-     * @var Categories\Model
+     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
      */
-    protected $categoriesModel;
+    protected $categoryRepository;
     /**
      * @var bool
      */
@@ -53,7 +53,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository  $newsRepository
      * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
      * @param \ACP3\Modules\ACP3\Categories\Helpers         $categoriesHelpers
-     * @param \ACP3\Modules\ACP3\Categories\Model           $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository           $categoryRepository
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -62,7 +62,7 @@ class Index extends Core\Modules\FrontendController
         News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
         Categories\Helpers $categoriesHelpers,
-        Categories\Model $categoriesModel)
+        Categories\Model\CategoryRepository $categoryRepository)
     {
         parent::__construct($context);
 
@@ -71,7 +71,7 @@ class Index extends Core\Modules\FrontendController
         $this->newsRepository = $newsRepository;
         $this->newsCache = $newsCache;
         $this->categoriesHelpers = $categoriesHelpers;
-        $this->categoriesModel = $categoriesModel;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function preDispatch()
@@ -120,7 +120,7 @@ class Index extends Core\Modules\FrontendController
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->router->route('news'));
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
-            $category = $this->categoriesModel->getTitleById($cat);
+            $category = $this->categoryRepository->getTitleById($cat);
             if (!empty($category)) {
                 $this->breadcrumb->append($category);
             }

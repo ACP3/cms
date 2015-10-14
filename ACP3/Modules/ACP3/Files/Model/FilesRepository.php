@@ -39,7 +39,7 @@ class FilesRepository extends Core\Model
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', [$id]);
     }
 
     /**
@@ -100,7 +100,7 @@ class FilesRepository extends Core\Model
 
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT f.*, c.title AS cat FROM ' . $this->getTableName() . ' AS f, ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model::TABLE_NAME) . ' AS c WHERE f.category_id = c.id ORDER BY f.start DESC, f.end DESC, f.id DESC');
+        return $this->db->fetchAll('SELECT f.*, c.title AS cat FROM ' . $this->getTableName() . ' AS f, ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c WHERE f.category_id = c.id ORDER BY f.start DESC, f.end DESC, f.id DESC');
     }
 
     /**

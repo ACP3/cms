@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\CategoryRepository;
 
 /**
  * Class Helpers
@@ -34,23 +35,23 @@ class Helpers
      */
     protected $categoriesCache;
     /**
-     * @var Model
+     * @var CategoryRepository
      */
-    protected $categoriesModel;
+    protected $categoryRepository;
     /**
      * @var Core\Helpers\Forms
      */
     protected $formsHelper;
 
     /**
-     * @param \ACP3\Core\ACL                      $acl
-     * @param \ACP3\Core\Lang                     $lang
-     * @param \ACP3\Core\Modules                  $modules
-     * @param \ACP3\Core\Http\RequestInterface    $request
-     * @param \ACP3\Core\View                     $view
-     * @param \ACP3\Core\Helpers\Forms            $formsHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model $categoriesModel
+     * @param \ACP3\Core\ACL                                         $acl
+     * @param \ACP3\Core\Lang                                        $lang
+     * @param \ACP3\Core\Modules                                     $modules
+     * @param \ACP3\Core\Http\RequestInterface                       $request
+     * @param \ACP3\Core\View                                        $view
+     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
+     * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\ACL $acl,
@@ -60,7 +61,7 @@ class Helpers
         Core\View $view,
         Core\Helpers\Forms $formsHelper,
         Cache $categoriesCache,
-        Model $categoriesModel
+        CategoryRepository $categoryRepository
     )
     {
         $this->acl = $acl;
@@ -70,7 +71,7 @@ class Helpers
         $this->view = $view;
         $this->formsHelper = $formsHelper;
         $this->categoriesCache = $categoriesCache;
-        $this->categoriesModel = $categoriesModel;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -82,7 +83,7 @@ class Helpers
      */
     public function categoryExists($categoryId)
     {
-        return $this->categoriesModel->resultExists($categoryId);
+        return $this->categoryRepository->resultExists($categoryId);
     }
 
     /**
@@ -105,13 +106,13 @@ class Helpers
                 'description' => '',
                 'module_id' => $moduleInfo['id'],
             ];
-            $result = $this->categoriesModel->insert($insertValues);
+            $result = $this->categoryRepository->insert($insertValues);
 
             $this->categoriesCache->saveCache($module);
 
             return $result;
         } else {
-            return $this->categoriesModel->getOneByTitleAndModule($title, $module)['id'];
+            return $this->categoryRepository->getOneByTitleAndModule($title, $module)['id'];
         }
     }
 
@@ -126,7 +127,7 @@ class Helpers
      */
     public function categoryIsDuplicate($title, $module, $categoryId = '')
     {
-        return $this->categoriesModel->resultIsDuplicate($title, $module, $categoryId);
+        return $this->categoryRepository->resultIsDuplicate($title, $module, $categoryId);
     }
 
     /**

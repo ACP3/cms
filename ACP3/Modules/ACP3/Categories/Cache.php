@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\CategoryRepository;
 
 /**
  * Class Cache
@@ -10,22 +11,22 @@ use ACP3\Core;
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
-     * @var Model
+     * @var CategoryRepository
      */
-    protected $categoriesModel;
+    protected $categoryRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model      $categoriesModel
+     * @param Core\Cache         $cache
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $categoriesModel
+        CategoryRepository $categoryRepository
     )
     {
         parent::__construct($cache);
 
-        $this->categoriesModel = $categoriesModel;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -55,6 +56,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveCache($moduleName)
     {
-        return $this->cache->save($moduleName, $this->categoriesModel->getAllByModuleName($moduleName));
+        return $this->cache->save($moduleName, $this->categoryRepository->getAllByModuleName($moduleName));
     }
 }

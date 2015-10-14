@@ -28,30 +28,30 @@ class Index extends Core\Modules\FrontendController
      */
     protected $filesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model
+     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
      */
-    protected $categoriesModel;
+    protected $categoryRepository;
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext  $context
      * @param \ACP3\Core\Date                                $date
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model            $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository            $categoryRepository
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
-        Categories\Model $categoriesModel)
+        Categories\Model\CategoryRepository $categoryRepository)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
-        $this->categoriesModel = $categoriesModel;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -110,8 +110,8 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionFiles($cat)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($cat) && $this->categoriesModel->resultExists($cat) === true) {
-            $category = $this->categoriesModel->getOneById($cat);
+        if ($this->get('core.validator.rules.misc')->isNumber($cat) && $this->categoryRepository->resultExists($cat) === true) {
+            $category = $this->categoryRepository->getOneById($cat);
 
             $this->breadcrumb
                 ->append($this->lang->t('files', 'files'), 'files')

@@ -12,9 +12,9 @@ use ACP3\Modules\ACP3\Categories;
 class Index extends Core\Modules\AdminController
 {
     /**
-     * @var Categories\Model
+     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
      */
-    protected $categoriesModel;
+    protected $categoryRepository;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Cache
      */
@@ -29,22 +29,22 @@ class Index extends Core\Modules\AdminController
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Modules\ACP3\Categories\Model        $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Cache        $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Validator    $categoriesValidator
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Validator                $categoriesValidator
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
-        Categories\Model $categoriesModel,
+        Categories\Model\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
         Categories\Validator $categoriesValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
-        $this->categoriesModel = $categoriesModel;
+        $this->categoryRepository = $categoryRepository;
         $this->categoriesCache = $categoriesCache;
         $this->categoriesValidator = $categoriesValidator;
         $this->formTokenHelper = $formTokenHelper;
@@ -81,7 +81,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
@@ -99,7 +99,7 @@ class Index extends Core\Modules\AdminController
                 $insertValues['picture'] = $result['name'];
             }
 
-            $bool = $this->categoriesModel->insert($insertValues);
+            $bool = $this->categoryRepository->insert($insertValues);
 
             $this->categoriesCache->saveCache(strtolower($formData['module']));
 
@@ -125,8 +125,8 @@ class Index extends Core\Modules\AdminController
                 $isInUse = false;
 
                 foreach ($items as $item) {
-                    if (!empty($item) && $this->categoriesModel->resultExists($item) === true) {
-                        $category = $this->categoriesModel->getCategoryDeleteInfosById($item);
+                    if (!empty($item) && $this->categoryRepository->resultExists($item) === true) {
+                        $category = $this->categoryRepository->getCategoryDeleteInfosById($item);
 
                         $serviceId = strtolower($category['module'] . '.model');
                         if ($this->container->has($serviceId)) {
@@ -139,7 +139,7 @@ class Index extends Core\Modules\AdminController
                         // Kategoriebild ebenfalls löschen
                         $upload = new Core\Helpers\Upload('categories');
                         $upload->removeUploadedFile($category['picture']);
-                        $bool = $this->categoriesModel->delete($item);
+                        $bool = $this->categoryRepository->delete($item);
                     }
                 }
 
@@ -165,7 +165,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $category = $this->categoriesModel->getOneById($id);
+        $category = $this->categoryRepository->getOneById($id);
 
         if (empty($category) === false) {
             $this->breadcrumb->setTitlePostfix($category['title']);
@@ -191,7 +191,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, array $category, $id)
     {
-        return $this->actionHelper->handleEditPostAction(function() use ($formData, $category, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $category, $id) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'), $id);
@@ -208,9 +208,9 @@ class Index extends Core\Modules\AdminController
                 $updateValues['picture'] = $result['name'];
             }
 
-            $bool = $this->categoriesModel->update($updateValues, $id);
+            $bool = $this->categoryRepository->update($updateValues, $id);
 
-            $this->categoriesCache->saveCache($this->categoriesModel->getModuleNameFromCategoryId($id));
+            $this->categoriesCache->saveCache($this->categoryRepository->getModuleNameFromCategoryId($id));
 
             $this->formTokenHelper->unsetFormToken();
 
@@ -220,7 +220,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $categories = $this->categoriesModel->getAllWithModuleName();
+        $categories = $this->categoryRepository->getAllWithModuleName();
         $c_categories = count($categories);
 
         if ($c_categories > 0) {
