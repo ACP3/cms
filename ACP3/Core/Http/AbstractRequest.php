@@ -136,7 +136,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the $_SERVER superglobal
      *
-     * @return \ACP3\Core\Http\Request\ServerBag
+     * @return \Symfony\Component\HttpFoundation\ServerBag
      */
     public function getServer()
     {
