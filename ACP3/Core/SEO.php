@@ -5,7 +5,7 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
-use ACP3\Modules\ACP3\Seo\Model as SeoModel;
+use ACP3\Modules\ACP3\Seo\Model\SeoRepository as seoRepository;
 
 /**
  * Class SEO
@@ -38,9 +38,9 @@ class SEO
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
-    protected $seoModel;
+    protected $seoRepository;
 
     /**
      * @var string
@@ -64,13 +64,13 @@ class SEO
     protected $metaDescriptionPostfix = '';
 
     /**
-     * @param \ACP3\Core\Lang                  $lang
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\Aliases        $aliases
-     * @param \ACP3\Core\Helpers\Forms         $formsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache     $seoCache
-     * @param \ACP3\Core\Config                $config
-     * @param \ACP3\Modules\ACP3\Seo\Model     $seoModel
+     * @param \ACP3\Core\Lang                            $lang
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Router\Aliases                  $aliases
+     * @param \ACP3\Core\Helpers\Forms                   $formsHelper
+     * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
+     * @param \ACP3\Core\Config                          $config
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
         Lang $lang,
@@ -79,7 +79,7 @@ class SEO
         Forms $formsHelper,
         SeoCache $seoCache,
         Config $config,
-        SeoModel $seoModel)
+        seoRepository $seoRepository)
     {
         $this->lang = $lang;
         $this->request = $request;
@@ -87,7 +87,7 @@ class SEO
         $this->formsHelper = $formsHelper;
         $this->seoCache = $seoCache;
         $this->config = $config;
-        $this->seoModel = $seoModel;
+        $this->seoRepository = $seoRepository;
     }
 
     /**
@@ -345,7 +345,7 @@ class SEO
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        $bool = $this->seoModel->delete($path, 'uri');
+        $bool = $this->seoRepository->delete($path, 'uri');
         return $bool !== false && $this->seoCache->saveCache() !== false;
     }
 
@@ -373,11 +373,11 @@ class SEO
         ];
 
         // Update an existing result
-        if ($this->seoModel->uriAliasExists($path) === true) {
-            $bool = $this->seoModel->update($values, ['uri' => $path]);
+        if ($this->seoRepository->uriAliasExists($path) === true) {
+            $bool = $this->seoRepository->update($values, ['uri' => $path]);
         } else {
             $values['uri'] = $path;
-            $bool = $this->seoModel->insert($values);
+            $bool = $this->seoRepository->insert($values);
         }
 
         return $bool !== false && $this->seoCache->saveCache() !== false;

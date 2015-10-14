@@ -28,4 +28,4 @@ services:
 
   core.validator.rules.router.aliases:
     class: ACP3\Core\Validator\Rules\Router\Aliases
-    arguments: ['@core.validator.rules.router', '@seo.model']
+    arguments: ['@core.validator.rules.router', '@seo.model.seorepository']

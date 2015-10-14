@@ -19,9 +19,9 @@ class Request extends AbstractRequest
      */
     protected $config;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
-    protected $seoModel;
+    protected $seoRepository;
 
     /**
      * @var string
@@ -57,16 +57,16 @@ class Request extends AbstractRequest
     protected $isHomepage;
 
     /**
-     * @param \ACP3\Core\Config            $config
-     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
+     * @param \ACP3\Core\Config                          $config
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
         Config $config,
-        Seo\Model $seoModel
+        Seo\Model\SeoRepository $seoRepository
     )
     {
         $this->config = $config;
-        $this->seoModel = $seoModel;
+        $this->seoRepository = $seoRepository;
 
         parent::__construct();
 
@@ -197,7 +197,7 @@ class Request extends AbstractRequest
         list($params, $probableQuery) = $this->checkUriAliasForAdditionalParameters();
 
         // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-        $alias = $this->seoModel->getUriByAlias(substr($probableQuery, 0, -1));
+        $alias = $this->seoRepository->getUriByAlias(substr($probableQuery, 0, -1));
         if (!empty($alias)) {
             $this->query = $alias . $params;
         }

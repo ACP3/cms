@@ -15,21 +15,21 @@ class Aliases
      */
     protected $routerValidator;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
-    protected $seoModel;
+    protected $seoRepository;
 
     /**
-     * @param \ACP3\Core\Validator\Rules\Router $routerValidator
-     * @param \ACP3\Modules\ACP3\Seo\Model      $seoModel
+     * @param \ACP3\Core\Validator\Rules\Router          $routerValidator
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
         Core\Validator\Rules\Router $routerValidator,
-        Seo\Model $seoModel
+        Seo\Model\SeoRepository $seoRepository
     )
     {
         $this->routerValidator = $routerValidator;
-        $this->seoModel = $seoModel;
+        $this->seoRepository = $seoRepository;
     }
 
     /**
@@ -48,8 +48,8 @@ class Aliases
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
                 if ($path !== '/' && $this->routerValidator->isInternalURI($path) === true) {
-                    return $this->seoModel->uriAliasExistsByAlias($alias, $path);
-                } elseif ($this->seoModel->uriAliasExistsByAlias($alias) === true) {
+                    return $this->seoRepository->uriAliasExistsByAlias($alias, $path);
+                } elseif ($this->seoRepository->uriAliasExistsByAlias($alias) === true) {
                     return true;
                 }
             }

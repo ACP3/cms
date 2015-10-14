@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Seo;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
 
 /**
  * Class Cache
@@ -10,21 +11,21 @@ use ACP3\Core;
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
-    protected $seoModel;
+    protected $seoRepository;
 
     /**
-     * @param \ACP3\Core\Cache             $cache
-     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
+     * @param \ACP3\Core\Cache                           $cache
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $seoModel)
+        SeoRepository $seoRepository)
     {
         parent::__construct($cache);
 
-        $this->seoModel = $seoModel;
+        $this->seoRepository = $seoRepository;
     }
 
     /**
@@ -48,7 +49,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     public function saveCache()
     {
-        $aliases = $this->seoModel->getAllMetaTags();
+        $aliases = $this->seoRepository->getAllMetaTags();
         $c_aliases = count($aliases);
         $data = [];
 

@@ -20,9 +20,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
-    protected $seoModel;
+    protected $seoRepository;
     /**
      * @var \ACP3\Modules\ACP3\Seo\Validator
      */
@@ -32,21 +32,21 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext $context
      * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Model               $seoModel
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      * @param \ACP3\Modules\ACP3\Seo\Validator           $seoValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Cache $seoCache,
-        Seo\Model $seoModel,
+        Seo\Model\SeoRepository $seoRepository,
         Seo\Validator $seoValidator)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->seoCache = $seoCache;
-        $this->seoModel = $seoModel;
+        $this->seoRepository = $seoRepository;
         $this->seoValidator = $seoValidator;
     }
 
@@ -77,11 +77,11 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 foreach ($items as $item) {
-                    $bool = $this->seoModel->delete($item);
+                    $bool = $this->seoRepository->delete($item);
                 }
 
                 $this->seoCache->saveCache();
@@ -99,7 +99,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $seo = $this->seoModel->getOneById($id);
+        $seo = $this->seoRepository->getOneById($id);
 
         if (empty($seo) === false) {
             $this->breadcrumb->setTitlePostfix($seo['alias']);
@@ -120,7 +120,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $seo = $this->seoModel->getAllInAcp();
+        $seo = $this->seoRepository->getAllInAcp();
 
         if (count($seo) > 0) {
             $canDelete = $this->acl->hasPermission('admin/seo/index/delete');
@@ -144,7 +144,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->seoValidator->validate($formData);
 
             $bool = $this->seo->insertUriAlias(
@@ -170,7 +170,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $path, $id)
     {
-        return $this->actionHelper->handleEditPostAction(function() use ($formData, $path, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $path, $id) {
             $this->seoValidator->validate($formData, $path);
 
             $updateValues = [
@@ -181,7 +181,7 @@ class Index extends Core\Modules\AdminController
                 'robots' => (int)$formData['seo_robots']
             ];
 
-            $bool = $this->seoModel->update($updateValues, $id);
+            $bool = $this->seoRepository->update($updateValues, $id);
 
             $this->seoCache->saveCache();
 
@@ -226,7 +226,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _settingsPost(array $formData)
     {
-        return $this->actionHelper->handleSettingsPostAction(function() use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->seoValidator->validateSettings($formData);
 
             // Config aktualisieren

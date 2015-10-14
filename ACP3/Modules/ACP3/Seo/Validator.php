@@ -41,8 +41,8 @@ class Validator extends Core\Validator\AbstractValidator
      * @param array  $formData
      * @param string $uriAlias
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\InvalidFormToken
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData, $uriAlias = '')
     {
@@ -62,8 +62,8 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * @param array $formData
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\InvalidFormToken
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateSettings(array $formData)
     {

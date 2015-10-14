@@ -1,13 +1,13 @@
 <?php
-namespace ACP3\Modules\ACP3\Seo;
+namespace ACP3\Modules\ACP3\Seo\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\System
+ * Class SeoRepository
+ * @package ACP3\Modules\ACP3\Seo\Model
  */
-class Model extends Core\Model
+class SeoRepository extends Core\Model
 {
     const TABLE_NAME = 'seo';
 

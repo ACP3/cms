@@ -63,7 +63,7 @@ services:
 
   core.request:
     class: ACP3\Core\Http\Request
-    arguments: ['@core.config', '@seo.model']
+    arguments: ['@core.config', '@seo.model.seorepository']
 
   core.response:
     class: Symfony\Component\HttpFoundation\Response
@@ -78,7 +78,7 @@ services:
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@core.config', '@seo.model']
+    arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@core.config', '@seo.model.seorepository']
 
   core.session:
     class: ACP3\Core\SessionHandler
