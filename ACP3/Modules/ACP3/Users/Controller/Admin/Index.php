@@ -30,9 +30,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $formsHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model
+     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
-    protected $usersModel;
+    protected $userRepository;
     /**
      * @var \ACP3\Modules\ACP3\Users\Validator
      */
@@ -43,14 +43,14 @@ class Index extends Core\Modules\AdminController
     protected $permissionsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
-     * @param \ACP3\Core\Helpers\Forms                   $formsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model             $usersModel
-     * @param \ACP3\Modules\ACP3\Users\Validator         $usersValidator
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers     $permissionsHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext    $context
+     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                     $secureHelper
+     * @param \ACP3\Core\Helpers\Forms                      $formsHelpers
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Validator            $usersValidator
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +58,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
-        Users\Model $usersModel,
+        Users\Model\UserRepository $userRepository,
         Users\Validator $usersValidator,
         Permissions\Helpers $permissionsHelpers)
     {
@@ -68,7 +68,7 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->formsHelpers = $formsHelpers;
-        $this->usersModel = $usersModel;
+        $this->userRepository = $userRepository;
         $this->usersValidator = $usersValidator;
         $this->permissionsHelpers = $permissionsHelpers;
     }
@@ -125,7 +125,7 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = $isAdminUser = $selfDelete = false;
                 foreach ($items as $item) {
                     if ($item == 1) {
@@ -136,7 +136,7 @@ class Index extends Core\Modules\AdminController
                             $this->user->logout();
                             $selfDelete = true;
                         }
-                        $bool = $this->usersModel->delete($item);
+                        $bool = $this->userRepository->delete($item);
                     }
                 }
                 if ($isAdminUser === true) {
@@ -159,7 +159,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        if ($this->usersModel->resultExists($id) === true) {
+        if ($this->userRepository->resultExists($id) === true) {
             $user = $this->user->getUserInfo($id);
 
             $this->breadcrumb->setTitlePostfix($user['nickname']);
@@ -228,7 +228,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $users = $this->usersModel->getAllInAcp();
+        $users = $this->userRepository->getAllInAcp();
         $c_users = count($users);
 
         if ($c_users > 0) {
@@ -257,7 +257,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost($formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->usersValidator->validate($formData);
 
             $salt = $this->secureHelper->salt(15);
@@ -293,7 +293,7 @@ class Index extends Core\Modules\AdminController
                 'registration_date' => $this->date->getCurrentDateTime(),
             ];
 
-            $lastId = $this->usersModel->insert($insertValues);
+            $lastId = $this->userRepository->insert($insertValues);
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
 
@@ -311,7 +311,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        return $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->usersValidator->validate($formData, $id);
 
             $updateValues = [
@@ -350,11 +350,11 @@ class Index extends Core\Modules\AdminController
                 $updateValues['pwd_salt'] = $salt;
             }
 
-            $bool = $this->usersModel->update($updateValues, $id);
+            $bool = $this->userRepository->update($updateValues, $id);
 
             // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
             if ($id == $this->user->getUserId() && $this->request->getCookies()->has(Core\User::AUTH_NAME)) {
-                $user = $this->usersModel->getOneById($id);
+                $user = $this->userRepository->getOneById($id);
                 $this->user->setRememberMeCookie(
                     $id,
                     $user['remember_me_token'],

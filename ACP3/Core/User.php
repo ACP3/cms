@@ -58,9 +58,9 @@ class User
      */
     protected $usersConfig;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model
+     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
-    protected $usersModel;
+    protected $userRepository;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -72,7 +72,7 @@ class User
      * @param \ACP3\Core\SessionHandler                         $sessionHandler
      * @param \ACP3\Core\Helpers\Secure                         $secureHelper
      * @param \ACP3\Core\Config                                 $config
-     * @param \ACP3\Modules\ACP3\Users\Model                    $usersModel
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository     $userRepository
      */
     public function __construct(
         RequestInterface $request,
@@ -80,7 +80,7 @@ class User
         SessionHandler $sessionHandler,
         Secure $secureHelper,
         Config $config,
-        Users\Model $usersModel
+        Users\Model\UserRepository $userRepository
     )
     {
         $this->request = $request;
@@ -88,7 +88,7 @@ class User
         $this->sessionHandler = $sessionHandler;
         $this->secureHelper = $secureHelper;
         $this->config = $config;
-        $this->usersModel = $usersModel;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -159,7 +159,7 @@ class User
 
         if (empty($this->userInfo[$userId])) {
             $countries = Country::worldCountries();
-            $info = $this->usersModel->getOneById($userId);
+            $info = $this->userRepository->getOneById($userId);
             if (!empty($info)) {
                 $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
                 $this->userInfo[$userId] = $info;
@@ -227,7 +227,7 @@ class User
      */
     public function login($username, $password, $rememberMe)
     {
-        $user = $this->usersModel->getOneByNickname($username);
+        $user = $this->userRepository->getOneByNickname($username);
 
         if (!empty($user)) {
             // The user account has been locked
@@ -241,7 +241,7 @@ class User
 
             if ($user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password, 'sha512')) {
                 if ($user['login_errors'] > 0) {
-                    $this->usersModel->update(['login_errors' => 0], (int)$user['id']);
+                    $this->userRepository->update(['login_errors' => 0], (int)$user['id']);
                 }
 
                 if ($rememberMe === true) {
@@ -285,7 +285,7 @@ class User
     protected function saveFailedLoginAttempts(array $userData)
     {
         $loginErrors = $userData['login_errors'] + 1;
-        $this->usersModel->update(['login_errors' => $loginErrors], (int)$userData['id']);
+        $this->userRepository->update(['login_errors' => $loginErrors], (int)$userData['id']);
         return $loginErrors;
     }
 
@@ -364,7 +364,7 @@ class User
      */
     private function saveRememberMeToken($userId, $token)
     {
-        return $this->usersModel->update(['remember_me_token' => $token], $userId);
+        return $this->userRepository->update(['remember_me_token' => $token], $userId);
     }
 
     /**
@@ -383,9 +383,9 @@ class User
             'pwd_salt' => $salt
         ];
 
-        $this->usersModel->update($updateValues, $userId);
+        $this->userRepository->update($updateValues, $userId);
 
-        return $this->usersModel->getOneById($userId);
+        return $this->userRepository->getOneById($userId);
     }
 
     /**

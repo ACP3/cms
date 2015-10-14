@@ -1,6 +1,6 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Users;
+namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core;
 
@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Model
  * @package ACP3\Modules\ACP3\Users
  */
-class Model extends Core\Model
+class UserRepository extends Core\Model
 {
     const TABLE_NAME = 'users';
 

@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Users;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Users\Model\UserRepository;
 
 /**
  * Class Validator
@@ -10,15 +11,15 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\ACL
+     * @var \ACP3\Core\Validator\Rules\ACL
      */
     protected $aclValidator;
     /**
-     * @var Core\Validator\Rules\Captcha
+     * @var \ACP3\Core\Validator\Rules\Captcha
      */
     protected $captchaValidator;
     /**
-     * @var Core\Validator\Rules\Date
+     * @var \ACP3\Core\Validator\Rules\Date
      */
     protected $dateValidator;
     /**
@@ -30,19 +31,19 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $user;
     /**
-     * @var Model
+     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
     protected $userModel;
 
     /**
-     * @param Core\Lang                    $lang
-     * @param Core\Validator\Rules\Misc    $validate
-     * @param Core\Validator\Rules\ACL     $aclValidator
-     * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\Validator\Rules\Date    $dateValidator
-     * @param Core\ACL                     $acl
-     * @param Core\User                    $user
-     * @param Model                        $userModel
+     * @param \ACP3\Core\Lang                               $lang
+     * @param \ACP3\Core\Validator\Rules\Misc               $validate
+     * @param \ACP3\Core\Validator\Rules\ACL                $aclValidator
+     * @param \ACP3\Core\Validator\Rules\Captcha            $captchaValidator
+     * @param \ACP3\Core\Validator\Rules\Date               $dateValidator
+     * @param \ACP3\Core\ACL                                $acl
+     * @param \ACP3\Core\User                               $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      */
     public function __construct(
         Core\Lang $lang,
@@ -52,7 +53,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Date $dateValidator,
         Core\ACL $acl,
         Core\User $user,
-        Model $userModel
+        UserRepository $userRepository
     )
     {
         parent::__construct($lang, $validate);
@@ -62,7 +63,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->dateValidator = $dateValidator;
         $this->acl = $acl;
         $this->user = $user;
-        $this->userModel = $userModel;
+        $this->userModel = $userRepository;
     }
 
     /**

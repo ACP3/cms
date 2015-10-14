@@ -4,7 +4,7 @@ namespace ACP3\Core\Authentication;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\SessionHandler;
 use ACP3\Core\User;
-use ACP3\Modules\ACP3\Users\Model;
+use ACP3\Modules\ACP3\Users\Model\UserRepository;
 
 /**
  * Class Native
@@ -21,23 +21,23 @@ class Native implements AuthenticationInterface
      */
     protected $sessionHandler;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model
+     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
-    protected $usersModel;
+    protected $userRepository;
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
-     * @param \ACP3\Modules\ACP3\Users\Model   $usersModel
+     * @param \ACP3\Core\Http\RequestInterface              $request
+     * @param \ACP3\Core\SessionHandler                     $sessionHandler
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      */
     public function __construct(
         RequestInterface $request,
         SessionHandler $sessionHandler,
-        Model $usersModel)
+        UserRepository $userRepository)
     {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
-        $this->usersModel = $usersModel;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -64,7 +64,7 @@ class Native implements AuthenticationInterface
      */
     protected function verifyCredentials($userId, $token)
     {
-        $user = $this->usersModel->getOneById($userId);
+        $user = $this->userRepository->getOneById($userId);
         if (!empty($user) && $user['remember_me_token'] === $token) {
             return $user;
         }

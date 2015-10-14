@@ -86,7 +86,7 @@ services:
 
   core.user:
     class: ACP3\Core\User
-    arguments: [@core.request, @core.authentication, '@core.session', '@core.helpers.secure', '@core.config', '@users.model']
+    arguments: [@core.request, @core.authentication, '@core.session', '@core.helpers.secure', '@core.config', '@users.model.userrepository']
 
   core.view:
     class: ACP3\Core\View

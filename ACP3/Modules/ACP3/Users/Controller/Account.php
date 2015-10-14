@@ -25,9 +25,9 @@ class Account extends Core\Modules\FrontendController
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model
+     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
-    protected $usersModel;
+    protected $userRepository;
     /**
      * @var \ACP3\Modules\ACP3\Users\Validator
      */
@@ -38,7 +38,7 @@ class Account extends Core\Modules\FrontendController
      * @param \ACP3\Core\Date                               $date
      * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                     $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model                $usersModel
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validator            $usersValidator
      */
     public function __construct(
@@ -46,7 +46,7 @@ class Account extends Core\Modules\FrontendController
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Users\Model $usersModel,
+        Users\Model\UserRepository $userRepository,
         Users\Validator $usersValidator)
     {
         parent::__construct($context);
@@ -54,7 +54,7 @@ class Account extends Core\Modules\FrontendController
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
-        $this->usersModel = $usersModel;
+        $this->userRepository = $userRepository;
         $this->usersValidator = $usersValidator;
     }
 
@@ -108,7 +108,7 @@ class Account extends Core\Modules\FrontendController
             return $this->_settingsPost($this->request->getPost()->all(), $settings);
         }
 
-        $user = $this->usersModel->getOneById($this->user->getUserId());
+        $user = $this->userRepository->getOneById($this->user->getUserId());
 
         $this->view->assign('language_override', $settings['language_override']);
         $this->view->assign('entries_override', $settings['entries_override']);
@@ -138,12 +138,12 @@ class Account extends Core\Modules\FrontendController
             $updateValues = [
                 'draft' => Core\Functions::strEncode($this->request->getPost()->get('draft', ''), true)
             ];
-            $bool = $this->usersModel->update($updateValues, $this->user->getUserId());
+            $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 
             return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         }
 
-        $user = $this->usersModel->getOneById($this->user->getUserId());
+        $user = $this->userRepository->getOneById($this->user->getUserId());
 
         $this->view->assign('draft', $user['draft']);
     }
@@ -183,9 +183,9 @@ class Account extends Core\Modules\FrontendController
                     $updateValues['pwd_salt'] = $salt;
                 }
 
-                $bool = $this->usersModel->update($updateValues, $this->user->getUserId());
+                $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 
-                $user = $this->usersModel->getOneById($this->user->getUserId());
+                $user = $this->userRepository->getOneById($this->user->getUserId());
                 $this->user->setRememberMeCookie(
                     $this->user->getUserId(),
                     $user['remember_me_token'],
@@ -227,7 +227,7 @@ class Account extends Core\Modules\FrontendController
                     $updateValues['entries'] = (int)$formData['entries'];
                 }
 
-                $bool = $this->usersModel->update($updateValues, $this->user->getUserId());
+                $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 
                 $this->formTokenHelper->unsetFormToken();
 

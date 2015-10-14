@@ -31,9 +31,9 @@ class Index extends Core\Modules\FrontendController
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model
+     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
-    protected $usersModel;
+    protected $userRepository;
     /**
      * @var \ACP3\Modules\ACP3\Users\Validator
      */
@@ -57,7 +57,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Pagination                         $pagination
      * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                     $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model                $usersModel
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validator            $usersValidator
      * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
      * @param \ACP3\Core\Helpers\SendEmail                  $sendEmail
@@ -68,7 +68,7 @@ class Index extends Core\Modules\FrontendController
         Core\Pagination $pagination,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Users\Model $usersModel,
+        Users\Model\UserRepository $userRepository,
         Users\Validator $usersValidator,
         Permissions\Helpers $permissionsHelpers,
         Core\Helpers\SendEmail $sendEmail)
@@ -79,7 +79,7 @@ class Index extends Core\Modules\FrontendController
         $this->pagination = $pagination;
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
-        $this->usersModel = $usersModel;
+        $this->userRepository = $userRepository;
         $this->usersValidator = $usersValidator;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->sendEmail = $sendEmail;
@@ -121,9 +121,9 @@ class Index extends Core\Modules\FrontendController
 
     public function actionIndex()
     {
-        $users = $this->usersModel->getAll(POS, $this->user->getEntriesPerPage());
+        $users = $this->userRepository->getAll(POS, $this->user->getEntriesPerPage());
         $c_users = count($users);
-        $allUsers = $this->usersModel->countAll();
+        $allUsers = $this->userRepository->countAll();
 
         if ($c_users > 0) {
             $this->pagination->setTotalResults($allUsers);
@@ -217,7 +217,7 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionViewProfile($id)
     {
-        if ($this->usersModel->resultExists($id) === true) {
+        if ($this->userRepository->resultExists($id) === true) {
             $user = $this->user->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
 
@@ -235,7 +235,7 @@ class Index extends Core\Modules\FrontendController
     protected function _forgotPasswordPost(array $formData)
     {
         return $this->actionHelper->handlePostAction(
-            function() use ($formData) {
+            function () use ($formData) {
                 $this->usersValidator->validateForgotPassword($formData);
 
                 // Neues Passwort und neuen Zufallsschlüssel erstellen
@@ -243,10 +243,10 @@ class Index extends Core\Modules\FrontendController
                 $host = $this->request->getHostname();
 
                 // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                if ($this->get('core.validator.rules.misc')->email($formData['nick_mail']) === true && $this->usersModel->resultExistsByEmail($formData['nick_mail']) === true) {
-                    $user = $this->usersModel->getOneByEmail($formData['nick_mail']);
+                if ($this->get('core.validator.rules.misc')->email($formData['nick_mail']) === true && $this->userRepository->resultExistsByEmail($formData['nick_mail']) === true) {
+                    $user = $this->userRepository->getOneByEmail($formData['nick_mail']);
                 } else {
-                    $user = $this->usersModel->getOneByNickname($formData['nick_mail']);
+                    $user = $this->userRepository->getOneByNickname($formData['nick_mail']);
                 }
 
                 $seoSettings = $this->config->getSettings('seo');
@@ -268,7 +268,7 @@ class Index extends Core\Modules\FrontendController
                         'pwd_salt' => $salt,
                         'login_errors' => 0
                     ];
-                    $bool = $this->usersModel->update($updateValues, $user['id']);
+                    $bool = $this->userRepository->update($updateValues, $user['id']);
                 }
 
                 $this->formTokenHelper->unsetFormToken();
@@ -291,7 +291,7 @@ class Index extends Core\Modules\FrontendController
     protected function _registerPost(array $formData, array $settings)
     {
         return $this->actionHelper->handlePostAction(
-            function() use ($formData, $settings) {
+            function () use ($formData, $settings) {
                 $this->usersValidator->validateRegistration($formData);
 
                 $systemSettings = $this->config->getSettings('system');
@@ -325,7 +325,7 @@ class Index extends Core\Modules\FrontendController
                     'registration_date' => $this->date->getCurrentDateTime(),
                 ];
 
-                $lastId = $this->usersModel->insert($insertValues);
+                $lastId = $this->userRepository->insert($insertValues);
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
                 $this->formTokenHelper->unsetFormToken();
