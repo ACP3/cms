@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Event\Listener\OnDisplayFeedListener
     arguments: [@core.date, @core.router, @core.helpers.stringFormatter, @files.model]
     tags:
-      - { name: core.eventListener, event: feeds.events.displayFeed, method: onDisplayFeed }
+      - { name: core.eventListener, event: feeds.events.displayFeed.files, method: onDisplayFeed }
 
   files.events.onAvailableModulesListener:
     class: ACP3\Modules\ACP3\Files\Event\Listener\OnAvailableModulesListener

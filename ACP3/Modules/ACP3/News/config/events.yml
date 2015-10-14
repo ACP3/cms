@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplayFeedListener
     arguments: [@core.date, @core.router, @core.helpers.stringFormatter, @news.model]
     tags:
-      - { name: core.eventListener, event: feeds.events.displayFeed, method: onDisplayFeed }
+      - { name: core.eventListener, event: feeds.events.displayFeed.news, method: onDisplayFeed }
 
   news.events.onAvailableModulesListener:
     class: ACP3\Modules\ACP3\News\Event\Listener\OnAvailableModulesListener

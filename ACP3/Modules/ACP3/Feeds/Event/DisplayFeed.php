@@ -11,30 +11,16 @@ use Symfony\Component\EventDispatcher\Event;
 class DisplayFeed extends Event
 {
     /**
-     * @var string
-     */
-    protected $moduleName;
-    /**
      * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
      * @param \ACP3\Core\View $view
-     * @param string          $moduleName
      */
-    public function __construct(View $view, $moduleName)
+    public function __construct(View $view)
     {
         $this->view = $view;
-        $this->moduleName = strtolower($moduleName);
-    }
-
-    /**
-     * @return string
-     */
-    public function getModuleName()
-    {
-        return $this->moduleName;
     }
 
     /**

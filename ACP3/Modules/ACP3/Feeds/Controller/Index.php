@@ -31,20 +31,21 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param string $feed
      *
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionIndex($feed)
     {
         if ($this->acl->hasPermission('frontend/' . $feed)) {
             $this->eventDispatcher->dispatch(
-                'feeds.events.displayFeed',
+                'feeds.events.displayFeed.' . strtolower($feed),
                 new Feeds\Event\DisplayFeed($this->view, $feed)
             );
 
-            $this->$this->setContentType('text/xml');
-            $this->setTemplate($this->config->getSettings('feeds')['feed_type']);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            $this->setContentType('text/xml');
+            return $this->response->setContent($this->view->fetchTemplate($this->config->getSettings('feeds')['feed_type']));
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 }
