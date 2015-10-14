@@ -5,7 +5,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Router;
 use ACP3\Modules\ACP3\Feeds\Event\DisplayFeed;
-use ACP3\Modules\ACP3\News\Model;
+use ACP3\Modules\ACP3\News\Model\NewsRepository;
 
 /**
  * Class OnDisplayFeedListener
@@ -26,27 +26,27 @@ class OnDisplayFeedListener
      */
     protected $formatter;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model
+     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
      */
-    protected $newsModel;
+    protected $newsRepository;
 
     /**
-     * @param \ACP3\Core\Date                    $date
-     * @param \ACP3\Core\Router                  $router
-     * @param \ACP3\Core\Helpers\StringFormatter $formatter
-     * @param \ACP3\Modules\ACP3\News\Model      $newsModel
+     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Core\Router                            $router
+     * @param \ACP3\Core\Helpers\StringFormatter           $formatter
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
      */
     public function __construct(
         Date $date,
         Router $router,
         StringFormatter $formatter,
-        Model $newsModel
+        NewsRepository $newsRepository
     )
     {
         $this->date = $date;
         $this->router = $router;
         $this->formatter = $formatter;
-        $this->newsModel = $newsModel;
+        $this->newsRepository = $newsRepository;
     }
 
     /**
@@ -55,7 +55,7 @@ class OnDisplayFeedListener
     public function onDisplayFeed(DisplayFeed $displayFeed)
     {
         $items = [];
-        $results = $this->newsModel->getAll($this->date->getCurrentDateTime(), 10);
+        $results = $this->newsRepository->getAll($this->date->getCurrentDateTime(), 10);
         $c_results = count($results);
 
         for ($i = 0; $i < $c_results; ++$i) {

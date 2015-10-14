@@ -18,17 +18,13 @@ class Index extends Core\Modules\FrontendController
      */
     protected $date;
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-    /**
      * @var Core\Pagination
      */
     protected $pagination;
     /**
-     * @var News\Model
+     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
      */
-    protected $newsModel;
+    protected $newsRepository;
     /**
      * @var News\Cache
      */
@@ -54,7 +50,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Modules\Controller\FrontendContext $context
      * @param \ACP3\Core\Date                               $date
      * @param \ACP3\Core\Pagination                         $pagination
-     * @param \ACP3\Modules\ACP3\News\Model                 $newsModel
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository  $newsRepository
      * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
      * @param \ACP3\Modules\ACP3\Categories\Helpers         $categoriesHelpers
      * @param \ACP3\Modules\ACP3\Categories\Model           $categoriesModel
@@ -63,7 +59,7 @@ class Index extends Core\Modules\FrontendController
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        News\Model $newsModel,
+        News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
         Categories\Helpers $categoriesHelpers,
         Categories\Model $categoriesModel)
@@ -72,7 +68,7 @@ class Index extends Core\Modules\FrontendController
 
         $this->date = $date;
         $this->pagination = $pagination;
-        $this->newsModel = $newsModel;
+        $this->newsRepository = $newsRepository;
         $this->newsCache = $newsCache;
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoriesModel = $categoriesModel;
@@ -93,7 +89,7 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionDetails($id)
     {
-        if ($this->newsModel->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
+        if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
             $news = $this->newsCache->getCache($id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
@@ -133,14 +129,14 @@ class Index extends Core\Modules\FrontendController
         $time = $this->date->getCurrentDateTime();
         // Falls Kategorie angegeben, News nur aus eben dieser selektieren
         if (!empty($cat)) {
-            $news = $this->newsModel->getAllByCategoryId($cat, $time, POS, $this->user->getEntriesPerPage());
+            $news = $this->newsRepository->getAllByCategoryId($cat, $time, POS, $this->user->getEntriesPerPage());
         } else {
-            $news = $this->newsModel->getAll($time, POS, $this->user->getEntriesPerPage());
+            $news = $this->newsRepository->getAll($time, POS, $this->user->getEntriesPerPage());
         }
         $c_news = count($news);
 
         if ($c_news > 0) {
-            $this->pagination->setTotalResults($this->newsModel->countAll($time, $cat));
+            $this->pagination->setTotalResults($this->newsRepository->countAll($time, $cat));
             $this->pagination->display();
 
             $formatter = $this->get('core.helpers.stringFormatter');

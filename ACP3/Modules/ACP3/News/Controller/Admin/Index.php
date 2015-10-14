@@ -22,9 +22,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model
+     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
      */
-    protected $newsModel;
+    protected $newsRepository;
     /**
      * @var \ACP3\Modules\ACP3\News\Cache
      */
@@ -43,19 +43,19 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
-     * @param \ACP3\Core\Date                            $date
-     * @param \ACP3\Core\Helpers\FormToken               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model              $newsModel
-     * @param \ACP3\Modules\ACP3\News\Cache              $newsCache
-     * @param \ACP3\Modules\ACP3\News\Validator          $newsValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers      $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext   $context
+     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Core\Helpers\FormToken                 $formTokenHelper
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Cache                $newsCache
+     * @param \ACP3\Modules\ACP3\News\Validator            $newsValidator
+     * @param \ACP3\Modules\ACP3\Categories\Helpers        $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        News\Model $newsModel,
+        News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
         News\Validator $newsValidator,
         Categories\Helpers $categoriesHelpers)
@@ -64,7 +64,7 @@ class Index extends Core\Modules\AdminController
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->newsModel = $newsModel;
+        $this->newsRepository = $newsRepository;
         $this->newsCache = $newsCache;
         $this->newsValidator = $newsValidator;
         $this->categoriesHelpers = $categoriesHelpers;
@@ -126,7 +126,7 @@ class Index extends Core\Modules\AdminController
                 $bool = false;
 
                 foreach ($items as $item) {
-                    $bool = $this->newsModel->delete($item);
+                    $bool = $this->newsRepository->delete($item);
                     if ($this->commentsHelpers) {
                         $this->commentsHelpers->deleteCommentsByModuleAndResult('news', $item);
                     }
@@ -148,7 +148,7 @@ class Index extends Core\Modules\AdminController
      */
     public function actionEdit($id)
     {
-        $news = $this->newsModel->getOneById($id);
+        $news = $this->newsRepository->getOneById($id);
 
         if (empty($news) === false) {
             $this->breadcrumb->setTitlePostfix($news['title']);
@@ -175,7 +175,7 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $news = $this->newsModel->getAllInAcp();
+        $news = $this->newsRepository->getAllInAcp();
 
         if (count($news) > 0) {
             $canDelete = $this->acl->hasPermission('admin/news/index/delete');
@@ -246,7 +246,7 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $lastId = $this->newsModel->insert($insertValues);
+            $lastId = $this->newsRepository->insert($insertValues);
 
             $this->seo->insertUriAlias(
                 sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
@@ -291,7 +291,7 @@ class Index extends Core\Modules\AdminController
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $bool = $this->newsModel->update($updateValues, $id);
+            $bool = $this->newsRepository->update($updateValues, $id);
 
             $this->seo->insertUriAlias(
                 sprintf(News\Helpers::URL_KEY_PATTERN, $id),

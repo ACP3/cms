@@ -6,7 +6,7 @@ parameters:
   news.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Index'
   news.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Sidebar\Index'
   news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
-  news.model.fqdn: 'ACP3\Modules\ACP3\News\Model'
+  news.model.newsrepository.fqdn: 'ACP3\Modules\ACP3\News\Model\NewsRepository'
   news.validator.fqdn: 'ACP3\Modules\ACP3\News\Validator'
   news.installer.schema.fqdn: 'ACP3\Modules\ACP3\News\Installer\Schema'
   news.installer.migration.fqdn: 'ACP3\Modules\ACP3\News\Installer\Migration'
@@ -15,28 +15,28 @@ parameters:
 services:
   news.controller.admin.index:
     class: %news.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@news.model', '@news.cache', '@news.validator', '@categories.helpers']
+    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@news.model.newsrepository', '@news.cache', '@news.validator', '@categories.helpers']
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.frontend.index:
     class: %news.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@news.model', '@news.cache', '@categories.helpers', '@categories.model']
+    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@news.model.newsrepository', '@news.cache', '@categories.helpers', '@categories.model']
 
   news.controller.sidebar.index:
     class: %news.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.date', '@news.model']
+    arguments: ['@core.context', '@core.date', '@news.model.newsrepository']
 
   news.cache:
     class: %news.cache.fqdn%
-    arguments: ['@news.cache.core', '@news.model']
+    arguments: ['@news.cache.core', '@news.model.newsrepository']
 
   news.cache.core:
     class: ACP3\Core\Cache
     arguments: ['@service_container', 'news']
 
-  news.model:
-    class: %news.model.fqdn%
+  news.model.newsrepository:
+    class: %news.model.newsrepository.fqdn%
     arguments: ['@core.db']
 
   news.validator:

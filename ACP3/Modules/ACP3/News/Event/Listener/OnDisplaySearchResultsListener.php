@@ -5,7 +5,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Date;
 use ACP3\Core\Lang;
 use ACP3\Core\Router;
-use ACP3\Modules\ACP3\News\Model;
+use ACP3\Modules\ACP3\News\Model\NewsRepository;
 use ACP3\Modules\ACP3\Search\Event\DisplaySearchResults;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -32,30 +32,30 @@ class OnDisplaySearchResultsListener extends Event
      */
     private $router;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model
+     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
      */
-    private $newsModel;
+    private $newsRepository;
 
     /**
-     * @param \ACP3\Core\ACL                    $acl
-     * @param \ACP3\Core\Date                   $date
-     * @param \ACP3\Core\Lang                   $lang
-     * @param \ACP3\Core\Router                 $router
-     * @param \ACP3\Modules\ACP3\News\Model $newsModel
+     * @param \ACP3\Core\ACL                               $acl
+     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Core\Lang                              $lang
+     * @param \ACP3\Core\Router                            $router
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
      */
     public function __construct(
         ACL $acl,
         Date $date,
         Lang $lang,
         Router $router,
-        Model $newsModel
+        NewsRepository $newsRepository
     )
     {
         $this->acl = $acl;
         $this->date = $date;
         $this->lang = $lang;
         $this->router = $router;
-        $this->newsModel = $newsModel;
+        $this->newsRepository = $newsRepository;
     }
 
     /**
@@ -66,7 +66,7 @@ class OnDisplaySearchResultsListener extends Event
         if (in_array('news', $displaySearchResults->getModules()) && $this->acl->hasPermission('frontend/news')) {
             $fields = $this->mapSearchAreasToFields($displaySearchResults->getAreas());
 
-            $results = $this->newsModel->getAllSearchResults(
+            $results = $this->newsRepository->getAllSearchResults(
                 $fields,
                 $displaySearchResults->getSearchTerm(),
                 $displaySearchResults->getSortDirection(),

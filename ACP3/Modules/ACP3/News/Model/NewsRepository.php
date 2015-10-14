@@ -1,14 +1,14 @@
 <?php
 
-namespace ACP3\Modules\ACP3\News;
+namespace ACP3\Modules\ACP3\News\Model;
 
 use ACP3\Core;
 
 /**
- * Class Model
- * @package ACP3\Modules\ACP3\News
+ * Class NewsRepository
+ * @package ACP3\Modules\ACP3\News\Model
  */
-class Model extends Core\Model
+class NewsRepository extends Core\Model
 {
     const TABLE_NAME = 'news';
 

@@ -1,7 +1,7 @@
 services:
   news.events.onDisplayFeedListener:
     class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplayFeedListener
-    arguments: [@core.date, @core.router, @core.helpers.stringFormatter, @news.model]
+    arguments: [@core.date, @core.router, @core.helpers.stringFormatter, @news.model.newsrepository]
     tags:
       - { name: core.eventListener, event: feeds.events.displayFeed.news, method: onDisplayFeed }
 
@@ -12,6 +12,6 @@ services:
 
   news.events.onDisplaySearchResultsListener:
     class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplaySearchResultsListener
-    arguments: [@core.acl, @core.date, @core.lang, @core.router, @news.model]
+    arguments: [@core.acl, @core.date, @core.lang, @core.router, @news.model.newsrepository]
     tags:
       - { name: core.eventListener, event: search.events.displaySearchResults, method: onDisplaySearchResults }

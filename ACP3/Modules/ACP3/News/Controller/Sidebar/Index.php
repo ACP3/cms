@@ -16,24 +16,24 @@ class Index extends Core\Modules\Controller
      */
     protected $date;
     /**
-     * @var News\Model
+     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
      */
-    protected $newsModel;
+    protected $newsRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context $context
-     * @param \ACP3\Core\Date                       $date
-     * @param \ACP3\Modules\ACP3\News\Model         $newsModel
+     * @param \ACP3\Core\Modules\Controller\Context        $context
+     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Core\Date $date,
-        News\Model $newsModel)
+        News\Model\NewsRepository $newsRepository)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->newsModel = $newsModel;
+        $this->newsRepository = $newsRepository;
     }
 
     /**
@@ -45,9 +45,9 @@ class Index extends Core\Modules\Controller
         $settings = $this->config->getSettings('news');
 
         if (!empty($categoryId)) {
-            $news = $this->newsModel->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
+            $news = $this->newsRepository->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
         } else {
-            $news = $this->newsModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
+            $news = $this->newsRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
         $this->view->assign('sidebar_news', $news);
         $this->view->assign('dateformat', $settings['dateformat']);
@@ -63,9 +63,9 @@ class Index extends Core\Modules\Controller
         $settings = $this->config->getSettings('news');
 
         if (!empty($categoryId)) {
-            $news = $this->newsModel->getLatestByCategoryId((int)$categoryId, $this->date->getCurrentDateTime());
+            $news = $this->newsRepository->getLatestByCategoryId((int)$categoryId, $this->date->getCurrentDateTime());
         } else {
-            $news = $this->newsModel->getLatest($this->date->getCurrentDateTime());
+            $news = $this->newsRepository->getLatest($this->date->getCurrentDateTime());
         }
 
         $this->view->assign('sidebar_news_latest', $news);
