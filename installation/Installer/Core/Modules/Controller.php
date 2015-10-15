@@ -94,7 +94,7 @@ class Controller implements ControllerInterface
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
 
-        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->lang->getLanguage() . '.xml');
+        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->lang->getLanguage() . '.xml');
         $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
         $this->view->assign('LANG', $this->lang->getShortIsoCode());
     }
@@ -126,7 +126,7 @@ class Controller implements ControllerInterface
     {
         // Dropdown-Menü für die Sprachen
         $languages = [];
-        $path = INSTALLER_MODULES_DIR . 'Install/Languages/';
+        $path = INSTALLER_MODULES_DIR . 'Install/Resources/Languages/';
 
         foreach (Filesystem::scandir($path) as $row) {
             $langInfo = simplexml_load_file($path . $row);
@@ -302,7 +302,7 @@ class Controller implements ControllerInterface
     private function setLanguage()
     {
         if (!preg_match('=/=', $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '')) &&
-            is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
+            is_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
         ) {
             $language = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
         } else {

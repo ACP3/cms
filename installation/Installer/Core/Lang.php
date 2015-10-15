@@ -38,6 +38,6 @@ class Lang extends \ACP3\Core\Lang
      */
     public static function languagePackExists($lang)
     {
-        return !preg_match('=/=', $lang) && is_file(INSTALLER_MODULES_DIR . 'Install/Languages/' . $lang . '.xml') === true;
+        return !preg_match('=/=', $lang) && is_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $lang . '.xml') === true;
     }
 }

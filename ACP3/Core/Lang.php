@@ -65,7 +65,7 @@ class Lang
      */
     public static function languagePackExists($lang)
     {
-        return !preg_match('=/=', $lang) && is_file(MODULES_DIR . 'ACP3/System/Languages/' . $lang . '.xml') === true;
+        return !preg_match('=/=', $lang) && is_file(MODULES_DIR . 'ACP3/System/Resources/Languages/' . $lang . '.xml') === true;
     }
 
     /**

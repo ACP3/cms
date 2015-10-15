@@ -41,7 +41,7 @@ class Cache
         $data = [];
 
         foreach (Filesystem::scandir(INSTALLER_MODULES_DIR) as $module) {
-            $path = INSTALLER_MODULES_DIR . $module . '/Languages/' . $language . '.xml';
+            $path = INSTALLER_MODULES_DIR . $module . '/Resources/Languages/' . $language . '.xml';
             if (is_file($path) === true) {
                 $xml = simplexml_load_file($path);
                 if (isset($data['info']['direction']) === false) {

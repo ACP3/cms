@@ -58,7 +58,7 @@ class Cache
         $data = [];
 
         foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob(MODULES_DIR . $vendor . '/*/Languages/' . $language . '.xml');
+            $languageFiles = glob(MODULES_DIR . $vendor . '/*/Resources/Languages/' . $language . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -89,7 +89,7 @@ class Cache
     {
         $pathArray = explode('/', $path);
 
-        return $pathArray[count($pathArray) - 3];
+        return $pathArray[count($pathArray) - 4];
     }
 
     /**
@@ -116,7 +116,7 @@ class Cache
         $languagePacks = [];
 
         foreach ($this->vendors->getVendors() as $vendors) {
-            $languageFiles = glob(MODULES_DIR . $vendors . '/*/Languages/*.xml');
+            $languageFiles = glob(MODULES_DIR . $vendors . '/*/Resources/Languages/*.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
