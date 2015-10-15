@@ -20,8 +20,6 @@
         <item key="admin_index_configuration">Configuration</item>
         <item key="admin_maintenance_cache">Cache-Management</item>
         <item key="admin_maintenance_index">Maintenance</item>
-        <item key="admin_maintenance_sql_export">SQL table export</item>
-        <item key="admin_maintenance_sql_import">SQL table import</item>
         <item key="admin_maintenance_update_check">Version check</item>
         <item key="allow_comments">Allow comments</item>
         <item key="author">Author</item>
@@ -42,7 +40,6 @@
         <item key="cache_type_templates_delete_success">The Templates-Cache has been successfully emptied.</item>
         <item key="cancel">Cancel</item>
         <item key="close_window">Close window</item>
-        <item key="complete_export">Complete</item>
         <item key="configuration">Configuration</item>
         <item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
         <item key="config_edit_success">The ACP3 configuration has been successfully edited.</item>
@@ -119,7 +116,6 @@
         <item key="designs_edit_success">The design has been successfully selected and may now be used.</item>
         <item key="disable">Disable</item>
         <item key="disable_module">Disable module</item>
-        <item key="drop_tables"><![CDATA[Export with &quot;DROP TABLE&quot; statement]]></item>
         <item key="edit">Edit</item>
         <item key="edit_error">While editing the entry an error has occured.</item>
         <item key="edit_order">Edit order</item>
@@ -135,12 +131,8 @@
         <item key="entry">Entry</item>
         <item key="entry_not_found">Sorry, but the requested entry can be found.</item>
         <item key="error_update_check">It wasn't possible to establish a connection to the update server.</item>
-        <item key="export_data">Data only</item>
-        <item key="export_options">Exportoptions</item>
-        <item key="export_structure">Struture only</item>
-        <item key="export_type">Export type</item>
         <item key="extensions">Extensions</item>
-        <item key="failure">The following errors have occured:</item>
+        <item key="failure">The following errors have occurred:</item>
         <item key="file">File</item>
         <item key="first_page">First page</item>
         <item key="flood_barrier">Flood barrier</item>
@@ -248,15 +240,11 @@
         <item key="select_date">Please complete the details of the release date and end date.</item>
         <item key="select_date_format">Please select whether the long or the short date format to be used.</item>
         <item key="select_editor">Please select whether you want to use a WYSIWYG editor or a simple textarea.</item>
-        <item key="select_export_type">Please select the export type.</item>
         <item key="select_language">Please select the language in which you want to see the website.</item>
         <item key="select_menu_item">Please choose from one of the menu items above to get to the desired action.</item>
         <item key="select_online_maintenance">Please select whether the maintenance mode should be turned on or off.</item>
-        <item key="select_output">Please select whether the backup should be outputed as a file or a text.</item>
         <item key="select_records_per_page">Please select how many records per page to display.</item>
         <item key="select_sidebar_entries">Please select how many entries should be to displayed in the Module-Sidebar.</item>
-        <item key="select_sql_file">The uploaded file is not a valid textfile.</item>
-        <item key="select_sql_tables">Please select at least one SQL table that should be exported.</item>
         <item key="select_time_zone">Please select the time zone.</item>
         <item key="settings">Settings</item>
         <item key="settings_error">While editing the settings an error has occured.</item>
@@ -265,9 +253,6 @@
         <item key="start_date">Release date</item>
         <item key="statements_in_byte">Statements in Byte.</item>
         <item key="statements_in_pixel">Statements in Pixel.</item>
-        <item key="sql_query">SQL Query</item>
-        <item key="sql_tables">SQL-tables</item>
-        <item key="structure_of_table">Structure of table %s</item>
         <item key="submit">Submit</item>
         <item key="system">System</item>
         <item key="table_of_contents">Table of contents</item>
@@ -286,7 +271,6 @@
         <item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
         <item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
         <item key="type_in_short_date_format">Please type in the short date format.</item>
-        <item key="type_in_text_or_select_sql_file">Please enter the sql queries either in the textarea or upload a file.</item>
         <item key="uninstall">Uninstall</item>
         <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following modules first: %s</item>
         <item key="uninstall_module">Uninstall module</item>

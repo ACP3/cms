@@ -119,6 +119,10 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}settings` CHANGE `module_id` `module_id` INT(10) UNSIGNED NOT NULL",
                 "ALTER TABLE `{pre}settings` ADD INDEX (`module_id`)",
                 "ALTER TABLE `{pre}settings` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
+            ],
+            57 => [
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'maintenance' AND `page` ='sql_export';",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'maintenance' AND `page` ='sql_import';"
             ]
         ];
     }

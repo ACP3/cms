@@ -28,8 +28,6 @@ class Schema implements Modules\Installer\SchemaInterface
                 ],
                 'Maintenance' => [
                     'cache' => 7,
-                    'sql_export' => 7,
-                    'sql_import' => 7,
                 ]
             ]
         ];
@@ -48,7 +46,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 56;
+        return 57;
     }
 
     /**
