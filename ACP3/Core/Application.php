@@ -229,7 +229,7 @@ class Application extends AbstractApplication
 
         foreach ($activeModules as $module) {
             foreach ($vendors as $vendor) {
-                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/config/services.yml';
+                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/Resources/config/services.yml';
 
                 if (is_file($path)) {
                     $loader->load($path);

@@ -126,7 +126,7 @@ class ModuleInfoCache
     {
         $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($vendors as $vendor) {
-            $path = MODULES_DIR . $vendor . '/' . $moduleDirectory . '/config/module.xml';
+            $path = MODULES_DIR . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
             if (is_file($path) === true) {
                 $moduleInfo = $this->xml->parseXmlFile($path, 'info');
 

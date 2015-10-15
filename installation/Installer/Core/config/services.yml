@@ -3,8 +3,8 @@ parameters:
 
 imports:
   - { resource: ../View/Renderer/Smarty/config/services.yml }
-  - { resource: ../../Modules/Errors/config/services.yml }
-  - { resource: ../../Modules/Install/config/services.yml }
+  - { resource: ../../Modules/Errors/Resources/config/services.yml }
+  - { resource: ../../Modules/Install/Resources/config/services.yml }
 
 services:
   core.context.install:

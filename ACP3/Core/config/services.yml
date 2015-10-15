@@ -8,10 +8,10 @@ imports:
   - { resource: components/nestedsets.yml }
   - { resource: components/validation.yml }
   - { resource: ../WYSIWYG/config/services.yml }
-  - { resource: ../../Modules/ACP3/Permissions/config/services.yml }
-  - { resource: ../../Modules/ACP3/Seo/config/services.yml }
-  - { resource: ../../Modules/ACP3/System/config/services.yml }
-  - { resource: ../../Modules/ACP3/Users/config/services.yml }
+  - { resource: ../../Modules/ACP3/Permissions/Resources/config/services.yml }
+  - { resource: ../../Modules/ACP3/Seo/Resources/config/services.yml }
+  - { resource: ../../Modules/ACP3/System/Resources/config/services.yml }
+  - { resource: ../../Modules/ACP3/Users/Resources/config/services.yml }
 
 services:
   core.acl:

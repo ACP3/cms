@@ -77,7 +77,7 @@ class Application extends Core\AbstractApplication
             $vendors = $this->container->get('core.modules.vendors')->getVendors();
 
             foreach ($vendors as $vendor) {
-                $namespaceModules = glob(MODULES_DIR . $vendor . '/*/config/services.yml');
+                $namespaceModules = glob(MODULES_DIR . $vendor . '/*/Resources/config/services.yml');
                 foreach ($namespaceModules as $module) {
                     $loader->load($module);
                 }

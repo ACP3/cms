@@ -117,7 +117,7 @@ class Installer
     {
         if ((bool)preg_match('=/=', $moduleName) === false) {
             foreach ($this->vendors->getVendors() as $vendor) {
-                $path = MODULES_DIR . $vendor . '/' . ucfirst($moduleName) . '/config/module.xml';
+                $path = MODULES_DIR . $vendor . '/' . ucfirst($moduleName) . '/Resources/config/module.xml';
 
                 if (is_file($path) === true) {
                     return array_values($this->xml->parseXmlFile($path, '/module/info/dependencies'));
@@ -148,7 +148,7 @@ class Installer
 
         foreach ($modules as $module) {
             foreach ($vendors as $vendor) {
-                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/config/services.yml';
+                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/Resources/config/services.yml';
                 if (is_file($path)) {
                     $loader->load($path);
                 }

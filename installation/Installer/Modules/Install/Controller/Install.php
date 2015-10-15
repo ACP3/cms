@@ -154,7 +154,7 @@ class Install extends AbstractController
 
         $this->container->setParameter('core.environment', $environment);
 
-        $modulesServices = glob(MODULES_DIR . 'ACP3/*/config/services.yml');
+        $modulesServices = glob(MODULES_DIR . 'ACP3/*/Resources/config/services.yml');
         foreach ($modulesServices as $moduleServices) {
             $loader->load($moduleServices);
         }
