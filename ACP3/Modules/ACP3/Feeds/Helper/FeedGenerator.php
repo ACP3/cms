@@ -34,7 +34,7 @@ class FeedGenerator
     /**
      * @param array $params
      */
-    public function configure(array $params = [])
+    public function configure(array $params)
     {
         switch ($params['feed_type']) {
             case 'ATOM':
