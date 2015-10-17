@@ -11,6 +11,25 @@ use ACP3\Modules\ACP3\Feeds;
  */
 class Index extends Core\Modules\FrontendController
 {
+    /**
+     * @var \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
+     */
+    protected $feedGenerator;
+
+    /**
+     * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
+     * @param \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator $feedGenerator
+     */
+    public function __construct(
+        Core\Modules\Controller\FrontendContext $frontendContext,
+        Feeds\Helper\FeedGenerator $feedGenerator)
+    {
+        parent::__construct($frontendContext);
+
+        $this->feedGenerator = $feedGenerator;
+    }
+
+
     public function preDispatch()
     {
         $settings = $this->config->getSettings('feeds');
@@ -23,7 +42,7 @@ class Index extends Core\Modules\FrontendController
             'module' => $this->request->getParameters()->get('feed', ''),
         ];
 
-        $this->view->setRenderer('feedgenerator', $config);
+        $this->feedGenerator->configure($config);
 
         parent::preDispatch();
     }
@@ -39,11 +58,11 @@ class Index extends Core\Modules\FrontendController
         if ($this->acl->hasPermission('frontend/' . $feed)) {
             $this->eventDispatcher->dispatch(
                 'feeds.events.displayFeed.' . strtolower($feed),
-                new Feeds\Event\DisplayFeed($this->view, $feed)
+                new Feeds\Event\DisplayFeed($this->feedGenerator, $feed)
             );
 
             $this->setContentType('text/xml');
-            return $this->response->setContent($this->view->fetchTemplate($this->config->getSettings('feeds')['feed_type']));
+            return $this->response->setContent($this->feedGenerator->generateFeed());
         }
 
         throw new Core\Exceptions\ResultNotExists();

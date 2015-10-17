@@ -31,10 +31,10 @@ class OnDisplayFeedListener
     protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Date                    $date
-     * @param \ACP3\Core\Router                  $router
-     * @param \ACP3\Core\Helpers\StringFormatter $formatter
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository     $filesRepository
+     * @param \ACP3\Core\Date                                $date
+     * @param \ACP3\Core\Router                              $router
+     * @param \ACP3\Core\Helpers\StringFormatter             $formatter
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
         Date $date,
@@ -67,6 +67,6 @@ class OnDisplayFeedListener
             ];
         }
 
-        $displayFeed->getView()->assign($items);
+        $displayFeed->getFeedGenerator()->assign($items);
     }
 }

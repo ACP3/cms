@@ -67,6 +67,6 @@ class OnDisplayFeedListener
             ];
         }
 
-        $displayFeed->getView()->assign($items);
+        $displayFeed->getFeedGenerator()->assign($items);
     }
 }

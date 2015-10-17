@@ -1,19 +1,35 @@
 <?php
 
-namespace ACP3\Modules\ACP3\Feeds\View\Renderer;
+namespace ACP3\Modules\ACP3\Feeds\Helper;
 
-use ACP3\Core\View\Renderer\AbstractRenderer;
+use ACP3\Core\Lang;
 
 /**
  * Renderer for the output of RSS and ATOM News feeds
  * @package ACP3\Core\View\Renderer
  */
-class FeedGenerator extends AbstractRenderer
+class FeedGenerator
 {
+    /**
+     * @var \ACP3\Core\Lang
+     */
+    protected $lang;
     /**
      * @var \FeedWriter\Feed
      */
     public $renderer;
+    /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
+     * @param \ACP3\Core\Lang $lang
+     */
+    public function __construct(Lang $lang)
+    {
+        $this->lang = $lang;
+    }
 
     /**
      * @param array $params
@@ -47,7 +63,7 @@ class FeedGenerator extends AbstractRenderer
         $this->renderer->setTitle($this->config['feed_title']);
         $this->renderer->setLink($link);
         if ($this->config['feed_type'] !== 'ATOM') {
-            $this->renderer->setDescription($this->container->get('core.lang')->t($this->config['module'], $this->config['module']));
+            $this->renderer->setDescription($this->lang->t($this->config['module'], $this->config['module']));
         } else {
             $this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
             $this->renderer->setChannelElement('author', ['name' => $this->config['feed_title']]);
@@ -59,55 +75,38 @@ class FeedGenerator extends AbstractRenderer
     }
 
     /**
-     * @param      $items
-     * @param null $value
+     * @param array $items
      */
-    public function assign($items, $value = null)
+    public function assign(array $items)
     {
-        if (is_array($items) === true && !empty($items)) {
-            // Check for a multidimensional array
-            if (isset($items[0]) === true) {
-                foreach ($items as $row) {
-                    $this->assign($row);
-                }
-            } else { // Single item
-                /** @var \FeedWriter\Item $item */
-                $item = $this->renderer->createNewItem();
-                $item->setTitle($items['title']);
-                $item->setDate($items['date']);
-                $item->setDescription($items['description']);
-                $item->setLink($items['link']);
-                if ($this->config['feed_type'] !== 'ATOM') {
-                    $item->addElement('guid', $items['link'], ['isPermaLink' => 'true']);
-                }
-                $this->renderer->addItem($item);
+        if ($this->renderer === null) {
+            return;
+        }
+
+        // Check for a multidimensional array
+        if (isset($items[0]) === true) {
+            foreach ($items as $row) {
+                $this->assign($row);
             }
+        } else { // Single item
+            /** @var \FeedWriter\Item $item */
+            $item = $this->renderer->createNewItem();
+            $item->setTitle($items['title']);
+            $item->setDate($items['date']);
+            $item->setDescription($items['description']);
+            $item->setLink($items['link']);
+            if ($this->config['feed_type'] !== 'ATOM') {
+                $item->addElement('guid', $items['link'], ['isPermaLink' => 'true']);
+            }
+            $this->renderer->addItem($item);
         }
     }
 
     /**
-     * @param $type
+     * @return string
      */
-    public function display($type)
-    {
-        echo $this->fetch($type);
-    }
-
-    /**
-     * @param $type
-     *
-     * @return mixed
-     */
-    public function fetch($type)
+    public function generateFeed()
     {
         return $this->renderer->generateFeed();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function templateExists($template)
-    {
-        return true;
     }
 }

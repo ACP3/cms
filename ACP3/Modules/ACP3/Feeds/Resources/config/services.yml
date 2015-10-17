@@ -1,6 +1,7 @@
 parameters:
   feeds.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Admin\Index'
   feeds.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Index'
+  feeds.helper.feedgenerator.fqdn: 'ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator'
   feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validator'
   feeds.installer.schema.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Schema'
   feeds.installer.migration.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Migration'
@@ -12,7 +13,7 @@ services:
 
   feeds.controller.frontend.index:
     class: %feeds.controller.frontend.index.fqdn%
-    parent: core.modules.controller.frontend
+    arguments: [@core.context.frontend, @feeds.helper.feedgenerator]
 
   feeds.validator:
     class: %feeds.validator.fqdn%
@@ -24,7 +25,6 @@ services:
   feeds.installer.migration:
     class: %feeds.installer.migration.fqdn%
 
-  core.view.renderer.feedgenerator:
-    class: ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
-    calls:
-      - ['setContainer', ['@service_container']]
+  feeds.helper.feedgenerator:
+    class: %feeds.helper.feedgenerator.fqdn%
+    arguments: [@core.lang]
