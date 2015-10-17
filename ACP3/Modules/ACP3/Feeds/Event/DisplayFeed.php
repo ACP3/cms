@@ -24,7 +24,7 @@ class DisplayFeed extends Event
     }
 
     /**
-     * @return \ACP3\Core\View
+     * @return \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
      */
     public function getFeedGenerator()
     {
