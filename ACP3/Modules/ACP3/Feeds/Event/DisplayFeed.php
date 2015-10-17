@@ -1,9 +1,7 @@
 <?php
 namespace ACP3\Modules\ACP3\Feeds\Event;
 
-use ACP3\Core\View;
 use ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator;
-use FeedWriter\Feed;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

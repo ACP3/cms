@@ -29,24 +29,6 @@ class Index extends Core\Modules\FrontendController
         $this->feedGenerator = $feedGenerator;
     }
 
-
-    public function preDispatch()
-    {
-        $settings = $this->config->getSettings('feeds');
-
-        $config = [
-            'feed_image' => $settings['feed_image'],
-            'feed_type' => $settings['feed_type'],
-            'feed_link' => $this->router->route('', true),
-            'feed_title' => $this->config->getSettings('seo')['title'],
-            'module' => $this->request->getParameters()->get('feed', ''),
-        ];
-
-        $this->feedGenerator->configure($config);
-
-        parent::preDispatch();
-    }
-
     /**
      * @param string $feed
      *
@@ -56,9 +38,14 @@ class Index extends Core\Modules\FrontendController
     public function actionIndex($feed)
     {
         if ($this->acl->hasPermission('frontend/' . $feed)) {
+            $module = $this->request->getParameters()->get('feed', '');
+            $this->feedGenerator
+                ->setTitle($this->config->getSettings('seo')['title'])
+                ->setDescription($this->lang->t($module, $module));
+
             $this->eventDispatcher->dispatch(
                 'feeds.events.displayFeed.' . strtolower($feed),
-                new Feeds\Event\DisplayFeed($this->feedGenerator, $feed)
+                new Feeds\Event\DisplayFeed($this->feedGenerator)
             );
 
             $this->setContentType('text/xml');

@@ -2,41 +2,83 @@
 
 namespace ACP3\Modules\ACP3\Feeds\Helper;
 
-use ACP3\Core\Lang;
+use ACP3\Core\Config;
+use ACP3\Core\Router;
+use FeedWriter\ATOM;
 
 /**
  * Renderer for the output of RSS and ATOM News feeds
- * @package ACP3\Core\View\Renderer
+ * @package ACP3\Modules\ACP3\Feeds\Helpe
  */
 class FeedGenerator
 {
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\Config
      */
-    protected $lang;
+    protected $config;
+    /**
+     * @var \ACP3\Core\Router
+     */
+    protected $router;
     /**
      * @var \FeedWriter\Feed
      */
-    public $renderer;
+    protected $renderer;
+
     /**
      * @var array
      */
-    protected $config = [];
+    protected $settings = [];
+    /**
+     * @var string
+     */
+    protected $title;
+    /**
+     * @var string
+     */
+    protected $description;
 
     /**
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\Router $router
      */
-    public function __construct(Lang $lang)
+    public function __construct(
+        Config $config,
+        Router $router)
     {
-        $this->lang = $lang;
+        $this->config = $config;
+        $this->router = $router;
+
+        $this->configure();
     }
 
     /**
-     * @param array $params
+     * @param string $title
+     *
+     * @return $this
      */
-    public function configure(array $params)
+    public function setTitle($title)
     {
-        switch ($params['feed_type']) {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    protected function configure()
+    {
+        $this->settings = $this->config->getSettings('feeds');
+
+        switch ($this->settings['feed_type']) {
             case 'ATOM':
                 $feedType = 'ATOM';
                 break;
@@ -48,10 +90,6 @@ class FeedGenerator
         }
         $className = '\\FeedWriter\\' . $feedType;
         $this->renderer = new $className;
-
-        $this->config = $params;
-
-        $this->generateChannel();
     }
 
     /**
@@ -59,18 +97,19 @@ class FeedGenerator
      */
     protected function generateChannel()
     {
-        $link = $this->config['feed_link'];
-        $this->renderer->setTitle($this->config['feed_title']);
+        $link = $this->router->route('', true);
+        $this->renderer->setTitle($this->title);
         $this->renderer->setLink($link);
-        if ($this->config['feed_type'] !== 'ATOM') {
-            $this->renderer->setDescription($this->lang->t($this->config['module'], $this->config['module']));
-        } else {
+
+        if ($this->renderer instanceof ATOM) {
             $this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
-            $this->renderer->setChannelElement('author', ['name' => $this->config['feed_title']]);
+            $this->renderer->setChannelElement('author', ['name' => $this->title]);
+        } else {
+            $this->renderer->setDescription($this->description);
         }
 
-        if (!empty($this->config['feed_image'])) {
-            $this->renderer->setImage($this->config['feed_title'], $link, $this->config['feed_image']);
+        if (!empty($this->settings['feed_image'])) {
+            $this->renderer->setImage($this->title, $link, $this->settings['feed_image']);
         }
     }
 
@@ -95,7 +134,7 @@ class FeedGenerator
             $item->setDate($items['date']);
             $item->setDescription($items['description']);
             $item->setLink($items['link']);
-            if ($this->config['feed_type'] !== 'ATOM') {
+            if (!($this->renderer instanceof ATOM)) {
                 $item->addElement('guid', $items['link'], ['isPermaLink' => 'true']);
             }
             $this->renderer->addItem($item);
@@ -107,6 +146,7 @@ class FeedGenerator
      */
     public function generateFeed()
     {
+        $this->generateChannel();
         return $this->renderer->generateFeed();
     }
 }
