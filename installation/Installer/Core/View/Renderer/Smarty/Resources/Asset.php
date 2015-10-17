@@ -15,7 +15,17 @@ class Asset extends AbstractResource
     protected $resourceName = 'asset';
 
     /**
-     * @param $template
+     * @inheritdoc
+     */
+    public function populate(\Smarty_Template_Source $source, \Smarty_Internal_Template $_template = null)
+    {
+        parent::populate($source, $_template);
+
+        $source->recompiled = true;
+    }
+
+    /**
+     * @param string $template
      *
      * @return string
      */

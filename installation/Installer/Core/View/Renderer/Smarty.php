@@ -22,11 +22,6 @@ class Smarty extends \ACP3\Core\View\Renderer\Smarty
             $this->renderer->compile_id = $params['compile_id'];
         }
 
-        $this->renderer->setCompileCheck($this->isDevOrInstall());
-        $this->renderer
-            ->setCompileDir(INSTALLER_CACHE_DIR . 'tpl_compiled/')
-            ->setCacheDir(INSTALLER_CACHE_DIR . 'tpl_cached/');
-
         $this->_registerPlugins();
     }
 }
