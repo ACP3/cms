@@ -118,10 +118,6 @@ class FeedGenerator
      */
     public function assign(array $items)
     {
-        if ($this->renderer === null) {
-            return;
-        }
-
         // Check for a multidimensional array
         if (isset($items[0]) === true) {
             foreach ($items as $row) {
