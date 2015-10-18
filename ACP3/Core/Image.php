@@ -183,7 +183,7 @@ class Image
      */
     public function setForceResample($forceResample)
     {
-        $this->forceResample = (int)$forceResample;
+        $this->forceResample = (bool)$forceResample;
         return $this;
     }
 
@@ -291,7 +291,7 @@ class Image
      * @param integer $type
      * @param string  $cacheFile
      */
-    protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile = null)
+    protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile)
     {
         $this->image = imagecreatetruecolor($newWidth, $newHeight);
         switch ($type) {
