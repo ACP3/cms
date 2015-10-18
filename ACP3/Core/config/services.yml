@@ -41,6 +41,11 @@ services:
   core.functions:
     class: ACP3\Core\Functions
 
+  core.image:
+    class: ACP3\Core\Image
+    arguments: [@core.response]
+    scope: prototype
+
   core.lang:
     class: ACP3\Core\Lang
     arguments: ['@core.user', @core.lang.cache, '@core.config']

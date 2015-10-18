@@ -139,16 +139,15 @@ class Index extends Core\Modules\FrontendController
         $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
 
-        $options = [
-            'enable_cache' => $this->config->getSettings('system')['cache_images'] == 1,
-            'cache_prefix' => 'gallery_' . $action,
-            'max_width' => $this->settings[$action . 'width'],
-            'max_height' => $this->settings[$action . 'height'],
-            'file' => UPLOADS_DIR . 'gallery/' . $picture,
-            'prefer_height' => $action === 'thumb'
-        ];
+        $image = $this->get('core.image');
+        $image
+            ->setEnableCache($this->config->getSettings('system')['cache_images'] == 1)
+            ->setCachePrefix('gallery_' . $action)
+            ->setMaxWidth($this->settings[$action . 'width'])
+            ->setMaxHeight($this->settings[$action . 'height'])
+            ->setFile(UPLOADS_DIR . 'gallery/' . $picture)
+            ->setPreferHeight($action === 'thumb');
 
-        $image = new Core\Image($this->response, $options);
         return $image->output();
     }
 

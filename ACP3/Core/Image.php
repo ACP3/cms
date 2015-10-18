@@ -60,48 +60,11 @@ class Image
     protected $image;
 
     /**
-     * Konstruktor der Klasse.
-     * Überschreibt die Defaultwerte mit denen im $options-array enthaltenen Werten
-     *
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param array                                      $options
      */
-    public function __construct(
-        Response $response,
-        array $options
-    )
+    public function __construct(Response $response)
     {
         $this->response = $response;
-
-        if (isset($options['enable_cache'])) {
-            $this->enableCache = (bool)$options['enable_cache'];
-        }
-        if (isset($options['cache_prefix'])) {
-            $this->cachePrefix = $options['cache_prefix'];
-        }
-        if ($this->cachePrefix !== '' && !preg_match('/_$/', $this->cachePrefix)) {
-            $this->cachePrefix .= '_';
-        }
-        if (isset($options['max_width'])) {
-            $this->maxWidth = (int)$options['max_width'];
-        }
-        if (isset($options['max_height'])) {
-            $this->maxHeight = (int)$options['max_height'];
-        }
-        if (isset($options['prefer_width'])) {
-            $this->preferWidth = (bool)$options['prefer_width'];
-        }
-        if (isset($options['prefer_height'])) {
-            $this->preferHeight = (bool)$options['prefer_height'];
-        }
-        if (isset($options['jpg_quality'])) {
-            $this->jpgQuality = (int)$options['jpg_quality'];
-        }
-        if (isset($options['force_resample'])) {
-            $this->forceResample = (bool)$options['force_resample'];
-        }
-
-        $this->file = $options['file'];
     }
 
     /**
@@ -112,6 +75,116 @@ class Image
         if (is_resource($this->image) === true) {
             imagedestroy($this->image);
         }
+    }
+
+    /**
+     * @param boolean $enableCache
+     *
+     * @return $this
+     */
+    public function setEnableCache($enableCache)
+    {
+        $this->enableCache = (bool)$enableCache;
+        return $this;
+    }
+
+    /**
+     * @param string $cacheDir
+     *
+     * @return $this
+     */
+    public function setCacheDir($cacheDir)
+    {
+        $this->cacheDir = $cacheDir;
+        return $this;
+    }
+
+    /**
+     * @param string $cachePrefix
+     *
+     * @return $this
+     */
+    public function setCachePrefix($cachePrefix)
+    {
+        $this->cachePrefix = $cachePrefix;
+        return $this;
+    }
+
+    /**
+     * @param int $maxWidth
+     *
+     * @return $this
+     */
+    public function setMaxWidth($maxWidth)
+    {
+        $this->maxWidth = (int)$maxWidth;
+        return $this;
+    }
+
+    /**
+     * @param int $maxHeight
+     *
+     * @return $this
+     */
+    public function setMaxHeight($maxHeight)
+    {
+        $this->maxHeight = (int)$maxHeight;
+        return $this;
+    }
+
+    /**
+     * @param int $jpgQuality
+     *
+     * @return $this
+     */
+    public function setJpgQuality($jpgQuality)
+    {
+        $this->jpgQuality = (int)$jpgQuality;
+        return $this;
+    }
+
+    /**
+     * @param boolean $preferWidth
+     *
+     * @return $this
+     */
+    public function setPreferWidth($preferWidth)
+    {
+        $this->preferWidth = (bool)$preferWidth;
+        return $this;
+    }
+
+    /**
+     * @param boolean $preferHeight
+     *
+     * @return $this
+     */
+    public function setPreferHeight($preferHeight)
+    {
+        $this->preferHeight = (bool)$preferHeight;
+        return $this;
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return $this
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    /**
+     * @param boolean $forceResample
+     *
+     * @return $this
+     */
+    public function setForceResample($forceResample)
+    {
+        $this->forceResample = (int)$forceResample;
+        return $this;
     }
 
     /**
@@ -257,10 +330,10 @@ class Image
     }
 
     /**
-     * @param int $newWidth
-     * @param int $newHeight
-     * @param int $width
-     * @param int $height
+     * @param int      $newWidth
+     * @param int      $newHeight
+     * @param int      $width
+     * @param int      $height
      * @param resource $origPicture
      */
     protected function scalePicture($newWidth, $newHeight, $width, $height, $origPicture)

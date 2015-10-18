@@ -59,7 +59,7 @@ class CKEditor extends Textarea
      *
      * @return $this
      */
-    public function setemoticonRepository(\ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository)
+    public function setEmoticonRepository(\ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository)
     {
         $this->emoticonRepository = $emoticonRepository;
 
