@@ -45,6 +45,7 @@ class Migration implements Modules\Installer\MigrationInterface
             34 => [
                 "ALTER TABLE `{pre}acl_resources` ADD INDEX (`privilege_id`)",
                 "ALTER TABLE `{pre}acl_resources` ADD FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE",
+                "DELETE FROM `{pre}acl_rules` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);",
                 "ALTER TABLE `{pre}acl_rules` ADD INDEX (`role_id`)",
                 "ALTER TABLE `{pre}acl_rules` ADD INDEX (`privilege_id`)",
                 "ALTER TABLE `{pre}acl_rules` ADD INDEX (`module_id`)",

@@ -35,6 +35,7 @@ class Migration implements Modules\Installer\MigrationInterface
                 "ALTER TABLE `{pre}comments` ENGINE = InnoDB",
             ],
             35 => [
+                "DELETE FROM `{pre}comments` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);",
                 "ALTER TABLE `{pre}comments` ADD INDEX (`module_id`)",
                 "ALTER TABLE `{pre}comments` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
             ],

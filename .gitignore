@@ -5,7 +5,6 @@
 /uploads/categories/*
 /uploads/files/*
 /uploads/gallery/*
-/uploads/kcfinder/*
 /vendor
 
 !.gitignore
