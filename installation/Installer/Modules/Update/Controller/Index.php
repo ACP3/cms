@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller
         $results = [];
 
         // Zuerst die wichtigen System-Module aktualisieren...
-        $coreModules = ['system', 'permissions', 'users'];
+        $coreModules = ['system', 'users', 'permissions'];
         foreach ($coreModules as $module) {
             $results[$module] = $this->_returnModuleUpdateResult($module);
         }
