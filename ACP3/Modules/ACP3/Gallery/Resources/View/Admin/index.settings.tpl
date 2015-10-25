@@ -103,33 +103,6 @@
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="maxwidth" class="col-sm-2 control-label">{lang t="gallery|max_image_width"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="maxwidth" id="maxwidth" value="{$form.maxwidth}">
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="maxheight" class="col-sm-2 control-label">{lang t="gallery|max_image_height"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="maxheight" id="maxheight" value="{$form.maxheight}">
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="filesize" class="col-sm-2 control-label">{lang t="gallery|image_filesize"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}">
-
-                            <p class="help-block">{lang t="system|statements_in_byte"}</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

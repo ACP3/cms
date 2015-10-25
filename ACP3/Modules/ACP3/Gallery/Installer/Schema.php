@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 38;
+        return 39;
     }
 
     /**
@@ -87,9 +87,6 @@ class Schema implements Modules\Installer\SchemaInterface
             'height' => 480,
             'thumbwidth' => 160,
             'thumbheight' => 120,
-            'maxwidth' => 2048,
-            'maxheight' => 1536,
-            'filesize' => 20971520,
             'overlay' => 1,
             'comments' => 1,
             'dateformat' => 'long',

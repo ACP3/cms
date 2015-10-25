@@ -15,9 +15,9 @@ class Picture extends Core\Validator\AbstractValidator
     protected $mimeValidator;
 
     /**
-     * @param Core\Lang                           $lang
-     * @param Core\Validator\Rules\Misc           $validate
-     * @param Core\Validator\Rules\Mime           $mimeValidator
+     * @param Core\Lang                 $lang
+     * @param Core\Validator\Rules\Misc $validate
+     * @param Core\Validator\Rules\Mime $mimeValidator
      */
     public function __construct(
         Core\Lang $lang,
@@ -32,12 +32,11 @@ class Picture extends Core\Validator\AbstractValidator
 
     /**
      * @param array $file
-     * @param array $settings
      *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
-    public function validateCreate(array $file, array $settings)
+    public function validateCreate(array $file)
     {
         $this->validateFormKey();
 
@@ -46,8 +45,7 @@ class Picture extends Core\Validator\AbstractValidator
             $this->errors['file'] = $this->lang->t('gallery', 'no_picture_selected');
         }
         if (!empty($file['tmp_name']) &&
-            ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
-                $file['error'] !== UPLOAD_ERR_OK)
+            ($this->mimeValidator->isPicture($file['tmp_name']) === false || $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
         }
@@ -57,19 +55,17 @@ class Picture extends Core\Validator\AbstractValidator
 
     /**
      * @param array $file
-     * @param array $settings
      *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
-    public function validateEdit(array $file, array $settings)
+    public function validateEdit(array $file)
     {
         $this->validateFormKey();
 
         $this->errors = [];
         if (!empty($file['tmp_name']) &&
-            ($this->mimeValidator->isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
-                $file['error'] !== UPLOAD_ERR_OK)
+            ($this->mimeValidator->isPicture($file['tmp_name']) === false || $file['error'] !== UPLOAD_ERR_OK)
         ) {
             $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
         }

@@ -53,14 +53,11 @@ class Settings extends Core\Validator\AbstractValidator
         if ($this->modules->isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
             $this->errors['comments'] = $this->lang->t('gallery', 'select_allow_comments');
         }
-        if ($this->validate->isNumber($formData['thumbwidth']) === false || $this->validate->isNumber($formData['width']) === false || $this->validate->isNumber($formData['maxwidth']) === false) {
+        if ($this->validate->isNumber($formData['thumbwidth']) === false || $this->validate->isNumber($formData['width']) === false) {
             $this->errors[] = $this->lang->t('gallery', 'invalid_image_width_entered');
         }
-        if ($this->validate->isNumber($formData['thumbheight']) === false || $this->validate->isNumber($formData['height']) === false || $this->validate->isNumber($formData['maxheight']) === false) {
+        if ($this->validate->isNumber($formData['thumbheight']) === false || $this->validate->isNumber($formData['height']) === false) {
             $this->errors[] = $this->lang->t('gallery', 'invalid_image_height_entered');
-        }
-        if ($this->validate->isNumber($formData['filesize']) === false) {
-            $this->errors['filesize'] = $this->lang->t('gallery', 'invalid_image_filesize_entered');
         }
 
         $this->_checkForFailedValidation();

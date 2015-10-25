@@ -51,6 +51,11 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}gallery` ADD INDEX (`user_id`)",
                 "UPDATE `{pre}gallery` SET `user_id` = NULL WHERE `user_id` = 0",
                 "ALTER TABLE `{pre}gallery` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
+            ],
+            39 => [
+                "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND name = 'filesize';",
+                "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND name = 'maxheight';",
+                "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND name = 'maxwidth';",
             ]
         ];
     }
