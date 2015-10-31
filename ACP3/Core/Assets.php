@@ -87,11 +87,23 @@ class Assets
     {
         if (isset($this->designXml->css) && empty($this->additionalThemeCssFiles)) {
             foreach ($this->designXml->css->item as $file) {
-                $this->additionalThemeCssFiles[] = $file;
+                $this->addCssFile($file);
             }
         }
 
         return $this->additionalThemeCssFiles;
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return $this
+     */
+    public function addCssFile($file)
+    {
+        $this->additionalThemeCssFiles[] = $file;
+
+        return $this;
     }
 
     /**
@@ -101,11 +113,23 @@ class Assets
     {
         if (isset($this->designXml->js) && empty($this->additionalThemeJsFiles)) {
             foreach ($this->designXml->js->item as $file) {
-                $this->additionalThemeJsFiles[] = $file;
+                $this->addJsFile($file);
             }
         }
 
         return $this->additionalThemeJsFiles;
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return $this
+     */
+    public function addJsFile($file)
+    {
+        $this->additionalThemeJsFiles[] = $file;
+
+        return $this;
     }
 
     /**
