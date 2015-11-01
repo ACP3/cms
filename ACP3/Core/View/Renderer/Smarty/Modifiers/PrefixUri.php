@@ -10,7 +10,7 @@ class PrefixUri extends AbstractModifier
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'prefix_uri';
     }

@@ -33,3 +33,5 @@ services:
   smarty.plugin.robots:
     class: %smarty.plugin.robots.fqdn%
     arguments: ['@core.lang', '@core.seo']
+    tags:
+      - { name: core.view.extension }

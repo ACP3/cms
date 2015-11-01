@@ -10,11 +10,6 @@ use ACP3\Core\Assets\MinifierInterface;
 class MoveToHead extends AbstractFilter
 {
     /**
-     * @var string
-     */
-    protected $filterType = 'output';
-
-    /**
      * @var \ACP3\Core\Assets\MinifierInterface
      */
     protected $minifier;
@@ -25,6 +20,14 @@ class MoveToHead extends AbstractFilter
     public function __construct(MinifierInterface $minifier)
     {
         $this->minifier = $minifier;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getExtensionName()
+    {
+        return 'output';
     }
 
     /**

@@ -25,7 +25,7 @@ class Router extends AbstractFunction
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'uri';
     }

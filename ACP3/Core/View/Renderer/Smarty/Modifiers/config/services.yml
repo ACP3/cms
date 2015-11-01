@@ -1,11 +1,17 @@
 services:
   smarty.plugin.addProtocol:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\PrefixUri
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.nl2p:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\Nl2p
     arguments: ['@core.helpers.stringFormatter']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.rewrite_uri:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\RewriteUri
     arguments: ['@core.helpers.formatter.rewriteInternalUri']
+    tags:
+      - { name: core.view.extension }

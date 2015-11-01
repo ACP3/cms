@@ -34,8 +34,6 @@ class Smarty extends AbstractRenderer
         $this->renderer->compile_check = $this->isDevOrInstall();
         $this->renderer->compile_dir = CACHE_DIR . 'tpl_compiled/';
         $this->renderer->cache_dir = CACHE_DIR . 'tpl_cached/';
-
-        $this->_registerPlugins();
     }
 
     /**
@@ -81,29 +79,6 @@ class Smarty extends AbstractRenderer
     public function templateExists($template)
     {
         return $this->renderer->templateExists($template);
-    }
-
-    /**
-     * Register all available Smarty plugins
-     */
-    protected function _registerPlugins()
-    {
-        $services = $this->container->getServiceIds();
-        foreach ($services as $serviceName) {
-            if (strpos($serviceName, 'smarty.plugin.') === 0) {
-                /** @var AbstractPlugin $plugin */
-                $plugin = $this->container->get($serviceName);
-                $plugin->registerPlugin($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.filter.') === 0) {
-                /** @var AbstractFilter $filter */
-                $filter = $this->container->get($serviceName);
-                $filter->registerFilter($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.resource.') === 0) {
-                /** @var AbstractResource $resource */
-                $resource = $this->container->get($serviceName);
-                $resource->registerResource($this->renderer);
-            }
-        }
     }
 
     /**

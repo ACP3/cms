@@ -37,7 +37,7 @@ class SiteTitle extends AbstractFunction
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'site_title';
     }

@@ -23,7 +23,7 @@ class DateRange extends AbstractFunction
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'date_range';
     }

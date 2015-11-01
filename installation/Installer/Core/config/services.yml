@@ -73,8 +73,7 @@ services:
 
   core.view:
     class: ACP3\Core\View
-    calls:
-      - ['setContainer', ['@service_container']]
+    arguments: [@core.view.renderer.smarty, [compile_id: installer]]
 
   core.view.renderer.smarty:
     class: ACP3\Installer\Core\View\Renderer\Smarty

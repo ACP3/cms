@@ -81,3 +81,5 @@ services:
   smarty.plugin.navbar:
     class: %smarty.plugin.navbar.fqdn%
     arguments: ['@core.request', '@core.router', '@menus.model.menuitemrepository', '@menus.cache']
+    tags:
+      - { name: core.view.extension }

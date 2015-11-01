@@ -65,7 +65,7 @@ class Datepicker extends AbstractFunction
     /**
      * @return string
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'datepicker';
     }

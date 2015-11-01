@@ -2,6 +2,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
+use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
 /**
  * Class AbstractBlock
@@ -12,9 +13,9 @@ abstract class AbstractBlock extends AbstractPlugin
     /**
      * @inheritdoc
      */
-    public function getPluginType()
+    public function getExtensionType()
     {
-        return 'block';
+        return PluginInterface::EXTENSION_TYPE_BLOCK;
     }
 
     /**

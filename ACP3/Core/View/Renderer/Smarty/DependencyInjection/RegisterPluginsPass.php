@@ -3,6 +3,7 @@ namespace ACP3\Core\View\Renderer\Smarty\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class RegisterPluginsPass
@@ -20,30 +21,11 @@ class RegisterPluginsPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.view.renderer.smarty');
+        $definition = $container->findDefinition('core.view');
+        $plugins = $container->findTaggedServiceIds('core.view.extension');
 
-        $plugins = $container->findTaggedServiceIds('smarty.plugin');
-
-        foreach ($plugins as $plugin) {
-            $definition->addMethodCall()
+        foreach ($plugins as $serviceId => $tags) {
+            $definition->addMethodCall('registerPlugin', [new Reference($serviceId)]);
         }
-
-        $services = $this->container->getServiceIds();
-        foreach ($services as $serviceName) {
-            if (strpos($serviceName, 'smarty.plugin.') === 0) {
-                /** @var AbstractPlugin $plugin */
-                $plugin = $this->container->get($serviceName);
-                $plugin->registerPlugin($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.filter.') === 0) {
-                /** @var AbstractFilter $filter */
-                $filter = $this->container->get($serviceName);
-                $filter->registerFilter($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.resource.') === 0) {
-                /** @var AbstractResource $resource */
-                $resource = $this->container->get($serviceName);
-                $resource->registerResource($this->renderer);
-            }
-        }
-
     }
 }

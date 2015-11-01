@@ -10,9 +10,12 @@ use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 class Asset extends AbstractResource
 {
     /**
-     * @var string
+     * @return string
      */
-    protected $resourceName = 'asset';
+    public function getExtensionName()
+    {
+        return 'asset';
+    }
 
     /**
      * @inheritdoc

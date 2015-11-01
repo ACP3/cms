@@ -2,11 +2,17 @@ services:
   smarty.filter.move_to_bottom:
     class: ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom
     arguments: ['@core.assets.minifier.javascript', '@core.request']
+    tags:
+      - { name: core.view.extension }
 
   smarty.filter.move_to_head:
     class: ACP3\Core\View\Renderer\Smarty\Filters\MoveToHead
     arguments: ['@core.assets.minifier.css']
+    tags:
+      - { name: core.view.extension }
 
   smarty.filter.page_css_classes:
     class: ACP3\Core\View\Renderer\Smarty\Filters\PageCssClasses
     arguments: ['@core.assets.pageCssClasses', '@core.request']
+    tags:
+      - { name: core.view.extension }

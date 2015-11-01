@@ -3,13 +3,13 @@
 namespace ACP3\Core;
 
 use ACP3\Core\View\Renderer\AbstractRenderer;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use ACP3\Core\View\Renderer\Smarty;
 
 /**
  * Klasse für die Ausgabe der Seite
  * @package ACP3\Core
  */
-class View extends ContainerAware
+class View
 {
     /**
      * @var AbstractRenderer
@@ -27,22 +27,13 @@ class View extends ContainerAware
     }
 
     /**
-     * Set the desired renderer with an optional config array
-     *
-     * @param string $renderer
-     * @param array  $params
-     *
-     * @throws \Exception
+     * @param \ACP3\Core\View\Renderer\Smarty $smarty
+     * @param array                           $params
      */
-    public function setRenderer($renderer = 'smarty', array $params = [])
+    public function __construct(Smarty $smarty, array $params = [])
     {
-        $serviceId = 'core.view.renderer.' . $renderer;
-        if ($this->container->has($serviceId) === true) {
-            $this->renderer = $this->container->get($serviceId);
-            $this->renderer->configure($params);
-        } else {
-            throw new \Exception('Renderer ' . $renderer . ' not found!');
-        }
+        $this->renderer = $smarty;
+        $this->renderer->configure($params);
     }
 
     /**
@@ -98,5 +89,13 @@ class View extends ContainerAware
     public function assign($name, $value = null)
     {
         return $this->renderer->assign($name, $value);
+    }
+
+    /**
+     * @param \ACP3\Core\View\Renderer\Smarty\PluginInterface $plugin
+     */
+    public function registerPlugin(Smarty\PluginInterface $plugin)
+    {
+        $plugin->register($this->renderer->renderer);
     }
 }

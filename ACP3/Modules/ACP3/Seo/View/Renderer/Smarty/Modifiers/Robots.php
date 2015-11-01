@@ -69,7 +69,7 @@ class Robots extends AbstractModifier
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'robots';
     }

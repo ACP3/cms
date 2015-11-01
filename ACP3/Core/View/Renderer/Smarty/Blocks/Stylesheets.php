@@ -10,7 +10,7 @@ class Stylesheets extends AbstractBlock
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'stylesheets';
     }

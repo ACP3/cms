@@ -75,10 +75,10 @@ class ThemeResolver
      */
     public function getStaticAssetPath($modulePath, $designPath, $dir = '', $file = '')
     {
-        if (strpos($modulePath, '.') === false && !preg_match('=/$=', $modulePath)) {
+        if (!empty($modulePath) && strpos($modulePath, '.') === false && !preg_match('=/$=', $modulePath)) {
             $modulePath .= '/';
         }
-        if (strpos($designPath, '.') === false && !preg_match('=/$=', $designPath)) {
+        if (!empty($designPath) && strpos($designPath, '.') === false && !preg_match('=/$=', $designPath)) {
             $designPath .= '/';
         }
         if (!empty($dir) && !preg_match('=/$=', $dir)) {

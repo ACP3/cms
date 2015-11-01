@@ -18,7 +18,7 @@ class PageTitle extends SiteTitle
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'page_title';
     }

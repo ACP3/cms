@@ -10,11 +10,6 @@ use ACP3\Core;
 class PageCssClasses extends AbstractFilter
 {
     /**
-     * @var string
-     */
-    protected $filterType = 'output';
-
-    /**
      * @var \ACP3\Core\Assets\PageCssClasses
      */
     protected $pageCssClasses;
@@ -37,6 +32,14 @@ class PageCssClasses extends AbstractFilter
     {
         $this->pageCssClasses = $pageCssClasses;
         $this->request = $request;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getExtensionName()
+    {
+        return 'output';
     }
 
     /**

@@ -1,23 +1,20 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
+use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
+use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
 /**
  * Class AbstractFilter
  * @package ACP3\Core\View\Renderer\Smarty\Filters
  */
-abstract class AbstractFilter
+abstract class AbstractFilter extends AbstractPlugin
 {
     /**
-     * @var string
+     * @inheritdoc
      */
-    protected $filterType = '';
-
-    /**
-     * @param \Smarty $smarty
-     */
-    public function registerFilter(\Smarty $smarty)
+    public function getExtensionType()
     {
-        $smarty->registerFilter($this->filterType, [$this, 'process']);
+        return PluginInterface::EXTENSION_TYPE_FILTER;
     }
 
     /**

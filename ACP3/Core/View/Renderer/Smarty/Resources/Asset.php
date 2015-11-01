@@ -13,10 +13,6 @@ class Asset extends AbstractResource
      * @var \ACP3\Core\Assets\ThemeResolver
      */
     protected $themeResolver;
-    /**
-     * @var string
-     */
-    protected $resourceName = 'asset';
 
     /**
      * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
@@ -24,6 +20,11 @@ class Asset extends AbstractResource
     public function __construct(Core\Assets\ThemeResolver $themeResolver)
     {
         $this->themeResolver = $themeResolver;
+    }
+
+    public function getExtensionName()
+    {
+        return 'asset';
     }
 
     /**

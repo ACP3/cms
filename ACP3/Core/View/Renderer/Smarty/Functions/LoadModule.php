@@ -27,7 +27,7 @@ class LoadModule extends AbstractFunction
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'load_module';
     }

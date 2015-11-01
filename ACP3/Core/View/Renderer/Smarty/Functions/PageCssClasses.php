@@ -47,7 +47,7 @@ class PageCssClasses extends AbstractFunction
     /**
      * @return string
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'page_css_classes';
     }

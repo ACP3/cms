@@ -61,6 +61,7 @@ class Application extends Core\AbstractApplication
     public function initializeClasses()
     {
         $this->container = new ContainerBuilder();
+        $this->container->addCompilerPass(new Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass());
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
 
@@ -83,8 +84,6 @@ class Application extends Core\AbstractApplication
                 }
             }
         }
-
-        $this->container->get('core.view')->setRenderer('smarty', ['compile_id' => 'installer']);
 
         $this->container->compile();
     }

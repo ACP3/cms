@@ -6,6 +6,7 @@ use ACP3\Core\Enum\Environment;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Logger as ACP3Logger;
+use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -131,7 +132,6 @@ class Application extends AbstractApplication
         $this->systemSettings = $this->container->get('core.config')->getSettings('system');
         $this->_setThemeConstants();
         $this->container->get('core.user')->authenticate();
-        $this->container->get('core.view')->setRenderer('smarty');
 
         /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.request');
@@ -214,6 +214,7 @@ class Application extends AbstractApplication
     {
         $containerBuilder = new ContainerBuilder();
         $containerBuilder->addCompilerPass(new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber'));
+        $containerBuilder->addCompilerPass(new RegisterPluginsPass());
 
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
         $loader->load(CLASSES_DIR . 'config/services.yml');

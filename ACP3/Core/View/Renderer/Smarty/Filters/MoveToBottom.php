@@ -11,11 +11,6 @@ use ACP3\Core\Http\RequestInterface;
 class MoveToBottom extends AbstractFilter
 {
     /**
-     * @var string
-     */
-    protected $filterType = 'output';
-
-    /**
      * @var \ACP3\Core\Assets\AbstractMinifier
      */
     protected $minifier;
@@ -35,6 +30,14 @@ class MoveToBottom extends AbstractFilter
     {
         $this->minifier = $minifier;
         $this->request = $request;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getExtensionName()
+    {
+        return 'output';
     }
 
     /**
