@@ -23,13 +23,13 @@ class Edit extends AbstractNestedSetOperation
     public function execute($id, $parentId, $blockId, array $updateValues)
     {
         $callback = function() use ($id, $parentId, $blockId, $updateValues) {
-            $nodes = $this->nestedSetModel->fetchNodeWithSiblings($this->tableName, $id);
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $id);
 
             // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
             if ($this->nodeIsRootItemAndNoChangeNeed($parentId, $blockId, $nodes[0])) {
                 $bool = $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $id]);
             } else {
-                $currentParent = $this->nestedSetModel->fetchParentNode(
+                $currentParent = $this->nestedSetRepository->fetchParentNode(
                     $this->tableName,
                     $nodes[0]['left_id'],
                     $nodes[0]['right_id']
@@ -40,7 +40,7 @@ class Edit extends AbstractNestedSetOperation
                     $bool = $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $id]);
                 } else { // ...ansonsten den Baum bearbeiten...
                     // Neues Elternelement
-                    $newParent = $this->nestedSetModel->fetchNodeById($this->tableName, $parentId);
+                    $newParent = $this->nestedSetRepository->fetchNodeById($this->tableName, $parentId);
 
                     if (empty($newParent)) {
                         list($rootId, $diff) = $this->nodeBecomesRootNode($id, $blockId, $nodes);
@@ -70,7 +70,7 @@ class Edit extends AbstractNestedSetOperation
     {
         return empty($parentId) &&
         ($this->enableBlocks === false || ($this->enableBlocks === true && $blockId == $items['block_id'])) &&
-        $this->nestedSetModel->nodeIsRootItem($this->tableName, $items['left_id'], $items['right_id']) === true;
+        $this->nestedSetRepository->nodeIsRootItem($this->tableName, $items['left_id'], $items['right_id']) === true;
     }
 
     /**
@@ -91,7 +91,7 @@ class Edit extends AbstractNestedSetOperation
                 $diff = $this->nodeBecomesRootNodeInSameBlock($nodes, $itemDiff);
             }
         } else {
-            $maxId = $this->nestedSetModel->fetchMaximumRightId($this->tableName);
+            $maxId = $this->nestedSetRepository->fetchMaximumRightId($this->tableName);
             $diff = $maxId - $nodes[0]['right_id'];
 
             $this->adjustParentNodesAfterSeparation($itemDiff, $nodes[0]['left_id'], $nodes[0]['right_id']);
@@ -111,12 +111,12 @@ class Edit extends AbstractNestedSetOperation
      */
     protected function nodeBecomesRootNodeInNewBlock($blockId, array $nodes, $itemDiff)
     {
-        $newBlockLeftId = $this->nestedSetModel->fetchMinimumLeftIdByBlockId($this->tableName, $blockId);
+        $newBlockLeftId = $this->nestedSetRepository->fetchMinimumLeftIdByBlockId($this->tableName, $blockId);
 
         // Falls die Knoten in einen leeren Block verschoben werden sollen,
         // die right_id des letzten Elementes verwenden
         if (empty($newBlockLeftId) || is_null($newBlockLeftId) === true) {
-            $newBlockLeftId = $this->nestedSetModel->fetchMaximumRightId($this->tableName);
+            $newBlockLeftId = $this->nestedSetRepository->fetchMaximumRightId($this->tableName);
             $newBlockLeftId += 1;
         }
 
@@ -140,7 +140,7 @@ class Edit extends AbstractNestedSetOperation
      */
     protected function nodeBecomesRootNodeInSameBlock(array $nodes, $itemDiff)
     {
-        $maxId = $this->nestedSetModel->fetchMaximumRightIdByBlockId($this->tableName, $nodes[0]['block_id']);
+        $maxId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($this->tableName, $nodes[0]['block_id']);
 
         $this->adjustParentNodesAfterSeparation($itemDiff, $nodes[0]['left_id'], $nodes[0]['right_id']);
 
@@ -169,7 +169,7 @@ class Edit extends AbstractNestedSetOperation
             $node['left_id'] += $diff;
             $node['right_id'] += $diff;
 
-            $parentId = $this->nestedSetModel->fetchParentNode(
+            $parentId = $this->nestedSetRepository->fetchParentNode(
                 $this->tableName,
                 $node['left_id'],
                 $node['right_id']

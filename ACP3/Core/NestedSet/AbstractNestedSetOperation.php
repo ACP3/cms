@@ -14,9 +14,9 @@ abstract class AbstractNestedSetOperation
      */
     protected $db;
     /**
-     * @var \ACP3\Core\NestedSet\Model
+     * @var \ACP3\Core\NestedSet\NestedSetRepository
      */
-    protected $nestedSetModel;
+    protected $nestedSetRepository;
 
     /**
      * @var bool
@@ -28,16 +28,16 @@ abstract class AbstractNestedSetOperation
     protected $tableName;
 
     /**
-     * @param \ACP3\Core\DB              $db
-     * @param \ACP3\Core\NestedSet\Model $nestedSetModel
+     * @param \ACP3\Core\DB                            $db
+     * @param \ACP3\Core\NestedSet\NestedSetRepository $nestedSetRepository
      */
     public function __construct(
         DB $db,
-        Model $nestedSetModel
+        NestedSetRepository $nestedSetRepository
     )
     {
         $this->db = $db;
-        $this->nestedSetModel = $nestedSetModel;
+        $this->nestedSetRepository = $nestedSetRepository;
     }
 
     /**

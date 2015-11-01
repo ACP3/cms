@@ -16,7 +16,7 @@ class Delete extends AbstractNestedSetOperation
     public function execute($id)
     {
         $callback = function () use ($id) {
-            $nodes = $this->nestedSetModel->fetchNodeWithSiblings($this->tableName, (int)$id);
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, (int)$id);
             if (!empty($nodes)) {
                 $this->db->getConnection()->delete($this->tableName, ['id' => (int)$id]);
 
@@ -41,8 +41,8 @@ class Delete extends AbstractNestedSetOperation
     protected function moveSiblingsOneLevelUp(array $nodes)
     {
         foreach ($nodes as $node) {
-            $rootId = $this->nestedSetModel->fetchRootNode($this->tableName, $node['left_id'], $node['right_id']);
-            $parentId = $this->nestedSetModel->fetchParentNode($this->tableName, $node['left_id'], $node['right_id']);
+            $rootId = $this->nestedSetRepository->fetchRootNode($this->tableName, $node['left_id'], $node['right_id']);
+            $parentId = $this->nestedSetRepository->fetchParentNode($this->tableName, $node['left_id'], $node['right_id']);
 
             // root_id und parent_id der Kinder aktualisieren
             $this->db->getConnection()->executeUpdate(

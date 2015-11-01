@@ -18,7 +18,7 @@ class Insert extends AbstractNestedSetOperation
     {
         $callback = function() use ($insertValues, $parentId) {
             // No parent item has been assigned
-            if ($this->nestedSetModel->nodeExists($this->tableName, (int) $parentId) === false) {
+            if ($this->nestedSetRepository->nodeExists($this->tableName, (int) $parentId) === false) {
                 // Select the last result set
                 $maxRightId = $this->fetchMaximumRightId($insertValues['block_id']);
 
@@ -31,7 +31,7 @@ class Insert extends AbstractNestedSetOperation
                 $rootId = $this->db->getConnection()->lastInsertId();
                 $result = $this->db->getConnection()->update($this->tableName, ['root_id' => $rootId], ['id' => $rootId]);
             } else { // a parent item for the node has been assigned
-                $parent = $this->nestedSetModel->fetchNodeById($this->tableName, (int) $parentId);
+                $parent = $this->nestedSetRepository->fetchNodeById($this->tableName, (int) $parentId);
 
                 $this->adjustFollowingNodesAfterInsert(2, $parent['right_id']);
                 $this->adjustParentNodesAfterInsert(2, $parent['left_id'], $parent['right_id']);
@@ -59,10 +59,10 @@ class Insert extends AbstractNestedSetOperation
     protected function fetchMaximumRightId($blockId)
     {
         if ($this->enableBlocks === true) {
-            $maxRightId = $this->nestedSetModel->fetchMaximumRightIdByBlockId($this->tableName,$blockId);
+            $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($this->tableName,$blockId);
         }
         if (empty($maxRightId)) {
-            $maxRightId = $this->nestedSetModel->fetchMaximumRightId($this->tableName);
+            $maxRightId = $this->nestedSetRepository->fetchMaximumRightId($this->tableName);
         }
 
         return (int) $maxRightId;

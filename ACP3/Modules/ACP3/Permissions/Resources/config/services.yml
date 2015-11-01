@@ -16,7 +16,7 @@ parameters:
 services:
   permissions.controller.admin.index:
     class: %permissions.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', @core.nestedSet, '@core.helpers.formToken', '@permissions.model.rolerepository', @permissions.model.userrolerepository, @permissions.model.rulerepository, '@permissions.cache', '@permissions.validator.role']
+    arguments: ['@core.context.admin', @core.nested_set, '@core.helpers.formToken', '@permissions.model.rolerepository', @permissions.model.userrolerepository, @permissions.model.rulerepository, '@permissions.cache', '@permissions.validator.role']
 
   permissions.controller.admin.resources:
     class: %permissions.controller.admin.resources.fqdn%

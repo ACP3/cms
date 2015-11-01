@@ -15,11 +15,11 @@ class Sort extends AbstractNestedSetOperation
      */
     public function execute($id, $mode)
     {
-        if ($this->nestedSetModel->nodeExists($this->tableName, $id) === true) {
-            $nodes = $this->nestedSetModel->fetchNodeWithSiblings($this->tableName, $id);
+        if ($this->nestedSetRepository->nodeExists($this->tableName, $id) === true) {
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $id);
 
             if ($mode === 'up' &&
-                $this->nestedSetModel->nextNodeExists(
+                $this->nestedSetRepository->nextNodeExists(
                     $this->tableName,
                     $nodes[0]['left_id'] - 1,
                     $this->getBlockId($nodes[0])
@@ -27,7 +27,7 @@ class Sort extends AbstractNestedSetOperation
             ) {
                 return $this->sortUp($nodes);
             } elseif ($mode === 'down' &&
-                $this->nestedSetModel->previousNodeExists(
+                $this->nestedSetRepository->previousNodeExists(
                     $this->tableName,
                     $nodes[0]['right_id'] + 1,
                     $this->getBlockId($nodes[0])
@@ -49,7 +49,7 @@ class Sort extends AbstractNestedSetOperation
     protected function sortUp(array $nodes)
     {
         $callback = function () use ($nodes) {
-            $prevNodes = $this->nestedSetModel->fetchPrevNodeWithSiblings($this->tableName, $nodes[0]['left_id'] - 1);
+            $prevNodes = $this->nestedSetRepository->fetchPrevNodeWithSiblings($this->tableName, $nodes[0]['left_id'] - 1);
 
             list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nodes[0], $prevNodes[0]);
 
@@ -68,7 +68,7 @@ class Sort extends AbstractNestedSetOperation
     protected function sortDown(array $nodes)
     {
         $callback = function () use ($nodes) {
-            $nextNodes = $this->nestedSetModel->fetchNextNodeWithSiblings($this->tableName, $nodes[0]['right_id'] + 1);
+            $nextNodes = $this->nestedSetRepository->fetchNextNodeWithSiblings($this->tableName, $nodes[0]['right_id'] + 1);
 
             list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nextNodes[0], $nodes[0]);
 
