@@ -1,0 +1,15 @@
+services:
+  core.request:
+    class: ACP3\Core\Http\Request
+    arguments: ['@core.config', '@seo.model.seorepository']
+
+  core.response:
+    class: Symfony\Component\HttpFoundation\Response
+
+  core.router:
+    class: ACP3\Core\Router
+    arguments: ['@core.router.aliases', '@core.request', '@core.config', %core.environment%]
+
+  core.router.aliases:
+    class: ACP3\Core\Router\Aliases
+    arguments: ['@seo.cache']

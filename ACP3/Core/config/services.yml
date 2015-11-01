@@ -4,9 +4,12 @@ imports:
   - { resource: components/assets.yml }
   - { resource: components/authentication.yml }
   - { resource: components/helpers.yml }
+  - { resource: components/http.yml }
+  - { resource: components/language.yml }
   - { resource: components/modules.yml }
   - { resource: components/nestedsets.yml }
   - { resource: components/validation.yml }
+  - { resource: components/view.yml }
   - { resource: ../WYSIWYG/config/services.yml }
   - { resource: ../../Modules/ACP3/Permissions/Resources/config/services.yml }
   - { resource: ../../Modules/ACP3/Seo/Resources/config/services.yml }
@@ -46,14 +49,6 @@ services:
     arguments: [@core.response]
     scope: prototype
 
-  core.lang:
-    class: ACP3\Core\Lang
-    arguments: ['@core.user', @core.lang.cache, '@core.config']
-
-  core.lang.cache:
-    class: ACP3\Core\Lang\Cache
-    arguments: ['@core.cache.system', @core.modules.vendors]
-
   core.mailer:
     class: ACP3\Core\Mailer
     arguments: ['@core.view', '@core.config', @core.helpers.stringFormatter]
@@ -66,21 +61,6 @@ services:
     class: ACP3\Core\Redirect
     arguments: ['@core.request', '@core.router']
 
-  core.request:
-    class: ACP3\Core\Http\Request
-    arguments: ['@core.config', '@seo.model.seorepository']
-
-  core.response:
-    class: Symfony\Component\HttpFoundation\Response
-
-  core.router:
-    class: ACP3\Core\Router
-    arguments: ['@core.router.aliases', '@core.request', '@core.config', %core.environment%]
-
-  core.router.aliases:
-    class: ACP3\Core\Router\Aliases
-    arguments: ['@seo.cache']
-
   core.seo:
     class: ACP3\Core\SEO
     arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@core.config', '@seo.model.seorepository']
@@ -92,15 +72,6 @@ services:
   core.user:
     class: ACP3\Core\User
     arguments: [@core.request, @core.authentication, '@core.session', '@core.helpers.secure', '@core.config', '@users.model.userrepository']
-
-  core.view:
-    class: ACP3\Core\View
-    arguments: [@core.view.renderer.smarty]
-
-  core.view.renderer.smarty:
-    class: ACP3\Core\View\Renderer\Smarty
-    calls:
-      - ['setContainer', ['@service_container']]
 
   core.xml:
     class: ACP3\Core\XML

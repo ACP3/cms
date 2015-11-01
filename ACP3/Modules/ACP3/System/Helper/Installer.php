@@ -2,10 +2,7 @@
 namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class Installer
@@ -135,28 +132,6 @@ class Installer
      */
     public function updateServiceContainer($allModules = false)
     {
-        $container = new ContainerBuilder();
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-        $loader->load(CLASSES_DIR . 'config/services.yml');
-        $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
-
-        $container->setParameter('core.environment', $this->environment);
-
-        // Try to get all available services
-        $modules = ($allModules === true) ? $this->modules->getAllModules() : $this->modules->getInstalledModules();
-        $vendors = $this->vendors->getVendors();
-
-        foreach ($modules as $module) {
-            foreach ($vendors as $vendor) {
-                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/Resources/config/services.yml';
-                if (is_file($path)) {
-                    $loader->load($path);
-                }
-            }
-        }
-
-        $container->compile();
-
-        return $container;
+        return Core\ServiceContainerBuilder::compileContainer($this->environment, $allModules);
     }
 }

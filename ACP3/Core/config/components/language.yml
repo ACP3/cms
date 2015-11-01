@@ -1,0 +1,8 @@
+services:
+  core.lang:
+    class: ACP3\Core\Lang
+    arguments: ['@core.user', @core.lang.cache, '@core.config']
+
+  core.lang.cache:
+    class: ACP3\Core\Lang\Cache
+    arguments: ['@core.cache.system', @core.modules.vendors]

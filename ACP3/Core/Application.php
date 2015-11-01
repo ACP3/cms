@@ -6,15 +6,10 @@ use ACP3\Core\Enum\Environment;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Logger as ACP3Logger;
-use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
  * Bootstraps the application
@@ -103,11 +98,8 @@ class Application extends AbstractApplication
         Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
         $file = CACHE_DIR . 'sql/container.php';
-        $containerConfigCache = new ConfigCache($file, ($this->environment === Environment::DEVELOPMENT));
 
-        if (!$containerConfigCache->isFresh()) {
-            $this->dumpContainer($containerConfigCache);
-        }
+        $this->dumpContainer($file);
 
         require_once $file;
         $this->container = new \ACP3ServiceContainer();
@@ -208,42 +200,20 @@ class Application extends AbstractApplication
     }
 
     /**
-     * @param \Symfony\Component\Config\ConfigCache $containerConfigCache
+     * @param string $file
      */
-    protected function dumpContainer(ConfigCache $containerConfigCache)
+    protected function dumpContainer($file)
     {
-        $containerBuilder = new ContainerBuilder();
-        $containerBuilder->addCompilerPass(new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber'));
-        $containerBuilder->addCompilerPass(new RegisterPluginsPass());
+        $containerConfigCache = new ConfigCache($file, ($this->environment === Environment::DEVELOPMENT));
 
-        $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
-        $loader->load(CLASSES_DIR . 'config/services.yml');
-        $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/config/services.yml');
+        if (!$containerConfigCache->isFresh()) {
+            $containerBuilder = ServiceContainerBuilder::compileContainer($this->environment);
 
-        $containerBuilder->setParameter('core.environment', $this->environment);
-
-        // Try to get all available services
-        /** @var Modules $modules */
-        $modules = $containerBuilder->get('core.modules');
-        $activeModules = $modules->getActiveModules();
-        $vendors = $containerBuilder->get('core.modules.vendors')->getVendors();
-
-        foreach ($activeModules as $module) {
-            foreach ($vendors as $vendor) {
-                $path = MODULES_DIR . $vendor . '/' . $module['dir'] . '/Resources/config/services.yml';
-
-                if (is_file($path)) {
-                    $loader->load($path);
-                }
-            }
+            $dumper = new PhpDumper($containerBuilder);
+            $containerConfigCache->write(
+                $dumper->dump(['class' => 'ACP3ServiceContainer']),
+                $containerBuilder->getResources()
+            );
         }
-
-        $containerBuilder->compile();
-
-        $dumper = new PhpDumper($containerBuilder);
-        $containerConfigCache->write(
-            $dumper->dump(['class' => 'ACP3ServiceContainer']),
-            $containerBuilder->getResources()
-        );
     }
 }

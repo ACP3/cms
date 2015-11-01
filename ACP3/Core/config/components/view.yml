@@ -1,0 +1,9 @@
+services:
+  core.view:
+    class: ACP3\Core\View
+    arguments: [@core.view.renderer.smarty]
+
+  core.view.renderer.smarty:
+    class: ACP3\Core\View\Renderer\Smarty
+    calls:
+      - ['setContainer', ['@service_container']]
