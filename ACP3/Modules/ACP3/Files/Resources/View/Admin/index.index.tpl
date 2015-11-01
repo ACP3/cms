@@ -42,7 +42,7 @@
                         {if $can_delete === true}
                             <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                         {/if}
-                        <td>{date_range start=$row.start end=$row.end}</td>
+                        <td data-order="{date_format date=$row.start format="U"}">{date_range start=$row.start end=$row.end}</td>
                         <td>{check_access mode="link" path="acp/files/index/edit/id_`$row.id`" title=$row.title}</td>
                         <td>{check_access mode="link" path="files/index/details/id_`$row.id`/action_download" lang="files|download_file" title=$row.file}</td>
                         <td>{if !empty($row.size)}{$row.size}{else}{lang t="files|unknown_filesize"}{/if}</td>
