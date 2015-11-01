@@ -46,14 +46,14 @@ class CSS extends AbstractMinifier
         foreach ($modules as $module) {
             $modulePath = $module['dir'] . '/Resources/';
             $designPath = $module['dir'] . '/';
-            if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'style.css')) &&
+            if ('' !== ($stylesheet = $this->fileResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'style.css')) &&
                 $module['dir'] !== 'System'
             ) {
                 $this->stylesheets[] = $stylesheet;
             }
 
             // Append custom styles to the default module styling
-            if ('' !== ($stylesheet = $this->themeResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'append.css'))) {
+            if ('' !== ($stylesheet = $this->fileResolver->getStaticAssetPath($modulePath, $designPath, static::ASSETS_PATH_CSS, 'append.css'))) {
                 $this->stylesheets[] = $stylesheet;
             }
         }
@@ -66,7 +66,7 @@ class CSS extends AbstractMinifier
     {
         foreach ($this->assets->getLibraries() as $library) {
             if ($library['enabled'] === true && isset($library['css']) === true) {
-                $this->stylesheets[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, $library['css']);
+                $this->stylesheets[] = $this->fileResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, $library['css']);
             }
         }
     }
@@ -79,12 +79,12 @@ class CSS extends AbstractMinifier
     protected function fetchThemeStylesheets($layout)
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
-            $this->stylesheets[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, trim($file));
+            $this->stylesheets[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, trim($file));
         }
 
         // Include general system styles and the stylesheet of the current theme
-        $this->stylesheets[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, 'style.css');
-        $this->stylesheets[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, $layout . '.css');
+        $this->stylesheets[] = $this->fileResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, 'style.css');
+        $this->stylesheets[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, $layout . '.css');
     }
 
 }

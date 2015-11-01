@@ -10,16 +10,16 @@ use ACP3\Core;
 class TemplatePath extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Assets\ThemeResolver
+     * @var \ACP3\Core\Assets\FileResolver
      */
-    protected $themeResolver;
+    protected $fileResolver;
 
     /**
-     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
+     * @param \ACP3\Core\Assets\FileResolver $fileResolver
      */
-    public function __construct(Core\Assets\ThemeResolver $themeResolver)
+    public function __construct(Core\Assets\FileResolver $fileResolver)
     {
-        $this->themeResolver = $themeResolver;
+        $this->fileResolver = $fileResolver;
     }
 
     /**
@@ -35,6 +35,6 @@ class TemplatePath extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        return $this->themeResolver->resolveTemplatePath($params['path']);
+        return $this->fileResolver->resolveTemplatePath($params['path']);
     }
 }

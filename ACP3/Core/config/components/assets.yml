@@ -7,7 +7,7 @@ services:
     arguments: ['@core.cache.system']
 
   core.assets.abstractMinifier:
-    arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.themeResolver, %core.environment%]
+    arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.file_resolver, %core.environment%]
     abstract: true
 
   core.assets.minifier.css:
@@ -18,8 +18,8 @@ services:
     class: ACP3\Core\Assets\Minifier\JavaScript
     parent: core.assets.abstractMinifier
 
-  core.assets.themeResolver:
-    class: ACP3\Core\Assets\ThemeResolver
+  core.assets.file_resolver:
+    class: ACP3\Core\Assets\FileResolver
     arguments: ['@core.xml', '@core.assets.cache', @core.modules.vendors]
 
   core.assets.pageCssClasses:

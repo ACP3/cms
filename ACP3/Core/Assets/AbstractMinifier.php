@@ -33,9 +33,9 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Assets\ThemeResolver
+     * @var \ACP3\Core\Assets\FileResolver
      */
-    protected $themeResolver;
+    protected $fileResolver;
     /**
      * @var string
      */
@@ -55,19 +55,19 @@ abstract class AbstractMinifier implements MinifierInterface
     protected $assetGroup = '';
 
     /**
-     * @param \ACP3\Core\Assets               $assets
-     * @param \ACP3\Core\Cache                $systemCache
-     * @param \ACP3\Core\Config               $config
-     * @param \ACP3\Core\Modules              $modules
-     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
-     * @param string                          $environment
+     * @param \ACP3\Core\Assets              $assets
+     * @param \ACP3\Core\Cache               $systemCache
+     * @param \ACP3\Core\Config              $config
+     * @param \ACP3\Core\Modules             $modules
+     * @param \ACP3\Core\Assets\FileResolver $fileResolver
+     * @param string                         $environment
      */
     public function __construct(
         Assets $assets,
         Cache $systemCache,
         Config $config,
         Modules $modules,
-        ThemeResolver $themeResolver,
+        FileResolver $fileResolver,
         $environment
     )
     {
@@ -75,7 +75,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->systemCache = $systemCache;
         $this->config = $config;
         $this->modules = $modules;
-        $this->themeResolver = $themeResolver;
+        $this->fileResolver = $fileResolver;
         $this->environment = $environment;
     }
 

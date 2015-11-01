@@ -42,7 +42,7 @@ class JavaScript extends AbstractMinifier
     {
         foreach ($this->assets->getLibraries() as $library) {
             if ($library['enabled'] === true && isset($library['js']) === true) {
-                $this->javascript[] = $this->themeResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_JS_LIBS, $library['js']);
+                $this->javascript[] = $this->fileResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_JS_LIBS, $library['js']);
             }
         }
     }
@@ -55,11 +55,11 @@ class JavaScript extends AbstractMinifier
     protected function fetchThemeJavaScript($layout)
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
-            $this->javascript[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);
+            $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);
         }
 
         // Include general js file of the layout
-        $this->javascript[] = $this->themeResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
+        $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
     }
 
 }

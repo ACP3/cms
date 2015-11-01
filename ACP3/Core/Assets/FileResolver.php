@@ -4,10 +4,10 @@ namespace ACP3\Core\Assets;
 use ACP3\Core;
 
 /**
- * Class ThemeResolver
+ * Class FileResolver
  * @package ACP3\Core\Assets
  */
-class ThemeResolver
+class FileResolver
 {
     /**
      * @var \ACP3\Core\XML
@@ -75,10 +75,10 @@ class ThemeResolver
      */
     public function getStaticAssetPath($modulePath, $designPath, $dir = '', $file = '')
     {
-        if (!empty($modulePath) && strpos($modulePath, '.') === false && !preg_match('=/$=', $modulePath)) {
+        if (strpos($modulePath, '.') === false && !preg_match('=/$=', $modulePath)) {
             $modulePath .= '/';
         }
-        if (!empty($designPath) && strpos($designPath, '.') === false && !preg_match('=/$=', $designPath)) {
+        if (strpos($designPath, '.') === false && !preg_match('=/$=', $designPath)) {
             $designPath .= '/';
         }
         if (!empty($dir) && !preg_match('=/$=', $dir)) {

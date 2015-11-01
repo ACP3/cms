@@ -10,18 +10,21 @@ use ACP3\Core;
 class Asset extends AbstractResource
 {
     /**
-     * @var \ACP3\Core\Assets\ThemeResolver
+     * @var \ACP3\Core\Assets\FileResolver
      */
-    protected $themeResolver;
+    protected $fileResolver;
 
     /**
-     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
+     * @param \ACP3\Core\Assets\FileResolver $fileResolver
      */
-    public function __construct(Core\Assets\ThemeResolver $themeResolver)
+    public function __construct(Core\Assets\FileResolver $fileResolver)
     {
-        $this->themeResolver = $themeResolver;
+        $this->fileResolver = $fileResolver;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getExtensionName()
     {
         return 'asset';
@@ -36,7 +39,7 @@ class Asset extends AbstractResource
      */
     protected function fetch($name, &$source, &$mtime)
     {
-        $asset = $this->themeResolver->resolveTemplatePath($name);
+        $asset = $this->fileResolver->resolveTemplatePath($name);
 
         if ($asset !== '') {
             $source = file_get_contents($asset);
@@ -56,7 +59,7 @@ class Asset extends AbstractResource
      */
     protected function fetchTimestamp($name)
     {
-        $asset = $this->themeResolver->resolveTemplatePath($name);
+        $asset = $this->fileResolver->resolveTemplatePath($name);
 
         return filemtime($asset);
     }
