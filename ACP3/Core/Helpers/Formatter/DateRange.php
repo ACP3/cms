@@ -34,7 +34,7 @@ class DateRange
     }
 
     /**
-     * Gibt die Formularfelder f�r den Ver�ffentlichungszeitraum aus
+     * Formats a given single date or date range into the desired format
      *
      * @param string $start
      * @param string $end
@@ -44,16 +44,27 @@ class DateRange
      */
     public function formatTimeRange($start, $end = '', $format = 'long')
     {
+        $rfcStart = $this->date->format($start, 'c');
+
         if ($end === '' || $start >= $end) {
             if ($end === '') {
                 $title = $this->date->format($start, $format);
             } else {
                 $title = sprintf($this->lang->t('system', 'date_published_since'), $this->date->format($start, $format));
             }
-            return '<time datetime="' . $start . '" title="' . $title . '">' . $this->date->format($start, Date::DEFAULT_DATE_FORMAT_LONG) . '</time>';
+            return '<time datetime="' . $rfcStart . '" title="' . $title . '">' . $this->date->format($start, $format) . '</time>';
         } else {
-            $title = sprintf($this->lang->t('system', 'date_time_range'), $this->date->format($start, $format), $this->date->format($end, $format));
-            return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->date->format($start, Date::DEFAULT_DATE_FORMAT_LONG) . '&ndash;' . $this->date->format($end, $datetimeFormat) . '</time>';
+            $rfcEnd = $this->date->format($end, 'c');
+
+            $dateRange = '<time datetime="' . $rfcStart . '">';
+            $dateRange.= $this->date->format($start, $format);
+            $dateRange.= '</time>';
+            $dateRange.= '&ndash;';
+            $dateRange.= '<time datetime="' . $rfcEnd . '">';
+            $dateRange.= $this->date->format($end, $format);
+            $dateRange.= '</time>';
+
+            return $dateRange;
         }
     }
 
