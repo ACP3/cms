@@ -44,28 +44,34 @@ class DateRange
      */
     public function formatTimeRange($start, $end = '', $format = 'long')
     {
-        $rfcStart = $this->date->format($start, 'c');
-
         if ($end === '' || $start >= $end) {
             if ($end === '') {
                 $title = $this->date->format($start, $format);
             } else {
                 $title = sprintf($this->lang->t('system', 'date_published_since'), $this->date->format($start, $format));
             }
-            return '<time datetime="' . $rfcStart . '" title="' . $title . '">' . $this->date->format($start, $format) . '</time>';
+            return $this->generateTimeTag($start, $format, $title);
         } else {
-            $rfcEnd = $this->date->format($end, 'c');
-
-            $dateRange = '<time datetime="' . $rfcStart . '">';
-            $dateRange.= $this->date->format($start, $format);
-            $dateRange.= '</time>';
-            $dateRange.= '&ndash;';
-            $dateRange.= '<time datetime="' . $rfcEnd . '">';
-            $dateRange.= $this->date->format($end, $format);
-            $dateRange.= '</time>';
+            $dateRange = $this->generateTimeTag($start, $format);
+            $dateRange .= '&ndash;';
+            $dateRange .= $this->generateTimeTag($end, $format);
 
             return $dateRange;
         }
+    }
+
+    /**
+     * @param string $date
+     * @param string $format
+     * @param string $title
+     *
+     * @return string
+     */
+    protected function generateTimeTag($date, $format, $title = '')
+    {
+        $rfcDate = $this->date->format($date, 'c');
+        $title = !empty($title) ? ' title="' . $title . '"' : '';
+        return '<time datetime="' . $rfcDate . '"' . $title . '>' . $this->date->format($date, $format) . '</time>';
     }
 
 }
