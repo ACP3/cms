@@ -122,6 +122,9 @@ class Index extends Core\Modules\AdminController
         return $this;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
@@ -308,21 +311,52 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        $articles = $this->articleRepository->getAllInAcp();
-
-        if (count($articles) > 0) {
-            $canDelete = $this->acl->hasPermission('admin/articles/index/delete');
-            $config = [
+        $dataTable = $this->get('core.helpers.data_table');
+        $dataTable
+            ->setRepository($this->articleRepository)
+            ->setDataTableConfig([
                 'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 2 : 1,
-                'sort_dir' => 'asc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
                 'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            $this->view->assign('articles', $articles);
-            $this->view->assign('can_delete', $canDelete);
-        }
+            ])
+            ->setResourcePathDelete('admin/articles/index/delete')
+            ->setResourcePathEdit('admin/articles/index/edit');
+
+        $dataTable
+            ->addColumn([
+                'label' => $this->lang->t('system', 'publication_period'),
+                'type' => 'date_range',
+                'fields' => ['start', 'end']
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('articles', 'title'),
+                'type' => 'string',
+                'fields' => ['title']
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'int',
+                'fields' => ['id']
+            ], 10);
+
+        return [
+            'grid' => $dataTable->generateDataTable()
+        ];
+
+//        $articles = $this->articleRepository->getAllInAcp();
+//
+//        if (count($articles) > 0) {
+//            $canDelete = $this->acl->hasPermission('admin/articles/index/delete');
+//            $config = [
+//                'element' => '#acp-table',
+//                'sort_col' => $canDelete === true ? 2 : 1,
+//                'sort_dir' => 'asc',
+//                'hide_col_sort' => $canDelete === true ? 0 : '',
+//                'records_per_page' => $this->user->getEntriesPerPage()
+//            ];
+//            $this->view->assign('datatable_config', $config);
+//            $this->view->assign('articles', $articles);
+//            $this->view->assign('can_delete', $canDelete);
+//        }
     }
 
     /**

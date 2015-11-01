@@ -9,6 +9,7 @@
         <item key="acp">Administration Control Panel</item>
         <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %1$shere%2$s to download the latest version.</item>
         <item key="acp3_up_to_date">You're already using the latest version of ACP3.</item>
+        <item key="action">Action</item>
         <item key="activate_module"><![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.<br />Please enable the module, to resolve this problem.]]></item>
         <item key="additional_javascript_files">Additional JavaScript files</item>
         <item key="additional_javascript_files_description">The javascript files have to be located in the &quot;js&quot; directory. Please separate each file with a comma.</item>

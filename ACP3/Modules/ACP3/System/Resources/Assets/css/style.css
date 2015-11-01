@@ -164,6 +164,10 @@
     float: right;
 }
 
+.table .table-cell-actions {
+    width: 10%;
+}
+
 /* Position Bootstrap modal dialogs statically */
 .modal.static {
     margin: 0 auto;

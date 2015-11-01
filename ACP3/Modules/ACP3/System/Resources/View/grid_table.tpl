@@ -1,0 +1,14 @@
+<table id="acp-table" class="table table-striped table-hover">
+    <thead>
+    <tr>
+        {$dataTable.header}
+    </tr>
+    </thead>
+    <tbody>
+    {$dataTable.results}
+    </tbody>
+</table>
+{if $dataTable.can_delete === true}
+    {include file="asset:system/mark.tpl"}
+{/if}
+{include file="asset:system/datatable.tpl" dt=$dataTable.config}
