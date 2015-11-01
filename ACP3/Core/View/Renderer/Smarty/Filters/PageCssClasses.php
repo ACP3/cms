@@ -43,10 +43,7 @@ class PageCssClasses extends AbstractFilter
     }
 
     /**
-     * @param                           $tpl_output
-     * @param \Smarty_Internal_Template $smarty
-     *
-     * @return string
+     * @inheritdoc
      */
     public function process($tpl_output, \Smarty_Internal_Template $smarty)
     {

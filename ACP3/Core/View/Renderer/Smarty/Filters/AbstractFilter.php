@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
+
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
@@ -18,7 +19,7 @@ abstract class AbstractFilter extends AbstractPlugin
     }
 
     /**
-     * @param                           $tpl_output
+     * @param string                    $tpl_output
      * @param \Smarty_Internal_Template $smarty
      *
      * @return string
