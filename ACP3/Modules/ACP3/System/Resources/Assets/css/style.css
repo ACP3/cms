@@ -164,8 +164,16 @@
     float: right;
 }
 
-.table .table-cell-actions {
-    width: 10%;
+.datagrid .datagrid-column__mass-delete {
+    width: 5%;
+}
+
+.datagrid .datagrid-column__date-range {
+    width: 22%;
+}
+
+.datagrid .datagrid-column__actions {
+    width: 15%;
 }
 
 /* Position Bootstrap modal dialogs statically */

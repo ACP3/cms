@@ -311,13 +311,12 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
+        /** @var Core\Helpers\DataTable $dataTable */
         $dataTable = $this->get('core.helpers.data_table');
         $dataTable
-            ->setRepository($this->articleRepository)
-            ->setDataTableConfig([
-                'element' => '#acp-table',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ])
+            ->setResults($this->articleRepository->getAllInAcp())
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/articles/index/delete')
             ->setResourcePathEdit('admin/articles/index/edit');
 
@@ -330,7 +329,8 @@ class Index extends Core\Modules\AdminController
             ->addColumn([
                 'label' => $this->lang->t('articles', 'title'),
                 'type' => 'string',
-                'fields' => ['title']
+                'fields' => ['title'],
+                'default_sort' => true
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),

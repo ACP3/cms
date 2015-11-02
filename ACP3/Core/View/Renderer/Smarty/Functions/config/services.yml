@@ -61,7 +61,7 @@ services:
 
   smarty.plugin.mark:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Mark
-    arguments: ['@core.lang']
+    arguments: ['@core.helpers.formatter.mark_entries']
     tags:
       - { name: core.view.extension }
 

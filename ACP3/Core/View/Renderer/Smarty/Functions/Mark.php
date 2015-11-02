@@ -10,16 +10,18 @@ use ACP3\Core;
 class Mark extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\Helpers\Formatter\MarkEntries
      */
-    protected $lang;
+    protected $markEntries;
 
     /**
-     * @param \ACP3\Core\Lang $lang
+     * Mark constructor.
+     *
+     * @param \ACP3\Core\Helpers\Formatter\MarkEntries $markEntries
      */
-    public function __construct(Core\Lang $lang)
+    public function __construct(Core\Helpers\Formatter\MarkEntries $markEntries)
     {
-        $this->lang = $lang;
+        $this->markEntries = $markEntries;
     }
 
     /**
@@ -36,17 +38,7 @@ class Mark extends AbstractFunction
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $markAllId = !empty($params['mark_all_id']) ? $params['mark_all_id'] : 'mark-all';
-        $deleteOptions = json_encode(
-            [
-                'checkBoxName' => $params['name'],
-                'language' => [
-                    'confirmationTextSingle' => $this->lang->t('system', 'confirm_delete_single'),
-                    'confirmationTextMultiple' => $this->lang->t('system', 'confirm_delete_multiple'),
-                    'noEntriesSelectedText' => $this->lang->t('system', 'no_entries_selected')
-                ]
-            ]
-        );
 
-        return 'data-mark-all-id="' . $markAllId . '" data-checkbox-name="' . $params['name'] . '" data-delete-options=\'' . $deleteOptions . '\'';
+        return $this->markEntries->execute($params['name'], $markAllId);
     }
 }

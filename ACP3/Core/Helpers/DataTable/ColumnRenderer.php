@@ -10,7 +10,7 @@ use ACP3\Core\Router;
  * Class ColumnRenderer
  * @package ACP3\Core\Helpers\DataTable
  */
-class ColumnRenderer
+class ColumnRenderer extends AbstractColumnRenderer
 {
     /**
      * @var \ACP3\Core\Date
@@ -49,26 +49,16 @@ class ColumnRenderer
     }
 
     /**
-     * @param string $value
-     *
-     * @param string $attributes
-     *
-     * @return string
-     */
-    public function renderColumn($value, $attributes = '')
-    {
-        return "<td{$attributes}>{$value}</td>\n";
-    }
-
-    /**
      * @param string $date
      *
      * @return string
      */
     public function renderDateColumn($date)
     {
-        $attribute = ' data-order="' . $this->date->format($date, 'U') . '"';
-        return $this->renderColumn($this->dateRangeHelper->formatTimeRange($date), $attribute);
+        $attribute = [
+            'data-order' => $this->date->format($date, 'U')
+        ];
+        return $this->renderColumn($this->dateRangeHelper->formatTimeRange($date), self::TYPE_TD, $attribute);
     }
 
     /**
@@ -80,8 +70,10 @@ class ColumnRenderer
     public function renderDateRangeColumn($dateStart, $dateEnd)
     {
         $value = $this->dateRangeHelper->formatTimeRange($dateStart, $dateEnd);
-        $attribute = ' data-order="' . $this->date->format($dateStart, 'U') . '"';
-        return $this->renderColumn($value, $attribute);
+        $attribute = [
+            'data-order' => $this->date->format($dateStart, 'U')
+        ];
+        return $this->renderColumn($value, self::TYPE_TD, $attribute, 'datagrid-column__date-range');
     }
 
     /**
@@ -98,15 +90,35 @@ class ColumnRenderer
         $value = '';
 
         if ($canEdit) {
-            $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';  
-            $value.= '<a href="' . $this->router->route($resourcePathEdit . 'id_' . $id) . '">' . $this->lang->t('system', 'edit') . '</a>';
+            $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';
+            $value .= '<a href="' . $this->router->route($resourcePathEdit . 'id_' . $id) . '" class="btn btn-default btn-xs btn-block">';
+            $value .= '<i class="glyphicon glyphicon-edit"></i> ' . $this->lang->t('system', 'edit');
+            $value .= '</a>';
         }
 
         if ($canDelete) {
             $resourcePathDelete .= !preg_match('=/$=', $resourcePathDelete) ? '/' : '';
-            $value.= '<a href="' . $this->router->route($resourcePathDelete . 'entries_' . $id) . '">' . $this->lang->t('system', 'delete') . '</a>';
+            $value .= ' <a href="' . $this->router->route($resourcePathDelete . 'entries_' . $id) . '" class="btn btn-danger btn-xs btn-block">';
+            $value .= '<i class="glyphicon glyphicon-remove"></i> ' . $this->lang->t('system', 'delete');
+            $value .= '</a>';
         }
 
         return $this->renderColumn($value);
+    }
+
+    /**
+     * @param int  $id
+     * @param bool $canDelete
+     *
+     * @return string
+     */
+    public function renderDeleteCheckbox($id, $canDelete)
+    {
+        if ($canDelete === true) {
+            $value = '<input type="checkbox" name="entries[]" value="' . $id . '">';
+            return $this->renderColumn($value);
+        }
+
+        return '';
     }
 }
