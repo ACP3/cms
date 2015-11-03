@@ -311,10 +311,12 @@ class Index extends Core\Modules\AdminController
 
     public function actionIndex()
     {
-        /** @var Core\Helpers\DataTable $dataTable */
-        $dataTable = $this->get('core.helpers.data_table');
+        $articles = $this->articleRepository->getAllInAcp();
+
+        /** @var Core\Helpers\DataGrid $dataTable */
+        $dataTable = $this->get('core.helpers.data_grid');
         $dataTable
-            ->setResults($this->articleRepository->getAllInAcp())
+            ->setResults($articles)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/articles/index/delete')
@@ -328,35 +330,21 @@ class Index extends Core\Modules\AdminController
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('articles', 'title'),
-                'type' => 'string',
+                'type' => 'text',
                 'fields' => ['title'],
                 'default_sort' => true
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'int',
-                'fields' => ['id']
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
             ], 10);
 
         return [
-            'grid' => $dataTable->generateDataTable()
+            'grid' => $dataTable->generateDataTable(),
+            'show_mass_delete_button' => count($articles) > 0
         ];
-
-//        $articles = $this->articleRepository->getAllInAcp();
-//
-//        if (count($articles) > 0) {
-//            $canDelete = $this->acl->hasPermission('admin/articles/index/delete');
-//            $config = [
-//                'element' => '#acp-table',
-//                'sort_col' => $canDelete === true ? 2 : 1,
-//                'sort_dir' => 'asc',
-//                'hide_col_sort' => $canDelete === true ? 0 : '',
-//                'records_per_page' => $this->user->getEntriesPerPage()
-//            ];
-//            $this->view->assign('datatable_config', $config);
-//            $this->view->assign('articles', $articles);
-//            $this->view->assign('can_delete', $canDelete);
-//        }
     }
 
     /**

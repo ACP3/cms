@@ -3,17 +3,16 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataTable\ColumnPriorityQueue;
-use ACP3\Core\Helpers\DataTable\ColumnRenderer;
-use ACP3\Core\Helpers\DataTable\HeaderColumnRenderer;
+use ACP3\Core\Helpers\DataTable\ColumnRenderer\ColumnRendererInterface;
+use ACP3\Core\Helpers\Formatter\MarkEntries;
 use ACP3\Core\Lang;
-use ACP3\Core\Model;
 use ACP3\Core\View;
 
 /**
- * Class DataTable
+ * Class DataGrid
  * @package ACP3\Core\Helpers
  */
-class DataTable
+class DataGrid
 {
     /**
      * @var \ACP3\Core\ACL
@@ -28,13 +27,9 @@ class DataTable
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Helpers\DataTable\HeaderColumnRenderer
+     * @var \ACP3\Core\Helpers\Formatter\MarkEntries
      */
-    protected $headerColumnRenderer;
-    /**
-     * @var \ACP3\Core\Helpers\DataTable\ColumnRenderer
-     */
-    protected $columnRenderer;
+    protected $markEntriesHelper;
     /**
      * @var array
      */
@@ -59,28 +54,41 @@ class DataTable
      * @var \ACP3\Core\Helpers\DataTable\ColumnPriorityQueue
      */
     protected $columns;
+    /**
+     * @var \ACP3\Core\Helpers\DataTable\ColumnRenderer\ColumnRendererInterface[]
+     */
+    protected $columnRenderer = [];
 
     /**
-     * @param \ACP3\Core\ACL                                    $acl
-     * @param \ACP3\Core\Lang                                   $lang
-     * @param \ACP3\Core\View                                   $view
-     * @param \ACP3\Core\Helpers\DataTable\HeaderColumnRenderer $headerColumnRenderer
-     * @param \ACP3\Core\Helpers\DataTable\ColumnRenderer       $columnRenderer
+     * @param \ACP3\Core\ACL                           $acl
+     * @param \ACP3\Core\Lang                          $lang
+     * @param \ACP3\Core\View                          $view
+     * @param \ACP3\Core\Helpers\Formatter\MarkEntries $markEntriesHelper
      */
     public function __construct(
         ACL $acl,
         Lang $lang,
         View $view,
-        HeaderColumnRenderer $headerColumnRenderer,
-        ColumnRenderer $columnRenderer
+        MarkEntries $markEntriesHelper
     )
     {
         $this->acl = $acl;
         $this->lang = $lang;
         $this->view = $view;
-        $this->headerColumnRenderer = $headerColumnRenderer;
-        $this->columnRenderer = $columnRenderer;
+        $this->markEntriesHelper = $markEntriesHelper;
         $this->columns = new ColumnPriorityQueue();
+    }
+
+    /**
+     * @param \ACP3\Core\Helpers\DataTable\ColumnRenderer\ColumnRendererInterface $columnRenderer
+     *
+     * @return $this
+     */
+    public function registerColumnRenderer(ColumnRendererInterface $columnRenderer)
+    {
+        $this->columnRenderer[$columnRenderer->getType()] = $columnRenderer;
+
+        return $this;
     }
 
     /**
@@ -160,7 +168,10 @@ class DataTable
                 'style' => '',
                 'sortable' => true,
                 'default_sort' => false,
-                'default_sort_direction' => 'asc'
+                'default_sort_direction' => 'asc',
+                'custom' => [],
+                'attribute' => [],
+                'primary' => false
             ],
             $columnData
         );
@@ -183,26 +194,32 @@ class DataTable
                 'label' => $this->identifier,
                 'type' => 'mass_delete',
                 'class' => 'datagrid-column datagrid-column__mass-delete',
-                'sortable' => false
+                'sortable' => false,
+                'custom' => [
+                    'can_delete' => $canDelete
+                ]
             ], 1000);
         }
 
         $this->addColumn([
             'label' => $this->lang->t('system', 'action'),
-            'type' => 'action_buttons',
+            'type' => 'options',
             'class' => 'datagrid-column datagrid-column__actions',
-            'sortable' => false
+            'sortable' => false,
+            'custom' => [
+                'can_delete' => $canDelete,
+                'can_edit' => $canEdit,
+                'resource_path_delete' => $this->resourcePathDelete,
+                'resource_path_edit' => $this->resourcePathEdit
+            ]
         ], 0);
 
         $dataTable = [
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
-            'header' => $this->headerColumnRenderer->renderTableHeader($this->columns),
+            'header' => $this->renderTableHeader(),
             'config' => $this->generateDataTableConfig(),
-            'results' => $this->mapTableColumnsToDbFields(
-                $canDelete,
-                $canEdit
-            )
+            'results' => $this->mapTableColumnsToDbFields()
         ];
         $this->view->assign('dataTable', $dataTable);
 
@@ -210,41 +227,38 @@ class DataTable
     }
 
     /**
-     * @param bool $canDelete
-     * @param bool $canEdit
-     *
      * @return string
      */
-    protected function mapTableColumnsToDbFields($canDelete, $canEdit)
+    protected function renderTableHeader()
+    {
+        $header = '';
+
+        foreach (clone $this->columns as $column) {
+            if ($column['type'] === 'mass_delete') {
+                $id = preg_replace('=[^\w\d-_]=', '', $column['label']) . '-mark-all';
+                $value = '<input type="checkbox" id="' . $id . '" value="1" ' . $this->markEntriesHelper->execute('entries', $id) . '>';
+            } else {
+                $value = $column['label'];
+            }
+
+            $header .= $this->columnRenderer['table_header']->renderColumn($column, $value, ColumnRendererInterface::TYPE_TH);
+        }
+
+        return $header;
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function mapTableColumnsToDbFields()
     {
         $results = '';
         foreach ($this->results as $result) {
             $results .= "<tr>\n";
             foreach (clone $this->columns as $column) {
-                $firstField = reset($column['fields']);
-                if ($firstField !== false && array_key_exists($firstField, $result)) {
-                    if (in_array($column['type'], ['string', 'int'])) {
-                        $results .= $this->columnRenderer->renderColumn($result[$firstField]);
-                    } elseif ($column['type'] === 'date') {
-                        $results .= $this->columnRenderer->renderDateColumn($result[$firstField]);
-                    } elseif ($column['type'] === 'date_range') {
-                        $dateStart = $column['fields'][0];
-                        $dateEnd = $column['fields'][1];
-                        $results .= $this->columnRenderer->renderDateRangeColumn($result[$dateStart], $result[$dateEnd]);
-                    }
-                } elseif ($column['type'] === 'action_buttons') {
-                    $results .= $this->columnRenderer->renderActionButtons(
-                        $result['id'],
-                        $this->resourcePathDelete,
-                        $this->resourcePathEdit,
-                        $canDelete,
-                        $canEdit
-                    );
-                } elseif ($column['type'] === 'mass_delete') {
-                    $results .= $this->columnRenderer->renderDeleteCheckbox(
-                        $result['id'],
-                        $canDelete
-                    );
+                if (array_key_exists($column['type'], $this->columnRenderer)) {
+                    $results .= $this->columnRenderer[$column['type']]->renderColumn($column, $result);
                 }
             }
 

@@ -1,0 +1,42 @@
+services:
+  core.helpers.data_grid:
+    class: ACP3\Core\Helpers\DataGrid
+    arguments: [@core.acl, @core.lang, @core.view, @core.helpers.formatter.mark_entries]
+
+  core.helpers.data_grid.column_renderer.date_column_renderer:
+    class: ACP3\Core\Helpers\DataTable\ColumnRenderer\DateColumnRenderer
+    arguments: [@core.date, @core.helpers.formatter.dateRange]
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.date_range_column_renderer:
+    class: ACP3\Core\Helpers\DataTable\ColumnRenderer\DateRangeColumnRenderer
+    arguments: [@core.date, @core.helpers.formatter.dateRange]
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.header_column_renderer:
+    class: ACP3\Core\Helpers\DataTable\ColumnRenderer\HeaderColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.integer_column_renderer:
+    class: ACP3\Core\Helpers\DataTable\ColumnRenderer\IntegerColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.mass_delete_column_renderer:
+    class: ACP3\Core\Helpers\DataTable\ColumnRenderer\MassDeleteColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.options_column_renderer:
+    class: ACP3\Core\Helpers\DataTable\ColumnRenderer\OptionsColumnRenderer
+    arguments: [@core.lang, @core.router]
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.text_column_renderer:
+    class: ACP3\Core\Helpers\DataTable\ColumnRenderer\TextColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }

@@ -11,18 +11,6 @@ services:
     class: ACP3\Core\Helpers\Date
     arguments: [@core.date, @core.lang, @core.request, @core.helpers.forms, @core.validator.rules.date]
 
-  core.helpers.data_table:
-    class: ACP3\Core\Helpers\DataTable
-    arguments: [@core.acl, @core.lang, @core.view, @core.helpers.data_table.header_column_renderer, @core.helpers.data_table.column_renderer]
-
-  core.helpers.data_table.header_column_renderer:
-    class: ACP3\Core\Helpers\DataTable\HeaderColumnRenderer
-    arguments: [@core.helpers.formatter.mark_entries]
-
-  core.helpers.data_table.column_renderer:
-    class: ACP3\Core\Helpers\DataTable\ColumnRenderer
-    arguments: [@core.date, @core.lang, @core.router, @core.helpers.formatter.dateRange]
-
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
     arguments: [@core.lang, @core.request]

@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
                     {check_access mode="link" path="acp/articles/index/create" class="glyphicon glyphicon-plus text-success"}
-                    {if isset($articles)}
+                    {if $show_mass_delete_button}
                         {check_access mode="button" path="acp/articles/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
                     {/if}
                 </div>
