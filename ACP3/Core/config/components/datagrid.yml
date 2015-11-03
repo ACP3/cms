@@ -2,6 +2,7 @@ services:
   core.helpers.data_grid:
     class: ACP3\Core\Helpers\DataGrid
     arguments: [@core.acl, @core.lang, @core.view, @core.helpers.formatter.mark_entries]
+    scope: prototype
 
   core.helpers.data_grid.column_renderer.date_column_renderer:
     class: ACP3\Core\Helpers\DataTable\ColumnRenderer\DateColumnRenderer
