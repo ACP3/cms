@@ -313,16 +313,16 @@ class Index extends Core\Modules\AdminController
     {
         $articles = $this->articleRepository->getAllInAcp();
 
-        /** @var Core\Helpers\DataGrid $dataTable */
-        $dataTable = $this->get('core.helpers.data_grid');
-        $dataTable
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
             ->setResults($articles)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/articles/index/delete')
             ->setResourcePathEdit('admin/articles/index/edit');
 
-        $dataTable
+        $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'publication_period'),
                 'type' => 'date_range',
@@ -342,7 +342,7 @@ class Index extends Core\Modules\AdminController
             ], 10);
 
         return [
-            'grid' => $dataTable->generateDataTable(),
+            'grid' => $dataGrid->render(),
             'show_mass_delete_button' => count($articles) > 0
         ];
     }

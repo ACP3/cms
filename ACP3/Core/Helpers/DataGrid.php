@@ -176,7 +176,7 @@ class DataGrid
     /**
      * @return string
      */
-    public function generateDataTable()
+    public function render()
     {
         $canDelete = $this->acl->hasPermission($this->resourcePathDelete);
         $canEdit = $this->acl->hasPermission($this->resourcePathEdit);
