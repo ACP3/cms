@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Core\Helpers\DataTable\DependencyInjection\RegisterColumnRendererPass;
+use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

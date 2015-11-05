@@ -1,11 +1,11 @@
 <?php
-namespace ACP3\Core\Helpers\DataTable\ColumnRenderer;
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Formatter\DateRange;
 
 /**
  * Class DateColumnRenderer
- * @package ACP3\Core\Helpers\DataTable\ColumnRenderer
+ * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
  */
 class DateColumnRenderer extends AbstractColumnRenderer
 {
@@ -34,16 +34,15 @@ class DateColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function renderColumn(array $column, $dbResultRow = '', $type = self::TYPE_TD)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
-        $date = $dbResultRow[$this->getFirstDbField($column)];
+        $date = $this->getDbFieldValueIfExists($column, $dbResultRow);
         $column['attribute'] = [
             'data-order' => $this->date->format($date, 'U')
         ];
-        return parent::renderColumn(
+        return $this->render(
             $column,
-            $this->dateRangeHelper->formatTimeRange($date),
-            $type
+            $this->dateRangeHelper->formatTimeRange($date)
         );
     }
 

@@ -2,9 +2,8 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataTable\ColumnPriorityQueue;
-use ACP3\Core\Helpers\DataTable\ColumnRenderer\ColumnRendererInterface;
-use ACP3\Core\Helpers\Formatter\MarkEntries;
+use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\Lang;
 use ACP3\Core\View;
 
@@ -27,10 +26,6 @@ class DataGrid
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Helpers\Formatter\MarkEntries
-     */
-    protected $markEntriesHelper;
-    /**
      * @var array
      */
     protected $results;
@@ -51,36 +46,33 @@ class DataGrid
      */
     protected $recordsPerPage;
     /**
-     * @var \ACP3\Core\Helpers\DataTable\ColumnPriorityQueue
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue
      */
     protected $columns;
     /**
-     * @var \ACP3\Core\Helpers\DataTable\ColumnRenderer\ColumnRendererInterface[]
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface[]
      */
     protected $columnRenderer = [];
 
     /**
-     * @param \ACP3\Core\ACL                           $acl
-     * @param \ACP3\Core\Lang                          $lang
-     * @param \ACP3\Core\View                          $view
-     * @param \ACP3\Core\Helpers\Formatter\MarkEntries $markEntriesHelper
+     * @param \ACP3\Core\ACL  $acl
+     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\View $view
      */
     public function __construct(
         ACL $acl,
         Lang $lang,
-        View $view,
-        MarkEntries $markEntriesHelper
+        View $view
     )
     {
         $this->acl = $acl;
         $this->lang = $lang;
         $this->view = $view;
-        $this->markEntriesHelper = $markEntriesHelper;
         $this->columns = new ColumnPriorityQueue();
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataTable\ColumnRenderer\ColumnRendererInterface $columnRenderer
+     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface $columnRenderer
      *
      * @return $this
      */
@@ -234,14 +226,7 @@ class DataGrid
         $header = '';
 
         foreach (clone $this->columns as $column) {
-            if ($column['type'] === 'mass_delete') {
-                $id = preg_replace('=[^\w\d-_]=', '', $column['label']) . '-mark-all';
-                $value = '<input type="checkbox" id="' . $id . '" value="1" ' . $this->markEntriesHelper->execute('entries', $id) . '>';
-            } else {
-                $value = $column['label'];
-            }
-
-            $header .= $this->columnRenderer['table_header']->renderColumn($column, $value, ColumnRendererInterface::TYPE_TH);
+            $header .= $this->columnRenderer['table_header']->fetchDataAndRenderColumn($column, []);
         }
 
         return $header;
@@ -258,7 +243,7 @@ class DataGrid
             $results .= "<tr>\n";
             foreach (clone $this->columns as $column) {
                 if (array_key_exists($column['type'], $this->columnRenderer)) {
-                    $results .= $this->columnRenderer[$column['type']]->renderColumn($column, $result);
+                    $results .= $this->columnRenderer[$column['type']]->fetchDataAndRenderColumn($column, $result);
                 }
             }
 

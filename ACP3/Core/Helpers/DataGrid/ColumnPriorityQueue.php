@@ -1,9 +1,9 @@
 <?php
-namespace ACP3\Core\Helpers\DataTable;
+namespace ACP3\Core\Helpers\DataGrid;
 
 /**
  * Class ColumnPriorityQueue
- * @package ACP3\Core\Helpers\DataTable
+ * @package ACP3\Core\Helpers\DataGrid
  */
 class ColumnPriorityQueue extends \SplPriorityQueue
 {

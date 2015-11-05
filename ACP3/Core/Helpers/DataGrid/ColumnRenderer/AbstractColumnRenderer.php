@@ -1,22 +1,34 @@
 <?php
-namespace ACP3\Core\Helpers\DataTable\ColumnRenderer;
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
  * Class AbstractColumnRenderer
- * @package ACP3\Core\Helpers\DataTable\ColumnRenderer
+ * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
  */
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
     /**
      * @inheritdoc
      */
-    public function renderColumn(array $column, $dbResultRow = '', $type = self::TYPE_TD)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    {
+        return $this->render($column, $this->getDbFieldValueIfExists($column, $dbResultRow));
+    }
+
+    /**
+     * @param array  $column
+     * @param string $value
+     * @param string $type
+     *
+     * @return string
+     */
+    protected function render(array $column, $value = '', $type = self::TYPE_TD)
     {
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
         $style = $this->addHtmlAttribute('style', $column['class']);
 
-        return "<{$type}{$attribute}{$class}{$style}>{$dbResultRow}</{$type}>";
+        return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
     }
 
     /**
@@ -49,6 +61,18 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     protected function getFirstDbField(array $column)
     {
         return reset($column['fields']);
+    }
+
+    /**
+     * @param array $column
+     * @param array $dbResultRow
+     *
+     * @return string
+     */
+    protected function getDbFieldValueIfExists(array $column, array $dbResultRow)
+    {
+        $field = $this->getFirstDbField($column);
+        return isset($dbResultRow[$field]) ? $dbResultRow[$field] : '';
     }
 
     /**

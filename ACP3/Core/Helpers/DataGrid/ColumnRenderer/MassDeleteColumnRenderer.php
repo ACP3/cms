@@ -1,20 +1,20 @@
 <?php
-namespace ACP3\Core\Helpers\DataTable\ColumnRenderer;
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
  * Class MassDeleteColumnRenderer
- * @package ACP3\Core\Helpers\DataTable\ColumnRenderer
+ * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
  */
 class MassDeleteColumnRenderer extends AbstractColumnRenderer
 {
     /**
      * @inheritdoc
      */
-    public function renderColumn(array $column, $dbResultRow = '', $type = self::TYPE_TD)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         if ($column['custom']['can_delete'] === true) {
             $value = '<input type="checkbox" name="entries[]" value="' . $dbResultRow['id'] . '">';
-            return parent::renderColumn($column, $value, $type);
+            return $this->render($column, $value);
         }
 
         return '';
