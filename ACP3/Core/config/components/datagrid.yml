@@ -27,7 +27,7 @@ services:
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
-  core.helpers.data_grid.column_renderer.mass_delete_column_renderer:
+  core.helpers.data_grid.column_renderer.mass_action_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer
     tags:
       - { name: core.helpers.data_grid.column_renderer }
@@ -40,5 +40,11 @@ services:
 
   core.helpers.data_grid.column_renderer.text_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.translate_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer
+    arguments: [@core.lang]
     tags:
       - { name: core.helpers.data_grid.column_renderer }
