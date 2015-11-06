@@ -33,6 +33,12 @@ services:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
     arguments: [@core.lang, @core.request, @core.helpers.date, @core.helpers.forms]
 
+  users.helpers.data_grid.column_renderer.user_roles_column_renderer:
+    class: ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer
+    arguments: [@core.acl]
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
   users.model.userrepository:
     class: %users.model.userrepository.fqdn%
     arguments: ['@core.db']

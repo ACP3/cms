@@ -49,7 +49,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Helpers\Secure                     $secureHelper
      * @param \ACP3\Core\Helpers\Forms                      $formsHelpers
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validator\Admin            $usersValidator
+     * @param \ACP3\Modules\ACP3\Users\Validator\Admin      $usersValidator
      * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
      */
     public function __construct(
@@ -229,25 +229,44 @@ class Index extends Core\Modules\AdminController
     public function actionIndex()
     {
         $users = $this->userRepository->getAllInAcp();
-        $c_users = count($users);
 
-        if ($c_users > 0) {
-            $canDelete = $this->acl->hasPermission('admin/users/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'asc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($users)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/users/index/delete')
+            ->setResourcePathEdit('admin/users/index/edit');
 
-            for ($i = 0; $i < $c_users; ++$i) {
-                $users[$i]['roles'] = implode(', ', $this->acl->getUserRoleNames($users[$i]['id']));
-            }
-            $this->view->assign('users', $users);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('users', 'nickname'),
+                'type' => 'text',
+                'fields' => ['nickname'],
+                'default_sort' => true
+            ], 40)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'email_address'),
+                'type' => 'text',
+                'fields' => ['mail'],
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('permissions', 'roles'),
+                'type' => 'user_roles',
+                'fields' => ['id'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($users) > 0
+        ];
     }
 
     /**
