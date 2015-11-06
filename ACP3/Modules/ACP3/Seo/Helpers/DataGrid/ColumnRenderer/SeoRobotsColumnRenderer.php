@@ -1,15 +1,15 @@
 <?php
-namespace ACP3\Modules\ACP3\Seo\View\Renderer\Smarty\Modifiers;
+namespace ACP3\Modules\ACP3\Seo\Helpers\DataGrid\ColumnRenderer;
 
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 use ACP3\Core\Lang;
 use ACP3\Core\SEO;
-use ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier;
 
 /**
- * Class Robots
- * @package ACP3\Modules\ACP3\Seo\View\Renderer\Smarty\Modifiers
+ * Class SeoRobotsColumnRenderer
+ * @package ACP3\Modules\ACP3\Seo\Helpers\DataGrid\ColumnRenderer
  */
-class Robots extends AbstractModifier
+class SeoRobotsColumnRenderer extends AbstractColumnRenderer
 {
     /**
      * @var \ACP3\Core\Lang
@@ -29,12 +29,15 @@ class Robots extends AbstractModifier
     protected $replace = [];
 
     /**
-     * @param Lang $lang
-     * @param SEO  $seo
+     * SeoRobotsColumnRenderer constructor.
+     *
+     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\SEO  $seo
      */
     public function __construct(
         Lang $lang,
-        SEO $seo)
+        SEO $seo
+    )
     {
         $this->lang = $lang;
         $this->seo = $seo;
@@ -57,20 +60,22 @@ class Robots extends AbstractModifier
     /**
      * @inheritdoc
      */
-    public function process($value)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
+        $value = $this->getDbFieldValueIfExists($column, $dbResultRow);
+
         if (empty($this->replace) === true) {
             $this->replace = $this->_setReplaceParams();
         }
 
-        return str_replace($this->search, $this->replace, $value);
+        return $this->render($column, str_replace($this->search, $this->replace, $value));
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    public function getExtensionName()
+    public function getType()
     {
-        return 'robots';
+        return 'seo_robots';
     }
 }

@@ -122,19 +122,53 @@ class Index extends Core\Modules\AdminController
     {
         $seo = $this->seoRepository->getAllInAcp();
 
-        if (count($seo) > 0) {
-            $canDelete = $this->acl->hasPermission('admin/seo/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            $this->view->assign('seo', $seo);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($seo)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/seo/index/delete')
+            ->setResourcePathEdit('admin/seo/index/edit');
+
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('seo', 'uri'),
+                'type' => 'text',
+                'fields' => ['uri'],
+                'default_sort' => true
+            ], 60)
+            ->addColumn([
+                'label' => $this->lang->t('seo', 'alias'),
+                'type' => 'text',
+                'fields' => ['alias'],
+            ], 50)
+            ->addColumn([
+                'label' => $this->lang->t('seo', 'keywords'),
+                'type' => 'text',
+                'fields' => ['keywords'],
+            ], 40)
+            ->addColumn([
+                'label' => $this->lang->t('seo', 'description'),
+                'type' => 'text',
+                'fields' => ['description'],
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('seo', 'robots'),
+                'type' => 'seo_robots',
+                'fields' => ['robots'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($seo) > 0
+        ];
     }
 
     /**

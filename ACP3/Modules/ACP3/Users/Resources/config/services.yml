@@ -3,6 +3,8 @@ parameters:
   users.controller.frontend.account.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Account'
   users.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Index'
   users.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index'
+  users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer'
+  users.helpers.forms.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\Forms'
   users.model.userrepository.fqdn: 'ACP3\Modules\ACP3\Users\Model\UserRepository'
   users.validator.account.fqdn: 'ACP3\Modules\ACP3\Users\Validator\Account'
   users.validator.admin.fqdn: 'ACP3\Modules\ACP3\Users\Validator\Admin'
@@ -30,11 +32,11 @@ services:
     arguments: ['@core.context']
 
   users.helpers.forms:
-    class: ACP3\Modules\ACP3\Users\Helpers\Forms
+    class: %users.helpers.forms.fqdn%
     arguments: [@core.lang, @core.request, @core.helpers.date, @core.helpers.forms]
 
   users.helpers.data_grid.column_renderer.user_roles_column_renderer:
-    class: ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer
+    class: %users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn%
     arguments: [@core.acl]
     tags:
       - { name: core.helpers.data_grid.column_renderer }
