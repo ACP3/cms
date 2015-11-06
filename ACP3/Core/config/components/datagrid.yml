@@ -38,6 +38,11 @@ services:
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
+  core.helpers.data_grid.column_renderer.picture_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
   core.helpers.data_grid.column_renderer.text_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer
     tags:
