@@ -72,7 +72,16 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     protected function getDbFieldValueIfExists(array $column, array $dbResultRow)
     {
         $field = $this->getFirstDbField($column);
-        return isset($dbResultRow[$field]) ? $dbResultRow[$field] : '';
+
+        if (isset($dbResultRow[$field])) {
+            return $dbResultRow[$field];
+        }
+
+        if (isset($column['custom']['default_value'])) {
+            return $column['custom']['default_value'];
+        }
+
+        return '';
     }
 
     /**

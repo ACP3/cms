@@ -210,19 +210,51 @@ class Index extends Core\Modules\AdminController
     {
         $files = $this->filesRepository->getAllInAcp();
 
-        if (count($files) > 0) {
-            $canDelete = $this->acl->hasPermission('admin/files/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            $this->view->assign('files', $files);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($files)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/files/index/delete')
+            ->setResourcePathEdit('admin/files/index/edit');
+
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'publication_period'),
+                'type' => 'date_range',
+                'fields' => ['start', 'end'],
+                'default_sort' => true
+            ], 50)
+            ->addColumn([
+                'label' => $this->lang->t('files', 'title'),
+                'type' => 'text',
+                'fields' => ['title'],
+            ], 40)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'description'),
+                'type' => 'text',
+                'fields' => ['description'],
+            ], 40)
+            ->addColumn([
+                'label' => $this->lang->t('files', 'filesize'),
+                'type' => 'text',
+                'fields' => ['size'],
+                'customer' => [
+                    'default_value' => $this->lang->t('files', 'unknown_filesize')
+                ]
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($files) > 0
+        ];
     }
 
     /**
