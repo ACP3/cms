@@ -46,6 +46,14 @@ class DataGrid
      */
     protected $recordsPerPage;
     /**
+     * @var bool
+     */
+    protected $enableMassAction = true;
+    /**
+     * @var bool
+     */
+    protected $enableOptions = true;
+    /**
      * @var \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue
      */
     protected $columns;
@@ -132,6 +140,29 @@ class DataGrid
     }
 
     /**
+     * @param boolean $enableMassAction
+     *
+     * @return $this
+     */
+    public function setEnableMassAction($enableMassAction)
+    {
+        $this->enableMassAction = (bool) $enableMassAction;
+
+        return $this;
+    }
+
+    /**
+     * @param boolean $enableOptions
+     *
+     * @return $this
+     */
+    public function setEnableOptions($enableOptions)
+    {
+        $this->enableOptions = (bool) $enableOptions;
+        return $this;
+    }
+
+    /**
      * @param string $identifier
      *
      * @return $this
@@ -181,30 +212,7 @@ class DataGrid
         $canDelete = $this->acl->hasPermission($this->resourcePathDelete);
         $canEdit = $this->acl->hasPermission($this->resourcePathEdit);
 
-        if ($canDelete) {
-            $this->addColumn([
-                'label' => $this->identifier,
-                'type' => 'mass_delete',
-                'class' => 'datagrid-column datagrid-column__mass-delete',
-                'sortable' => false,
-                'custom' => [
-                    'can_delete' => $canDelete
-                ]
-            ], 1000);
-        }
-
-        $this->addColumn([
-            'label' => $this->lang->t('system', 'action'),
-            'type' => 'options',
-            'class' => 'datagrid-column datagrid-column__actions',
-            'sortable' => false,
-            'custom' => [
-                'can_delete' => $canDelete,
-                'can_edit' => $canEdit,
-                'resource_path_delete' => $this->resourcePathDelete,
-                'resource_path_edit' => $this->resourcePathEdit
-            ]
-        ], 0);
+        $this->addDefaultColumns($canDelete, $canEdit);
 
         $dataTable = [
             'can_edit' => $canEdit,
@@ -284,5 +292,39 @@ class DataGrid
             'sort_col' => $defaultSortColumn,
             'sort_dir' => $defaultSortDirection
         ];
+    }
+
+    /**
+     * @param bool $canDelete
+     * @param bool $canEdit
+     */
+    protected function addDefaultColumns($canDelete, $canEdit)
+    {
+        if ($this->enableMassAction && $canDelete) {
+            $this->addColumn([
+                'label' => $this->identifier,
+                'type' => 'mass_action',
+                'class' => 'datagrid-column datagrid-column__mass-action',
+                'sortable' => false,
+                'custom' => [
+                    'can_delete' => $canDelete
+                ]
+            ], 1000);
+        }
+
+        if ($this->enableOptions) {
+            $this->addColumn([
+                'label' => $this->lang->t('system', 'action'),
+                'type' => 'options',
+                'class' => 'datagrid-column datagrid-column__actions',
+                'sortable' => false,
+                'custom' => [
+                    'can_delete' => $canDelete,
+                    'can_edit' => $canEdit,
+                    'resource_path_delete' => $this->resourcePathDelete,
+                    'resource_path_edit' => $this->resourcePathEdit
+                ]
+            ], 0);
+        }
     }
 }

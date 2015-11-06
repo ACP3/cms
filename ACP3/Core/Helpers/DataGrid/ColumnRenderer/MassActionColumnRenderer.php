@@ -2,10 +2,10 @@
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
- * Class MassDeleteColumnRenderer
+ * Class MassActionColumnRenderer
  * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
  */
-class MassDeleteColumnRenderer extends AbstractColumnRenderer
+class MassActionColumnRenderer extends AbstractColumnRenderer
 {
     /**
      * @inheritdoc
@@ -25,6 +25,6 @@ class MassDeleteColumnRenderer extends AbstractColumnRenderer
      */
     public function getType()
     {
-        return 'mass_delete';
+        return 'mass_action';
     }
 }

@@ -28,7 +28,7 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
-        if ($column['type'] === 'mass_delete') {
+        if ($column['type'] === 'mass_action') {
             $id = preg_replace('=[^\w\d-_]=', '', $column['label']) . '-mark-all';
             $value = '<input type="checkbox" id="' . $id . '" value="1" ' . $this->markEntriesHelper->execute('entries', $id) . '>';
         } else {

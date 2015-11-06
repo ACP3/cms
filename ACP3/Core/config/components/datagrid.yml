@@ -28,7 +28,7 @@ services:
       - { name: core.helpers.data_grid.column_renderer }
 
   core.helpers.data_grid.column_renderer.mass_delete_column_renderer:
-    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassDeleteColumnRenderer
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
