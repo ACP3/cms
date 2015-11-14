@@ -81,7 +81,7 @@ class Pictures extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionCreate($id)
@@ -107,13 +107,15 @@ class Pictures extends Core\Modules\AdminController
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', array_merge(['description' => ''], $this->request->getPost()->all()));
-            $this->view->assign('gallery_id', $id);
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'form' => array_merge(['description' => ''], $this->request->getPost()->all()),
+                'gallery_id' => $id
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
@@ -154,7 +156,7 @@ class Pictures extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -181,13 +183,15 @@ class Pictures extends Core\Modules\AdminController
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', array_merge($picture, $this->request->getPost()->all()));
-            $this->view->assign('gallery_id', $id);
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'form' => array_merge($picture, $this->request->getPost()->all()),
+                'gallery_id' => $id
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**

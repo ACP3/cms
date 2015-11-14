@@ -60,7 +60,17 @@ class PictureRepository extends Core\Model
      */
     public function getPicturesByGalleryId($id)
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE gallery_id = ? ORDER BY pic ASC', [$id]);
+        return $this->db->fetchAll(
+            'SELECT
+              p.*,
+              (SELECT pmin.pic FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.gallery_id = p.gallery_id ORDER BY pmin.pic ASC LIMIT 1) AS `first`,
+              (SELECT pmax.pic FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.gallery_id = p.gallery_id ORDER BY pmax.pic DESC LIMIT 1) AS `last`
+            FROM
+              ' . $this->getTableName() . ' AS p
+            WHERE p.gallery_id = ?
+            ORDER BY p.pic ASC',
+            [$id]
+        );
     }
 
     /**
