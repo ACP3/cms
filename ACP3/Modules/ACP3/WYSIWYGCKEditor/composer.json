@@ -12,7 +12,7 @@
     "acp3/module-seo": "dev-master",
     "acp3/module-system": "dev-master",
     "acp3/module-users": "dev-master",
-    "ckeditor/ckeditor": "dev-full/4.4.x"
+    "ckeditor/ckeditor": "dev-full/4.5.x"
   },
   "extra": {
     "installer-name": "ACP3/WYSIWYGCKEditor"

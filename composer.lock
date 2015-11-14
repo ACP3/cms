@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "44209a5b2611571d6053a495ed715564",
+    "hash": "7c84f3d53da45b4efd7dc283205351a1",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
-            "version": "dev-full/4.4.x",
+            "version": "dev-full/4.5.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "31614dbd37ac334f814008ef8561eade312ea809"
+                "reference": "f331514699086155601400717dc752a0102a5c88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/31614dbd37ac334f814008ef8561eade312ea809",
-                "reference": "31614dbd37ac334f814008ef8561eade312ea809",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/f331514699086155601400717dc752a0102a5c88",
+                "reference": "f331514699086155601400717dc752a0102a5c88",
                 "shasum": ""
             },
             "type": "library",
@@ -45,7 +45,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2015-07-01 12:33:29"
+            "time": "2015-11-12 19:21:35"
         },
         {
             "name": "doctrine/annotations",
