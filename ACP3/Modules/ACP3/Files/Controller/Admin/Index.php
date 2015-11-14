@@ -83,7 +83,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -94,10 +94,6 @@ class Index extends Core\Modules\AdminController
         }
 
         $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
-        $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''));
-
-        // Formularelemente
-        $this->view->assign('categories', $this->categoriesHelpers->categoriesList('files', '', true));
 
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $options = [];
@@ -106,8 +102,6 @@ class Index extends Core\Modules\AdminController
             $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
             $this->view->assign('options', $options);
         }
-
-        $this->view->assign('checked_external', $this->request->getPost()->has('external') ? ' checked="checked"' : '');
 
         $defaults = [
             'title' => '',
@@ -119,11 +113,15 @@ class Index extends Core\Modules\AdminController
             'end' => ''
         ];
 
-        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'units' => $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''),
+            'categories' => $this->categoriesHelpers->categoriesList('files', '', true),
+            'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
+            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -162,7 +160,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -179,12 +177,8 @@ class Index extends Core\Modules\AdminController
             }
 
             $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
-            $this->view->assign('units', $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($file['size'], ' '))));
 
             $file['filesize'] = substr($file['size'], 0, strpos($file['size'], ' '));
-
-            // Formularelemente
-            $this->view->assign('categories', $this->categoriesHelpers->categoriesList('files', $file['category_id'], true));
 
             if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = [];
@@ -194,16 +188,19 @@ class Index extends Core\Modules\AdminController
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('checked_external', $this->request->getPost()->has('external') ? ' checked="checked"' : '');
-            $this->view->assign('current_file', $file['file']);
-
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id)));
-            $this->view->assign('form', array_merge($file, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'units' => $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($file['size'], ' '))),
+                'categories' => $this->categoriesHelpers->categoriesList('files', $file['category_id'], true),
+                'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
+                'current_file' => $file['file'],
+                'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id)),
+                'form' => array_merge($file, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     public function actionIndex()
@@ -235,7 +232,7 @@ class Index extends Core\Modules\AdminController
                 'label' => $this->lang->t('system', 'description'),
                 'type' => 'text',
                 'fields' => ['description'],
-            ], 40)
+            ], 30)
             ->addColumn([
                 'label' => $this->lang->t('files', 'filesize'),
                 'type' => 'text',
@@ -258,7 +255,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -272,11 +269,12 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('comments', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('comments', $settings['comments']));
         }
 
-        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
-
-        $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'sidebar_entries' => $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10)
+        ];
     }
 
     /**
