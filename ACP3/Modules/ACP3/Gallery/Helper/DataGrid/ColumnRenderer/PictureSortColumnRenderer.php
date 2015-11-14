@@ -60,6 +60,8 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
             $value = '<i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="' . $this->lang->t('system', 'move_impossible') . '"></i>';
         }
 
+        $column['attribute']['data-order'] = $dbResultRow['pic'];
+
         return $this->render($column, $value);
     }
 

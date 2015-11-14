@@ -148,7 +148,7 @@ class Pictures extends Core\Modules\AdminController
 
                 return $bool;
             },
-            null,
+            'acp/gallery/pictures/delete/id_' . $id,
             'acp/gallery/index/edit/id_' . $id
         );
     }

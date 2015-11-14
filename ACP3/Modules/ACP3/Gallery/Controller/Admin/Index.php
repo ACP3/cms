@@ -181,7 +181,7 @@ class Index extends Core\Modules\AdminController
             ->setResults($pictures)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
-            ->setResourcePathDelete('admin/gallery/pictures/delete')
+            ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
             ->setResourcePathEdit('admin/gallery/pictures/edit');
 
         $dataGrid
