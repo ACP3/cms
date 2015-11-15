@@ -37,7 +37,7 @@ class DateRangeColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
     {
         $dateStart = $this->getDbFieldValueIfExists($column, $dbResultRow);
         $dateEnd = $dbResultRow[$column['fields'][1]];

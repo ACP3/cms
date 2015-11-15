@@ -39,7 +39,7 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
     {
         $dbValue = $this->getDbFieldValueIfExists($column, $dbResultRow);
 

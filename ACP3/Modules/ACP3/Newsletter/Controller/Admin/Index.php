@@ -65,7 +65,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -75,15 +75,16 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all(), $settings);
         }
 
-        $this->view->assign('settings', $settings);
-        $this->view->assign('form', array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()));
-
-        $this->view->assign('test', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0));
-
         $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
-        $this->view->assign('action', $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'settings' => $settings,
+            'test' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0),
+            'action' => $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1),
+            'form' => array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -111,7 +112,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -127,23 +128,69 @@ class Index extends Core\Modules\AdminController
                 return $this->_editPost($this->request->getPost()->all(), $settings, $id);
             }
 
-            $this->view->assign('settings', array_merge($settings, ['html' => $newsletter['html']]));
-            $this->view->assign('form', array_merge($newsletter, $this->request->getPost()->all()));
-
-            $this->view->assign('test', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0));
-
             $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
-            $this->view->assign('action', $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1));
 
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'settings' => array_merge($settings, ['html' => $newsletter['html']]),
+                'test' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0),
+                'action' => $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1),
+                'form' => array_merge($newsletter, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     public function actionIndex()
     {
         $newsletter = $this->newsletterRepository->getAllInAcp();
+
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($newsletter)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#newsletter-data-grid')
+            ->setResourcePathEdit('admin/newsletter/index/edit')
+            ->setResourcePathDelete('admin/newsletter/index/delete');
+
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'date'),
+                'type' => 'date',
+                'fields' => ['date'],
+                'default_sort' => true
+            ], 50)
+            ->addColumn([
+                'label' => $this->lang->t('newsletter', 'subject'),
+                'type' => 'text',
+                'fields' => ['title'],
+            ], 40)
+            ->addColumn([
+                'label' => $this->lang->t('newsletter', 'status'),
+                'type' => 'replace_value',
+                'fields' => ['status'],
+                'custom' => [
+                    'search' => [0, 1],
+                    'replace' => [
+                        $this->lang->t('newsletter', 'not_yet_sent'),
+                        $this->lang->t('newsletter', 'already_sent'),
+                    ]
+                ]
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($newsletter) > 0
+        ];
 
         if (count($newsletter) > 0) {
             $canDelete = $this->acl->hasPermission('admin/newsletter/index/delete');
@@ -185,14 +232,17 @@ class Index extends Core\Modules\AdminController
                 $bool2 = $this->newsletterRepository->update(['status' => '1'], $id);
             }
 
-            return $this->redirectMessages()->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'));
+            return $this->redirectMessages()->setMessage(
+                $bool && $bool2 !== false,
+                $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error')
+            );
         }
 
         throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -202,11 +252,12 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('newsletter');
 
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
-
-        $this->view->assign('html', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('html', $settings['html']));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'html' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('html', $settings['html']),
+            'form' => array_merge($settings, $this->request->getPost()->all()),
+        ];
     }
 
     /**

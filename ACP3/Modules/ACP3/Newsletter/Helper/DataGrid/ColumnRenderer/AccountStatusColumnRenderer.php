@@ -38,7 +38,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
     {
         $status = $this->getDbFieldValueIfExists($column, $dbResultRow);
 

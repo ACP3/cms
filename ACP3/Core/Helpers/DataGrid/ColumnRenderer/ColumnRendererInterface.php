@@ -11,12 +11,13 @@ interface ColumnRendererInterface
     const TYPE_TD = 'td';
 
     /**
-     * @param array $column
-     * @param array $dbResultRow
+     * @param array  $column
+     * @param array  $dbResultRow
+     * @param string $identifier
      *
-     * @return mixed
+     * @return string
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow);
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier);
 
     /**
      * @return string

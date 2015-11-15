@@ -1,0 +1,6 @@
+services:
+  newsletter.event.listener.on_data_grid_custom_option_before_listener:
+    class: ACP3\Modules\ACP3\Newsletter\Event\Listener\OnDataGridCustomOptionBeforeListener
+    arguments: [@core.acl, @core.lang]
+    tags:
+      - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before, method: onDataGridCustomOptionBefore }

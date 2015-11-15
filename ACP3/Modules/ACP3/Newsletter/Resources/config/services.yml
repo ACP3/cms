@@ -1,3 +1,6 @@
+imports:
+  - { resource: events.yml }
+
 parameters:
   newsletter.controller.admin.accounts.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts'
   newsletter.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index'

@@ -234,7 +234,7 @@ class DataGrid
         $header = '';
 
         foreach (clone $this->columns as $column) {
-            $header .= $this->columnRenderer['table_header']->fetchDataAndRenderColumn($column, []);
+            $header .= $this->columnRenderer['table_header']->fetchDataAndRenderColumn($column, [], $this->identifier);
         }
 
         return $header;
@@ -251,7 +251,7 @@ class DataGrid
             $results .= "<tr>\n";
             foreach (clone $this->columns as $column) {
                 if (array_key_exists($column['type'], $this->columnRenderer)) {
-                    $results .= $this->columnRenderer[$column['type']]->fetchDataAndRenderColumn($column, $result);
+                    $results .= $this->columnRenderer[$column['type']]->fetchDataAndRenderColumn($column, $result, $this->identifier);
                 }
             }
 

@@ -11,7 +11,7 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
     {
         $value = $this->getDbFieldValueIfExists($column, $dbResultRow);
 

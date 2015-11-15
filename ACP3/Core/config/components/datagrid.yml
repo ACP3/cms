@@ -34,9 +34,13 @@ services:
 
   core.helpers.data_grid.column_renderer.options_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer
-    arguments: [@core.lang, @core.router]
+    arguments: [@core.lang, @core.helpers.data_grid.column_renderer.options_column_renderer.option_renderer, @core.eventDispatcher]
     tags:
       - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.options_column_renderer.option_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer
+    arguments: [@core.router]
 
   core.helpers.data_grid.column_renderer.picture_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer

@@ -10,7 +10,7 @@ class MassActionColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
     {
         if ($column['custom']['can_delete'] === true) {
             $value = '<input type="checkbox" name="entries[]" value="' . $dbResultRow['id'] . '">';
