@@ -92,7 +92,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -116,47 +116,66 @@ class Index extends Core\Modules\AdminController
                 $this->view->assign('activate', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('active', $guestbook['active']));
             }
 
-            $this->view->assign('form', array_merge($guestbook, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'form' => array_merge($guestbook, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     public function actionIndex()
     {
         $guestbook = $this->guestbookRepository->getAllInAcp();
-        $c_guestbook = count($guestbook);
 
-        if ($c_guestbook > 0) {
-            $canDelete = $this->acl->hasPermission('admin/guestbook/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($guestbook)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/guestbook/index/delete')
+            ->setResourcePathEdit('admin/guestbook/index/edit');
 
-            $settings = $this->config->getSettings('guestbook');
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'date'),
+                'type' => 'date',
+                'fields' => ['date'],
+                'default_sort' => true
+            ], 50)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'name'),
+                'type' => 'text',
+                'fields' => ['name'],
+            ], 40)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'message'),
+                'type' => 'nl2p',
+                'fields' => ['message'],
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('guestbook', 'ip'),
+                'type' => 'text',
+                'fields' => ['ip'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
 
-            // Emoticons einbinden
-            $emoticonsActive = ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true);
-
-            for ($i = 0; $i < $c_guestbook; ++$i) {
-                if ($emoticonsActive === true && $this->emoticonsHelpers) {
-                    $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($guestbook[$i]['message']);
-                }
-            }
-            $this->view->assign('guestbook', $guestbook);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($guestbook) > 0
+        ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -166,16 +185,11 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('guestbook');
 
-        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
-
         $lang_notify = [
             $this->lang->t('guestbook', 'no_notification'),
             $this->lang->t('guestbook', 'notify_on_new_entry'),
             $this->lang->t('guestbook', 'notify_and_enable')
         ];
-        $this->view->assign('notify', $this->get('core.helpers.forms')->selectGenerator('notify', [0, 1, 2], $lang_notify, $settings['notify']));
-
-        $this->view->assign('overlay', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']));
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
@@ -187,9 +201,14 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration']));
         }
 
-        $this->view->assign('form', array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'notify' => $this->get('core.helpers.forms')->selectGenerator('notify', [0, 1, 2], $lang_notify, $settings['notify']),
+            'overlay' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']),
+            'form' => array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all())
+        ];
     }
 
     /**

@@ -32,6 +32,12 @@ services:
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
+  core.helpers.data_grid.column_renderer.nl2p_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer
+    arguments: [@core.helpers.stringFormatter]
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
   core.helpers.data_grid.column_renderer.options_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer
     arguments: [@core.lang, @core.helpers.data_grid.column_renderer.options_column_renderer.option_renderer, @core.eventDispatcher]
