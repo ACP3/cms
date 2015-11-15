@@ -217,6 +217,7 @@ class DataGrid
         $dataTable = [
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
+            'identifier' => substr($this->identifier, 1),
             'header' => $this->renderTableHeader(),
             'config' => $this->generateDataTableConfig(),
             'results' => $this->mapTableColumnsToDbFields()

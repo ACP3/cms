@@ -1,5 +1,5 @@
 {if !empty($dataTable.results)}
-    <table id="acp-table" class="table table-striped table-hover datagrid">
+    <table id="{$dataTable.identifier}" class="table table-striped table-hover datagrid">
         <thead>
         <tr>
             {$dataTable.header}
