@@ -61,6 +61,10 @@ class DataGrid
      * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface[]
      */
     protected $columnRenderer = [];
+    /**
+     * @var string
+     */
+    protected $primaryKey = '';
 
     /**
      * @param \ACP3\Core\ACL  $acl
@@ -214,6 +218,8 @@ class DataGrid
 
         $this->addDefaultColumns($canDelete, $canEdit);
 
+        $this->findPrimaryKey();
+
         $dataTable = [
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
@@ -235,7 +241,11 @@ class DataGrid
         $header = '';
 
         foreach (clone $this->columns as $column) {
-            $header .= $this->columnRenderer['table_header']->fetchDataAndRenderColumn($column, [], $this->identifier);
+            if (!empty($column['label'])) {
+                $header .= $this->columnRenderer['table_header']->fetchDataAndRenderColumn(
+                    $column, [], $this->identifier, $this->primaryKey
+                );
+            }
         }
 
         return $header;
@@ -251,8 +261,10 @@ class DataGrid
         foreach ($this->results as $result) {
             $results .= "<tr>\n";
             foreach (clone $this->columns as $column) {
-                if (array_key_exists($column['type'], $this->columnRenderer)) {
-                    $results .= $this->columnRenderer[$column['type']]->fetchDataAndRenderColumn($column, $result, $this->identifier);
+                if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
+                    $results .= $this->columnRenderer[$column['type']]->fetchDataAndRenderColumn(
+                        $column, $result, $this->identifier, $this->primaryKey
+                    );
                 }
             }
 
@@ -283,7 +295,9 @@ class DataGrid
                 $defaultSortDirection = $column['default_sort_direction'];
             }
 
-            ++$i;
+            if (!empty($column['label'])) {
+                ++$i;
+            }
         }
 
         return [
@@ -326,6 +340,19 @@ class DataGrid
                     'resource_path_edit' => $this->resourcePathEdit
                 ]
             ], 0);
+        }
+    }
+
+    /**
+     * Finds the primary key column
+     */
+    protected function findPrimaryKey()
+    {
+        foreach (clone $this->columns as $column) {
+            if ($column['primary'] === true && !empty($column['fields'])) {
+                $this->primaryKey = reset($column['fields']);
+                break;
+            }
         }
     }
 }

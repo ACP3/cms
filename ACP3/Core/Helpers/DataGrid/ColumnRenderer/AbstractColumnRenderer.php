@@ -10,7 +10,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
         return $this->render($column, $this->getDbFieldValueIfExists($column, $dbResultRow));
     }

@@ -14,10 +14,11 @@ interface ColumnRendererInterface
      * @param array  $column
      * @param array  $dbResultRow
      * @param string $identifier
+     * @param string $primaryKey
      *
      * @return string
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier);
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey);
 
     /**
      * @return string

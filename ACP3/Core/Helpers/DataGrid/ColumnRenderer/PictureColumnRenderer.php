@@ -26,7 +26,7 @@ class PictureColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
         if (isset($column['custom']['pattern'])) {
             $dbValue = $this->getDbFieldValueIfExists($column, $dbResultRow);

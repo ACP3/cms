@@ -45,7 +45,7 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
         $this->eventDispatcher->dispatch(
             'data_grid.column_renderer.custom_option_before',
@@ -56,7 +56,7 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
             $resourcePathEdit = $column['custom']['resource_path_edit'];
             $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
-                $resourcePathEdit . 'id_' . $dbResultRow['id'],
+                $resourcePathEdit . 'id_' . $dbResultRow[$primaryKey],
                 $this->lang->t('system', 'edit'),
                 'glyphicon-edit',
                 'btn-default'
@@ -72,7 +72,7 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
             $resourcePathDelete = $column['custom']['resource_path_delete'];
             $resourcePathDelete .= !preg_match('=/$=', $resourcePathDelete) ? '/' : '';
             $this->optionRenderer->addOption(
-                $resourcePathDelete . 'entries_' . $dbResultRow['id'],
+                $resourcePathDelete . 'entries_' . $dbResultRow[$primaryKey],
                 $this->lang->t('system', 'delete'),
                 'glyphicon-remove',
                 'btn-danger'

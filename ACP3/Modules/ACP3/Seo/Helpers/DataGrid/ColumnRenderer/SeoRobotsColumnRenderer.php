@@ -60,7 +60,7 @@ class SeoRobotsColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
         $value = $this->getDbFieldValueIfExists($column, $dbResultRow);
 

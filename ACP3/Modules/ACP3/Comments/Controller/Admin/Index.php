@@ -75,29 +75,41 @@ class Index extends Core\Modules\AdminController
     public function actionIndex()
     {
         $comments = $this->commentRepository->getCommentsGroupedByModule();
-        $c_comments = count($comments);
 
-        if ($c_comments > 0) {
-            $canDelete = $this->acl->hasPermission('admin/comments/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($comments)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/comments/index/delete')
+            ->setResourcePathEdit('admin/comments/details/index');
 
-            for ($i = 0; $i < $c_comments; ++$i) {
-                $comments[$i]['name'] = $this->lang->t($comments[$i]['module'], $comments[$i]['module']);
-            }
-            $this->view->assign('comments', $comments);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('comments', 'module'),
+                'type' => 'translate',
+                'fields' => ['module'],
+                'default_sort' => true
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('comments', 'comments_count'),
+                'type' => 'integer',
+                'fields' => ['comments_count'],
+            ], 20)
+            ->addColumn([
+                'fields' => ['module_id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($comments) > 0
+        ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -107,14 +119,16 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('comments');
 
-        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
-
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
             $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('emoticons', $settings['emoticons']));
         }
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat'])
+        ];
     }
 
     /**
