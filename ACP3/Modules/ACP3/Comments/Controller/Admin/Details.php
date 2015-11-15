@@ -69,41 +69,41 @@ class Details extends Core\Modules\AdminController
     }
 
     /**
+     * @param int    $id
      * @param string $action
      *
      * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionDelete($action = '')
+    public function actionDelete($id, $action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
-            function ($items) {
+            function ($items) use ($id) {
                 $bool = false;
-
-                // Get the module-ID of the first item
-                $moduleId = 0;
-                if (isset($items[0])) {
-                    $comment = $this->commentRepository->getOneById($items[0]);
-                    if (!empty($comment)) {
-                        $moduleId = $comment['module_id'];
-                    }
-                }
 
                 foreach ($items as $item) {
                     $bool = $this->commentRepository->delete($item);
                 }
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
-                if ($this->commentRepository->countAll($moduleId) == 0) {
-                    return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+                if ($this->commentRepository->countAll($id) == 0) {
+                    return $this->redirectMessages()->setMessage(
+                        $bool,
+                        $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
+                        'acp/comments'
+                    );
                 }
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments/details/index/id_' . $moduleId);
+                return $this->redirectMessages()->setMessage(
+                    $bool,
+                    $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
+                    'acp/comments/details/index/id_' . $id
+                );
             },
-            null,
-            'acp/comments'
+            'acp/comments/details/delete/id_' . $id,
+            'acp/comments/details/index/id_' . $id
         );
     }
 
@@ -165,7 +165,7 @@ class Details extends Core\Modules\AdminController
                 ->setResults($comments)
                 ->setRecordsPerPage($this->user->getEntriesPerPage())
                 ->setIdentifier('#acp-table')
-                ->setResourcePathDelete('admin/comments/details/delete')
+                ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
                 ->setResourcePathEdit('admin/comments/details/edit');
 
             $dataGrid
