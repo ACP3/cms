@@ -8,14 +8,24 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 class IntegerColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @inheritdoc
+     * @param array $column
+     * @param array $dbResultRow
+     *
+     * @return string
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    protected function getDbFieldValueIfExists(array $column, array $dbResultRow)
     {
-        return parent::render(
-            $column,
-            (int)$this->getDbFieldValueIfExists($column, $dbResultRow)
-        );
+        $field = $this->getFirstDbField($column);
+
+        if (isset($dbResultRow[$field])) {
+            return (int)$dbResultRow[$field];
+        }
+
+        if (isset($column['custom']['default_value'])) {
+            return $column['custom']['default_value'];
+        }
+
+        return '';
     }
 
     /**
