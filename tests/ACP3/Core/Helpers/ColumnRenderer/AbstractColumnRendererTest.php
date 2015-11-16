@@ -32,7 +32,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testCustomHtmlAttribute()
+    public function testSingleCustomHtmlAttribute()
     {
         $column = array_merge($this->getColumnDefaults(), [
             'attribute' => [
@@ -41,6 +41,45 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ]);
 
         $expected = '<td data-foo="bar"></td>';
+        $actual = $this->columnRenderer->fetchDataAndRenderColumn($column, [], '', '');
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testMultipleCustomHtmlAttributes()
+    {
+        $column = array_merge($this->getColumnDefaults(), [
+            'attribute' => [
+                'data-foo' => 'bar',
+                'data-lorem' => 'ipsum',
+            ]
+        ]);
+
+        $expected = '<td data-foo="bar" data-lorem="ipsum"></td>';
+        $actual = $this->columnRenderer->fetchDataAndRenderColumn($column, [], '', '');
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testAddStyle()
+    {
+        $column = array_merge($this->getColumnDefaults(), [
+            'style' => 'width:50%'
+        ]);
+
+        $expected = '<td style="width:50%"></td>';
+        $actual = $this->columnRenderer->fetchDataAndRenderColumn($column, [], '', '');
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testAddCssClass()
+    {
+        $column = array_merge($this->getColumnDefaults(), [
+            'class' => 'foobar'
+        ]);
+
+        $expected = '<td class="foobar"></td>';
         $actual = $this->columnRenderer->fetchDataAndRenderColumn($column, [], '', '');
 
         $this->assertEquals($expected, $actual);

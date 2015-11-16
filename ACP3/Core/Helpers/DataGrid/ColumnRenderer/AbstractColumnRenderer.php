@@ -26,7 +26,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     {
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
-        $style = $this->addHtmlAttribute('style', $column['class']);
+        $style = $this->addHtmlAttribute('style', $column['style']);
 
         return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
     }
