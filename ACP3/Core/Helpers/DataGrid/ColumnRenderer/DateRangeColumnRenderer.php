@@ -39,7 +39,7 @@ class DateRangeColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        $dateStart = $this->getDbFieldValueIfExists($column, $dbResultRow);
+        $dateStart = $this->getValue($column, $dbResultRow);
         $dateEnd = $dbResultRow[$column['fields'][1]];
         $column['attribute'] = [
             'data-order' => $this->date->format($dateStart, 'U')

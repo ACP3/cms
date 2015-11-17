@@ -41,7 +41,7 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        $dbValue = $this->getDbFieldValueIfExists($column, $dbResultRow);
+        $dbValue = $this->getValue($column, $dbResultRow);
 
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {

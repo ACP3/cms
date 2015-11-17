@@ -26,11 +26,15 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        $value = $this->getDbFieldValueIfExists($column, $dbResultRow);
+        if (isset($dbResultRow[$field])) {
+            $value = $dbResultRow[$field];
 
-        return $this->render($column, $this->lang->t($value, $value));
+            return $this->lang->t($value, $value);
+        }
+
+        return null;
     }
 
     /**

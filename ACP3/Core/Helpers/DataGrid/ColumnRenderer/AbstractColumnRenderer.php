@@ -12,7 +12,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        return $this->render($column, $this->getDbFieldValueIfExists($column, $dbResultRow));
+        return $this->render($column, $this->getValue($column, $dbResultRow));
     }
 
     /**
@@ -69,14 +69,36 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      *
      * @return string
      */
-    protected function getDbFieldValueIfExists(array $column, array $dbResultRow)
+    protected function getValue(array $column, array $dbResultRow)
     {
         $field = $this->getFirstDbField($column);
+        $value = $this->getDbValueIfExists($dbResultRow, $field);
 
-        if (isset($dbResultRow[$field])) {
-            return $dbResultRow[$field];
+        if ($value === null) {
+            $value = $this->getDefaultValue($column);
         }
 
+        return $value;
+    }
+
+    /**
+     * @param array  $dbResultRow
+     * @param string $field
+     *
+     * @return null
+     */
+    protected function getDbValueIfExists(array $dbResultRow, $field)
+    {
+        return isset($dbResultRow[$field]) ? $dbResultRow[$field] : null;
+    }
+
+    /**
+     * @param array $column
+     *
+     * @return string
+     */
+    private function getDefaultValue(array $column)
+    {
         if (isset($column['custom']['default_value'])) {
             return $column['custom']['default_value'];
         }

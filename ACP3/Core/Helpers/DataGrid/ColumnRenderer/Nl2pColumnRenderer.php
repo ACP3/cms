@@ -28,7 +28,7 @@ class Nl2pColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        $value = $this->getDbFieldValueIfExists($column, $dbResultRow);
+        $value = $this->getValue($column, $dbResultRow);
 
         return $this->render($column, $this->stringFormatter->nl2p($value));
     }

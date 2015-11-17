@@ -40,7 +40,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        $status = $this->getDbFieldValueIfExists($column, $dbResultRow);
+        $status = $this->getValue($column, $dbResultRow);
 
         if ($status == 0) {
             $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow['id']);

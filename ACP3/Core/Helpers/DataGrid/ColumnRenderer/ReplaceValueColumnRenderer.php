@@ -13,7 +13,7 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        $value = $this->getDbFieldValueIfExists($column, $dbResultRow);
+        $value = $this->getValue($column, $dbResultRow);
 
         $search = $column['custom']['search'];
         $replace = $column['custom']['replace'];

@@ -62,7 +62,7 @@ class SeoRobotsColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        $value = $this->getDbFieldValueIfExists($column, $dbResultRow);
+        $value = $this->getValue($column, $dbResultRow);
 
         if (empty($this->replace) === true) {
             $this->replace = $this->_setReplaceParams();

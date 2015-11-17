@@ -136,9 +136,9 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param       $expected
-     * @param array $column
-     * @param array $data
+     * @param string $expected
+     * @param array  $column
+     * @param array  $data
      */
     protected function compareResults($expected, array $column, array $data = [])
     {

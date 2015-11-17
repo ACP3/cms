@@ -29,7 +29,7 @@ class PictureColumnRenderer extends AbstractColumnRenderer
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
         if (isset($column['custom']['pattern'])) {
-            $dbValue = $this->getDbFieldValueIfExists($column, $dbResultRow);
+            $dbValue = $this->getValue($column, $dbResultRow);
             $value = '<img src="' . $this->getUrl($column['custom'], $dbValue) . '" alt="">';
         } else {
             $value = '';
