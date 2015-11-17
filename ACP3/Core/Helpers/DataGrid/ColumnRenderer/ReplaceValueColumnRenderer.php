@@ -7,18 +7,32 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class ReplaceValueColumnRenderer extends AbstractColumnRenderer
 {
+    /**
+     * @var array
+     */
+    protected $search = [];
+    /**
+     * @var array
+     */
+    protected $replace = [];
 
     /**
      * @inheritdoc
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
     {
-        $value = $this->getValue($column, $dbResultRow);
+        $this->search = $column['custom']['search'];
+        $this->replace = $column['custom']['replace'];
 
-        $search = $column['custom']['search'];
-        $replace = $column['custom']['replace'];
+        return $this->render($column, $this->getValue($column, $dbResultRow));
+    }
 
-        return $this->render($column, str_replace($search, $replace, $value));
+    /**
+     * @inheritdoc
+     */
+    protected function getDbValueIfExists(array $dbResultRow, $field)
+    {
+        return isset($dbResultRow[$field]) ? str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
     }
 
     /**

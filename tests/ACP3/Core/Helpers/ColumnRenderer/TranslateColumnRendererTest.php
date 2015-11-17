@@ -7,7 +7,6 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
      */
     protected  $langMock;
 
-
     protected function setUp()
     {
         $this->langMock = $this->getMockBuilder(\ACP3\Core\Lang::class)
@@ -16,6 +15,8 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
             ->getMock();
 
         $this->columnRenderer = new \ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer($this->langMock);
+
+        parent::setUp();
     }
 
     /**
@@ -24,7 +25,6 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
      */
     private function setUpLangMockExpectation($langKey, $langValue)
     {
-
         $this->langMock->expects($this->once())
             ->method('t')
             ->with($langKey, $langKey)
@@ -36,7 +36,7 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
     {
         $this->setUpLangMockExpectation('news', '{NEWS_NEWS}');
 
-        $column = array_merge($this->getColumnDefaults(), [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text']
         ]);
         $data = [
@@ -44,6 +44,6 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
         ];
 
         $expected = '<td>{NEWS_NEWS}</td>';
-        $this->compareResults($expected, $column, $data);
+        $this->compareResults($expected, $this->columnData, $data);
     }
 }
