@@ -20,6 +20,6 @@
             {/if}
         </nav>
         {redirect_message}
-        {$grid}
+        {include file="asset:system/datagrid.tpl" dataTable=$grid}
     </form>
 {/block}

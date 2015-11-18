@@ -23,7 +23,7 @@
             </div>
         </nav>
         {redirect_message}
-        {$grid}
+        {include file="asset:system/datagrid.tpl" dataTable=$grid}
         {javascripts}
             {include_js module="system" file="forms"}
         {/javascripts}

@@ -22,29 +22,25 @@ class DataGrid
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
      * @var array
      */
-    protected $results;
+    protected $results = [];
     /**
      * @var string
      */
-    protected $resourcePathEdit;
+    protected $resourcePathEdit = '';
     /**
      * @var string
      */
-    protected $resourcePathDelete;
+    protected $resourcePathDelete = '';
     /**
      * @var string
      */
-    protected $identifier;
+    protected $identifier = '';
     /**
      * @var int
      */
-    protected $recordsPerPage;
+    protected $recordsPerPage = 10;
     /**
      * @var bool
      */
@@ -69,17 +65,14 @@ class DataGrid
     /**
      * @param \ACP3\Core\ACL  $acl
      * @param \ACP3\Core\Lang $lang
-     * @param \ACP3\Core\View $view
      */
     public function __construct(
         ACL $acl,
-        Lang $lang,
-        View $view
+        Lang $lang
     )
     {
         $this->acl = $acl;
         $this->lang = $lang;
-        $this->view = $view;
         $this->columns = new ColumnPriorityQueue();
     }
 
@@ -209,7 +202,7 @@ class DataGrid
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function render()
     {
@@ -220,7 +213,7 @@ class DataGrid
 
         $this->findPrimaryKey();
 
-        $dataTable = [
+        return [
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
             'identifier' => substr($this->identifier, 1),
@@ -228,9 +221,6 @@ class DataGrid
             'config' => $this->generateDataTableConfig(),
             'results' => $this->mapTableColumnsToDbFields()
         ];
-        $this->view->assign('dataTable', $dataTable);
-
-        return $this->view->fetchTemplate('system/datagrid.tpl');
     }
 
     /**
@@ -260,7 +250,7 @@ class DataGrid
     {
         $results = '';
         foreach ($this->results as $result) {
-            $results .= "<tr>\n";
+            $results .= '<tr>';
             foreach (clone $this->columns as $column) {
                 if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
                     $results .= $this->columnRenderer[$column['type']]

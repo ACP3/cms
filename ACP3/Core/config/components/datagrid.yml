@@ -1,7 +1,7 @@
 services:
   core.helpers.data_grid:
     class: ACP3\Core\Helpers\DataGrid
-    arguments: [@core.acl, @core.lang, @core.view]
+    arguments: [@core.acl, @core.lang]
     scope: prototype
 
   core.helpers.data_grid.column_renderer.date_column_renderer:
