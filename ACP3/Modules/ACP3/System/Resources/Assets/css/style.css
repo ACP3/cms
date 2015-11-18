@@ -164,6 +164,18 @@
     float: right;
 }
 
+.datagrid .datagrid-column__mass-action {
+    width: 5%;
+}
+
+.datagrid .datagrid-column__date-range {
+    width: 22%;
+}
+
+.datagrid .datagrid-column__actions {
+    width: 15%;
+}
+
 /* Position Bootstrap modal dialogs statically */
 .modal.static {
     margin: 0 auto;

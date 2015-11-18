@@ -79,31 +79,60 @@ class Accounts extends Core\Modules\AdminController
     public function actionIndex()
     {
         $accounts = $this->accountRepository->getAllAccounts();
-        $c_accounts = count($accounts);
 
-        if ($c_accounts > 0) {
-            $canDelete = $this->acl->hasPermission('admin/newsletter/accounts/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 3 : 2,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($accounts)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/newsletter/accounts/delete');
 
-            $search = [0, 1, 2];
-            $replace = [
-                '',
-                $this->lang->t('newsletter', 'salutation_female'),
-                $this->lang->t('newsletter', 'salutation_male'),
-            ];
-            for ($i = 0; $i < $c_accounts; ++$i) {
-                $accounts[$i]['salutation'] = str_replace($search, $replace, $accounts[$i]['salutation']);
-            }
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'email_address'),
+                'type' => 'text',
+                'fields' => ['mail'],
+                'default_sort' => true
+            ], 60)
+            ->addColumn([
+                'label' => $this->lang->t('newsletter', 'salutation'),
+                'type' => 'replace_value',
+                'fields' => ['salutation'],
+                'custom' => [
+                    'search' => [0, 1, 2],
+                    'replace' => [
+                        '',
+                        $this->lang->t('newsletter', 'salutation_female'),
+                        $this->lang->t('newsletter', 'salutation_male'),
+                    ]
+                ]
+            ], 50)
+            ->addColumn([
+                'label' => $this->lang->t('newsletter', 'first_name'),
+                'type' => 'text',
+                'fields' => ['first_name'],
+            ], 40)
+            ->addColumn([
+                'label' => $this->lang->t('newsletter', 'last_name'),
+                'type' => 'text',
+                'fields' => ['last_name'],
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('newsletter', 'status'),
+                'type' => 'account_status',
+                'fields' => ['status'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
 
-            $this->view->assign('accounts', $accounts);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($accounts) > 0
+        ];
     }
 }

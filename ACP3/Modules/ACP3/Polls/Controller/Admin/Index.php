@@ -166,22 +166,39 @@ class Index extends Core\Modules\AdminController
     public function actionIndex()
     {
         $polls = $this->pollRepository->getAllInAcp();
-        $c_polls = count($polls);
 
-        if ($c_polls > 0) {
-            $canDelete = $this->acl->hasPermission('admin/polls/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($polls)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/polls/index/delete')
+            ->setResourcePathEdit('admin/polls/index/edit');
 
-            $this->view->assign('polls', $polls);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'publication_period'),
+                'type' => 'date_range',
+                'fields' => ['start', 'end'],
+                'default_sort' => true
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('polls', 'question'),
+                'type' => 'text',
+                'fields' => ['title'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($polls) > 0
+        ];
     }
 
     /**

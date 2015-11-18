@@ -69,48 +69,48 @@ class Details extends Core\Modules\AdminController
     }
 
     /**
+     * @param int    $id
      * @param string $action
      *
      * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionDelete($action = '')
+    public function actionDelete($id, $action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $this,
             $action,
-            function ($items) {
+            function ($items) use ($id) {
                 $bool = false;
-
-                // Get the module-ID of the first item
-                $moduleId = 0;
-                if (isset($items[0])) {
-                    $comment = $this->commentRepository->getOneById($items[0]);
-                    if (!empty($comment)) {
-                        $moduleId = $comment['module_id'];
-                    }
-                }
 
                 foreach ($items as $item) {
                     $bool = $this->commentRepository->delete($item);
                 }
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
-                if ($this->commentRepository->countAll($moduleId) == 0) {
-                    return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+                if ($this->commentRepository->countAll($id) == 0) {
+                    return $this->redirectMessages()->setMessage(
+                        $bool,
+                        $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
+                        'acp/comments'
+                    );
                 }
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments/details/index/id_' . $moduleId);
+                return $this->redirectMessages()->setMessage(
+                    $bool,
+                    $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
+                    'acp/comments/details/index/id_' . $id
+                );
             },
-            null,
-            'acp/comments'
+            'acp/comments/details/delete/id_' . $id,
+            'acp/comments/details/index/id_' . $id
         );
     }
 
     /**
      * @param $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -132,17 +132,22 @@ class Details extends Core\Modules\AdminController
                 $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
             }
 
-            $this->view->assign('form', array_merge($comment, $this->request->getPost()->all()));
-            $this->view->assign('module_id', (int)$comment['module_id']);
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'form' => array_merge($comment, $this->request->getPost()->all()),
+                'module_id' => (int)$comment['module_id']
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
      * @param int $id
+     *
+     * @return array
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionIndex($id)
     {
@@ -154,36 +159,51 @@ class Details extends Core\Modules\AdminController
             //Brotkrümelspur
             $this->breadcrumb->append($this->lang->t($moduleName, $moduleName));
 
-            $c_comments = count($comments);
+            /** @var Core\Helpers\DataGrid $dataGrid */
+            $dataGrid = $this->get('core.helpers.data_grid');
+            $dataGrid
+                ->setResults($comments)
+                ->setRecordsPerPage($this->user->getEntriesPerPage())
+                ->setIdentifier('#acp-table')
+                ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
+                ->setResourcePathEdit('admin/comments/details/edit');
 
-            if ($c_comments > 0) {
-                $canDelete = $this->acl->hasPermission('admin/comments/details/delete');
-                $config = [
-                    'element' => '#acp-table',
-                    'sort_col' => $canDelete === true ? 5 : 4,
-                    'sort_dir' => 'asc',
-                    'hide_col_sort' => $canDelete === true ? 0 : '',
-                    'records_per_page' => $this->user->getEntriesPerPage()
-                ];
-                $this->view->assign('datatable_config', $config);
+            $dataGrid
+                ->addColumn([
+                    'label' => $this->lang->t('system', 'date'),
+                    'type' => 'date',
+                    'fields' => ['date'],
+                    'default_sort' => true
+                ], 50)
+                ->addColumn([
+                    'label' => $this->lang->t('system', 'name'),
+                    'type' => 'text',
+                    'fields' => ['name'],
+                ], 40)
+                ->addColumn([
+                    'label' => $this->lang->t('system', 'message'),
+                    'type' => 'nl2p',
+                    'fields' => ['message'],
+                ], 30)
+                ->addColumn([
+                    'label' => $this->lang->t('comments', 'ip'),
+                    'type' => 'text',
+                    'fields' => ['ip'],
+                ], 20)
+                ->addColumn([
+                    'label' => $this->lang->t('system', 'id'),
+                    'type' => 'integer',
+                    'fields' => ['id'],
+                    'primary' => true
+                ], 10);
 
-                $settings = $this->config->getSettings('comments');
-
-                // Emoticons einbinden
-                $emoticonsActive = ($settings['emoticons'] == 1 && $this->emoticonsHelpers);
-
-                for ($i = 0; $i < $c_comments; ++$i) {
-                    if (empty($comments[$i]['name'])) {
-                        $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
-                    }
-                    if ($emoticonsActive === true) {
-                        $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
-                    }
-                }
-                $this->view->assign('comments', $comments);
-                $this->view->assign('can_delete', $canDelete);
-            }
+            return [
+                'grid' => $dataGrid->render(),
+                'show_mass_delete_button' => count($comments) > 0
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**

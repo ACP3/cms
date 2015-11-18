@@ -9,6 +9,7 @@
         <item key="acp">Administration Control Panel</item>
         <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen werden.</item>
         <item key="acp3_up_to_date">Sie verwenden bereits die aktuelle Version des ACP3.</item>
+        <item key="action">Aktion</item>
         <item key="activate_module"><![CDATA[Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.<br />Bitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.]]></item>
         <item key="additional_javascript_files">Zusätzlich zu ladende JavaScript Dateien</item>
         <item key="additional_javascript_files_description">Die Dateien müssen sich im &quot;js&quot;-Ordner des Designs befinden. Die einzelnen Dateien bitte jeweils mit einem Komma separieren.</item>

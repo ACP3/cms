@@ -138,7 +138,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -146,64 +146,119 @@ class Index extends Core\Modules\AdminController
         if ($this->galleryRepository->galleryExists($id) === true) {
             $gallery = $this->galleryRepository->getGalleryById($id);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)));
-
             $this->breadcrumb->setTitlePostfix($gallery['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
-            $this->view->assign('gallery_id', $id);
-            $this->view->assign('form', array_merge($gallery, $this->request->getPost()->all()));
-
-            $this->_actionEditPictures($id);
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return array_merge(
+                [
+                    'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)),
+                    'gallery_id' => $id,
+                    'form' => array_merge($gallery, $this->request->getPost()->all())
+                ],
+                $this->_actionEditPictures($id)
+            );
         }
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
      * @param int $id
+     *
+     * @return array
      */
     protected function _actionEditPictures($id)
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
-        $c_pictures = count($pictures);
 
-        if ($c_pictures > 0) {
-            $canDelete = $this->acl->hasPermission('admin/gallery/pictures/delete');
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($pictures)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
+            ->setResourcePathEdit('admin/gallery/pictures/edit');
 
-            for ($i = 0; $i < $c_pictures; ++$i) {
-                $pictures[$i]['first'] = $i == 0;
-                $pictures[$i]['last'] = $i == $c_pictures - 1;
-            }
-            $this->view->assign('pictures', $pictures);
-            $this->view->assign('can_delete', $canDelete);
-            $this->view->assign('can_order', $this->acl->hasPermission('admin/gallery/pictures/order'));
-            $this->view->assign('can_edit_picture', $this->acl->hasPermission('admin/gallery/pictures/edit'));
-        }
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('gallery', 'picture'),
+                'type' => 'picture',
+                'fields' => ['id'],
+                'custom' => [
+                    'pattern' => 'gallery/index/image/id_%s/action_thumb',
+                    'isRoute' => true
+                ]
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'description'),
+                'type' => 'text',
+                'fields' => ['description'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'order'),
+                'type' => 'picture_sort',
+                'fields' => ['pic'],
+                'default_sort' => true
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($pictures) > 0
+        ];
     }
 
     public function actionIndex()
     {
         $galleries = $this->galleryRepository->getAllInAcp();
 
-        if (count($galleries) > 0) {
-            $canDelete = $this->acl->hasPermission('admin/gallery/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            $this->view->assign('galleries', $galleries);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($galleries)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/gallery/index/delete')
+            ->setResourcePathEdit('admin/gallery/index/edit');
+
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'publication_period'),
+                'type' => 'date_range',
+                'fields' => ['start', 'end'],
+                'default_sort' => true
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('gallery', 'title'),
+                'type' => 'text',
+                'fields' => ['title'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('gallery', 'pictures'),
+                'type' => 'integer',
+                'fields' => ['pictures'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($galleries) > 0
+        ];
     }
 
     /**

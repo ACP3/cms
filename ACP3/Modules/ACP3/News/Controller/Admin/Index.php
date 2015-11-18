@@ -177,19 +177,43 @@ class Index extends Core\Modules\AdminController
     {
         $news = $this->newsRepository->getAllInAcp();
 
-        if (count($news) > 0) {
-            $canDelete = $this->acl->hasPermission('admin/news/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            $this->view->assign('news', $news);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($news)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/news/index/delete')
+            ->setResourcePathEdit('admin/news/index/edit');
+
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'publication_period'),
+                'type' => 'date_range',
+                'fields' => ['start', 'end'],
+                'default_sort' => true
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('news', 'title'),
+                'type' => 'text',
+                'fields' => ['title'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('categories', 'category'),
+                'type' => 'text',
+                'fields' => ['cat']
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($news) > 0
+        ];
     }
 
     /**

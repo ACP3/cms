@@ -122,6 +122,9 @@ class Index extends Core\Modules\AdminController
         return $this;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
@@ -310,19 +313,38 @@ class Index extends Core\Modules\AdminController
     {
         $articles = $this->articleRepository->getAllInAcp();
 
-        if (count($articles) > 0) {
-            $canDelete = $this->acl->hasPermission('admin/articles/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 2 : 1,
-                'sort_dir' => 'asc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            $this->view->assign('articles', $articles);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($articles)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/articles/index/delete')
+            ->setResourcePathEdit('admin/articles/index/edit');
+
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('system', 'publication_period'),
+                'type' => 'date_range',
+                'fields' => ['start', 'end']
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('articles', 'title'),
+                'type' => 'text',
+                'fields' => ['title'],
+                'default_sort' => true
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($articles) > 0
+        ];
     }
 
     /**

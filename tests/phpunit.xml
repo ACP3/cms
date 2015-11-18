@@ -26,6 +26,7 @@
     <testsuites>
         <testsuite name="ACP3">
             <directory>./ACP3/</directory>
+            <directory>./../ACP3/Modules/*/*/tests/</directory>
             <exclude>./vendor/*</exclude>
         </testsuite>
     </testsuites>

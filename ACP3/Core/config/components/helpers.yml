@@ -52,6 +52,10 @@ services:
     class: ACP3\Core\Helpers\Formatter\DateRange
     arguments: [@core.date, @core.lang]
 
+  core.helpers.formatter.mark_entries:
+    class: ACP3\Core\Helpers\Formatter\MarkEntries
+    arguments: [@core.lang]
+
   core.helpers.formatter.rewriteInternalUri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
     arguments: [@core.modules.helper.controllerActionExists, @core.request, '@core.router', '@core.validator.rules.router.aliases']

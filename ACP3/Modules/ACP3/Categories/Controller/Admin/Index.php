@@ -221,24 +221,44 @@ class Index extends Core\Modules\AdminController
     public function actionIndex()
     {
         $categories = $this->categoryRepository->getAllWithModuleName();
-        $c_categories = count($categories);
 
-        if ($c_categories > 0) {
-            $canDelete = $this->acl->hasPermission('admin/categories/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            for ($i = 0; $i < $c_categories; ++$i) {
-                $categories[$i]['module'] = $this->lang->t($categories[$i]['module'], $categories[$i]['module']);
-            }
-            $this->view->assign('categories', $categories);
-            $this->view->assign('can_delete', $canDelete);
-        }
+        /** @var Core\Helpers\DataGrid $dataGrid */
+        $dataGrid = $this->get('core.helpers.data_grid');
+        $dataGrid
+            ->setResults($categories)
+            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setIdentifier('#acp-table')
+            ->setResourcePathDelete('admin/categories/index/delete')
+            ->setResourcePathEdit('admin/categories/index/edit');
+
+        $dataGrid
+            ->addColumn([
+                'label' => $this->lang->t('categories', 'title'),
+                'type' => 'text',
+                'fields' => ['title'],
+                'default_sort' => true
+            ], 30)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'description'),
+                'type' => 'text',
+                'fields' => ['description']
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('categories', 'module'),
+                'type' => 'translate',
+                'fields' => ['module'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->lang->t('system', 'id'),
+                'type' => 'integer',
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => count($categories) > 0
+        ];
     }
 
     /**

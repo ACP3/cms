@@ -5,6 +5,7 @@ parameters:
   gallery.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Sidebar\Index'
   gallery.cache.fqdn: 'ACP3\Modules\ACP3\Gallery\Cache'
   gallery.helpers.fqdn: 'ACP3\Modules\ACP3\Gallery\Helpers'
+  gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn: 'ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer'
   gallery.model.galleryrepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\GalleryRepository'
   gallery.model.picturerepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\PictureRepository'
   gallery.validator.gallery.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator\Gallery'
@@ -49,6 +50,12 @@ services:
   gallery.helpers:
     class: %gallery.helpers.fqdn%
     arguments: ['@core.router.aliases', '@core.seo', '@gallery.model.picturerepository']
+
+  gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer:
+    class: ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer
+    arguments: [@core.lang, @core.router]
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
 
   gallery.validator.gallery:
     class: %gallery.validator.gallery.fqdn%

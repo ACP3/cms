@@ -1,11 +1,11 @@
 parameters:
   seo.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index'
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
+  seo.helpers.data_grid_column_renderer.seo_robots_column_renderer.fqdn: 'ACP3\Modules\ACP3\Seo\Helpers\DataGrid\ColumnRenderer\SeoRobotsColumnRenderer'
   seo.model.seorepository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\SeoRepository'
   seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validator'
   seo.installer.schema.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Schema'
   seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
-  smarty.plugin.robots.fqdn: 'ACP3\Modules\ACP3\Seo\View\Renderer\Smarty\Modifiers\Robots'
 
 services:
   seo.controller.admin.index:
@@ -15,6 +15,12 @@ services:
   seo.cache:
     class: %seo.cache.fqdn%
     arguments: ['@core.cache.system', '@seo.model.seorepository']
+
+  seo.helpers.data_grid.column_renderer.seo_robots_column_renderer:
+    class: %seo.helpers.data_grid_column_renderer.seo_robots_column_renderer.fqdn%
+    arguments: [@core.lang, @core.seo]
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
 
   seo.model.seorepository:
     class: %seo.model.seorepository.fqdn%
@@ -29,9 +35,3 @@ services:
 
   seo.installer.migration:
     class: %seo.installer.migration.fqdn%
-
-  smarty.plugin.robots:
-    class: %smarty.plugin.robots.fqdn%
-    arguments: ['@core.lang', '@core.seo']
-    tags:
-      - { name: core.view.extension }

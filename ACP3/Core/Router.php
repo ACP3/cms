@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System;
  */
 class Router
 {
-    const ADMIN_PANEL_PATTERN = '=^acp/=';
+    const ADMIN_PANEL_PATTERN = '=^(acp|admin)/=';
 
     /**
      * @var \ACP3\Core\Router\Aliases
@@ -134,6 +134,11 @@ class Router
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
         if ($path === 'acp/') {
             $path = 'acp/acp/index/index/';
+        }
+
+        $prefix = 'admin/';
+        if (substr($path, 0, strlen($prefix)) == $prefix) {
+            $path = 'acp/' . substr($path, strlen($prefix));
         }
 
         return $this->addControllerAndAction($path);
