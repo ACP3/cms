@@ -39,11 +39,11 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text']
         ]);
-        $data = [
+        $this->dbData = [
             'text' => 'news'
         ];
 
         $expected = '<td>{NEWS_NEWS}</td>';
-        $this->compareResults($expected, $this->columnData, $data);
+        $this->compareResults($expected);
     }
 }

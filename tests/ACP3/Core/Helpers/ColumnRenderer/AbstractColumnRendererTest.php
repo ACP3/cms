@@ -14,6 +14,14 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
      * @var array
      */
     protected $dbData = [];
+    /**
+     * @var string
+     */
+    protected $identifier = '';
+    /**
+     * @var string
+     */
+    protected $primaryKey = '';
 
     protected function setUp()
     {
@@ -49,7 +57,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ]);
 
         $expected = '<td data-foo="bar"></td>';
-        $this->compareResults($expected, $this->columnData);
+        $this->compareResults($expected);
     }
 
     public function testMultipleCustomHtmlAttributes()
@@ -62,7 +70,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ]);
 
         $expected = '<td data-foo="bar" data-lorem="ipsum"></td>';
-        $this->compareResults($expected, $this->columnData);
+        $this->compareResults($expected);
     }
 
     public function testAddStyle()
@@ -72,7 +80,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ]);
 
         $expected = '<td style="width:50%"></td>';
-        $this->compareResults($expected, $this->columnData);
+        $this->compareResults($expected);
     }
 
     public function testAddCssClass()
@@ -82,7 +90,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ]);
 
         $expected = '<td class="foobar"></td>';
-        $this->compareResults($expected, $this->columnData);
+        $this->compareResults($expected);
     }
 
     public function testInvalidField()
@@ -95,7 +103,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ];
 
         $expected = '<td></td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
     public function testValidField()
@@ -108,7 +116,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ];
 
         $expected = '<td>Lorem Ipsum</td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
     public function testDefaultValueIfNull()
@@ -124,7 +132,7 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ];
 
         $expected = '<td>Foo Bar</td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
     public function testDefaultValueIfNotFound()
@@ -140,17 +148,18 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
         ];
 
         $expected = '<td>Foo Bar</td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
     /**
      * @param string $expected
-     * @param array  $column
-     * @param array  $data
      */
-    protected function compareResults($expected, array $column, array $data = [])
+    protected function compareResults($expected)
     {
-        $actual = $this->columnRenderer->fetchDataAndRenderColumn($column, $data, '', '');
+        $actual = $this->columnRenderer
+            ->setIdentifier($this->identifier)
+            ->setPrimaryKey($this->primaryKey)
+            ->fetchDataAndRenderColumn($this->columnData, $this->dbData);
 
         $this->assertEquals($expected, $actual);
     }

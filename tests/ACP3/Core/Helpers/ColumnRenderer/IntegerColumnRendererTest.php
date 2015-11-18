@@ -19,7 +19,7 @@ class IntegerColumnRendererTest extends AbstractColumnRendererTest
         ];
 
         $expected = '<td>1</td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
     public function testValidFieldStringToIntegerConversion()
@@ -32,6 +32,6 @@ class IntegerColumnRendererTest extends AbstractColumnRendererTest
         ];
 
         $expected = '<td>0</td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 }

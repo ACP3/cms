@@ -26,7 +26,7 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
         ];
 
         $expected = '<td><p>Lorem Ipsum</p></td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
     public function testValidFieldWithMultipleLines()
@@ -39,6 +39,6 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
         ];
 
         $expected = "<td><p>Lorem Ipsum</p>\n<p>Dolor</p></td>";
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 }

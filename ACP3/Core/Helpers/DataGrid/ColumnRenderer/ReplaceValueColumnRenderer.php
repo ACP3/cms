@@ -19,7 +19,7 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         $this->search = $column['custom']['search'];
         $this->replace = $column['custom']['replace'];

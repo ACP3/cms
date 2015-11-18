@@ -17,6 +17,23 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
         );
     }
 
+    public function testValidField()
+    {
+        $this->columnData = array_merge($this->columnData, [
+            'fields' => ['text'],
+            'custom' => [
+                'search' => ['Lorem'],
+                'replace' => ['Dolor']
+            ]
+        ]);
+        $this->dbData = [
+            'text' => 'Lorem Ipsum'
+        ];
+
+        $expected = '<td>Dolor Ipsum</td>';
+        $this->compareResults($expected);
+    }
+
     public function testDefaultValueIfNull()
     {
         $this->columnData = array_merge($this->columnData, [
@@ -32,7 +49,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
         ];
 
         $expected = '<td>Foo Bar</td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
     public function testDefaultValueIfNotFound()
@@ -50,7 +67,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
         ];
 
         $expected = '<td>Foo Bar</td>';
-        $this->compareResults($expected, $this->columnData, $this->dbData);
+        $this->compareResults($expected);
     }
 
 }

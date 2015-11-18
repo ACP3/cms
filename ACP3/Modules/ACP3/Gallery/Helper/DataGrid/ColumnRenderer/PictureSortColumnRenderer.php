@@ -39,7 +39,7 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         $dbValue = $this->getValue($column, $dbResultRow);
 

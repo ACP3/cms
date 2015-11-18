@@ -34,7 +34,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         $date = $this->getValue($column, $dbResultRow);
         $column['attribute'] = [

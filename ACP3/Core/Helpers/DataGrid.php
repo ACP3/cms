@@ -58,7 +58,7 @@ class DataGrid
      */
     protected $columns;
     /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface[]
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
      */
     protected $columnRenderer = [];
     /**
@@ -150,7 +150,7 @@ class DataGrid
      */
     public function setEnableMassAction($enableMassAction)
     {
-        $this->enableMassAction = (bool) $enableMassAction;
+        $this->enableMassAction = (bool)$enableMassAction;
 
         return $this;
     }
@@ -162,7 +162,7 @@ class DataGrid
      */
     public function setEnableOptions($enableOptions)
     {
-        $this->enableOptions = (bool) $enableOptions;
+        $this->enableOptions = (bool)$enableOptions;
         return $this;
     }
 
@@ -242,9 +242,10 @@ class DataGrid
 
         foreach (clone $this->columns as $column) {
             if (!empty($column['label'])) {
-                $header .= $this->columnRenderer['table_header']->fetchDataAndRenderColumn(
-                    $column, [], $this->identifier, $this->primaryKey
-                );
+                $header .= $this->columnRenderer['table_header']
+                    ->setIdentifier($this->identifier)
+                    ->setPrimaryKey($this->primaryKey)
+                    ->fetchDataAndRenderColumn($column, []);
             }
         }
 
@@ -262,9 +263,10 @@ class DataGrid
             $results .= "<tr>\n";
             foreach (clone $this->columns as $column) {
                 if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
-                    $results .= $this->columnRenderer[$column['type']]->fetchDataAndRenderColumn(
-                        $column, $result, $this->identifier, $this->primaryKey
-                    );
+                    $results .= $this->columnRenderer[$column['type']]
+                        ->setIdentifier($this->identifier)
+                        ->setPrimaryKey($this->primaryKey)
+                        ->fetchDataAndRenderColumn($column, $result);
                 }
             }
 

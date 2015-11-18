@@ -26,7 +26,7 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         if ($column['type'] === 'mass_action') {
             $id = preg_replace('=[^\w\d-_]=', '', $column['label']) . '-mark-all';

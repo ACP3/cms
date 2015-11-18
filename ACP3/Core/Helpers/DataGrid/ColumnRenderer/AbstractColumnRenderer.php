@@ -8,9 +8,42 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
     /**
+     * @var string
+     */
+    protected $identifier = '';
+    /**
+     * @var string
+     */
+    protected $primaryKey = '';
+
+    /**
+     * @param string $identifier
+     *
+     * @return $this
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $primaryKey
+     *
+     * @return $this
+     */
+    public function setPrimaryKey($primaryKey)
+    {
+        $this->primaryKey = $primaryKey;
+
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         return $this->render($column, $this->getValue($column, $dbResultRow));
     }
@@ -97,7 +130,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      *
      * @return string
      */
-    private function getDefaultValue(array $column)
+    protected function getDefaultValue(array $column)
     {
         if (isset($column['custom']['default_value'])) {
             return $column['custom']['default_value'];

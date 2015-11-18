@@ -10,14 +10,18 @@ class MassActionColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    protected function getValue(array $column, array $dbResultRow)
     {
-        if ($column['custom']['can_delete'] === true) {
-            $value = '<input type="checkbox" name="entries[]" value="' . $dbResultRow[$primaryKey] . '">';
-            return $this->render($column, $value);
+        $value = null;
+        if (isset($column['custom']['can_delete']) && $column['custom']['can_delete'] === true) {
+            $value = '<input type="checkbox" name="entries[]" value="' . $dbResultRow[$this->primaryKey] . '">';
         }
 
-        return '';
+        if ($value === null) {
+            $value = $this->getDefaultValue($column);
+        }
+
+        return $value;
     }
 
     /**

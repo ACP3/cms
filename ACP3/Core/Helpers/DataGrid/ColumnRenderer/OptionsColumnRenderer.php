@@ -45,18 +45,18 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow, $identifier, $primaryKey)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         $this->eventDispatcher->dispatch(
             'data_grid.column_renderer.custom_option_before',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $identifier)
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->identifier)
         );
 
         if ($column['custom']['can_edit']) {
             $resourcePathEdit = $column['custom']['resource_path_edit'];
             $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
-                $resourcePathEdit . 'id_' . $dbResultRow[$primaryKey],
+                $resourcePathEdit . 'id_' . $dbResultRow[$this->primaryKey],
                 $this->lang->t('system', 'edit'),
                 'glyphicon-edit',
                 'btn-default'
@@ -65,14 +65,14 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
 
         $this->eventDispatcher->dispatch(
             'data_grid.column_renderer.custom_option_between',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $identifier)
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->identifier)
         );
 
         if ($column['custom']['can_delete']) {
             $resourcePathDelete = $column['custom']['resource_path_delete'];
             $resourcePathDelete .= !preg_match('=/$=', $resourcePathDelete) ? '/' : '';
             $this->optionRenderer->addOption(
-                $resourcePathDelete . 'entries_' . $dbResultRow[$primaryKey],
+                $resourcePathDelete . 'entries_' . $dbResultRow[$this->primaryKey],
                 $this->lang->t('system', 'delete'),
                 'glyphicon-remove',
                 'btn-danger'
@@ -81,7 +81,7 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
 
         $this->eventDispatcher->dispatch(
             'data_grid.column_renderer.custom_option_after',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $identifier)
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->identifier)
         );
 
         return $this->render($column, $this->collectOptions());
