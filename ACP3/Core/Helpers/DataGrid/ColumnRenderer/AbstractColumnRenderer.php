@@ -93,7 +93,9 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function getFirstDbField(array $column)
     {
-        return reset($this->getDbFields($column));
+        $fields = $this->getDbFields($column);
+
+        return reset($fields);
     }
 
     /**

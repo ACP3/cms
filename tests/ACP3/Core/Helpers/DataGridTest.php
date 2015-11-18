@@ -31,6 +31,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
             $this->aclMock,
             $this->langMock
         );
+        $this->dataGrid->setIdentifier('#data-grid');
 
         parent::setUp();
     }
@@ -43,10 +44,10 @@ class DataGridTest extends PHPUnit_Framework_TestCase
         return [
             'can_edit' => false,
             'can_delete' => false,
-            'identifier' => '',
+            'identifier' => 'data-grid',
             'header' => '',
             'config' => [
-                'element' => null,
+                'element' => '#data-grid',
                 'records_per_page' => 10,
                 'hide_col_sort' => "0",
                 'sort_col' => null,
@@ -94,7 +95,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
             [
                 'header' => '<th>Foo</th>',
                 'config' => [
-                    'element' => null,
+                    'element' => '#data-grid',
                     'records_per_page' => 10,
                     'hide_col_sort' => "1",
                     'sort_col' => null,
@@ -141,7 +142,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
             [
                 'header' => '<th>Foo</th>',
                 'config' => [
-                    'element' => null,
+                    'element' => '#data-grid',
                     'records_per_page' => 10,
                     'hide_col_sort' => "1",
                     'sort_col' => null,
