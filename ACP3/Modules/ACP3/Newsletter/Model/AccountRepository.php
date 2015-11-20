@@ -59,7 +59,7 @@ class AccountRepository extends Model
      */
     public function countAllAccounts()
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE status != ' . AccountStatus::ACCOUNT_STATUS_DISABLED);
     }
 
     /**
@@ -75,7 +75,7 @@ class AccountRepository extends Model
      */
     public function getAllAccounts()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY `id` DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE status != ' . AccountStatus::ACCOUNT_STATUS_DISABLED . ' ORDER BY `id` DESC');
     }
 
     /**
