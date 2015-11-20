@@ -148,11 +148,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
                     'sort_col' => null,
                     'sort_dir' => null
                 ],
-                'results' => <<<HTML
-<tr><td>Lorem Ipsum</td></tr>
-<tr><td>Lorem Ipsum Dolor</td></tr>
-
-HTML
+                'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n"
             ]
         );
 

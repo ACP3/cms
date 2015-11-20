@@ -155,8 +155,18 @@ class Index extends Core\Modules\AdminController
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('seo', 'robots'),
-                'type' => 'seo_robots',
+                'type' => 'replace_value',
                 'fields' => ['robots'],
+                'custom' => [
+                    'search' => [0, 1, 2, 3, 4],
+                    'replace' => [
+                        sprintf($this->lang->t('seo', 'robots_use_system_default'), $this->seo->getRobotsSetting()),
+                        $this->lang->t('seo', 'robots_index_follow'),
+                        $this->lang->t('seo', 'robots_index_nofollow'),
+                        $this->lang->t('seo', 'robots_noindex_follow'),
+                        $this->lang->t('seo', 'robots_noindex_nofollow')
+                    ]
+                ]
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
