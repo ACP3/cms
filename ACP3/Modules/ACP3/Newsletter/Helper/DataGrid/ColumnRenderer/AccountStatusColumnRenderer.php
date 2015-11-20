@@ -38,21 +38,23 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        $status = $this->getValue($column, $dbResultRow);
+        if (isset($dbResultRow[$field])) {
+            if ((int)$dbResultRow[$field] === 0) {
+                $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]);
+                $title = $this->lang->t('newsletter', 'activate_account');
+                $value = '<a href="' . $route . '" title="' . $title . '">';
+                $value .= '<i class="glyphicon glyphicon-remove text-danger"></i>';
+                $value .= '</a>';
+            } else {
+                $value = '<i class="glyphicon glyphicon-ok text-success"></i>';
+            }
 
-        if ($status == 0) {
-            $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow['id']);
-            $title = $this->lang->t('newsletter', 'activate_account');
-            $value = '<a href="' . $route . '" title="' . $title . '">';
-            $value .= '<i class="glyphicon glyphicon-remove text-danger"></i>';
-            $value .= '</a>';
-        } else {
-            $value = '<i class="glyphicon glyphicon-ok text-success"></i>';
+            return $value;
         }
 
-        return $this->render($column, $value);
+        return null;
     }
 
     /**

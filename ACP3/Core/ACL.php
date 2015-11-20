@@ -257,7 +257,7 @@ class ACL
      */
     public function hasPermission($path)
     {
-        if ($path !== null && $this->modules->controllerActionExists($path) === true) {
+        if (!empty($path) && $this->modules->controllerActionExists($path) === true) {
             $pathArray = explode('/', $path);
 
             if ($this->modules->isActive($pathArray[1]) === true) {
