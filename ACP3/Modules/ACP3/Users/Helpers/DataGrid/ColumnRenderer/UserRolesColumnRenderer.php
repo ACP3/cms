@@ -29,11 +29,9 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        $value = $this->getValue($column, $dbResultRow);
-
-        return $this->render($column, implode(', ', $this->acl->getUserRoleNames($value)));
+        return isset($dbResultRow[$field]) ? implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
     }
 
     /**
