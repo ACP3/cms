@@ -36,14 +36,27 @@ class DateColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
-        $date = $this->getValue($column, $dbResultRow);
-        $column['attribute'] = [
-            'data-order' => $this->date->format($date, 'U')
-        ];
+        $value = $this->getValue($column, $dbResultRow);
+
+        if ($value !== null && $value !== $this->getDefaultValue($column)) {
+            $field = $this->getFirstDbField($column);
+            $column['attribute'] += [
+                'data-order' => $this->date->format($dbResultRow[$field], 'U')
+            ];
+        }
+
         return $this->render(
             $column,
-            $this->dateRangeHelper->formatTimeRange($date)
+            $value
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getDbValueIfExists(array $dbResultRow, $field)
+    {
+        return isset($dbResultRow[$field]) ? $this->dateRangeHelper->formatTimeRange($dbResultRow[$field]) : null;
     }
 
     /**
