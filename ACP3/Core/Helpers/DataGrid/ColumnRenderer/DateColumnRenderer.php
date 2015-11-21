@@ -54,9 +54,19 @@ class DateColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getValue(array $column, array $dbResultRow)
     {
-        return isset($dbResultRow[$field]) ? $this->dateRangeHelper->formatTimeRange($dbResultRow[$field]) : null;
+        $field = $this->getFirstDbField($column);
+        $value = $this->getDbValueIfExists($dbResultRow, $field);
+
+        if ($value === null) {
+            $value = $this->getDefaultValue($column);
+        } else {
+            $fields = $this->getDbFields($column);
+            $value = $this->dateRangeHelper->formatTimeRange($value, $this->getDbValueIfExists($dbResultRow, next($fields)));
+        }
+
+        return $value;
     }
 
     /**

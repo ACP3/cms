@@ -44,8 +44,8 @@ class DateRange
      */
     public function formatTimeRange($start, $end = '', $format = 'long')
     {
-        if ($end === '' || $start >= $end) {
-            if ($end === '') {
+        if (empty($end) || $start >= $end) {
+            if (empty($end)) {
                 $title = $this->date->format($start, $format);
             } else {
                 $title = sprintf($this->lang->t('system', 'date_published_since'), $this->date->format($start, $format));

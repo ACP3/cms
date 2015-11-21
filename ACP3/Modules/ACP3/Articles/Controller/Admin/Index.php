@@ -325,7 +325,7 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'publication_period'),
-                'type' => 'date_range',
+                'type' => 'date',
                 'fields' => ['start', 'end']
             ], 30)
             ->addColumn([

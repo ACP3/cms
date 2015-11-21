@@ -10,12 +10,6 @@ services:
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
-  core.helpers.data_grid.column_renderer.date_range_column_renderer:
-    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateRangeColumnRenderer
-    arguments: [@core.date, @core.helpers.formatter.dateRange]
-    tags:
-      - { name: core.helpers.data_grid.column_renderer }
-
   core.helpers.data_grid.column_renderer.header_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer
     arguments: [@core.helpers.formatter.mark_entries]
