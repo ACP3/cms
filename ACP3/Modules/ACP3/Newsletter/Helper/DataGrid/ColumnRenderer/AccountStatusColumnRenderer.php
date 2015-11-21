@@ -11,6 +11,8 @@ use ACP3\Core\Router;
  */
 class AccountStatusColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'account_status';
+
     /**
      * @var \ACP3\Core\Lang
      */
@@ -55,13 +57,5 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
         }
 
         return null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'account_status';
     }
 }

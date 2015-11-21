@@ -68,7 +68,7 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
     /**
      * @return string
      */
-    public function getType()
+    public function getName()
     {
         return 'picture_sort';
     }

@@ -8,6 +8,8 @@ use ACP3\Core\Helpers\StringFormatter;
  */
 class Nl2pColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'nl2p';
+
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
@@ -29,13 +31,5 @@ class Nl2pColumnRenderer extends AbstractColumnRenderer
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
         return isset($dbResultRow[$field]) ? $this->stringFormatter->nl2p($dbResultRow[$field]) : null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'nl2p';
     }
 }

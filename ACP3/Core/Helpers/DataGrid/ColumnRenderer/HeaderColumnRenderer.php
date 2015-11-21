@@ -8,6 +8,9 @@ use ACP3\Core\Helpers\Formatter\MarkEntries;
  */
 class HeaderColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'table_header';
+    const CELL_TYPE = 'th';
+
     /**
      * @var \ACP3\Core\Helpers\Formatter\MarkEntries
      */
@@ -35,14 +38,6 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
             $value = $column['label'];
         }
 
-        return $this->render($column, $value, self::TYPE_TH);
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'table_header';
+        return $this->render($column, $value);
     }
 }

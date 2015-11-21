@@ -7,6 +7,8 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class MassActionColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'mass_action';
+
     /**
      * @inheritdoc
      */
@@ -22,13 +24,5 @@ class MassActionColumnRenderer extends AbstractColumnRenderer
         }
 
         return $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'mass_action';
     }
 }

@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Formatter\DateRange;
 
@@ -9,6 +10,7 @@ use ACP3\Core\Helpers\Formatter\DateRange;
  */
 class DateColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'date';
     /**
      * @var \ACP3\Core\Date
      */
@@ -46,8 +48,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
         }
 
         return $this->render(
-            $column,
-            $value
+            $column, $value
         );
     }
 
@@ -67,13 +68,5 @@ class DateColumnRenderer extends AbstractColumnRenderer
         }
 
         return $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'date';
     }
 }

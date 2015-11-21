@@ -8,6 +8,8 @@ use ACP3\Core\Lang;
  */
 class TranslateColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'translate';
+
     /**
      * @var
      */
@@ -35,13 +37,5 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
         }
 
         return null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'translate';
     }
 }

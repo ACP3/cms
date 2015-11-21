@@ -7,6 +7,8 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class ReplaceValueColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'replace_value';
+
     /**
      * @var array
      */
@@ -33,13 +35,5 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
         return isset($dbResultRow[$field]) ? str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'replace_value';
     }
 }

@@ -7,11 +7,5 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class TextColumnRenderer extends AbstractColumnRenderer
 {
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'text';
-    }
+    const NAME = 'text';
 }

@@ -13,6 +13,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class OptionsColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'options';
+
     /**
      * @var \ACP3\Core\Lang
      */
@@ -101,13 +103,5 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
         $this->optionRenderer->clearOptions();
 
         return $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'options';
     }
 }

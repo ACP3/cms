@@ -9,6 +9,8 @@ use ACP3\Core\Router;
  */
 class PictureColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'picture';
+
     /**
      * @var \ACP3\Core\Router
      */
@@ -27,17 +29,18 @@ class PictureColumnRenderer extends AbstractColumnRenderer
     /**
      * @inheritdoc
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    protected function getValue(array $column, array $dbResultRow)
     {
-        $value = $this->getValue($column, $dbResultRow);
+        $field = $this->getFirstDbField($column);
+        $value = $this->getDbValueIfExists($dbResultRow, $field);
 
-        if (isset($column['custom']['pattern']) &&
-            $value !== null && $value !== $this->getDefaultValue($column)
-        ) {
+        if ($value === null) {
+            $value = $this->getDefaultValue($column);
+        } elseif (isset($column['custom']['pattern'])) {
             $value = '<img src="' . $this->getUrl($column['custom'], $value) . '" alt="">';
         }
 
-        return $this->render($column, $value);
+        return $value;
     }
 
     /**
@@ -54,13 +57,5 @@ class PictureColumnRenderer extends AbstractColumnRenderer
         }
 
         return $url;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'picture';
     }
 }

@@ -83,7 +83,7 @@ class DataGrid
      */
     public function registerColumnRenderer(ColumnRendererInterface $columnRenderer)
     {
-        $this->columnRenderer[$columnRenderer->getType()] = $columnRenderer;
+        $this->columnRenderer[$columnRenderer->getName()] = $columnRenderer;
 
         return $this;
     }

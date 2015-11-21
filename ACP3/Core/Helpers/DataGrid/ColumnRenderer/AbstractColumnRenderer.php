@@ -17,6 +17,14 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     protected $primaryKey = '';
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return static::NAME;
+    }
+
+    /**
      * @param string $identifier
      *
      * @return $this
@@ -51,12 +59,12 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * @param array  $column
      * @param string $value
-     * @param string $type
      *
      * @return string
      */
-    protected function render(array $column, $value = '', $type = self::TYPE_TD)
+    protected function render(array $column, $value = '')
     {
+        $type = static::CELL_TYPE;
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
         $style = $this->addHtmlAttribute('style', $column['style']);

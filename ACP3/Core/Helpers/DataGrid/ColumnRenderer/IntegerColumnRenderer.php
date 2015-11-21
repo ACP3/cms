@@ -7,6 +7,8 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class IntegerColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'integer';
+
     /**
      * @param array  $dbResultRow
      * @param string $field
@@ -16,13 +18,5 @@ class IntegerColumnRenderer extends AbstractColumnRenderer
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
         return isset($dbResultRow[$field]) ? (int)$dbResultRow[$field] : null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'integer';
     }
 }

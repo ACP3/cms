@@ -7,8 +7,8 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 interface ColumnRendererInterface
 {
-    const TYPE_TH = 'th';
-    const TYPE_TD = 'td';
+    const CELL_TYPE = 'td';
+    const NAME = '';
 
     /**
      * @param array $column
@@ -21,5 +21,5 @@ interface ColumnRendererInterface
     /**
      * @return string
      */
-    public function getType();
+    public function getName();
 }

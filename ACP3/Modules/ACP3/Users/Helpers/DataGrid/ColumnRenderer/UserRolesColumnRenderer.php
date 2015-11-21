@@ -11,6 +11,8 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
  */
 class UserRolesColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'user_roles';
+
     /**
      * @var \ACP3\Core\ACL
      */
@@ -32,13 +34,5 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
         return isset($dbResultRow[$field]) ? implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'user_roles';
     }
 }
