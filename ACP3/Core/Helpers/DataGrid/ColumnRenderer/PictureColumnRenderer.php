@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
 use ACP3\Core\Router;
 
 /**
@@ -28,30 +29,31 @@ class PictureColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
-        if (isset($column['custom']['pattern'])) {
-            $dbValue = $this->getValue($column, $dbResultRow);
-            $value = '<img src="' . $this->getUrl($column['custom'], $dbValue) . '" alt="">';
-        } else {
-            $value = '';
+        $value = $this->getValue($column, $dbResultRow);
+
+        if (isset($column['custom']['pattern']) &&
+            $value !== null && $value !== $this->getDefaultValue($column)
+        ) {
+            $value = '<img src="' . $this->getUrl($column['custom'], $value) . '" alt="">';
         }
 
         return $this->render($column, $value);
     }
 
     /**
-     * @param array  $custom
+     * @param array  $data
      * @param string $value
      *
      * @return string
      */
-    protected function getUrl(array $custom, $value)
+    protected function getUrl(array $data, $value)
     {
-        $value = sprintf($custom['pattern'], $value);
-        if (isset($custom['isRoute'])) {
-            return $this->router->route($value);
+        $url = sprintf($data['pattern'], $value);
+        if (isset($data['isRoute'])) {
+            return $this->router->route($url);
         }
 
-        return $value;
+        return $url;
     }
 
     /**
