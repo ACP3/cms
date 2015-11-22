@@ -83,7 +83,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -93,11 +93,6 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all(), $settings);
         }
 
-        $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', '', true));
-        $this->view->assign('options', $this->fetchNewsOptions($settings, 0, 0));
-        $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'));
-        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-
         $defaults = [
             'title' => '',
             'text' => '',
@@ -106,9 +101,16 @@ class Index extends Core\Modules\AdminController
             'start' => '',
             'end' => ''
         ];
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'categories' => $this->categoriesHelpers->categoriesList('news', '', true),
+            'options' => $this->fetchNewsOptions($settings, 0, 0),
+            'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'),
+            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -143,7 +145,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -159,20 +161,23 @@ class Index extends Core\Modules\AdminController
                 return $this->_editPost($this->request->getPost()->all(), $settings, $id);
             }
 
-            $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $news['category_id'], true));
-            $this->view->assign('options', $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']));
-
-            $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $news['target']));
-
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id)));
-            $this->view->assign('form', array_merge($news, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'categories' => $this->categoriesHelpers->categoriesList('news', $news['category_id'], true),
+                'options' => $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']),
+                'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $news['target']),
+                'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id)),
+                'form' => array_merge($news, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $news = $this->newsRepository->getAllInAcp();
@@ -189,23 +194,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'publication_period'),
-                'type' => 'date',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('news', 'title'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('categories', 'category'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['cat']
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -217,7 +222,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -227,21 +232,19 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('news');
 
-        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
-
-        $this->view->assign('readmore', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('readmore', $settings['readmore']));
-
-        $this->view->assign('readmore_chars', $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']));
-
         if ($this->modules->isActive('comments') === true) {
             $this->view->assign('allow_comments', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('comments', $settings['comments']));
         }
 
-        $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
-
-        $this->view->assign('category_in_breadcrumb', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('category_in_breadcrumb', $settings['category_in_breadcrumb']));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'readmore' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('readmore', $settings['readmore']),
+            'readmore_chars' => $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']),
+            'sidebar_entries' => $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10),
+            'category_in_breadcrumb' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('category_in_breadcrumb', $settings['category_in_breadcrumb'])
+        ];
     }
 
     /**

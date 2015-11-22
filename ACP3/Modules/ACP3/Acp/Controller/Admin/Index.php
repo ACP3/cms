@@ -10,6 +10,9 @@ use ACP3\Core;
  */
 class Index extends Core\Modules\AdminController
 {
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $activeModules = $this->modules->getActiveModules();
@@ -22,6 +25,9 @@ class Index extends Core\Modules\AdminController
                 $allowedModules[$name]['dir'] = $dir;
             }
         }
-        $this->view->assign('modules', $allowedModules);
+
+        return [
+            'modules' => $allowedModules
+        ];
     }
 }

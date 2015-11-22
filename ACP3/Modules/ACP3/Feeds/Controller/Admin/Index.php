@@ -37,7 +37,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex()
     {
@@ -52,11 +52,13 @@ class Index extends Core\Modules\AdminController
             'RSS 2.0',
             'ATOM'
         ];
-        $this->view->assign('feed_types', $this->get('core.helpers.forms')->selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']));
-
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'feed_types' => $this->get('core.helpers.forms')->selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']),
+            'form' => array_merge($settings, $this->request->getPost()->all())
+        ];
     }
 
     /**

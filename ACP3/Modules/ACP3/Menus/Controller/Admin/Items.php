@@ -103,17 +103,13 @@ class Items extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
             return $this->_createPost($this->request->getPost()->all());
         }
-
-        $this->view->assign('mode', $this->fetchMenuItemModes());
-        $this->view->assign('modules', $this->fetchModules());
-        $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'));
 
         if ($this->articlesHelpers) {
             $this->view->assign('articles', $this->articlesHelpers->articlesList());
@@ -125,10 +121,16 @@ class Items extends Core\Modules\AdminController
         ];
 
         $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
-        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'mode' => $this->fetchMenuItemModes(),
+            'modules' => $this->fetchModules(),
+            'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'),
+            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -164,7 +166,7 @@ class Items extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -181,10 +183,6 @@ class Items extends Core\Modules\AdminController
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->_editPost($this->request->getPost()->all(), $menuItem, $id);
             }
-
-            $this->view->assign('mode', $this->fetchMenuItemModes($menuItem['mode']));
-            $this->view->assign('modules', $this->fetchModules($menuItem));
-            $this->view->assign('target', $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $menuItem['target']));
 
             if ($this->articlesHelpers) {
                 $matches = [];
@@ -204,13 +202,18 @@ class Items extends Core\Modules\AdminController
                     $menuItem['display']
                 )
             );
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
-            $this->view->assign('form', array_merge($menuItem, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'mode' => $this->fetchMenuItemModes($menuItem['mode']),
+                'modules' => $this->fetchModules($menuItem),
+                'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $menuItem['target']),
+                'SEO_FORM_FIELDS' => $this->seo->formFields($menuItem['uri']),
+                'form' => array_merge($menuItem, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**

@@ -76,6 +76,9 @@ class Accounts extends Core\Modules\AdminController
         );
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $accounts = $this->accountRepository->getAllAccounts();
@@ -91,13 +94,13 @@ class Accounts extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'email_address'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['mail'],
                 'default_sort' => true
             ], 60)
             ->addColumn([
                 'label' => $this->lang->t('newsletter', 'salutation'),
-                'type' => 'replace_value',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
                 'fields' => ['salutation'],
                 'custom' => [
                     'search' => [0, 1, 2],
@@ -110,22 +113,22 @@ class Accounts extends Core\Modules\AdminController
             ], 50)
             ->addColumn([
                 'label' => $this->lang->t('newsletter', 'first_name'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['first_name'],
             ], 40)
             ->addColumn([
                 'label' => $this->lang->t('newsletter', 'last_name'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['last_name'],
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('newsletter', 'status'),
-                'type' => 'account_status',
+                'type' => Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer::NAME,
                 'fields' => ['status'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

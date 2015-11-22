@@ -37,7 +37,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex()
     {
@@ -47,9 +47,11 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('contact');
 
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge($settings, $this->request->getPost()->all())
+        ];
     }
 
     /**

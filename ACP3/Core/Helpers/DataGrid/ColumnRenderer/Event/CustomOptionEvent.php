@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer;
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\Event;
 class CustomOptionEvent extends Event
 {
     /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
      */
     protected $optionRenderer;
     /**
@@ -26,9 +26,9 @@ class CustomOptionEvent extends Event
     /**
      * CustomOptionEvent constructor.
      *
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer $optionRenderer
-     * @param array                                                                           $dbResultRow
-     * @param string                                                                          $identifier
+     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
+     * @param array                                                                          $dbResultRow
+     * @param string                                                                         $identifier
      */
     public function __construct(OptionRenderer $optionRenderer, array $dbResultRow, $identifier)
     {
@@ -38,7 +38,7 @@ class CustomOptionEvent extends Event
     }
 
     /**
-     * @return \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer
+     * @return \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
      */
     public function getOptionRenderer()
     {

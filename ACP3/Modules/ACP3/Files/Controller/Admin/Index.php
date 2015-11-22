@@ -203,6 +203,9 @@ class Index extends Core\Modules\AdminController
         throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $files = $this->filesRepository->getAllInAcp();
@@ -219,23 +222,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'publication_period'),
-                'type' => 'date',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
                 'label' => $this->lang->t('files', 'title'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 40)
             ->addColumn([
                 'label' => $this->lang->t('system', 'description'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('files', 'filesize'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['size'],
                 'customer' => [
                     'default_value' => $this->lang->t('files', 'unknown_filesize')
@@ -243,7 +246,7 @@ class Index extends Core\Modules\AdminController
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

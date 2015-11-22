@@ -126,6 +126,9 @@ class Index extends Core\Modules\AdminController
         throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $guestbook = $this->guestbookRepository->getAllInAcp();
@@ -142,28 +145,28 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'date'),
-                'type' => 'date',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['date'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
                 'label' => $this->lang->t('system', 'name'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['name'],
             ], 40)
             ->addColumn([
                 'label' => $this->lang->t('system', 'message'),
-                'type' => 'nl2p',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::NAME,
                 'fields' => ['message'],
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('guestbook', 'ip'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['ip'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

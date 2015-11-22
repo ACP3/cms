@@ -51,7 +51,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -59,11 +59,12 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-
-        $this->view->assign('form', array_merge(['uri' => ''], $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'form' => array_merge(['uri' => ''], $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -94,7 +95,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -108,16 +109,20 @@ class Index extends Core\Modules\AdminController
                 return $this->_editPost($this->request->getPost()->all(), $seo['uri'], $id);
             }
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($seo['uri']));
-
-            $this->view->assign('form', array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'SEO_FORM_FIELDS' => $this->seo->formFields($seo['uri']),
+                'form' => array_merge(['uri' => $seo['uri']], $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $seo = $this->seoRepository->getAllInAcp();
@@ -134,28 +139,28 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('seo', 'uri'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['uri'],
                 'default_sort' => true
             ], 60)
             ->addColumn([
                 'label' => $this->lang->t('seo', 'alias'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['alias'],
             ], 50)
             ->addColumn([
                 'label' => $this->lang->t('seo', 'keywords'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['keywords'],
             ], 40)
             ->addColumn([
                 'label' => $this->lang->t('seo', 'description'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('seo', 'robots'),
-                'type' => 'replace_value',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
                 'fields' => ['robots'],
                 'custom' => [
                     'search' => [0, 1, 2, 3, 4],
@@ -170,7 +175,7 @@ class Index extends Core\Modules\AdminController
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -236,7 +241,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -253,14 +258,14 @@ class Index extends Core\Modules\AdminController
             $this->lang->t('seo', 'robots_noindex_follow'),
             $this->lang->t('seo', 'robots_noindex_nofollow')
         ];
-        $this->view->assign('robots', $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots, $seoSettings['robots']));
-
-        // Sef-URIs
-        $this->view->assign('mod_rewrite', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']));
-
-        $this->view->assign('form', array_merge($seoSettings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'robots' => $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots, $seoSettings['robots']),
+            'mod_rewrite' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']),
+            'form' => array_merge($seoSettings, $this->request->getPost()->all())
+        ];
     }
 
     /**

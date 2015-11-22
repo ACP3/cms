@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin;
 
 use ACP3\Core;
-use ACP3\Core\Helpers\Country;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
@@ -74,7 +73,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -84,9 +83,6 @@ class Index extends Core\Modules\AdminController
 
         $systemSettings = $this->config->getSettings('system');
 
-        $this->view->assign('roles', $this->fetchUserRoles());
-        $this->view->assign('super_user', $this->fetchIsSuperUser());
-        $this->view->assign('contact', $this->get('users.helpers.forms')->fetchContactDetails());
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
                 (int)$systemSettings['entries'],
@@ -109,9 +105,14 @@ class Index extends Core\Modules\AdminController
             'date_format_short' => $systemSettings['date_format_short']
         ];
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'roles' => $this->fetchUserRoles(),
+            'super_user' => $this->fetchIsSuperUser(),
+            'contact' => $this->get('users.helpers.forms')->fetchContactDetails(),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -154,7 +155,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -169,14 +170,6 @@ class Index extends Core\Modules\AdminController
             }
 
             $userRoles = $this->acl->getUserRoleIds($id);
-            $this->view->assign('roles', $this->fetchUserRoles($userRoles));
-            $this->view->assign('super_user', $this->fetchIsSuperUser($user['super_user']));
-            $this->view->assign('contact', $this->get('users.helpers.forms')->fetchContactDetails(
-                $user['mail'],
-                $user['website'],
-                $user['icq'],
-                $user['skype']
-            ));
             $this->view->assign(
                 $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
                     (int)$user['entries'],
@@ -196,16 +189,26 @@ class Index extends Core\Modules\AdminController
                 )
             );
 
-            $this->view->assign('form', array_merge($user, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'roles' => $this->fetchUserRoles($userRoles),
+                'super_user' => $this->fetchIsSuperUser($user['super_user']),
+                'contact' => $this->get('users.helpers.forms')->fetchContactDetails(
+                    $user['mail'],
+                    $user['website'],
+                    $user['icq'],
+                    $user['skype']
+                ),
+                'form' => array_merge($user, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -215,17 +218,19 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('users');
 
-        $this->view->assign('languages', $this->formsHelpers->yesNoCheckboxGenerator('language_override', $settings['language_override']));
-
-        $this->view->assign('entries', $this->formsHelpers->yesNoCheckboxGenerator('entries_override', $settings['entries_override']));
-
-        $this->view->assign('registration', $this->formsHelpers->yesNoCheckboxGenerator('enable_registration', $settings['enable_registration']));
-
-        $this->view->assign('form', array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'languages' => $this->formsHelpers->yesNoCheckboxGenerator('language_override', $settings['language_override']),
+            'entries' => $this->formsHelpers->yesNoCheckboxGenerator('entries_override', $settings['entries_override']),
+            'registration' => $this->formsHelpers->yesNoCheckboxGenerator('enable_registration', $settings['enable_registration']),
+            'form' => array_merge(['mail' => $settings['mail']], $this->request->getPost()->all())
+        ];
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $users = $this->userRepository->getAllInAcp();
@@ -242,23 +247,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('users', 'nickname'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['nickname'],
                 'default_sort' => true
             ], 40)
             ->addColumn([
                 'label' => $this->lang->t('system', 'email_address'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['mail'],
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('permissions', 'roles'),
-                'type' => 'user_roles',
+                'type' => Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer::NAME,
                 'fields' => ['id'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

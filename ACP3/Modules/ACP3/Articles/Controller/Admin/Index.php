@@ -123,7 +123,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -144,11 +144,12 @@ class Index extends Core\Modules\AdminController
             'end' => ''
         ];
 
-        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -226,7 +227,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -257,14 +258,15 @@ class Index extends Core\Modules\AdminController
                 );
             }
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)));
-
-            $this->view->assign('form', array_merge($article, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)),
+                'form' => array_merge($article, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
@@ -309,6 +311,9 @@ class Index extends Core\Modules\AdminController
         });
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $articles = $this->articleRepository->getAllInAcp();
@@ -325,18 +330,18 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'publication_period'),
-                'type' => 'date',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end']
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('articles', 'title'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
                 'default_sort' => true
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

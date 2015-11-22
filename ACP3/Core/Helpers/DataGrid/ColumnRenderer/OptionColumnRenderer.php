@@ -2,16 +2,16 @@
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer;
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer;
 use ACP3\Core\Lang;
 use ACP3\Core\Router;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * Class OptionsColumnRenderer
+ * Class OptionColumnRenderer
  * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
  */
-class OptionsColumnRenderer extends AbstractColumnRenderer
+class OptionColumnRenderer extends AbstractColumnRenderer
 {
     const NAME = 'options';
 
@@ -24,14 +24,14 @@ class OptionsColumnRenderer extends AbstractColumnRenderer
      */
     protected $eventDispatcher;
     /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
      */
     protected $optionRenderer;
 
     /**
-     * @param \ACP3\Core\Lang                                                                 $lang
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer\OptionRenderer $optionRenderer
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher                              $eventDispatcher
+     * @param \ACP3\Core\Lang                                                                $lang
+     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher                             $eventDispatcher
      */
     public function __construct(
         Lang $lang,

@@ -1,12 +1,12 @@
 <?php
-namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer;
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 
 use ACP3\Core\Lang;
 use ACP3\Core\Router;
 
 /**
- * Class OptionsRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionsColumnRenderer
+ * Class OptionRenderer
+ * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer
  */
 class OptionRenderer
 {

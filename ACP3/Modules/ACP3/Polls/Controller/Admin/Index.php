@@ -65,7 +65,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -88,14 +88,16 @@ class Index extends Core\Modules\AdminController
             'end' => ''
         ];
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-        $this->view->assign('answers', $answers);
-
         $options = [];
         $options[] = $this->fetchMultipleChoiceOption(0);
-        $this->view->assign('options', $options);
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'answers' => $answers,
+            'options' => $options,
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -123,7 +125,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -142,7 +144,6 @@ class Index extends Core\Modules\AdminController
             } else {
                 $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);
             }
-            $this->view->assign('answers', $answers);
 
             $options = [
                 $this->fetchMultipleChoiceOption($poll['multiple']),
@@ -153,16 +154,21 @@ class Index extends Core\Modules\AdminController
                 ]
             ];
 
-            $this->view->assign('options', $options);
-
-            $this->view->assign('form', array_merge($poll, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'answers' => $answers,
+                'options' => $options,
+                'form' => array_merge($poll, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $polls = $this->pollRepository->getAllInAcp();
@@ -179,18 +185,18 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'publication_period'),
-                'type' => 'date',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('polls', 'question'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -313,12 +319,12 @@ class Index extends Core\Modules\AdminController
                     );
                 }
             } elseif (isset($row['delete'])) { // Antwort mitsamt Stimmen löschen
-                $this->answerRepository->delete((int) $row['id']);
-                $this->voteRepository->delete((int) $row['id'], 'answer_id');
+                $this->answerRepository->delete((int)$row['id']);
+                $this->voteRepository->delete((int)$row['id'], 'answer_id');
             } elseif (!empty($row['text'])) { // Antwort aktualisieren
                 $bool = $this->answerRepository->update(
                     ['text' => Core\Functions::strEncode($row['text'])],
-                    (int) $row['id']
+                    (int)$row['id']
                 );
             }
         }

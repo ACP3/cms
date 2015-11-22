@@ -51,7 +51,7 @@ class Resources extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -63,18 +63,20 @@ class Resources extends Core\Modules\AdminController
         foreach ($modules as $row) {
             $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry('modules', $row['name']);
         }
-        $this->view->assign('modules', $modules);
 
         $privileges = $this->acl->getAllPrivileges();
         $c_privileges = count($privileges);
         for ($i = 0; $i < $c_privileges; ++$i) {
             $privileges[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('privileges', $privileges[$i]['id']);
         }
-        $this->view->assign('privileges', $privileges);
-
-        $this->view->assign('form', array_merge(['resource' => '', 'area' => '', 'controller' => ''], $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'modules' => $modules,
+            'privileges' => $privileges,
+            'form' => array_merge(['resource' => '', 'area' => '', 'controller' => ''], $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -121,7 +123,6 @@ class Resources extends Core\Modules\AdminController
             for ($i = 0; $i < $c_privileges; ++$i) {
                 $privileges[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('privileges', $privileges[$i]['id'], $resource['privilege_id']);
             }
-            $this->view->assign('privileges', $privileges);
 
             $defaults = [
                 'resource' => $resource['page'],
@@ -129,14 +130,21 @@ class Resources extends Core\Modules\AdminController
                 'controller' => $resource['controller'],
                 'modules' => $resource['module_name']
             ];
-            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'privileges' => $privileges,
+                'form' => array_merge($defaults, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $resources = $this->resourceRepository->getAllResources();
@@ -149,8 +157,11 @@ class Resources extends Core\Modules\AdminController
             }
         }
         ksort($output);
-        $this->view->assign('resources', $output);
-        $this->view->assign('can_delete_resource', $this->acl->hasPermission('admin/permissions/resources/delete'));
+
+        return [
+            'resources' => $output,
+            'can_delete_resource' => $this->acl->hasPermission('admin/permissions/resources/delete')
+        ];
     }
 
     /**

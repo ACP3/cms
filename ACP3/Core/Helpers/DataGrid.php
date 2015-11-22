@@ -4,6 +4,8 @@ namespace ACP3\Core\Helpers;
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\Lang;
 use ACP3\Core\View;
 
@@ -310,7 +312,7 @@ class DataGrid
         if ($this->enableMassAction && $canDelete) {
             $this->addColumn([
                 'label' => $this->identifier,
-                'type' => 'mass_action',
+                'type' => MassActionColumnRenderer::NAME,
                 'class' => 'datagrid-column datagrid-column__mass-action',
                 'sortable' => false,
                 'custom' => [
@@ -322,7 +324,7 @@ class DataGrid
         if ($this->enableOptions) {
             $this->addColumn([
                 'label' => $this->lang->t('system', 'action'),
-                'type' => 'options',
+                'type' => OptionColumnRenderer::NAME,
                 'class' => 'datagrid-column datagrid-column__actions',
                 'sortable' => false,
                 'custom' => [

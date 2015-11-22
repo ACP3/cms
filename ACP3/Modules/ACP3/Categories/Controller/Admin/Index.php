@@ -51,15 +51,13 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
         if ($this->request->getPost()->isEmpty() === false) {
             return $this->_createPost($this->request->getPost()->all());
         }
-
-        $this->view->assign('form', array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()));
 
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
@@ -69,9 +67,13 @@ class Index extends Core\Modules\AdminController
                 unset($modules[$name]);
             }
         }
-        $this->view->assign('mod_list', $modules);
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
+            'mod_list' => $modules
+        ];
     }
 
     /**
@@ -160,7 +162,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -174,12 +176,14 @@ class Index extends Core\Modules\AdminController
                 return $this->_editPost($this->request->getPost()->all(), $category, $id);
             }
 
-            $this->view->assign('form', array_merge($category, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'form' => array_merge($category, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
@@ -218,6 +222,9 @@ class Index extends Core\Modules\AdminController
         });
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $categories = $this->categoryRepository->getAllWithModuleName();
@@ -234,23 +241,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('categories', 'title'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('system', 'description'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description']
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('categories', 'module'),
-                'type' => 'translate',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::NAME,
                 'fields' => ['module'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -262,7 +269,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -272,9 +279,11 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('categories');
 
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge($settings, $this->request->getPost()->all())
+        ];
     }
 
     /**

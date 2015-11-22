@@ -12,6 +12,8 @@ use ACP3\Core\Router;
  */
 class PictureSortColumnRenderer extends AbstractColumnRenderer
 {
+    const NAME = 'picture_sort';
+
     /**
      * @var \ACP3\Core\Lang
      */
@@ -63,13 +65,5 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
         $column['attribute']['data-order'] = $dbResultRow['pic'];
 
         return $this->render($column, $value);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'picture_sort';
     }
 }

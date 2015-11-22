@@ -143,6 +143,9 @@ class Index extends Core\Modules\AdminController
         throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $newsletter = $this->newsletterRepository->getAllInAcp();
@@ -159,18 +162,18 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'date'),
-                'type' => 'date',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['date'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
                 'label' => $this->lang->t('newsletter', 'subject'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 40)
             ->addColumn([
                 'label' => $this->lang->t('newsletter', 'status'),
-                'type' => 'replace_value',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
                 'fields' => ['status'],
                 'custom' => [
                     'search' => [0, 1],
@@ -182,7 +185,7 @@ class Index extends Core\Modules\AdminController
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -191,22 +194,6 @@ class Index extends Core\Modules\AdminController
             'grid' => $dataGrid->render(),
             'show_mass_delete_button' => count($newsletter) > 0
         ];
-
-        if (count($newsletter) > 0) {
-            $canDelete = $this->acl->hasPermission('admin/newsletter/index/delete');
-            $config = [
-                'element' => '#acp-table',
-                'sort_col' => $canDelete === true ? 1 : 0,
-                'sort_dir' => 'desc',
-                'hide_col_sort' => $canDelete === true ? 0 : '',
-                'records_per_page' => $this->user->getEntriesPerPage()
-            ];
-            $this->view->assign('datatable_config', $config);
-            $this->view->assign('newsletter', $newsletter);
-            $this->view->assign('can_delete', $canDelete);
-            $this->view->assign('can_send', $this->acl->hasPermission('admin/newsletter/index/send'));
-            $this->view->assign('has_active_newsletter_accounts', $this->accountRepository->countAllActiveAccounts() > 0);
-        }
     }
 
     /**

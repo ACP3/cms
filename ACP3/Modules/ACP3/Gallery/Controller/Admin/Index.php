@@ -79,7 +79,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -87,16 +87,18 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-
         $defaults = [
             'title' => '',
             'start' => '',
             'end' => ''
         ];
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -187,7 +189,7 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('gallery', 'picture'),
-                'type' => 'picture',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::NAME,
                 'fields' => ['id'],
                 'custom' => [
                     'pattern' => 'gallery/index/image/id_%s/action_thumb',
@@ -196,18 +198,18 @@ class Index extends Core\Modules\AdminController
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('system', 'description'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'order'),
-                'type' => 'picture_sort',
+                'type' => Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer::NAME,
                 'fields' => ['pic'],
                 'default_sort' => true
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -218,6 +220,9 @@ class Index extends Core\Modules\AdminController
         ];
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $galleries = $this->galleryRepository->getAllInAcp();
@@ -234,23 +239,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'publication_period'),
-                'type' => 'date',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('gallery', 'title'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('gallery', 'pictures'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['pictures'],
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -262,7 +267,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -276,15 +281,14 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('comments', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('comments', $settings['comments']));
         }
 
-        $this->view->assign('overlay', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']));
-
-        $this->view->assign('dateformat', $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']));
-
-        $this->view->assign('sidebar_entries', $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10));
-
-        $this->view->assign('form', array_merge($settings, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'overlay' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']),
+            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'sidebar_entries' => $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10),
+            'form' => array_merge($settings, $this->request->getPost()->all())
+        ];
     }
 
     /**

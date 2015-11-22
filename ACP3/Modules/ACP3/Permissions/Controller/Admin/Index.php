@@ -72,7 +72,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -80,11 +80,13 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['name' => ''], $this->request->getPost()->all()));
-        $this->view->assign('parent', $this->fetchRoles());
-        $this->view->assign('modules', $this->fetchModulePermissions(0, 2));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'modules' => $this->fetchModulePermissions(0, 2),
+            'parent' => $this->fetchRoles(),
+            'form' => array_merge(['name' => ''], $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -127,7 +129,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -144,13 +146,16 @@ class Index extends Core\Modules\AdminController
             if ($id != 1) {
                 $this->view->assign('parent', $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id']));
             }
-            $this->view->assign('modules', $this->fetchModulePermissions($id));
-            $this->view->assign('form', array_merge($role, $this->request->getPost()->all()));
 
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'modules' => $this->fetchModulePermissions($id),
+                'form' => array_merge($role, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     public function actionIndex()

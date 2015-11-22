@@ -72,7 +72,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -80,9 +80,11 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -95,7 +97,7 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleDeleteAction(
             $this,
             $action,
-            function($items) {
+            function ($items) {
                 $bool = false;
 
                 foreach ($items as $item) {
@@ -126,7 +128,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -140,12 +142,14 @@ class Index extends Core\Modules\AdminController
                 return $this->_editPost($this->request->getPost()->all(), $id);
             }
 
-            $this->view->assign('form', array_merge($menu, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'form' => array_merge($menu, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     public function actionIndex()
@@ -181,7 +185,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _createPost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function() use ($formData) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->menusValidator->validate($formData);
 
             $insertValues = [
@@ -206,7 +210,7 @@ class Index extends Core\Modules\AdminController
      */
     protected function _editPost(array $formData, $id)
     {
-        return $this->actionHelper->handleEditPostAction(function() use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->menusValidator->validate($formData, $id);
 
             $updateValues = [

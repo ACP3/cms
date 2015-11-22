@@ -72,6 +72,9 @@ class Index extends Core\Modules\AdminController
         );
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $comments = $this->commentRepository->getCommentsGroupedByModule();
@@ -88,13 +91,13 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('comments', 'module'),
-                'type' => 'translate',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::NAME,
                 'fields' => ['module'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('comments', 'comments_count'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['comments_count'],
             ], 20)
             ->addColumn([

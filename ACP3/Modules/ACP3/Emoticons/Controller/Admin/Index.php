@@ -51,7 +51,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -59,9 +59,11 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge(['code' => '', 'description' => ''], $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge(['code' => '', 'description' => ''], $this->request->getPost()->all())
+        ];
     }
 
     /**
@@ -99,6 +101,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param string $action
      *
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDelete($action = '')
@@ -129,7 +132,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionEdit($id)
@@ -141,12 +144,14 @@ class Index extends Core\Modules\AdminController
                 return $this->_editPost($this->request->getPost()->all(), $emoticon, $id);
             }
 
-            $this->view->assign('form', array_merge($emoticon, $this->request->getPost()->all()));
-
             $this->formTokenHelper->generateFormToken();
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'form' => array_merge($emoticon, $this->request->getPost()->all())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
@@ -201,17 +206,17 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->lang->t('system', 'description'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 40)
             ->addColumn([
                 'label' => $this->lang->t('emoticons', 'code'),
-                'type' => 'text',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['code']
             ], 30)
             ->addColumn([
                 'label' => $this->lang->t('emoticons', 'picture'),
-                'type' => 'picture',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::NAME,
                 'fields' => ['img'],
                 'custom' => [
                     'pattern' => ROOT_DIR . 'uploads/emoticons/%s'
@@ -219,7 +224,7 @@ class Index extends Core\Modules\AdminController
             ], 20)
             ->addColumn([
                 'label' => $this->lang->t('system', 'id'),
-                'type' => 'integer',
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true,
                 'default_sort' => true
@@ -232,7 +237,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -240,9 +245,11 @@ class Index extends Core\Modules\AdminController
             return $this->_settingsPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('form', array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->all())
+        ];
     }
 
     /**
