@@ -47,13 +47,13 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
 
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {
-            $value .= '<a href="' . $this->router->route('acp/gallery/pictures/order/id_' . $dbResultRow['id'] . '/action_down') . '"
+            $value .= '<a href="' . $this->router->route('acp/gallery/pictures/order/id_' . $dbResultRow[$this->primaryKey] . '/action_down') . '"
                        title="' . $this->lang->t('system', 'move_down') . '"
                        data-ajax-form="true"
                        data-ajax-form-loading-text="' . $this->lang->t('system', 'loading_please_wait') . '"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>';
         }
         if ($dbResultRow['first'] != $dbValue) {
-            $value .= '<a href="' . $this->router->route('acp/gallery/pictures/order/id_' . $dbResultRow['id'] . '/action_up') . '"
+            $value .= '<a href="' . $this->router->route('acp/gallery/pictures/order/id_' . $dbResultRow[$this->primaryKey] . '/action_up') . '"
                        title="' . $this->lang->t('system', 'move_up') . '"
                        data-ajax-form="true"
                        data-ajax-form-loading-text="' . $this->lang->t('system', 'loading_please_wait') . '"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>';
