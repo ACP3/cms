@@ -1,4 +1,17 @@
 services:
+  core.validator:
+    class: ACP3\Core\Validator\Validator
+
+  core.validator.validation_rules.integer_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\IntegerValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
+  core.validator.validation_rules.min_length_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\MinLengthValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.abstract:
     abstract: true
     arguments: ['@core.lang', '@core.validator.rules.misc']

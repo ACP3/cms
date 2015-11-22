@@ -22,9 +22,14 @@ class Validator extends Core\Validator\AbstractValidator
      * @var \ACP3\Core\ACL
      */
     protected $acl;
+    /**
+     * @var \ACP3\Core\Validator\Validator
+     */
+    protected $validator;
 
     /**
      * @param \ACP3\Core\Lang                           $lang
+     * @param \ACP3\Core\Validator\Validator            $validator
      * @param \ACP3\Core\Validator\Rules\Misc           $validate
      * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasesValidator
      * @param \ACP3\Core\Validator\Rules\Date           $dateValidator
@@ -32,6 +37,7 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Router\Aliases $aliasesValidator,
         Core\Validator\Rules\Date $dateValidator,
@@ -39,6 +45,7 @@ class Validator extends Core\Validator\AbstractValidator
     {
         parent::__construct($lang, $validate);
 
+        $this->validator = $validator;
         $this->aliasesValidator = $aliasesValidator;
         $this->dateValidator = $dateValidator;
         $this->acl = $acl;
@@ -71,18 +78,36 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
             $this->errors['date'] = $this->lang->t('system', 'select_date');
         }
-        if (strlen($formData['title']) < 3) {
-            $this->errors['title'] = $this->lang->t('articles', 'title_to_short');
-        }
-        if (strlen($formData['text']) < 3) {
-            $this->errors['text'] = $this->lang->t('articles', 'text_to_short');
-        }
+        $this->validator
+            ->addConstraint(
+                Core\Validator\ValidationRules\MinLengthValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'title',
+                    'message' => $this->lang->t('articles', 'title_to_short'),
+                    'extra' => [
+                        'length' => 3
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\MinLengthValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'text',
+                    'message' => $this->lang->t('articles', 'text_to_short'),
+                    'extra' => [
+                        'length' => 3
+                    ]
+                ]
+            );
         if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {
             $this->validateMenuItem($formData);
         }
         if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $uriAlias) === true) {
             $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
         }
+
+        $this->validator->validate();
 
         $this->_checkForFailedValidation();
     }
@@ -93,9 +118,14 @@ class Validator extends Core\Validator\AbstractValidator
     protected function validateMenuItem(array $formData)
     {
         if ($formData['create'] == 1) {
-            if ($this->validate->isNumber($formData['block_id']) === false) {
-                $this->errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
-            }
+            $this->validator->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'block_id',
+                    'message' => $this->lang->t('menus', 'select_menu_bar')
+                ]
+            );
             if (!empty($formData['parent_id']) && $this->validate->isNumber($formData['parent_id']) === false) {
                 $this->errors['parent-id'] = $this->lang->t('menus', 'select_superior_page');
             }
@@ -103,7 +133,7 @@ class Validator extends Core\Validator\AbstractValidator
                 // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
                 $parentBlock = $this->menuItemRepository->getMenuItemBlockIdById($formData['parent_id']);
                 if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
-                    $this->errors['parent_id'] = $this->lang->t('menus', 'superior_page_not_allowed');
+                    $this->errors['parent-id'] = $this->lang->t('menus', 'superior_page_not_allowed');
                 }
             }
             if ($formData['display'] != 0 && $formData['display'] != 1) {

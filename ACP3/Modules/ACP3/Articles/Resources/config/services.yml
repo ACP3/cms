@@ -48,7 +48,7 @@ services:
 
   articles.validator:
     class: %articles.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl']
     calls:
       - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
 
