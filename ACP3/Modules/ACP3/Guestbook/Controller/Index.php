@@ -131,7 +131,7 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionCreate()
     {
@@ -172,19 +172,22 @@ class Index extends Core\Modules\FrontendController
             $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
         }
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
-        $this->view->assign('overlay', $this->guestbookSettings['overlay']);
-
         $guestbook = $this->guestbookRepository->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
         $c_guestbook = count($guestbook);
 
@@ -200,6 +203,10 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('guestbook', $guestbook);
             $this->view->assign('dateformat', $this->guestbookSettings['dateformat']);
         }
+
+        return [
+            'overlay' => $this->guestbookSettings['overlay']
+        ];
     }
 
     /**

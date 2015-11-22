@@ -51,7 +51,7 @@ class Index extends Core\Modules\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionConfiguration()
     {
@@ -60,8 +60,6 @@ class Index extends Core\Modules\AdminController
         }
 
         $systemSettings = $this->config->getSettings('system');
-
-        $this->view->assign('entries', $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']));
 
         // WYSIWYG editors
         $services = $this->container->getServiceIds();
@@ -79,25 +77,9 @@ class Index extends Core\Modules\AdminController
                 }
             }
         }
-        $this->view->assign('wysiwyg', $wysiwyg);
-
-        $this->view->assign('languages', $this->lang->getLanguagePack($systemSettings['lang']));
-
-        // Zeitzonen
-        $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']));
-
-        // Wartungsmodus an/aus
-        $this->view->assign('maintenance', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']));
-
-        // Caching von Bildern
-        $this->view->assign('cache_images', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']));
 
         // Mailertyp
         $lang_mailerType = [$this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp')];
-        $this->view->assign('mailer_type', $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $lang_mailerType, $systemSettings['mailer_type']));
-
-        // Mailer SMTP Authentifizierung
-        $this->view->assign('mailer_smtp_auth', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']));
 
         // Mailer SMTP Verschlüsselung
         $lang_mailerSmtpSecurity = [
@@ -105,11 +87,21 @@ class Index extends Core\Modules\AdminController
             $this->lang->t('system', 'mailer_smtp_security_ssl'),
             $this->lang->t('system', 'mailer_smtp_security_tls')
         ];
-        $this->view->assign('mailer_smtp_security', $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailerSmtpSecurity, $systemSettings['mailer_smtp_security']));
-
-        $this->view->assign('form', array_merge($systemSettings, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'entries' => $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']),
+            'wysiwyg' => $wysiwyg,
+            'languages' => $this->lang->getLanguagePack($systemSettings['lang']),
+            'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
+            'maintenance' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']),
+            'cache_images' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']),
+            'mailer_type' => $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $lang_mailerType, $systemSettings['mailer_type']),
+            'mailer_smtp_auth' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']),
+            'mailer_smtp_security' => $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
+            'form' => array_merge($systemSettings, $this->request->getPost()->all())
+        ];
     }
 
     public function actionIndex()

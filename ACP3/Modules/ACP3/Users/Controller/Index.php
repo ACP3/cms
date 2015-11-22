@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Users\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Permissions;
@@ -98,27 +97,32 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionForgotPwd()
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage(ROOT_DIR);
-        } else {
-            if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_forgotPasswordPost($this->request->getPost()->all());
-            }
-
-            $this->view->assign('form', array_merge(['nick_mail' => ''], $this->request->getPost()->all()));
-
-            if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-                $this->view->assign('captcha', $this->captchaHelpers->captcha());
-            }
-
-            $this->formTokenHelper->generateFormToken();
         }
+
+        if ($this->request->getPost()->isEmpty() === false) {
+            return $this->_forgotPasswordPost($this->request->getPost()->all());
+        }
+
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
+            $this->view->assign('captcha', $this->captchaHelpers->captcha());
+        }
+
+        $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all())
+        ];
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $users = $this->userRepository->getAll(POS, $this->user->getEntriesPerPage());
@@ -131,11 +135,14 @@ class Index extends Core\Modules\FrontendController
 
             $this->view->assign('users', $users);
         }
-        $this->view->assign('LANG_users_found', sprintf($this->lang->t('users', 'users_found'), $allUsers));
+
+        return [
+            'LANG_users_found' => sprintf($this->lang->t('users', 'users_found'), $allUsers)
+        ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionLogin()
     {
@@ -151,12 +158,14 @@ class Index extends Core\Modules\FrontendController
             if ($result == 1) {
                 if ($this->request->getParameters()->has('redirect')) {
                     return $this->redirect()->temporary(base64_decode($this->request->getParameters()->get('redirect')));
-                } else {
-                    return $this->redirect()->toNewPage(ROOT_DIR);
                 }
-            } else {
-                $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
+
+                return $this->redirect()->toNewPage(ROOT_DIR);
             }
+
+            return [
+                'error_msg' => $this->get('core.helpers.alerts')->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong'))
+            ];
         }
     }
 
@@ -180,7 +189,7 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionRegister()
     {
@@ -200,19 +209,22 @@ class Index extends Core\Modules\FrontendController
                 'mail' => '',
             ];
 
-            $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-
             if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', $this->captchaHelpers->captcha());
             }
 
             $this->formTokenHelper->generateFormToken();
+
+            return [
+                'form' => array_merge($defaults, $this->request->getPost()->all())
+            ];
         }
     }
 
     /**
      * @param int $id
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionViewProfile($id)
@@ -221,10 +233,12 @@ class Index extends Core\Modules\FrontendController
             $user = $this->user->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
 
-            $this->view->assign('user', $user);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'user' => $user
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**

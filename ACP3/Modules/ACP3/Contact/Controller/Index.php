@@ -62,7 +62,7 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex()
     {
@@ -88,15 +88,17 @@ class Index extends Core\Modules\FrontendController
             $defaults['mail_disabled'] = $disabled;
         }
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-        $this->view->assign('copy_checked', $this->get('core.helpers.forms')->selectEntry('copy', 1, 0, 'checked'));
-        $this->view->assign('contact', $this->config->getSettings('contact'));
-
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'copy_checked' => $this->get('core.helpers.forms')->selectEntry('copy', 1, 0, 'checked'),
+            'contact' => $this->config->getSettings('contact')
+        ];
     }
 
     /**
@@ -140,9 +142,14 @@ class Index extends Core\Modules\FrontendController
         );
     }
 
+    /**
+     * @return array
+     */
     public function actionImprint()
     {
-        $this->view->assign('imprint', $this->config->getSettings('contact'));
-        $this->view->assign('powered_by', sprintf($this->lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" target="_blank">ACP3</a>'));
+        return [
+            'imprint' => $this->config->getSettings('contact'),
+            'powered_by' => sprintf($this->lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" target="_blank">ACP3</a>')
+        ];
     }
 }

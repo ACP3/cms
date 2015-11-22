@@ -79,6 +79,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param int $id
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionResult($id)
@@ -92,12 +93,15 @@ class Index extends Core\Modules\FrontendController
             for ($i = 0; $i < $c_answers; ++$i) {
                 $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
             }
-            $this->view->assign('question', $question['title']);
-            $this->view->assign('answers', $answers);
-            $this->view->assign('total_votes', $totalVotes);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+
+            return [
+                'question' => $question['title'],
+                'answers' => $answers,
+                'total_votes' => $totalVotes
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
@@ -105,7 +109,7 @@ class Index extends Core\Modules\FrontendController
      *
      * @param int|array $answer
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionVote($id, $answer)
@@ -120,12 +124,14 @@ class Index extends Core\Modules\FrontendController
 
             $poll = $this->pollRepository->getOneById($id);
 
-            $this->view->assign('question', $poll['title']);
-            $this->view->assign('multiple', $poll['multiple']);
-            $this->view->assign('answers', $this->answerRepository->getAnswersByPollId($id));
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'question' => $poll['title'],
+                'multiple' => $poll['multiple'],
+                'answers' => $this->answerRepository->getAnswersByPollId($id)
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**

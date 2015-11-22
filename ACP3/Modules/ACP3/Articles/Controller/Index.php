@@ -76,6 +76,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param int $id
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDetails($id)
@@ -85,9 +86,11 @@ class Index extends Core\Modules\FrontendController
 
             $this->breadcrumb->replaceAncestor($article['title'], 0, true);
 
-            $this->view->assign('page', $this->pageBreaksHelper->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages()));
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'page' => $this->pageBreaksHelper->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages())
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 }

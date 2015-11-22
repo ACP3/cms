@@ -72,6 +72,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param int $id
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDetails($id)
@@ -105,8 +106,6 @@ class Index extends Core\Modules\FrontendController
                 $picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
             }
 
-            $this->view->assign('picture', $picture);
-
             // Previous picture
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
@@ -121,10 +120,13 @@ class Index extends Core\Modules\FrontendController
                 $this->view->assign('picture_next', $nextPicture);
             }
 
-            $this->view->assign('comments_allowed', $this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'picture' => $picture,
+                'comments_allowed' => $this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
@@ -132,6 +134,7 @@ class Index extends Core\Modules\FrontendController
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionImage($id, $action = '')
     {
@@ -139,6 +142,7 @@ class Index extends Core\Modules\FrontendController
         $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
 
+        /** @var Core\Picture $image */
         $image = $this->get('core.image');
         $image
             ->setEnableCache($this->config->getSettings('system')['cache_images'] == 1)
@@ -148,9 +152,16 @@ class Index extends Core\Modules\FrontendController
             ->setFile(UPLOADS_DIR . 'gallery/' . $picture)
             ->setPreferHeight($action === 'thumb');
 
-        return $image->output();
+        if ($image->process()) {
+            return $image->sendResponse();
+        }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $time = $this->date->getCurrentDateTime();
@@ -158,13 +169,16 @@ class Index extends Core\Modules\FrontendController
         $this->pagination->setTotalResults($this->galleryRepository->countAll($time));
         $this->pagination->display();
 
-        $this->view->assign('galleries', $this->galleryRepository->getAll($time, POS, $this->user->getEntriesPerPage()));
-        $this->view->assign('dateformat', $this->settings['dateformat']);
+        return [
+            'galleries' => $this->galleryRepository->getAll($time, POS, $this->user->getEntriesPerPage()),
+            'dateformat' => $this->settings['dateformat']
+        ];
     }
 
     /**
      * @param int $id
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionPics($id)
@@ -175,10 +189,12 @@ class Index extends Core\Modules\FrontendController
                 ->append($this->lang->t('gallery', 'gallery'), 'gallery')
                 ->append($this->galleryRepository->getGalleryTitle($id));
 
-            $this->view->assign('pictures', $this->galleryCache->getCache($id));
-            $this->view->assign('overlay', (int)$this->settings['overlay']);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'pictures' => $this->galleryCache->getCache($id),
+                'overlay' => (int)$this->settings['overlay']
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 }

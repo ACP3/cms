@@ -22,9 +22,9 @@ class Archive extends Core\Modules\FrontendController
     protected $newsletterRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param Core\Pagination                               $pagination
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository                              $newsletterRepository
+     * @param \ACP3\Core\Modules\Controller\FrontendContext            $context
+     * @param Core\Pagination                                          $pagination
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -40,6 +40,7 @@ class Archive extends Core\Modules\FrontendController
     /**
      * @param int $id
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDetails($id)
@@ -52,17 +53,24 @@ class Archive extends Core\Modules\FrontendController
                 ->append($this->lang->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
                 ->append($newsletter['title']);
 
-            $this->view->assign('newsletter', $newsletter);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'newsletter' => $newsletter
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
+    /**
+     * @return array
+     */
     public function actionIndex()
     {
         $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
         $this->pagination->display();
 
-        $this->view->assign('newsletters', $this->newsletterRepository->getAll(1, POS, $this->user->getEntriesPerPage()));
+        return [
+            'newsletters' => $this->newsletterRepository->getAll(1, POS, $this->user->getEntriesPerPage())
+        ];
     }
 }

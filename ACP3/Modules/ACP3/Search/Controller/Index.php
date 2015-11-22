@@ -39,7 +39,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param string $q
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex($q = '')
     {
@@ -49,29 +49,27 @@ class Index extends Core\Modules\FrontendController
             return $this->_indexPost(['search_term' => (string)$q]);
         }
 
-        $this->view->assign('form', array_merge(['search_term' => ''], $this->request->getPost()->all()));
-
-        $this->view->assign('search_mods', $this->searchHelpers->getModules());
-
         // Zu durchsuchende Bereiche
         $langSearchAreas = [
             $this->lang->t('search', 'title_and_content'),
             $this->lang->t('search', 'title_only'),
             $this->lang->t('search', 'content_only')
         ];
-        $this->view->assign(
-            'search_areas',
-            $this->get('core.helpers.forms')->checkboxGenerator(
+
+        // Treffer sortieren
+        $langSortHits = [$this->lang->t('search', 'asc'), $this->lang->t('search', 'desc')];
+
+        return [
+            'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
+            'search_mods' => $this->searchHelpers->getModules(),
+            'search_areas' => $this->get('core.helpers.forms')->checkboxGenerator(
                 'area',
                 ['title_content', 'title', 'content'],
                 $langSearchAreas,
                 'title_content'
-            )
-        );
-
-        // Treffer sortieren
-        $langSortHits = [$this->lang->t('search', 'asc'), $this->lang->t('search', 'desc')];
-        $this->view->assign('sort_hits', $this->get('core.helpers.forms')->checkboxGenerator('sort', ['asc', 'desc'], $langSortHits, 'asc'));
+            ),
+            'sort_hits' => $this->get('core.helpers.forms')->checkboxGenerator('sort', ['asc', 'desc'], $langSortHits, 'asc')
+        ];
     }
 
     /**

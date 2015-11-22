@@ -47,13 +47,13 @@ class Index extends Core\Modules\FrontendController
     protected $commentsActive;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Pagination                         $pagination
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository  $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
-     * @param \ACP3\Modules\ACP3\Categories\Helpers         $categoriesHelpers
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository           $categoryRepository
+     * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
+     * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Pagination                                  $pagination
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository           $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Cache                          $newsCache
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -85,6 +85,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @param int $id
      *
+     * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionDetails($id)
@@ -101,21 +102,23 @@ class Index extends Core\Modules\FrontendController
 
             $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';
 
-            $this->view->assign('news', $news);
-            $this->view->assign('dateformat', $this->newsSettings['dateformat']);
-            $this->view->assign('comments_allowed', $this->commentsActive === true && $news['comments'] == 1);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
+            return [
+                'news' => $news,
+                'dateformat' => $this->newsSettings['dateformat'],
+                'comments_allowed' => $this->commentsActive === true && $news['comments'] == 1
+            ];
         }
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
      * @param int $cat
+     *
+     * @return array
      */
     public function actionIndex($cat = 0)
     {
-        $this->view->assign('categories', $this->categoriesHelpers->categoriesList('news', $cat));
-
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->router->route('news'));
@@ -151,5 +154,9 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('news', $news);
             $this->view->assign('dateformat', $this->newsSettings['dateformat']);
         }
+
+        return [
+            'categories' => $this->categoriesHelpers->categoriesList('news', $cat)
+        ];
     }
 }

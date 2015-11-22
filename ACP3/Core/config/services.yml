@@ -46,8 +46,8 @@ services:
     class: ACP3\Core\Functions
 
   core.image:
-    class: ACP3\Core\Image
-    arguments: [@core.response]
+    class: ACP3\Core\Picture
+    arguments: [@core.response, %core.environment%]
     scope: prototype
 
   core.mailer:

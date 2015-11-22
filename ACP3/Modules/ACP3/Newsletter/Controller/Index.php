@@ -88,7 +88,7 @@ class Index extends Core\Modules\FrontendController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex()
     {
@@ -101,23 +101,26 @@ class Index extends Core\Modules\FrontendController
             'last_name' => '',
             'mail' => ''
         ];
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $salutationsLang = [
             $this->lang->t('newsletter', 'salutation_female'),
             $this->lang->t('newsletter', 'salutation_male')
         ];
-        $this->view->assign('salutation', $this->get('core.helpers.forms')->selectGenerator('salutation', [1, 2], $salutationsLang));
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'salutation' => $this->get('core.helpers.forms')->selectGenerator('salutation', [1, 2], $salutationsLang),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionUnsubscribe()
     {
@@ -128,9 +131,12 @@ class Index extends Core\Modules\FrontendController
         $defaults = [
             'mail' => ''
         ];
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
 
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**

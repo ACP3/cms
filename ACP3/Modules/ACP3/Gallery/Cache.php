@@ -44,7 +44,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * Bindet die gecachete Galerie anhand ihrer ID ein
      *
      * @param integer $id
-     *  Die ID der Galerie
      *
      * @return array
      */
@@ -61,7 +60,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * Erstellt den Galerie-Cache anhand der angegebenen ID
      *
      * @param integer $id
-     *  Die ID der zu cachenden Galerie
      *
      * @return boolean
      */

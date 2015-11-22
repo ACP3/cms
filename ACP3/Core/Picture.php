@@ -4,10 +4,9 @@ namespace ACP3\Core;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Klasse zum beliebigen Skalieren und Ausgeben von Bildern
  * @package ACP3\Core
  */
-class Image
+class Picture
 {
     /**
      * @var boolean
@@ -58,13 +57,22 @@ class Image
      * @var resource
      */
     protected $image;
+    /**
+     * @var string
+     */
+    protected $environment = '';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param string                                     $environment
      */
-    public function __construct(Response $response)
+    public function __construct(
+        Response $response,
+        $environment
+    )
     {
         $this->response = $response;
+        $this->environment = $environment;
     }
 
     /**
@@ -188,9 +196,9 @@ class Image
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return bool
      */
-    public function output()
+    public function process()
     {
         if (is_file($this->file) === true) {
             $cacheFile = $this->getCacheFileName();
@@ -220,12 +228,28 @@ class Image
                 $this->file = $cacheFile;
             }
 
-            $this->response->setContent($this->readFromFile());
+            return true;
         } else {
             $this->setHeaders('image/jpeg');
         }
 
-        return $this->response;
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebFilePath()
+    {
+        return ROOT_DIR . 'cache/' . $this->environment . '/' . $this->cacheDir . $this->getCacheName();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sendResponse()
+    {
+        return $this->response->setContent($this->readFromFile());
     }
 
     /**
@@ -282,7 +306,7 @@ class Image
     }
 
     /**
-     * Führt die Größenanpassung des Bildes durch
+     * Resamples the picture to the given values
      *
      * @param integer $newWidth
      * @param integer $newHeight
@@ -313,6 +337,8 @@ class Image
                 imagepng($this->image, $cacheFile, 9);
                 break;
         }
+
+        imagedestroy($this->image);
     }
 
     /**

@@ -33,11 +33,11 @@ class Index extends Core\Modules\FrontendController
     protected $categoryRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext  $context
-     * @param \ACP3\Core\Date                                $date
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository            $categoryRepository
+     * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
+     * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository         $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                         $filesCache
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,

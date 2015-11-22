@@ -61,7 +61,7 @@ class Extensions extends Core\Modules\AdminController
     /**
      * @param string $dir
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionDesigns($dir = '')
     {
@@ -81,7 +81,10 @@ class Extensions extends Core\Modules\AdminController
                 $designs[$i]['dir'] = $directories[$i];
             }
         }
-        $this->view->assign('designs', $designs);
+
+        return [
+            'designs' => $designs
+        ];
     }
 
     /**
@@ -117,7 +120,7 @@ class Extensions extends Core\Modules\AdminController
      * @param string $action
      * @param string $dir
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     public function actionModules($action = '', $dir = '')
@@ -125,16 +128,12 @@ class Extensions extends Core\Modules\AdminController
         switch ($action) {
             case 'activate':
                 return $this->_enableModule($dir);
-                break;
             case 'deactivate':
                 return $this->_disableModule($dir);
-                break;
             case 'install':
                 return $this->_installModule($dir);
-                break;
             case 'uninstall':
                 return $this->_uninstallModule($dir);
-                break;
             default:
                 $this->_renewCaches();
 
@@ -150,8 +149,10 @@ class Extensions extends Core\Modules\AdminController
                     }
                 }
 
-                $this->view->assign('installed_modules', $installedModules);
-                $this->view->assign('new_modules', $newModules);
+                return [
+                    'installed_modules' => $installedModules,
+                    'new_modules' => $newModules
+                ];
         }
     }
 

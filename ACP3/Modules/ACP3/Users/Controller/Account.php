@@ -68,7 +68,7 @@ class Account extends Core\Modules\FrontendController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionEdit()
     {
@@ -78,12 +78,6 @@ class Account extends Core\Modules\FrontendController
 
         $user = $this->user->getUserInfo();
 
-        $this->view->assign('contact', $this->get('users.helpers.forms')->fetchContactDetails(
-            $user['mail'],
-            $user['website'],
-            $user['icq'],
-            $user['skype']
-        ));
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserProfileFormFields(
                 $user['birthday'],
@@ -92,13 +86,21 @@ class Account extends Core\Modules\FrontendController
             )
         );
 
-        $this->view->assign('form', array_merge($user, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'contact' => $this->get('users.helpers.forms')->fetchContactDetails(
+                $user['mail'],
+                $user['website'],
+                $user['icq'],
+                $user['skype']
+            ),
+            'form' => array_merge($user, $this->request->getPost()->all())
+        ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionSettings()
     {
@@ -110,8 +112,6 @@ class Account extends Core\Modules\FrontendController
 
         $user = $this->userRepository->getOneById($this->user->getUserId());
 
-        $this->view->assign('language_override', $settings['language_override']);
-        $this->view->assign('entries_override', $settings['entries_override']);
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
                 (int)$user['entries'],
@@ -124,13 +124,17 @@ class Account extends Core\Modules\FrontendController
             )
         );
 
-        $this->view->assign('form', array_merge($user, $this->request->getPost()->all()));
-
         $this->formTokenHelper->generateFormToken();
+
+        return [
+            'language_override' => $settings['language_override'],
+            'entries_override' => $settings['entries_override'],
+            'form' => array_merge($user, $this->request->getPost()->all())
+        ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionIndex()
     {
@@ -145,7 +149,9 @@ class Account extends Core\Modules\FrontendController
 
         $user = $this->userRepository->getOneById($this->user->getUserId());
 
-        $this->view->assign('draft', $user['draft']);
+        return [
+            'draft' => $user['draft']
+        ];
     }
 
     /**
