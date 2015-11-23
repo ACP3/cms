@@ -56,12 +56,10 @@ class Validator
      */
     public function addConstraint($validationRuleName, array $params)
     {
-        $key = serialize([
+        $this->constraints[] = [
             'rule' => $validationRuleName,
-            $params
-        ]);
-
-        $this->constraints[$key] = array_merge($this->getDefaultConstraintParams(), $params);
+            'params' => array_merge($this->getDefaultConstraintParams(), $params)
+        ];
 
         return $this;
     }
@@ -87,10 +85,10 @@ class Validator
     {
         $this->errors = [];
 
-        foreach ($this->constraints as $key => $params) {
-            $key = unserialize($key);
-            if (isset($this->validationRules[$key['rule']])) {
-                $validationRule = $this->validationRules[$key['rule']];
+        foreach ($this->constraints as $constraint) {
+            if (isset($this->validationRules[$constraint['rule']])) {
+                $validationRule = $this->validationRules[$constraint['rule']];
+                $params = $constraint['params'];
 
                 if (!empty($params['message'])) {
                     $validationRule->setMessage($params['message']);
