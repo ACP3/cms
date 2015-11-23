@@ -18,7 +18,7 @@ class MinLengthValidationRule extends AbstractValidationRule
             return $this->checkMinLength($data[$field], $extra['length']);
         }
 
-        return $this->checkMinLength($field, $extra['length']);
+        return $this->checkMinLength($data, $extra['length']);
     }
 
     /**

@@ -10,6 +10,8 @@ parameters:
   menus.model.menuitemrepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuItemRepository'
   menus.validator.menu.fqdn: 'ACP3\Modules\ACP3\Menus\Validator\Menu'
   menus.validator.menuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Validator\MenuItem'
+  menus.validator.validation_rules.allowed_menu_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validator\ValidationRules\AllowedMenuValidationRule'
+  menus.validator.validation_rules.parent_id_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validator\ValidationRules\ParentIdValidationRule'
   menus.installer.schema.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Schema'
   menus.installer.migration.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Migration'
   menus.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\SampleData'
@@ -67,6 +69,18 @@ services:
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.router', '@core.modules', @menus.model.menuitemrepository]
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
+
+  menus.validator.validation_rules.allowed_menu_validation_rule:
+    class: %menus.validator.validation_rules.allowed_menu_validation_rule.fqdn%
+    arguments: [@menus.model.menuitemrepository]
+    tags:
+      - { name: core.validator.validation_rule }
+
+  menus.validator.validation_rules.parent_id_validation_rule:
+    class: %menus.validator.validation_rules.parent_id_validation_rule.fqdn%
+    arguments: [@menus.model.menuitemrepository]
+    tags:
+      - { name: core.validator.validation_rule }
 
   menus.installer.schema:
     class: %menus.installer.schema.fqdn%

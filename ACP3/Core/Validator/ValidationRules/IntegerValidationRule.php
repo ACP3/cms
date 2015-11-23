@@ -18,7 +18,7 @@ class IntegerValidationRule extends AbstractValidationRule
             return $this->checkAgainstPattern($data[$field]);
         }
 
-        return $this->checkAgainstPattern($field);
+        return $this->checkAgainstPattern($data);
     }
 
     /**

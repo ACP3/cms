@@ -54,7 +54,7 @@ class Validator
      *
      * @return $this
      */
-    public function addConstraint($validationRuleName, array $params)
+    public function addConstraint($validationRuleName, array $params = [])
     {
         $this->constraints[] = [
             'rule' => $validationRuleName,
@@ -65,20 +65,35 @@ class Validator
     }
 
     /**
-     * @param string $message
-     * @param string $field
+     * @param string       $message
+     * @param string|array $field
      *
      * @return $this
      */
     public function addError($message, $field = '')
     {
         if (!empty($field)) {
-            $this->errors[$field] = $message;
+            $fieldName = $this->mapField($field);
+            $this->errors[$fieldName] = $message;
         } else {
             $this->errors[] = $message;
         }
 
         return $this;
+    }
+
+    /**
+     * @param string|array $field
+     *
+     * @return mixed
+     */
+    protected function mapField($field)
+    {
+        if (is_array($field)) {
+            $field = reset($field);
+        }
+
+        return str_replace('_', '-', $field);
     }
 
     public function validate()

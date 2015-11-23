@@ -41,7 +41,7 @@ class AbstractValidator
     public function validateFormKey()
     {
         if ($this->validate->formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($this->lang->t('system', 'form_already_submitted'));
+            throw new Core\Exceptions\InvalidFormToken();
         }
     }
 
