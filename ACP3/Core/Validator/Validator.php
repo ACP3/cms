@@ -85,7 +85,7 @@ class Validator
     /**
      * @param string|array $field
      *
-     * @return mixed
+     * @return string
      */
     protected function mapField($field)
     {

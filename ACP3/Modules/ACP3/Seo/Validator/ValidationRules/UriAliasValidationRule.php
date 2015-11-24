@@ -40,13 +40,11 @@ class UriAliasValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        $path = isset($extra['path']) ? $extra['path'] : '';
-
         if (is_array($data) && array_key_exists($field, $data)) {
-            return $this->checkUriAlias($data[$field], $path);
+            return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkUriAlias($data, $path);
+        return $this->checkUriAlias($data, isset($extra['path']) ? $extra['path'] : '');
     }
 
     /**

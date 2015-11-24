@@ -96,9 +96,8 @@ class Helpers
      */
     public function categoriesCreate($title, $module)
     {
-        if ($this->categoryIsDuplicate($title, $module) === false) {
-            $moduleInfo = $this->modules->getModuleInfo($module);
-
+        $moduleInfo = $this->modules->getModuleInfo($module);
+        if ($this->categoryIsDuplicate($title, $moduleInfo['id']) === false) {
             $insertValues = [
                 'id' => '',
                 'title' => Core\Functions::strEncode($title),
@@ -120,14 +119,14 @@ class Helpers
      * Überprüft, ob bereits eine Kategorie mit dem selben Namen existiert
      *
      * @param string     $title
-     * @param string     $module
+     * @param int        $moduleId
      * @param int|string $categoryId
      *
      * @return boolean
      */
-    public function categoryIsDuplicate($title, $module, $categoryId = '')
+    public function categoryIsDuplicate($title, $moduleId, $categoryId = '')
     {
-        return $this->categoryRepository->resultIsDuplicate($title, $module, $categoryId);
+        return $this->categoryRepository->resultIsDuplicate($title, $moduleId, $categoryId);
     }
 
     /**

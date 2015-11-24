@@ -30,7 +30,7 @@
             <div class="col-sm-10">
                 <select class="form-control" name="module" id="module">
                     {foreach $mod_list as $row}
-                        <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+                        <option value="{$row.id}"{$row.selected}>{$row.name}</option>
                     {/foreach}
                 </select>
             </div>

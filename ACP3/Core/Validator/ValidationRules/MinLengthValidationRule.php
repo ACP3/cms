@@ -15,7 +15,7 @@ class MinLengthValidationRule extends AbstractValidationRule
     public function isValid($data, $field = '', array $extra = [])
     {
         if (is_array($data) && array_key_exists($field, $data)) {
-            return $this->checkMinLength($data[$field], $extra['length']);
+            return $this->isValid($data[$field], $field, $extra);
         }
 
         return $this->checkMinLength($data, $extra['length']);

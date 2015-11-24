@@ -23,6 +23,11 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.picture_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\PictureValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.min_length_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\MinLengthValidationRule
     tags:

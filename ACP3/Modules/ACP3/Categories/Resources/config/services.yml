@@ -30,7 +30,7 @@ services:
 
   categories.validator:
     class: %categories.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.mime', '@categories.helpers', '@categories.model']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@categories.model']
 
   categories.installer.schema:
     class: %categories.installer.schema.fqdn%

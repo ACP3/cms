@@ -62,7 +62,7 @@ class Index extends Core\Modules\AdminController
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
             if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $info['dir']);
+                $modules[$name]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $info['id']);
             } else {
                 unset($modules[$name]);
             }
@@ -88,12 +88,11 @@ class Index extends Core\Modules\AdminController
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
 
-            $moduleInfo = $this->modules->getModuleInfo($formData['module']);
             $insertValues = [
                 'id' => '',
                 'title' => Core\Functions::strEncode($formData['title']),
                 'description' => Core\Functions::strEncode($formData['description']),
-                'module_id' => $moduleInfo['id'],
+                'module_id' => (int)$formData['module'],
             ];
             if (!empty($file)) {
                 $upload = new Core\Helpers\Upload('categories');
