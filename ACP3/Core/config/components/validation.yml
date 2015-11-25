@@ -7,6 +7,12 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.flood_barrier_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\FloodBarrierValidationRule
+    arguments: [@core.date]
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.form_token_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\FormTokenValidationRule
     arguments: [@core.request, @core.session]

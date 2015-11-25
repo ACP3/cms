@@ -5,6 +5,7 @@ parameters:
   comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
   comments.model.commentrepository.fqdn: 'ACP3\Modules\ACP3\Comments\Model\CommentRepository'
   comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validator'
+  comments.validator.validation_rules.user_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Comments\Validator\ValidationRules\UserNameValidationRule'
   comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'
   comments.installer.migration.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Migration'
 
@@ -36,7 +37,13 @@ services:
 
   comments.validator:
     class: %comments.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@core.date', '@core.modules', '@comments.model.commentrepository']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules', '@comments.model.commentrepository']
+
+  comments.validator.validation_rules.user_name_validation_rule:
+    class: %comments.validator.validation_rules.user_name_validation_rule.fqdn%
+    arguments: [@core.validator.validation_rules.integer_validation_rule]
+    tags:
+      - { name: core.validator.validation_rule }
 
   comments.installer.schema:
     class: %comments.installer.schema.fqdn%

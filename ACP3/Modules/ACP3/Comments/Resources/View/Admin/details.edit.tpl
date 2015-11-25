@@ -5,7 +5,7 @@
         {$error_msg}
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        {if isset($form.user_id) && $form.user_id == '0'}
+        {if !isset($form.user_id)}
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label required">{lang t="system|name"}</label>
 

@@ -18,6 +18,6 @@ class NotEmptyValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return !empty($data);
+        return !empty(trim($data));
     }
 }

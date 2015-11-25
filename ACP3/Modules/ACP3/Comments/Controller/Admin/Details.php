@@ -124,7 +124,7 @@ class Details extends Core\Modules\AdminController
                 ->setTitlePostfix($comment['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->_editPost($this->request->getPost()->all(), $comment, $id);
+                return $this->_editPost($this->request->getPost()->all(), $comment, $id, $comment['module_id']);
             }
 
             if ($this->emoticonsHelpers) {
@@ -210,25 +210,29 @@ class Details extends Core\Modules\AdminController
      * @param array $formData
      * @param array $comment
      * @param int   $id
+     * @param int   $moduleId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _editPost(array $formData, array $comment, $id)
+    protected function _editPost(array $formData, array $comment, $id, $moduleId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $comment, $id) {
-            $this->commentsValidator->validateEdit($formData);
+        return $this->actionHelper->handleEditPostAction(
+            function () use ($formData, $comment, $id) {
+                $this->commentsValidator->validateEdit($formData);
 
-            $updateValues = [];
-            $updateValues['message'] = Core\Functions::strEncode($formData['message']);
-            if ((empty($comment['user_id']) || $this->get('core.validator.rules.misc')->isNumber($comment['user_id']) === false) && !empty($formData['name'])) {
-                $updateValues['name'] = Core\Functions::strEncode($formData['name']);
-            }
+                $updateValues = [];
+                $updateValues['message'] = Core\Functions::strEncode($formData['message']);
+                if ((empty($comment['user_id']) || $this->get('core.validator.rules.misc')->isNumber($comment['user_id']) === false) && !empty($formData['name'])) {
+                    $updateValues['name'] = Core\Functions::strEncode($formData['name']);
+                }
 
-            $bool = $this->commentRepository->update($updateValues, $id);
+                $bool = $this->commentRepository->update($updateValues, $id);
 
-            $this->formTokenHelper->unsetFormToken();
+                $this->formTokenHelper->unsetFormToken();
 
-            return $bool;
-        });
+                return $bool;
+            },
+            'acp/comments/details/index/id_' . $moduleId
+        );
     }
 }

@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
 use ACP3\Modules\ACP3\Comments\Model\CommentRepository;
 
 /**
@@ -11,22 +12,6 @@ use ACP3\Modules\ACP3\Comments\Model\CommentRepository;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Core\Validator\Rules\Captcha
-     */
-    protected $captchaValidator;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
-     * @var \ACP3\Core\User
-     */
-    protected $user;
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Modules
      */
     protected $modules;
@@ -34,72 +19,78 @@ class Validator extends Core\Validator\AbstractValidator
      * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
      */
     protected $commentRepository;
+    /**
+     * @var \ACP3\Core\Validator\Validator
+     */
+    protected $validator;
 
     /**
+     * Validator constructor.
+     *
      * @param \ACP3\Core\Lang                                     $lang
+     * @param \ACP3\Core\Validator\Validator                      $validator
      * @param \ACP3\Core\Validator\Rules\Misc                     $validate
-     * @param \ACP3\Core\Validator\Rules\Captcha                  $captchaValidator
-     * @param \ACP3\Core\ACL                                      $acl
-     * @param \ACP3\Core\User                                     $user
-     * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Core\Modules                                  $modules
      * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Captcha $captchaValidator,
-        Core\ACL $acl,
-        Core\User $user,
-        Core\Date $date,
         Core\Modules $modules,
         CommentRepository $commentRepository
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->captchaValidator = $captchaValidator;
-        $this->acl = $acl;
-        $this->user = $user;
-        $this->date = $date;
+        $this->validator = $validator;
         $this->modules = $modules;
         $this->commentRepository = $commentRepository;
     }
 
     /**
-     * @param array $formData
-     * @param       $ip
+     * @param array  $formData
+     * @param string $ip
      *
      * @throws Core\Exceptions\InvalidFormToken
      * @throws Core\Exceptions\ValidationFailed
      */
     public function validateCreate(array $formData, $ip)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\FloodBarrierValidationRule::NAME,
+                [
+                    'message' => $this->lang->t('system', 'flood_no_entry_possible'),
+                    'extra' => [
+                        'last_date' => $this->commentRepository->getLastDateFromIp($ip)
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'name',
+                    'message' => $this->lang->t('system', 'name_to_short')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'message',
+                    'message' => $this->lang->t('system', 'message_to_short')
+                ])
+            ->addConstraint(
+                CaptchaValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'captcha',
+                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                ]
+            );
 
-        // Flood Sperre
-        $flood = $this->commentRepository->getLastDateFromIp($ip);
-        $floodTime = !empty($flood) ? $this->date->timestamp($flood, true) + 30 : 0;
-        $time = $this->date->timestamp('now', true);
-
-        $this->errors = [];
-        if ($floodTime > $time) {
-            $this->errors[] = sprintf($this->lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
-        }
-        if (empty($formData['name'])) {
-            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
-        }
-        if (strlen($formData['message']) < 3) {
-            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
-        }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
-            $this->user->isAuthenticated() === false &&
-            $this->captchaValidator->captcha($formData['captcha']) === false
-        ) {
-            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -110,17 +101,24 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateEdit(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Validator\ValidationRules\UserNameValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => ['name', 'user_id'],
+                    'message' => $this->lang->t('system', 'name_to_short')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'message',
+                    'message' => $this->lang->t('system', 'message_to_short'),
+                ]);
 
-        $this->errors = [];
-        if ((empty($comment['user_id']) || $this->validate->isNumber($comment['user_id']) === false) && empty($formData['name'])) {
-            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
-        }
-        if (strlen($formData['message']) < 3) {
-            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -133,14 +131,33 @@ class Validator extends Core\Validator\AbstractValidator
     {
         $this->validateFormKey();
 
-        $this->errors = [];
-        if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $this->errors['dateformat'] = $this->lang->t('system', 'select_date_format');
-        }
-        if ($this->modules->isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
-            $this->errors['emoticons'] = $this->lang->t('comments', 'select_emoticons');
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'dateformat',
+                    'message' => $this->lang->t('system', 'select_date_format'),
+                    'extra' => [
+                        'haystack' => ['long', 'short']
+                    ]
+                ]);
+
+        if ($this->modules->isActive('emoticons')) {
+            $this->validator
+                ->addConstraint(
+                    Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                    [
+                        'data' => $formData,
+                        'field' => 'emoticons',
+                        'message' => $this->lang->t('comments', 'select_emoticons'),
+                        'extra' => [
+                            'haystack' => [0, 1]
+                        ]
+                    ]);
         }
 
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }

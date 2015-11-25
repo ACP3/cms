@@ -29,6 +29,6 @@ class MinLengthValidationRule extends AbstractValidationRule
      */
     protected function checkMinLength($value, $length)
     {
-        return mb_strlen($value) >= $length;
+        return mb_strlen(trim($value)) >= $length;
     }
 }
