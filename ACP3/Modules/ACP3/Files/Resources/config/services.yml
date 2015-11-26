@@ -8,6 +8,7 @@ parameters:
   files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
   files.model.filesrepository.fqdn: 'ACP3\Modules\ACP3\Files\Model\FilesRepository'
   files.validator.fqdn: 'ACP3\Modules\ACP3\Files\Validator'
+  files.validator.validation_rules.is_external_file_validation_rule.fqdn: 'ACP3\Modules\ACP3\Files\Validator\ValidationRules\IsExternalFileValidationRule'
   files.installer.schema.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Schema'
   files.installer.migration.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Migration'
 
@@ -40,7 +41,12 @@ services:
 
   files.validator:
     class: %files.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.modules', '@categories.helpers']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules']
+
+  files.validator.validation_rules.is_external_file_validation_rule:
+    class: %files.validator.validation_rules.is_external_file_validation_rule.fqdn%
+    tags:
+      - { name: core.validator.validation_rule }
 
   files.installer.schema:
     class: %files.installer.schema.fqdn%

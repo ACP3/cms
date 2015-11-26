@@ -129,12 +129,12 @@ class Index extends Core\Modules\AdminController
                     if (!empty($item) && $this->categoryRepository->resultExists($item) === true) {
                         $category = $this->categoryRepository->getCategoryDeleteInfosById($item);
 
-                        $serviceId = strtolower($category['module'] . '.model');
-                        if ($this->container->has($serviceId)) {
-                            if ($this->get($serviceId)->countAll('', $item) > 0) {
-                                $isInUse = true;
-                                continue;
-                            }
+                        $serviceId = strtolower($category['module'] . '.' . $category['module'] . 'repository');
+                        if ($this->container->has($serviceId) &&
+                            $this->get($serviceId)->countAll('', $item) > 0
+                        ) {
+                            $isInUse = true;
+                            continue;
                         }
 
                         // Kategoriebild ebenfalls löschen
@@ -153,7 +153,7 @@ class Index extends Core\Modules\AdminController
                     $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
                 }
 
-                $this->redirectMessages()->setMessage($bool, $text);
+                return $this->redirectMessages()->setMessage($bool, $text);
             }
         );
     }

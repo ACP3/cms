@@ -5,12 +5,12 @@ use ACP3\Core\Validator\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Categories\Helpers;
 
 /**
- * Class DuplicateCategoryValidationRule
+ * Class CategoryExistsValidationRule
  * @package ACP3\Modules\ACP3\Categories\Validator\ValidationRules
  */
-class DuplicateCategoryValidationRule extends AbstractValidationRule
+class CategoryExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'categories_duplicate_category';
+    const NAME = 'categories_category_exists';
 
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
@@ -18,7 +18,7 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
     protected $categoriesHelper;
 
     /**
-     * DuplicateCategoryValidationRule constructor.
+     * CategoryExistsValidationRule constructor.
      *
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelper
      */
@@ -32,19 +32,13 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
-            return $this->isValid($data[$field], $field, $extra);
+        if (is_array($data) && is_array($field)) {
+            $categoryId = reset($field);
+            $createCategory = next($field);
+
+            return !empty($data[$createCategory]) || $this->categoriesHelper->categoryExists($data[$categoryId]);
         }
 
-        $params = array_merge([
-            'module_id' => 0,
-            'category_id' => ''
-        ], $extra);
-
-        return $this->categoriesHelper->categoryIsDuplicate(
-            $data,
-            $params['module_id'],
-            $params['category_id']
-        );
+        return false;
     }
 }

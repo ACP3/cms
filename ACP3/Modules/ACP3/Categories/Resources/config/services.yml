@@ -4,6 +4,8 @@ parameters:
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
   categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
   categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validator'
+  categories.validator.validation_rules.category_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validator\ValidationRules\CategoryExistsValidationRule'
+  categories.validator.validation_rules.duplicate_category_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validator\ValidationRules\DuplicateCategoryValidationRule'
   categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'
   categories.installer.migration.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Migration'
 
@@ -31,6 +33,18 @@ services:
   categories.validator:
     class: %categories.validator.fqdn%
     arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@categories.model']
+
+  categories.validator.validation_rules.category_exists_validation_rule:
+    class: %categories.validator.validation_rules.category_exists_validation_rule.fqdn%
+    arguments: [@categories.helpers]
+    tags:
+      - { name: core.validator.validation_rule }
+
+  categories.validator.validation_rules.duplicate_category_validation_rule:
+    class: %categories.validator.validation_rules.duplicate_category_validation_rule.fqdn%
+    arguments: [@categories.helpers]
+    tags:
+      - { name: core.validator.validation_rule }
 
   categories.installer.schema:
     class: %categories.installer.schema.fqdn%

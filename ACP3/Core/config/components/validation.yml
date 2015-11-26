@@ -12,6 +12,11 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.file_upload_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\FileUploadValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.form_token_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\FormTokenValidationRule
     arguments: [@core.request, @core.session]
@@ -40,6 +45,7 @@ services:
 
   core.validator.validation_rules.picture_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\PictureValidationRule
+    arguments: [@core.validator.validation_rules.file_upload_validation_rule]
     tags:
       - { name: core.validator.validation_rule }
 

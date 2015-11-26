@@ -10,6 +10,21 @@ class PictureValidationRule extends AbstractValidationRule
     const NAME = 'picture';
 
     /**
+     * @var \ACP3\Core\Validator\ValidationRules\FileUploadValidationRule
+     */
+    protected $fileUploadValidationRule;
+
+    /**
+     * PictureValidationRule constructor.
+     *
+     * @param \ACP3\Core\Validator\ValidationRules\FileUploadValidationRule $fileUploadValidationRule
+     */
+    public function __construct(FileUploadValidationRule $fileUploadValidationRule)
+    {
+        $this->fileUploadValidationRule = $fileUploadValidationRule;
+    }
+
+    /**
      * @inheritdoc
      */
     public function isValid($data, $field = '', array $extra = [])
@@ -21,7 +36,7 @@ class PictureValidationRule extends AbstractValidationRule
             'required' => true
         ], $extra);
 
-        if ($this->isFileUpload($data)) {
+        if ($this->fileUploadValidationRule->isValid($data)) {
             return $this->isPicture(
                 $data['tmp_name'],
                 $params['width'],
@@ -33,16 +48,6 @@ class PictureValidationRule extends AbstractValidationRule
         }
 
         return false;
-    }
-
-    /**
-     * @param $data
-     *
-     * @return bool
-     */
-    protected function isFileUpload($data)
-    {
-        return (is_array($data) && !empty($data['tmp_name']) && !empty($data['size']) && $data['error'] === UPLOAD_ERR_OK);
     }
 
     /**

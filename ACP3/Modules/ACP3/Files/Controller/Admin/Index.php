@@ -6,6 +6,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
+use ACP3\Modules\ACP3\Files\Helpers;
 
 /**
  * Class Index
@@ -295,7 +296,7 @@ class Index extends Core\Modules\AdminController
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->filesValidator->validateCreate($formData, $file);
+            $this->filesValidator->validate($formData, $file);
 
             if (is_array($file) === true) {
                 $upload = new Core\Helpers\Upload('files');
@@ -356,7 +357,7 @@ class Index extends Core\Modules\AdminController
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->filesValidator->validateEdit($formData, $file, $id);
+            $this->filesValidator->validate($formData, $file, sprintf(Helpers::URL_KEY_PATTERN, $id));
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
