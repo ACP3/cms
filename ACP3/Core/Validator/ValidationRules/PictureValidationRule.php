@@ -42,7 +42,7 @@ class PictureValidationRule extends AbstractValidationRule
      */
     protected function isFileUpload($data)
     {
-        return (is_array($data) && !empty($data['tmp_name']) && !empty($data['size']) && $data['error'] !== UPLOAD_ERR_OK);
+        return (is_array($data) && !empty($data['tmp_name']) && !empty($data['size']) && $data['error'] === UPLOAD_ERR_OK);
     }
 
     /**

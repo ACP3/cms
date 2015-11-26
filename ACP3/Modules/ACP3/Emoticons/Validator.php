@@ -10,24 +10,24 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Core\Validator\Rules\Mime
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $mimeValidator;
+    protected $validator;
 
     /**
      * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
      * @param \ACP3\Core\Validator\Rules\Misc $validate
-     * @param \ACP3\Core\Validator\Rules\Mime $mimeValidator
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Mime $mimeValidator
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->mimeValidator = $mimeValidator;
+        $this->validator = $validator;
     }
 
     /**
@@ -40,21 +40,32 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateCreate(array $formData, $file, array $settings)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'code',
+                    'message' => $this->lang->t('emoticons', 'type_in_code')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'description',
+                    'message' => $this->lang->t('emoticons', 'type_in_description')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\PictureValidationRule::NAME,
+                [
+                    'data' => $file,
+                    'field' => 'picture',
+                    'message' => $this->lang->t('emoticons', 'invalid_image_selected'),
+                    'extra' => $settings
+                ]);
 
-        if (empty($formData['code'])) {
-            $this->errors['code'] = $this->lang->t('emoticons', 'type_in_code');
-        }
-        if (empty($formData['description'])) {
-            $this->errors['description'] = $this->lang->t('emoticons', 'type_in_description');
-        }
-        if ($this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-            $file['error'] !== UPLOAD_ERR_OK
-        ) {
-            $this->errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -67,19 +78,37 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateEdit(array $formData, $file, array $settings)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'code',
+                    'message' => $this->lang->t('emoticons', 'type_in_code')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'description',
+                    'message' => $this->lang->t('emoticons', 'type_in_description')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\PictureValidationRule::NAME,
+                [
+                    'data' => $file,
+                    'field' => 'picture',
+                    'message' => $this->lang->t('emoticons', 'invalid_image_selected'),
+                    'extra' => [
+                        'width' => $settings['width'],
+                        'height' => $settings['height'],
+                        'filesize' => $settings['filesize'],
+                        'required' => false
+                    ]
+                ]);
 
-        if (empty($formData['code'])) {
-            $this->errors['code'] = $this->lang->t('emoticons', 'type_in_code');
-        }
-        if (empty($formData['description'])) {
-            $this->errors['description'] = $this->lang->t('emoticons', 'type_in_description');
-        }
-        if (!empty($file) && ($this->mimeValidator->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $file['error'] !== UPLOAD_ERR_OK)) {
-            $this->errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -90,19 +119,30 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateSettings(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'width',
+                    'message' => $this->lang->t('emoticons', 'invalid_image_width_entered')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'height',
+                    'message' => $this->lang->t('emoticons', 'invalid_image_height_entered')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'filesize',
+                    'message' => $this->lang->t('emoticons', 'invalid_image_filesize_entered')
+                ]);
 
-        $this->errors = [];
-        if ($this->validate->isNumber($formData['width']) === false) {
-            $this->errors['width'] = $this->lang->t('emoticons', 'invalid_image_width_entered');
-        }
-        if ($this->validate->isNumber($formData['height']) === false) {
-            $this->errors['height'] = $this->lang->t('emoticons', 'invalid_image_height_entered');
-        }
-        if ($this->validate->isNumber($formData['filesize']) === false) {
-            $this->errors['filesize'] = $this->lang->t('emoticons', 'invalid_image_filesize_entered');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
