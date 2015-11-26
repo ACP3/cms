@@ -11,6 +11,29 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var \ACP3\Core\Validator\Validator
+     */
+    protected $validator;
+
+    /**
+     * Validator constructor.
+     *
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
+     */
+    public function __construct(
+        Core\Lang $lang,
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
+    )
+    {
+        parent::__construct($lang, $validate);
+
+        $this->validator = $validator;
+    }
+
+    /**
      * @param array $formData
      *
      * @throws Core\Exceptions\InvalidFormToken
@@ -18,13 +41,19 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateSettings(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'feed_type',
+                    'message' => $this->lang->t('feeds', 'select_feed_type'),
+                    'extra' => [
+                        'haystack' => ['RSS 1.0', 'RSS 2.0', 'ATOM']
+                    ]
+                ]);
 
-        $this->errors = [];
-        if (empty($formData['feed_type']) || in_array($formData['feed_type'], ['RSS 1.0', 'RSS 2.0', 'ATOM']) === false) {
-            $this->errors['feed-type'] = $this->lang->t('feeds', 'select_feed_type');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
