@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class ModuleRepository
  * @package ACP3\Modules\ACP3\System\Model
  */
-class ModuleRepository extends Core\Model
+class ModuleRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'modules';
 

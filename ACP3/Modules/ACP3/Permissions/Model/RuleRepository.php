@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class RuleRepository
  * @package ACP3\Modules\ACP3\Permissions\Model
  */
-class RuleRepository extends Core\Model
+class RuleRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'acl_rules';
 

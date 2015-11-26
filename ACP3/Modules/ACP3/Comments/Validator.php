@@ -4,6 +4,7 @@ namespace ACP3\Modules\ACP3\Comments;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
 use ACP3\Modules\ACP3\Comments\Model\CommentRepository;
+use ACP3\Modules\ACP3\Comments\Validator\ValidationRules\FloodBarrierValidationRule;
 
 /**
  * Class Validator
@@ -16,10 +17,6 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
-     */
-    protected $commentRepository;
-    /**
      * @var \ACP3\Core\Validator\Validator
      */
     protected $validator;
@@ -27,25 +24,22 @@ class Validator extends Core\Validator\AbstractValidator
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\Lang                                     $lang
-     * @param \ACP3\Core\Validator\Validator                      $validator
-     * @param \ACP3\Core\Validator\Rules\Misc                     $validate
-     * @param \ACP3\Core\Modules                                  $modules
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
+     * @param \ACP3\Core\Modules              $modules
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
-        Core\Modules $modules,
-        CommentRepository $commentRepository
+        Core\Modules $modules
     )
     {
         parent::__construct($lang, $validate);
 
         $this->validator = $validator;
         $this->modules = $modules;
-        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -60,11 +54,11 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validator
             ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
             ->addConstraint(
-                Core\Validator\ValidationRules\FloodBarrierValidationRule::NAME,
+                FloodBarrierValidationRule::NAME,
                 [
                     'message' => $this->lang->t('system', 'flood_no_entry_possible'),
                     'extra' => [
-                        'last_date' => $this->commentRepository->getLastDateFromIp($ip)
+                        'ip' => $ip
                     ]
                 ])
             ->addConstraint(

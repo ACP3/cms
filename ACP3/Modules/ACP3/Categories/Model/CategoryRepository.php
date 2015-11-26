@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class CategoryRepository
  * @package ACP3\Modules\ACP3\Categories\Model
  */
-class CategoryRepository extends Core\Model
+class CategoryRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'categories';
 

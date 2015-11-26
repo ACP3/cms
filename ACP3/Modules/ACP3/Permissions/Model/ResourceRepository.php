@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class ResourceRepository
  * @package ACP3\Modules\ACP3\Permissions\Model
  */
-class ResourceRepository extends Core\Model
+class ResourceRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'acl_resources';
 

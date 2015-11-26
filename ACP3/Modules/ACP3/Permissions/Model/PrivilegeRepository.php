@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class PrivilegeRepository
  * @package ACP3\Modules\ACP3\Permissions\Model
  */
-class PrivilegeRepository extends Core\Model
+class PrivilegeRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'acl_privileges';
 

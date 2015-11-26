@@ -1,14 +1,14 @@
 <?php
 namespace ACP3\Modules\ACP3\Newsletter\Model;
 
-use ACP3\Core\Model;
+use ACP3\Core\Model\AbstractRepository;
 use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
 
 /**
  * Class AccountRepository
  * @package ACP3\Modules\ACP3\Newsletter\Model
  */
-class AccountRepository extends Model
+class AccountRepository extends AbstractRepository
 {
     const TABLE_NAME = 'newsletter_accounts';
 

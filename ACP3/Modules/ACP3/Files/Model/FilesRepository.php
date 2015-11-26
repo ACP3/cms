@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class FilesRepository
  * @package ACP3\Modules\ACP3\Files\Model
  */
-class FilesRepository extends Core\Model
+class FilesRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'files';
 

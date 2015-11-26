@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class PictureRepository
  * @package ACP3\Modules\ACP3\Gallery\Model
  */
-class PictureRepository extends Core\Model
+class PictureRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'gallery_pictures';
 

@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class GuestbookRepository
  * @package ACP3\Modules\ACP3\Guestbook\Model
  */
-class GuestbookRepository extends Core\Model
+class GuestbookRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'guestbook';
 

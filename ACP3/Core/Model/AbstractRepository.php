@@ -1,15 +1,16 @@
 <?php
+namespace ACP3\Core\Model;
 
-namespace ACP3\Core;
+use ACP3\Core\DB;
 
 /**
- * Class Model
- * @package ACP3\Core
+ * Class AbstractRepository
+ * @package ACP3\Core\Model
  */
-class Model
+abstract class AbstractRepository
 {
     /**
-     * The name of the default sql table
+     * The name of the sql table
      */
     const TABLE_NAME = '';
     /**

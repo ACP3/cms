@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class SeoRepository
  * @package ACP3\Modules\ACP3\Seo\Model
  */
-class SeoRepository extends Core\Model
+class SeoRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'seo';
 

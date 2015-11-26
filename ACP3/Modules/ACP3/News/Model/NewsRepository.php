@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class NewsRepository
  * @package ACP3\Modules\ACP3\News\Model
  */
-class NewsRepository extends Core\Model
+class NewsRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'news';
 

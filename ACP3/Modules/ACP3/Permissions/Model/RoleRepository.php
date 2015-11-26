@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class Model
  * @package ACP3\Modules\ACP3\Permissions
  */
-class RoleRepository extends Core\Model
+class RoleRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'acl_roles';
 

@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class EmoticonRepository
  * @package ACP3\Modules\ACP3\Emoticons\Model
  */
-class EmoticonRepository extends Core\Model
+class EmoticonRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'emoticons';
 
