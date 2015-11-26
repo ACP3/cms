@@ -7,6 +7,11 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.email_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\EmailValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.form_token_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\FormTokenValidationRule
     arguments: [@core.request, @core.session]
@@ -23,11 +28,6 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
-  core.validator.validation_rules.picture_validation_rule:
-    class: ACP3\Core\Validator\ValidationRules\PictureValidationRule
-    tags:
-      - { name: core.validator.validation_rule }
-
   core.validator.validation_rules.min_length_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\MinLengthValidationRule
     tags:
@@ -35,6 +35,11 @@ services:
 
   core.validator.validation_rules.not_empty_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\NotEmptyValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
+  core.validator.validation_rules.picture_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\PictureValidationRule
     tags:
       - { name: core.validator.validation_rule }
 

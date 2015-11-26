@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Contact;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
 
 /**
  * Class Validator
@@ -11,38 +12,26 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Captcha
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $captchaValidator;
-    /**
-     * @var \ACP3\Core\User
-     */
-    protected $user;
-    /**
-     * @var Core\ACL
-     */
-    protected $acl;
+    protected $validator;
 
     /**
-     * @param Core\Lang                    $lang
-     * @param Core\Validator\Rules\Misc    $validate
-     * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\ACL                     $acl
-     * @param Core\User                    $user
+     * Validator constructor.
+     *
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Captcha $captchaValidator,
-        Core\ACL $acl,
-        Core\User $user
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->captchaValidator = $captchaValidator;
-        $this->acl = $acl;
-        $this->user = $user;
+        $this->validator = $validator;
     }
 
     /**
@@ -53,25 +42,38 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'name',
+                    'message' => $this->lang->t('system', 'name_to_short')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\EmailValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('system', 'wrong_email_format')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'message',
+                    'message' => $this->lang->t('system', 'message_to_short')
+                ])
+            ->addConstraint(
+                CaptchaValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'captcha',
+                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                ]);
 
-        $this->errors = [];
-        if (empty($formData['name'])) {
-            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
-        }
-        if ($this->validate->email($formData['mail']) === false) {
-            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-        }
-        if (strlen($formData['message']) < 3) {
-            $this->errors['message'] = $this->lang->t('system', 'message_to_short');
-        }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
-            $this->user->isAuthenticated() === false && $this->captchaValidator->captcha($formData['captcha']) === false
-        ) {
-            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -82,13 +84,16 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateSettings(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\EmailValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('system', 'wrong_email_format')
+                ]);
 
-        $this->errors = [];
-        if (!empty($formData['mail']) && $this->validate->email($formData['mail']) === false) {
-            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
