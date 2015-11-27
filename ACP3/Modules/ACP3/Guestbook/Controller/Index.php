@@ -218,7 +218,11 @@ class Index extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->guestbookValidator->validateCreate($formData, $this->newsletterActive);
+                $this->guestbookValidator->validateCreate(
+                    $formData,
+                    $this->newsletterActive,
+                    $this->request->getServer()->get('REMOTE_ADDR', '')
+                );
 
                 $insertValues = [
                     'id' => '',

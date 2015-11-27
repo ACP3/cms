@@ -3,6 +3,7 @@ parameters:
   guestbook.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Guestbook\Controller\Index'
   guestbook.model.guestbookrepository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository'
   guestbook.validator.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validator'
+  guestbook.validator.validation_rules.flood_barrier_validation_rule.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validator\ValidationRules\FloodBarrierValidationRule'
   guestbook.installer.schema.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Schema'
   guestbook.installer.migration.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Migration'
 
@@ -27,9 +28,13 @@ services:
 
   guestbook.validator:
     class: %guestbook.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@core.date', '@core.modules', @core.request, '@guestbook.model.guestbookrepository']
-    calls:
-      - ['setNewsletterAccountRepository', ['@?newsletter.model.accountrepository']]
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules']
+
+  guestbook.validator.validation_rules.flood_barrier_validation_rule:
+    class: %guestbook.validator.validation_rules.flood_barrier_validation_rule.fqdn%
+    arguments: [@core.date, @guestbook.model.guestbookrepository]
+    tags:
+      - { name: core.validator.validation_rule }
 
   guestbook.installer.schema:
     class: %guestbook.installer.schema.fqdn%

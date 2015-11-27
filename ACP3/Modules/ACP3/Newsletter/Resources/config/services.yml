@@ -15,6 +15,7 @@ parameters:
   newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
   newsletter.model.accounthistoryrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository'
   newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validator'
+  newsletter.validator.validation_rules.account_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validator\ValidationRules\AccountExistsValidationRule'
   newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
   newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
 
@@ -76,6 +77,12 @@ services:
   newsletter.validator:
     class: %newsletter.validator.fqdn%
     arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@core.user', '@newsletter.model.accountrepository']
+
+  newsletter.validator.validation_rules.account_exists_validation_rule:
+    class: %newsletter.validator.validation_rules.account_exists_validation_rule.fqdn%
+    arguments: [@newsletter.model.accountrepository]
+    tags:
+      - { name: core.validator.validation_rule }
 
   newsletter.installer.schema:
     class: %newsletter.installer.schema.fqdn%
