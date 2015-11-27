@@ -233,7 +233,7 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->pictureValidator->validateCreate($file);
+                $this->pictureValidator->validate($file);
 
                 $upload = new Core\Helpers\Upload('gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -275,7 +275,7 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $picture, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->pictureValidator->validateEdit($file);
+                $this->pictureValidator->validate($file, false);
 
                 $updateValues = [
                     'description' => Core\Functions::strEncode($formData['description'], true),

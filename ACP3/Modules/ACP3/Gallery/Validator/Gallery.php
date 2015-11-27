@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Validator;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Seo\Validator\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class Gallery
@@ -10,38 +11,26 @@ use ACP3\Core;
 class Gallery extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Date
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $dateValidator;
-    /**
-     * @var Core\Validator\Rules\Router\Aliases
-     */
-    protected $aliasesValidator;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
+    protected $validator;
 
     /**
-     * @param Core\Lang                           $lang
-     * @param Core\Validator\Rules\Misc           $validate
-     * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
-     * @param Core\Validator\Rules\Date           $dateValidator
-     * @param Core\Modules                        $modules
+     * Gallery constructor.
+     *
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Router\Aliases $aliasesValidator,
-        Core\Validator\Rules\Date $dateValidator,
-        Core\Modules $modules
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->aliasesValidator = $aliasesValidator;
-        $this->dateValidator = $dateValidator;
-        $this->modules = $modules;
+        $this->validator = $validator;
     }
 
     /**
@@ -53,55 +42,33 @@ class Gallery extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData, $uriAlias = '')
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\DateValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => ['start', 'end'],
+                    'message' => $this->lang->t('system', 'select_date')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'title',
+                    'message' => $this->lang->t('gallery', 'type_in_gallery_title')
+                ])
+            ->addConstraint(
+                UriAliasValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'alias',
+                    'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                    'extra' => [
+                        'path' => $uriAlias
+                    ]
+                ]);
 
-        $this->errors = [];
-        if ($this->dateValidator->date($formData['start'], $formData['end']) === false) {
-            $this->errors['date'] = $this->lang->t('system', 'select_date');
-        }
-        if (strlen($formData['title']) < 3) {
-            $this->errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
-        }
-        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $uriAlias) === true) {
-            $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSettings(array $formData)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $this->errors['dateformat'] = $this->lang->t('system', 'select_date_format');
-        }
-        if ($this->validate->isNumber($formData['sidebar']) === false) {
-            $this->errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
-        }
-        if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0) {
-            $this->errors['overlay'] = $this->lang->t('gallery', 'select_use_overlay');
-        }
-        if ($this->modules->isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
-            $this->errors['comments'] = $this->lang->t('gallery', 'select_allow_comments');
-        }
-        if ($this->validate->isNumber($formData['thumbwidth']) === false || $this->validate->isNumber($formData['width']) === false || $this->validate->isNumber($formData['maxwidth']) === false) {
-            $this->errors[] = $this->lang->t('gallery', 'invalid_image_width_entered');
-        }
-        if ($this->validate->isNumber($formData['thumbheight']) === false || $this->validate->isNumber($formData['height']) === false || $this->validate->isNumber($formData['maxheight']) === false) {
-            $this->errors[] = $this->lang->t('gallery', 'invalid_image_height_entered');
-        }
-        if ($this->validate->isNumber($formData['filesize']) === false) {
-            $this->errors['filesize'] = $this->lang->t('gallery', 'invalid_image_filesize_entered');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }

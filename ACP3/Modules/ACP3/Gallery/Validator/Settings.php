@@ -13,20 +13,27 @@ class Settings extends Core\Validator\AbstractValidator
      * @var \ACP3\Core\Modules
      */
     protected $modules;
+    /**
+     * @var \ACP3\Core\Validator\Validator
+     */
+    protected $validator;
 
     /**
-     * @param Core\Lang                           $lang
-     * @param Core\Validator\Rules\Misc           $validate
-     * @param Core\Modules                        $modules
+     * @param Core\Lang                      $lang
+     * @param \ACP3\Core\Validator\Validator $validator
+     * @param Core\Validator\Rules\Misc      $validate
+     * @param Core\Modules                   $modules
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
         Core\Modules $modules
     )
     {
         parent::__construct($lang, $validate);
 
+        $this->validator = $validator;
         $this->modules = $modules;
     }
 
@@ -38,28 +45,78 @@ class Settings extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'dateformat',
+                    'message' => $this->lang->t('system', 'select_date_format'),
+                    'extra' => [
+                        'haystack' => ['long', 'short']
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'sidebar',
+                    'message' => $this->lang->t('system', 'select_sidebar_entries')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'overlay',
+                    'message' => $this->lang->t('gallery', 'select_use_overlay'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'thumbwidth',
+                    'message' => $this->lang->t('gallery', 'invalid_image_width_entered')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'width',
+                    'message' => $this->lang->t('gallery', 'invalid_image_width_entered')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'thumbheight',
+                    'message' => $this->lang->t('gallery', 'invalid_image_height_entered')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\IntegerValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'height',
+                    'message' => $this->lang->t('gallery', 'invalid_image_height_entered')
+                ]);
 
-        $this->errors = [];
-        if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $this->errors['dateformat'] = $this->lang->t('system', 'select_date_format');
-        }
-        if ($this->validate->isNumber($formData['sidebar']) === false) {
-            $this->errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
-        }
-        if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0) {
-            $this->errors['overlay'] = $this->lang->t('gallery', 'select_use_overlay');
-        }
-        if ($this->modules->isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
-            $this->errors['comments'] = $this->lang->t('gallery', 'select_allow_comments');
-        }
-        if ($this->validate->isNumber($formData['thumbwidth']) === false || $this->validate->isNumber($formData['width']) === false) {
-            $this->errors[] = $this->lang->t('gallery', 'invalid_image_width_entered');
-        }
-        if ($this->validate->isNumber($formData['thumbheight']) === false || $this->validate->isNumber($formData['height']) === false) {
-            $this->errors[] = $this->lang->t('gallery', 'invalid_image_height_entered');
+        if ($this->modules->isActive('comments') === true) {
+            $this->validator
+                ->addConstraint(
+                    Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                    [
+                        'data' => $formData,
+                        'field' => 'comments',
+                        'message' => $this->lang->t('gallery', 'select_allow_comments'),
+                        'extra' => [
+                            'haystack' => [0, 1]
+                        ]
+                    ]);
         }
 
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }

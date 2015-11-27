@@ -10,66 +10,47 @@ use ACP3\Core;
 class Picture extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Mime
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $mimeValidator;
+    protected $validator;
 
     /**
-     * @param Core\Lang                 $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Mime $mimeValidator
+     * @param Core\Lang                      $lang
+     * @param \ACP3\Core\Validator\Validator $validator
+     * @param Core\Validator\Rules\Misc      $validate
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Mime $mimeValidator
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->mimeValidator = $mimeValidator;
+        $this->validator = $validator;
     }
 
     /**
      * @param array $file
+     * @param bool  $fileRequired
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
-    public function validateCreate(array $file)
+    public function validate(array $file, $fileRequired = true)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\PictureValidationRule::NAME,
+                [
+                    'data' => $file,
+                    'field' => 'file',
+                    'message' => $this->lang->t('gallery', 'invalid_image_selected'),
+                    'extra' => [
+                        'required' => $fileRequired
+                    ]
+                ]);
 
-        $this->errors = [];
-        if (empty($file['tmp_name'])) {
-            $this->errors['file'] = $this->lang->t('gallery', 'no_picture_selected');
-        }
-        if (!empty($file['tmp_name']) &&
-            ($this->mimeValidator->isPicture($file['tmp_name']) === false || $file['error'] !== UPLOAD_ERR_OK)
-        ) {
-            $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
-        }
-
-        $this->_checkForFailedValidation();
-    }
-
-    /**
-     * @param array $file
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateEdit(array $file)
-    {
-        $this->validateFormKey();
-
-        $this->errors = [];
-        if (!empty($file['tmp_name']) &&
-            ($this->mimeValidator->isPicture($file['tmp_name']) === false || $file['error'] !== UPLOAD_ERR_OK)
-        ) {
-            $this->errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
