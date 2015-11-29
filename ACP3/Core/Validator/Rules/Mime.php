@@ -6,6 +6,8 @@ use ACP3\Core;
 /**
  * Class Mime
  * @package ACP3\Core\Validator\Rules
+ *
+ * @deprecated
  */
 class Mime
 {
@@ -32,6 +34,8 @@ class Mime
      * @param string $filesize
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function isPicture($file, $width = '', $height = '', $filesize = '')
     {
@@ -64,6 +68,8 @@ class Mime
      *  Der zu vergleichende MIMETYPE
      *
      * @return mixed
+     *
+     * @deprecated
      */
     public function mimeType($file, $mimetype = '')
     {

@@ -8,6 +8,8 @@ use ACP3\Core\SessionHandler;
 /**
  * Class Misc
  * @package ACP3\Core
+ *
+ * @deprecated
  */
 class Misc
 {
@@ -43,6 +45,8 @@ class Misc
      *  Zu überprüfende E-Mail-Adresse
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function email($var)
     {
@@ -58,6 +62,8 @@ class Misc
      * Validiert das Formtoken auf seine Gültigkeit
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function formToken()
     {
@@ -74,6 +80,8 @@ class Misc
      * @param string $string
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function isMD5($string)
     {
@@ -86,6 +94,8 @@ class Misc
      * @param mixed $var
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function isNumber($var)
     {

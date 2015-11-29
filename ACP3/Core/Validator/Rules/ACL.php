@@ -6,6 +6,8 @@ use ACP3\Core;
 /**
  * Class ACL
  * @package ACP3\Core\Validator\Rules
+ *
+ * @deprecated
  */
 class ACL
 {
@@ -30,6 +32,8 @@ class ACL
      *    Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function aclPrivilegesExist(array $privileges)
     {

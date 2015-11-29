@@ -14,6 +14,8 @@ class Router
      * @param string $var
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function isUriSafe($var)
     {
@@ -26,6 +28,8 @@ class Router
      * @param mixed $var
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function isInternalURI($var)
     {

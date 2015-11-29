@@ -6,6 +6,8 @@ use ACP3\Core;
 /**
  * Class Captcha
  * @package ACP3\Core\Validator\Rules
+ *
+ * @deprecated
  */
 class Captcha
 {
@@ -45,6 +47,8 @@ class Captcha
      * @param string $path
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function captcha($input, $path = '')
     {

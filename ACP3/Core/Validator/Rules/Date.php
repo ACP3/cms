@@ -4,6 +4,8 @@ namespace ACP3\Core\Validator\Rules;
 /**
  * Class Date
  * @package ACP3\Core\Validator\Rules
+ *
+ * @deprecated
  */
 class Date
 {
@@ -36,6 +38,8 @@ class Date
      *  Enddatum
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function date($start, $end = null)
     {
