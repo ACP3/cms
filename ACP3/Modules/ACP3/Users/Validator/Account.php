@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\Users\Model\UserRepository;
 class Account extends AbstractUserValidator
 {
     /**
-     * @var \ACP3\Core\Validator\Rules\Date
-     */
-    protected $dateValidator;
-    /**
      * @var \ACP3\Core\User
      */
     protected $user;
@@ -43,9 +39,8 @@ class Account extends AbstractUserValidator
         UserRepository $userRepository
     )
     {
-        parent::__construct($lang, $validator, $validate);
+        parent::__construct($lang, $validator, $validate, $dateValidator);
 
-        $this->dateValidator = $dateValidator;
         $this->user = $user;
         $this->userModel = $userRepository;
     }
@@ -99,33 +94,7 @@ class Account extends AbstractUserValidator
         $this->validateFormKey();
 
         $this->errors = [];
-        if ($settings['language_override'] == 1 && $this->lang->languagePackExists($formData['language']) === false) {
-            $this->errors['language'] = $this->lang->t('users', 'select_language');
-        }
-        if ($settings['entries_override'] == 1 && $this->validate->isNumber($formData['entries']) === false) {
-            $this->errors['entries'] = $this->lang->t('system', 'select_records_per_page');
-        }
-        if (empty($formData['date_format_long'])) {
-            $this->errors['date-format-long'] = $this->lang->t('system', 'type_in_long_date_format');
-        }
-        if (empty($formData['date_format_short'])) {
-            $this->errors['date-format-short'] = $this->lang->t('system', 'type_in_short_date_format');
-        }
-        if ($this->dateValidator->timeZone($formData['date_time_zone']) === false) {
-            $this->errors['time-zone'] = $this->lang->t('system', 'select_time_zone');
-        }
-        if (in_array($formData['mail_display'], [0, 1]) === false) {
-            $this->errors['mail-display'] = $this->lang->t('users', 'select_mail_display');
-        }
-        if (in_array($formData['address_display'], [0, 1]) === false) {
-            $this->errors['address-display'] = $this->lang->t('users', 'select_address_display');
-        }
-        if (in_array($formData['country_display'], [0, 1]) === false) {
-            $this->errors['country-display'] = $this->lang->t('users', 'select_country_display');
-        }
-        if (in_array($formData['birthday_display'], [0, 1, 2]) === false) {
-            $this->errors['birthday-display'] = $this->lang->t('users', 'select_birthday_display');
-        }
+        parent::validateUserSettings($formData, $settings['language_override'], $settings['entries_override']);
 
         $this->_checkForFailedValidation();
     }

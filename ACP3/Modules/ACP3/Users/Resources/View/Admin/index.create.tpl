@@ -45,7 +45,7 @@
                         <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
-                            {datepicker name="birthday" value=$birthday inputFieldOnly=true}
+                            {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false}
                         </div>
                     </div>
                     <div class="form-group">
@@ -240,16 +240,16 @@
                     </div>
                 </div>
                 <div id="tab-6" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="pwd" class="col-sm-2 control-label">{lang t="users|pwd"}</label>
-
-                        <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="pwd-repeat" class="col-sm-2 control-label">{lang t="users|pwd_repeat"}</label>
-
-                        <div class="col-sm-10"><input class="form-control" type="password" name="pwd_repeat" id="pwd-repeat"></div>
-                    </div>
+                    {block PASSWORD_FIELDS}
+                        <div class="form-group">
+                            <label for="pwd" class="col-sm-2 control-label">{lang t="users|pwd"}</label>
+                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd-repeat" class="col-sm-2 control-label">{lang t="users|pwd_repeat"}</label>
+                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd_repeat" id="pwd-repeat"></div>
+                        </div>
+                    {/block}
                 </div>
             </div>
         </div>
