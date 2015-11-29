@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Newsletter;
 
@@ -131,6 +130,10 @@ class Index extends Core\Modules\FrontendController
         $defaults = [
             'mail' => ''
         ];
+
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
+            $this->view->assign('captcha', $this->captchaHelpers->captcha());
+        }
 
         $this->formTokenHelper->generateFormToken();
 

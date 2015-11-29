@@ -2,6 +2,9 @@
 namespace ACP3\Modules\ACP3\Newsletter;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
+use ACP3\Modules\ACP3\Newsletter\Validator\ValidationRules\AccountExistsByHashValidationRule;
+use ACP3\Modules\ACP3\Newsletter\Validator\ValidationRules\AccountExistsValidationRule;
 
 /**
  * Class Validator
@@ -10,45 +13,26 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Captcha
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $captchaValidator;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
-     * @var \ACP3\Core\User
-     */
-    protected $user;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
-     */
-    protected $newsletterAccountRepository;
+    protected $validator;
 
     /**
-     * @param Core\Lang                    $lang
-     * @param Core\Validator\Rules\Misc    $validate
-     * @param Core\Validator\Rules\Captcha $captchaValidator
-     * @param Core\ACL                     $acl
-     * @param Core\User                    $user
-     * @param Model\AccountRepository      $newsletterAccountRepository
+     * Validator constructor.
+     *
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Captcha $captchaValidator,
-        Core\ACL $acl,
-        Core\User $user,
-        Model\AccountRepository $newsletterAccountRepository
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->captchaValidator = $captchaValidator;
-        $this->acl = $acl;
-        $this->user = $user;
-        $this->newsletterAccountRepository = $newsletterAccountRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -59,17 +43,24 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'title',
+                    'message' => $this->lang->t('newsletter', 'subject_to_short')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'text',
+                    'message' => $this->lang->t('newsletter', 'text_to_short')
+                ]);
 
-        $this->errors = [];
-        if (strlen($formData['title']) < 3) {
-            $this->errors['title'] = $this->lang->t('newsletter', 'subject_to_short');
-        }
-        if (strlen($formData['text']) < 3) {
-            $this->errors['text'] = $this->lang->t('newsletter', 'text_to_short') . strlen($formData['text']);
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -80,25 +71,41 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateSubscribe(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'salutation',
+                    'message' => $this->lang->t('newsletter', 'select_salutation'),
+                    'extra' => [
+                        'haystack' => [1, 2]
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\EmailValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('system', 'wrong_email_format')
+                ])
+            ->addConstraint(
+                AccountExistsValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('newsletter', 'account_not_exists')
+                ])
+            ->addConstraint(
+                CaptchaValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'captcha',
+                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                ]);
 
-        $this->errors = [];
-        if (!empty($formData['salutation']) && !in_array($formData['salutation'], [1, 2])) {
-            $this->errors['salutation'] = $this->lang->t('newsletter', 'select_salutation');
-        }
-        if ($this->validate->email($formData['mail']) === false) {
-            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-        } elseif ($this->newsletterAccountRepository->accountExists($formData['mail']) === true) {
-            $this->errors['mail'] = $this->lang->t('newsletter', 'account_exists');
-        }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
-            $this->user->isAuthenticated() === false &&
-            $this->captchaValidator->captcha($formData['captcha']) === false
-        ) {
-            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -109,19 +116,32 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateUnsubscribe(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\EmailValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('system', 'wrong_email_format')
+                ])
+            ->addConstraint(
+                AccountExistsValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('newsletter', 'account_not_exists')
+                ])
+            ->addConstraint(
+                CaptchaValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'captcha',
+                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                ]);
 
-        $this->errors = [];
-        if ($this->validate->email($formData['mail']) === false) {
-            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-        } elseif ($this->newsletterAccountRepository->accountExists($formData['mail']) === false) {
-            $this->errors['mail'] = $this->lang->t('newsletter', 'account_not_exists');
-        }
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true && $this->user->isAuthenticated() === false && $this->captchaValidator->captcha($formData['captcha']) === false) {
-            $this->errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
-        }
 
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -132,14 +152,17 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateSettings(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\EmailValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('system', 'wrong_email_format')
+                ]);
 
-        $this->errors = [];
-        if ($this->validate->email($formData['mail']) === false) {
-            $this->errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -149,11 +172,14 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateActivate($hash)
     {
-        $this->errors = [];
-        if ($this->newsletterAccountRepository->accountExistsByHash($hash) === false) {
-            $this->errors[] = $this->lang->t('newsletter', 'account_not_exists');
-        }
+        $this->validator
+            ->addConstraint(
+                AccountExistsByHashValidationRule::NAME,
+                [
+                    'data' => $hash,
+                    'message' => $this->lang->t('newsletter', 'account_not_exists')
+                ]);
 
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
