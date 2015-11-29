@@ -3,6 +3,8 @@ namespace ACP3\Modules\ACP3\Permissions\Validator;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegesExistValidationRule;
+use ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\RoleNotExistsValidationRule;
 
 /**
  * Class Validator
@@ -11,31 +13,26 @@ use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
 class Role extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Core\Validator\Rules\ACL
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $aclValidator;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
-     */
-    protected $roleRepository;
+    protected $validator;
 
     /**
-     * @param \ACP3\Core\Lang                                     $lang
-     * @param \ACP3\Core\Validator\Rules\Misc                     $validate
-     * @param \ACP3\Core\Validator\Rules\ACL                      $aclValidator
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository $roleRepository
+     * Role constructor.
+     *
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\ACL $aclValidator,
-        RoleRepository $roleRepository
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->aclValidator = $aclValidator;
-        $this->roleRepository = $roleRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -47,21 +44,33 @@ class Role extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData, $roleId = 0)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'name',
+                    'message' => $this->lang->t('system', 'name_to_short')
+                ])
+            ->addConstraint(
+                RoleNotExistsValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'name',
+                    'message' => $this->lang->t('permissions', 'role_already_exists'),
+                    'extra' => [
+                        'role_id' => $roleId
+                    ]
+                ])
+            ->addConstraint(
+                PrivilegesExistValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'privileges',
+                    'message' => $this->lang->t('permissions', 'invalid_privileges')
+                ]);
 
-        $this->errors = [];
-        if (empty($formData['name'])) {
-            $this->errors['name'] = $this->lang->t('system', 'name_to_short');
-        }
-        if (!empty($formData['name']) && $this->roleRepository->roleExistsByName($formData['name'], $roleId) === true) {
-            $this->errors['name'] = $this->lang->t('permissions', 'role_already_exists');
-        }
-        if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
-            $this->errors['privileges'] = $this->lang->t('permissions', 'no_privilege_selected');
-        } elseif ($this->aclValidator->aclPrivilegesExist($formData['privileges']) === false) {
-            $this->errors['privileges'] = $this->lang->t('permissions', 'invalid_privileges');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }

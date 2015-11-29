@@ -43,12 +43,18 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.module_is_installed_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\ModuleIsInstalledValidationRule
+    arguments: [@core.modules]
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.not_empty_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\NotEmptyValidationRule
     tags:
       - { name: core.validator.validation_rule }
 
-  core.validator.validation_rules.umber_greater_than_validation_rule:
+  core.validator.validation_rules.number_greater_than_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\NumberGreaterThanValidationRule
     tags:
       - { name: core.validator.validation_rule }

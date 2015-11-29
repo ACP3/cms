@@ -10,6 +10,9 @@ parameters:
   permissions.model.userrolerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository'
   permissions.validator.role.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\Role'
   permissions.validator.resource.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\Resource'
+  permissions.validator.validation_rules.privilege_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegeExistsValidationRule'
+  permissions.validator.validation_rules.privileges_exist_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegesExistValidationRule'
+  permissions.validator.validation_rules.role_not_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\RoleNotExistsValidationRule'
   permissions.installer.schema.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Schema'
   permissions.installer.migration.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Migration'
 
@@ -52,11 +55,29 @@ services:
 
   permissions.validator.role:
     class: %permissions.validator.role.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@permissions.model.rolerepository']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
 
   permissions.validator.resource:
     class: %permissions.validator.resource.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.modules', '@permissions.model.privilegerepository']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+
+  permissions.validator.validation_rules.privilege_exists_validation_rule:
+    class: %permissions.validator.validation_rules.privilege_exists_validation_rule.fqdn%
+    arguments: [@permissions.model.privilegerepository]
+    tags:
+      - { name: core.validator.validation_rule }
+
+  permissions.validator.validation_rules.privileges_exist_validation_rule:
+    class: %permissions.validator.validation_rules.privileges_exist_validation_rule.fqdn%
+    arguments: [@core.acl]
+    tags:
+      - { name: core.validator.validation_rule }
+
+  permissions.validator.validation_rules.role_not_exists_validation_rule:
+    class: %permissions.validator.validation_rules.role_not_exists_validation_rule.fqdn%
+    arguments: [@permissions.model.rolerepository]
+    tags:
+      - { name: core.validator.validation_rule }
 
   permissions.installer.schema:
     class: %permissions.installer.schema.fqdn%

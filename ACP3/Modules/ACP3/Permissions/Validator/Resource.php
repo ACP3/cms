@@ -4,6 +4,7 @@ namespace ACP3\Modules\ACP3\Permissions\Validator;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository;
 use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegeExistsValidationRule;
 
 /**
  * Class Resource
@@ -12,38 +13,26 @@ use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
 class Resource extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Core\Validator\Rules\Router
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $routerValidator;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
-     */
-    protected $privilegeRepository;
+    protected $validator;
 
     /**
-     * @param \ACP3\Core\Lang                                          $lang
-     * @param \ACP3\Core\Validator\Rules\Misc                          $validate
-     * @param \ACP3\Core\Validator\Rules\Router                        $routerValidator
-     * @param \ACP3\Core\Modules                                       $modules
-     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
+     * Resource constructor.
+     *
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Router $routerValidator,
-        Core\Modules $modules,
-        PrivilegeRepository $privilegeRepository
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->routerValidator = $routerValidator;
-        $this->modules = $modules;
-        $this->privilegeRepository = $privilegeRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -54,27 +43,48 @@ class Resource extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\ModuleIsInstalledValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'modules',
+                    'message' => $this->lang->t('permissions', 'select_module')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'area',
+                    'message' => $this->lang->t('permissions', 'type_in_area'),
+                    'extra' => [
+                        'haystack' => ['admin', 'frontend', 'sidebar']
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'controller',
+                    'message' => $this->lang->t('permissions', 'type_in_controller')
+                ])
+            ->addConstraint(
+                PrivilegeExistsValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'privileges',
+                    'message' => $this->lang->t('permissions', 'privilege_does_not_exist')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\InternalUriValidationRule::NAME,
+                [
+                    'data' => strtolower($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/'),
+                    'field' => 'resource',
+                    'message' => $this->lang->t('permissions', 'type_in_resource')
+                ]
+            );
 
-        $this->errors = [];
-        if (empty($formData['modules']) || $this->modules->isInstalled($formData['modules']) === false) {
-            $this->errors['modules'] = $this->lang->t('permissions', 'select_module');
-        }
-        if (empty($formData['area']) || in_array($formData['area'], ['admin', 'frontend', 'sidebar']) === false) {
-            $this->errors['controller'] = $this->lang->t('permissions', 'type_in_area');
-        }
-        if (empty($formData['controller'])) {
-            $this->errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
-        }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->routerValidator->isInternalURI(strtolower($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/')) === false) {
-            $this->errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
-        }
-        if (empty($formData['privileges']) || $this->validate->isNumber($formData['privileges']) === false) {
-            $this->errors['privileges'] = $this->lang->t('permissions', 'select_privilege');
-        } elseif ($this->privilegeRepository->privilegeExists($formData['privileges']) === false) {
-            $this->errors['privileges'] = $this->lang->t('permissions', 'privilege_does_not_exist');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
