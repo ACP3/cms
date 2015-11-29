@@ -22,7 +22,7 @@ services:
 
   seo.validator:
     class: %seo.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.validator.rules.router.aliases']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.router', '@core.validator.rules.router.aliases']
 
   seo.validator.validation_rules.uri_alias_validation_rule:
     class: %seo.validator.validation_rules.uri_alias_validation_rule.fqdn%

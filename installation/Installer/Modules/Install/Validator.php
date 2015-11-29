@@ -25,7 +25,7 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Date $dateValidator
     )
     {
-        parent::__construct($lang, $validate);
+        parent::__construct($lang, , $validate);
 
         $this->dateValidator = $dateValidator;
     }

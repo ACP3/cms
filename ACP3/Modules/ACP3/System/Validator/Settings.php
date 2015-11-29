@@ -24,7 +24,10 @@ class Settings extends Core\Validator\AbstractValidator
     protected $container;
 
     /**
+     * Settings constructor.
+     *
      * @param \ACP3\Core\Lang                                           $lang
+     * @param \ACP3\Core\Validator\Validator                            $validator
      * @param \ACP3\Core\Validator\Rules\Misc                           $validate
      * @param \ACP3\Core\Validator\Rules\Date                           $dateValidator
      * @param \ACP3\Core\Validator\Rules\Router                         $routerValidator
@@ -32,13 +35,14 @@ class Settings extends Core\Validator\AbstractValidator
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Date $dateValidator,
         Core\Validator\Rules\Router $routerValidator,
         ContainerInterface $container
     )
     {
-        parent::__construct($lang, $validate);
+        parent::__construct($lang, $validator, $validate);
 
         $this->dateValidator = $dateValidator;
         $this->routerValidator = $routerValidator;

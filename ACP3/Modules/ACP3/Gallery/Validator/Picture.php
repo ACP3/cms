@@ -10,27 +10,6 @@ use ACP3\Core;
 class Picture extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Core\Validator\Validator
-     */
-    protected $validator;
-
-    /**
-     * @param Core\Lang                      $lang
-     * @param \ACP3\Core\Validator\Validator $validator
-     * @param Core\Validator\Rules\Misc      $validate
-     */
-    public function __construct(
-        Core\Lang $lang,
-        Core\Validator\Validator $validator,
-        Core\Validator\Rules\Misc $validate
-    )
-    {
-        parent::__construct($lang, $validate);
-
-        $this->validator = $validator;
-    }
-
-    /**
      * @param array $file
      * @param bool  $fileRequired
      *

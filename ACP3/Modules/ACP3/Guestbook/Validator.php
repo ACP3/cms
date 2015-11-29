@@ -17,10 +17,6 @@ class Validator extends Core\Validator\AbstractValidator
      * @var \ACP3\Core\Modules
      */
     protected $modules;
-    /**
-     * @var \ACP3\Core\Validator\Validator
-     */
-    protected $validator;
 
     /**
      * Validator constructor.
@@ -36,9 +32,8 @@ class Validator extends Core\Validator\AbstractValidator
         Core\Validator\Rules\Misc $validate,
         Core\Modules $modules)
     {
-        parent::__construct($lang, $validate);
+        parent::__construct($lang, $validator, $validate);
 
-        $this->validator = $validator;
         $this->modules = $modules;
     }
 

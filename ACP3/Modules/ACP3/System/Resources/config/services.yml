@@ -37,7 +37,7 @@ services:
 
   system.validator.settings:
     class: %system.validator.settings.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.router', '@service_container']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.router', '@service_container']
 
   system.installer.schema:
     class: %system.installer.schema.fqdn%

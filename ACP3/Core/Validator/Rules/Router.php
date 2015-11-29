@@ -4,6 +4,8 @@ namespace ACP3\Core\Validator\Rules;
 /**
  * Class Router
  * @package ACP3\Core\Validator\Rules
+ *
+ * @deprecated
  */
 class Router
 {

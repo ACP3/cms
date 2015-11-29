@@ -12,29 +12,6 @@ use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Core\Validator\Validator
-     */
-    protected $validator;
-
-    /**
-     * Validator constructor.
-     *
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\Validator\Validator  $validator
-     * @param \ACP3\Core\Validator\Rules\Misc $validate
-     */
-    public function __construct(
-        Core\Lang $lang,
-        Core\Validator\Validator $validator,
-        Core\Validator\Rules\Misc $validate
-    )
-    {
-        parent::__construct($lang, $validate);
-
-        $this->validator = $validator;
-    }
-
-    /**
      * @param array $formData
      *
      * @throws Core\Exceptions\InvalidFormToken

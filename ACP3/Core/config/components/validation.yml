@@ -72,7 +72,7 @@ services:
 
   core.validator.abstract:
     abstract: true
-    arguments: ['@core.lang', '@core.validator.rules.misc']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
 
   core.validator.rules.acl:
     class: ACP3\Core\Validator\Rules\ACL

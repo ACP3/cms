@@ -25,6 +25,7 @@ class Register extends AbstractUserValidator
 
     /**
      * @param \ACP3\Core\Lang                               $lang
+     * @param \ACP3\Core\Validator\Validator                $validator
      * @param \ACP3\Core\Validator\Rules\Misc               $validate
      * @param \ACP3\Core\Validator\Rules\Captcha            $captchaValidator
      * @param \ACP3\Core\ACL                                $acl
@@ -32,13 +33,14 @@ class Register extends AbstractUserValidator
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Captcha $captchaValidator,
         Core\ACL $acl,
         UserRepository $userRepository
     )
     {
-        parent::__construct($lang, $validate);
+        parent::__construct($lang, $validator, $validate);
 
         $this->captchaValidator = $captchaValidator;
         $this->acl = $acl;

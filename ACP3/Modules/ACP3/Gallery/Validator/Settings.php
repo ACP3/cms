@@ -13,10 +13,6 @@ class Settings extends Core\Validator\AbstractValidator
      * @var \ACP3\Core\Modules
      */
     protected $modules;
-    /**
-     * @var \ACP3\Core\Validator\Validator
-     */
-    protected $validator;
 
     /**
      * @param Core\Lang                      $lang
@@ -31,9 +27,8 @@ class Settings extends Core\Validator\AbstractValidator
         Core\Modules $modules
     )
     {
-        parent::__construct($lang, $validate);
+        parent::__construct($lang, $validator, $validate);
 
-        $this->validator = $validator;
         $this->modules = $modules;
     }
 

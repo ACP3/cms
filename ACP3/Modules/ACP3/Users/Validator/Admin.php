@@ -29,6 +29,7 @@ class Admin extends AbstractUserValidator
 
     /**
      * @param \ACP3\Core\Lang                               $lang
+     * @param \ACP3\Core\Validator\Validator                $validator
      * @param \ACP3\Core\Validator\Rules\Misc               $validate
      * @param \ACP3\Core\Validator\Rules\ACL                $aclValidator
      * @param \ACP3\Core\Validator\Rules\Date               $dateValidator
@@ -37,6 +38,7 @@ class Admin extends AbstractUserValidator
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\ACL $aclValidator,
         Core\Validator\Rules\Date $dateValidator,
@@ -44,7 +46,7 @@ class Admin extends AbstractUserValidator
         UserRepository $userRepository
     )
     {
-        parent::__construct($lang, $validate);
+        parent::__construct($lang, $validator, $validate);
 
         $this->aclValidator = $aclValidator;
         $this->dateValidator = $dateValidator;

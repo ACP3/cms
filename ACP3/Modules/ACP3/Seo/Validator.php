@@ -19,18 +19,22 @@ class Validator extends Core\Validator\AbstractValidator
     protected $aliasesValidator;
 
     /**
-     * @param Core\Lang                           $lang
-     * @param Core\Validator\Rules\Misc           $validate
-     * @param Core\Validator\Rules\Router         $routerValidator
-     * @param Core\Validator\Rules\Router\Aliases $aliasesValidator
+     * Validator constructor.
+     *
+     * @param \ACP3\Core\Lang                           $lang
+     * @param \ACP3\Core\Validator\Validator            $validator
+     * @param \ACP3\Core\Validator\Rules\Misc           $validate
+     * @param \ACP3\Core\Validator\Rules\Router         $routerValidator
+     * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasesValidator
      */
     public function __construct(
         Core\Lang $lang,
+        Core\Validator\Validator $validator,
         Core\Validator\Rules\Misc $validate,
         Core\Validator\Rules\Router $routerValidator,
         Core\Validator\Rules\Router\Aliases $aliasesValidator)
     {
-        parent::__construct($lang, $validate);
+        parent::__construct($lang, $validator, $validate);
 
         $this->routerValidator = $routerValidator;
         $this->aliasesValidator = $aliasesValidator;

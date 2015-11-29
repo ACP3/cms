@@ -47,15 +47,15 @@ services:
 
   users.validator.account:
     class: %users.validator.account.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date', '@core.user', '@users.model.userrepository']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.date', '@core.user', '@users.model.userrepository']
 
   users.validator.admin:
     class: %users.validator.admin.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.date', '@core.user', '@users.model.userrepository']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.date', '@core.user', '@users.model.userrepository']
 
   users.validator.register:
     class: %users.validator.register.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@users.model.userrepository']
+    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@users.model.userrepository']
 
   users.installer.schema:
     class: %users.installer.schema.fqdn%
