@@ -38,6 +38,12 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.language_pack_exists_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\LanguagePackExistsValidationRule
+    arguments: [@core.lang]
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.min_length_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\MinLengthValidationRule
     tags:
@@ -67,6 +73,11 @@ services:
 
   core.validator.validation_rules.uri_safe_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\UriSafeValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
+  core.validator.validation_rules.time_zone_exists_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\TimeZoneExistsValidationRule
     tags:
       - { name: core.validator.validation_rule }
 

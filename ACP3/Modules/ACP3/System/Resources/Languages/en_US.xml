@@ -242,6 +242,7 @@
         <item key="select_date_format">Please select whether the long or the short date format to be used.</item>
         <item key="select_editor">Please select whether you want to use a WYSIWYG editor or a simple textarea.</item>
         <item key="select_language">Please select the language in which you want to see the website.</item>
+        <item key="select_mailer_type">Please select the mailer type.</item>
         <item key="select_menu_item">Please choose from one of the menu items above to get to the desired action.</item>
         <item key="select_online_maintenance">Please select whether the maintenance mode should be turned on or off.</item>
         <item key="select_records_per_page">Please select how many records per page to display.</item>

@@ -7,6 +7,7 @@ parameters:
   system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
   system.model.settingsrepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SettingsRepository'
   system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validator\Settings'
+  system.validator.validation_rules.is_wysiwyg_editor_validation_rule.fqdn: 'ACP3\Modules\ACP3\System\Validator\ValidationRules\IsWysiwygEditorValidationRule'
   system.installer.schema.fqdn: 'ACP3\Modules\ACP3\System\Installer\Schema'
   system.installer.migration.fqdn: 'ACP3\Modules\ACP3\System\Installer\Migration'
 
@@ -37,7 +38,13 @@ services:
 
   system.validator.settings:
     class: %system.validator.settings.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.date', '@core.validator.rules.router', '@service_container']
+    parent: core.validator.abstract
+
+  system.validator.validation_rules.is_wysiwyg_editor_validation_rule:
+    class: %system.validator.validation_rules.is_wysiwyg_editor_validation_rule.fqdn%
+    arguments: [@service_container]
+    tags:
+      - { name: core.validator.validation_rule }
 
   system.installer.schema:
     class: %system.installer.schema.fqdn%
