@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Seo;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Seo\Validator\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class Validator
@@ -50,17 +51,37 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData, $uriAlias = '')
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\InternalUriValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'uri',
+                    'message' => $this->lang->t('seo', 'type_in_valid_resource')
+                ])
+            ->addConstraint(
+                UriAliasValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'alias',
+                    'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                    'extra' => [
+                        'path' => $uriAlias
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'seo_robots',
+                    'message' => $this->lang->t('seo', 'select_robots'),
+                    'extra' => [
+                        'haystack' => [0, 1, 2, 3, 4]
+                    ]
+                ]);
 
-        $this->errors = [];
-        if ($this->routerValidator->isInternalURI($formData['uri']) === false) {
-            $this->errors['uri'] = $this->lang->t('seo', 'type_in_valid_resource');
-        }
-        if (!empty($formData['alias']) && $this->aliasesValidator->uriAliasExists($formData['alias'], $uriAlias) === true) {
-            $this->errors['alias'] = $this->lang->t('seo', 'alias_unallowed_characters_or_exists');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
     /**
@@ -71,19 +92,36 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validateSettings(array $formData)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'title',
+                    'message' => $this->lang->t('system', 'title_to_short'),
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'robots',
+                    'message' => $this->lang->t('seo', 'select_robots'),
+                    'extra' => [
+                        'haystack' => [1, 2, 3, 4]
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mod_rewrite',
+                    'message' => $this->lang->t('seo', 'select_mod_rewrite'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
+                ]);
 
-        $this->errors = [];
-        if (empty($formData['title'])) {
-            $this->errors['seo-title'] = $this->lang->t('system', 'title_to_short');
-        }
-        if ($this->validate->isNumber($formData['robots']) === false) {
-            $this->errors['seo-robots'] = $this->lang->t('seo', 'select_robots');
-        }
-        if ($this->validate->isNumber($formData['mod_rewrite']) === false) {
-            $this->errors['seo-mod-rewrite'] = $this->lang->t('seo', 'select_mod_rewrite');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
