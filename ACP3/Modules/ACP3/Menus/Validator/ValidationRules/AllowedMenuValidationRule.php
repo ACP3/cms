@@ -50,8 +50,12 @@ class AllowedMenuValidationRule extends AbstractValidationRule
      */
     protected function checkIsAllowedMenu($parentId, $menuId)
     {
-        $parentBlock = $this->menuItemRepository->getMenuItemBlockIdById($parentId);
+        if (empty($parentId)) {
+            return true;
+        }
 
-        return (!empty($parentBlock) && $parentBlock == $menuId);
+        $parentMenuId = $this->menuItemRepository->getMenuItemMenuIdById($parentId);
+
+        return (!empty($parentMenuId) && $parentMenuId == $menuId);
     }
 }

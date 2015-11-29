@@ -78,7 +78,7 @@ class MenuItemRepository extends AbstractRepository
      *
      * @return mixed
      */
-    public function getMenuItemBlockIdById($id)
+    public function getMenuItemMenuIdById($id)
     {
         return $this->db->fetchColumn(
             "SELECT `block_id` FROM {$this->getTableName()} WHERE id = ?",

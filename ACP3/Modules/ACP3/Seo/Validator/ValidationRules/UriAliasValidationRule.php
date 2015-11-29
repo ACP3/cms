@@ -14,24 +14,33 @@ class UriAliasValidationRule extends AbstractValidationRule
     const NAME = 'seo_uri_alias';
 
     /**
-     * @var \ACP3\Core\Validator\Rules\Router
+     * @var \ACP3\Core\Validator\ValidationRules\InternalUriValidationRule
      */
-    protected $routerValidator;
+    protected $internalUriValidationRule;
+    /**
+     * @var \ACP3\Core\Validator\ValidationRules\UriSafeValidationRule
+     */
+    protected $uriSafeValidationRule;
     /**
      * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
     protected $seoRepository;
 
     /**
-     * @param \ACP3\Core\Validator\Rules\Router          $routerValidator
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * UriAliasValidationRule constructor.
+     *
+     * @param \ACP3\Core\Validator\ValidationRules\InternalUriValidationRule $internalUriValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\UriSafeValidationRule     $uriSafeValidationRule
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository                     $seoRepository
      */
     public function __construct(
-        Core\Validator\Rules\Router $routerValidator,
+        Core\Validator\ValidationRules\InternalUriValidationRule $internalUriValidationRule,
+        Core\Validator\ValidationRules\UriSafeValidationRule $uriSafeValidationRule,
         Seo\Model\SeoRepository $seoRepository
     )
     {
-        $this->routerValidator = $routerValidator;
+        $this->internalUriValidationRule = $internalUriValidationRule;
+        $this->uriSafeValidationRule = $uriSafeValidationRule;
         $this->seoRepository = $seoRepository;
     }
 
@@ -59,12 +68,12 @@ class UriAliasValidationRule extends AbstractValidationRule
             return true;
         }
 
-        if ($this->routerValidator->isUriSafe($alias)) {
+        if ($this->uriSafeValidationRule->isValid($alias)) {
             if (is_dir(MODULES_DIR . $alias) === true) {
                 return true;
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
-                if ($path !== '/' && $this->routerValidator->isInternalURI($path) === true) {
+                if ($path !== '/' && $this->internalUriValidationRule->isValid($path) === true) {
                     return $this->seoRepository->uriAliasExistsByAlias($alias, $path);
                 } elseif ($this->seoRepository->uriAliasExistsByAlias($alias) === true) {
                     return true;

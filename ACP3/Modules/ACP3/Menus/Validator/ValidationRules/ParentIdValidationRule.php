@@ -36,7 +36,7 @@ class ParentIdValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkParentIdExists($field);
+        return $this->checkParentIdExists($data);
     }
 
     /**
@@ -46,6 +46,10 @@ class ParentIdValidationRule extends AbstractValidationRule
      */
     protected function checkParentIdExists($value)
     {
-        return !empty($value) && $this->menuItemRepository->menuItemExists($value);
+        if (empty($value)) {
+            return true;
+        }
+
+        return $this->menuItemRepository->menuItemExists($value);
     }
 }

@@ -9,6 +9,7 @@ parameters:
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
   articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
   articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validator'
+  articles.validator.validation_rules.article_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Articles\Validator\ValidationRules\ArticleExistsValidationRule'
   articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
   articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
 
@@ -49,6 +50,12 @@ services:
   articles.validator:
     class: %articles.validator.fqdn%
     arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.acl']
+
+  articles.validator.validation_rules.article_exists_validation_rule:
+    class: %articles.validator.validation_rules.article_exists_validation_rule.fqdn%
+    arguments: [@articles.model.articlerepository]
+    tags:
+      - { name: core.validator.validation_rule }
 
   articles.installer.schema:
     class: %articles.installer.schema.fqdn%

@@ -3,6 +3,8 @@ namespace ACP3\Modules\ACP3\Menus\Validator;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Validator\ValidationRules\MenuExistsValidationRule;
+use ACP3\Modules\ACP3\Menus\Validator\ValidationRules\MenuNameValidationRule;
 
 /**
  * Class Menu
@@ -11,24 +13,26 @@ use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
 class Menu extends Core\Validator\AbstractValidator
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
+     * @var \ACP3\Core\Validator\Validator
      */
-    protected $menuRepository;
+    protected $validator;
 
     /**
-     * @param \ACP3\Core\Lang                               $lang
-     * @param \ACP3\Core\Validator\Rules\Misc               $validate
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository $menuRepository
+     * Menu constructor.
+     *
+     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\Validator\Validator  $validator
+     * @param \ACP3\Core\Validator\Rules\Misc $validate
      */
     public function __construct(
         Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        MenuRepository $menuRepository
+        Core\Validator\Validator $validator,
+        Core\Validator\Rules\Misc $validate
     )
     {
         parent::__construct($lang, $validate);
 
-        $this->menuRepository = $menuRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -40,20 +44,34 @@ class Menu extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData, $menuId = 0)
     {
-        $this->validateFormKey();
+        $this->validator
+            ->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(
+                MenuNameValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'index_name',
+                    'message' => $this->lang->t('menus', 'type_in_index_name')
+                ])
+            ->addConstraint(
+                MenuExistsValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'index_name',
+                    'message' => $this->lang->t('menus', 'index_name_unique'),
+                    'extra' => [
+                        'menu_id' => $menuId
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'title',
+                    'message' => $this->lang->t('menus', 'menu_bar_title_to_short')
+                ]);
 
-        $this->errors = [];
-        if (!preg_match('/^[a-zA-Z]+\w/', $formData['index_name'])) {
-            $this->errors['index-name'] = $this->lang->t('menus', 'type_in_index_name');
-        }
-        if (!isset($this->errors) && $this->menuRepository->menuExistsByName($formData['index_name'], $menuId) === true) {
-            $this->errors['index-name'] = $this->lang->t('menus', 'index_name_unique');
-        }
-        if (strlen($formData['title']) < 3) {
-            $this->errors['title'] = $this->lang->t('menus', 'menu_bar_title_to_short');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 
 }

@@ -33,6 +33,11 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.internal_uri_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\InternalUriValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.min_length_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\MinLengthValidationRule
     tags:
@@ -46,6 +51,11 @@ services:
   core.validator.validation_rules.picture_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\PictureValidationRule
     arguments: [@core.validator.validation_rules.file_upload_validation_rule]
+    tags:
+      - { name: core.validator.validation_rule }
+
+  core.validator.validation_rules.uri_safe_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\UriSafeValidationRule
     tags:
       - { name: core.validator.validation_rule }
 
