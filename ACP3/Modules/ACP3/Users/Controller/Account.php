@@ -162,7 +162,7 @@ class Account extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->usersValidator->validateEditProfile($formData);
+                $this->usersValidator->validateEditProfile($formData, $this->user->getUserId());
 
                 $updateValues = [
                     'nickname' => Core\Functions::strEncode($formData['nickname']),

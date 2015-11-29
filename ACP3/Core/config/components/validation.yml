@@ -2,6 +2,11 @@ services:
   core.validator:
     class: ACP3\Core\Validator\Validator
 
+  core.validator.validation_rules.change_password_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\ChangePasswordValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.date_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\DateValidationRule
     tags:
@@ -62,6 +67,11 @@ services:
 
   core.validator.validation_rules.number_greater_than_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\NumberGreaterThanValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
+  core.validator.validation_rules.password_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\PasswordValidationRule
     tags:
       - { name: core.validator.validation_rule }
 

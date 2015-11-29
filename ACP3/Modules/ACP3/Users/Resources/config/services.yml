@@ -9,6 +9,10 @@ parameters:
   users.validator.account.fqdn: 'ACP3\Modules\ACP3\Users\Validator\Account'
   users.validator.admin.fqdn: 'ACP3\Modules\ACP3\Users\Validator\Admin'
   users.validator.register.fqdn: 'ACP3\Modules\ACP3\Users\Validator\Register'
+  users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\AccountNotExistsByEmailValidationRule'
+  users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\AccountNotExistsByNameValidationRule'
+  users.validation.validation_rules.birthday_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule'
+  users.validation.validation_rules.icq_number_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\IcqNumberValidationRule'
   users.installer.schema.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Schema'
   users.installer.migration.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Migration'
 
@@ -47,15 +51,37 @@ services:
 
   users.validator.account:
     class: %users.validator.account.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.date', '@core.user', '@users.model.userrepository']
+    parent: core.validator.abstract
 
   users.validator.admin:
     class: %users.validator.admin.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.acl', '@core.validator.rules.date', '@core.user', '@users.model.userrepository']
+    parent: core.validator.abstract
 
   users.validator.register:
     class: %users.validator.register.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.validator.rules.captcha', '@core.acl', '@users.model.userrepository']
+    parent: core.validator.abstract
+
+  users.validation.validation_rules.account_not_exists_by_email_validation_rule:
+    class: %users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn%
+    arguments: [@users.model.userrepository]
+    tags:
+      - { name: core.validator.validation_rule }
+
+  users.validation.validation_rules.account_not_exists_by_name_validation_rule:
+    class: %users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn%
+    arguments: [@users.model.userrepository]
+    tags:
+      - { name: core.validator.validation_rule }
+
+  users.validation.validation_rules.birthday_validation_rule:
+    class: %users.validation.validation_rules.birthday_validation_rule.fqdn%
+    tags:
+      - { name: core.validator.validation_rule }
+
+  users.validation.validation_rules.icq_number_validation_rule:
+    class: %users.validation.validation_rules.icq_number_validation_rule.fqdn%
+    tags:
+      - { name: core.validator.validation_rule }
 
   users.installer.schema:
     class: %users.installer.schema.fqdn%

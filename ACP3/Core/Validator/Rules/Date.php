@@ -16,6 +16,8 @@ class Date
      *  Das zu überprüfende Datum
      *
      * @return boolean
+     *
+     * @deprecated
      */
     public function birthday($var)
     {
