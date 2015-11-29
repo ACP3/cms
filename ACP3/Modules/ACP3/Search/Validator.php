@@ -16,20 +16,42 @@ class Validator extends Core\Validator\AbstractValidator
      */
     public function validate(array $formData)
     {
-        $this->errors = [];
-        if (strlen($formData['search_term']) < 4) {
-            $this->errors['search-term'] = $this->lang->t('search', 'search_term_to_short');
-        }
-        if (empty($formData['mods'])) {
-            $this->errors['mods'] = $this->lang->t('search', 'no_module_selected');
-        }
-        if (empty($formData['area'])) {
-            $this->errors['area'] = $this->lang->t('search', 'no_area_selected');
-        }
-        if (empty($formData['sort']) || $formData['sort'] != 'asc' && $formData['sort'] != 'desc') {
-            $this->errors['sort'] = $this->lang->t('search', 'no_sorting_selected');
-        }
+        $this->validator
+            ->addConstraint(
+                Core\Validator\ValidationRules\MinLengthValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'search_term',
+                    'message' => $this->lang->t('search', 'search_term_to_short'),
+                    'extra' => [
+                        'length' => 4
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mods',
+                    'message' => $this->lang->t('search', 'no_module_selected')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'area',
+                    'message' => $this->lang->t('search', 'no_area_selected')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\InArrayValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'sort',
+                    'message' => $this->lang->t('search', 'no_sorting_selected'),
+                    'extra' => [
+                        'haystack' => ['asc', 'desc']
+                    ]
+                ]);
 
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }
