@@ -48,6 +48,11 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
+  core.validator.validation_rules.umber_greater_than_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\NumberGreaterThanValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.picture_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\PictureValidationRule
     arguments: [@core.validator.validation_rules.file_upload_validation_rule]
