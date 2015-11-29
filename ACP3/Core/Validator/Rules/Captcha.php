@@ -2,6 +2,7 @@
 namespace ACP3\Core\Validator\Rules;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
 
 /**
  * Class Captcha
@@ -12,37 +13,21 @@ use ACP3\Core;
 class Captcha
 {
     /**
-     * @var \ACP3\Core\Http\RequestInterface
+     * @var \ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule
      */
-    protected $request;
-    /**
-     * @var \ACP3\Core\Router
-     */
-    protected $router;
-    /**
-     * @var \ACP3\Core\SessionHandler
-     */
-    protected $sessionHandler;
+    protected $captchaValidationRule;
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router                $router
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * Captcha constructor.
+     *
+     * @param \ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule $captchaValidationRule
      */
-    public function __construct(
-        Core\Http\RequestInterface $request,
-        Core\Router $router,
-        Core\SessionHandler $sessionHandler
-    )
+    public function __construct(CaptchaValidationRule $captchaValidationRule)
     {
-        $this->request = $request;
-        $this->router = $router;
-        $this->sessionHandler = $sessionHandler;
+        $this->captchaValidationRule = $captchaValidationRule;
     }
 
     /**
-     * Überpürft, ob das eingegebene Captcha mit dem generierten übereinstimmt
-     *
      * @param string $input
      * @param string $path
      *
@@ -52,8 +37,6 @@ class Captcha
      */
     public function captcha($input, $path = '')
     {
-        $index = 'captcha_' . sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
-
-        return preg_match('/^[a-zA-Z0-9]+$/', $input) && strtolower($input) === strtolower($this->sessionHandler->get($index, '')) ? true : false;
+        return $this->captchaValidationRule->isValid($input, '', ['path' => $path]);
     }
 }

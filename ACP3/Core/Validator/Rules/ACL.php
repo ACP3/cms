@@ -2,6 +2,8 @@
 namespace ACP3\Core\Validator\Rules;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegesExistValidationRule;
+use ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\RolesExistValidationRule;
 
 /**
  * Class ACL
@@ -12,16 +14,27 @@ use ACP3\Core;
 class ACL
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegesExistValidationRule
      */
-    protected $acl;
+    protected $privilegesExistValidationRule;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\RolesExistValidationRule
+     */
+    protected $rolesExistValidationRule;
 
     /**
-     * @param \ACP3\Core\ACL $acl
+     * ACL constructor.
+     *
+     * @param \ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegesExistValidationRule $privilegesExistValidationRule
+     * @param \ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\RolesExistValidationRule      $rolesExistValidationRule
      */
-    public function __construct(Core\ACL $acl)
+    public function __construct(
+        PrivilegesExistValidationRule $privilegesExistValidationRule,
+        RolesExistValidationRule $rolesExistValidationRule
+    )
     {
-        $this->acl = $acl;
+        $this->privilegesExistValidationRule = $privilegesExistValidationRule;
+        $this->rolesExistValidationRule = $rolesExistValidationRule;
     }
 
     /**
@@ -37,21 +50,7 @@ class ACL
      */
     public function aclPrivilegesExist(array $privileges)
     {
-        $allPrivileges = $this->acl->getAllPrivileges();
-        $c_allPrivileges = count($allPrivileges);
-        $valid = false;
-
-        for ($i = 0; $i < $c_allPrivileges; ++$i) {
-            $valid = false;
-            foreach ($privileges as $module) {
-                foreach ($module as $privilegeId => $value) {
-                    if ($privilegeId == $allPrivileges[$i]['id'] && $value >= 0 && $value <= 2) {
-                        $valid = true;
-                    }
-                }
-            }
-        }
-        return $valid;
+        return $this->privilegesExistValidationRule->isValid($privileges);
     }
 
     /**
@@ -64,17 +63,6 @@ class ACL
      */
     public function aclRolesExist(array $roles)
     {
-        $allRoles = $this->acl->getAllRoles();
-        $good = [];
-        foreach ($allRoles as $row) {
-            $good[] = $row['id'];
-        }
-
-        foreach ($roles as $row) {
-            if (in_array($row, $good) === false) {
-                return false;
-            }
-        }
-        return true;
+        return $this->rolesExistValidationRule->isValid($roles);
     }
 }

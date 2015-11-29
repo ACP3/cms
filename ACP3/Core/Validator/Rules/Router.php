@@ -1,5 +1,7 @@
 <?php
 namespace ACP3\Core\Validator\Rules;
+use ACP3\Core\Validator\ValidationRules\InternalUriValidationRule;
+use ACP3\Core\Validator\ValidationRules\UriSafeValidationRule;
 
 /**
  * Class Router
@@ -9,6 +11,30 @@ namespace ACP3\Core\Validator\Rules;
  */
 class Router
 {
+    /**
+     * @var \ACP3\Core\Validator\ValidationRules\UriSafeValidationRule
+     */
+    protected $uriSafeValidationRule;
+    /**
+     * @var \ACP3\Core\Validator\ValidationRules\InternalUriValidationRule
+     */
+    protected $internalUriValidationRule;
+
+    /**
+     * Router constructor.
+     *
+     * @param \ACP3\Core\Validator\ValidationRules\UriSafeValidationRule     $uriSafeValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\InternalUriValidationRule $internalUriValidationRule
+     */
+    public function __construct(
+        UriSafeValidationRule $uriSafeValidationRule,
+        InternalUriValidationRule $internalUriValidationRule
+    )
+    {
+        $this->uriSafeValidationRule = $uriSafeValidationRule;
+        $this->internalUriValidationRule = $internalUriValidationRule;
+    }
+
     /**
      * Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
      * die Kleinbuchstaben von a-z, Zahlen, der Bindestrich und das Slash eingegeben werden
@@ -21,7 +47,7 @@ class Router
      */
     public function isUriSafe($var)
     {
-        return (bool)preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', $var);
+        return $this->uriSafeValidationRule->isValid($var);
     }
 
     /**
@@ -35,6 +61,6 @@ class Router
      */
     public function isInternalURI($var)
     {
-        return (bool)preg_match('/^([a-z\d_\-]+\/){3,}$/', $var);
+        return $this->internalUriValidationRule->isValid($var);
     }
 }

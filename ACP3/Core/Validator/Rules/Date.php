@@ -1,6 +1,10 @@
 <?php
 namespace ACP3\Core\Validator\Rules;
 
+use ACP3\Core\Validator\ValidationRules\DateValidationRule;
+use ACP3\Core\Validator\ValidationRules\TimeZoneExistsValidationRule;
+use ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule;
+
 /**
  * Class Date
  * @package ACP3\Core\Validator\Rules
@@ -9,6 +13,36 @@ namespace ACP3\Core\Validator\Rules;
  */
 class Date
 {
+    /**
+     * @var \ACP3\Core\Validator\ValidationRules\DateValidationRule
+     */
+    protected $dateValidationRule;
+    /**
+     * @var \ACP3\Core\Validator\ValidationRules\TimeZoneExistsValidationRule
+     */
+    protected $timeZoneExistsValidationRule;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule
+     */
+    protected $birthdayValidationRule;
+
+    /**
+     * Date constructor.
+     *
+     * @param \ACP3\Core\Validator\ValidationRules\DateValidationRule                   $dateValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\TimeZoneExistsValidationRule         $timeZoneExistsValidationRule
+     * @param \ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule $birthdayValidationRule
+     */
+    public function __construct(
+        DateValidationRule $dateValidationRule,
+        TimeZoneExistsValidationRule $timeZoneExistsValidationRule,
+        BirthdayValidationRule $birthdayValidationRule)
+    {
+        $this->dateValidationRule = $dateValidationRule;
+        $this->timeZoneExistsValidationRule = $timeZoneExistsValidationRule;
+        $this->birthdayValidationRule = $birthdayValidationRule;
+    }
+
     /**
      * Überprüft einen Geburtstag auf seine Gültigkeit
      *
@@ -21,14 +55,7 @@ class Date
      */
     public function birthday($var)
     {
-        $regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
-        $matches = [];
-        if (preg_match($regex, $var, $matches)) {
-            if (checkdate($matches[2], $matches[3], $matches[1])) {
-                return true;
-            }
-        }
-        return false;
+        return $this->birthdayValidationRule->isValid($var);
     }
 
     /**
@@ -45,24 +72,11 @@ class Date
      */
     public function date($start, $end = null)
     {
-        $matchesStart = $matchesEnd = [];
-        $regex = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3])(:([0-5][0-9])){1,2}){0,1}$/';
-        if (preg_match($regex, $start, $matchesStart)) {
-            // Wenn ein Enddatum festgelegt wurde, dieses ebenfalls mit überprüfen
-            if ($end != null && preg_match($regex, $end, $matchesEnd)) {
-                if (checkdate($matchesStart[2], $matchesStart[3], $matchesStart[1]) &&
-                    checkdate($matchesEnd[2], $matchesEnd[3], $matchesEnd[1]) &&
-                    strtotime($start) <= strtotime($end)
-                ) {
-                    return true;
-                }
-            } else { // Nur Startdatum überprüfen
-                if (checkdate($matchesStart[2], $matchesStart[3], $matchesStart[1])) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        $data = [
+            'start' => $start,
+            'end' => $end
+        ];
+        return $this->dateValidationRule->isValid($data, ['start', 'end']);
     }
 
 
@@ -76,12 +90,6 @@ class Date
      */
     public function timeZone($var)
     {
-        $bool = true;
-        try {
-            new \DateTimeZone($var);
-        } catch (\Exception $e) {
-            $bool = false;
-        }
-        return $bool;
+        return $this->timeZoneExistsValidationRule->isValid($var);
     }
 }

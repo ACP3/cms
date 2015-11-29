@@ -2,8 +2,9 @@
 
 namespace ACP3\Core\Validator\Rules;
 
-use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\SessionHandler;
+use ACP3\Core\Validator\ValidationRules\EmailValidationRule;
+use ACP3\Core\Validator\ValidationRules\FormTokenValidationRule;
+use ACP3\Core\Validator\ValidationRules\IntegerValidationRule;
 
 /**
  * Class Misc
@@ -14,25 +15,34 @@ use ACP3\Core\SessionHandler;
 class Misc
 {
     /**
-     * @var \ACP3\Core\Http\RequestInterface
+     * @var \ACP3\Core\Validator\ValidationRules\EmailValidationRule
      */
-    protected $request;
+    protected $emailValidationRule;
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Validator\ValidationRules\FormTokenValidationRule
      */
-    protected $sessionHandler;
+    protected $formTokenValidationRule;
+    /**
+     * @var \ACP3\Core\Validator\ValidationRules\IntegerValidationRule
+     */
+    protected $integerValidationRule;
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * Misc constructor.
+     *
+     * @param \ACP3\Core\Validator\ValidationRules\EmailValidationRule     $emailValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\FormTokenValidationRule $formTokenValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\IntegerValidationRule   $integerValidationRule
      */
     public function __construct(
-        RequestInterface $request,
-        SessionHandler $sessionHandler
+        EmailValidationRule $emailValidationRule,
+        FormTokenValidationRule $formTokenValidationRule,
+        IntegerValidationRule $integerValidationRule
     )
     {
-        $this->request = $request;
-        $this->sessionHandler = $sessionHandler;
+        $this->emailValidationRule = $emailValidationRule;
+        $this->formTokenValidationRule = $formTokenValidationRule;
+        $this->integerValidationRule = $integerValidationRule;
     }
 
     /**
@@ -50,12 +60,7 @@ class Misc
      */
     public function email($var)
     {
-        if (function_exists('filter_var')) {
-            return (bool)filter_var($var, FILTER_VALIDATE_EMAIL);
-        } else {
-            $pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
-            return (bool)preg_match($pattern, $var);
-        }
+        return $this->emailValidationRule->isValid($var);
     }
 
     /**
@@ -67,11 +72,7 @@ class Misc
      */
     public function formToken()
     {
-        $tokenName = SessionHandler::XSRF_TOKEN_NAME;
-        $urlQueryString = $this->request->getQuery();
-        $sessionToken = $this->sessionHandler->get($tokenName);
-
-        return (isset($sessionToken[$urlQueryString]) && $this->request->getPost()->get($tokenName, '') === $sessionToken[$urlQueryString]);
+        return $this->formTokenValidationRule->isValid('');
     }
 
     /**
@@ -99,6 +100,6 @@ class Misc
      */
     public function isNumber($var)
     {
-        return (bool)preg_match('/^(\d+)$/', $var);
+        return $this->integerValidationRule->isValid($var);
     }
 }

@@ -12,16 +12,18 @@ use ACP3\Core;
 class Mime
 {
     /**
-     * @var \ACP3\Core\Validator\Rules\Misc
+     * @var \ACP3\Core\Validator\ValidationRules\PictureValidationRule
      */
-    protected $validate;
+    protected $pictureValidationRule;
 
     /**
-     * @param \ACP3\Core\Validator\Rules\Misc $validate
+     * Mime constructor.
+     *
+     * @param \ACP3\Core\Validator\ValidationRules\PictureValidationRule $pictureValidationRule
      */
-    public function __construct(Core\Validator\Rules\Misc $validate)
+    public function __construct(Core\Validator\ValidationRules\PictureValidationRule $pictureValidationRule)
     {
-        $this->validate = $validate;
+        $this->pictureValidationRule = $pictureValidationRule;
     }
 
     /**
@@ -39,22 +41,11 @@ class Mime
      */
     public function isPicture($file, $width = '', $height = '', $filesize = '')
     {
-        $info = getimagesize($file);
-        $isPicture = $info[2] >= 1 && $info[2] <= 3 ? true : false;
-
-        if ($isPicture === true) {
-            $bool = true;
-            // Optionale Parameter
-            if ($this->validate->isNumber($width) && $info[0] > $width ||
-                $this->validate->isNumber($height) && $info[1] > $height ||
-                filesize($file) === 0 || $this->validate->isNumber($filesize) && filesize($file) > $filesize
-            ) {
-                $bool = false;
-            }
-
-            return $bool;
-        }
-        return false;
+        return $this->pictureValidationRule->isValid($file, [], [
+            'width' => $width,
+            'height' => $height,
+            'filesize' => $filesize
+        ]);
     }
 
     /**
@@ -64,14 +55,14 @@ class Mime
      *
      * @param string $file
      *  Die zu überprüfende Datei
-     * @param string $mimetype
+     * @param string $mimeType
      *  Der zu vergleichende MIMETYPE
      *
      * @return mixed
      *
      * @deprecated
      */
-    public function mimeType($file, $mimetype = '')
+    public function mimeType($file, $mimeType = '')
     {
         $return = '';
 
@@ -83,8 +74,8 @@ class Mime
                 $return = mime_content_type($file);
             }
 
-            if (!empty($mimetype)) {
-                return $return == $mimetype ? true : false;
+            if (!empty($mimeType)) {
+                return $return == $mimeType ? true : false;
             }
         }
 

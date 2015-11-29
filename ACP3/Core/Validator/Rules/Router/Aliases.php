@@ -22,9 +22,7 @@ class Aliases
      *
      * @param \ACP3\Modules\ACP3\Seo\Validator\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
      */
-    public function __construct(
-        Seo\Validator\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
-    )
+    public function __construct(Seo\Validator\ValidationRules\UriAliasValidationRule $uriAliasValidationRule)
     {
         $this->uriAliasValidationRule = $uriAliasValidationRule;
     }
