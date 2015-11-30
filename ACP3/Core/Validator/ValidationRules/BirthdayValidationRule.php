@@ -1,15 +1,13 @@
 <?php
-namespace ACP3\Modules\ACP3\Users\Validator\ValidationRules;
-
-use ACP3\Core\Validator\ValidationRules\AbstractValidationRule;
+namespace ACP3\Core\Validator\ValidationRules;
 
 /**
  * Class BirthdayValidationRule
- * @package ACP3\Modules\ACP3\Users\Validator\ValidationRules
+ * @package ACP3\Core\Validator\ValidationRules
  */
 class BirthdayValidationRule extends AbstractValidationRule
 {
-    const NAME = 'users_birthday';
+    const NAME = 'birthday';
 
     /**
      * @inheritdoc

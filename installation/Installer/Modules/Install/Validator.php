@@ -2,6 +2,8 @@
 namespace ACP3\Installer\Modules\Install;
 
 use ACP3\Core;
+use ACP3\Installer\Modules\Install\Validator\ValidationRules\ConfigFileValidationRule;
+use ACP3\Installer\Modules\Install\Validator\ValidationRules\DatabaseConnectionValidationRule;
 
 /**
  * Class Validator
@@ -10,86 +12,91 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Date
-     */
-    protected $dateValidator;
-
-    /**
-     * @param Core\Lang                 $lang
-     * @param Core\Validator\Rules\Misc $validate
-     * @param Core\Validator\Rules\Date $dateValidator
-     */
-    public function __construct(
-        Core\Lang $lang,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Date $dateValidator
-    )
-    {
-        parent::__construct($lang, , $validate);
-
-        $this->dateValidator = $dateValidator;
-    }
-
-    /**
-     * @param array $formData
-     * @param       $configFilePath
+     * @param array  $formData
+     * @param string $configFilePath
      *
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validateConfiguration(array $formData, $configFilePath)
     {
-        $this->errors = [];
-        if (empty($formData['db_host'])) {
-            $this->errors['db-host'] = $this->lang->t('install', 'type_in_db_host');
-        }
-        if (empty($formData['db_user'])) {
-            $this->errors['db-user'] = $this->lang->t('install', 'type_in_db_username');
-        }
-        if (empty($formData['db_name'])) {
-            $this->errors['db-name'] = $this->lang->t('install', 'type_in_db_name');
-        }
-        if (!empty($formData['db_host']) && !empty($formData['db_user']) && !empty($formData['db_name'])) {
-            try {
-                $config = new \Doctrine\DBAL\Configuration();
+        $this->validator
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'db_host',
+                    'message' => $this->lang->t('install', 'type_in_db_host')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'db_user',
+                    'message' => $this->lang->t('install', 'type_in_db_username')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'db_name',
+                    'message' => $this->lang->t('install', 'type_in_db_name')
+                ])
+            ->addConstraint(
+                DatabaseConnectionValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => ['db_host', 'db_user', 'db_password', 'db_name'],
+                    'message' => $this->lang->t('install', 'db_connection_failed')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'user_name',
+                    'message' => $this->lang->t('install', 'type_in_user_name')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\EmailValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'mail',
+                    'message' => $this->lang->t('install', 'wrong_email_format')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'date_format_long',
+                    'message' => $this->lang->t('install', 'type_in_long_date_format')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\NotEmptyValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'date_format_short',
+                    'message' => $this->lang->t('install', 'type_in_short_date_format')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\PasswordValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => ['user_pwd', 'user_pwd_wdh'],
+                    'message' => $this->lang->t('install', 'type_in_pwd')
+                ])
+            ->addConstraint(
+                Core\Validator\ValidationRules\TimeZoneExistsValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => 'date_time_zone',
+                    'message' => $this->lang->t('install', 'select_time_zone')
+                ])
+            ->addConstraint(
+                ConfigFileValidationRule::NAME,
+                [
+                    'data' => $configFilePath,
+                    'message' => $this->lang->t('install', 'wrong_chmod_for_config_file')
+                ]);
 
-                $connectionParams = [
-                    'dbname' => $formData['db_name'],
-                    'user' => $formData['db_user'],
-                    'password' => $formData['db_password'],
-                    'host' => $formData['db_host'],
-                    'driver' => 'pdo_mysql',
-                    'charset' => 'utf8'
-                ];
-                $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-                $db->query('USE `' . $formData['db_name'] . '`');
-            } catch (\Exception $e) {
-                $this->errors['db'] = sprintf($this->lang->t('install', 'db_connection_failed'), $e->getMessage());
-            }
-        }
-        if (empty($formData['user_name'])) {
-            $this->errors['user-name'] = $this->lang->t('install', 'type_in_user_name');
-        }
-        if ((empty($formData['user_pwd']) || empty($formData['user_pwd_wdh'])) ||
-            (!empty($formData['user_pwd']) && !empty($formData['user_pwd_wdh']) && $formData['user_pwd'] != $formData['user_pwd_wdh'])
-        ) {
-            $this->errors['user-pwd'] = $this->lang->t('install', 'type_in_pwd');
-        }
-        if ($this->validate->email($formData['mail']) === false) {
-            $this->errors['mail'] = $this->lang->t('install', 'wrong_email_format');
-        }
-        if (empty($formData['date_format_long'])) {
-            $this->errors['date-format-long'] = $this->lang->t('install', 'type_in_long_date_format');
-        }
-        if (empty($formData['date_format_short'])) {
-            $this->errors['date-format-short'] = $this->lang->t('install', 'type_in_short_date_format');
-        }
-        if ($this->dateValidator->timeZone($formData['date_time_zone']) === false) {
-            $this->errors['date-time-zone'] = $this->lang->t('install', 'select_time_zone');
-        }
-        if (is_file($configFilePath) === false || is_writable($configFilePath) === false) {
-            $this->errors[] = $this->lang->t('install', 'wrong_chmod_for_config_file');
-        }
-
-        $this->_checkForFailedValidation();
+        $this->validator->validate();
     }
 }

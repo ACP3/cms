@@ -2,6 +2,7 @@ parameters:
   default_request: 'install'
 
 imports:
+  - { resource: validation.yml }
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }
   - { resource: ../../Modules/Install/Resources/config/services.yml }
@@ -63,13 +64,6 @@ services:
 
   core.session:
     class: ACP3\Installer\Core\SessionHandler
-
-  core.validator.rules.date:
-    class: ACP3\Core\Validator\Rules\Date
-
-  core.validator.rules.misc:
-    class: ACP3\Core\Validator\Rules\Misc
-    arguments: ['@core.request', @core.session]
 
   core.view:
     class: ACP3\Core\View

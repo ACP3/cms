@@ -2,6 +2,11 @@ services:
   core.validator:
     class: ACP3\Core\Validator\Validator
 
+  core.validator.validation_rules.birthday_validation_rule:
+    class: ACP3\Core\Validator\ValidationRules\BirthdayValidationRule
+    tags:
+      - { name: core.validator.validation_rule }
+
   core.validator.validation_rules.change_password_validation_rule:
     class: ACP3\Core\Validator\ValidationRules\ChangePasswordValidationRule
     tags:
@@ -105,7 +110,7 @@ services:
 
   core.validator.rules.date:
     class: ACP3\Core\Validator\Rules\Date
-    arguments: [@core.validator.validation_rules.date_validation_rule, @core.validator.validation_rules.time_zone_exists_validation_rule, @users.validation.validation_rules.birthday_validation_rule]
+    arguments: [@core.validator.validation_rules.date_validation_rule, @core.validator.validation_rules.time_zone_exists_validation_rule, @core.validator.validation_rules.birthday_validation_rule]
 
   core.validator.rules.mime:
     class: ACP3\Core\Validator\Rules\Mime

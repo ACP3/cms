@@ -11,7 +11,6 @@ parameters:
   users.validator.register.fqdn: 'ACP3\Modules\ACP3\Users\Validator\Register'
   users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\AccountNotExistsByEmailValidationRule'
   users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\AccountNotExistsByNameValidationRule'
-  users.validation.validation_rules.birthday_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule'
   users.validation.validation_rules.icq_number_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validator\ValidationRules\IcqNumberValidationRule'
   users.installer.schema.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Schema'
   users.installer.migration.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Migration'
@@ -70,11 +69,6 @@ services:
   users.validation.validation_rules.account_not_exists_by_name_validation_rule:
     class: %users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn%
     arguments: [@users.model.userrepository]
-    tags:
-      - { name: core.validator.validation_rule }
-
-  users.validation.validation_rules.birthday_validation_rule:
-    class: %users.validation.validation_rules.birthday_validation_rule.fqdn%
     tags:
       - { name: core.validator.validation_rule }
 

@@ -3,7 +3,7 @@ namespace ACP3\Core\Validator\Rules;
 
 use ACP3\Core\Validator\ValidationRules\DateValidationRule;
 use ACP3\Core\Validator\ValidationRules\TimeZoneExistsValidationRule;
-use ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule;
+use ACP3\Core\Validator\ValidationRules\BirthdayValidationRule;
 
 /**
  * Class Date
@@ -22,16 +22,16 @@ class Date
      */
     protected $timeZoneExistsValidationRule;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule
+     * @var \ACP3\Core\Validator\ValidationRules\BirthdayValidationRule
      */
     protected $birthdayValidationRule;
 
     /**
      * Date constructor.
      *
-     * @param \ACP3\Core\Validator\ValidationRules\DateValidationRule                   $dateValidationRule
-     * @param \ACP3\Core\Validator\ValidationRules\TimeZoneExistsValidationRule         $timeZoneExistsValidationRule
-     * @param \ACP3\Modules\ACP3\Users\Validator\ValidationRules\BirthdayValidationRule $birthdayValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\DateValidationRule           $dateValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\TimeZoneExistsValidationRule $timeZoneExistsValidationRule
+     * @param \ACP3\Core\Validator\ValidationRules\BirthdayValidationRule       $birthdayValidationRule
      */
     public function __construct(
         DateValidationRule $dateValidationRule,

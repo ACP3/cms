@@ -20,9 +20,9 @@ class DateValidationRule extends AbstractValidationRule
                 $end = next($field);
 
                 return $this->checkIsValidDate($data[$start], $data[$end]);
+            } elseif (!empty($field)) {
+                return $this->isValid($data[$field], $field, $extra);
             }
-
-            return $this->checkIsValidDate($data[$field]);
         }
 
         return $this->checkIsValidDate($data);
