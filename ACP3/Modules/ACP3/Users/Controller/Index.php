@@ -257,7 +257,9 @@ class Index extends Core\Modules\FrontendController
                 $host = $this->request->getHostname();
 
                 // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                if ($this->get('core.validator.rules.misc')->email($formData['nick_mail']) === true && $this->userRepository->resultExistsByEmail($formData['nick_mail']) === true) {
+                if ($this->get('core.validator.validation_rules.email_validation_rule')->isValid($formData['nick_mail']) === true &&
+                    $this->userRepository->resultExistsByEmail($formData['nick_mail']) === true
+                ) {
                     $user = $this->userRepository->getOneByEmail($formData['nick_mail']);
                 } else {
                     $user = $this->userRepository->getOneByNickname($formData['nick_mail']);

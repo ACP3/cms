@@ -222,7 +222,9 @@ class Details extends Core\Modules\AdminController
 
                 $updateValues = [];
                 $updateValues['message'] = Core\Functions::strEncode($formData['message']);
-                if ((empty($comment['user_id']) || $this->get('core.validator.rules.misc')->isNumber($comment['user_id']) === false) && !empty($formData['name'])) {
+                if ((empty($comment['user_id']) || $this->validator->is(Core\Validator\ValidationRules\IntegerValidationRule::NAME, $comment['user_id']) === false) &&
+                    !empty($formData['name'])
+                ) {
                     $updateValues['name'] = Core\Functions::strEncode($formData['name']);
                 }
 

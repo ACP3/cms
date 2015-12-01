@@ -109,7 +109,7 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionFiles($cat)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($cat) && $this->categoryRepository->resultExists($cat) === true) {
+        if ($this->categoryRepository->resultExists($cat) === true) {
             $category = $this->categoryRepository->getOneById($cat);
 
             $this->breadcrumb

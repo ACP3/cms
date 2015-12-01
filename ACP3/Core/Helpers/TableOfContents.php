@@ -30,22 +30,24 @@ class TableOfContents
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validator\Rules\Misc
+     * @var \ACP3\Core\Validator\ValidationRules\IntegerValidationRule
      */
-    protected $validate;
+    protected $integerValidationRule;
     /**
      * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * @param \ACP3\Core\Breadcrumb            $breadcrumb
-     * @param \ACP3\Core\Lang                  $lang
-     * @param \ACP3\Core\SEO                   $seo
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router                $router
-     * @param \ACP3\Core\Validator\Rules\Misc  $validate
-     * @param \ACP3\Core\View                  $view
+     * TableOfContents constructor.
+     *
+     * @param \ACP3\Core\Breadcrumb                                      $breadcrumb
+     * @param \ACP3\Core\Lang                                            $lang
+     * @param \ACP3\Core\SEO                                             $seo
+     * @param \ACP3\Core\Http\RequestInterface                           $request
+     * @param \ACP3\Core\Router                                          $router
+     * @param \ACP3\Core\Validator\ValidationRules\IntegerValidationRule $integerValidationRule
+     * @param \ACP3\Core\View                                            $view
      */
     public function __construct(
         Core\Breadcrumb $breadcrumb,
@@ -53,7 +55,7 @@ class TableOfContents
         Core\SEO $seo,
         Core\Http\RequestInterface $request,
         Core\Router $router,
-        Core\Validator\Rules\Misc $validate,
+        Core\Validator\ValidationRules\IntegerValidationRule $integerValidationRule,
         Core\View $view
     )
     {
@@ -62,7 +64,7 @@ class TableOfContents
         $this->seo = $seo;
         $this->request = $request;
         $this->router = $router;
-        $this->validate = $validate;
+        $this->integerValidationRule = $integerValidationRule;
         $this->view = $view;
     }
 
@@ -140,7 +142,7 @@ class TableOfContents
                 return true;
             }
         } else {
-            if (($this->validate->isNumber($this->request->getParameters()->get('page')) === false && $currentIndex === 0) ||
+            if (($this->integerValidationRule->isValid($this->request->getParameters()->get('page')) === false && $currentIndex === 0) ||
                 $this->request->getParameters()->get('page') === $pageNumber
             ) {
                 return true;

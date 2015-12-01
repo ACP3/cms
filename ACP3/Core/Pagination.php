@@ -39,10 +39,6 @@ class Pagination
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Validator\Rules\Misc
-     */
-    protected $miscValidator;
-    /**
      * @var int
      */
     private $resultsPerPage = 0;
@@ -87,7 +83,6 @@ class Pagination
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router                $router
      * @param \ACP3\Core\View                  $view
-     * @param \ACP3\Core\Validator\Rules\Misc  $miscValidator
      */
     public function __construct(
         User $user,
@@ -96,8 +91,7 @@ class Pagination
         SEO $seo,
         RequestInterface $request,
         Router $router,
-        View $view,
-        Misc $miscValidator)
+        View $view)
     {
         $this->user = $user;
         $this->breadcrumb = $breadcrumb;
@@ -106,7 +100,6 @@ class Pagination
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
-        $this->miscValidator = $miscValidator;
 
         $this->resultsPerPage = $user->getEntriesPerPage();
     }

@@ -8,6 +8,7 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Lang;
 use ACP3\Core\Modules;
 use ACP3\Core\Router;
+use ACP3\Core\Validator\Validator;
 use ACP3\Core\View;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -46,6 +47,10 @@ class Context
      */
     protected $router;
     /**
+     * @var \ACP3\Core\Validator\Validator
+     */
+    protected $validator;
+    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -55,6 +60,8 @@ class Context
     protected $config;
 
     /**
+     * Context constructor.
+     *
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Core\ACL                                              $acl
      * @param \ACP3\Core\User                                             $user
@@ -62,6 +69,7 @@ class Context
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\Router                                           $router
+     * @param \ACP3\Core\Validator\Validator                              $validator
      * @param \ACP3\Core\View                                             $view
      * @param \ACP3\Core\Config                                           $config
      */
@@ -73,6 +81,7 @@ class Context
         Modules $modules,
         RequestInterface $request,
         Router $router,
+        Validator $validator,
         View $view,
         Config $config
     )
@@ -84,6 +93,7 @@ class Context
         $this->modules = $modules;
         $this->request = $request;
         $this->router = $router;
+        $this->validator = $validator;
         $this->view = $view;
         $this->config = $config;
     }
@@ -142,6 +152,14 @@ class Context
     public function getRouter()
     {
         return $this->router;
+    }
+
+    /**
+     * @return \ACP3\Core\Validator\Validator
+     */
+    public function getValidator()
+    {
+        return $this->validator;
     }
 
     /**

@@ -43,14 +43,6 @@ services:
     tags:
       - { name: core.validator.validation_rule }
 
-  core.validator.rules.date:
-    class: ACP3\Core\Validator\Rules\Date
-    arguments: [@core.validator.validation_rules.date_validation_rule, @core.validator.validation_rules.time_zone_exists_validation_rule, @core.validator.validation_rules.birthday_validation_rule]
-
-  core.validator.rules.misc:
-    class: ACP3\Core\Validator\Rules\Misc
-    arguments: [@core.validator.validation_rules.email_validation_rule, @core.validator.validation_rules.form_token_validation_rule, @core.validator.validation_rules.integer_validation_rule]
-
   core.validator.abstract:
     abstract: true
     arguments: ['@core.lang', @core.validator]

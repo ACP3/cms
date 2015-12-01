@@ -10,22 +10,16 @@ use ACP3\Core;
 class AdminContext extends FrontendContext
 {
     /**
-     * @var \ACP3\Core\Validator\Rules\Misc
-     */
-    protected $validate;
-    /**
      * @var \ACP3\Core\SessionHandler
      */
     protected $session;
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
-     * @param \ACP3\Core\Validator\Rules\Misc               $validate
      * @param \ACP3\Core\SessionHandler                     $session
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $frontendContext,
-        Core\Validator\Rules\Misc $validate,
         Core\SessionHandler $session
     )
     {
@@ -38,7 +32,6 @@ class AdminContext extends FrontendContext
             $frontendContext->getResponse()
         );
 
-        $this->validate = $validate;
         $this->session = $session;
     }
 
@@ -48,13 +41,5 @@ class AdminContext extends FrontendContext
     public function getSession()
     {
         return $this->session;
-    }
-
-    /**
-     * @return \ACP3\Core\Validator\Rules\Misc
-     */
-    public function getValidate()
-    {
-        return $this->validate;
     }
 }

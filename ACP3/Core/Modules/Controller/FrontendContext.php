@@ -56,6 +56,7 @@ class FrontendContext extends Core\Modules\Controller\Context
             $context->getModules(),
             $context->getRequest(),
             $context->getRouter(),
+            $context->getValidator(),
             $context->getView(),
             $context->getConfig()
         );

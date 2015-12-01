@@ -56,7 +56,7 @@ services:
 
   core.pagination:
     class: ACP3\Core\Pagination
-    arguments: ['@core.user', '@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view', '@core.validator.rules.misc']
+    arguments: ['@core.user', '@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view']
 
   core.redirect:
     class: ACP3\Core\Redirect

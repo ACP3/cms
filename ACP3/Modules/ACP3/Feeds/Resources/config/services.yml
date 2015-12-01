@@ -17,7 +17,7 @@ services:
 
   feeds.validator:
     class: %feeds.validator.fqdn%
-    arguments: [@core.lang, @core.validator, @core.validator.rules.misc]
+    parent: core.validator.abstract
 
   feeds.installer.schema:
     class: %feeds.installer.schema.fqdn%
