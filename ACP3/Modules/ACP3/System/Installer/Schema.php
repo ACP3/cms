@@ -101,7 +101,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'date_format_short' => '',
             'date_time_zone' => '',
             'design' => 'acp3',
-            'entries' => '',
+            'entries' => '20',
             'flood' => '20',
             'homepage' => 'news/index/index/',
             'lang' => '',
