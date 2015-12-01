@@ -58,4 +58,4 @@ services:
 
   core.helpers.formatter.rewriteInternalUri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
-    arguments: [@core.modules.helper.controllerActionExists, @core.request, '@core.router', '@core.validator.rules.router.aliases']
+    arguments: [@core.modules.helper.controllerActionExists, @core.request, '@core.router', @seo.validator.validation_rules.uri_alias_validation_rule]
