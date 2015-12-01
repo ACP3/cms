@@ -32,7 +32,7 @@ services:
 
   categories.validator:
     class: %categories.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@categories.model']
+    arguments: ['@core.lang', @core.validator, '@categories.model']
 
   categories.validator.validation_rules.category_exists_validation_rule:
     class: %categories.validator.validation_rules.category_exists_validation_rule.fqdn%

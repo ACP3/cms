@@ -23,7 +23,7 @@ services:
 
   contact.validator:
     class: %contact.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   contact.installer.schema:
     class: %contact.installer.schema.fqdn%

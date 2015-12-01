@@ -38,7 +38,7 @@ services:
 
   comments.validator:
     class: %comments.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules']
+    arguments: ['@core.lang', @core.validator, '@core.modules']
 
   comments.validator.validation_rules.flood_barrier_validation_rule:
     class: %comments.validator.validation_rules.flood_barrier_validation_rule.fqdn%

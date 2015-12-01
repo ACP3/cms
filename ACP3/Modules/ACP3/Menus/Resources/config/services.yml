@@ -65,11 +65,11 @@ services:
 
   menus.validator.menu:
     class: %menus.validator.menu.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   menus.validator.menuitem:
     class: %menus.validator.menuitem.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   menus.validator.validation_rules.allowed_menu_validation_rule:
     class: %menus.validator.validation_rules.allowed_menu_validation_rule.fqdn%

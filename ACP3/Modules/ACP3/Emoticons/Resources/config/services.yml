@@ -31,7 +31,7 @@ services:
 
   emoticons.validator:
     class: %emoticons.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   emoticons.installer.schema:
     class: %emoticons.installer.schema.fqdn%

@@ -77,7 +77,7 @@ services:
 
   newsletter.validator:
     class: %newsletter.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   newsletter.validator.validation_rules.account_exists_validation_rule:
     class: %newsletter.validator.validation_rules.account_exists_validation_rule.fqdn%

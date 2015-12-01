@@ -14,10 +14,6 @@ class AbstractValidator
      */
     protected $lang;
     /**
-     * @var \ACP3\Core\Validator\Rules\Misc
-     */
-    protected $validate;
-    /**
      * @var array
      */
     protected $errors = [];
@@ -27,16 +23,15 @@ class AbstractValidator
     protected $validator;
 
     /**
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\Validator\Validator  $validator
-     * @param \ACP3\Core\Validator\Rules\Misc $validate
+     * @param \ACP3\Core\Lang                $lang
+     * @param \ACP3\Core\Validator\Validator $validator
      */
     public function __construct(
-        Core\Lang $lang, Core\Validator\Validator $validator, Rules\Misc $validate
+        Core\Lang $lang,
+        Core\Validator\Validator $validator
     )
     {
         $this->lang = $lang;
-        $this->validate = $validate;
         $this->validator = $validator;
     }
 
@@ -47,9 +42,7 @@ class AbstractValidator
      */
     public function validateFormKey()
     {
-        if ($this->validate->formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken();
-        }
+        $this->validator->addConstraint(Core\Validator\ValidationRules\FormTokenValidationRule::NAME);
     }
 
     /**
@@ -59,6 +52,8 @@ class AbstractValidator
      */
     protected function _checkForFailedValidation()
     {
+        $this->validator->validate();
+
         if (!empty($this->errors)) {
             throw new Core\Exceptions\ValidationFailed($this->errors);
         }

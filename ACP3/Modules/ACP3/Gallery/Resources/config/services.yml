@@ -59,15 +59,15 @@ services:
 
   gallery.validator.gallery:
     class: %gallery.validator.gallery.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   gallery.validator.picture:
     class: %gallery.validator.picture.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   gallery.validator.settings:
     class: %gallery.validator.settings.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules']
+    arguments: ['@core.lang', @core.validator, '@core.modules']
 
   gallery.installer.schema:
     class: %gallery.installer.schema.fqdn%

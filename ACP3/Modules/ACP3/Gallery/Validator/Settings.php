@@ -17,17 +17,15 @@ class Settings extends Core\Validator\AbstractValidator
     /**
      * @param Core\Lang                      $lang
      * @param \ACP3\Core\Validator\Validator $validator
-     * @param Core\Validator\Rules\Misc      $validate
      * @param Core\Modules                   $modules
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Validator $validator,
-        Core\Validator\Rules\Misc $validate,
         Core\Modules $modules
     )
     {
-        parent::__construct($lang, $validator, $validate);
+        parent::__construct($lang, $validator);
 
         $this->modules = $modules;
     }

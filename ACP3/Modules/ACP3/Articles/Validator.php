@@ -17,16 +17,14 @@ class Validator extends Core\Validator\AbstractValidator
      *
      * @param \ACP3\Core\Lang                 $lang
      * @param \ACP3\Core\Validator\Validator  $validator
-     * @param \ACP3\Core\Validator\Rules\Misc $validate
      * @param \ACP3\Core\ACL                  $acl
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Validator $validator,
-        Core\Validator\Rules\Misc $validate,
         Core\ACL $acl)
     {
-        parent::__construct($lang, $validator, $validate);
+        parent::__construct($lang, $validator);
 
         $this->acl = $acl;
     }

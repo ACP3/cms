@@ -42,7 +42,7 @@ services:
 
   news.validator:
     class: %news.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules']
+    arguments: ['@core.lang', @core.validator, '@core.modules']
 
   news.validator.validation_rules.external_link_validation_rule:
     class: %news.validator.validation_rules.external_link_validation_rule.fqdn%

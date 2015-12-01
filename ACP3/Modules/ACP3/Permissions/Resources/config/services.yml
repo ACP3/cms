@@ -56,11 +56,11 @@ services:
 
   permissions.validator.role:
     class: %permissions.validator.role.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   permissions.validator.resource:
     class: %permissions.validator.resource.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc']
+    parent: core.validator.abstract
 
   permissions.validator.validation_rules.privilege_exists_validation_rule:
     class: %permissions.validator.validation_rules.privilege_exists_validation_rule.fqdn%

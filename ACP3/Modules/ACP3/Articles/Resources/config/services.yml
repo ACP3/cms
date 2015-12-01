@@ -49,7 +49,7 @@ services:
 
   articles.validator:
     class: %articles.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.acl']
+    arguments: ['@core.lang', @core.validator, '@core.acl']
 
   articles.validator.validation_rules.article_exists_validation_rule:
     class: %articles.validator.validation_rules.article_exists_validation_rule.fqdn%

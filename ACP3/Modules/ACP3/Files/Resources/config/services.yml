@@ -41,7 +41,7 @@ services:
 
   files.validator:
     class: %files.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules']
+    arguments: ['@core.lang', @core.validator, '@core.modules']
 
   files.validator.validation_rules.is_external_file_validation_rule:
     class: %files.validator.validation_rules.is_external_file_validation_rule.fqdn%

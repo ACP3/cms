@@ -11,38 +11,6 @@ use ACP3\Modules\ACP3\Seo\Validator\ValidationRules\UriAliasValidationRule;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
-     * @var Core\Validator\Rules\Router
-     */
-    protected $routerValidator;
-    /**
-     * @var Core\Validator\Rules\Router\Aliases
-     */
-    protected $aliasesValidator;
-
-    /**
-     * Validator constructor.
-     *
-     * @param \ACP3\Core\Lang                           $lang
-     * @param \ACP3\Core\Validator\Validator            $validator
-     * @param \ACP3\Core\Validator\Rules\Misc           $validate
-     * @param \ACP3\Core\Validator\Rules\Router         $routerValidator
-     * @param \ACP3\Core\Validator\Rules\Router\Aliases $aliasesValidator
-     */
-    public function __construct(
-        Core\Lang $lang,
-        Core\Validator\Validator $validator,
-        Core\Validator\Rules\Misc $validate,
-        Core\Validator\Rules\Router $routerValidator,
-        Core\Validator\Rules\Router\Aliases $aliasesValidator)
-    {
-        parent::__construct($lang, $validator, $validate);
-
-        $this->routerValidator = $routerValidator;
-        $this->aliasesValidator = $aliasesValidator;
-
-    }
-
-    /**
      * @param array  $formData
      * @param string $uriAlias
      *

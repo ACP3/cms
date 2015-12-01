@@ -21,17 +21,15 @@ class Validator extends Core\Validator\AbstractValidator
      *
      * @param \ACP3\Core\Lang                                        $lang
      * @param \ACP3\Core\Validator\Validator                         $validator
-     * @param \ACP3\Core\Validator\Rules\Misc                        $validate
      * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Lang $lang,
         Core\Validator\Validator $validator,
-        Core\Validator\Rules\Misc $validate,
         CategoryRepository $categoryRepository
     )
     {
-        parent::__construct($lang, $validator, $validate);
+        parent::__construct($lang, $validator);
 
         $this->categoryRepository = $categoryRepository;
     }

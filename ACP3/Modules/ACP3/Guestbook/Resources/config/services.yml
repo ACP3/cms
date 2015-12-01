@@ -28,7 +28,7 @@ services:
 
   guestbook.validator:
     class: %guestbook.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.validator.rules.misc', '@core.modules']
+    arguments: ['@core.lang', @core.validator, '@core.modules']
 
   guestbook.validator.validation_rules.flood_barrier_validation_rule:
     class: %guestbook.validator.validation_rules.flood_barrier_validation_rule.fqdn%
