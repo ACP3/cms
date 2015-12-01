@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Captcha\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 
 /**
  * Class Index

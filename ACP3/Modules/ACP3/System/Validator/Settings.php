@@ -3,7 +3,6 @@ namespace ACP3\Modules\ACP3\System\Validator;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Validator\ValidationRules\IsWysiwygEditorValidationRule;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Settings

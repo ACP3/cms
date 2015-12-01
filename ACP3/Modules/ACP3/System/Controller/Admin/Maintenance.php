@@ -4,7 +4,6 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Class Maintenance

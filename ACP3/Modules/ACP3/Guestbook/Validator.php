@@ -3,7 +3,6 @@ namespace ACP3\Modules\ACP3\Guestbook;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
-use ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository;
 use ACP3\Modules\ACP3\Guestbook\Validator\ValidationRules\FloodBarrierValidationRule;
 use ACP3\Modules\ACP3\Newsletter;
 

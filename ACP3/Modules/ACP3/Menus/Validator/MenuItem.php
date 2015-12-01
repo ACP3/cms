@@ -3,7 +3,6 @@ namespace ACP3\Modules\ACP3\Menus\Validator;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
-use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Validator\ValidationRules\AllowedMenuValidationRule;
 use ACP3\Modules\ACP3\Menus\Validator\ValidationRules\LinkModeValidationRule;
 use ACP3\Modules\ACP3\Menus\Validator\ValidationRules\ParentIdValidationRule;

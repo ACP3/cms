@@ -4,8 +4,8 @@ namespace ACP3\Modules\ACP3\Users\Controller;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha;
-use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Users;
 
 /**
  * Class Index

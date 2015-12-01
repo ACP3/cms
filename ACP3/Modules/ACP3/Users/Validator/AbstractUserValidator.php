@@ -2,9 +2,9 @@
 namespace ACP3\Modules\ACP3\Users\Validator;
 
 use ACP3\Core;
+use ACP3\Core\Validator\ValidationRules\BirthdayValidationRule;
 use ACP3\Modules\ACP3\Users\Validator\ValidationRules\AccountNotExistsByEmailValidationRule;
 use ACP3\Modules\ACP3\Users\Validator\ValidationRules\AccountNotExistsByNameValidationRule;
-use ACP3\Core\Validator\ValidationRules\BirthdayValidationRule;
 use ACP3\Modules\ACP3\Users\Validator\ValidationRules\IcqNumberValidationRule;
 
 /**

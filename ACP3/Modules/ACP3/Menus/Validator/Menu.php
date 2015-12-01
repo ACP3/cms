@@ -2,7 +2,6 @@
 namespace ACP3\Modules\ACP3\Menus\Validator;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
 use ACP3\Modules\ACP3\Menus\Validator\ValidationRules\MenuExistsValidationRule;
 use ACP3\Modules\ACP3\Menus\Validator\ValidationRules\MenuNameValidationRule;
 

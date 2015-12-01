@@ -2,7 +2,6 @@
 namespace ACP3\Modules\ACP3\Permissions\Validator;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\PrivilegesExistValidationRule;
 use ACP3\Modules\ACP3\Permissions\Validator\ValidationRules\RoleNotExistsValidationRule;
 

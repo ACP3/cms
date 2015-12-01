@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook;

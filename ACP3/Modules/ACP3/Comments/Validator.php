@@ -3,7 +3,6 @@ namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule;
-use ACP3\Modules\ACP3\Comments\Model\CommentRepository;
 use ACP3\Modules\ACP3\Comments\Validator\ValidationRules\FloodBarrierValidationRule;
 
 /**
