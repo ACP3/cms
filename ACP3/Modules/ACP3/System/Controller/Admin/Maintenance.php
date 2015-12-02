@@ -57,7 +57,7 @@ class Maintenance extends Core\Modules\AdminController
             $data = explode('||', $file);
             if (count($data) === 2) {
                 $update = [
-                    'installed_version' => Core\ApplicationInterface::VERSION,
+                    'installed_version' => Core\Application\BootstrapInterface::VERSION,
                     'current_version' => $data[0],
                 ];
 

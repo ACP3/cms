@@ -1,16 +1,18 @@
 <?php
-namespace ACP3\Core;
+namespace ACP3\Core\Application;
 
+use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Enum\Environment;
+use ACP3\Core\ErrorHandler;
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 
 /**
- * Class AbstractApplication
- * @package ACP3\Core
+ * Class AbstractBootstrap
+ * @package ACP3\Core\Application
  */
-abstract class AbstractApplication implements ApplicationInterface
+abstract class AbstractBootstrap implements BootstrapInterface
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface

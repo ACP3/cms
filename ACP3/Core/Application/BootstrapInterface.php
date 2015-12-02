@@ -1,11 +1,11 @@
 <?php
-namespace ACP3\Core;
+namespace ACP3\Core\Application;
 
 /**
- * Interface ApplicationInterface
- * @package ACP3\Core
+ * Interface BootstrapInterface
+ * @package ACP3\Core\Application
  */
-interface ApplicationInterface
+interface BootstrapInterface
 {
     /**
      * Contains the current ACP3 version string

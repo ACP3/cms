@@ -1,11 +1,16 @@
 <?php
 
-namespace ACP3\Core;
+namespace ACP3\Core\Application;
 
+use ACP3\Core\Application\AbstractBootstrap;
 use ACP3\Core\Enum\Environment;
+use ACP3\Core\Exceptions;
+use ACP3\Core\FrontController;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Logger as ACP3Logger;
+use ACP3\Core\Redirect;
+use ACP3\Core\ServiceContainerBuilder;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,9 +18,9 @@ use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
 /**
  * Bootstraps the application
- * @package ACP3
+ * @package ACP3\Core\Application
  */
-class Application extends AbstractApplication
+class Bootstrap extends AbstractBootstrap
 {
     /**
      * @var array

@@ -1,7 +1,7 @@
 <?php
 namespace kcfinder\cms;
 
-use ACP3\Core\Application;
+use ACP3\Core\Application\Bootstrap;
 
 /**
  * Class ACP3
@@ -27,7 +27,7 @@ class ACP3
 
             require_once ACP3_ROOT_DIR . 'vendor/autoload.php';
 
-            $application = new Application();
+            $application = new Bootstrap();
             $application->defineDirConstants();
             if ($application->startupChecks()) {
                 $application->initializeClasses();

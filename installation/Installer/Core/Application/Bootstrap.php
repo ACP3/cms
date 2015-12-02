@@ -1,17 +1,18 @@
 <?php
 
-namespace ACP3\Installer\Core;
+namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core;
+use ACP3\Installer\Core\FrontController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * Class Application
- * @package ACP3\Installer
+ * Class Bootstrap
+ * @package ACP3\Installer\Core\Application
  */
-class Application extends Core\AbstractApplication
+class Bootstrap extends Core\Application\AbstractBootstrap
 {
     /**
      * @inheritdoc

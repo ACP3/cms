@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+use ACP3\Core\Application\Bootstrap;
 
 /**
  * Parses XML files
@@ -37,7 +38,7 @@ class XML
                         if ($value->attributes()) {
                             foreach ($value->attributes() as $attrKey => $attrValue) {
                                 if ($key === 'version' && $attrKey === 'core' && (string)$attrValue === 'true') {
-                                    $this->info[$path][$xpath]['version'] = Application::VERSION;
+                                    $this->info[$path][$xpath]['version'] = Bootstrap::VERSION;
                                 } else {
                                     $this->info[$path][$xpath][(string)$key][(string)$attrKey] = (string)$attrValue;
                                 }
