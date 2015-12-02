@@ -16,7 +16,7 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="polls|question"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="polls|question"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">

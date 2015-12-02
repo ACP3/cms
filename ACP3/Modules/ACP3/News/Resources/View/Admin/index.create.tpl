@@ -18,7 +18,7 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="news|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="news|title"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
@@ -30,7 +30,7 @@
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250"}</div>
                     </div>
                     <div class="form-group">
-                        <label for="cat" class="col-sm-2 control-label">{lang t="categories|category"}</label>
+                        <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
 
                         <div class="col-sm-10">{$categories}</div>
                     </div>

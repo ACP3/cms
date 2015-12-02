@@ -25,7 +25,7 @@
             <div class="col-sm-10"><input type="file" id="picture" name="picture"></div>
         </div>
         <div class="form-group">
-            <label for="module" class="col-sm-2 control-label">{lang t="categories|module"}</label>
+            <label for="module" class="col-sm-2 control-label required">{lang t="categories|module"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="module" id="module">

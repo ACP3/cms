@@ -1,6 +1,6 @@
 <div id="create-menu-item-container">
     <div class="form-group">
-        <label for="block-id" class="col-sm-2 control-label">{lang t="menus|menu_bar"}</label>
+        <label for="block-id" class="col-sm-2 control-label required">{lang t="menus|menu_bar"}</label>
 
         <div class="col-sm-10">
             <select class="form-control" name="block_id" id="block-id">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="parent-id" class="col-sm-2 control-label">{lang t="menus|superior_page"}</label>
+        <label for="parent-id" class="col-sm-2 control-label required">{lang t="menus|superior_page"}</label>
 
         <div class="col-sm-10">
             <select class="form-control" name="parent_id" id="parent-id">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="{$display.0.id}" class="col-sm-2 control-label">{lang t="menus|display_item"}</label>
+        <label for="{$display.0.id}" class="col-sm-2 control-label required">{lang t="menus|display_item"}</label>
 
         <div class="col-sm-10">
             <div class="btn-group" data-toggle="buttons">

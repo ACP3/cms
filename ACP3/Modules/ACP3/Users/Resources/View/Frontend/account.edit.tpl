@@ -15,7 +15,7 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="nickname" class="col-sm-2 control-label">{lang t="users|nickname"}</label>
+                        <label for="nickname" class="col-sm-2 control-label required">{lang t="users|nickname"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30">

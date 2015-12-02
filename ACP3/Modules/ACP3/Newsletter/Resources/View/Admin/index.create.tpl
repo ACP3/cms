@@ -24,7 +24,7 @@
             </div>
         </div>
         <div id="test-newsletter" class="form-group">
-            <label for="test-1" class="col-sm-2 control-label">{lang t="newsletter|test_newsletter"}</label>
+            <label for="test-1" class="col-sm-2 control-label required">{lang t="newsletter|test_newsletter"}</label>
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
                     {foreach $test as $row}

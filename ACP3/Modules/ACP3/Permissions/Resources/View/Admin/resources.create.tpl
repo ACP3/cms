@@ -6,7 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="modules" class="col-sm-2 control-label">{lang t="system|module"}</label>
+            <label for="modules" class="col-sm-2 control-label required">{lang t="system|module"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="modules" id="modules">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="privileges" class="col-sm-2 control-label">{lang t="permissions|assigned_privilege"}</label>
+            <label for="privileges" class="col-sm-2 control-label required">{lang t="permissions|assigned_privilege"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="privileges" id="privileges">

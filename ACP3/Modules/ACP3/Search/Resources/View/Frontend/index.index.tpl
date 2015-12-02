@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">{lang t="search|search_after_modules"}</label>
+            <label class="col-sm-2 control-label required">{lang t="search|search_after_modules"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$search_areas.0.id}" class="col-sm-2 control-label">{lang t="search|search_after_areas"}</label>
+            <label for="{$search_areas.0.id}" class="col-sm-2 control-label required">{lang t="search|search_after_areas"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$sort_hits.0.id}" class="col-sm-2 control-label">{lang t="search|sort_hits"}</label>
+            <label for="{$sort_hits.0.id}" class="col-sm-2 control-label required">{lang t="search|sort_hits"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">

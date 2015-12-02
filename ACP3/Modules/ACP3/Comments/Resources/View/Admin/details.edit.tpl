@@ -10,7 +10,8 @@
                 <label for="name" class="col-sm-2 control-label required">{lang t="system|name"}</label>
 
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="name" id="name" value="{$form.name}" required></div>
+                    <input class="form-control" type="text" name="name" id="name" value="{$form.name}" required>
+                </div>
             </div>
         {/if}
         <div class="form-group">

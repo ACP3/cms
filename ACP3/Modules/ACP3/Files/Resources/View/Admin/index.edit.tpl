@@ -17,7 +17,7 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="files|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="files|title"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div id="external-filesize" class="form-group">
-                        <label for="filesize" class="col-sm-2 control-label">{lang t="files|filesize"}</label>
+                        <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
 
                         <div class="col-sm-10">
                             <div class="row">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label">{lang t="system|description"}</label>
+                        <label for="text" class="col-sm-2 control-label required">{lang t="system|description"}</label>
 
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="200" toolbar="simple"}</div>
                     </div>

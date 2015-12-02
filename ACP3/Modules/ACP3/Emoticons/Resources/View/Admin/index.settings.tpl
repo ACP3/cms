@@ -6,7 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="width" class="col-sm-2 control-label">{lang t="emoticons|image_width"}</label>
+            <label for="width" class="col-sm-2 control-label required">{lang t="emoticons|image_width"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="number" name="width" id="width" value="{$form.width}">
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="height" class="col-sm-2 control-label">{lang t="emoticons|image_height"}</label>
+            <label for="height" class="col-sm-2 control-label required">{lang t="emoticons|image_height"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="number" name="height" id="height" value="{$form.height}">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="filesize" class="col-sm-2 control-label">{lang t="emoticons|image_filesize"}</label>
+            <label for="filesize" class="col-sm-2 control-label required">{lang t="emoticons|image_filesize"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}">

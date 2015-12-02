@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="privileges" class="col-sm-2 control-label">{lang t="permissions|assigned_privilege"}</label>
+            <label for="privileges" class="col-sm-2 control-label required">{lang t="permissions|assigned_privilege"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="privileges" id="privileges">

@@ -6,13 +6,13 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="code" class="col-sm-2 control-label">{lang t="emoticons|code"}</label>
+            <label for="code" class="col-sm-2 control-label required">{lang t="emoticons|code"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="code" id="code" value="{$form.code}" maxlength="10"></div>
         </div>
         <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">{lang t="system|description"}</label>
+            <label for="description" class="col-sm-2 control-label required">{lang t="system|description"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="description" id="description" value="{$form.description}" maxlength="15">
