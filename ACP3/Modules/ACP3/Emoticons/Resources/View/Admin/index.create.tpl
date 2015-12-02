@@ -18,11 +18,13 @@
                 <input class="form-control" type="text" name="description" id="description" value="{$form.description}" maxlength="15">
             </div>
         </div>
-        <div class="form-group">
-            <label for="picture" class="col-sm-2 control-label required">{lang t="emoticons|picture"}</label>
+        {block EMOTICONS_PICTURE_UPLOAD}
+            <div class="form-group">
+                <label for="picture" class="col-sm-2 control-label required">{lang t="emoticons|picture"}</label>
 
-            <div class="col-sm-10"><input type="file" name="picture" id="picture"></div>
-        </div>
+                <div class="col-sm-10"><input type="file" name="picture" id="picture"></div>
+            </div>
+        {/block}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
