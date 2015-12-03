@@ -30,7 +30,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Validator
+     * @var \ACP3\Modules\ACP3\Comments\Validation\Validator
      */
     protected $commentsValidator;
     /**
@@ -55,7 +55,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Core\Pagination                               $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validator               $commentsValidator
+     * @param \ACP3\Modules\ACP3\Comments\Validation\Validator    $commentsValidator
      * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      */
     public function __construct(
@@ -63,7 +63,7 @@ class Index extends Core\Modules\FrontendController
         Core\Date $date,
         Core\Pagination $pagination,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validator $commentsValidator,
+        Comments\Validation\Validator $commentsValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

@@ -28,7 +28,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $answerRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Validator
+     * @var \ACP3\Modules\ACP3\Polls\Validation\Validator
      */
     protected $pollsValidator;
     /**
@@ -43,7 +43,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
-     * @param \ACP3\Modules\ACP3\Polls\Validator              $pollsValidator
+     * @param \ACP3\Modules\ACP3\Polls\Validation\Validator   $pollsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -52,7 +52,7 @@ class Index extends Core\Modules\AdminController
         Polls\Model\PollRepository $pollRepository,
         Polls\Model\AnswerRepository $answerRepository,
         Polls\Model\VoteRepository $voteRepository,
-        Polls\Validator $pollsValidator)
+        Polls\Validation\Validator $pollsValidator)
     {
         parent::__construct($context);
 

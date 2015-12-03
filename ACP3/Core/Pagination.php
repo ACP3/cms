@@ -2,7 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Validator\Rules\Misc;
+use ACP3\Core\Validation\Rules\Misc;
 
 /**
  * Class Pagination

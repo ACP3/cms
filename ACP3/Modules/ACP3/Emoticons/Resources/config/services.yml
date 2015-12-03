@@ -3,7 +3,7 @@ parameters:
   emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
   emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
-  emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validator'
+  emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\Validator'
   emoticons.installer.sampledata.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\SampleData'
   emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
   emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'

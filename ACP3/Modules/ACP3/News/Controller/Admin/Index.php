@@ -30,7 +30,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $newsCache;
     /**
-     * @var \ACP3\Modules\ACP3\News\Validator
+     * @var \ACP3\Modules\ACP3\News\Validation\Validator
      */
     protected $newsValidator;
     /**
@@ -48,7 +48,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Helpers\FormToken                 $formTokenHelper
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
      * @param \ACP3\Modules\ACP3\News\Cache                $newsCache
-     * @param \ACP3\Modules\ACP3\News\Validator            $newsValidator
+     * @param \ACP3\Modules\ACP3\News\Validation\Validator $newsValidator
      * @param \ACP3\Modules\ACP3\Categories\Helpers        $categoriesHelpers
      */
     public function __construct(
@@ -57,7 +57,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
-        News\Validator $newsValidator,
+        News\Validation\Validator $newsValidator,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);

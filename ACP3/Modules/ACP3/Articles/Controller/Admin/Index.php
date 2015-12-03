@@ -25,7 +25,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $articlesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Validator
+     * @var \ACP3\Modules\ACP3\Articles\Validation\Validator
      */
     protected $articlesValidator;
     /**
@@ -54,7 +54,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
-     * @param \ACP3\Modules\ACP3\Articles\Validator               $articlesValidator
+     * @param \ACP3\Modules\ACP3\Articles\Validation\Validator    $articlesValidator
      * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      */
     public function __construct(
@@ -62,7 +62,7 @@ class Index extends Core\Modules\AdminController
         Core\Date $date,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
-        Articles\Validator $articlesValidator,
+        Articles\Validation\Validator $articlesValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

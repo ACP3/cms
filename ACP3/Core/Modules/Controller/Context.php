@@ -2,13 +2,13 @@
 namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core\ACL;
-use ACP3\Core\User;
 use ACP3\Core\Config;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Lang;
 use ACP3\Core\Modules;
 use ACP3\Core\Router;
-use ACP3\Core\Validator\Validator;
+use ACP3\Core\User;
+use ACP3\Core\Validation\Validator;
 use ACP3\Core\View;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -47,7 +47,7 @@ class Context
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validator\Validator
+     * @var \ACP3\Core\Validation\Validator
      */
     protected $validator;
     /**
@@ -69,7 +69,7 @@ class Context
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\Router                                           $router
-     * @param \ACP3\Core\Validator\Validator                              $validator
+     * @param \ACP3\Core\Validation\Validator                             $validator
      * @param \ACP3\Core\View                                             $view
      * @param \ACP3\Core\Config                                           $config
      */
@@ -155,7 +155,7 @@ class Context
     }
 
     /**
-     * @return \ACP3\Core\Validator\Validator
+     * @return \ACP3\Core\Validation\Validator
      */
     public function getValidator()
     {

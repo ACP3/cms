@@ -2,7 +2,7 @@ parameters:
   search.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Index'
   search.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Sidebar\Index'
   search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
-  search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validator'
+  search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validation\Validator'
   search.installer.schema.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Schema'
   search.installer.migration.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Migration'
 

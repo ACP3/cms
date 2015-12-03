@@ -3,7 +3,7 @@ parameters:
   captcha.helpers.fqdn: 'ACP3\Modules\ACP3\Captcha\Helpers'
   captcha.installer.schema.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Schema'
   captcha.installer.migration.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Migration'
-  captcha.validator.validation_rules.captcha_validation_rule.fqdn: 'ACP3\Modules\ACP3\Captcha\Validator\ValidationRules\CaptchaValidationRule'
+  captcha.validation.validation_rules.captcha_validation_rule.fqdn: 'ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule'
 
 services:
   captcha.controller.frontend.index:
@@ -20,8 +20,8 @@ services:
   captcha.installer.migration:
     class: %captcha.installer.migration.fqdn%
 
-  captcha.validator.validation_rules.captcha_validation_rule:
-    class: %captcha.validator.validation_rules.captcha_validation_rule.fqdn%
+  captcha.validation.validation_rules.captcha_validation_rule:
+    class: %captcha.validation.validation_rules.captcha_validation_rule.fqdn%
     arguments: [@core.acl, @core.request, @core.router, @core.session, @core.user]
     tags:
-      - { name: core.validator.validation_rule }
+      - { name: core.validation.validation_rule }

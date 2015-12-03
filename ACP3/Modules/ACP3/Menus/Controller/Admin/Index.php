@@ -32,7 +32,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Validator\Menu
+     * @var \ACP3\Modules\ACP3\Menus\Validation\Menu
      */
     protected $menusValidator;
     /**
@@ -48,7 +48,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository     $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
-     * @param \ACP3\Modules\ACP3\Menus\Validator\Menu           $menusValidator
+     * @param \ACP3\Modules\ACP3\Menus\Validation\Menu          $menusValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +58,7 @@ class Index extends Core\Modules\AdminController
         Menus\Model\MenuRepository $menuRepository,
         Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
-        Menus\Validator\Menu $menusValidator)
+        Menus\Validation\Menu $menusValidator)
     {
         parent::__construct($context);
 

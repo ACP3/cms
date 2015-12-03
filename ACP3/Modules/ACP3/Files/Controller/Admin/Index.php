@@ -31,7 +31,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $filesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Validator
+     * @var \ACP3\Modules\ACP3\Files\Validation\Validator
      */
     protected $filesValidator;
     /**
@@ -49,7 +49,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Helpers\FormToken                   $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
-     * @param \ACP3\Modules\ACP3\Files\Validator             $filesValidator
+     * @param \ACP3\Modules\ACP3\Files\Validation\Validator  $filesValidator
      * @param \ACP3\Modules\ACP3\Categories\Helpers          $categoriesHelpers
      */
     public function __construct(
@@ -58,7 +58,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
-        Files\Validator $filesValidator,
+        Files\Validation\Validator $filesValidator,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);

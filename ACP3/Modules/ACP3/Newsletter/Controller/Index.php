@@ -25,7 +25,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $accountStatusHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Validator
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\Validator
      */
     protected $newsletterValidator;
     /**
@@ -38,14 +38,14 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe     $subscribeHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validator            $newsletterValidator
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\Validator $newsletterValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\Subscribe $subscribeHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
-        Newsletter\Validator $newsletterValidator)
+        Newsletter\Validation\Validator $newsletterValidator)
     {
         parent::__construct($context);
 

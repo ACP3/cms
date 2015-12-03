@@ -8,9 +8,9 @@ parameters:
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn: 'ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer'
   gallery.model.galleryrepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\GalleryRepository'
   gallery.model.picturerepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\PictureRepository'
-  gallery.validator.gallery.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator\Gallery'
-  gallery.validator.picture.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator\Picture'
-  gallery.validator.settings.fqdn: 'ACP3\Modules\ACP3\Gallery\Validator\Settings'
+  gallery.validator.gallery.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\Gallery'
+  gallery.validator.picture.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\Picture'
+  gallery.validator.settings.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\Settings'
   gallery.installer.schema.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Schema'
   gallery.installer.migration.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Migration'
 

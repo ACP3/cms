@@ -2,7 +2,7 @@ parameters:
   contact.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Admin\Index'
   contact.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Index'
   contact.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Sidebar\Index'
-  contact.validator.fqdn: 'ACP3\Modules\ACP3\Contact\Validator'
+  contact.validator.fqdn: 'ACP3\Modules\ACP3\Contact\Validation\Validator'
   contact.installer.schema.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Schema'
   contact.installer.migration.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Migration'
 

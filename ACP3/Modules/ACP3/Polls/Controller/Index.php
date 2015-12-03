@@ -160,7 +160,7 @@ class Index extends Core\Modules\FrontendController
             }
 
             foreach ($answers as $answer) {
-                if ($this->validator->is(Core\Validator\ValidationRules\IntegerValidationRule::NAME, $answer) === true) {
+                if ($this->validator->is(Core\Validation\ValidationRules\IntegerValidationRule::NAME, $answer) === true) {
                     $insertValues = [
                         'poll_id' => $id,
                         'answer_id' => $answer,

@@ -34,7 +34,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $userRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validator\Register
+     * @var \ACP3\Modules\ACP3\Users\Validation\Register
      */
     protected $usersValidator;
     /**
@@ -57,7 +57,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                     $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validator\Register   $usersValidator
+     * @param \ACP3\Modules\ACP3\Users\Validation\Register  $usersValidator
      * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
      * @param \ACP3\Core\Helpers\SendEmail                  $sendEmail
      */
@@ -68,7 +68,7 @@ class Index extends Core\Modules\FrontendController
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UserRepository $userRepository,
-        Users\Validator\Register $usersValidator,
+        Users\Validation\Register $usersValidator,
         Permissions\Helpers $permissionsHelpers,
         Core\Helpers\SendEmail $sendEmail)
     {
@@ -257,7 +257,7 @@ class Index extends Core\Modules\FrontendController
                 $host = $this->request->getHostname();
 
                 // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                if ($this->get('core.validator.validation_rules.email_validation_rule')->isValid($formData['nick_mail']) === true &&
+                if ($this->get('core.validation.validation_rules.email_validation_rule')->isValid($formData['nick_mail']) === true &&
                     $this->userRepository->resultExistsByEmail($formData['nick_mail']) === true
                 ) {
                     $user = $this->userRepository->getOneByEmail($formData['nick_mail']);

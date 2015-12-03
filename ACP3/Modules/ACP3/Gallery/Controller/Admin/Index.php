@@ -32,11 +32,11 @@ class Index extends Core\Modules\AdminController
      */
     protected $galleryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validator\Gallery
+     * @var \ACP3\Modules\ACP3\Gallery\Validation\Gallery
      */
     protected $galleryValidator;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validator\Settings
+     * @var \ACP3\Modules\ACP3\Gallery\Validation\Settings
      */
     protected $settingsValidator;
     /**
@@ -52,8 +52,8 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Validator\Gallery       $galleryValidator
-     * @param \ACP3\Modules\ACP3\Gallery\Validator\Settings      $settingsValidator
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\Gallery      $galleryValidator
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\Settings     $settingsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -63,8 +63,8 @@ class Index extends Core\Modules\AdminController
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryRepository $galleryRepository,
         Gallery\Model\PictureRepository $pictureRepository,
-        Gallery\Validator\Gallery $galleryValidator,
-        Gallery\Validator\Settings $settingsValidator)
+        Gallery\Validation\Gallery $galleryValidator,
+        Gallery\Validation\Settings $settingsValidator)
     {
         parent::__construct($context);
 

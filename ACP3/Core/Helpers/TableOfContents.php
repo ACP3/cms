@@ -30,7 +30,7 @@ class TableOfContents
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validator\ValidationRules\IntegerValidationRule
+     * @var \ACP3\Core\Validation\ValidationRules\IntegerValidationRule
      */
     protected $integerValidationRule;
     /**
@@ -41,13 +41,13 @@ class TableOfContents
     /**
      * TableOfContents constructor.
      *
-     * @param \ACP3\Core\Breadcrumb                                      $breadcrumb
-     * @param \ACP3\Core\Lang                                            $lang
-     * @param \ACP3\Core\SEO                                             $seo
-     * @param \ACP3\Core\Http\RequestInterface                           $request
-     * @param \ACP3\Core\Router                                          $router
-     * @param \ACP3\Core\Validator\ValidationRules\IntegerValidationRule $integerValidationRule
-     * @param \ACP3\Core\View                                            $view
+     * @param \ACP3\Core\Breadcrumb                                       $breadcrumb
+     * @param \ACP3\Core\Lang                                             $lang
+     * @param \ACP3\Core\SEO                                              $seo
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\Router                                           $router
+     * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
+     * @param \ACP3\Core\View                                             $view
      */
     public function __construct(
         Core\Breadcrumb $breadcrumb,
@@ -55,7 +55,7 @@ class TableOfContents
         Core\SEO $seo,
         Core\Http\RequestInterface $request,
         Core\Router $router,
-        Core\Validator\ValidationRules\IntegerValidationRule $integerValidationRule,
+        Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
         Core\View $view
     )
     {

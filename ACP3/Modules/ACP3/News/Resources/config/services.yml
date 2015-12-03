@@ -7,8 +7,8 @@ parameters:
   news.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Sidebar\Index'
   news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
   news.model.newsrepository.fqdn: 'ACP3\Modules\ACP3\News\Model\NewsRepository'
-  news.validator.fqdn: 'ACP3\Modules\ACP3\News\Validator'
-  news.validator.validation_rules.external_link_validation_rule.fqdn: 'ACP3\Modules\ACP3\News\Validator\ValidationRules\ExternalLinkValidationRule'
+  news.validator.fqdn: 'ACP3\Modules\ACP3\News\Validation\Validator'
+  news.validation.validation_rules.external_link_validation_rule.fqdn: 'ACP3\Modules\ACP3\News\Validation\ValidationRules\ExternalLinkValidationRule'
   news.installer.schema.fqdn: 'ACP3\Modules\ACP3\News\Installer\Schema'
   news.installer.migration.fqdn: 'ACP3\Modules\ACP3\News\Installer\Migration'
   news.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\News\Installer\SampleData'
@@ -44,11 +44,11 @@ services:
     class: %news.validator.fqdn%
     arguments: ['@core.lang', @core.validator, '@core.modules']
 
-  news.validator.validation_rules.external_link_validation_rule:
-    class: %news.validator.validation_rules.external_link_validation_rule.fqdn%
-    arguments: [@core.validator.validation_rules.in_array_validation_rule]
+  news.validation.validation_rules.external_link_validation_rule:
+    class: %news.validation.validation_rules.external_link_validation_rule.fqdn%
+    arguments: [@core.validation.validation_rules.in_array_validation_rule]
     tags:
-      - { name: core.validator.validation_rule }
+      - { name: core.validation.validation_rule }
 
   news.installer.schema:
     class: %news.installer.schema.fqdn%

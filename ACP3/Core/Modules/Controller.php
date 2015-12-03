@@ -44,7 +44,7 @@ abstract class Controller implements ControllerInterface
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validator\Validator
+     * @var \ACP3\Core\Validation\Validator
      */
     protected $validator;
     /**

@@ -18,7 +18,7 @@ class Details extends Core\Modules\AdminController
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Validator
+     * @var \ACP3\Modules\ACP3\Comments\Validation\Validator
      */
     protected $commentsValidator;
     /**
@@ -37,14 +37,14 @@ class Details extends Core\Modules\AdminController
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext          $context
      * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validator               $commentsValidator
+     * @param \ACP3\Modules\ACP3\Comments\Validation\Validator    $commentsValidator
      * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository    $systemModuleRepository
      * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validator $commentsValidator,
+        Comments\Validation\Validator $commentsValidator,
         System\Model\ModuleRepository $systemModuleRepository,
         Core\Helpers\FormToken $formTokenHelper)
     {
@@ -222,7 +222,7 @@ class Details extends Core\Modules\AdminController
 
                 $updateValues = [];
                 $updateValues['message'] = Core\Functions::strEncode($formData['message']);
-                if ((empty($comment['user_id']) || $this->validator->is(Core\Validator\ValidationRules\IntegerValidationRule::NAME, $comment['user_id']) === false) &&
+                if ((empty($comment['user_id']) || $this->validator->is(Core\Validation\ValidationRules\IntegerValidationRule::NAME, $comment['user_id']) === false) &&
                     !empty($formData['name'])
                 ) {
                     $updateValues['name'] = Core\Functions::strEncode($formData['name']);

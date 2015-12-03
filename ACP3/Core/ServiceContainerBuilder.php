@@ -2,7 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
-use ACP3\Core\Validator\DependencyInjection\RegisterValidationRulesPass;
+use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

@@ -24,7 +24,7 @@ class Resources extends Core\Modules\AdminController
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Validator\Resource
+     * @var \ACP3\Modules\ACP3\Permissions\Validation\Resource
      */
     protected $resourceValidator;
 
@@ -33,14 +33,14 @@ class Resources extends Core\Modules\AdminController
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validator\Resource       $resourceValidator
+     * @param \ACP3\Modules\ACP3\Permissions\Validation\Resource      $resourceValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache,
-        Permissions\Validator\Resource $resourceValidator)
+        Permissions\Validation\Resource $resourceValidator)
     {
         parent::__construct($context);
 

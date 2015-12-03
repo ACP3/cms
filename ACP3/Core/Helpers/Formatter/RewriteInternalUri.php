@@ -2,7 +2,7 @@
 namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo\Validator\ValidationRules\UriAliasValidationRule;
+use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class RewriteInternalUri
@@ -23,15 +23,15 @@ class RewriteInternalUri
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Validator\ValidationRules\UriAliasValidationRule
+     * @var \ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule
      */
     protected $uriAliasValidationRule;
 
     /**
-     * @param \ACP3\Core\Modules\Helper\ControllerActionExists                        $controllerActionExists
-     * @param \ACP3\Core\Http\Request                                                 $request
-     * @param \ACP3\Core\Router                                                       $router
-     * @param \ACP3\Modules\ACP3\Seo\Validator\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
+     * @param \ACP3\Core\Modules\Helper\ControllerActionExists                         $controllerActionExists
+     * @param \ACP3\Core\Http\Request                                                  $request
+     * @param \ACP3\Core\Router                                                        $router
+     * @param \ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
      */
     public function __construct(
         Core\Modules\Helper\ControllerActionExists $controllerActionExists,
