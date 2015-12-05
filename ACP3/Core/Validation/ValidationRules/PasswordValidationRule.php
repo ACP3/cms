@@ -18,7 +18,9 @@ class PasswordValidationRule extends AbstractValidationRule
             $password = reset($field);
             $passwordConfirmation = next($field);
 
-            return $this->checkPassword($data[$password], $data[$passwordConfirmation]);
+            if ($password !== false && $passwordConfirmation !== false) {
+                return $this->checkPassword($data[$password], $data[$passwordConfirmation]);
+            }
         }
 
         return false;
