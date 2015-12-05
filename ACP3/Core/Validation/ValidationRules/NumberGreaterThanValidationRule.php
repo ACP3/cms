@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-
 /**
  * Class NumberGreaterThanValidationRule
  * @package ACP3\Core\Validation\ValidationRules

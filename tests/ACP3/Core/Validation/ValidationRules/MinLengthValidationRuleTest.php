@@ -5,6 +5,8 @@ class MinLengthValidationRuleTest extends AbstractValidationRuleTest
     protected function setUp()
     {
         $this->validationRule = new \ACP3\Core\Validation\ValidationRules\MinLengthValidationRule();
+
+        parent::setUp();
     }
 
     /**

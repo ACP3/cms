@@ -6,6 +6,8 @@ class DateValidationRuleTest extends AbstractValidationRuleTest
     protected function setUp()
     {
         $this->validationRule = new \ACP3\Core\Validation\ValidationRules\DateValidationRule();
+
+        parent::setUp();
     }
 
     /**

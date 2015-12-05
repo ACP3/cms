@@ -5,6 +5,8 @@ class InArrayValidationRuleTest extends AbstractValidationRuleTest
     protected function setUp()
     {
         $this->validationRule = new \ACP3\Core\Validation\ValidationRules\InArrayValidationRule();
+
+        parent::setUp();
     }
 
     /**

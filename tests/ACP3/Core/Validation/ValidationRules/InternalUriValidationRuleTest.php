@@ -6,6 +6,8 @@ class InternalUriValidationRuleTest extends AbstractValidationRuleTest
     protected function setUp()
     {
         $this->validationRule = new \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule();
+
+        parent::setUp();
     }
 
     /**

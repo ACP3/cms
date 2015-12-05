@@ -6,6 +6,8 @@ class IntegerValidationRuleTest extends AbstractValidationRuleTest
     protected function setUp()
     {
         $this->validationRule = new \ACP3\Core\Validation\ValidationRules\IntegerValidationRule();
+
+        parent::setUp();
     }
 
     /**

@@ -6,6 +6,8 @@ class EmailValidationRuleTest extends AbstractValidationRuleTest
     protected function setUp()
     {
         $this->validationRule = new \ACP3\Core\Validation\ValidationRules\EmailValidationRule();
+
+        parent::setUp();
     }
 
     /**
