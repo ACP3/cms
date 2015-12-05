@@ -7,6 +7,9 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
+    const CELL_TYPE = 'td';
+    const NAME = '';
+
     /**
      * @var string
      */

@@ -7,9 +7,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 interface ColumnRendererInterface
 {
-    const CELL_TYPE = 'td';
-    const NAME = '';
-
     /**
      * @param array $column
      * @param array $dbResultRow
