@@ -18,6 +18,10 @@ class InArrayValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
+        if (empty($extra['haystack']) || is_array($extra['haystack']) === false) {
+            return false;
+        }
+
         return $this->checkInArray($data, $extra['haystack']);
     }
 

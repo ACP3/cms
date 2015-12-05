@@ -153,6 +153,8 @@ abstract class AbstractColumnRendererTest extends PHPUnit_Framework_TestCase
 
     public function testGetType()
     {
+        $this->assertNotEmpty($this->columnRenderer->getName());
+
         /** @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer $className */
         $className = get_class($this->columnRenderer);
         $this->assertEquals($className::NAME, $this->columnRenderer->getName());
