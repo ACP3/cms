@@ -40,8 +40,8 @@ class DateValidationRule extends AbstractValidationRule
     {
         if ($this->matchIsDate($start)) {
             // Check date range
-            if ($end !== null && $this->matchIsDate($end) && strtotime($start) <= strtotime($end)) {
-                return true;
+            if ($end !== null && $this->matchIsDate($end)) {
+                return strtotime($start) <= strtotime($end);
             }
 
             return true;
