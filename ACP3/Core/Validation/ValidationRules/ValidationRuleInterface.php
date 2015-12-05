@@ -9,8 +9,6 @@ use ACP3\Core\Validation\Validator;
  */
 interface ValidationRuleInterface
 {
-    const NAME = '';
-
     /**
      * @return string
      */
