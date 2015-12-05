@@ -5,7 +5,7 @@ parameters:
   polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
   polls.model.answerrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\AnswerRepository'
   polls.model.voterepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\VoteRepository'
-  polls.validator.fqdn: 'ACP3\Modules\ACP3\Polls\Validation\Validator'
+  polls.validator.fqdn: 'ACP3\Modules\ACP3\Polls\Validation\FormValidation'
   polls.validation.validation_rules.at_least_two_answers_validation_rule.fqdn: 'ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AtLeastTwoAnswersValidationRule'
   polls.validation.validation_rules.delete_all_answers_validation_rule.fqdn: 'ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidationRule'
   polls.installer.schema.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Schema'

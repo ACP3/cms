@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule;
  * Class Menu
  * @package ACP3\Modules\ACP3\Menus\Validator
  */
-class Menu extends Core\Validation\AbstractValidator
+class Menu extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

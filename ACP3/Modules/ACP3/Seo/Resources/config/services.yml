@@ -2,7 +2,7 @@ parameters:
   seo.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index'
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
   seo.model.seorepository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\SeoRepository'
-  seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\Validator'
+  seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\FormValidation'
   seo.validation.validation_rules.uri_alias_validation_rule.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule'
   seo.installer.schema.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Schema'
   seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'

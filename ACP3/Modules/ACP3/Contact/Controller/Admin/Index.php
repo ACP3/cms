@@ -16,19 +16,19 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Contact\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
      */
     protected $contactValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext      $context
-     * @param \ACP3\Core\Helpers\FormToken                    $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Contact\Validation\Validator $contactValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext           $context
+     * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $contactValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Contact\Validation\Validator $contactValidator)
+        Contact\Validation\FormValidation $contactValidator)
     {
         parent::__construct($context);
 

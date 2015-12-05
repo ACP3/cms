@@ -30,7 +30,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $newsCache;
     /**
-     * @var \ACP3\Modules\ACP3\News\Validation\Validator
+     * @var \ACP3\Modules\ACP3\News\Validation\FormValidation
      */
     protected $newsValidator;
     /**
@@ -43,13 +43,13 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext   $context
-     * @param \ACP3\Core\Date                              $date
-     * @param \ACP3\Core\Helpers\FormToken                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                $newsCache
-     * @param \ACP3\Modules\ACP3\News\Validation\Validator $newsValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers        $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
+     * @param \ACP3\Core\Date                                   $date
+     * @param \ACP3\Core\Helpers\FormToken                      $formTokenHelper
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository      $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Cache                     $newsCache
+     * @param \ACP3\Modules\ACP3\News\Validation\FormValidation $newsValidator
+     * @param \ACP3\Modules\ACP3\Categories\Helpers             $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -57,7 +57,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
-        News\Validation\Validator $newsValidator,
+        News\Validation\FormValidation $newsValidator,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);

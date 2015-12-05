@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Validator
  * @package ACP3\Modules\ACP3\Guestbook\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Core\Modules

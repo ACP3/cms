@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class Picture
  * @package ACP3\Modules\ACP3\Gallery\Validator
  */
-class Picture extends Core\Validation\AbstractValidator
+class Picture extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $file

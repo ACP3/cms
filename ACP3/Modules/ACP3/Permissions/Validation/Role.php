@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValida
  * Class Validator
  * @package ACP3\Modules\ACP3\Permissions
  */
-class Role extends Core\Validation\AbstractValidator
+class Role extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

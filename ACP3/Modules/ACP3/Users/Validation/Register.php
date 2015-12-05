@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameVal
  * Class Register
  * @package ACP3\Modules\ACP3\Users\Validator
  */
-class Register extends AbstractUserValidator
+class Register extends AbstractUserFormValidation
 {
     /**
      * @param array $formData

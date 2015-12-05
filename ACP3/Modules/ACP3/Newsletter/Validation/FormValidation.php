@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidat
  * Class Validator
  * @package ACP3\Modules\ACP3\Newsletter\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

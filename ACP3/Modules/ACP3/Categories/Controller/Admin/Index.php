@@ -20,7 +20,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $categoriesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Categories\Validation\FormValidation
      */
     protected $categoriesValidator;
     /**
@@ -29,17 +29,17 @@ class Index extends Core\Modules\AdminController
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Validation\Validator     $categoriesValidator
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository  $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Cache                     $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Validation\FormValidation $categoriesValidator
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Categories\Model\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
-        Categories\Validation\Validator $categoriesValidator,
+        Categories\Validation\FormValidation $categoriesValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

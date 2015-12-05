@@ -4,7 +4,7 @@ parameters:
   comments.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Index'
   comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
   comments.model.commentrepository.fqdn: 'ACP3\Modules\ACP3\Comments\Model\CommentRepository'
-  comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\Validator'
+  comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\FormValidation'
   comments.validation.validation_rules.flood_barrier_validation_rule.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule'
   comments.validation.validation_rules.user_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\ValidationRules\UserNameValidationRule'
   comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'

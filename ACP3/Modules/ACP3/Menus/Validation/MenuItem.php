@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
  * Class MenuItem
  * @package ACP3\Modules\ACP3\Menus\Validator
  */
-class MenuItem extends Core\Validation\AbstractValidator
+class MenuItem extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

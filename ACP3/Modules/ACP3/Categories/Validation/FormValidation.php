@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryVal
  * Class Validator
  * @package ACP3\Modules\ACP3\Categories\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository

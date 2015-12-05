@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
  * Class Validator
  * @package ACP3\Modules\ACP3\Contact\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Account
  * @package ACP3\Modules\ACP3\Users\Validator
  */
-class Account extends AbstractUserValidator
+class Account extends AbstractUserFormValidation
 {
     /**
      * @param array $formData

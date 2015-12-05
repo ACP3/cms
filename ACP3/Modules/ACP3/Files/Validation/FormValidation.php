@@ -1,16 +1,16 @@
 <?php
-namespace ACP3\Modules\ACP3\News\Validation;
+namespace ACP3\Modules\ACP3\Files\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\News\Validation\ValidationRules\ExternalLinkValidationRule;
+use ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class Validator
- * @package ACP3\Modules\ACP3\News
+ * @package ACP3\Modules\ACP3\Files\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var Core\Modules
@@ -37,12 +37,13 @@ class Validator extends Core\Validation\AbstractValidator
 
     /**
      * @param array  $formData
+     * @param array  $file
      * @param string $uriAlias
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\InvalidFormToken
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
-    public function validate(array $formData, $uriAlias = '')
+    public function validate(array $formData, $file, $uriAlias = '')
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -58,28 +59,24 @@ class Validator extends Core\Validation\AbstractValidator
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('news', 'title_to_short')
+                    'message' => $this->lang->t('files', 'type_in_title')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->lang->t('news', 'text_to_short')
+                    'message' => $this->lang->t('files', 'description_to_short')
                 ])
             ->addConstraint(
-                Categories\Validation\ValidationRules\CategoryExistsValidationRule::NAME,
+                IsExternalFileValidationRule::NAME,
                 [
                     'data' => $formData,
-                    'field' => ['cat', 'cat_create'],
-                    'message' => $this->lang->t('news', 'select_category')
-                ])
-            ->addConstraint(
-                ExternalLinkValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => ['link_title', 'uri', 'target'],
-                    'message' => $this->lang->t('news', 'complete_hyperlink_statements')
+                    'field' => ['external', 'filesize', 'unit'],
+                    'message' => $this->lang->t('files', 'type_in_external_resource'),
+                    'extra' => [
+                        'file' => $file
+                    ]
                 ])
             ->addConstraint(
                 UriAliasValidationRule::NAME,
@@ -90,7 +87,28 @@ class Validator extends Core\Validation\AbstractValidator
                     'extra' => [
                         'path' => $uriAlias
                     ]
+                ])
+            ->addConstraint(
+                Categories\Validation\ValidationRules\CategoryExistsValidationRule::NAME,
+                [
+                    'data' => $formData,
+                    'field' => ['cat', 'cat_create'],
+                    'message' => $this->lang->t('files', 'select_category')
                 ]);
+
+        if (!isset($formData['external'])) {
+            $this->validator
+                ->addConstraint(
+                    Core\Validation\ValidationRules\FileUploadValidationRule::NAME,
+                    [
+                        'data' => $file,
+                        'field' => 'file_internal',
+                        'message' => $this->lang->t('files', 'select_internal_resource'),
+                        'extra' => [
+                            'required' => empty($uriAlias)
+                        ]
+                    ]);
+        }
 
         $this->validator->validate();
     }
@@ -121,46 +139,16 @@ class Validator extends Core\Validation\AbstractValidator
                     'data' => $formData,
                     'field' => 'sidebar',
                     'message' => $this->lang->t('system', 'select_sidebar_entries')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\NumberGreaterThanValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'readmore_chars',
-                    'message' => $this->lang->t('news', 'type_in_readmore_chars'),
-                    'extra' => [
-                        'value' => 0
-                    ]
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\NumberGreaterThanValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'readmore',
-                    'message' => $this->lang->t('news', 'select_activate_readmore'),
-                    'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'category_in_breadcrumb',
-                    'message' => $this->lang->t('news', 'select_display_category_in_breadcrumb'),
-                    'extra' => [
-                        'haystack' => [0, 1]
-                    ]
                 ]);
 
-        if ($this->modules->isActive('comments') === true) {
+        if ($this->modules->isActive('comments')) {
             $this->validator
                 ->addConstraint(
                     Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                     [
                         'data' => $formData,
                         'field' => 'comments',
-                        'message' => $this->lang->t('news', 'select_allow_comments'),
+                        'message' => $this->lang->t('files', 'select_allow_comments'),
                         'extra' => [
                             'haystack' => [0, 1]
                         ]

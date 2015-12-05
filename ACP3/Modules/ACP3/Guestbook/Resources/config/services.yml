@@ -2,7 +2,7 @@ parameters:
   guestbook.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index'
   guestbook.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Guestbook\Controller\Index'
   guestbook.model.guestbookrepository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository'
-  guestbook.validator.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\Validator'
+  guestbook.validator.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\FormValidation'
   guestbook.validation.validation_rules.flood_barrier_validation_rule.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule'
   guestbook.installer.schema.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Schema'
   guestbook.installer.migration.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Migration'

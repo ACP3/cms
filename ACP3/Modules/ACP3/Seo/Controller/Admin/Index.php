@@ -24,23 +24,23 @@ class Index extends Core\Modules\AdminController
      */
     protected $seoRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Seo\Validation\FormValidation
      */
     protected $seoValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext  $context
-     * @param \ACP3\Core\Helpers\FormToken                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache                $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository  $seoRepository
-     * @param \ACP3\Modules\ACP3\Seo\Validation\Validator $seoValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext       $context
+     * @param \ACP3\Core\Helpers\FormToken                     $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Seo\Cache                     $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository       $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Validation\FormValidation $seoValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Cache $seoCache,
         Seo\Model\SeoRepository $seoRepository,
-        Seo\Validation\Validator $seoValidator)
+        Seo\Validation\FormValidation $seoValidator)
     {
         parent::__construct($context);
 

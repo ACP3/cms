@@ -24,7 +24,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $newsletterRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation
      */
     protected $newsletterValidator;
     /**
@@ -42,7 +42,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Helpers\FormToken                             $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository    $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\Validator       $newsletterValidator
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation  $newsletterValidator
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter      $newsletterHelpers
      */
     public function __construct(
@@ -51,7 +51,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterRepository $newsletterRepository,
         Newsletter\Model\AccountRepository $accountRepository,
-        Newsletter\Validation\Validator $newsletterValidator,
+        Newsletter\Validation\FormValidation $newsletterValidator,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);

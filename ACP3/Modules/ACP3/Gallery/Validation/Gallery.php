@@ -8,7 +8,7 @@ use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
  * Class Gallery
  * @package ACP3\Modules\ACP3\Gallery\Validator
  */
-class Gallery extends Core\Validation\AbstractValidator
+class Gallery extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array  $formData

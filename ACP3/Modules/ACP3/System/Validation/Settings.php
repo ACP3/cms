@@ -8,7 +8,7 @@ use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidatio
  * Class Settings
  * @package ACP3\Modules\ACP3\System\Validator
  */
-class Settings extends Core\Validation\AbstractValidator
+class Settings extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

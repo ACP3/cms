@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidation
  * Class Validator
  * @package ACP3\Modules\ACP3\Comments\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Core\Modules

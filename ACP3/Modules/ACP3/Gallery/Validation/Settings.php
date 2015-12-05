@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class Settings
  * @package ACP3\Modules\ACP3\Gallery\Validator
  */
-class Settings extends Core\Validation\AbstractValidator
+class Settings extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Core\Modules

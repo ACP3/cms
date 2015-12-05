@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidatio
  * Class Validator
  * @package ACP3\Modules\ACP3\Polls\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

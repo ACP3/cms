@@ -14,7 +14,7 @@ parameters:
   newsletter.model.newsletterrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository'
   newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
   newsletter.model.accounthistoryrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository'
-  newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\Validator'
+  newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\FormValidation'
   newsletter.validation.validation_rules.account_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule'
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule'
   newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'

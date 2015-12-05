@@ -8,7 +8,7 @@ parameters:
   articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
   articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
-  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\Validator'
+  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\FormValidation'
   articles.validation.validation_rules.article_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule'
   articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
   articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'

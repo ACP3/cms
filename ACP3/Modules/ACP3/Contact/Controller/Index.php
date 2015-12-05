@@ -21,7 +21,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $sendEmailHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Contact\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
      */
     protected $contactValidator;
     /**
@@ -30,16 +30,16 @@ class Index extends Core\Modules\FrontendController
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext   $context
-     * @param \ACP3\Core\Helpers\FormToken                    $formTokenHelper
-     * @param \ACP3\Core\Helpers\SendEmail                    $sendEmailHelper
-     * @param \ACP3\Modules\ACP3\Contact\Validation\Validator $contactValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext        $context
+     * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
+     * @param \ACP3\Core\Helpers\SendEmail                         $sendEmailHelper
+     * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $contactValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
-        Contact\Validation\Validator $contactValidator)
+        Contact\Validation\FormValidation $contactValidator)
     {
         parent::__construct($context);
 

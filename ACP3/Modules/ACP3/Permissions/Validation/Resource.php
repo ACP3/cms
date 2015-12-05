@@ -8,7 +8,7 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsVali
  * Class Resource
  * @package ACP3\Modules\ACP3\Permissions\Validator
  */
-class Resource extends Core\Validation\AbstractValidator
+class Resource extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

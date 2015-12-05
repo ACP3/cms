@@ -3,7 +3,7 @@ parameters:
   categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
   categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
-  categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\Validator'
+  categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\FormValidation'
   categories.validation.validation_rules.category_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\ValidationRules\CategoryExistsValidationRule'
   categories.validation.validation_rules.duplicate_category_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule'
   categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'

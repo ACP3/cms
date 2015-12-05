@@ -20,7 +20,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     protected $commentsValidator;
     /**
@@ -29,17 +29,17 @@ class Index extends Core\Modules\AdminController
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validation\Validator    $commentsValidator
-     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
+     * @param \ACP3\Core\Date                                       $date
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository   $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $commentsValidator
+     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validation\Validator $commentsValidator,
+        Comments\Validation\FormValidation $commentsValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

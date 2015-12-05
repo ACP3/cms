@@ -8,7 +8,7 @@ services:
     arguments: ['@core.context.install', '@core.date', @core.helpers.secure, '@install.helpers.install']
 
   install.validator:
-    class: ACP3\Installer\Modules\Install\Validation\Validator
+    class: ACP3\Installer\Modules\Install\Validation\FormValidation
     parent: core.validator.abstract
 
   install.validation.validation_rules.config_file_validation_rule:

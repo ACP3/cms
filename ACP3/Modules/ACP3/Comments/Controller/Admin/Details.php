@@ -18,7 +18,7 @@ class Details extends Core\Modules\AdminController
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     protected $commentsValidator;
     /**
@@ -35,16 +35,16 @@ class Details extends Core\Modules\AdminController
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validation\Validator    $commentsValidator
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository    $systemModuleRepository
-     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository   $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $commentsValidator
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository      $systemModuleRepository
+     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validation\Validator $commentsValidator,
+        Comments\Validation\FormValidation $commentsValidator,
         System\Model\ModuleRepository $systemModuleRepository,
         Core\Helpers\FormToken $formTokenHelper)
     {

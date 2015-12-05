@@ -9,7 +9,7 @@ use ACP3\Installer\Modules\Install\Validation\ValidationRules\DatabaseConnection
  * Class Validator
  * @package ACP3\Installer\Modules\Install\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array  $formData

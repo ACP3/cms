@@ -16,19 +16,19 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Feeds\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Feeds\Validation\FormValidation
      */
     protected $feedsValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext    $context
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Feeds\Validation\Validator $feedsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
+     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Feeds\Validation\FormValidation $feedsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Feeds\Validation\Validator $feedsValidator)
+        Feeds\Validation\FormValidation $feedsValidator)
     {
         parent::__construct($context);
 

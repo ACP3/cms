@@ -31,7 +31,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $guestbookRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
     protected $guestbookValidator;
     /**
@@ -65,7 +65,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Pagination                                  $pagination
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\Validator      $guestbookValidator
+     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $guestbookValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -73,7 +73,7 @@ class Index extends Core\Modules\FrontendController
         Core\Pagination $pagination,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
-        Guestbook\Validation\Validator $guestbookValidator)
+        Guestbook\Validation\FormValidation $guestbookValidator)
     {
         parent::__construct($context);
 

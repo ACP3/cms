@@ -25,7 +25,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $guestbookRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
     protected $guestbookValidator;
     /**
@@ -38,14 +38,14 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Date                                        $date
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\Validator      $guestbookValidator
+     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $guestbookValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
-        Guestbook\Validation\Validator $guestbookValidator)
+        Guestbook\Validation\FormValidation $guestbookValidator)
     {
         parent::__construct($context);
 

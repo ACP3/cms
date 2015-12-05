@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
  * Class Validator
  * @package ACP3\Modules\ACP3\Articles\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Core\ACL

@@ -31,7 +31,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $filesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Files\Validation\FormValidation
      */
     protected $filesValidator;
     /**
@@ -44,13 +44,13 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext     $context
-     * @param \ACP3\Core\Date                                $date
-     * @param \ACP3\Core\Helpers\FormToken                   $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
-     * @param \ACP3\Modules\ACP3\Files\Validation\Validator  $filesValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers          $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
+     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository     $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                     $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Validation\FormValidation $filesValidator
+     * @param \ACP3\Modules\ACP3\Categories\Helpers              $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +58,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
-        Files\Validation\Validator $filesValidator,
+        Files\Validation\FormValidation $filesValidator,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);

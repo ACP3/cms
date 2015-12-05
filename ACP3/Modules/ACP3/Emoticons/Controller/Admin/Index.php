@@ -20,7 +20,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $emoticonRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Emoticons\Validation\FormValidation
      */
     protected $emoticonsValidator;
     /**
@@ -29,17 +29,17 @@ class Index extends Core\Modules\AdminController
     protected $emoticonsCache;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository
-     * @param \ACP3\Modules\ACP3\Emoticons\Validation\Validator     $emoticonsValidator
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache                    $emoticonsCache
+     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository  $emoticonRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Validation\FormValidation $emoticonsValidator
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache                     $emoticonsCache
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonRepository $emoticonRepository,
-        Emoticons\Validation\Validator $emoticonsValidator,
+        Emoticons\Validation\FormValidation $emoticonsValidator,
         Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($context);

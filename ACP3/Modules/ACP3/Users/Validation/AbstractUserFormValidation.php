@@ -8,10 +8,10 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameVal
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule;
 
 /**
- * Class AbstractUserValidator
- * @package ACP3\Modules\ACP3\Users\Validator
+ * Class AbstractUserFormValidation
+ * @package ACP3\Modules\ACP3\Users\Validation
  */
-abstract class AbstractUserValidator extends Core\Validation\AbstractValidator
+abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array  $formData

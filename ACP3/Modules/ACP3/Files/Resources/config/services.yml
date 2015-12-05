@@ -7,7 +7,7 @@ parameters:
   files.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Sidebar\Index'
   files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
   files.model.filesrepository.fqdn: 'ACP3\Modules\ACP3\Files\Model\FilesRepository'
-  files.validator.fqdn: 'ACP3\Modules\ACP3\Files\Validation\Validator'
+  files.validator.fqdn: 'ACP3\Modules\ACP3\Files\Validation\FormValidation'
   files.validation.validation_rules.is_external_file_validation_rule.fqdn: 'ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule'
   files.installer.schema.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Schema'
   files.installer.migration.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Migration'

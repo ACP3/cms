@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Validator
  * @package ACP3\Modules\ACP3\Feeds\Validation
  */
-class Validator extends Core\Validation\AbstractValidator
+class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData

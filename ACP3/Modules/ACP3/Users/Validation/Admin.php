@@ -8,7 +8,7 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidatio
  * Class Admin
  * @package ACP3\Modules\ACP3\Users\Validator
  */
-class Admin extends AbstractUserValidator
+class Admin extends AbstractUserFormValidation
 {
     /**
      * @param array $formData
