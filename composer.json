@@ -19,7 +19,7 @@
   "require": {
     "php": ">=5.5.0",
     "doctrine/dbal": "2.5.2",
-    "doctrine/cache": "1.5.1",
+    "doctrine/cache": "1.5.2",
     "inlinestyle/inlinestyle": "1.2.5",
     "monolog/monolog": "1.17.2",
     "mrclay/minify": "2.2.1",
