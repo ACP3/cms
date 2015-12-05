@@ -15,7 +15,7 @@
         </div>
         {if isset($activate)}
             <div class="form-group">
-                <label for="active-1" class="col-sm-2 control-label">{lang t="guestbook|activate_entry"}</label>
+                <label for="active-1" class="col-sm-2 control-label required">{lang t="guestbook|activate_entry"}</label>
 
                 <div class="col-sm-10">
                     {foreach $activate as $row}

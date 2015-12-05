@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class NewsletterRepository
  * @package ACP3\Modules\ACP3\Newsletter
  */
-class NewsletterRepository extends Core\Model
+class NewsletterRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'newsletters';
 

@@ -5,17 +5,19 @@
         {$error_msg}
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="form-group">
-            <label for="modules" class="col-sm-2 control-label">{lang t="system|module"}</label>
+        {block PERMISSIONS_RESOURCES_MODULE}
+            <div class="form-group">
+                <label for="modules" class="col-sm-2 control-label required">{lang t="system|module"}</label>
 
-            <div class="col-sm-10">
-                <select class="form-control" name="modules" id="modules">
-                    {foreach $modules as $row}
-                        <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
-                    {/foreach}
-                </select>
+                <div class="col-sm-10">
+                    <select class="form-control" name="modules" id="modules">
+                        {foreach $modules as $row}
+                            <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+                        {/foreach}
+                    </select>
+                </div>
             </div>
-        </div>
+        {/block}
         <div class="form-group">
             <label for="area" class="col-sm-2 control-label required">{lang t="permissions|area"}</label>
 
@@ -38,7 +40,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="privileges" class="col-sm-2 control-label">{lang t="permissions|assigned_privilege"}</label>
+            <label for="privileges" class="col-sm-2 control-label required">{lang t="permissions|assigned_privilege"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="privileges" id="privileges">
@@ -51,7 +53,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/permissions/index/index_resouces"}" class="btn btn-default">{lang t="system|cancel"}</a>
+                <a href="{uri args="acp/permissions/index/index_resources"}" class="btn btn-default">{lang t="system|cancel"}</a>
                 {$form_token}
             </div>
         </div>

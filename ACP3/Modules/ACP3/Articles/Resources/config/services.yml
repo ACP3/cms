@@ -8,7 +8,8 @@ parameters:
   articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
   articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
-  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validator'
+  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\FormValidation'
+  articles.validation.validation_rules.article_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule'
   articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
   articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
 
@@ -48,9 +49,13 @@ services:
 
   articles.validator:
     class: %articles.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router.aliases', '@core.validator.rules.date', '@core.acl']
-    calls:
-      - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
+    arguments: ['@core.lang', @core.validator, '@core.acl']
+
+  articles.validation.validation_rules.article_exists_validation_rule:
+    class: %articles.validation.validation_rules.article_exists_validation_rule.fqdn%
+    arguments: [@articles.model.articlerepository]
+    tags:
+      - { name: core.validation.validation_rule }
 
   articles.installer.schema:
     class: %articles.installer.schema.fqdn%

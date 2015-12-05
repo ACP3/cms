@@ -1,13 +1,13 @@
 <?php
 namespace ACP3\Modules\ACP3\Menus\Model;
 
-use ACP3\Core\Model;
+use ACP3\Core\Model\AbstractRepository;
 
 /**
  * Class MenuItemRepository
  * @package ACP3\Modules\ACP3\Menus\Model
  */
-class MenuItemRepository extends Model
+class MenuItemRepository extends AbstractRepository
 {
     const TABLE_NAME = 'menu_items';
 
@@ -78,7 +78,7 @@ class MenuItemRepository extends Model
      *
      * @return mixed
      */
-    public function getMenuItemBlockIdById($id)
+    public function getMenuItemMenuIdById($id)
     {
         return $this->db->fetchColumn(
             "SELECT `block_id` FROM {$this->getTableName()} WHERE id = ?",

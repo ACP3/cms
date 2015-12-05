@@ -24,17 +24,19 @@
 
             <div class="col-sm-10"><input type="file" id="picture" name="picture"></div>
         </div>
-        <div class="form-group">
-            <label for="module" class="col-sm-2 control-label">{lang t="categories|module"}</label>
+        {block CATEGORIES_MODULE}
+            <div class="form-group">
+                <label for="module" class="col-sm-2 control-label required">{lang t="categories|module"}</label>
 
-            <div class="col-sm-10">
-                <select class="form-control" name="module" id="module">
-                    {foreach $mod_list as $row}
-                        <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
-                    {/foreach}
-                </select>
+                <div class="col-sm-10">
+                    <select class="form-control" name="module" id="module">
+                        {foreach $mod_list as $row}
+                            <option value="{$row.id}"{$row.selected}>{$row.name}</option>
+                        {/foreach}
+                    </select>
+                </div>
             </div>
-        </div>
+        {/block}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>

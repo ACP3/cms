@@ -8,12 +8,12 @@ use ACP3\Core;
  * Class CategoryRepository
  * @package ACP3\Modules\ACP3\Categories\Model
  */
-class CategoryRepository extends Core\Model
+class CategoryRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'categories';
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */
@@ -23,39 +23,39 @@ class CategoryRepository extends Core\Model
     }
 
     /**
-     * @param $title
-     * @param $module
-     * @param $categoryId
+     * @param string $title
+     * @param int    $moduleId
+     * @param int    $categoryId
      *
      * @return bool
      */
-    public function resultIsDuplicate($title, $module, $categoryId)
+    public function resultIsDuplicate($title, $moduleId, $categoryId)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ? AND c.id != ?', [$title, $module, $categoryId]) > 0;
+        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
     }
 
     /**
-     * @param $id
+     * @param int $categoryId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($categoryId)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$categoryId]);
     }
 
     /**
-     * @param $id
+     * @param int $categoryId
      *
      * @return mixed
      */
-    public function getTitleById($id)
+    public function getTitleById($categoryId)
     {
-        return $this->db->fetchColumn('SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn('SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?', [$categoryId]);
     }
 
     /**
-     * @param $moduleName
+     * @param string $moduleName
      *
      * @return array
      */
@@ -73,7 +73,7 @@ class CategoryRepository extends Core\Model
     }
 
     /**
-     * @param $categoryId
+     * @param int $categoryId
      *
      * @return mixed
      */
@@ -83,23 +83,33 @@ class CategoryRepository extends Core\Model
     }
 
     /**
-     * @param $id
+     * @param int $categoryId
      *
-     * @return array
+     * @return mixed
      */
-    public function getCategoryDeleteInfosById($id)
+    public function getModuleIdByCategoryId($categoryId)
     {
-        return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', [$id]);
+        return $this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
     }
 
     /**
-     * @param $title
-     * @param $module
+     * @param int $categoryId
      *
      * @return array
      */
-    public function getOneByTitleAndModule($title, $module)
+    public function getCategoryDeleteInfosById($categoryId)
     {
-        return $this->db->fetchAssoc('SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ?', [$title, $module]);
+        return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', [$categoryId]);
+    }
+
+    /**
+     * @param string $title
+     * @param string $moduleName
+     *
+     * @return array
+     */
+    public function getOneByTitleAndModule($title, $moduleName)
+    {
+        return $this->db->fetchAssoc('SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ?', [$title, $moduleName]);
     }
 }

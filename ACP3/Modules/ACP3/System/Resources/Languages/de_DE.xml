@@ -242,6 +242,7 @@
         <item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll.</item>
         <item key="select_editor">Bitte wählen Sie aus, mit welchem Editor Sie Ihre Einträge erstellen wollen.</item>
         <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
+        <item key="select_mailer_type">Bitte wählen Sie den zu verwendenten Mailertyp aus.</item>
         <item key="select_menu_item">Bitte wählen Sie einen der oben stehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.</item>
         <item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht.</item>
         <item key="select_records_per_page">Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen.</item>

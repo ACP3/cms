@@ -37,7 +37,7 @@ class Items extends Core\Modules\AdminController
      */
     protected $menusHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Validator\MenuItem
+     * @var \ACP3\Modules\ACP3\Menus\Validation\MenuItem
      */
     protected $menuItemValidator;
     /**
@@ -63,7 +63,7 @@ class Items extends Core\Modules\AdminController
      * @param \ACP3\Modules\ACP3\Menus\Cache                      $menusCache
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList      $menusHelpers
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Validator\MenuItem         $menuItemValidator
+     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItem        $menuItemValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -75,7 +75,7 @@ class Items extends Core\Modules\AdminController
         Menus\Cache $menusCache,
         Menus\Helpers\MenuItemsList $menusHelpers,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
-        Menus\Validator\MenuItem $menuItemValidator)
+        Menus\Validation\MenuItem $menuItemValidator)
     {
         parent::__construct($context);
 

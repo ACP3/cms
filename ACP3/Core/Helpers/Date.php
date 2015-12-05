@@ -3,6 +3,7 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\Request;
 use ACP3\Core\Lang;
+use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
 /**
  * Class Date
@@ -27,30 +28,32 @@ class Date
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Core\Validator\Rules\Date
+     * @var \ACP3\Core\Validation\ValidationRules\DateValidationRule
      */
-    protected $dateValidator;
+    protected $dateValidationRule;
 
     /**
-     * @param \ACP3\Core\Date                 $date
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\Http\Request         $request
-     * @param \ACP3\Core\Helpers\Forms        $formsHelper
-     * @param \ACP3\Core\Validator\Rules\Date $dateValidator
+     * Date constructor.
+     *
+     * @param \ACP3\Core\Date                                          $date
+     * @param \ACP3\Core\Lang                                          $lang
+     * @param \ACP3\Core\Http\Request                                  $request
+     * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
+     * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
      */
     public function __construct(
         \ACP3\Core\Date $date,
         Lang $lang,
         Request $request,
         Forms $formsHelper,
-        \ACP3\Core\Validator\Rules\Date $dateValidator
+        DateValidationRule $dateValidationRule
     )
     {
         $this->date = $date;
         $this->lang = $lang;
         $this->request = $request;
         $this->formsHelper = $formsHelper;
-        $this->dateValidator = $dateValidator;
+        $this->dateValidationRule = $dateValidationRule;
     }
 
     /**
@@ -183,7 +186,7 @@ class Date
             $valueEnd = $this->request->getPost()->get($name[1]);
             $valueStartR = $this->date->format($valueStart, 'r', false);
             $valueEndR = $this->date->format($valueEnd, 'r', false);
-        } elseif (is_array($value) && $this->dateValidator->date($value[0], $value[1]) === true) {
+        } elseif (is_array($value) && $this->dateValidationRule->isValid($value) === true) {
             $valueStart = $this->date->format($value[0], $this->getDateFormat($showTime));
             $valueEnd = $this->date->format($value[1], $this->getDateFormat($showTime));
             $valueStartR = $this->date->format($value[0], 'r');
@@ -214,7 +217,7 @@ class Date
     {
         if ($this->request->getPost()->has($name)) {
             return $this->request->getPost()->get($name, '');
-        } elseif ($this->dateValidator->date($value) === true) {
+        } elseif ($this->dateValidationRule->isValid($value) === true) {
             return $this->date->format($value, $this->getDateFormat($showTime));
         }
 

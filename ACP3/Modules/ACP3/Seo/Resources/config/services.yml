@@ -2,7 +2,8 @@ parameters:
   seo.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index'
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
   seo.model.seorepository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\SeoRepository'
-  seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validator'
+  seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\FormValidation'
+  seo.validation.validation_rules.uri_alias_validation_rule.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule'
   seo.installer.schema.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Schema'
   seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
 
@@ -21,7 +22,11 @@ services:
 
   seo.validator:
     class: %seo.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.validator.rules.router.aliases']
+    parent: core.validator.abstract
+
+  seo.validation.validation_rules.uri_alias_validation_rule:
+    class: %seo.validation.validation_rules.uri_alias_validation_rule.fqdn%
+    arguments: [@core.validation.validation_rules.internal_uri_validation_rule, @core.validation.validation_rules.uri_safe_validation_rule, @seo.model.seorepository]
 
   seo.installer.schema:
     class: %seo.installer.schema.fqdn%

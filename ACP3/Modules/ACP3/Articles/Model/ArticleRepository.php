@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class ArticleRepository
  * @package ACP3\Modules\ACP3\Articles\Model
  */
-class ArticleRepository extends Core\Model
+class ArticleRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'articles';
 

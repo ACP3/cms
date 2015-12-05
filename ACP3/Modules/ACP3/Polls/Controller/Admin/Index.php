@@ -28,7 +28,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $answerRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Validator
+     * @var \ACP3\Modules\ACP3\Polls\Validation\FormValidation
      */
     protected $pollsValidator;
     /**
@@ -37,13 +37,13 @@ class Index extends Core\Modules\AdminController
     protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext      $context
-     * @param \ACP3\Core\Date                                 $date
-     * @param \ACP3\Core\Helpers\FormToken                    $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
-     * @param \ACP3\Modules\ACP3\Polls\Validator              $pollsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
+     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository      $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository    $answerRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository      $voteRepository
+     * @param \ACP3\Modules\ACP3\Polls\Validation\FormValidation $pollsValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -52,7 +52,7 @@ class Index extends Core\Modules\AdminController
         Polls\Model\PollRepository $pollRepository,
         Polls\Model\AnswerRepository $answerRepository,
         Polls\Model\VoteRepository $voteRepository,
-        Polls\Validator $pollsValidator)
+        Polls\Validation\FormValidation $pollsValidator)
     {
         parent::__construct($context);
 

@@ -14,10 +14,6 @@ abstract class AdminController extends Core\Modules\FrontendController
      * @var \ACP3\Core\SessionHandler
      */
     protected $session;
-    /**
-     * @var \ACP3\Core\Validator\Rules\Misc
-     */
-    protected $validate;
 
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext $adminContext
@@ -26,7 +22,6 @@ abstract class AdminController extends Core\Modules\FrontendController
     {
         parent::__construct($adminContext);
 
-        $this->validate = $adminContext->getValidate();
         $this->session = $adminContext->getSession();
     }
 

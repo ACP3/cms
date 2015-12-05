@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class NewsRepository
  * @package ACP3\Modules\ACP3\News\Model
  */
-class NewsRepository extends Core\Model
+class NewsRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'news';
 
@@ -72,7 +72,7 @@ class NewsRepository extends Core\Model
     {
         $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
     }
 
     /**
@@ -86,7 +86,7 @@ class NewsRepository extends Core\Model
     {
         $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt, ['time' => $time]);
     }
 
     /**

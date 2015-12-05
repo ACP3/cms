@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Polls\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Polls;
 
 /**
@@ -115,10 +114,9 @@ class Index extends Core\Modules\FrontendController
     public function actionVote($id, $answer)
     {
         $time = $this->date->getCurrentDateTime();
-        if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true
-        ) {
+        if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
             // Wenn abgestimmt wurde
-            if (is_array($answer) === true || $this->get('core.validator.rules.misc')->isNumber($answer) === true) {
+            if (!empty($answer) || is_array($answer) === true) {
                 return $this->_votePost($this->request->getPost()->all(), $time, $id);
             }
 
@@ -162,7 +160,7 @@ class Index extends Core\Modules\FrontendController
             }
 
             foreach ($answers as $answer) {
-                if ($this->get('core.validator.rules.misc')->isNumber($answer) === true) {
+                if ($this->validator->is(Core\Validation\ValidationRules\IntegerValidationRule::NAME, $answer) === true) {
                     $insertValues = [
                         'poll_id' => $id,
                         'answer_id' => $answer,

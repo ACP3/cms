@@ -17,28 +17,30 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="files|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="files|title"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="file-internal" class="col-sm-2 control-label">{lang t="files|filename"}</label>
+                    {block FILES_FILE_UPLOAD}
+                        <div class="form-group">
+                            <label for="file-internal" class="col-sm-2 control-label">{lang t="files|filename"}</label>
 
-                        <div class="col-sm-10">
-                            <div class="checkbox">
-                                <label for="external">
-                                    <input type="checkbox" name="external" id="external" value="1"{$checked_external}>
-                                    {lang t="files|external_resource"}
-                                </label>
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label for="external">
+                                        <input type="checkbox" name="external" id="external" value="1"{$checked_external}>
+                                        {lang t="files|external_resource"}
+                                    </label>
+                                </div>
+                                <input type="file" name="file_internal" id="file-internal">
+                                <input class="form-control" type="url" name="file_external" id="file-external" value="{$form.file_external}" maxlength="120">
                             </div>
-                            <input type="file" name="file_internal" id="file-internal">
-                            <input class="form-control" type="url" name="file_external" id="file-external" value="{$form.file_external}" maxlength="120">
                         </div>
-                    </div>
+                    {/block}
                     <div id="external-filesize" class="form-group">
-                        <label for="filesize" class="col-sm-2 control-label">{lang t="files|filesize"}</label>
+                        <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
 
                         <div class="col-sm-10">
                             <div class="row">

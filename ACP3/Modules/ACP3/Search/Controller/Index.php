@@ -16,19 +16,19 @@ class Index extends Core\Modules\FrontendController
      */
     protected $searchHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Search\Validator
+     * @var \ACP3\Modules\ACP3\Search\Validation\FormValidation
      */
     protected $searchValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Search\Helpers             $searchHelpers
-     * @param \ACP3\Modules\ACP3\Search\Validator           $searchValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext       $context
+     * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
+     * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Search\Helpers $searchHelpers,
-        Search\Validator $searchValidator)
+        Search\Validation\FormValidation $searchValidator)
     {
         parent::__construct($context);
 

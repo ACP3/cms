@@ -1,12 +1,12 @@
 services:
   core.context:
     class: ACP3\Core\Modules\Controller\Context
-    arguments: [@core.eventDispatcher, '@core.acl', '@core.user', '@core.lang', '@core.modules', '@core.request', '@core.router', '@core.view', '@core.config']
+    arguments: [@core.eventDispatcher, '@core.acl', '@core.user', '@core.lang', '@core.modules', '@core.request', '@core.router', @core.validator, '@core.view', '@core.config']
     public: false
 
   core.context.admin:
     class: ACP3\Core\Modules\Controller\AdminContext
-    arguments: ['@core.context.frontend', '@core.validator.rules.misc', '@core.session']
+    arguments: ['@core.context.frontend', '@core.session']
     public: false
 
   core.context.frontend:
@@ -16,7 +16,7 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: ['@service_container', @core.modules.helper.controllerActionExists, @core.modules.moduleInfoCache, @core.modules.vendors]
+    arguments: [@service_container, @core.modules.helper.controllerActionExists, @core.modules.moduleInfoCache, @core.modules.vendors]
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller

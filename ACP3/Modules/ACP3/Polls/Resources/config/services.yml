@@ -5,7 +5,9 @@ parameters:
   polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
   polls.model.answerrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\AnswerRepository'
   polls.model.voterepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\VoteRepository'
-  polls.validator.fqdn: 'ACP3\Modules\ACP3\Polls\Validator'
+  polls.validator.fqdn: 'ACP3\Modules\ACP3\Polls\Validation\FormValidation'
+  polls.validation.validation_rules.at_least_two_answers_validation_rule.fqdn: 'ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AtLeastTwoAnswersValidationRule'
+  polls.validation.validation_rules.delete_all_answers_validation_rule.fqdn: 'ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidationRule'
   polls.installer.schema.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Schema'
   polls.installer.migration.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Migration'
 
@@ -36,7 +38,19 @@ services:
 
   polls.validator:
     class: %polls.validator.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.date']
+    parent: core.validator.abstract
+
+  polls.validation.validation_rules.at_least_two_answers_validation_rule:
+    class: %polls.validation.validation_rules.at_least_two_answers_validation_rule.fqdn%
+    arguments: [@core.validation.validation_rules.not_empty_validation_rule]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  polls.validation.validation_rules.delete_all_answers_validation_rule:
+    class: %polls.validation.validation_rules.delete_all_answers_validation_rule.fqdn%
+    arguments: [@core.validation.validation_rules.not_empty_validation_rule]
+    tags:
+      - { name: core.validation.validation_rule }
 
   polls.installer.schema:
     class: %polls.installer.schema.fqdn%

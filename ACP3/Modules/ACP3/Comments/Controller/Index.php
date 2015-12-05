@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Comments\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Emoticons;
@@ -31,7 +30,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Validator
+     * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     protected $commentsValidator;
     /**
@@ -52,19 +51,19 @@ class Index extends Core\Modules\FrontendController
     protected $commentsSettings;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext       $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Core\Pagination                               $pagination
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validator               $commentsValidator
-     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\FrontendContext         $context
+     * @param \ACP3\Core\Date                                       $date
+     * @param \ACP3\Core\Pagination                                 $pagination
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository   $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $commentsValidator
+     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validator $commentsValidator,
+        Comments\Validation\FormValidation $commentsValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

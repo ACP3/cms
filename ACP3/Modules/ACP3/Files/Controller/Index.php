@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Files\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -110,7 +109,7 @@ class Index extends Core\Modules\FrontendController
      */
     public function actionFiles($cat)
     {
-        if ($this->get('core.validator.rules.misc')->isNumber($cat) && $this->categoryRepository->resultExists($cat) === true) {
+        if ($this->categoryRepository->resultExists($cat) === true) {
             $category = $this->categoryRepository->getOneById($cat);
 
             $this->breadcrumb

@@ -36,7 +36,7 @@ class Pictures extends Core\Modules\AdminController
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validator\Picture
+     * @var \ACP3\Modules\ACP3\Gallery\Validation\Picture
      */
     protected $pictureValidator;
     /**
@@ -53,7 +53,7 @@ class Pictures extends Core\Modules\AdminController
      * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Validator\Picture       $pictureValidator
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\Picture      $pictureValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -64,7 +64,7 @@ class Pictures extends Core\Modules\AdminController
         Gallery\Model\GalleryRepository $galleryRepository,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
-        Gallery\Validator\Picture $pictureValidator)
+        Gallery\Validation\Picture $pictureValidator)
     {
         parent::__construct($context);
 
@@ -233,7 +233,7 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->pictureValidator->validateCreate($file);
+                $this->pictureValidator->validate($file);
 
                 $upload = new Core\Helpers\Upload('gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -275,7 +275,7 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $picture, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->pictureValidator->validateEdit($file);
+                $this->pictureValidator->validate($file, false);
 
                 $updateValues = [
                     'description' => Core\Functions::strEncode($formData['description'], true),

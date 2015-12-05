@@ -1,0 +1,48 @@
+services:
+  core.validator:
+    class: ACP3\Core\Validation\Validator
+
+  core.validation.validation_rules.birthday_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\BirthdayValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validation.validation_rules.date_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\DateValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validation.validation_rules.email_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\EmailValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validation.validation_rules.form_token_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\FormTokenValidationRule
+    arguments: [@core.request, @core.session]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validation.validation_rules.integer_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\IntegerValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validation.validation_rules.not_empty_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validation.validation_rules.password_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\PasswordValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validation.validation_rules.time_zone_exists_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\TimeZoneExistsValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  core.validator.abstract:
+    abstract: true
+    arguments: ['@core.lang', @core.validator]

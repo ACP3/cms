@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Model
  * @package ACP3\Modules\ACP3\Users
  */
-class UserRepository extends Core\Model
+class UserRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'users';
 

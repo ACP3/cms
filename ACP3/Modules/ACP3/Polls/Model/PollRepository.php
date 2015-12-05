@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Model
  * @package ACP3\Modules\ACP3\Polls
  */
-class PollRepository extends Core\Model
+class PollRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'polls';
 

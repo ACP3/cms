@@ -8,8 +8,12 @@ parameters:
   permissions.model.privilegerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository'
   permissions.model.rulerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\RuleRepository'
   permissions.model.userrolerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository'
-  permissions.validator.role.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\Role'
-  permissions.validator.resource.fqdn: 'ACP3\Modules\ACP3\Permissions\Validator\Resource'
+  permissions.validator.role.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\Role'
+  permissions.validator.resource.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\Resource'
+  permissions.validation.validation_rules.privilege_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule'
+  permissions.validation.validation_rules.privileges_exist_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistValidationRule'
+  permissions.validation.validation_rules.role_not_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule'
+  permissions.validation.validation_rules.roles_exist_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidationRule'
   permissions.installer.schema.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Schema'
   permissions.installer.migration.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Migration'
 
@@ -52,11 +56,35 @@ services:
 
   permissions.validator.role:
     class: %permissions.validator.role.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.acl', '@permissions.model.rolerepository']
+    parent: core.validator.abstract
 
   permissions.validator.resource:
     class: %permissions.validator.resource.fqdn%
-    arguments: ['@core.lang', '@core.validator.rules.misc', '@core.validator.rules.router', '@core.modules', '@permissions.model.privilegerepository']
+    parent: core.validator.abstract
+
+  permissions.validation.validation_rules.privilege_exists_validation_rule:
+    class: %permissions.validation.validation_rules.privilege_exists_validation_rule.fqdn%
+    arguments: [@permissions.model.privilegerepository]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.privileges_exist_validation_rule:
+    class: %permissions.validation.validation_rules.privileges_exist_validation_rule.fqdn%
+    arguments: [@core.acl]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.role_not_exists_validation_rule:
+    class: %permissions.validation.validation_rules.role_not_exists_validation_rule.fqdn%
+    arguments: [@permissions.model.rolerepository]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.roles_exist_validation_rule:
+    class: %permissions.validation.validation_rules.roles_exist_validation_rule.fqdn%
+    arguments: [@core.acl]
+    tags:
+      - { name: core.validation.validation_rule }
 
   permissions.installer.schema:
     class: %permissions.installer.schema.fqdn%

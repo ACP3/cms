@@ -2,7 +2,6 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList;
 use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
 
 /**

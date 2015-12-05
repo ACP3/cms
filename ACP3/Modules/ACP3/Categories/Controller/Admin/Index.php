@@ -20,7 +20,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $categoriesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Validator
+     * @var \ACP3\Modules\ACP3\Categories\Validation\FormValidation
      */
     protected $categoriesValidator;
     /**
@@ -29,17 +29,17 @@ class Index extends Core\Modules\AdminController
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Validator                $categoriesValidator
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository  $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Cache                     $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Validation\FormValidation $categoriesValidator
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Categories\Model\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
-        Categories\Validator $categoriesValidator,
+        Categories\Validation\FormValidation $categoriesValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
@@ -62,7 +62,7 @@ class Index extends Core\Modules\AdminController
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
             if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $info['dir']);
+                $modules[$name]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $info['id']);
             } else {
                 unset($modules[$name]);
             }
@@ -88,12 +88,11 @@ class Index extends Core\Modules\AdminController
 
             $this->categoriesValidator->validate($formData, $file, $this->config->getSettings('categories'));
 
-            $moduleInfo = $this->modules->getModuleInfo($formData['module']);
             $insertValues = [
                 'id' => '',
                 'title' => Core\Functions::strEncode($formData['title']),
                 'description' => Core\Functions::strEncode($formData['description']),
-                'module_id' => $moduleInfo['id'],
+                'module_id' => (int)$formData['module'],
             ];
             if (!empty($file)) {
                 $upload = new Core\Helpers\Upload('categories');
@@ -130,12 +129,12 @@ class Index extends Core\Modules\AdminController
                     if (!empty($item) && $this->categoryRepository->resultExists($item) === true) {
                         $category = $this->categoryRepository->getCategoryDeleteInfosById($item);
 
-                        $serviceId = strtolower($category['module'] . '.model');
-                        if ($this->container->has($serviceId)) {
-                            if ($this->get($serviceId)->countAll('', $item) > 0) {
-                                $isInUse = true;
-                                continue;
-                            }
+                        $serviceId = strtolower($category['module'] . '.' . $category['module'] . 'repository');
+                        if ($this->container->has($serviceId) &&
+                            $this->get($serviceId)->countAll('', $item) > 0
+                        ) {
+                            $isInUse = true;
+                            continue;
                         }
 
                         // Kategoriebild ebenfalls löschen
@@ -154,7 +153,7 @@ class Index extends Core\Modules\AdminController
                     $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
                 }
 
-                $this->redirectMessages()->setMessage($bool, $text);
+                return $this->redirectMessages()->setMessage($bool, $text);
             }
         );
     }

@@ -6,7 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">{lang t="system|title"}</label>
+            <label for="title" class="col-sm-2 control-label required">{lang t="system|title"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="robots" class="col-sm-2 control-label">{lang t="seo|robots"}</label>
+            <label for="robots" class="col-sm-2 control-label required">{lang t="seo|robots"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="robots" id="robots">
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$mod_rewrite.0.id}" class="col-sm-2 control-label">{lang t="seo|mod_rewrite"}</label>
+            <label for="{$mod_rewrite.0.id}" class="col-sm-2 control-label required">{lang t="seo|mod_rewrite"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">

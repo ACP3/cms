@@ -116,7 +116,7 @@ class Forms
      *
      * @return array
      */
-    public function linkTargetSelectGenerator($name, $currentValue = '', $selected = '')
+    public function linkTargetSelectGenerator($name, $currentValue = '', $selected = 'selected')
     {
         $langTarget = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
         return $this->selectGenerator($name, [1, 2], $langTarget, $currentValue, $selected);

@@ -6,7 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="date-format" class="col-sm-2 control-label">{lang t="system|date_format"}</label>
+            <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="dateformat" id="date-format">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="notify" class="col-sm-2 control-label">{lang t="guestbook|notification"}</label>
+            <label for="notify" class="col-sm-2 control-label required">{lang t="guestbook|notification"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="notify" id="notify">
@@ -28,14 +28,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="notify-email" class="col-sm-2 control-label">{lang t="guestbook|notification_email"}</label>
+            <label for="notify-email" class="col-sm-2 control-label required">{lang t="guestbook|notification_email"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="notify_email" id="notify-email" value="{$form.notify_email}">
             </div>
         </div>
         <div class="form-group">
-            <label for="{$overlay.0.id}" class="col-sm-2 control-label">{lang t="guestbook|use_overlay"}</label>
+            <label for="{$overlay.0.id}" class="col-sm-2 control-label required">{lang t="guestbook|use_overlay"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -50,7 +50,7 @@
         </div>
         {if isset($allow_emoticons)}
             <div class="form-group">
-                <label for="{$allow_emoticons.0.id}" class="col-sm-2 control-label">{lang t="guestbook|allow_emoticons"}</label>
+                <label for="{$allow_emoticons.0.id}" class="col-sm-2 control-label required">{lang t="guestbook|allow_emoticons"}</label>
 
                 <div class="col-sm-10">
                     <div class="btn-group" data-toggle="buttons">
@@ -66,7 +66,7 @@
         {/if}
         {if isset($newsletter_integration)}
             <div class="form-group">
-                <label for="{$newsletter_integration.0.id}" class="col-sm-2 control-label">{lang t="guestbook|newsletter_integration"}</label>
+                <label for="{$newsletter_integration.0.id}" class="col-sm-2 control-label required">{lang t="guestbook|newsletter_integration"}</label>
 
                 <div class="col-sm-10">
                     <div class="btn-group" data-toggle="buttons">

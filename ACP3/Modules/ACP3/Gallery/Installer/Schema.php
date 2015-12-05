@@ -3,8 +3,8 @@
 namespace ACP3\Modules\ACP3\Gallery\Installer;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\System;
 
 /**
  * Class Schema

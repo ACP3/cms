@@ -33,7 +33,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $userRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validator\Admin
+     * @var \ACP3\Modules\ACP3\Users\Validation\Admin
      */
     protected $usersValidator;
     /**
@@ -48,7 +48,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Helpers\Secure                     $secureHelper
      * @param \ACP3\Core\Helpers\Forms                      $formsHelpers
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validator\Admin      $usersValidator
+     * @param \ACP3\Modules\ACP3\Users\Validation\Admin     $usersValidator
      * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
      */
     public function __construct(
@@ -58,7 +58,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
         Users\Model\UserRepository $userRepository,
-        Users\Validator\Admin $usersValidator,
+        Users\Validation\Admin $usersValidator,
         Permissions\Helpers $permissionsHelpers)
     {
         parent::__construct($context);

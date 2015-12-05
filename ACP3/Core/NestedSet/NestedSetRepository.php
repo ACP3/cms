@@ -7,7 +7,7 @@ use ACP3\Core\DB;
  * Class NestedSetRepository
  * @package ACP3\Core\NestedSet
  */
-class NestedSetRepository extends \ACP3\Core\Model
+class NestedSetRepository extends \ACP3\Core\Model\AbstractRepository
 {
     /**
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren

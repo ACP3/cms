@@ -110,6 +110,17 @@ class Forms
         return $countriesSelect;
     }
 
+    /**
+     * @param int    $entries
+     * @param string $language
+     * @param string $timeZone
+     * @param int    $displayAddress
+     * @param int    $displayBirthday
+     * @param int    $displayCountry
+     * @param int    $displayMail
+     *
+     * @return array
+     */
     public function fetchUserSettingsFormFields(
         $entries,
         $language,
@@ -148,12 +159,12 @@ class Forms
      */
     protected function displayBirthday($value)
     {
-        $lang_birthdayDisplay = [
+        $langBirthdayDisplay = [
             $this->lang->t('users', 'birthday_hide'),
             $this->lang->t('users', 'birthday_display_completely'),
             $this->lang->t('users', 'birthday_hide_year')
         ];
-        return $this->formsHelpers->checkboxGenerator('birthday_display', [0, 1, 2], $lang_birthdayDisplay, $value);
+        return $this->formsHelpers->checkboxGenerator('birthday_display', [0, 1, 2], $langBirthdayDisplay, $value);
     }
 
     /**
@@ -179,7 +190,7 @@ class Forms
     /**
      * @param string $birthday
      * @param string $country
-     * @param int $gender
+     * @param int    $gender
      *
      * @return array
      */
@@ -199,12 +210,12 @@ class Forms
      */
     protected function fetchGenderField($value)
     {
-        $lang_gender = [
+        $langGender = [
             $this->lang->t('users', 'gender_not_specified'),
             $this->lang->t('users', 'gender_female'),
             $this->lang->t('users', 'gender_male')
         ];
-        return $this->formsHelpers->selectGenerator('gender', [1, 2, 3], $lang_gender, $value);
+        return $this->formsHelpers->selectGenerator('gender', [1, 2, 3], $langGender, $value);
     }
 
 }

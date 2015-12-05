@@ -25,7 +25,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $articlesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Validator
+     * @var \ACP3\Modules\ACP3\Articles\Validation\FormValidation
      */
     protected $articlesValidator;
     /**
@@ -50,19 +50,19 @@ class Index extends Core\Modules\AdminController
     protected $menuItemFormFieldsHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
-     * @param \ACP3\Modules\ACP3\Articles\Validator               $articlesValidator
-     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
+     * @param \ACP3\Core\Date                                       $date
+     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository   $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Cache                     $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Validation\FormValidation $articlesValidator
+     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
-        Articles\Validator $articlesValidator,
+        Articles\Validation\FormValidation $articlesValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

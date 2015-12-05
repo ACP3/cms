@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class VoteRepository
  * @package ACP3\Modules\ACP3\Polls\Model
  */
-class VoteRepository extends Core\Model
+class VoteRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'poll_votes';
 

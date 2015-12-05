@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Newsletter;
 
@@ -26,7 +25,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $accountStatusHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Validator
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation
      */
     protected $newsletterValidator;
     /**
@@ -35,18 +34,18 @@ class Index extends Core\Modules\FrontendController
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext      $context
-     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe     $subscribeHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validator            $newsletterValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext           $context
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe          $subscribeHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus      $accountStatusHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation $newsletterValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\Subscribe $subscribeHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
-        Newsletter\Validator $newsletterValidator)
+        Newsletter\Validation\FormValidation $newsletterValidator)
     {
         parent::__construct($context);
 
@@ -131,6 +130,10 @@ class Index extends Core\Modules\FrontendController
         $defaults = [
             'mail' => ''
         ];
+
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
+            $this->view->assign('captcha', $this->captchaHelpers->captcha());
+        }
 
         $this->formTokenHelper->generateFormToken();
 

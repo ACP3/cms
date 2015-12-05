@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class Model
  * @package ACP3\Modules\ACP3\Gallery
  */
-class GalleryRepository extends Core\Model
+class GalleryRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'gallery';
 

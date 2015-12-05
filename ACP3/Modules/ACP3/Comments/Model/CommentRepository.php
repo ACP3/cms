@@ -8,7 +8,7 @@ use ACP3\Core;
  * Class CommentRepository
  * @package ACP3\Modules\ACP3\Comments\Model
  */
-class CommentRepository extends Core\Model
+class CommentRepository extends Core\Model\AbstractRepository implements Core\Model\FloodBarrierAwareRepositoryInterface
 {
     const TABLE_NAME = 'comments';
 

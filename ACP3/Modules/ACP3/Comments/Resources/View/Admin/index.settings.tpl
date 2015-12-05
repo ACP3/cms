@@ -6,7 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="date-format" class="col-sm-2 control-label">{lang t="system|date_format"}</label>
+            <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
             <div class="col-sm-10">
                 <select class="form-control" name="dateformat" id="date-format">
@@ -18,7 +18,7 @@
         </div>
         {if isset($allow_emoticons)}
             <div class="form-group">
-                <label for="{$allow_emoticons.0.id}" class="col-sm-2 control-label">{lang t="comments|allow_emoticons"}</label>
+                <label for="{$allow_emoticons.0.id}" class="col-sm-2 control-label required">{lang t="comments|allow_emoticons"}</label>
 
                 <div class="col-sm-10">
                     <div class="btn-group" data-toggle="buttons">

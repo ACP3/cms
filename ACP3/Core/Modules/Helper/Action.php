@@ -71,7 +71,7 @@ class Action
         try {
             return $callback();
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            return $this->redirectMessages->setMessage(false, $e->getMessage(), $path);
+            return $this->redirectMessages->setMessage(false, $this->lang->t('system', 'form_already_submitted'), $path);
         } catch (Core\Exceptions\ValidationFailed $e) {
             return [
                 'error_msg' => $this->alerts->errorBox($e->getMessage())

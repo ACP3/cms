@@ -6,6 +6,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
+use ACP3\Modules\ACP3\Files\Helpers;
 
 /**
  * Class Index
@@ -30,7 +31,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $filesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Validator
+     * @var \ACP3\Modules\ACP3\Files\Validation\FormValidation
      */
     protected $filesValidator;
     /**
@@ -43,13 +44,13 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext     $context
-     * @param \ACP3\Core\Date                                $date
-     * @param \ACP3\Core\Helpers\FormToken                   $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
-     * @param \ACP3\Modules\ACP3\Files\Validator             $filesValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers          $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
+     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository     $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                     $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Validation\FormValidation $filesValidator
+     * @param \ACP3\Modules\ACP3\Categories\Helpers              $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -57,7 +58,7 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
-        Files\Validator $filesValidator,
+        Files\Validation\FormValidation $filesValidator,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);
@@ -295,7 +296,7 @@ class Index extends Core\Modules\AdminController
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->filesValidator->validateCreate($formData, $file);
+            $this->filesValidator->validate($formData, $file);
 
             if (is_array($file) === true) {
                 $upload = new Core\Helpers\Upload('files');
@@ -356,7 +357,7 @@ class Index extends Core\Modules\AdminController
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->filesValidator->validateEdit($formData, $file, $id);
+            $this->filesValidator->validate($formData, $file, sprintf(Helpers::URL_KEY_PATTERN, $id));
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),

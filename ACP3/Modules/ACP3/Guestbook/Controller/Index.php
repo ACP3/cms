@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
 use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook;
@@ -32,7 +31,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected $guestbookRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validator
+     * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
     protected $guestbookValidator;
     /**
@@ -66,7 +65,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Pagination                                  $pagination
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
-     * @param \ACP3\Modules\ACP3\Guestbook\Validator                 $guestbookValidator
+     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $guestbookValidator
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -74,7 +73,7 @@ class Index extends Core\Modules\FrontendController
         Core\Pagination $pagination,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
-        Guestbook\Validator $guestbookValidator)
+        Guestbook\Validation\FormValidation $guestbookValidator)
     {
         parent::__construct($context);
 
@@ -218,7 +217,11 @@ class Index extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->guestbookValidator->validateCreate($formData, $this->newsletterActive);
+                $this->guestbookValidator->validateCreate(
+                    $formData,
+                    $this->newsletterActive,
+                    $this->request->getServer()->get('REMOTE_ADDR', '')
+                );
 
                 $insertValues = [
                     'id' => '',

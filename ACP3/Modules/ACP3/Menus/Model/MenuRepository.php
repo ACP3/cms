@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class Model
  * @package ACP3\Modules\ACP3\Menus
  */
-class MenuRepository extends Core\Model
+class MenuRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'menus';
 

@@ -44,6 +44,10 @@ abstract class Controller implements ControllerInterface
      */
     protected $router;
     /**
+     * @var \ACP3\Core\Validation\Validator
+     */
+    protected $validator;
+    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -73,6 +77,7 @@ abstract class Controller implements ControllerInterface
         $this->lang = $context->getLang();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
+        $this->validator = $context->getValidator();
         $this->view = $context->getView();
         $this->modules = $context->getModules();
         $this->config = $context->getConfig();

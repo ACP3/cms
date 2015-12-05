@@ -8,12 +8,12 @@ use ACP3\Core;
  * Class GuestbookRepository
  * @package ACP3\Modules\ACP3\Guestbook\Model
  */
-class GuestbookRepository extends Core\Model
+class GuestbookRepository extends Core\Model\AbstractRepository implements Core\Model\FloodBarrierAwareRepositoryInterface
 {
     const TABLE_NAME = 'guestbook';
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */
@@ -23,7 +23,7 @@ class GuestbookRepository extends Core\Model
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
@@ -57,7 +57,7 @@ class GuestbookRepository extends Core\Model
     }
 
     /**
-     * @param $ipAddress
+     * @param string $ipAddress
      *
      * @return mixed
      */
