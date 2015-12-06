@@ -6,5 +6,6 @@
 /uploads/files/*
 /uploads/gallery/*
 /vendor
+/build
 
 !.gitignore
