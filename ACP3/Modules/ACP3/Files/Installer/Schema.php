@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 38;
+        return 39;
     }
 
     /**
@@ -52,7 +52,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED,
                 PRIMARY KEY (`id`),
-                FULLTEXT KEY `index` (`title`, `text`),
+                FULLTEXT KEY `fulltext_index` (`title`, `file`, `text`),
                 INDEX `foreign_category_id` (`category_id`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE CASCADE,

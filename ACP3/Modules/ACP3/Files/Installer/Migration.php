@@ -48,6 +48,10 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}files` ADD INDEX (`user_id`)",
                 "UPDATE `{pre}files` SET `user_id` = NULL WHERE `user_id` = 0",
                 "ALTER TABLE `{pre}files` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
+            ],
+            39 => [
+                "ALTER TABLE `{pre}files` DROP INDEX `index`;",
+                "ALTER TABLE `{pre}files` ADD FULLTEXT `fulltext_index` (`title`, `file`, `text`)"
             ]
         ];
     }
