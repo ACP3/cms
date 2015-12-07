@@ -45,6 +45,18 @@ jQuery.fn.formSubmit = function (customFormData) {
     }
 
     /**
+     *
+     * @param $form
+     * @private
+     */
+    function _findSubmitButton($form) {
+        $form.find(':submit').click(function () {
+            $(":submit", $(this).closest("form")).removeAttr("data-clicked");
+            $(this).attr("data-clicked", "true");
+        });
+    }
+
+    /**
      * Processes the AJAX requests
      *
      * @param $form
@@ -59,8 +71,23 @@ jQuery.fn.formSubmit = function (customFormData) {
             data;
 
         if ($form.attr('method')) {
+            var $submitButton = $(':submit[data-clicked="true"]', $form),
+                hash = $submitButton.data('hashChange');
+
             type = $form.attr('method').toUpperCase();
-            data = customFormData || new FormData($form[0]);
+            data = new FormData($form[0]);
+
+            if ($submitButton.length) {
+                data.append($submitButton.attr('name'), 1);
+            }
+
+            if (customFormData) {
+                for (var key in customFormData) {
+                    if (customFormData.hasOwnProperty(key)) {
+                        data.append(key, customFormData[key]);
+                    }
+                }
+            }
         } else {
             type = 'GET';
             data = customFormData || {};
@@ -103,6 +130,10 @@ jQuery.fn.formSubmit = function (customFormData) {
                                 .fadeIn();
                         } else { // The request was successful
                             $content.html(data);
+
+                            if (hash) {
+                                location.hash = hash;
+                            }
                         }
                     }
                 } catch (err) {
@@ -120,6 +151,7 @@ jQuery.fn.formSubmit = function (customFormData) {
     $(this).each(function () {
         var $this = $(this);
 
+        _findSubmitButton($this);
         $this.on('submit', function (e) {
             e.preventDefault();
 

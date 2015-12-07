@@ -4,7 +4,7 @@
     {if isset($error_msg)}
         {$error_msg}
     {/if}
-    <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
+    <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" id="polls-create-form" data-ajax-form="true" data-ajax-form-loading-text="Huhu">
         <div class="tabbable">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
@@ -60,11 +60,15 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="add_answer" class="btn btn-primary">{lang t="polls|add_answer"}</button>
+                <button type="submit" name="add_answer" class="btn btn-primary" data-hash-change="#tab-2">{lang t="polls|add_answer"}</button>
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
                 <a href="{uri args="acp/polls"}" class="btn btn-default">{lang t="system|cancel"}</a>
                 {$form_token}
             </div>
         </div>
     </form>
+    {javascripts}
+    {include_js module="system" file="forms"}
+    {include_js module="system" file="hash-change"}
+    {/javascripts}
 {/block}
