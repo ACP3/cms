@@ -41,7 +41,7 @@ class Index extends Core\Modules\FrontendController
             $module = $this->request->getParameters()->get('feed', '');
             $this->feedGenerator
                 ->setTitle($this->config->getSettings('seo')['title'])
-                ->setDescription($this->lang->t($module, $module));
+                ->setDescription($this->translator->t($module, $module));
 
             $this->eventDispatcher->dispatch(
                 'feeds.events.displayFeed.' . strtolower($feed),

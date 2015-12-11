@@ -12,22 +12,22 @@ class AbstractFormValidation
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Validation\Validator
      */
     protected $validator;
 
     /**
-     * @param \ACP3\Core\I18n\Translator      $lang
+     * @param \ACP3\Core\I18n\Translator      $translator
      * @param \ACP3\Core\Validation\Validator $validator
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Validation\Validator $validator
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->validator = $validator;
     }
 }

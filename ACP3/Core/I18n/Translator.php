@@ -28,7 +28,7 @@ class Translator
      *
      * @var string
      */
-    protected $lang = '';
+    protected $locale = '';
     /**
      * @var string
      */
@@ -61,13 +61,14 @@ class Translator
     /**
      * Überprüft, ob das angegebene Sprachpaket existiert
      *
-     * @param string $lang
+     * @param string $locale
      *
      * @return boolean
      */
-    public static function languagePackExists($lang)
+    public static function languagePackExists($locale)
     {
-        return !preg_match('=/=', $lang) && is_file(MODULES_DIR . 'ACP3/System/Resources/Languages/' . $lang . '.xml') === true;
+        return !preg_match('=/=',
+            $locale) && is_file(MODULES_DIR . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
     }
 
     /**
@@ -77,12 +78,12 @@ class Translator
      */
     public function getLanguage()
     {
-        if ($this->lang === '') {
-            $lang = $this->user->getLanguage();
-            $this->lang = self::languagePackExists($lang) === true ? $lang : $this->config->getSettings('system')['lang'];
+        if ($this->locale === '') {
+            $locale = $this->user->getLanguage();
+            $this->locale = self::languagePackExists($locale) === true ? $locale : $this->config->getSettings('system')['lang'];
         }
 
-        return $this->lang;
+        return $this->locale;
     }
 
     /**
@@ -96,14 +97,14 @@ class Translator
     /**
      * Verändert die aktuell eingestellte Sprache
      *
-     * @param string $lang
+     * @param string $locale
      *
      * @return $this
      */
-    public function setLanguage($lang)
+    public function setLanguage($locale)
     {
-        if (self::languagePackExists($lang) === true) {
-            $this->lang = $lang;
+        if (self::languagePackExists($locale) === true) {
+            $this->locale = $locale;
         }
 
         return $this;

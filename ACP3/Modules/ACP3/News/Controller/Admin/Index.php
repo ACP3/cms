@@ -193,23 +193,23 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'publication_period'),
+                'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('news', 'title'),
+                'label' => $this->translator->t('news', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('categories', 'category'),
+                'label' => $this->translator->t('categories', 'category'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['cat']
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
@@ -410,14 +410,14 @@ class Index extends Core\Modules\AdminController
             $options[] = [
                 'name' => 'readmore',
                 'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $readmoreValue, 'checked'),
-                'lang' => $this->lang->t('news', 'activate_readmore')
+                'lang' => $this->translator->t('news', 'activate_readmore')
             ];
         }
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $options[] = [
                 'name' => 'comments',
                 'checked' => $this->get('core.helpers.forms')->selectEntry('comments', '1', $commentsValue, 'checked'),
-                'lang' => $this->lang->t('system', 'allow_comments')
+                'lang' => $this->translator->t('system', 'allow_comments')
             ];
         }
 

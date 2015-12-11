@@ -85,7 +85,7 @@ class Index extends Core\Modules\FrontendController
             }
 
             $this->breadcrumb
-                ->append($this->lang->t('files', 'files'), 'files')
+                ->append($this->translator->t('files', 'files'), 'files')
                 ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
                 ->append($file['title']);
 
@@ -113,7 +113,7 @@ class Index extends Core\Modules\FrontendController
             $category = $this->categoryRepository->getOneById($cat);
 
             $this->breadcrumb
-                ->append($this->lang->t('files', 'files'), 'files')
+                ->append($this->translator->t('files', 'files'), 'files')
                 ->append($category['title']);
 
             $settings = $this->config->getSettings('files');

@@ -14,16 +14,16 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
     /**
      * @var
      */
-    protected $lang;
+    protected $translator;
 
     /**
      * TranslateColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      */
-    public function __construct(Translator $lang)
+    public function __construct(Translator $translator)
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
     }
 
     /**
@@ -34,7 +34,7 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
         if (isset($dbResultRow[$field])) {
             $value = $dbResultRow[$field];
 
-            return $this->lang->t($value, $value);
+            return $this->translator->t($value, $value);
         }
 
         return null;

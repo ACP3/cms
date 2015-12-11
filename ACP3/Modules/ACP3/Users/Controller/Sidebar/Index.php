@@ -63,19 +63,19 @@ class Index extends Core\Modules\Controller
                 $i = 0;
                 if ($this->acl->hasPermission('admin/system/index/configuration') === true) {
                     $navSystem[$i]['path'] = 'system/index/configuration/';
-                    $navSystem[$i]['name'] = $this->lang->t('system', 'configuration');
+                    $navSystem[$i]['name'] = $this->translator->t('system', 'configuration');
                     $navSystem[$i]['active'] = $this->request->getQuery() === $navSystem[$i]['path'] ? ' class="active"' : '';
                 }
                 if ($this->acl->hasPermission('admin/system/extensions/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/extensions/';
-                    $navSystem[$i]['name'] = $this->lang->t('system', 'extensions');
+                    $navSystem[$i]['name'] = $this->translator->t('system', 'extensions');
                     $navSystem[$i]['active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
                 }
                 if ($this->acl->hasPermission('admin/system/maintenance/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/maintenance/';
-                    $navSystem[$i]['name'] = $this->lang->t('system', 'maintenance');
+                    $navSystem[$i]['name'] = $this->translator->t('system', 'maintenance');
                     $navSystem[$i]['active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
                 }
                 $userSidebar['system'] = $navSystem;

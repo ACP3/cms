@@ -25,7 +25,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'feed_type',
-                    'message' => $this->lang->t('feeds', 'select_feed_type'),
+                    'message' => $this->translator->t('feeds', 'select_feed_type'),
                     'extra' => [
                         'haystack' => ['RSS 1.0', 'RSS 2.0', 'ATOM']
                     ]

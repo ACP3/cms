@@ -15,17 +15,17 @@ class Settings extends Core\Validation\AbstractFormValidation
     protected $modules;
 
     /**
-     * @param \ACP3\Core\I18n\Translator      $lang
+     * @param \ACP3\Core\I18n\Translator      $translator
      * @param \ACP3\Core\Validation\Validator $validator
      * @param Core\Modules                    $modules
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         Core\Modules $modules
     )
     {
-        parent::__construct($lang, $validator);
+        parent::__construct($translator, $validator);
 
         $this->modules = $modules;
     }
@@ -45,7 +45,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
-                    'message' => $this->lang->t('system', 'select_date_format'),
+                    'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
@@ -55,14 +55,14 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->lang->t('system', 'select_sidebar_entries')
+                    'message' => $this->translator->t('system', 'select_sidebar_entries')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'overlay',
-                    'message' => $this->lang->t('gallery', 'select_use_overlay'),
+                    'message' => $this->translator->t('gallery', 'select_use_overlay'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -72,28 +72,28 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'thumbwidth',
-                    'message' => $this->lang->t('gallery', 'invalid_image_width_entered')
+                    'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'width',
-                    'message' => $this->lang->t('gallery', 'invalid_image_width_entered')
+                    'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'thumbheight',
-                    'message' => $this->lang->t('gallery', 'invalid_image_height_entered')
+                    'message' => $this->translator->t('gallery', 'invalid_image_height_entered')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'height',
-                    'message' => $this->lang->t('gallery', 'invalid_image_height_entered')
+                    'message' => $this->translator->t('gallery', 'invalid_image_height_entered')
                 ]);
 
         if ($this->modules->isActive('comments') === true) {
@@ -103,7 +103,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'comments',
-                        'message' => $this->lang->t('gallery', 'select_allow_comments'),
+                        'message' => $this->translator->t('gallery', 'select_allow_comments'),
                         'extra' => [
                             'haystack' => [0, 1]
                         ]

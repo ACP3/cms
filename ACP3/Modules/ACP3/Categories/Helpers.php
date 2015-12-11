@@ -17,7 +17,7 @@ class Helpers
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var Core\Modules
      */
@@ -45,7 +45,7 @@ class Helpers
 
     /**
      * @param \ACP3\Core\ACL                                         $acl
-     * @param \ACP3\Core\I18n\Translator                             $lang
+     * @param \ACP3\Core\I18n\Translator                             $translator
      * @param \ACP3\Core\Modules                                     $modules
      * @param \ACP3\Core\Http\RequestInterface                       $request
      * @param \ACP3\Core\View                                        $view
@@ -55,7 +55,7 @@ class Helpers
      */
     public function __construct(
         Core\ACL $acl,
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Modules $modules,
         Core\Http\RequestInterface $request,
         Core\View $view,
@@ -65,7 +65,7 @@ class Helpers
     )
     {
         $this->acl = $acl;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->modules = $modules;
         $this->request = $request;
         $this->view = $view;
@@ -146,7 +146,7 @@ class Helpers
         $data = $this->categoriesCache->getCache($module);
         $c_data = count($data);
 
-        $categories['custom_text'] = !empty($customText) ? $customText : $this->lang->t('system', 'pls_select');
+        $categories['custom_text'] = !empty($customText) ? $customText : $this->translator->t('system', 'pls_select');
         $categories['name'] = $formFieldName;
         if ($c_data > 0) {
             for ($i = 0; $i < $c_data; ++$i) {

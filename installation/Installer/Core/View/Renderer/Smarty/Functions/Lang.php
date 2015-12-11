@@ -12,14 +12,14 @@ class Lang extends AbstractFunction
     /**
      * @var \ACP3\Installer\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
 
     /**
-     * @param \ACP3\Installer\Core\I18n\Translator $lang
+     * @param \ACP3\Installer\Core\I18n\Translator $translator
      */
-    public function __construct(\ACP3\Installer\Core\I18n\Translator $lang)
+    public function __construct(\ACP3\Installer\Core\I18n\Translator $translator)
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
     }
 
     /**
@@ -36,6 +36,6 @@ class Lang extends AbstractFunction
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $values = explode('|', $params['t']);
-        return $this->lang->t($values[0], $values[1]);
+        return $this->translator->t($values[0], $values[1]);
     }
 }

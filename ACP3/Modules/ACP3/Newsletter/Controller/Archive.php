@@ -48,8 +48,8 @@ class Archive extends Core\Modules\FrontendController
 
         if (!empty($newsletter)) {
             $this->breadcrumb
-                ->append($this->lang->t('newsletter', 'index'), 'newsletter')
-                ->append($this->lang->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
+                ->append($this->translator->t('newsletter', 'index'), 'newsletter')
+                ->append($this->translator->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
                 ->append($newsletter['title']);
 
             return [

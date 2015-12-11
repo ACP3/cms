@@ -15,27 +15,28 @@ class Translator extends \ACP3\Core\I18n\Translator
 
     /**
      * @param \ACP3\Installer\Core\I18n\DictionaryCache $cache
-     * @param string                                    $lang
+     * @param string                                    $locale
      */
     public function __construct(
         DictionaryCache $cache,
-        $lang
+        $locale
     )
     {
         $this->cache = $cache;
-        $this->lang = $lang;
-        $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
+        $this->locale = $locale;
+        $this->lang2Characters = substr($this->locale, 0, strpos($this->locale, '_'));
     }
 
     /**
      * Überprüft, ob das angegebene Sprachpaket existiert
      *
-     * @param string $lang
+     * @param string $locale
      *
      * @return boolean
      */
-    public static function languagePackExists($lang)
+    public static function languagePackExists($locale)
     {
-        return !preg_match('=/=', $lang) && is_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $lang . '.xml') === true;
+        return !preg_match('=/=',
+            $locale) && is_file(INSTALLER_MODULES_DIR . 'Install/Resources/i18n/' . $locale . '.xml') === true;
     }
 }

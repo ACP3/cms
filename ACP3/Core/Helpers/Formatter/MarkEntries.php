@@ -12,16 +12,16 @@ class MarkEntries
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
 
     /**
      * MarkEntries constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      */
-    public function __construct(Translator $lang)
+    public function __construct(Translator $translator)
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
     }
 
     /**
@@ -37,9 +37,9 @@ class MarkEntries
             [
                 'checkBoxName' => $name,
                 'language' => [
-                    'confirmationTextSingle' => $this->lang->t('system', 'confirm_delete_single'),
-                    'confirmationTextMultiple' => $this->lang->t('system', 'confirm_delete_multiple'),
-                    'noEntriesSelectedText' => $this->lang->t('system', 'no_entries_selected')
+                    'confirmationTextSingle' => $this->translator->t('system', 'confirm_delete_single'),
+                    'confirmationTextMultiple' => $this->translator->t('system', 'confirm_delete_multiple'),
+                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected')
                 ]
             ]
         );

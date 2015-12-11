@@ -22,7 +22,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'search_term',
-                    'message' => $this->lang->t('search', 'search_term_to_short'),
+                    'message' => $this->translator->t('search', 'search_term_to_short'),
                     'extra' => [
                         'length' => 4
                     ]
@@ -32,21 +32,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mods',
-                    'message' => $this->lang->t('search', 'no_module_selected')
+                    'message' => $this->translator->t('search', 'no_module_selected')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'area',
-                    'message' => $this->lang->t('search', 'no_area_selected')
+                    'message' => $this->translator->t('search', 'no_area_selected')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'sort',
-                    'message' => $this->lang->t('search', 'no_sorting_selected'),
+                    'message' => $this->translator->t('search', 'no_sorting_selected'),
                     'extra' => [
                         'haystack' => ['asc', 'desc']
                     ]

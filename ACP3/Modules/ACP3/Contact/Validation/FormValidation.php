@@ -26,28 +26,28 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->lang->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->lang->t('system', 'message_to_short')
+                    'message' => $this->translator->t('system', 'message_to_short')
                 ])
             ->addConstraint(
                 CaptchaValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'captcha',
-                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ]);
 
         $this->validator->validate();
@@ -68,7 +68,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ]);
 
         $this->validator->validate();

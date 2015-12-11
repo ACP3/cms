@@ -16,7 +16,7 @@ class TableOfContents
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\SEO
      */
@@ -42,7 +42,7 @@ class TableOfContents
      * TableOfContents constructor.
      *
      * @param \ACP3\Core\Breadcrumb                                       $breadcrumb
-     * @param \ACP3\Core\I18n\Translator                                  $lang
+     * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\SEO                                              $seo
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\Router                                           $router
@@ -51,7 +51,7 @@ class TableOfContents
      */
     public function __construct(
         Core\Breadcrumb $breadcrumb,
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\SEO $seo,
         Core\Http\RequestInterface $request,
         Core\Router $router,
@@ -60,7 +60,7 @@ class TableOfContents
     )
     {
         $this->breadcrumb = $breadcrumb;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->seo = $seo;
         $this->request = $request;
         $this->router = $router;
@@ -163,11 +163,11 @@ class TableOfContents
     {
         if ($titlesFromDb === false && is_array($page) === false) {
             $attributes = $this->_getHtmlAttributes($page);
-            return !empty($attributes['title']) ? $attributes['title'] : $this->lang->t('system', 'toc_page',
+            return !empty($attributes['title']) ? $attributes['title'] : $this->translator->t('system', 'toc_page',
                 ['%page%' => $pageNumber]);
         }
 
-        return !empty($page['title']) ? $page['title'] : $this->lang->t('system', 'toc_page',
+        return !empty($page['title']) ? $page['title'] : $this->translator->t('system', 'toc_page',
             ['%page%' => $pageNumber]);
     }
 

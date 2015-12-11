@@ -29,7 +29,7 @@ class MenuItem extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mode',
-                    'message' => $this->lang->t('menus', 'select_page_type'),
+                    'message' => $this->translator->t('menus', 'select_page_type'),
                     'extra' => [
                         'haystack' => [1, 2, 3, 4]
                     ]
@@ -39,35 +39,35 @@ class MenuItem extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('menus', 'title_to_short')
+                    'message' => $this->translator->t('menus', 'title_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'block_id',
-                    'message' => $this->lang->t('menus', 'select_menu_bar')
+                    'message' => $this->translator->t('menus', 'select_menu_bar')
                 ])
             ->addConstraint(
                 ParentIdValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
-                    'message' => $this->lang->t('menus', 'select_superior_page')
+                    'message' => $this->translator->t('menus', 'select_superior_page')
                 ])
             ->addConstraint(
                 AllowedMenuValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'block_id'],
-                    'message' => $this->lang->t('menus', 'superior_page_not_allowed')
+                    'message' => $this->translator->t('menus', 'superior_page_not_allowed')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'display',
-                    'message' => $this->lang->t('menus', 'select_item_visibility'),
+                    'message' => $this->translator->t('menus', 'select_item_visibility'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -77,7 +77,7 @@ class MenuItem extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'target',
-                    'message' => $this->lang->t('menus', 'type_in_uri_and_target'),
+                    'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
                     'extra' => [
                         'haystack' => [1, 2]
                     ]
@@ -87,7 +87,7 @@ class MenuItem extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['mode', 'module', 'uri', 'articles'],
-                    'message' => $this->lang->t('menus', 'type_in_uri_and_target')
+                    'message' => $this->translator->t('menus', 'type_in_uri_and_target')
                 ]);
 
         if ($formData['mode'] == 2) {
@@ -97,7 +97,7 @@ class MenuItem extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'alias',
-                        'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                        'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                         'extra' => [
                             'path' => $formData['uri']
                         ]

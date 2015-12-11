@@ -188,7 +188,7 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('gallery', 'picture'),
+                'label' => $this->translator->t('gallery', 'picture'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::NAME,
                 'fields' => ['id'],
                 'custom' => [
@@ -197,18 +197,18 @@ class Index extends Core\Modules\AdminController
                 ]
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('system', 'description'),
+                'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'order'),
+                'label' => $this->translator->t('system', 'order'),
                 'type' => Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer::NAME,
                 'fields' => ['pic'],
                 'default_sort' => true
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
@@ -238,23 +238,23 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'publication_period'),
+                'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('gallery', 'title'),
+                'label' => $this->translator->t('gallery', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('gallery', 'pictures'),
+                'label' => $this->translator->t('gallery', 'pictures'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['pictures'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true

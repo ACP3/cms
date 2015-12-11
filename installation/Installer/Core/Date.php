@@ -10,13 +10,13 @@ use ACP3\Installer\Core\I18n\Translator;
 class Date extends \ACP3\Core\Date
 {
     /**
-     * @param \ACP3\Installer\Core\I18n\Translator $lang
+     * @param \ACP3\Installer\Core\I18n\Translator $translator
      */
     public function __construct(
-        Translator $lang
+        Translator $translator
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
 
         $defaultTimeZone = date_default_timezone_get();
 

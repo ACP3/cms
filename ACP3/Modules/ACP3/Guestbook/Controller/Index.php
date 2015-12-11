@@ -148,7 +148,7 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
             $this->view->assign(
                 'LANG_subscribe_to_newsletter',
-                $this->lang->t(
+                $this->translator->t(
                     'guestbook',
                     'subscribe_to_newsletter',
                     ['%title%' => $this->config->getSettings('seo')['title']]
@@ -248,7 +248,9 @@ class Index extends Core\Modules\FrontendController
                 if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
                     $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $lastId;
                     $body = sprintf(
-                        $this->guestbookSettings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'),
+                        $this->guestbookSettings['notify'] == 1 ? $this->translator->t('guestbook',
+                            'notification_email_body_1') : $this->translator->t('guestbook',
+                            'notification_email_body_2'),
                         $this->router->route('', true),
                         $fullPath
                     );
@@ -256,7 +258,7 @@ class Index extends Core\Modules\FrontendController
                         '',
                         $this->guestbookSettings['notify_email'],
                         $this->guestbookSettings['notify_email'],
-                        $this->lang->t('guestbook', 'notification_email_subject'),
+                        $this->translator->t('guestbook', 'notification_email_subject'),
                         $body
                     );
                 }
@@ -272,7 +274,8 @@ class Index extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'));
+                return $this->redirectMessages()->setMessage($lastId,
+                    $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error'));
             }
         );
     }

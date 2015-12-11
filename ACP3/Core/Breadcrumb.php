@@ -37,7 +37,7 @@ class Breadcrumb
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -53,21 +53,21 @@ class Breadcrumb
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\I18n\Translator                       $lang
+     * @param \ACP3\Core\I18n\Translator                       $translator
      * @param \ACP3\Core\Http\RequestInterface                 $request
      * @param \ACP3\Core\Router                                $router
      * @param \ACP3\Core\Config                                $config
      */
     public function __construct(
         Container $container,
-        Translator $lang,
+        Translator $translator,
         RequestInterface $request,
         Router $router,
         Config $config
     )
     {
         $this->container = $container;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
         $this->config = $config;
@@ -212,19 +212,20 @@ class Breadcrumb
         if ($this->request->getModule() !== 'acp') {
             // An postfix for the page title has been already set
             if (!empty($this->title['postfix'])) {
-                $this->setTitlePostfix($this->title['postfix'] . $this->getTitleSeparator() . $this->lang->t('system', 'acp'));
+                $this->setTitlePostfix($this->title['postfix'] . $this->getTitleSeparator() . $this->translator->t('system',
+                        'acp'));
             } else {
-                $this->setTitlePostfix($this->lang->t('system', 'acp'));
+                $this->setTitlePostfix($this->translator->t('system', 'acp'));
             }
         }
 
         // No breadcrumb has been set yet
         if (empty($this->steps)) {
-            $this->append($this->lang->t('system', 'acp'), 'acp/acp');
+            $this->append($this->translator->t('system', 'acp'), 'acp/acp');
 
             if ($this->request->getModule() !== 'acp') {
                 $this->append(
-                    $this->lang->t($this->request->getModule(), $this->request->getModule()),
+                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
                     'acp/' . $this->request->getModule()
                 );
 
@@ -233,12 +234,12 @@ class Breadcrumb
         } else { // Prepend breadcrumb steps, if there have been already some steps set
             if ($this->request->getModule() !== 'acp') {
                 $this->prepend(
-                    $this->lang->t($this->request->getModule(), $this->request->getModule()),
+                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
                     'acp/' . $this->request->getModule()
                 );
             }
 
-            $this->prepend($this->lang->t('system', 'acp'), 'acp/acp');
+            $this->prepend($this->translator->t('system', 'acp'), 'acp/acp');
         }
         $this->breadcrumbCache = $this->steps;
     }
@@ -305,7 +306,7 @@ class Breadcrumb
         if (empty($this->steps)) {
             if ($this->request->getModule() !== 'errors') {
                 $this->append(
-                    $this->lang->t($this->request->getModule(), $this->request->getModule()),
+                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
                     $this->request->getModule()
                 );
             }
@@ -323,13 +324,13 @@ class Breadcrumb
             method_exists($this->container->get($serviceId), 'actionIndex')
         ) {
             $this->append(
-                $this->lang->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
+                $this->translator->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
                 $this->request->getModuleAndController()
             );
         }
         if ($this->request->getControllerAction() !== 'index') {
             $this->append(
-                $this->lang->t($this->request->getModule(), $this->getControllerActionTitle()),
+                $this->translator->t($this->request->getModule(), $this->getControllerActionTitle()),
                 $this->request->getFullPath()
             );
         }

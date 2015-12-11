@@ -15,19 +15,19 @@ abstract class AbstractController extends Core\Modules\Controller
 
         $navbar = [
             'index_index' => [
-                'lang' => $this->lang->t('install', 'index_index'),
+                'lang' => $this->translator->t('install', 'index_index'),
                 'active' => false,
             ],
             'index_licence' => [
-                'lang' => $this->lang->t('install', 'index_licence'),
+                'lang' => $this->translator->t('install', 'index_licence'),
                 'active' => false,
             ],
             'index_requirements' => [
-                'lang' => $this->lang->t('install', 'index_requirements'),
+                'lang' => $this->translator->t('install', 'index_requirements'),
                 'active' => false,
             ],
             'install_index' => [
-                'lang' => $this->lang->t('install', 'install_index'),
+                'lang' => $this->translator->t('install', 'install_index'),
                 'active' => false,
             ]
         ];

@@ -295,7 +295,8 @@ class Items extends Core\Modules\AdminController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+                return $this->redirectMessages()->setMessage($bool,
+                    $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
             },
             'acp/menus'
         );
@@ -352,7 +353,8 @@ class Items extends Core\Modules\AdminController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+                return $this->redirectMessages()->setMessage($bool,
+                    $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
             },
             'acp/menus'
         );
@@ -387,13 +389,13 @@ class Items extends Core\Modules\AdminController
     {
         $values_mode = [1, 2, 3];
         $lang_mode = [
-            $this->lang->t('menus', 'module'),
-            $this->lang->t('menus', 'dynamic_page'),
-            $this->lang->t('menus', 'hyperlink')
+            $this->translator->t('menus', 'module'),
+            $this->translator->t('menus', 'dynamic_page'),
+            $this->translator->t('menus', 'hyperlink')
         ];
         if ($this->articlesHelpers) {
             $values_mode[] = 4;
-            $lang_mode[] = $this->lang->t('menus', 'article');
+            $lang_mode[] = $this->translator->t('menus', 'article');
         }
 
         return $this->get('core.helpers.forms')->selectGenerator('mode', $values_mode, $lang_mode, $value);

@@ -26,21 +26,21 @@ class Gallery extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->lang->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('gallery', 'type_in_gallery_title')
+                    'message' => $this->translator->t('gallery', 'type_in_gallery_title')
                 ])
             ->addConstraint(
                 UriAliasValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'alias',
-                    'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
                         'path' => $uriAlias
                     ]

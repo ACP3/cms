@@ -79,13 +79,16 @@ class Index extends Core\Modules\AdminController
         }
 
         // Mailertyp
-        $lang_mailerType = [$this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp')];
+        $lang_mailerType = [
+            $this->translator->t('system', 'mailer_type_php_mail'),
+            $this->translator->t('system', 'mailer_type_smtp')
+        ];
 
         // Mailer SMTP Verschlüsselung
         $lang_mailerSmtpSecurity = [
-            $this->lang->t('system', 'mailer_smtp_security_none'),
-            $this->lang->t('system', 'mailer_smtp_security_ssl'),
-            $this->lang->t('system', 'mailer_smtp_security_tls')
+            $this->translator->t('system', 'mailer_smtp_security_none'),
+            $this->translator->t('system', 'mailer_smtp_security_ssl'),
+            $this->translator->t('system', 'mailer_smtp_security_tls')
         ];
 
         $this->formTokenHelper->generateFormToken();
@@ -93,7 +96,7 @@ class Index extends Core\Modules\AdminController
         return [
             'entries' => $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $wysiwyg,
-            'languages' => $this->lang->getLanguagePack($systemSettings['lang']),
+            'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']),
             'cache_images' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']),
@@ -147,7 +150,9 @@ class Index extends Core\Modules\AdminController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), $this->request->getFullPath());
+                return $this->redirectMessages()->setMessage($bool,
+                    $this->translator->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'),
+                    $this->request->getFullPath());
             },
             $this->request->getFullPath()
         );

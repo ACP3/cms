@@ -143,7 +143,8 @@ class Account extends Core\Modules\FrontendController
             ];
             $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 
-            return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
+            return $this->redirectMessages()->setMessage($bool,
+                $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
         }
 
         $user = $this->userRepository->getOneById($this->user->getUserId());
@@ -199,7 +200,8 @@ class Account extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
+                return $this->redirectMessages()->setMessage($bool,
+                    $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
             }
         );
     }
@@ -236,7 +238,8 @@ class Account extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
+                return $this->redirectMessages()->setMessage($bool,
+                    $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
             }
         );
     }

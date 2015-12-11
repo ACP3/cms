@@ -26,28 +26,28 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->lang->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('polls', 'type_in_question')
+                    'message' => $this->translator->t('polls', 'type_in_question')
                 ])
             ->addConstraint(
                 AtLeastTwoAnswersValidationRule::NAME,
                 [
                     'data' => $formData['answers'],
                     'field' => 'answer',
-                    'message' => $this->lang->t('polls', 'type_in_two_answers')
+                    'message' => $this->translator->t('polls', 'type_in_two_answers')
                 ])
             ->addConstraint(
                 DeleteAllAnswersValidationRule::NAME,
                 [
                     'data' => $formData['answers'],
                     'field' => 'answer',
-                    'message' => $this->lang->t('polls', 'can_not_delete_all_answers')
+                    'message' => $this->translator->t('polls', 'can_not_delete_all_answers')
                 ]);
 
         $this->validator->validate();

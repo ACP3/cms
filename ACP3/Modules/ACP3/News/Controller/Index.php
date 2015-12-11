@@ -92,7 +92,7 @@ class Index extends Core\Modules\FrontendController
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
             $news = $this->newsCache->getCache($id);
 
-            $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
+            $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
 
             if ($this->newsSettings['category_in_breadcrumb'] == 1) {
                 $this->breadcrumb->append($news['category_title'], 'news/index/index/cat_' . $news['category_id']);
@@ -121,7 +121,7 @@ class Index extends Core\Modules\FrontendController
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->router->route('news'));
-            $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
+            $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
             $category = $this->categoryRepository->getTitleById($cat);
             if (!empty($category)) {
                 $this->breadcrumb->append($category);
@@ -147,7 +147,10 @@ class Index extends Core\Modules\FrontendController
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
                 }
                 if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'], $this->newsSettings['readmore_chars'], 50, '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");
+                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'],
+                        $this->newsSettings['readmore_chars'], 50,
+                        '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->translator->t('news',
+                            'readmore') . "]</a>\n");
                 }
             }
             $this->view->assign('news', $news);

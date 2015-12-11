@@ -171,9 +171,10 @@ class Index extends Core\Modules\FrontendController
                     $bool = $this->voteRepository->insert($insertValues);
                 }
             }
-            $text = $bool !== false ? $this->lang->t('polls', 'poll_success') : $this->lang->t('polls', 'poll_error');
+            $text = $bool !== false ? $this->translator->t('polls', 'poll_success') : $this->translator->t('polls',
+                'poll_error');
         } else {
-            $text = $this->lang->t('polls', 'already_voted');
+            $text = $this->translator->t('polls', 'already_voted');
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $id);

@@ -17,11 +17,11 @@ class SampleData extends AbstractSampleData
     public function sampleData()
     {
         $currentDate = gmdate(Date::DEFAULT_DATE_FORMAT_FULL);
-        $lang = $this->schemaHelper->getContainer()->get('core.lang');
+        $translator = $this->schemaHelper->getContainer()->get('core.lang');
 
         return [
-            "INSERT INTO `{pre}categories` VALUES ('', '{$lang->t('install', 'category_name')}', '', '{$lang->t('install', 'category_description')}', '{$this->schemaHelper->getModuleId('news')}');",
-            "INSERT INTO `{pre}news` VALUES ('', '{$currentDate}', '{$currentDate}', '{$lang->t('install', 'news_headline')}', '{$lang->t('install', 'news_text')}', '1', '1', '1', '', '', '', '1');"
+            "INSERT INTO `{pre}categories` VALUES ('', '{$translator->t('install', 'category_name')}', '', '{$translator->t('install', 'category_description')}', '{$this->schemaHelper->getModuleId('news')}');",
+            "INSERT INTO `{pre}news` VALUES ('', '{$currentDate}', '{$currentDate}', '{$translator->t('install', 'news_headline')}', '{$translator->t('install', 'news_text')}', '1', '1', '1', '', '', '', '1');"
         ];
     }
 }

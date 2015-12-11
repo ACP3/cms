@@ -26,7 +26,7 @@ class OnDisplaySearchResultsListener extends Event
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    private $lang;
+    private $translator;
     /**
      * @var \ACP3\Core\Router
      */
@@ -39,21 +39,21 @@ class OnDisplaySearchResultsListener extends Event
     /**
      * @param \ACP3\Core\ACL                               $acl
      * @param \ACP3\Core\Date                              $date
-     * @param \ACP3\Core\I18n\Translator                   $lang
+     * @param \ACP3\Core\I18n\Translator                   $translator
      * @param \ACP3\Core\Router                            $router
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
      */
     public function __construct(
         ACL $acl,
         Date $date,
-        Translator $lang,
+        Translator $translator,
         Router $router,
         NewsRepository $newsRepository
     )
     {
         $this->acl = $acl;
         $this->date = $date;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->router = $router;
         $this->newsRepository = $newsRepository;
     }
@@ -82,7 +82,7 @@ class OnDisplaySearchResultsListener extends Event
                     $searchResults['results'][$i]['hyperlink'] = $this->router->route('news/index/details/id_' . $results[$i]['id']);
                 }
 
-                $displaySearchResults->addSearchResultsByModule($this->lang->t('news', 'news'), $searchResults);
+                $displaySearchResults->addSearchResultsByModule($this->translator->t('news', 'news'), $searchResults);
             }
         }
     }

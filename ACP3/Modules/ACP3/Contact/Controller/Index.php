@@ -116,8 +116,8 @@ class Index extends Core\Modules\FrontendController
 
                 $formData['message'] = Core\Functions::strEncode($formData['message'], true);
 
-                $subject = $this->lang->t('contact', 'contact_subject', ['%title%' => $seoSettings['title']]);
-                $body = $this->lang->t(
+                $subject = $this->translator->t('contact', 'contact_subject', ['%title%' => $seoSettings['title']]);
+                $body = $this->translator->t(
                     'contact',
                     'contact_body',
                     [
@@ -130,8 +130,9 @@ class Index extends Core\Modules\FrontendController
 
                 // Nachrichtenkopie an Absender senden
                 if (isset($formData['copy'])) {
-                    $subjectCopy = $this->lang->t('contact', 'sender_subject', ['%title%' => $seoSettings['title']]);
-                    $bodyCopy = $this->lang->t(
+                    $subjectCopy = $this->translator->t('contact', 'sender_subject',
+                        ['%title%' => $seoSettings['title']]);
+                    $bodyCopy = $this->translator->t(
                         'contact',
                         'sender_body',
                         [
@@ -145,7 +146,8 @@ class Index extends Core\Modules\FrontendController
                 $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $bool === true ? $this->lang->t('contact', 'send_mail_success') : $this->lang->t('contact', 'send_mail_error'),
+                    $bool === true ? $this->translator->t('contact',
+                        'send_mail_success') : $this->translator->t('contact', 'send_mail_error'),
                     $this->router->route('contact')
                 ));
             }
@@ -159,7 +161,7 @@ class Index extends Core\Modules\FrontendController
     {
         return [
             'imprint' => $this->config->getSettings('contact'),
-            'powered_by' => $this->lang->t(
+            'powered_by' => $this->translator->t(
                 'contact',
                 'powered_by',
                 [

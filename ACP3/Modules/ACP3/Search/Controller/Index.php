@@ -51,13 +51,13 @@ class Index extends Core\Modules\FrontendController
 
         // Zu durchsuchende Bereiche
         $langSearchAreas = [
-            $this->lang->t('search', 'title_and_content'),
-            $this->lang->t('search', 'title_only'),
-            $this->lang->t('search', 'content_only')
+            $this->translator->t('search', 'title_and_content'),
+            $this->translator->t('search', 'title_only'),
+            $this->translator->t('search', 'content_only')
         ];
 
         // Treffer sortieren
-        $langSortHits = [$this->lang->t('search', 'asc'), $this->lang->t('search', 'desc')];
+        $langSortHits = [$this->translator->t('search', 'asc'), $this->translator->t('search', 'desc')];
 
         return [
             'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
@@ -81,8 +81,8 @@ class Index extends Core\Modules\FrontendController
     protected function _displaySearchResults(array $modules, $searchTerm, $area, $sort)
     {
         $this->breadcrumb
-            ->append($this->lang->t('search', 'search'), 'search')
-            ->append($this->lang->t('search', 'search_results'));
+            ->append($this->translator->t('search', 'search'), 'search')
+            ->append($this->translator->t('search', 'search_results'));
 
         $searchResultsEvent = new Search\Event\DisplaySearchResults($modules, $searchTerm, $area, $sort);
         $this->eventDispatcher->dispatch('search.events.displaySearchResults', $searchResultsEvent);
@@ -93,7 +93,7 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('results_mods', $searchResults);
         } else {
             $this->view->assign('no_search_results',
-                $this->lang->t('search', 'no_search_results', ['%search_term%' => $searchTerm]));
+                $this->translator->t('search', 'no_search_results', ['%search_term%' => $searchTerm]));
         }
 
         $this->setTemplate('Search/Frontend/index.results.tpl');

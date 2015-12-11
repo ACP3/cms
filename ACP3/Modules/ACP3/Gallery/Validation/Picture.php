@@ -24,7 +24,7 @@ class Picture extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $file,
                     'field' => 'file',
-                    'message' => $this->lang->t('gallery', 'invalid_image_selected'),
+                    'message' => $this->translator->t('gallery', 'invalid_image_selected'),
                     'extra' => [
                         'required' => $fileRequired
                     ]

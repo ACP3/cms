@@ -147,10 +147,10 @@ class Index extends Core\Modules\AdminController
                 $this->categoriesCache->getCacheDriver()->deleteAll();
 
                 if ($isInUse === true) {
-                    $text = $this->lang->t('categories', 'category_is_in_use');
+                    $text = $this->translator->t('categories', 'category_is_in_use');
                     $bool = false;
                 } else {
-                    $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
+                    $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
                 }
 
                 return $this->redirectMessages()->setMessage($bool, $text);
@@ -239,23 +239,23 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('categories', 'title'),
+                'label' => $this->translator->t('categories', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('system', 'description'),
+                'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description']
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('categories', 'module'),
+                'label' => $this->translator->t('categories', 'module'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::NAME,
                 'fields' => ['module'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true

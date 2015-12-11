@@ -27,14 +27,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('newsletter', 'subject_to_short')
+                    'message' => $this->translator->t('newsletter', 'subject_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->lang->t('newsletter', 'text_to_short')
+                    'message' => $this->translator->t('newsletter', 'text_to_short')
                 ]);
 
         $this->validator->validate();
@@ -55,7 +55,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'salutation',
-                    'message' => $this->lang->t('newsletter', 'select_salutation'),
+                    'message' => $this->translator->t('newsletter', 'select_salutation'),
                     'extra' => [
                         'haystack' => [1, 2]
                     ]
@@ -65,21 +65,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
                 AccountExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('newsletter', 'account_not_exists')
+                    'message' => $this->translator->t('newsletter', 'account_not_exists')
                 ])
             ->addConstraint(
                 CaptchaValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'captcha',
-                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ]);
 
         $this->validator->validate();
@@ -100,21 +100,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
                 AccountExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('newsletter', 'account_not_exists')
+                    'message' => $this->translator->t('newsletter', 'account_not_exists')
                 ])
             ->addConstraint(
                 CaptchaValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'captcha',
-                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ]);
 
 
@@ -136,7 +136,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ]);
 
         $this->validator->validate();
@@ -154,7 +154,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 AccountExistsByHashValidationRule::NAME,
                 [
                     'data' => $hash,
-                    'message' => $this->lang->t('newsletter', 'account_not_exists')
+                    'message' => $this->translator->t('newsletter', 'account_not_exists')
                 ]);
 
         $this->validator->validate();

@@ -152,7 +152,7 @@ class Resources extends Core\Modules\AdminController
         $output = [];
         for ($i = 0; $i < $c_resources; ++$i) {
             if ($this->modules->isActive($resources[$i]['module_name']) === true) {
-                $module = $this->lang->t($resources[$i]['module_name'], $resources[$i]['module_name']);
+                $module = $this->translator->t($resources[$i]['module_name'], $resources[$i]['module_name']);
                 $output[$module][] = $resources[$i];
             }
         }

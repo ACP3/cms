@@ -20,7 +20,7 @@ class ModuleInfoCache
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Modules\Vendors
      */
@@ -36,21 +36,21 @@ class ModuleInfoCache
 
     /**
      * @param \ACP3\Core\Cache                                 $cache
-     * @param \ACP3\Core\I18n\Translator                       $lang
+     * @param \ACP3\Core\I18n\Translator                       $translator
      * @param \ACP3\Core\Modules\Vendors                       $vendors
      * @param \ACP3\Core\XML                                   $xml
      * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
      */
     public function __construct(
         Cache $cache,
-        Translator $lang,
+        Translator $translator,
         Vendors $vendors,
         XML $xml,
         ModuleRepository $systemModuleRepository
     )
     {
         $this->cache = $cache;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->vendors = $vendors;
         $this->xml = $xml;
         $this->systemModuleRepository = $systemModuleRepository;
@@ -61,7 +61,7 @@ class ModuleInfoCache
      */
     public function getCacheKey()
     {
-        return 'infos_' . $this->lang->getLanguage();
+        return 'infos_' . $this->translator->getLanguage();
     }
 
     /**
@@ -164,7 +164,7 @@ class ModuleInfoCache
     protected function getModuleDescription(array $moduleInfo, $moduleName)
     {
         if (isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true') {
-            return $this->lang->t($moduleName, 'mod_description');
+            return $this->translator->t($moduleName, 'mod_description');
         }
 
         return $moduleInfo['description'];
@@ -179,7 +179,7 @@ class ModuleInfoCache
     protected function getModuleName(array $moduleInfo, $moduleName)
     {
         if (isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] === 'true') {
-            return $this->lang->t($moduleName, $moduleName);
+            return $this->translator->t($moduleName, $moduleName);
         }
 
         return $moduleInfo['name'];

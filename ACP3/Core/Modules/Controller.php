@@ -30,7 +30,7 @@ abstract class Controller implements ControllerInterface
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -74,7 +74,7 @@ abstract class Controller implements ControllerInterface
         $this->eventDispatcher = $context->getEventDispatcher();
         $this->acl = $context->getACL();
         $this->user = $context->getUser();
-        $this->lang = $context->getLang();
+        $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
         $this->validator = $context->getValidator();

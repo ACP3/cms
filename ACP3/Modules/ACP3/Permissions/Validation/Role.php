@@ -27,14 +27,14 @@ class Role extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->lang->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
                 RoleNotExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->lang->t('permissions', 'role_already_exists'),
+                    'message' => $this->translator->t('permissions', 'role_already_exists'),
                     'extra' => [
                         'role_id' => $roleId
                     ]
@@ -44,7 +44,7 @@ class Role extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'privileges',
-                    'message' => $this->lang->t('permissions', 'invalid_privileges')
+                    'message' => $this->translator->t('permissions', 'invalid_privileges')
                 ]);
 
         $this->validator->validate();

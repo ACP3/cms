@@ -26,14 +26,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'uri',
-                    'message' => $this->lang->t('seo', 'type_in_valid_resource')
+                    'message' => $this->translator->t('seo', 'type_in_valid_resource')
                 ])
             ->addConstraint(
                 UriAliasValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'alias',
-                    'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
                         'path' => $uriAlias
                     ]
@@ -43,7 +43,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'seo_robots',
-                    'message' => $this->lang->t('seo', 'select_robots'),
+                    'message' => $this->translator->t('seo', 'select_robots'),
                     'extra' => [
                         'haystack' => [0, 1, 2, 3, 4]
                     ]
@@ -67,14 +67,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('system', 'title_to_short'),
+                    'message' => $this->translator->t('system', 'title_to_short'),
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'robots',
-                    'message' => $this->lang->t('seo', 'select_robots'),
+                    'message' => $this->translator->t('seo', 'select_robots'),
                     'extra' => [
                         'haystack' => [1, 2, 3, 4]
                     ]
@@ -84,7 +84,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mod_rewrite',
-                    'message' => $this->lang->t('seo', 'select_mod_rewrite'),
+                    'message' => $this->translator->t('seo', 'select_mod_rewrite'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]

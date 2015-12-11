@@ -106,7 +106,7 @@ class Extensions extends Core\Modules\AdminController
             Core\Cache::purge(CACHE_DIR . 'tpl_cached');
         }
 
-        $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
+        $text = $this->translator->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
@@ -166,9 +166,9 @@ class Extensions extends Core\Modules\AdminController
         $bool = false;
         $info = $this->modules->getModuleInfo($moduleDirectory);
         if (empty($info)) {
-            $text = $this->lang->t('system', 'module_not_found');
+            $text = $this->translator->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
-            $text = $this->lang->t('system', 'mod_deactivate_forbidden');
+            $text = $this->translator->t('system', 'mod_deactivate_forbidden');
         } else {
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
@@ -188,13 +188,13 @@ class Extensions extends Core\Modules\AdminController
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
-                    $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
+                    $text = $this->translator->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
-                    $text = $this->lang->t('system', 'enable_following_modules_first',
+                    $text = $this->translator->t('system', 'enable_following_modules_first',
                         ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
-                $text = $this->lang->t('system', 'module_installer_not_found');
+                $text = $this->translator->t('system', 'module_installer_not_found');
             }
         }
 
@@ -203,7 +203,7 @@ class Extensions extends Core\Modules\AdminController
 
     protected function _renewCaches()
     {
-        $this->get('core.lang.cache')->saveLanguageCache($this->lang->getLanguage());
+        $this->get('core.lang.cache')->saveLanguageCache($this->translator->getLanguage());
         $this->moduleInfoCache->saveModulesInfoCache();
         $this->permissionsCache->saveResourcesCache();
     }
@@ -219,9 +219,9 @@ class Extensions extends Core\Modules\AdminController
         $bool = false;
         $info = $this->modules->getModuleInfo($moduleDirectory);
         if (empty($info)) {
-            $text = $this->lang->t('system', 'module_not_found');
+            $text = $this->translator->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
-            $text = $this->lang->t('system', 'mod_deactivate_forbidden');
+            $text = $this->translator->t('system', 'mod_deactivate_forbidden');
         } else {
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
@@ -243,9 +243,9 @@ class Extensions extends Core\Modules\AdminController
                     Core\Cache::purge(CACHE_DIR . 'tpl_cached');
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
-                    $text = $this->lang->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
+                    $text = $this->translator->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
-                    $text = $this->lang->t('system', 'module_disable_not_possible',
+                    $text = $this->translator->t('system', 'module_disable_not_possible',
                         ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
@@ -285,16 +285,17 @@ class Extensions extends Core\Modules\AdminController
                     $this->_renewCaches();
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
-                    $text = $this->lang->t('system', 'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
+                    $text = $this->translator->t('system',
+                        'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
                 } else {
-                    $text = $this->lang->t('system', 'enable_following_modules_first',
+                    $text = $this->translator->t('system', 'enable_following_modules_first',
                         ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
-                $text = $this->lang->t('system', 'module_installer_not_found');
+                $text = $this->translator->t('system', 'module_installer_not_found');
             }
         } else {
-            $text = $this->lang->t('system', 'module_already_installed');
+            $text = $this->translator->t('system', 'module_already_installed');
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
@@ -335,16 +336,17 @@ class Extensions extends Core\Modules\AdminController
                     Core\Cache::purge(CACHE_DIR . 'tpl_cached');
                     Core\Cache::purge(CACHE_DIR . 'sql/container.php');
 
-                    $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
+                    $text = $this->translator->t('system',
+                        'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
                 } else {
-                    $text = $this->lang->t('system', 'uninstall_following_modules_first',
+                    $text = $this->translator->t('system', 'uninstall_following_modules_first',
                         ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
-                $text = $this->lang->t('system', 'module_installer_not_found');
+                $text = $this->translator->t('system', 'module_installer_not_found');
             }
         } else {
-            $text = $this->lang->t('system', 'protected_module_description');
+            $text = $this->translator->t('system', 'protected_module_description');
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());

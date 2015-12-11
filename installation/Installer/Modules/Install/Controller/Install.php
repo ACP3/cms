@@ -2,13 +2,13 @@
 
 namespace ACP3\Installer\Modules\Install\Controller;
 
-use ACP3\Core\User;
+use ACP3\Core\Exceptions\ValidationFailed;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
-use ACP3\Installer\Core\Date;
-use ACP3\Core\Exceptions\ValidationFailed;
+use ACP3\Core\User;
 use ACP3\Installer\Core;
+use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -235,8 +235,8 @@ class Install extends AbstractController
                 'date_format_long' => Functions::strEncode($formData['date_format_long']),
                 'date_format_short' => Functions::strEncode($formData['date_format_short']),
                 'date_time_zone' => $formData['date_time_zone'],
-                'maintenance_message' => $this->lang->t('install', 'offline_message'),
-                'lang' => $this->lang->getLanguage()
+                'maintenance_message' => $this->translator->t('install', 'offline_message'),
+                'lang' => $this->translator->getLanguage()
             ],
             'seo' => [
                 'title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
@@ -246,11 +246,12 @@ class Install extends AbstractController
             ],
             'newsletter' => [
                 'mail' => $formData['mail'],
-                'mailsig' => $this->lang->t('install', 'sincerely') . "\n\n" . $this->lang->t('install', 'newsletter_mailsig')
+                'mailsig' => $this->translator->t('install', 'sincerely') . "\n\n" . $this->translator->t('install',
+                        'newsletter_mailsig')
             ],
             'contact' => [
                 'mail' => $formData['mail'],
-                'disclaimer' => $this->lang->t('install', 'disclaimer')
+                'disclaimer' => $this->translator->t('install', 'disclaimer')
             ]
         ];
 
@@ -276,7 +277,7 @@ class Install extends AbstractController
             "INSERT INTO
                 `{pre}users`
             VALUES
-                (1, 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->lang->getLanguage()}', '20', '', '{$currentDate}');",
+                (1, 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->translator->getLanguage()}', '20', '', '{$currentDate}');",
             "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
         ];
 

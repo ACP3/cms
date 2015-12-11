@@ -163,7 +163,7 @@ class Index extends Core\Modules\FrontendController
             }
 
             return [
-                'error_msg' => $this->get('core.helpers.alerts')->errorBox($this->lang->t('users',
+                'error_msg' => $this->get('core.helpers.alerts')->errorBox($this->translator->t('users',
                     $result == -1 ? 'account_locked' : 'nickname_or_password_wrong'))
             ];
         }
@@ -199,7 +199,7 @@ class Index extends Core\Modules\FrontendController
             return $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($settings['enable_registration'] == 0) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox(
-                $this->lang->t('users', 'user_registration_disabled'))
+                $this->translator->t('users', 'user_registration_disabled'))
             );
         } else {
             if ($this->request->getPost()->isEmpty() === false) {
@@ -234,7 +234,7 @@ class Index extends Core\Modules\FrontendController
         if ($this->userRepository->resultExists($id) === true) {
             $user = $this->user->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3],
-                ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
+                ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')], $user['gender']);
 
             return [
                 'user' => $user
@@ -271,7 +271,7 @@ class Index extends Core\Modules\FrontendController
                 $seoSettings = $this->config->getSettings('seo');
 
                 // E-Mail mit dem neuen Passwort versenden
-                $subject = $this->lang->t(
+                $subject = $this->translator->t(
                     'users',
                     'forgot_pwd_mail_subject',
                     [
@@ -279,7 +279,7 @@ class Index extends Core\Modules\FrontendController
                         '{host}' => $host
                     ]
                 );
-                $body = $this->lang->t(
+                $body = $this->translator->t(
                     'users',
                     'forgot_pwd_mail_message', [
                         '{name}' => $user['nickname'],
@@ -308,7 +308,7 @@ class Index extends Core\Modules\FrontendController
                 $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $this->lang->t('users',
+                    $this->translator->t('users',
                         $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'),
                     ROOT_DIR
                 ));
@@ -332,14 +332,14 @@ class Index extends Core\Modules\FrontendController
                 $systemSettings = $this->config->getSettings('system');
                 $seoSettings = $this->config->getSettings('seo');
 
-                $subject = $this->lang->t(
+                $subject = $this->translator->t(
                     'users',
                     'register_mail_subject',
                     [
                         '{title}' => $seoSettings['title'],
                         '{host}' => $this->request->getHostname(),
                     ]);
-                $body = $this->lang->t(
+                $body = $this->translator->t(
                     'users',
                     'register_mail_message',
                     [
@@ -373,7 +373,7 @@ class Index extends Core\Modules\FrontendController
                 $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $this->lang->t('users',
+                    $this->translator->t('users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'),
                     ROOT_DIR
                 ));

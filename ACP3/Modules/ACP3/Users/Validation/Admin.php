@@ -25,28 +25,28 @@ class Admin extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'language_override',
-                    'message' => $this->lang->t('users', 'select_languages_override')
+                    'message' => $this->translator->t('users', 'select_languages_override')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'entries_override',
-                    'message' => $this->lang->t('users', 'select_entries_override')
+                    'message' => $this->translator->t('users', 'select_entries_override')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'enable_registration',
-                    'message' => $this->lang->t('users', 'select_enable_registration')
+                    'message' => $this->translator->t('users', 'select_enable_registration')
                 ]);
 
         $this->validator->validate();
@@ -68,14 +68,14 @@ class Admin extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'roles',
-                    'message' => $this->lang->t('users', 'select_access_level')
+                    'message' => $this->translator->t('users', 'select_access_level')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'super_user',
-                    'message' => $this->lang->t('users', 'select_super_user'),
+                    'message' => $this->translator->t('users', 'select_super_user'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]

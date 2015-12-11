@@ -17,7 +17,7 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Router
      */
@@ -26,15 +26,15 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
     /**
      * PictureSortColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\Router          $router
      */
     public function __construct(
-        Translator $lang,
+        Translator $translator,
         Router $router
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->router = $router;
     }
 
@@ -48,18 +48,21 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {
             $value .= '<a href="' . $this->router->route('acp/gallery/pictures/order/id_' . $dbResultRow[$this->primaryKey] . '/action_down') . '"
-                       title="' . $this->lang->t('system', 'move_down') . '"
+                       title="' . $this->translator->t('system', 'move_down') . '"
                        data-ajax-form="true"
-                       data-ajax-form-loading-text="' . $this->lang->t('system', 'loading_please_wait') . '"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>';
+                       data-ajax-form-loading-text="' . $this->translator->t('system',
+                    'loading_please_wait') . '"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>';
         }
         if ($dbResultRow['first'] != $dbValue) {
             $value .= '<a href="' . $this->router->route('acp/gallery/pictures/order/id_' . $dbResultRow[$this->primaryKey] . '/action_up') . '"
-                       title="' . $this->lang->t('system', 'move_up') . '"
+                       title="' . $this->translator->t('system', 'move_up') . '"
                        data-ajax-form="true"
-                       data-ajax-form-loading-text="' . $this->lang->t('system', 'loading_please_wait') . '"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>';
+                       data-ajax-form-loading-text="' . $this->translator->t('system',
+                    'loading_please_wait') . '"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>';
         }
         if ($dbResultRow['first'] == $dbResultRow['last']) {
-            $value = '<i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="' . $this->lang->t('system', 'move_impossible') . '"></i>';
+            $value = '<i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="' . $this->translator->t('system',
+                    'move_impossible') . '"></i>';
         }
 
         $column['attribute']['data-order'] = $dbResultRow['pic'];

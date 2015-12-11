@@ -16,7 +16,7 @@ class CheckAccess
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Router
      */
@@ -28,18 +28,18 @@ class CheckAccess
 
     /**
      * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\Router          $router
      * @param \ACP3\Core\View            $view
      */
     public function __construct(
         Core\ACL $acl,
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Router $router,
         Core\View $view
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->acl = $acl;
         $this->router = $router;
         $this->view = $view;
@@ -101,9 +101,9 @@ class CheckAccess
         }
         if (isset($params['lang'])) {
             $langArray = explode('|', $params['lang']);
-            $accessCheck['lang'] = $this->lang->t($langArray[0], $langArray[1]);
+            $accessCheck['lang'] = $this->translator->t($langArray[0], $langArray[1]);
         } else {
-            $accessCheck['lang'] = $this->lang->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
+            $accessCheck['lang'] = $this->translator->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
         }
         if (isset($params['class'])) {
             $accessCheck['class'] = $params['class'];

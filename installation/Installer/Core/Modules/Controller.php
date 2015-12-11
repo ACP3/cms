@@ -21,7 +21,7 @@ class Controller implements ControllerInterface
     /**
      * @var \ACP3\Installer\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Installer\Core\Http\Request
      */
@@ -67,7 +67,7 @@ class Controller implements ControllerInterface
      */
     public function __construct(Context $context)
     {
-        $this->lang = $context->getLang();
+        $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
         $this->view = $context->getView();
@@ -86,7 +86,7 @@ class Controller implements ControllerInterface
         $this->setLanguage();
 
         // Einige Template Variablen setzen
-        $this->view->assign('LANGUAGES', $this->_languagesDropdown($this->lang->getLanguage()));
+        $this->view->assign('LANGUAGES', $this->_languagesDropdown($this->translator->getLanguage()));
         $this->view->assign('PHP_SELF', PHP_SELF);
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
         $this->view->assign('ROOT_DIR', ROOT_DIR);
@@ -94,9 +94,9 @@ class Controller implements ControllerInterface
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
 
-        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->lang->getLanguage() . '.xml');
+        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->translator->getLanguage() . '.xml');
         $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
-        $this->view->assign('LANG', $this->lang->getShortIsoCode());
+        $this->view->assign('LANG', $this->translator->getShortIsoCode());
     }
 
     /**
@@ -180,8 +180,9 @@ class Controller implements ControllerInterface
                     $this->setTemplate($this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
                 }
 
-                $this->view->assign('PAGE_TITLE', $this->lang->t('install', 'acp3_installation'));
-                $this->view->assign('TITLE', $this->lang->t($this->request->getModule(), $this->request->getController() . '_' . $this->request->getControllerAction()));
+                $this->view->assign('PAGE_TITLE', $this->translator->t('install', 'acp3_installation'));
+                $this->view->assign('TITLE', $this->translator->t($this->request->getModule(),
+                    $this->request->getController() . '_' . $this->request->getControllerAction()));
                 $this->view->assign('CONTENT', $this->getContentAppend());
                 $this->view->assign('IS_AJAX', $this->request->isAjax());
 
@@ -309,6 +310,6 @@ class Controller implements ControllerInterface
             $language = $this->request->getUserAgent()->parseAcceptLanguage();
         }
 
-        $this->lang->setLanguage($language);
+        $this->translator->setLanguage($language);
     }
 }

@@ -22,7 +22,7 @@ class Pagination
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\SEO
      */
@@ -79,7 +79,7 @@ class Pagination
     /**
      * @param \ACP3\Core\User                  $user
      * @param \ACP3\Core\Breadcrumb            $breadcrumb
-     * @param \ACP3\Core\I18n\Translator       $lang
+     * @param \ACP3\Core\I18n\Translator       $translator
      * @param \ACP3\Core\SEO                   $seo
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router                $router
@@ -88,7 +88,7 @@ class Pagination
     public function __construct(
         User $user,
         Breadcrumb $breadcrumb,
-        Translator $lang,
+        Translator $translator,
         SEO $seo,
         RequestInterface $request,
         Router $router,
@@ -96,7 +96,7 @@ class Pagination
     {
         $this->user = $user;
         $this->breadcrumb = $breadcrumb;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->seo = $seo;
         $this->request = $request;
         $this->router = $router;
@@ -202,7 +202,7 @@ class Pagination
     private function setMetaStatements($link)
     {
         if ($this->currentPage > 1) {
-            $postfix = $this->lang->t('system', 'page_x', ['%page%' => $this->currentPage]);
+            $postfix = $this->translator->t('system', 'page_x', ['%page%' => $this->currentPage]);
             $this->breadcrumb->setTitlePostfix($postfix);
         }
 
@@ -210,7 +210,8 @@ class Pagination
         if ($this->request->getArea() !== 'admin') {
             if ($this->currentPage - 1 > 0) {
                 // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-                $this->seo->setDescriptionPostfix($this->lang->t('system', 'page_x', ['%page%' => $this->currentPage]));
+                $this->seo->setDescriptionPostfix($this->translator->t('system', 'page_x',
+                    ['%page%' => $this->currentPage]));
                 $this->seo->setPreviousPage($link . 'page_' . ($this->currentPage - 1) . '/');
             }
             if ($this->currentPage + 1 <= $this->totalPages) {
@@ -263,7 +264,7 @@ class Pagination
                 false,
                 '&laquo;',
                 $link . $this->urlFragment,
-                $this->lang->t('system', 'first_page')
+                $this->translator->t('system', 'first_page')
             );
         }
     }
@@ -296,7 +297,7 @@ class Pagination
                 false,
                 '&lsaquo;',
                 $link . ($this->currentPage - 1 > 1 ? 'page_' . ($this->currentPage - 1) . '/' : '') . $this->urlFragment,
-                $this->lang->t('system', 'previous_page')
+                $this->translator->t('system', 'previous_page')
             );
         }
     }
@@ -311,7 +312,7 @@ class Pagination
                 false,
                 '&rsaquo;',
                 $link . 'page_' . ($this->currentPage + 1) . '/' . $this->urlFragment,
-                $this->lang->t('system', 'next_page')
+                $this->translator->t('system', 'next_page')
             );
         }
     }
@@ -327,7 +328,7 @@ class Pagination
                 false,
                 '&raquo;',
                 $link . 'page_' . $this->totalPages . '/' . $this->urlFragment,
-                $this->lang->t('system', 'last_page')
+                $this->translator->t('system', 'last_page')
             );
         }
     }

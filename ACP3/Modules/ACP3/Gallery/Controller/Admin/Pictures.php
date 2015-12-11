@@ -91,7 +91,7 @@ class Pictures extends Core\Modules\AdminController
 
             $this->breadcrumb
                 ->append($gallery, 'acp/gallery/index/edit/id_' . $id)
-                ->append($this->lang->t('gallery', 'admin_pictures_create'));
+                ->append($this->translator->t('gallery', 'admin_pictures_create'));
 
             $settings = $this->config->getSettings('gallery');
 
@@ -103,7 +103,7 @@ class Pictures extends Core\Modules\AdminController
                 $options = [];
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked');
-                $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
+                $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }
 
@@ -166,8 +166,8 @@ class Pictures extends Core\Modules\AdminController
 
             $this->breadcrumb
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
-                ->append($this->lang->t('gallery', 'admin_pictures_edit'))
-                ->setTitlePostfix($picture['title'] . $this->breadcrumb->getTitleSeparator() . $this->lang->t('gallery',
+                ->append($this->translator->t('gallery', 'admin_pictures_edit'))
+                ->setTitlePostfix($picture['title'] . $this->breadcrumb->getTitleSeparator() . $this->translator->t('gallery',
                         'picture_x', ['%picture%' => $picture['pic']]));
 
             $settings = $this->config->getSettings('gallery');
@@ -180,7 +180,7 @@ class Pictures extends Core\Modules\AdminController
                 $options = [];
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $picture['comments'], 'checked');
-                $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
+                $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }
 

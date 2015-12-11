@@ -14,16 +14,16 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
 
     /**
      * LanguagePackExistsValidationRule constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      */
-    public function __construct(Translator $lang)
+    public function __construct(Translator $translator)
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
     }
 
     /**
@@ -35,6 +35,6 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->lang->languagePackExists($data);
+        return $this->translator->languagePackExists($data);
     }
 }

@@ -20,17 +20,17 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator      $lang
+     * @param \ACP3\Core\I18n\Translator      $translator
      * @param \ACP3\Core\Validation\Validator $validator
      * @param \ACP3\Core\Modules              $modules
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         Core\Modules $modules
     )
     {
-        parent::__construct($lang, $validator);
+        parent::__construct($translator, $validator);
 
         $this->modules = $modules;
     }
@@ -51,42 +51,42 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->lang->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('news', 'title_to_short')
+                    'message' => $this->translator->t('news', 'title_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->lang->t('news', 'text_to_short')
+                    'message' => $this->translator->t('news', 'text_to_short')
                 ])
             ->addConstraint(
                 Categories\Validation\ValidationRules\CategoryExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => ['cat', 'cat_create'],
-                    'message' => $this->lang->t('news', 'select_category')
+                    'message' => $this->translator->t('news', 'select_category')
                 ])
             ->addConstraint(
                 ExternalLinkValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => ['link_title', 'uri', 'target'],
-                    'message' => $this->lang->t('news', 'complete_hyperlink_statements')
+                    'message' => $this->translator->t('news', 'complete_hyperlink_statements')
                 ])
             ->addConstraint(
                 UriAliasValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'alias',
-                    'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
                         'path' => $uriAlias
                     ]
@@ -110,7 +110,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
-                    'message' => $this->lang->t('system', 'select_date_format'),
+                    'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
@@ -120,14 +120,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->lang->t('system', 'select_sidebar_entries')
+                    'message' => $this->translator->t('system', 'select_sidebar_entries')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NumberGreaterThanValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'readmore_chars',
-                    'message' => $this->lang->t('news', 'type_in_readmore_chars'),
+                    'message' => $this->translator->t('news', 'type_in_readmore_chars'),
                     'extra' => [
                         'value' => 0
                     ]
@@ -137,7 +137,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'readmore',
-                    'message' => $this->lang->t('news', 'select_activate_readmore'),
+                    'message' => $this->translator->t('news', 'select_activate_readmore'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -147,7 +147,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'category_in_breadcrumb',
-                    'message' => $this->lang->t('news', 'select_display_category_in_breadcrumb'),
+                    'message' => $this->translator->t('news', 'select_display_category_in_breadcrumb'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -160,7 +160,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'comments',
-                        'message' => $this->lang->t('news', 'select_allow_comments'),
+                        'message' => $this->translator->t('news', 'select_allow_comments'),
                         'extra' => [
                             'haystack' => [0, 1]
                         ]

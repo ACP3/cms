@@ -142,9 +142,9 @@ class Index extends Core\Modules\AdminController
                 }
                 if ($isAdminUser === true) {
                     $bool = false;
-                    $text = $this->lang->t('users', 'admin_user_undeletable');
+                    $text = $this->translator->t('users', 'admin_user_undeletable');
                 } else {
-                    $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
+                    $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
                 }
 
                 return $this->redirectMessages()->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : '');
@@ -246,23 +246,23 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('users', 'nickname'),
+                'label' => $this->translator->t('users', 'nickname'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['nickname'],
                 'default_sort' => true
             ], 40)
             ->addColumn([
-                'label' => $this->lang->t('system', 'email_address'),
+                'label' => $this->translator->t('system', 'email_address'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['mail'],
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('permissions', 'roles'),
+                'label' => $this->translator->t('permissions', 'roles'),
                 'type' => Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer::NAME,
                 'fields' => ['id'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true

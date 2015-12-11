@@ -27,14 +27,14 @@ class Menu extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'index_name',
-                    'message' => $this->lang->t('menus', 'type_in_index_name')
+                    'message' => $this->translator->t('menus', 'type_in_index_name')
                 ])
             ->addConstraint(
                 MenuExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'index_name',
-                    'message' => $this->lang->t('menus', 'index_name_unique'),
+                    'message' => $this->translator->t('menus', 'index_name_unique'),
                     'extra' => [
                         'menu_id' => $menuId
                     ]
@@ -44,7 +44,7 @@ class Menu extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('menus', 'menu_bar_title_to_short')
+                    'message' => $this->translator->t('menus', 'menu_bar_title_to_short')
                 ]);
 
         $this->validator->validate();

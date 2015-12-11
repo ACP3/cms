@@ -19,17 +19,17 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator                             $lang
+     * @param \ACP3\Core\I18n\Translator                             $translator
      * @param \ACP3\Core\Validation\Validator                        $validator
      * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         CategoryRepository $categoryRepository
     )
     {
-        parent::__construct($lang, $validator);
+        parent::__construct($translator, $validator);
 
         $this->categoryRepository = $categoryRepository;
     }
@@ -52,21 +52,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('categories', 'title_to_short')
+                    'message' => $this->translator->t('categories', 'title_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'description',
-                    'message' => $this->lang->t('categories', 'description_to_short')
+                    'message' => $this->translator->t('categories', 'description_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::NAME,
                 [
                     'data' => $file,
                     'field' => 'picture',
-                    'message' => $this->lang->t('categories', 'invalid_image_selected'),
+                    'message' => $this->translator->t('categories', 'invalid_image_selected'),
                     'extra' => [
                         'width' => $settings['width'],
                         'height' => $settings['height'],
@@ -79,7 +79,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('categories', 'category_already_exists'),
+                    'message' => $this->translator->t('categories', 'category_already_exists'),
                     'extra' => [
                         'module_id' => empty($categoryId) ? $formData['module'] : $this->categoryRepository->getModuleIdByCategoryId($categoryId),
                         'category_id' => $categoryId
@@ -92,7 +92,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'module',
-                    'message' => $this->lang->t('categories', 'select_module')
+                    'message' => $this->translator->t('categories', 'select_module')
                 ]);
         }
 
@@ -114,21 +114,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'width',
-                    'message' => $this->lang->t('categories', 'invalid_image_width_entered')
+                    'message' => $this->translator->t('categories', 'invalid_image_width_entered')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'height',
-                    'message' => $this->lang->t('categories', 'invalid_image_height_entered')
+                    'message' => $this->translator->t('categories', 'invalid_image_height_entered')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'filesize',
-                    'message' => $this->lang->t('categories', 'invalid_image_filesize_entered')
+                    'message' => $this->translator->t('categories', 'invalid_image_filesize_entered')
                 ]);
 
         $this->validator->validate();

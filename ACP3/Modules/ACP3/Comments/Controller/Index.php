@@ -125,7 +125,7 @@ class Index extends Core\Modules\FrontendController
 
             for ($i = 0; $i < $c_comments; ++$i) {
                 if (empty($comments[$i]['name'])) {
-                    $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
+                    $comments[$i]['name'] = $this->translator->t('users', 'deleted_user');
                 }
                 if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
                     $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
@@ -211,7 +211,9 @@ class Index extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->request->getQuery());
+                return $this->redirectMessages()->setMessage($bool,
+                    $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
+                    $this->request->getQuery());
             }
         );
     }

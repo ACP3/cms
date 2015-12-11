@@ -30,7 +30,7 @@ class Date
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Config
      */
@@ -38,16 +38,16 @@ class Date
 
     /**
      * @param \ACP3\Core\User            $user
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\Config          $config
      */
     public function __construct(
         User $user,
-        Translator $lang,
+        Translator $translator,
         Config $config
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->config = $config;
 
         $this->_setFormatAndTimeZone($user->getUserInfo());
@@ -180,13 +180,13 @@ class Date
     protected function localizeDaysAbbr()
     {
         return [
-            'Mon' => $this->lang->t('system', 'date_mon'),
-            'Tue' => $this->lang->t('system', 'date_tue'),
-            'Wed' => $this->lang->t('system', 'date_wed'),
-            'Thu' => $this->lang->t('system', 'date_thu'),
-            'Fri' => $this->lang->t('system', 'date_fri'),
-            'Sat' => $this->lang->t('system', 'date_sat'),
-            'Sun' => $this->lang->t('system', 'date_sun')
+            'Mon' => $this->translator->t('system', 'date_mon'),
+            'Tue' => $this->translator->t('system', 'date_tue'),
+            'Wed' => $this->translator->t('system', 'date_wed'),
+            'Thu' => $this->translator->t('system', 'date_thu'),
+            'Fri' => $this->translator->t('system', 'date_fri'),
+            'Sat' => $this->translator->t('system', 'date_sat'),
+            'Sun' => $this->translator->t('system', 'date_sun')
         ];
     }
 
@@ -196,13 +196,13 @@ class Date
     protected function localizeDays()
     {
         return [
-            'Monday' => $this->lang->t('system', 'date_monday'),
-            'Tuesday' => $this->lang->t('system', 'date_tuesday'),
-            'Wednesday' => $this->lang->t('system', 'date_wednesday'),
-            'Thursday' => $this->lang->t('system', 'date_thursday'),
-            'Friday' => $this->lang->t('system', 'date_friday'),
-            'Saturday' => $this->lang->t('system', 'date_saturday'),
-            'Sunday' => $this->lang->t('system', 'date_sunday')
+            'Monday' => $this->translator->t('system', 'date_monday'),
+            'Tuesday' => $this->translator->t('system', 'date_tuesday'),
+            'Wednesday' => $this->translator->t('system', 'date_wednesday'),
+            'Thursday' => $this->translator->t('system', 'date_thursday'),
+            'Friday' => $this->translator->t('system', 'date_friday'),
+            'Saturday' => $this->translator->t('system', 'date_saturday'),
+            'Sunday' => $this->translator->t('system', 'date_sunday')
         ];
     }
 
@@ -212,18 +212,18 @@ class Date
     protected function localizeMonthsAbbr()
     {
         return [
-            'Jan' => $this->lang->t('system', 'date_jan'),
-            'Feb' => $this->lang->t('system', 'date_feb'),
-            'Mar' => $this->lang->t('system', 'date_mar'),
-            'Apr' => $this->lang->t('system', 'date_apr'),
-            'May' => $this->lang->t('system', 'date_may_abbr'),
-            'Jun' => $this->lang->t('system', 'date_jun'),
-            'Jul' => $this->lang->t('system', 'date_jul'),
-            'Aug' => $this->lang->t('system', 'date_aug'),
-            'Sep' => $this->lang->t('system', 'date_sep'),
-            'Oct' => $this->lang->t('system', 'date_oct'),
-            'Nov' => $this->lang->t('system', 'date_nov'),
-            'Dec' => $this->lang->t('system', 'date_dec')
+            'Jan' => $this->translator->t('system', 'date_jan'),
+            'Feb' => $this->translator->t('system', 'date_feb'),
+            'Mar' => $this->translator->t('system', 'date_mar'),
+            'Apr' => $this->translator->t('system', 'date_apr'),
+            'May' => $this->translator->t('system', 'date_may_abbr'),
+            'Jun' => $this->translator->t('system', 'date_jun'),
+            'Jul' => $this->translator->t('system', 'date_jul'),
+            'Aug' => $this->translator->t('system', 'date_aug'),
+            'Sep' => $this->translator->t('system', 'date_sep'),
+            'Oct' => $this->translator->t('system', 'date_oct'),
+            'Nov' => $this->translator->t('system', 'date_nov'),
+            'Dec' => $this->translator->t('system', 'date_dec')
         ];
     }
 
@@ -233,18 +233,18 @@ class Date
     protected function localizeMonths()
     {
         return [
-            'January' => $this->lang->t('system', 'date_january'),
-            'February' => $this->lang->t('system', 'date_february'),
-            'March' => $this->lang->t('system', 'date_march'),
-            'April' => $this->lang->t('system', 'date_april'),
-            'May' => $this->lang->t('system', 'date_may_full'),
-            'June' => $this->lang->t('system', 'date_june'),
-            'July' => $this->lang->t('system', 'date_july'),
-            'August' => $this->lang->t('system', 'date_august'),
-            'September' => $this->lang->t('system', 'date_september'),
-            'October' => $this->lang->t('system', 'date_october'),
-            'November' => $this->lang->t('system', 'date_november'),
-            'December' => $this->lang->t('system', 'date_december')
+            'January' => $this->translator->t('system', 'date_january'),
+            'February' => $this->translator->t('system', 'date_february'),
+            'March' => $this->translator->t('system', 'date_march'),
+            'April' => $this->translator->t('system', 'date_april'),
+            'May' => $this->translator->t('system', 'date_may_full'),
+            'June' => $this->translator->t('system', 'date_june'),
+            'July' => $this->translator->t('system', 'date_july'),
+            'August' => $this->translator->t('system', 'date_august'),
+            'September' => $this->translator->t('system', 'date_september'),
+            'October' => $this->translator->t('system', 'date_october'),
+            'November' => $this->translator->t('system', 'date_november'),
+            'December' => $this->translator->t('system', 'date_december')
         ];
     }
 

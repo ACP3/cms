@@ -138,44 +138,44 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('seo', 'uri'),
+                'label' => $this->translator->t('seo', 'uri'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['uri'],
                 'default_sort' => true
             ], 60)
             ->addColumn([
-                'label' => $this->lang->t('seo', 'alias'),
+                'label' => $this->translator->t('seo', 'alias'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['alias'],
             ], 50)
             ->addColumn([
-                'label' => $this->lang->t('seo', 'keywords'),
+                'label' => $this->translator->t('seo', 'keywords'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['keywords'],
             ], 40)
             ->addColumn([
-                'label' => $this->lang->t('seo', 'description'),
+                'label' => $this->translator->t('seo', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('seo', 'robots'),
+                'label' => $this->translator->t('seo', 'robots'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
                 'fields' => ['robots'],
                 'custom' => [
                     'search' => [0, 1, 2, 3, 4],
                     'replace' => [
-                        $this->lang->t('seo', 'robots_use_system_default',
+                        $this->translator->t('seo', 'robots_use_system_default',
                             ['%default%' => $this->seo->getRobotsSetting()]),
-                        $this->lang->t('seo', 'robots_index_follow'),
-                        $this->lang->t('seo', 'robots_index_nofollow'),
-                        $this->lang->t('seo', 'robots_noindex_follow'),
-                        $this->lang->t('seo', 'robots_noindex_nofollow')
+                        $this->translator->t('seo', 'robots_index_follow'),
+                        $this->translator->t('seo', 'robots_index_nofollow'),
+                        $this->translator->t('seo', 'robots_noindex_follow'),
+                        $this->translator->t('seo', 'robots_noindex_nofollow')
                     ]
                 ]
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
@@ -254,10 +254,10 @@ class Index extends Core\Modules\AdminController
 
         // Robots
         $lang_robots = [
-            $this->lang->t('seo', 'robots_index_follow'),
-            $this->lang->t('seo', 'robots_index_nofollow'),
-            $this->lang->t('seo', 'robots_noindex_follow'),
-            $this->lang->t('seo', 'robots_noindex_nofollow')
+            $this->translator->t('seo', 'robots_index_follow'),
+            $this->translator->t('seo', 'robots_index_nofollow'),
+            $this->translator->t('seo', 'robots_noindex_follow'),
+            $this->translator->t('seo', 'robots_noindex_nofollow')
         ];
 
         $this->formTokenHelper->generateFormToken();

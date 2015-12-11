@@ -14,22 +14,22 @@ class Forms
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
 
     /**
-     * @param \ACP3\Core\I18n\Translator       $lang
+     * @param \ACP3\Core\I18n\Translator       $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
-        Translator $lang,
+        Translator $translator,
         RequestInterface $request
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->request = $request;
     }
 
@@ -85,16 +85,16 @@ class Forms
      *
      * @param string               $name
      * @param array                $values
-     * @param array                $lang
+     * @param array                $phrases
      * @param string|integer|array $currentValue
      * @param string               $selected
      *
      * @return array
      */
-    public function selectGenerator($name, array $values, array $lang, $currentValue = '', $selected = 'selected')
+    public function selectGenerator($name, array $values, array $phrases, $currentValue = '', $selected = 'selected')
     {
         $select = [];
-        if (count($values) == count($lang)) {
+        if (count($values) == count($phrases)) {
             $c_values = count($values);
             $id = str_replace('_', '-', $name);
             for ($i = 0; $i < $c_values; ++$i) {
@@ -102,7 +102,7 @@ class Forms
                     'value' => $values[$i],
                     'id' => ($selected === 'checked' ? $id . '-' . $values[$i] : ''),
                     $selected => $this->selectEntry($name, $values[$i], $currentValue, $selected),
-                    'lang' => $lang[$i]
+                    'lang' => $phrases[$i]
                 ];
             }
         }
@@ -118,7 +118,7 @@ class Forms
      */
     public function linkTargetSelectGenerator($name, $currentValue = '', $selected = 'selected')
     {
-        $langTarget = [$this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank')];
+        $langTarget = [$this->translator->t('system', 'window_self'), $this->translator->t('system', 'window_blank')];
         return $this->selectGenerator($name, [1, 2], $langTarget, $currentValue, $selected);
     }
 
@@ -134,7 +134,7 @@ class Forms
         return $this->selectGenerator(
             $name,
             [1, 0],
-            [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')],
+            [$this->translator->t('system', 'yes'), $this->translator->t('system', 'no')],
             $currentValue,
             $selected
         );
@@ -143,14 +143,14 @@ class Forms
     /**
      * @param string               $name
      * @param array                $values
-     * @param array                $lang
+     * @param array                $phrases
      * @param string|integer|array $currentValue
      *
      * @return array
      */
-    public function checkboxGenerator($name, array $values, array $lang, $currentValue = '')
+    public function checkboxGenerator($name, array $values, array $phrases, $currentValue = '')
     {
-        return $this->selectGenerator($name, $values, $lang, $currentValue, 'checked');
+        return $this->selectGenerator($name, $values, $phrases, $currentValue, 'checked');
     }
 
     /**
@@ -164,7 +164,7 @@ class Forms
         return $this->checkboxGenerator(
             $name,
             [1, 0],
-            [$this->lang->t('system', 'yes'), $this->lang->t('system', 'no')],
+            [$this->translator->t('system', 'yes'), $this->translator->t('system', 'no')],
             $currentValue
         );
     }

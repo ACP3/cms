@@ -17,7 +17,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    private $lang;
+    private $translator;
     /**
      * @var \ACP3\Core\View
      */
@@ -34,17 +34,17 @@ class TinyMCE extends Core\WYSIWYG\Textarea
 
     /**
      * @param \ACP3\Core\Assets\MinifierInterface $minifier
-     * @param \ACP3\Core\I18n\Translator          $lang
+     * @param \ACP3\Core\I18n\Translator          $translator
      * @param \ACP3\Core\View                     $view
      */
     public function __construct(
         Core\Assets\MinifierInterface $minifier,
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\View $view
     )
     {
         $this->minifier = $minifier;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->view = $view;
     }
 

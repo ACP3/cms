@@ -17,7 +17,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
      */
@@ -29,20 +29,20 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param Core\Cache                                        $cache
-     * @param \ACP3\Core\I18n\Translator                        $lang
+     * @param \ACP3\Core\I18n\Translator                        $translator
      * @param MenuRepository                                    $menuModel
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         MenuRepository $menuModel,
         MenuItemRepository $menuItemRepository
     )
     {
         parent::__construct($cache);
 
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->menuModel = $menuModel;
         $this->menuItemRepository = $menuItemRepository;
     }
@@ -90,10 +90,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
             $modeSearch = ['1', '2', '3', '4'];
             $modeReplace = [
-                $this->lang->t('menus', 'module'),
-                $this->lang->t('menus', 'dynamic_page'),
-                $this->lang->t('menus', 'hyperlink'),
-                $this->lang->t('menus', 'article')
+                $this->translator->t('menus', 'module'),
+                $this->translator->t('menus', 'dynamic_page'),
+                $this->translator->t('menus', 'hyperlink'),
+                $this->translator->t('menus', 'article')
             ];
 
             for ($i = 0; $i < $c_items; ++$i) {

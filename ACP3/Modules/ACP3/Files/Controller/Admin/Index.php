@@ -100,7 +100,7 @@ class Index extends Core\Modules\AdminController
             $options = [];
             $options[0]['name'] = 'comments';
             $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked');
-            $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
+            $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
             $this->view->assign('options', $options);
         }
 
@@ -185,7 +185,7 @@ class Index extends Core\Modules\AdminController
                 $options = [];
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $file['comments'], 'checked');
-                $options[0]['lang'] = $this->lang->t('system', 'allow_comments');
+                $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }
 
@@ -222,31 +222,31 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'publication_period'),
+                'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
-                'label' => $this->lang->t('files', 'title'),
+                'label' => $this->translator->t('files', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 40)
             ->addColumn([
-                'label' => $this->lang->t('system', 'description'),
+                'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('files', 'filesize'),
+                'label' => $this->translator->t('files', 'filesize'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['size'],
                 'customer' => [
-                    'default_value' => $this->lang->t('files', 'unknown_filesize')
+                    'default_value' => $this->translator->t('files', 'unknown_filesize')
                 ]
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true

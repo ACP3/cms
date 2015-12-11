@@ -25,76 +25,76 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'db_host',
-                    'message' => $this->lang->t('install', 'type_in_db_host')
+                    'message' => $this->translator->t('install', 'type_in_db_host')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'db_user',
-                    'message' => $this->lang->t('install', 'type_in_db_username')
+                    'message' => $this->translator->t('install', 'type_in_db_username')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'db_name',
-                    'message' => $this->lang->t('install', 'type_in_db_name')
+                    'message' => $this->translator->t('install', 'type_in_db_name')
                 ])
             ->addConstraint(
                 DatabaseConnectionValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => ['db_host', 'db_user', 'db_password', 'db_name'],
-                    'message' => $this->lang->t('install', 'db_connection_failed')
+                    'message' => $this->translator->t('install', 'db_connection_failed')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'user_name',
-                    'message' => $this->lang->t('install', 'type_in_user_name')
+                    'message' => $this->translator->t('install', 'type_in_user_name')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('install', 'wrong_email_format')
+                    'message' => $this->translator->t('install', 'wrong_email_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'date_format_long',
-                    'message' => $this->lang->t('install', 'type_in_long_date_format')
+                    'message' => $this->translator->t('install', 'type_in_long_date_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
-                    'message' => $this->lang->t('install', 'type_in_short_date_format')
+                    'message' => $this->translator->t('install', 'type_in_short_date_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\PasswordValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => ['user_pwd', 'user_pwd_wdh'],
-                    'message' => $this->lang->t('install', 'type_in_pwd')
+                    'message' => $this->translator->t('install', 'type_in_pwd')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\TimeZoneExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
-                    'message' => $this->lang->t('install', 'select_time_zone')
+                    'message' => $this->translator->t('install', 'select_time_zone')
                 ])
             ->addConstraint(
                 ConfigFileValidationRule::NAME,
                 [
                     'data' => $configFilePath,
-                    'message' => $this->lang->t('install', 'wrong_chmod_for_config_file')
+                    'message' => $this->translator->t('install', 'wrong_chmod_for_config_file')
                 ]);
 
         $this->validator->validate();

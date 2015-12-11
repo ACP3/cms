@@ -150,7 +150,7 @@ class Index extends Core\Modules\AdminController
                 [
                     'name' => 'reset',
                     'checked' => $this->get('core.helpers.forms')->selectEntry('reset', '1', '0', 'checked'),
-                    'lang' => $this->lang->t('polls', 'reset_votes')
+                    'lang' => $this->translator->t('polls', 'reset_votes')
                 ]
             ];
 
@@ -184,18 +184,18 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'publication_period'),
+                'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('polls', 'question'),
+                'label' => $this->translator->t('polls', 'question'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
@@ -342,7 +342,7 @@ class Index extends Core\Modules\AdminController
         return [
             'name' => 'multiple',
             'checked' => $this->get('core.helpers.forms')->selectEntry('multiple', '1', $currentValue, 'checked'),
-            'lang' => $this->lang->t('polls', 'multiple_choice')
+            'lang' => $this->translator->t('polls', 'multiple_choice')
         ];
     }
 }

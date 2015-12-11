@@ -18,7 +18,7 @@ class Date
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Http\Request
      */
@@ -36,21 +36,21 @@ class Date
      * Date constructor.
      *
      * @param \ACP3\Core\Date                                          $date
-     * @param \ACP3\Core\I18n\Translator                               $lang
+     * @param \ACP3\Core\I18n\Translator                               $translator
      * @param \ACP3\Core\Http\Request                                  $request
      * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
      * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
      */
     public function __construct(
         \ACP3\Core\Date $date,
-        Translator $lang,
+        Translator $translator,
         Request $request,
         Forms $formsHelper,
         DateValidationRule $dateValidationRule
     )
     {
         $this->date = $date;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->request = $request;
         $this->formsHelper = $formsHelper;
         $this->dateValidationRule = $dateValidationRule;
@@ -102,8 +102,8 @@ class Date
     public function dateFormatDropdown($format = '')
     {
         $dateFormatLang = [
-            $this->lang->t('system', 'date_format_short'),
-            $this->lang->t('system', 'date_format_long')
+            $this->translator->t('system', 'date_format_short'),
+            $this->translator->t('system', 'date_format_long')
         ];
         return $this->formsHelper->selectGenerator('dateformat', ['short', 'long'], $dateFormatLang, $format);
     }

@@ -21,7 +21,7 @@ class DataGrid
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var array
      */
@@ -65,15 +65,15 @@ class DataGrid
 
     /**
      * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
         ACL $acl,
-        Translator $lang
+        Translator $translator
     )
     {
         $this->acl = $acl;
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->columns = new ColumnPriorityQueue();
     }
 
@@ -322,7 +322,7 @@ class DataGrid
 
         if ($this->enableOptions) {
             $this->addColumn([
-                'label' => $this->lang->t('system', 'action'),
+                'label' => $this->translator->t('system', 'action'),
                 'type' => OptionColumnRenderer::NAME,
                 'class' => 'datagrid-column datagrid-column__actions',
                 'sortable' => false,

@@ -90,13 +90,13 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('comments', 'module'),
+                'label' => $this->translator->t('comments', 'module'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::NAME,
                 'fields' => ['module'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('comments', 'comments_count'),
+                'label' => $this->translator->t('comments', 'comments_count'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['comments_count'],
             ], 20)

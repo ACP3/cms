@@ -80,7 +80,8 @@ class Index extends Core\Modules\FrontendController
                 ['hash' => $hash]
             );
 
-            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
+            $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->translator->t('newsletter',
+                $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
@@ -102,8 +103,8 @@ class Index extends Core\Modules\FrontendController
         ];
 
         $salutationsLang = [
-            $this->lang->t('newsletter', 'salutation_female'),
-            $this->lang->t('newsletter', 'salutation_male')
+            $this->translator->t('newsletter', 'salutation_female'),
+            $this->translator->t('newsletter', 'salutation_male')
         ];
 
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
@@ -162,7 +163,8 @@ class Index extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->translator->t('newsletter',
+                    $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
             }
         );
     }
@@ -185,7 +187,8 @@ class Index extends Core\Modules\FrontendController
 
                 $this->formTokenHelper->unsetFormToken();
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->translator->t('newsletter',
+                    $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
             }
         );
     }

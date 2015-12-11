@@ -43,7 +43,7 @@ class UserAgent
      */
     public function parseAcceptLanguage()
     {
-        $languages = [];
+        $locales = [];
 
         if ($this->server->has('HTTP_ACCEPT_LANGUAGE')) {
             $matches = [];
@@ -54,24 +54,24 @@ class UserAgent
             );
 
             if (!empty($matches[1])) {
-                $languages = array_combine($matches[1], $matches[4]);
+                $locales = array_combine($matches[1], $matches[4]);
 
                 // Für Einträge ohne q-Faktor, Wert auf 1 setzen
-                foreach ($languages as $lang => $val) {
+                foreach ($locales as $locale => $val) {
                     if ($val === '') {
-                        $languages[$lang] = 1;
+                        $locales[$locale] = 1;
                     }
                 }
 
                 // Liste nach Sprachpräferenz sortieren
-                arsort($languages, SORT_NUMERIC);
+                arsort($locales, SORT_NUMERIC);
             }
         }
 
         // Über die Sprachen iterieren und das passende Sprachpaket auswählen
-        foreach ($languages as $lang => $val) {
-            if (Translator::languagePackExists($lang) === true) {
-                return $lang;
+        foreach ($locales as $locale => $val) {
+            if (Translator::languagePackExists($locale) === true) {
+                return $locale;
             }
         }
 

@@ -48,7 +48,8 @@ class Accounts extends Core\Modules\AdminController
             $id
         );
 
-        return $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
+        return $this->redirectMessages()->setMessage($bool,
+            $this->translator->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
     }
 
     /**
@@ -93,41 +94,41 @@ class Accounts extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'email_address'),
+                'label' => $this->translator->t('system', 'email_address'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['mail'],
                 'default_sort' => true
             ], 60)
             ->addColumn([
-                'label' => $this->lang->t('newsletter', 'salutation'),
+                'label' => $this->translator->t('newsletter', 'salutation'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
                 'fields' => ['salutation'],
                 'custom' => [
                     'search' => [0, 1, 2],
                     'replace' => [
                         '',
-                        $this->lang->t('newsletter', 'salutation_female'),
-                        $this->lang->t('newsletter', 'salutation_male'),
+                        $this->translator->t('newsletter', 'salutation_female'),
+                        $this->translator->t('newsletter', 'salutation_male'),
                     ]
                 ]
             ], 50)
             ->addColumn([
-                'label' => $this->lang->t('newsletter', 'first_name'),
+                'label' => $this->translator->t('newsletter', 'first_name'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['first_name'],
             ], 40)
             ->addColumn([
-                'label' => $this->lang->t('newsletter', 'last_name'),
+                'label' => $this->translator->t('newsletter', 'last_name'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['last_name'],
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('newsletter', 'status'),
+                'label' => $this->translator->t('newsletter', 'status'),
                 'type' => Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer::NAME,
                 'fields' => ['status'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true

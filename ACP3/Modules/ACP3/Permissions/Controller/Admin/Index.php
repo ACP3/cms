@@ -115,10 +115,10 @@ class Index extends Core\Modules\AdminController
 
                 if ($levelNotDeletable === true) {
                     $result = !$levelNotDeletable;
-                    $text = $this->lang->t('permissions', 'role_not_deletable');
+                    $text = $this->translator->t('permissions', 'role_not_deletable');
                 } else {
                     $result = $bool !== false;
-                    $text = $this->lang->t('system', $result ? 'delete_success' : 'delete_error');
+                    $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
                 }
 
                 return $this->redirectMessages()->setMessage($result, $text);
@@ -285,7 +285,7 @@ class Index extends Core\Modules\AdminController
         ];
 
         $select = [];
-        foreach ($permissions as $value => $lang) {
+        foreach ($permissions as $value => $phrase) {
             if ($roleId === 1 && $value === 2) {
                 continue;
             }
@@ -293,7 +293,7 @@ class Index extends Core\Modules\AdminController
             $select[$value] = [
                 'value' => $value,
                 'selected' => $this->privilegeIsChecked($moduleId, $privilegeId, $value, $defaultValue),
-                'lang' => $this->lang->t('permissions', $lang)
+                'lang' => $this->translator->t('permissions', $phrase)
             ];
         }
 
@@ -349,8 +349,9 @@ class Index extends Core\Modules\AdminController
     protected function calculatePermission(array $rules, $moduleDir, $key)
     {
         return sprintf(
-            $this->lang->t('permissions', 'calculated_permission'),
-            $this->lang->t('permissions', isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access')
+            $this->translator->t('permissions', 'calculated_permission'),
+            $this->translator->t('permissions',
+                isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access')
         );
     }
 

@@ -16,7 +16,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Router
      */
@@ -25,15 +25,15 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * AccountStatusColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\Router          $router
      */
     public function __construct(
-        Translator $lang,
+        Translator $translator,
         Router $router
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->router = $router;
     }
 
@@ -45,7 +45,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
         if (isset($dbResultRow[$field])) {
             if ((int)$dbResultRow[$field] === 0) {
                 $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]);
-                $title = $this->lang->t('newsletter', 'activate_account');
+                $title = $this->translator->t('newsletter', 'activate_account');
                 $value = '<a href="' . $route . '" title="' . $title . '">';
                 $value .= '<i class="glyphicon glyphicon-remove text-danger"></i>';
                 $value .= '</a>';

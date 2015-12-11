@@ -52,7 +52,7 @@ class FrontendContext extends Core\Modules\Controller\Context
             $context->getEventDispatcher(),
             $context->getACL(),
             $context->getUser(),
-            $context->getLang(),
+            $context->getTranslator(),
             $context->getModules(),
             $context->getRequest(),
             $context->getRouter(),

@@ -18,19 +18,19 @@ class DateRange
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
 
     /**
      * @param \ACP3\Core\Date            $date
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
         Date $date,
-        Translator $lang
+        Translator $translator
     )
     {
         $this->date = $date;
-        $this->lang = $lang;
+        $this->translator = $translator;
     }
 
     /**
@@ -48,7 +48,7 @@ class DateRange
             if (empty($end)) {
                 $title = $this->date->format($start, $format);
             } else {
-                $title = $this->lang->t(
+                $title = $this->translator->t(
                     'system',
                     'date_published_since',
                     ['%date%' => $this->date->format($start, $format)]

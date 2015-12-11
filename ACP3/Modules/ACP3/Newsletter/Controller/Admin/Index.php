@@ -75,7 +75,10 @@ class Index extends Core\Modules\AdminController
             return $this->_createPost($this->request->getPost()->all(), $settings);
         }
 
-        $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
+        $lang_action = [
+            $this->translator->t('newsletter', 'send_and_save'),
+            $this->translator->t('newsletter', 'only_save')
+        ];
 
         $this->formTokenHelper->generateFormToken();
 
@@ -128,7 +131,10 @@ class Index extends Core\Modules\AdminController
                 return $this->_editPost($this->request->getPost()->all(), $settings, $id);
             }
 
-            $lang_action = [$this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save')];
+            $lang_action = [
+                $this->translator->t('newsletter', 'send_and_save'),
+                $this->translator->t('newsletter', 'only_save')
+            ];
 
             $this->formTokenHelper->generateFormToken();
 
@@ -161,30 +167,30 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'date'),
+                'label' => $this->translator->t('system', 'date'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['date'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
-                'label' => $this->lang->t('newsletter', 'subject'),
+                'label' => $this->translator->t('newsletter', 'subject'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
             ], 40)
             ->addColumn([
-                'label' => $this->lang->t('newsletter', 'status'),
+                'label' => $this->translator->t('newsletter', 'status'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
                 'fields' => ['status'],
                 'custom' => [
                     'search' => [0, 1],
                     'replace' => [
-                        $this->lang->t('newsletter', 'not_yet_sent'),
-                        $this->lang->t('newsletter', 'already_sent'),
+                        $this->translator->t('newsletter', 'not_yet_sent'),
+                        $this->translator->t('newsletter', 'already_sent'),
                     ]
                 ]
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
@@ -221,7 +227,8 @@ class Index extends Core\Modules\AdminController
 
             return $this->redirectMessages()->setMessage(
                 $bool && $bool2 !== false,
-                $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error')
+                $this->translator->t('newsletter',
+                    $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error')
             );
         }
 
@@ -274,20 +281,20 @@ class Index extends Core\Modules\AdminController
             if ($formData['test'] == 1) {
                 $bool2 = $this->newsletterHelpers->sendNewsletter($lastId, $settings['mail']);
 
-                $lang = $this->lang->t('newsletter', 'create_success');
+                $text = $this->translator->t('newsletter', 'create_success');
                 $result = $lastId !== false && $bool2 !== false;
             } else {
-                $lang = $this->lang->t('newsletter', 'save_success');
+                $text = $this->translator->t('newsletter', 'save_success');
                 $result = $lastId !== false;
             }
 
             $this->formTokenHelper->unsetFormToken();
 
             if ($result === false) {
-                $lang = $this->lang->t('newsletter', 'create_save_error');
+                $text = $this->translator->t('newsletter', 'create_save_error');
             }
 
-            return $this->redirectMessages()->setMessage($result, $lang);
+            return $this->redirectMessages()->setMessage($result, $text);
         });
     }
 
@@ -316,20 +323,20 @@ class Index extends Core\Modules\AdminController
             if ($formData['test'] == 1) {
                 $bool2 = $this->newsletterHelpers->sendNewsletter($id, $settings['mail']);
 
-                $lang = $this->lang->t('newsletter', 'create_success');
+                $text = $this->translator->t('newsletter', 'create_success');
                 $result = $bool !== false && $bool2;
             } else {
-                $lang = $this->lang->t('newsletter', 'save_success');
+                $text = $this->translator->t('newsletter', 'save_success');
                 $result = $bool !== false;
             }
 
             $this->formTokenHelper->unsetFormToken();
 
             if ($result === false) {
-                $lang = $this->lang->t('newsletter', 'create_save_error');
+                $text = $this->translator->t('newsletter', 'create_save_error');
             }
 
-            return $this->redirectMessages()->setMessage($result, $lang);
+            return $this->redirectMessages()->setMessage($result, $text);
         });
     }
 

@@ -19,17 +19,17 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator      $lang
+     * @param \ACP3\Core\I18n\Translator      $translator
      * @param \ACP3\Core\Validation\Validator $validator
      * @param \ACP3\Core\Modules              $modules
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         Core\Modules $modules
     )
     {
-        parent::__construct($lang, $validator);
+        parent::__construct($translator, $validator);
 
         $this->modules = $modules;
     }
@@ -48,7 +48,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
             ->addConstraint(
                 FloodBarrierValidationRule::NAME,
                 [
-                    'message' => $this->lang->t('system', 'flood_no_entry_possible'),
+                    'message' => $this->translator->t('system', 'flood_no_entry_possible'),
                     'extra' => [
                         'ip' => $ip
                     ]
@@ -58,21 +58,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->lang->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->lang->t('system', 'message_to_short')
+                    'message' => $this->translator->t('system', 'message_to_short')
                 ])
             ->addConstraint(
                 CaptchaValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'captcha',
-                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ]
             );
 
@@ -94,14 +94,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['name', 'user_id'],
-                    'message' => $this->lang->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->lang->t('system', 'message_to_short'),
+                    'message' => $this->translator->t('system', 'message_to_short'),
                 ]);
 
         $this->validator->validate();
@@ -124,7 +124,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
-                    'message' => $this->lang->t('system', 'select_date_format'),
+                    'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
@@ -137,7 +137,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'emoticons',
-                        'message' => $this->lang->t('comments', 'select_emoticons'),
+                        'message' => $this->translator->t('comments', 'select_emoticons'),
                         'extra' => [
                             'haystack' => [0, 1]
                         ]

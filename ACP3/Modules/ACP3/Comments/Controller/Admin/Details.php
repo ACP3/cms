@@ -91,14 +91,14 @@ class Details extends Core\Modules\AdminController
                 if ($this->commentRepository->countAll($id) == 0) {
                     return $this->redirectMessages()->setMessage(
                         $bool,
-                        $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
+                        $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
                         'acp/comments'
                     );
                 }
 
                 return $this->redirectMessages()->setMessage(
                     $bool,
-                    $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
+                    $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
                     'acp/comments/details/index/id_' . $id
                 );
             },
@@ -119,8 +119,9 @@ class Details extends Core\Modules\AdminController
 
         if (empty($comment) === false) {
             $this->breadcrumb
-                ->append($this->lang->t($comment['module'], $comment['module']), 'acp/comments/details/index/id_' . $comment['module_id'])
-                ->append($this->lang->t('comments', 'admin_details_edit'))
+                ->append($this->translator->t($comment['module'], $comment['module']),
+                    'acp/comments/details/index/id_' . $comment['module_id'])
+                ->append($this->translator->t('comments', 'admin_details_edit'))
                 ->setTitlePostfix($comment['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
@@ -157,7 +158,7 @@ class Details extends Core\Modules\AdminController
             $moduleName = $this->systemModuleRepository->getModuleNameById($id);
 
             //Brotkrümelspur
-            $this->breadcrumb->append($this->lang->t($moduleName, $moduleName));
+            $this->breadcrumb->append($this->translator->t($moduleName, $moduleName));
 
             /** @var Core\Helpers\DataGrid $dataGrid */
             $dataGrid = $this->get('core.helpers.data_grid');
@@ -170,28 +171,28 @@ class Details extends Core\Modules\AdminController
 
             $dataGrid
                 ->addColumn([
-                    'label' => $this->lang->t('system', 'date'),
+                    'label' => $this->translator->t('system', 'date'),
                     'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                     'fields' => ['date'],
                     'default_sort' => true
                 ], 50)
                 ->addColumn([
-                    'label' => $this->lang->t('system', 'name'),
+                    'label' => $this->translator->t('system', 'name'),
                     'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                     'fields' => ['name'],
                 ], 40)
                 ->addColumn([
-                    'label' => $this->lang->t('system', 'message'),
+                    'label' => $this->translator->t('system', 'message'),
                     'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::NAME,
                     'fields' => ['message'],
                 ], 30)
                 ->addColumn([
-                    'label' => $this->lang->t('comments', 'ip'),
+                    'label' => $this->translator->t('comments', 'ip'),
                     'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                     'fields' => ['ip'],
                 ], 20)
                 ->addColumn([
-                    'label' => $this->lang->t('system', 'id'),
+                    'label' => $this->translator->t('system', 'id'),
                     'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                     'fields' => ['id'],
                     'primary' => true

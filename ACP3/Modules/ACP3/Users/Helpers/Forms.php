@@ -15,7 +15,7 @@ class Forms
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -30,19 +30,19 @@ class Forms
     protected $formsHelpers;
 
     /**
-     * @param \ACP3\Core\I18n\Translator       $lang
+     * @param \ACP3\Core\I18n\Translator       $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Helpers\Date          $dateHelpers
      * @param \ACP3\Core\Helpers\Forms         $formsHelpers
      */
     public function __construct(
-        Translator $lang,
+        Translator $translator,
         RequestInterface $request,
         Date $dateHelpers,
         \ACP3\Core\Helpers\Forms $formsHelpers
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->request = $request;
         $this->dateHelpers = $dateHelpers;
         $this->formsHelpers = $formsHelpers;
@@ -66,25 +66,25 @@ class Forms
         return [
             [
                 'name' => 'mail',
-                'lang' => $this->lang->t('system', 'email_address'),
+                'lang' => $this->translator->t('system', 'email_address'),
                 'value' => $this->request->getPost()->get('mail', $defaultMail),
                 'maxlength' => '120',
             ],
             [
                 'name' => 'website',
-                'lang' => $this->lang->t('system', 'website'),
+                'lang' => $this->translator->t('system', 'website'),
                 'value' => $this->request->getPost()->get('website', $defaultWebsite),
                 'maxlength' => '120',
             ],
             [
                 'name' => 'icq',
-                'lang' => $this->lang->t('users', 'icq'),
+                'lang' => $this->translator->t('users', 'icq'),
                 'value' => $this->request->getPost()->get('icq', $defaultIcqNumber),
                 'maxlength' => '9',
             ],
             [
                 'name' => 'skype',
-                'lang' => $this->lang->t('users', 'skype'),
+                'lang' => $this->translator->t('users', 'skype'),
                 'value' => $this->request->getPost()->get('skype', $defaultSkypeName),
                 'maxlength' => '28',
             ]
@@ -133,7 +133,7 @@ class Forms
     {
         return [
             'entries' => $this->formsHelpers->recordsPerPage((int)$entries),
-            'languages' => $this->lang->getLanguagePack($this->request->getPost()->get('language', $language)),
+            'languages' => $this->translator->getLanguagePack($this->request->getPost()->get('language', $language)),
             'time_zones' => $this->dateHelpers->getTimeZones($timeZone),
             'address_display' => $this->displayAddress($displayAddress),
             'birthday_display' => $this->displayBirthday($displayBirthday),
@@ -160,9 +160,9 @@ class Forms
     protected function displayBirthday($value)
     {
         $langBirthdayDisplay = [
-            $this->lang->t('users', 'birthday_hide'),
-            $this->lang->t('users', 'birthday_display_completely'),
-            $this->lang->t('users', 'birthday_hide_year')
+            $this->translator->t('users', 'birthday_hide'),
+            $this->translator->t('users', 'birthday_display_completely'),
+            $this->translator->t('users', 'birthday_hide_year')
         ];
         return $this->formsHelpers->checkboxGenerator('birthday_display', [0, 1, 2], $langBirthdayDisplay, $value);
     }
@@ -211,9 +211,9 @@ class Forms
     protected function fetchGenderField($value)
     {
         $langGender = [
-            $this->lang->t('users', 'gender_not_specified'),
-            $this->lang->t('users', 'gender_female'),
-            $this->lang->t('users', 'gender_male')
+            $this->translator->t('users', 'gender_not_specified'),
+            $this->translator->t('users', 'gender_female'),
+            $this->translator->t('users', 'gender_male')
         ];
         return $this->formsHelpers->selectGenerator('gender', [1, 2, 3], $langGender, $value);
     }

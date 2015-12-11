@@ -20,17 +20,17 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator      $lang
+     * @param \ACP3\Core\I18n\Translator      $translator
      * @param \ACP3\Core\Validation\Validator $validator
      * @param \ACP3\Core\Modules              $modules
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         Core\Modules $modules
     )
     {
-        parent::__construct($lang, $validator);
+        parent::__construct($translator, $validator);
 
         $this->modules = $modules;
     }
@@ -52,28 +52,28 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->lang->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('files', 'type_in_title')
+                    'message' => $this->translator->t('files', 'type_in_title')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->lang->t('files', 'description_to_short')
+                    'message' => $this->translator->t('files', 'description_to_short')
                 ])
             ->addConstraint(
                 IsExternalFileValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => ['external', 'filesize', 'unit'],
-                    'message' => $this->lang->t('files', 'type_in_external_resource'),
+                    'message' => $this->translator->t('files', 'type_in_external_resource'),
                     'extra' => [
                         'file' => $file
                     ]
@@ -83,7 +83,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'alias',
-                    'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
                         'path' => $uriAlias
                     ]
@@ -93,7 +93,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['cat', 'cat_create'],
-                    'message' => $this->lang->t('files', 'select_category')
+                    'message' => $this->translator->t('files', 'select_category')
                 ]);
 
         if (!isset($formData['external'])) {
@@ -103,7 +103,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $file,
                         'field' => 'file_internal',
-                        'message' => $this->lang->t('files', 'select_internal_resource'),
+                        'message' => $this->translator->t('files', 'select_internal_resource'),
                         'extra' => [
                             'required' => empty($uriAlias)
                         ]
@@ -128,7 +128,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
-                    'message' => $this->lang->t('system', 'select_date_format'),
+                    'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
@@ -138,7 +138,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->lang->t('system', 'select_sidebar_entries')
+                    'message' => $this->translator->t('system', 'select_sidebar_entries')
                 ]);
 
         if ($this->modules->isActive('comments')) {
@@ -148,7 +148,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'comments',
-                        'message' => $this->lang->t('files', 'select_allow_comments'),
+                        'message' => $this->translator->t('files', 'select_allow_comments'),
                         'extra' => [
                             'haystack' => [0, 1]
                         ]

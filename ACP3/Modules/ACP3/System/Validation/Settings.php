@@ -40,35 +40,35 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'homepage',
-                    'message' => $this->lang->t('system', 'incorrect_homepage')
+                    'message' => $this->translator->t('system', 'incorrect_homepage')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'entries',
-                    'message' => $this->lang->t('system', 'select_records_per_page')
+                    'message' => $this->translator->t('system', 'select_records_per_page')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'flood',
-                    'message' => $this->lang->t('system', 'type_in_flood_barrier')
+                    'message' => $this->translator->t('system', 'type_in_flood_barrier')
                 ])
             ->addConstraint(
                 IsWysiwygEditorValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'wysiwyg',
-                    'message' => $this->lang->t('system', 'select_editor')
+                    'message' => $this->translator->t('system', 'select_editor')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\LanguagePackExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'language',
-                    'message' => $this->lang->t('system', 'select_language')
+                    'message' => $this->translator->t('system', 'select_language')
                 ]);
     }
 
@@ -83,21 +83,21 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'date_format_long',
-                    'message' => $this->lang->t('system', 'type_in_long_date_format')
+                    'message' => $this->translator->t('system', 'type_in_long_date_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
-                    'message' => $this->lang->t('system', 'type_in_short_date_format')
+                    'message' => $this->translator->t('system', 'type_in_short_date_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\TimeZoneExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
-                    'message' => $this->lang->t('system', 'select_time_zone')
+                    'message' => $this->translator->t('system', 'select_time_zone')
                 ]);
     }
 
@@ -112,7 +112,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'maintenance_mode',
-                    'message' => $this->lang->t('system', 'select_online_maintenance'),
+                    'message' => $this->translator->t('system', 'select_online_maintenance'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -122,7 +122,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'maintenance_message',
-                    'message' => $this->lang->t('system', 'maintenance_message_to_short')
+                    'message' => $this->translator->t('system', 'maintenance_message_to_short')
                 ]);
     }
 
@@ -137,7 +137,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'cache_images',
-                    'message' => $this->lang->t('system', 'select_cache_images'),
+                    'message' => $this->translator->t('system', 'select_cache_images'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -147,7 +147,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'cache_minify',
-                    'message' => $this->lang->t('system', 'type_in_minify_cache_lifetime')
+                    'message' => $this->translator->t('system', 'type_in_minify_cache_lifetime')
                 ]);
     }
 
@@ -162,7 +162,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mailer_type',
-                    'message' => $this->lang->t('system', 'select_mailer_type'),
+                    'message' => $this->translator->t('system', 'select_mailer_type'),
                     'extra' => [
                         'haystack' => ['mail', 'smtp']
                     ]
@@ -175,14 +175,14 @@ class Settings extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mailer_smtp_host',
-                        'message' => $this->lang->t('system', 'type_in_mailer_smtp_host')
+                        'message' => $this->translator->t('system', 'type_in_mailer_smtp_host')
                     ])
                 ->addConstraint(
                     Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                     [
                         'data' => $formData,
                         'field' => 'mailer_smtp_port',
-                        'message' => $this->lang->t('system', 'type_in_mailer_smtp_port')
+                        'message' => $this->translator->t('system', 'type_in_mailer_smtp_port')
                     ]);
 
             if ($formData['mailer_smtp_auth'] == 1) {
@@ -192,7 +192,7 @@ class Settings extends Core\Validation\AbstractFormValidation
                         [
                             'data' => $formData,
                             'field' => 'mailer_smtp_user',
-                            'message' => $this->lang->t('system', 'type_in_mailer_smtp_username')
+                            'message' => $this->translator->t('system', 'type_in_mailer_smtp_username')
                         ]);
             }
         }

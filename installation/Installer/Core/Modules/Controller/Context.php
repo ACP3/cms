@@ -15,7 +15,7 @@ class Context
     /**
      * @var \ACP3\Installer\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -30,18 +30,18 @@ class Context
     protected $view;
 
     /**
-     * @param \ACP3\Installer\Core\I18n\Translator $lang
+     * @param \ACP3\Installer\Core\I18n\Translator $translator
      * @param \ACP3\Core\Http\RequestInterface     $request
      * @param \ACP3\Installer\Core\Router          $router
      * @param \ACP3\Core\View                      $view
      */
     public function __construct(
-        Translator $lang,
+        Translator $translator,
         RequestInterface $request,
         Router $router,
         \ACP3\Core\View $view)
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
@@ -50,9 +50,9 @@ class Context
     /**
      * @return Translator
      */
-    public function getLang()
+    public function getTranslator()
     {
-        return $this->lang;
+        return $this->translator;
     }
 
     /**

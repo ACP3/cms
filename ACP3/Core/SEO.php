@@ -21,7 +21,7 @@ class SEO
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -65,7 +65,7 @@ class SEO
     protected $metaDescriptionPostfix = '';
 
     /**
-     * @param \ACP3\Core\I18n\Translator                 $lang
+     * @param \ACP3\Core\I18n\Translator                 $translator
      * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\Router\Aliases                  $aliases
      * @param \ACP3\Core\Helpers\Forms                   $formsHelper
@@ -74,7 +74,7 @@ class SEO
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
-        Translator $lang,
+        Translator $translator,
         RequestInterface $request,
         Aliases $aliases,
         Forms $formsHelper,
@@ -82,7 +82,7 @@ class SEO
         Config $config,
         seoRepository $seoRepository)
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->request = $request;
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
@@ -320,11 +320,11 @@ class SEO
         }
 
         $langRobots = [
-            $this->lang->t('seo', 'robots_use_system_default', ['%default%' => $this->getRobotsSetting()]),
-            $this->lang->t('seo', 'robots_index_follow'),
-            $this->lang->t('seo', 'robots_index_nofollow'),
-            $this->lang->t('seo', 'robots_noindex_follow'),
-            $this->lang->t('seo', 'robots_noindex_nofollow')
+            $this->translator->t('seo', 'robots_use_system_default', ['%default%' => $this->getRobotsSetting()]),
+            $this->translator->t('seo', 'robots_index_follow'),
+            $this->translator->t('seo', 'robots_index_nofollow'),
+            $this->translator->t('seo', 'robots_noindex_follow'),
+            $this->translator->t('seo', 'robots_noindex_nofollow')
         ];
 
         return [

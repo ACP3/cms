@@ -18,7 +18,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcher
      */
@@ -29,17 +29,17 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     protected $optionRenderer;
 
     /**
-     * @param \ACP3\Core\I18n\Translator                                                     $lang
+     * @param \ACP3\Core\I18n\Translator                                                     $translator
      * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
      * @param \Symfony\Component\EventDispatcher\EventDispatcher                             $eventDispatcher
      */
     public function __construct(
-        Translator $lang,
+        Translator $translator,
         OptionRenderer $optionRenderer,
         EventDispatcher $eventDispatcher
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->optionRenderer = $optionRenderer;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -59,7 +59,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
                 $resourcePathEdit . 'id_' . $dbResultRow[$this->primaryKey],
-                $this->lang->t('system', 'edit'),
+                $this->translator->t('system', 'edit'),
                 'glyphicon-edit',
                 'btn-default'
             );
@@ -75,7 +75,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $resourcePathDelete .= !preg_match('=/$=', $resourcePathDelete) ? '/' : '';
             $this->optionRenderer->addOption(
                 $resourcePathDelete . 'entries_' . $dbResultRow[$this->primaryKey],
-                $this->lang->t('system', 'delete'),
+                $this->translator->t('system', 'delete'),
                 'glyphicon-remove',
                 'btn-danger'
             );

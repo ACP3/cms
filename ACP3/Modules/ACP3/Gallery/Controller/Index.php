@@ -80,11 +80,11 @@ class Index extends Core\Modules\FrontendController
             $picture = $this->pictureRepository->getPictureById($id);
 
             $this->breadcrumb
-                ->append($this->lang->t('gallery', 'gallery'), 'gallery')
+                ->append($this->translator->t('gallery', 'gallery'), 'gallery')
                 ->append($picture['title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
-                ->append($this->lang->t('gallery', 'details'))
+                ->append($this->translator->t('gallery', 'details'))
                 ->setTitlePrefix($picture['title'])
-                ->setTitlePostfix($this->lang->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
+                ->setTitlePostfix($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
 
             // Bildabmessungen berechnen
             $picture['width'] = $this->settings['width'];
@@ -185,7 +185,7 @@ class Index extends Core\Modules\FrontendController
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             // Brotkrümelspur
             $this->breadcrumb
-                ->append($this->lang->t('gallery', 'gallery'), 'gallery')
+                ->append($this->translator->t('gallery', 'gallery'), 'gallery')
                 ->append($this->galleryRepository->getGalleryTitle($id));
 
             return [

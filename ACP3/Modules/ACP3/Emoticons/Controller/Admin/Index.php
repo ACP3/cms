@@ -205,17 +205,17 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'description'),
+                'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['description'],
             ], 40)
             ->addColumn([
-                'label' => $this->lang->t('emoticons', 'code'),
+                'label' => $this->translator->t('emoticons', 'code'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['code']
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('emoticons', 'picture'),
+                'label' => $this->translator->t('emoticons', 'picture'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::NAME,
                 'fields' => ['img'],
                 'custom' => [
@@ -223,7 +223,7 @@ class Index extends Core\Modules\AdminController
                 ]
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true,

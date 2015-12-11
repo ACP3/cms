@@ -26,21 +26,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'code',
-                    'message' => $this->lang->t('emoticons', 'type_in_code')
+                    'message' => $this->translator->t('emoticons', 'type_in_code')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'description',
-                    'message' => $this->lang->t('emoticons', 'type_in_description')
+                    'message' => $this->translator->t('emoticons', 'type_in_description')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::NAME,
                 [
                     'data' => $file,
                     'field' => 'picture',
-                    'message' => $this->lang->t('emoticons', 'invalid_image_selected'),
+                    'message' => $this->translator->t('emoticons', 'invalid_image_selected'),
                     'extra' => $settings
                 ]);
 
@@ -64,21 +64,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'code',
-                    'message' => $this->lang->t('emoticons', 'type_in_code')
+                    'message' => $this->translator->t('emoticons', 'type_in_code')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'description',
-                    'message' => $this->lang->t('emoticons', 'type_in_description')
+                    'message' => $this->translator->t('emoticons', 'type_in_description')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::NAME,
                 [
                     'data' => $file,
                     'field' => 'picture',
-                    'message' => $this->lang->t('emoticons', 'invalid_image_selected'),
+                    'message' => $this->translator->t('emoticons', 'invalid_image_selected'),
                     'extra' => [
                         'width' => $settings['width'],
                         'height' => $settings['height'],
@@ -105,21 +105,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'width',
-                    'message' => $this->lang->t('emoticons', 'invalid_image_width_entered')
+                    'message' => $this->translator->t('emoticons', 'invalid_image_width_entered')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'height',
-                    'message' => $this->lang->t('emoticons', 'invalid_image_height_entered')
+                    'message' => $this->translator->t('emoticons', 'invalid_image_height_entered')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'filesize',
-                    'message' => $this->lang->t('emoticons', 'invalid_image_filesize_entered')
+                    'message' => $this->translator->t('emoticons', 'invalid_image_filesize_entered')
                 ]);
 
         $this->validator->validate();

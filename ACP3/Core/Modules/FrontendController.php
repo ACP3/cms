@@ -3,7 +3,6 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Controller\Context;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -87,8 +86,8 @@ abstract class FrontendController extends Core\Modules\Controller
         $this->view->assign('IN_ADM', $this->request->getArea() === 'admin');
         $this->view->assign('IS_HOMEPAGE', $this->request->isHomepage());
         $this->view->assign('IS_AJAX', $this->request->isAjax());
-        $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
-        $this->view->assign('LANG', $this->lang->getShortIsoCode());
+        $this->view->assign('LANG_DIRECTION', $this->translator->getDirection());
+        $this->view->assign('LANG', $this->translator->getShortIsoCode());
 
         return parent::preDispatch();
     }

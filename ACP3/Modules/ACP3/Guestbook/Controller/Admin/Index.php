@@ -144,28 +144,28 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'date'),
+                'label' => $this->translator->t('system', 'date'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['date'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
-                'label' => $this->lang->t('system', 'name'),
+                'label' => $this->translator->t('system', 'name'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['name'],
             ], 40)
             ->addColumn([
-                'label' => $this->lang->t('system', 'message'),
+                'label' => $this->translator->t('system', 'message'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::NAME,
                 'fields' => ['message'],
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('guestbook', 'ip'),
+                'label' => $this->translator->t('guestbook', 'ip'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['ip'],
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true
@@ -189,9 +189,9 @@ class Index extends Core\Modules\AdminController
         $settings = $this->config->getSettings('guestbook');
 
         $lang_notify = [
-            $this->lang->t('guestbook', 'no_notification'),
-            $this->lang->t('guestbook', 'notify_on_new_entry'),
-            $this->lang->t('guestbook', 'notify_and_enable')
+            $this->translator->t('guestbook', 'no_notification'),
+            $this->translator->t('guestbook', 'notify_on_new_entry'),
+            $this->translator->t('guestbook', 'notify_and_enable')
         ];
 
         // Emoticons erlauben

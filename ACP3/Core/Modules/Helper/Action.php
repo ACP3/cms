@@ -13,7 +13,7 @@ class Action
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -36,7 +36,7 @@ class Action
     protected $redirectMessages;
 
     /**
-     * @param \ACP3\Core\I18n\Translator          $lang
+     * @param \ACP3\Core\I18n\Translator          $translator
      * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\Router                   $router
      * @param \ACP3\Core\View                     $view
@@ -44,7 +44,7 @@ class Action
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Http\RequestInterface $request,
         Core\Router $router,
         Core\View $view,
@@ -52,7 +52,7 @@ class Action
         Core\Helpers\RedirectMessages $redirectMessages
     )
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
@@ -71,7 +71,8 @@ class Action
         try {
             return $callback();
         } catch (Core\Exceptions\InvalidFormToken $e) {
-            return $this->redirectMessages->setMessage(false, $this->lang->t('system', 'form_already_submitted'), $path);
+            return $this->redirectMessages->setMessage(false, $this->translator->t('system', 'form_already_submitted'),
+                $path);
         } catch (Core\Exceptions\ValidationFailed $e) {
             return [
                 'error_msg' => $this->alerts->errorBox($e->getMessage())
@@ -198,7 +199,7 @@ class Action
     {
         return $this->redirectMessages->setMessage(
             $result,
-            $this->lang->t('system', $localization . ($result !== false ? '_success' : '_error')),
+            $this->translator->t('system', $localization . ($result !== false ? '_success' : '_error')),
             $path
         );
     }
@@ -240,7 +241,7 @@ class Action
         }
 
         if (empty($entries)) {
-            return $this->alerts->errorBoxContent($this->lang->t('system', 'no_entries_selected'));
+            return $this->alerts->errorBoxContent($this->translator->t('system', 'no_entries_selected'));
         } elseif (empty($entries) === false && $action !== 'confirmed') {
             if (is_array($entries) === false) {
                 $entries = [$entries];
@@ -272,10 +273,10 @@ class Action
         $entriesCount = count($entries);
 
         if ($entriesCount === 1) {
-            return $this->lang->t('system', 'confirm_delete_single');
+            return $this->translator->t('system', 'confirm_delete_single');
         }
 
-        return str_replace('{items}', $entriesCount, $this->lang->t('system', 'confirm_delete_multiple'));
+        return str_replace('{items}', $entriesCount, $this->translator->t('system', 'confirm_delete_multiple'));
     }
 
 }

@@ -132,7 +132,7 @@ class Index extends Core\Modules\AdminController
         }
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-            $lang_options = [$this->lang->t('articles', 'create_menu_item')];
+            $lang_options = [$this->translator->t('articles', 'create_menu_item')];
             $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $lang_options, 0));
             $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
         }
@@ -244,7 +244,7 @@ class Index extends Core\Modules\AdminController
             if ($this->acl->hasPermission('admin/menus/items/create') === true) {
                 $menuItem = $this->menuItemRepository->getOneMenuItemByUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
 
-                $lang_options = [$this->lang->t('articles', 'create_menu_item')];
+                $lang_options = [$this->translator->t('articles', 'create_menu_item')];
                 $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $lang_options, !empty($menuItem) ? 1 : 0));
 
                 $this->view->assign(
@@ -329,18 +329,18 @@ class Index extends Core\Modules\AdminController
 
         $dataGrid
             ->addColumn([
-                'label' => $this->lang->t('system', 'publication_period'),
+                'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
                 'fields' => ['start', 'end']
             ], 30)
             ->addColumn([
-                'label' => $this->lang->t('articles', 'title'),
+                'label' => $this->translator->t('articles', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
                 'fields' => ['title'],
                 'default_sort' => true
             ], 20)
             ->addColumn([
-                'label' => $this->lang->t('system', 'id'),
+                'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
                 'fields' => ['id'],
                 'primary' => true

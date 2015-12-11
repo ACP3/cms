@@ -23,22 +23,26 @@ class Maintenance extends Core\Modules\AdminController
             switch ($action) {
                 case 'general':
                     $result = Core\Cache::purge(CACHE_DIR . 'sql');
-                    $text = $this->lang->t('system', $result === true ? 'cache_type_general_delete_success' : 'cache_type_general_delete_success');
+                    $text = $this->translator->t('system',
+                        $result === true ? 'cache_type_general_delete_success' : 'cache_type_general_delete_success');
                     break;
                 case 'images':
                     $result = Core\Cache::purge(CACHE_DIR . 'images');
-                    $text = $this->lang->t('system', $result === true ? 'cache_type_images_delete_success' : 'cache_type_images_delete_success');
+                    $text = $this->translator->t('system',
+                        $result === true ? 'cache_type_images_delete_success' : 'cache_type_images_delete_success');
                     break;
                 case 'minify':
                     $result = Core\Cache::purge(UPLOADS_DIR . 'assets');
-                    $text = $this->lang->t('system', $result === true ? 'cache_type_minify_delete_success' : 'cache_type_minify_delete_success');
+                    $text = $this->translator->t('system',
+                        $result === true ? 'cache_type_minify_delete_success' : 'cache_type_minify_delete_success');
                     break;
                 case 'templates':
                     $result = (Core\Cache::purge(CACHE_DIR . 'tpl_compiled') && Core\Cache::purge(CACHE_DIR . 'tpl_cached'));
-                    $text = $this->lang->t('system', $result === true ? 'cache_type_templates_delete_success' : 'cache_type_templates_delete_success');
+                    $text = $this->translator->t('system',
+                        $result === true ? 'cache_type_templates_delete_success' : 'cache_type_templates_delete_success');
                     break;
                 default:
-                    $text = $this->lang->t('system', 'cache_type_not_found');
+                    $text = $this->translator->t('system', 'cache_type_not_found');
             }
 
             return $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
@@ -62,10 +66,10 @@ class Maintenance extends Core\Modules\AdminController
                 ];
 
                 if (version_compare($update['installed_version'], $update['current_version'], '>=')) {
-                    $update['text'] = $this->lang->t('system', 'acp3_up_to_date');
+                    $update['text'] = $this->translator->t('system', 'acp3_up_to_date');
                     $update['class'] = 'success';
                 } else {
-                    $update['text'] = $this->lang->t(
+                    $update['text'] = $this->translator->t(
                         'system',
                         'acp3_not_up_to_date',
                         [

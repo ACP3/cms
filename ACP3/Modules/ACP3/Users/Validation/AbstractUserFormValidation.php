@@ -25,7 +25,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
             [
                 'data' => $formData,
                 'field' => [$passwordField, $passwordConfirmationField],
-                'message' => $this->lang->t('users', 'type_in_pwd')
+                'message' => $this->translator->t('users', 'type_in_pwd')
             ]);
     }
 
@@ -41,7 +41,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
             [
                 'data' => $formData,
                 'field' => [$passwordField, $passwordConfirmationField],
-                'message' => $this->lang->t('users', 'type_in_pwd')
+                'message' => $this->translator->t('users', 'type_in_pwd')
             ]);
     }
 
@@ -57,14 +57,14 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'nickname',
-                    'message' => $this->lang->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
                 AccountNotExistsByNameValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'nickname',
-                    'message' => $this->lang->t('users', 'user_name_already_exists'),
+                    'message' => $this->translator->t('users', 'user_name_already_exists'),
                     'extra' => [
                         'user_id' => $userId
                     ]
@@ -74,7 +74,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'gender',
-                    'message' => $this->lang->t('users', 'select_gender'),
+                    'message' => $this->translator->t('users', 'select_gender'),
                     'extra' => [
                         'haystack' => [1, 2, 3]
                     ]
@@ -84,21 +84,21 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'birthday',
-                    'message' => $this->lang->t('users', 'invalid_birthday')
+                    'message' => $this->translator->t('users', 'invalid_birthday')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
                 AccountNotExistsByEmailValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('users', 'user_email_already_exists'),
+                    'message' => $this->translator->t('users', 'user_email_already_exists'),
                     'extra' => [
                         'user_id' => $userId
                     ]
@@ -108,7 +108,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'icq',
-                    'message' => $this->lang->t('users', 'invalid_icq_number')
+                    'message' => $this->translator->t('users', 'invalid_icq_number')
                 ]);
     }
 
@@ -125,7 +125,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'language',
-                    'message' => $this->lang->t('users', 'select_language')
+                    'message' => $this->translator->t('users', 'select_language')
                 ]);
         }
         if ($entriesOverride == 1) {
@@ -134,7 +134,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'entries',
-                    'message' => $this->lang->t('system', 'select_records_per_page')
+                    'message' => $this->translator->t('system', 'select_records_per_page')
                 ]);
         }
 
@@ -144,28 +144,28 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'date_format_long',
-                    'message' => $this->lang->t('system', 'type_in_long_date_format')
+                    'message' => $this->translator->t('system', 'type_in_long_date_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
-                    'message' => $this->lang->t('system', 'type_in_short_date_format')
+                    'message' => $this->translator->t('system', 'type_in_short_date_format')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\TimeZoneExistsValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
-                    'messgae' => $this->lang->t('system', 'select_time_zone')
+                    'messgae' => $this->translator->t('system', 'select_time_zone')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail_display',
-                    'message' => $this->lang->t('users', 'select_mail_display'),
+                    'message' => $this->translator->t('users', 'select_mail_display'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -175,7 +175,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'address_display',
-                    'message' => $this->lang->t('users', 'select_address_display'),
+                    'message' => $this->translator->t('users', 'select_address_display'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -185,7 +185,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'country_display',
-                    'message' => $this->lang->t('users', 'select_country_display'),
+                    'message' => $this->translator->t('users', 'select_country_display'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -195,7 +195,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 [
                     'data' => $formData,
                     'field' => 'birthday_display',
-                    'message' => $this->lang->t('users', 'select_birthday_display'),
+                    'message' => $this->translator->t('users', 'select_birthday_display'),
                     'extra' => [
                         'haystack' => [0, 1, 2]
                     ]

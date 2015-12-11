@@ -19,21 +19,21 @@ class OnDataGridCustomOptionBeforeListener
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
 
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
      *
      * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
         ACL $acl,
-        Translator $lang
+        Translator $translator
     )
     {
         $this->acl = $acl;
-        $this->lang = $lang;
+        $this->translator = $translator;
     }
 
     /**
@@ -49,7 +49,7 @@ class OnDataGridCustomOptionBeforeListener
             if (array_key_exists('status', $dbResultRow) && $dbResultRow['status'] != 1) {
                 $customOptionEvent->getOptionRenderer()->addOption(
                     'acp/newsletter/index/send/id_' . $dbResultRow['id'],
-                    $this->lang->t('newsletter', 'send'),
+                    $this->translator->t('newsletter', 'send'),
                     'glyphicon-envelope',
                     'btn-primary',
                     true

@@ -19,16 +19,16 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator      $lang
+     * @param \ACP3\Core\I18n\Translator      $translator
      * @param \ACP3\Core\Validation\Validator $validator
      * @param \ACP3\Core\ACL                  $acl
      */
     public function __construct(
-        Core\I18n\Translator $lang,
+        Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         Core\ACL $acl)
     {
-        parent::__construct($lang, $validator);
+        parent::__construct($translator, $validator);
 
         $this->acl = $acl;
     }
@@ -49,14 +49,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->lang->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\MinLengthValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->lang->t('articles', 'title_to_short'),
+                    'message' => $this->translator->t('articles', 'title_to_short'),
                     'extra' => [
                         'length' => 3
                     ]
@@ -66,7 +66,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->lang->t('articles', 'text_to_short'),
+                    'message' => $this->translator->t('articles', 'text_to_short'),
                     'extra' => [
                         'length' => 3
                     ]
@@ -76,7 +76,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'alias',
-                    'message' => $this->lang->t('seo', 'alias_unallowed_characters_or_exists'),
+                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
                         'path' => $uriAlias
                     ]
@@ -99,21 +99,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'block_id',
-                    'message' => $this->lang->t('menus', 'select_menu_bar')
+                    'message' => $this->translator->t('menus', 'select_menu_bar')
                 ])
             ->addConstraint(
                 Menus\Validation\ValidationRules\ParentIdValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
-                    'message' => $this->lang->t('menus', 'select_superior_page')
+                    'message' => $this->translator->t('menus', 'select_superior_page')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'display',
-                    'message' => $this->lang->t('menus', 'select_item_visibility'),
+                    'message' => $this->translator->t('menus', 'select_item_visibility'),
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
@@ -123,7 +123,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'block_id'],
-                    'message' => $this->lang->t('menus', 'superior_page_not_allowed')
+                    'message' => $this->translator->t('menus', 'superior_page_not_allowed')
                 ]);
     }
 }

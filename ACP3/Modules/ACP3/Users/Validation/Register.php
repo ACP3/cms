@@ -33,21 +33,21 @@ class Register extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
-                    'message' => $this->lang->t('users', 'type_in_nickname_or_email')
+                    'message' => $this->translator->t('users', 'type_in_nickname_or_email')
                 ])
             ->addConstraint(
                 CaptchaValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'captcha',
-                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ])
             ->addConstraint(
                 $ruleName,
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
-                    'message' => $this->lang->t('users', 'user_not_exists')
+                    'message' => $this->translator->t('users', 'user_not_exists')
                 ]);
 
         $this->validator->validate();
@@ -68,35 +68,35 @@ class Register extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'nickname',
-                    'message' => $this->lang->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
                 AccountNotExistsByNameValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'nickname',
-                    'message' => $this->lang->t('users', 'user_name_already_exists')
+                    'message' => $this->translator->t('users', 'user_name_already_exists')
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
                 AccountNotExistsByEmailValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->lang->t('users', 'user_email_already_exists')
+                    'message' => $this->translator->t('users', 'user_email_already_exists')
                 ])
             ->addConstraint(
                 CaptchaValidationRule::NAME,
                 [
                     'data' => $formData,
                     'field' => 'captcha',
-                    'message' => $this->lang->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ]);
 
         $this->validatePassword($formData, 'pwd', 'pwd_repeat');
