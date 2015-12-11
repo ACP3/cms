@@ -6,8 +6,7 @@ use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
-use ACP3\Core\Lang;
-use ACP3\Core\View;
+use ACP3\Core\I18n\Translator;
 
 /**
  * Class DataGrid
@@ -20,7 +19,7 @@ class DataGrid
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -65,12 +64,12 @@ class DataGrid
     protected $primaryKey = '';
 
     /**
-     * @param \ACP3\Core\ACL  $acl
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\ACL             $acl
+     * @param \ACP3\Core\I18n\Translator $lang
      */
     public function __construct(
         ACL $acl,
-        Lang $lang
+        Translator $lang
     )
     {
         $this->acl = $acl;

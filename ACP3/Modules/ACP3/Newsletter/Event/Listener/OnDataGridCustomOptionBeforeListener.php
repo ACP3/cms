@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Event\Listener;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router;
 
 /**
@@ -17,19 +17,19 @@ class OnDataGridCustomOptionBeforeListener
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
 
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
      *
-     * @param \ACP3\Core\ACL  $acl
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\ACL             $acl
+     * @param \ACP3\Core\I18n\Translator $lang
      */
     public function __construct(
         ACL $acl,
-        Lang $lang
+        Translator $lang
     )
     {
         $this->acl = $acl;

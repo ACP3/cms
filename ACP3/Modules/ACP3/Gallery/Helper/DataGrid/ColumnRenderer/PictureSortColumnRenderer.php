@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer;
 
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router;
 
 /**
@@ -15,7 +15,7 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
     const NAME = 'picture_sort';
 
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -26,11 +26,11 @@ class PictureSortColumnRenderer extends AbstractColumnRenderer
     /**
      * PictureSortColumnRenderer constructor.
      *
-     * @param \ACP3\Core\Lang   $lang
-     * @param \ACP3\Core\Router $router
+     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\Router          $router
      */
     public function __construct(
-        Lang $lang,
+        Translator $lang,
         Router $router
     )
     {

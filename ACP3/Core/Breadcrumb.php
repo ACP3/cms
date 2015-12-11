@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -34,7 +35,7 @@ class Breadcrumb
      */
     protected $container;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -52,14 +53,14 @@ class Breadcrumb
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\Lang                                  $lang
+     * @param \ACP3\Core\I18n\Translator                       $lang
      * @param \ACP3\Core\Http\RequestInterface                 $request
      * @param \ACP3\Core\Router                                $router
      * @param \ACP3\Core\Config                                $config
      */
     public function __construct(
         Container $container,
-        Lang $lang,
+        Translator $lang,
         RequestInterface $request,
         Router $router,
         Config $config

@@ -10,7 +10,7 @@ use ACP3\Core;
 class AbstractFormValidation
 {
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -19,11 +19,11 @@ class AbstractFormValidation
     protected $validator;
 
     /**
-     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\I18n\Translator      $lang
      * @param \ACP3\Core\Validation\Validator $validator
      */
     public function __construct(
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         Core\Validation\Validator $validator
     )
     {

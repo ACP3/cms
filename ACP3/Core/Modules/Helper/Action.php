@@ -11,7 +11,7 @@ use ACP3\Core\Modules\FrontendController;
 class Action
 {
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -36,7 +36,7 @@ class Action
     protected $redirectMessages;
 
     /**
-     * @param \ACP3\Core\Lang                     $lang
+     * @param \ACP3\Core\I18n\Translator          $lang
      * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\Router                   $router
      * @param \ACP3\Core\View                     $view
@@ -44,7 +44,7 @@ class Action
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         Core\Http\RequestInterface $request,
         Core\Router $router,
         Core\View $view,

@@ -47,12 +47,6 @@ services:
     tags:
       - { name: core.view.extension }
 
-  smarty.plugin.lang:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Lang
-    arguments: ['@core.lang']
-    tags:
-      - { name: core.view.extension }
-
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
     arguments: ['@service_container']
@@ -92,6 +86,12 @@ services:
   smarty.plugin.template_path:
     class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
     arguments: ['@core.assets.file_resolver']
+    tags:
+      - { name: core.view.extension }
+
+  smarty.plugin.translate:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Translate
+    arguments: ['@core.lang']
     tags:
       - { name: core.view.extension }
 

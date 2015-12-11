@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\Files\Event\Listener;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Date;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router;
 use ACP3\Modules\ACP3\Files\Model\FilesRepository;
 use ACP3\Modules\ACP3\Search\Event\DisplaySearchResults;
@@ -24,7 +24,7 @@ class OnDisplaySearchResultsListener extends Event
      */
     private $date;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     private $lang;
     /**
@@ -37,16 +37,16 @@ class OnDisplaySearchResultsListener extends Event
     private $filesRepository;
 
     /**
-     * @param \ACP3\Core\ACL                    $acl
-     * @param \ACP3\Core\Date                   $date
-     * @param \ACP3\Core\Lang                   $lang
-     * @param \ACP3\Core\Router                 $router
+     * @param \ACP3\Core\ACL                                 $acl
+     * @param \ACP3\Core\Date                                $date
+     * @param \ACP3\Core\I18n\Translator                     $lang
+     * @param \ACP3\Core\Router                              $router
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
         ACL $acl,
         Date $date,
-        Lang $lang,
+        Translator $lang,
         Router $router,
         FilesRepository $filesRepository
     )

@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 
-use ACP3\Core\Lang;
 use ACP3\Core\Router;
 
 /**

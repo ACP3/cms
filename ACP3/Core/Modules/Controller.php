@@ -28,7 +28,7 @@ abstract class Controller implements ControllerInterface
      */
     protected $container;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**

@@ -10,14 +10,14 @@ use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 class Lang extends AbstractFunction
 {
     /**
-     * @var \ACP3\Installer\Core\Lang
+     * @var \ACP3\Installer\Core\I18n\Translator
      */
     protected $lang;
 
     /**
-     * @param \ACP3\Installer\Core\Lang $lang
+     * @param \ACP3\Installer\Core\I18n\Translator $lang
      */
-    public function __construct(\ACP3\Installer\Core\Lang $lang)
+    public function __construct(\ACP3\Installer\Core\I18n\Translator $lang)
     {
         $this->lang = $lang;
     }

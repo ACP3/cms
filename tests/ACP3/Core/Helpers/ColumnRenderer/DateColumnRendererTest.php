@@ -3,7 +3,7 @@
 class DateColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var \ACP3\Core\Lang|PHPUnit_Framework_MockObject_MockObject
+     * @var \ACP3\Core\I18n\Translator|PHPUnit_Framework_MockObject_MockObject
      */
     protected $langMock;
     /**
@@ -25,7 +25,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
 
     protected function setUp()
     {
-        $this->langMock = $this->getMockBuilder(\ACP3\Core\Lang::class)
+        $this->langMock = $this->getMockBuilder(\ACP3\Core\I18n\Translator::class)
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();

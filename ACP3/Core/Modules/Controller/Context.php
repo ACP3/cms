@@ -4,7 +4,7 @@ namespace ACP3\Core\Modules\Controller;
 use ACP3\Core\ACL;
 use ACP3\Core\Config;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Core\Router;
 use ACP3\Core\User;
@@ -31,7 +31,7 @@ class Context
      */
     protected $user;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -65,7 +65,7 @@ class Context
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Core\ACL                                              $acl
      * @param \ACP3\Core\User                                             $user
-     * @param \ACP3\Core\Lang                                             $lang
+     * @param \ACP3\Core\I18n\Translator                                  $lang
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\Router                                           $router
@@ -77,7 +77,7 @@ class Context
         EventDispatcherInterface $eventDispatcher,
         ACL $acl,
         User $user,
-        Lang $lang,
+        Translator $lang,
         Modules $modules,
         RequestInterface $request,
         Router $router,
@@ -123,7 +123,7 @@ class Context
     }
 
     /**
-     * @return \ACP3\Core\Lang
+     * @return \ACP3\Core\I18n\Translator
      */
     public function getLang()
     {

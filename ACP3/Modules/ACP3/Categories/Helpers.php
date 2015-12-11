@@ -15,7 +15,7 @@ class Helpers
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -45,7 +45,7 @@ class Helpers
 
     /**
      * @param \ACP3\Core\ACL                                         $acl
-     * @param \ACP3\Core\Lang                                        $lang
+     * @param \ACP3\Core\I18n\Translator                             $lang
      * @param \ACP3\Core\Modules                                     $modules
      * @param \ACP3\Core\Http\RequestInterface                       $request
      * @param \ACP3\Core\View                                        $view
@@ -55,7 +55,7 @@ class Helpers
      */
     public function __construct(
         Core\ACL $acl,
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         Core\Modules $modules,
         Core\Http\RequestInterface $request,
         Core\View $view,

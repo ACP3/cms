@@ -116,18 +116,29 @@ class Index extends Core\Modules\FrontendController
 
                 $formData['message'] = Core\Functions::strEncode($formData['message'], true);
 
-                $subject = sprintf($this->lang->t('contact', 'contact_subject'), $seoSettings['title']);
-                $body = str_replace(
-                    ['{name}', '{mail}', '{message}', '\n'],
-                    [$formData['name'], $formData['mail'], $formData['message'], "\n"],
-                    $this->lang->t('contact', 'contact_body')
+                $subject = $this->lang->t('contact', 'contact_subject', ['%title%' => $seoSettings['title']]);
+                $body = $this->lang->t(
+                    'contact',
+                    'contact_body',
+                    [
+                        '%name%' => $formData['name'],
+                        '%mail%' => $formData['mail'],
+                        '%message%' => $formData['message']
+                    ]
                 );
                 $bool = $this->sendEmailHelper->execute('', $settings['mail'], $formData['mail'], $subject, $body);
 
                 // Nachrichtenkopie an Absender senden
                 if (isset($formData['copy'])) {
-                    $subjectCopy = sprintf($this->lang->t('contact', 'sender_subject'), $seoSettings['title']);
-                    $bodyCopy = sprintf($this->lang->t('contact', 'sender_body'), $seoSettings['title'], $formData['message']);
+                    $subjectCopy = $this->lang->t('contact', 'sender_subject', ['%title%' => $seoSettings['title']]);
+                    $bodyCopy = $this->lang->t(
+                        'contact',
+                        'sender_body',
+                        [
+                            '%title%' => $seoSettings['title'],
+                            '%message%' => $formData['message']
+                        ]
+                    );
                     $this->sendEmailHelper->execute($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
                 }
 
@@ -148,7 +159,13 @@ class Index extends Core\Modules\FrontendController
     {
         return [
             'imprint' => $this->config->getSettings('contact'),
-            'powered_by' => sprintf($this->lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" target="_blank">ACP3</a>')
+            'powered_by' => $this->lang->t(
+                'contact',
+                'powered_by',
+                [
+                    '%ACP3%' => '<a href="http://www.acp3-cms.net" target="_blank">ACP3</a>'
+                ]
+            )
         ];
     }
 }

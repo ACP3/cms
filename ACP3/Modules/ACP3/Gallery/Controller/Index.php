@@ -84,7 +84,7 @@ class Index extends Core\Modules\FrontendController
                 ->append($picture['title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
                 ->append($this->lang->t('gallery', 'details'))
                 ->setTitlePrefix($picture['title'])
-                ->setTitlePostfix(sprintf($this->lang->t('gallery', 'picture_x'), $picture['pic']));
+                ->setTitlePostfix($this->lang->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
 
             // Bildabmessungen berechnen
             $picture['width'] = $this->settings['width'];

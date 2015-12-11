@@ -15,12 +15,12 @@ class Settings extends Core\Validation\AbstractFormValidation
     protected $modules;
 
     /**
-     * @param Core\Lang                       $lang
+     * @param \ACP3\Core\I18n\Translator      $lang
      * @param \ACP3\Core\Validation\Validator $validator
      * @param Core\Modules                    $modules
      */
     public function __construct(
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         Core\Validation\Validator $validator,
         Core\Modules $modules
     )

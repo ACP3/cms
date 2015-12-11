@@ -2,9 +2,9 @@
 
 {block CONTENT}
     <p>
-        {$LANG_users_found}
+        {lang t="users|users_found" args=['%count%' => $all_users]}
     </p>
-    {if isset($users)}
+    {if !empty($users)}
         {$pagination}
         <table class="table table-striped">
             <thead>

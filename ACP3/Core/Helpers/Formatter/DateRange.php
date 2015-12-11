@@ -3,7 +3,7 @@ namespace ACP3\Core\Helpers\Formatter;
 
 
 use ACP3\Core\Date;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 
 /**
  * Class DateRange
@@ -16,17 +16,17 @@ class DateRange
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
 
     /**
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\Date            $date
+     * @param \ACP3\Core\I18n\Translator $lang
      */
     public function __construct(
         Date $date,
-        Lang $lang
+        Translator $lang
     )
     {
         $this->date = $date;
@@ -48,7 +48,11 @@ class DateRange
             if (empty($end)) {
                 $title = $this->date->format($start, $format);
             } else {
-                $title = sprintf($this->lang->t('system', 'date_published_since'), $this->date->format($start, $format));
+                $title = $this->lang->t(
+                    'system',
+                    'date_published_since',
+                    ['%date%' => $this->date->format($start, $format)]
+                );
             }
             return $this->generateTimeTag($start, $format, $title);
         } else {

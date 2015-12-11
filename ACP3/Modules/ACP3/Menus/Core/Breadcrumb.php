@@ -27,7 +27,7 @@ class Breadcrumb extends Core\Breadcrumb
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container  $container
-     * @param \ACP3\Core\Lang                                   $lang
+     * @param \ACP3\Core\I18n\Translator                        $lang
      * @param \ACP3\Core\Http\RequestInterface                  $request
      * @param \ACP3\Core\Router                                 $router
      * @param \ACP3\Core\Config                                 $config
@@ -35,7 +35,7 @@ class Breadcrumb extends Core\Breadcrumb
      */
     public function __construct(
         Container $container,
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         RequestInterface $request,
         Core\Router $router,
         Core\Config $config,

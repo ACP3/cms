@@ -71,7 +71,8 @@ class Index extends Core\Modules\Controller
                 $c_answers = count($answers);
                 for ($i = 0; $i < $c_answers; ++$i) {
                     $votes = $answers[$i]['votes'];
-                    $answers[$i]['votes'] = ($votes > 1) ? sprintf($this->lang->t('polls', 'number_of_votes'), $votes) : $this->lang->t('polls', ($votes == 1 ? 'one_vote' : 'no_votes'));
+                    $answers[$i]['votes'] = ($votes > 1) ? $this->lang->t('polls', 'number_of_votes',
+                        ['%votes%' => $votes]) : $this->lang->t('polls', ($votes == 1 ? 'one_vote' : 'no_votes'));
                     $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $votes / $totalVotes, 2) : '0';
                 }
 

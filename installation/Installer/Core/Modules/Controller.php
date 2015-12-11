@@ -19,7 +19,7 @@ class Controller implements ControllerInterface
      */
     protected $container;
     /**
-     * @var \ACP3\Installer\Core\Lang
+     * @var \ACP3\Installer\Core\I18n\Translator
      */
     protected $lang;
     /**

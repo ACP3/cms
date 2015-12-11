@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Installer\Core;
 
+use ACP3\Installer\Core\I18n\Translator;
+
 /**
  * Class Date
  * @package ACP3\Installer\Core
@@ -8,10 +10,10 @@ namespace ACP3\Installer\Core;
 class Date extends \ACP3\Core\Date
 {
     /**
-     * @param \ACP3\Installer\Core\Lang $lang
+     * @param \ACP3\Installer\Core\I18n\Translator $lang
      */
     public function __construct(
-        Lang $lang
+        Translator $lang
     )
     {
         $this->lang = $lang;

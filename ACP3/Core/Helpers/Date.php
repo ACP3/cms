@@ -2,7 +2,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\Request;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
 /**
@@ -16,7 +16,7 @@ class Date
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -36,14 +36,14 @@ class Date
      * Date constructor.
      *
      * @param \ACP3\Core\Date                                          $date
-     * @param \ACP3\Core\Lang                                          $lang
+     * @param \ACP3\Core\I18n\Translator                               $lang
      * @param \ACP3\Core\Http\Request                                  $request
      * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
      * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
      */
     public function __construct(
         \ACP3\Core\Date $date,
-        Lang $lang,
+        Translator $lang,
         Request $request,
         Forms $formsHelper,
         DateValidationRule $dateValidationRule

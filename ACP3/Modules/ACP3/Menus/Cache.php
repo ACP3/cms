@@ -15,7 +15,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID_VISIBLE = 'visible_items_';
 
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -29,13 +29,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param Core\Cache                                        $cache
-     * @param Core\Lang                                         $lang
-     * @param MenuRepository                                             $menuModel
+     * @param \ACP3\Core\I18n\Translator                        $lang
+     * @param MenuRepository                                    $menuModel
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         MenuRepository $menuModel,
         MenuItemRepository $menuItemRepository
     )

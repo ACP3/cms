@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
-use ACP3\Core\Lang;
+
+use ACP3\Core\I18n\Translator;
 
 /**
  * Class TranslateColumnRenderer
@@ -18,9 +19,9 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
     /**
      * TranslateColumnRenderer constructor.
      *
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\I18n\Translator $lang
      */
-    public function __construct(Lang $lang)
+    public function __construct(Translator $lang)
     {
         $this->lang = $lang;
     }

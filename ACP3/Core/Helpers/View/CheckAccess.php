@@ -14,7 +14,7 @@ class CheckAccess
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -27,14 +27,14 @@ class CheckAccess
     protected $view;
 
     /**
-     * @param \ACP3\Core\ACL    $acl
-     * @param \ACP3\Core\Lang   $lang
-     * @param \ACP3\Core\Router $router
-     * @param \ACP3\Core\View   $view
+     * @param \ACP3\Core\ACL             $acl
+     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\Router          $router
+     * @param \ACP3\Core\View            $view
      */
     public function __construct(
         Core\ACL $acl,
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         Core\Router $router,
         Core\View $view
     )

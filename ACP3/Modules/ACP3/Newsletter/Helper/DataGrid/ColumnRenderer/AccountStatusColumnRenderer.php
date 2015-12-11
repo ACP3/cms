@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router;
 
 /**
@@ -14,7 +14,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     const NAME = 'account_status';
 
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -25,11 +25,11 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * AccountStatusColumnRenderer constructor.
      *
-     * @param \ACP3\Core\Lang   $lang
-     * @param \ACP3\Core\Router $router
+     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\Router          $router
      */
     public function __construct(
-        Lang $lang,
+        Translator $lang,
         Router $router
     )
     {

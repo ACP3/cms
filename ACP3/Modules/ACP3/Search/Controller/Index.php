@@ -92,7 +92,8 @@ class Index extends Core\Modules\FrontendController
             ksort($searchResults);
             $this->view->assign('results_mods', $searchResults);
         } else {
-            $this->view->assign('no_search_results', sprintf($this->lang->t('search', 'no_search_results'), $searchTerm));
+            $this->view->assign('no_search_results',
+                $this->lang->t('search', 'no_search_results', ['%search_term%' => $searchTerm]));
         }
 
         $this->setTemplate('Search/Frontend/index.results.tpl');

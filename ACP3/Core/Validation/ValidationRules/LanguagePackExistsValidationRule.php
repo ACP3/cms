@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 
 /**
  * Class LanguagePackExistsValidationRule
@@ -12,16 +12,16 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
     const NAME = 'language_pack_exists';
 
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
 
     /**
      * LanguagePackExistsValidationRule constructor.
      *
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\I18n\Translator $lang
      */
-    public function __construct(Lang $lang)
+    public function __construct(Translator $lang)
     {
         $this->lang = $lang;
     }

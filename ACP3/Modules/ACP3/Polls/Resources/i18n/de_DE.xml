@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Neue Umfrage erstellen</item>
+        <item key="admin_index_delete">Umfragen löschen</item>
+        <item key="admin_index_edit">Umfrage bearbeiten</item>
+        <item key="add_answer">Antwort hinzufügen</item>
+        <item key="already_voted">Sie haben bereits an dieser Umfrage teilgenommen.</item>
+        <item key="answer">Antwort</item>
+        <item key="answers">Antworten</item>
+        <item key="can_not_delete_all_answers">Es ist nicht möglich alle Antworten zu löschen</item>
+        <item key="delete_answer_description">Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.</item>
+        <item key="frontend_index_result">Ergebnis</item>
+        <item key="frontend_index_vote">Abstimmen</item>
+        <item key="latest_poll">Aktuelle Umfrage</item>
+        <item key="mod_description">Mit diesem Modul können die Umfragen verwaltet werden.</item>
+        <item key="multiple_choice">Mehrfachauswahl erlauben</item>
+        <item key="no_votes">Keine Stimmen</item>
+        <item key="number_of_votes">%votes% Stimmen</item>
+        <item key="one_vote">Eine Stimme</item>
+        <item key="per_cent">Prozent</item>
+        <item key="poll">Umfrage</item>
+        <item key="poll_error">Beim Speichern Ihrer Stimme ist ein Fehler aufgetreten.</item>
+        <item key="poll_success">Ihre Stimme wurde erfolgreich gezählt.</item>
+        <item key="polls">Umfragen</item>
+        <item key="polls_archive">Umfragen Archiv</item>
+        <item key="question">Frage</item>
+        <item key="reset_votes">Stimmen zurücksetzen</item>
+        <item key="total_votes">Gesamt</item>
+        <item key="type_in_two_answers">Bitte geben Sie zumindest 2 Antworten ein.</item>
+        <item key="type_in_question">Bitte geben Sie eine Frage ein.</item>
+        <item key="votes">Stimmen</item>
+    </keys>
+</language>
