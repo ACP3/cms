@@ -62,7 +62,7 @@ class DictionaryCache
         $data = [];
 
         foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob(MODULES_DIR . $vendor . '/*/Resources/Languages/' . $language . '.xml');
+            $languageFiles = glob(MODULES_DIR . $vendor . '/*/Resources/i18n/' . $language . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -120,7 +120,7 @@ class DictionaryCache
         $languagePacks = [];
 
         foreach ($this->vendors->getVendors() as $vendors) {
-            $languageFiles = glob(MODULES_DIR . $vendors . '/*/Resources/Languages/*.xml');
+            $languageFiles = glob(MODULES_DIR . $vendors . '/*/Resources/i18n/*.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
