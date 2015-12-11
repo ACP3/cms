@@ -10,11 +10,12 @@
         <item key="desc">Absteigend</item>
         <item key="mod_description">Mit diesem Modul können andere Module durchsucht werden.</item>
         <item key="no_area_selected">Bitte geben Sie an, welche Bereiche der Einträge durchsucht werden sollen.</item>
-        <item key="no_sorting_selected">Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden sollen.
+        <item key="no_sorting_selected">Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden
+            sollen.
         </item>
         <item key="no_module_selected">Bitte wählen Sie mindestens ein Modul aus, welches durchsucht werden soll.</item>
         <item key="no_search_results">
-            <![CDATA[Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden.]]></item>
+            <![CDATA[Es konnten keine Einträge mit dem Suchbegriff &quot;%search_term%&quot; gefunden werden.]]></item>
         <item key="search">Suche</item>
         <item key="search_after_areas">Zu durchsuchende Bereiche</item>
         <item key="search_after_modules">Zu durchsuchende Module</item>

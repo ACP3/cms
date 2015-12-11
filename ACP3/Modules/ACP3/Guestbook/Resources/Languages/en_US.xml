@@ -42,7 +42,7 @@
             overlay or not.
         </item>
         <item key="send_email">Send E-mail</item>
-        <item key="subscribe_to_newsletter">Yes, I would like to receive the newsletter of &quot;%s&quot;.</item>
+        <item key="subscribe_to_newsletter">Yes, I would like to receive the newsletter of &quot;%title%&quot;.</item>
         <item key="type_in_email_address_to_subscribe_to_newsletter">To receive the newsletter, you must provide a valid
             e-mail address.
         </item>

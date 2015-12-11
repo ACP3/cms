@@ -190,7 +190,8 @@ class Extensions extends Core\Modules\AdminController
 
                     $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
-                    $text = sprintf($this->lang->t('system', 'enable_following_modules_first'), implode(', ', $deps));
+                    $text = $this->lang->t('system', 'enable_following_modules_first',
+                        ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
                 $text = $this->lang->t('system', 'module_installer_not_found');
@@ -244,7 +245,8 @@ class Extensions extends Core\Modules\AdminController
 
                     $text = $this->lang->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
-                    $text = sprintf($this->lang->t('system', 'module_disable_not_possible'), implode(', ', $deps));
+                    $text = $this->lang->t('system', 'module_disable_not_possible',
+                        ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
                 throw new Core\Exceptions\ResultNotExists();
@@ -285,7 +287,8 @@ class Extensions extends Core\Modules\AdminController
 
                     $text = $this->lang->t('system', 'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
                 } else {
-                    $text = sprintf($this->lang->t('system', 'enable_following_modules_first'), implode(', ', $deps));
+                    $text = $this->lang->t('system', 'enable_following_modules_first',
+                        ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
                 $text = $this->lang->t('system', 'module_installer_not_found');
@@ -334,7 +337,8 @@ class Extensions extends Core\Modules\AdminController
 
                     $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
                 } else {
-                    $text = sprintf($this->lang->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
+                    $text = $this->lang->t('system', 'uninstall_following_modules_first',
+                        ['%modules%' => implode(', ', $deps)]);
                 }
             } else {
                 $text = $this->lang->t('system', 'module_installer_not_found');

@@ -9,27 +9,27 @@
         <item key="address_to_short">Die Anschrift sollte mindestens 3 Zeichen lang sein.</item>
         <item key="ceo">Geschäftsführer</item>
         <item key="contact">Kontakt</item>
-        <item key="contact_body">{name} ({mail}) hat folgende Nachricht hinterlassen:
+        <item key="contact_body">%name% (%mail%) hat folgende Nachricht hinterlassen:
 
-{message}
+            %message%
         </item>
         <item key="contact_information">Kontakt Daten</item>
-        <item key="contact_subject">Kontaktformular "%s".</item>
+        <item key="contact_subject">Kontaktformular "%title%".</item>
         <item key="disclaimer">Haftungshinweise</item>
         <item key="disclaimer_to_short">Die Haftungshinweise sollten mindestens 3 Zeichen lang sein.</item>
         <item key="fax">FAX Nummer</item>
         <item key="frontend_index_imprint">Impressum</item>
         <item key="imprint">Impressum</item>
         <item key="mod_description">Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</item>
-        <item key="powered_by">Diese Website wird angetrieben vom %s</item>
+        <item key="powered_by">Diese Website wird angetrieben vom %ACP3%</item>
         <item key="send_copy_to_sender">Kopie der Nachricht an mich senden.</item>
         <item key="send_mail_error">Beim Versenden der E-Mail ist ein Fehler aufgetreten.</item>
         <item key="send_mail_success">Die E-Mail wurde erfolgreich versendet.</item>
-        <item key="sender_body">Sie haben folgende Nachricht auf der Website "%1$s" hinterlassen:
+        <item key="sender_body">Sie haben folgende Nachricht auf der Website "%title%" hinterlassen:
 
-%2$s
+            %message%
         </item>
-        <item key="sender_subject">Ihre Nachricht an "%s".</item>
+        <item key="sender_subject">Ihre Nachricht an "%title%".</item>
         <item key="telephone">Telefonnummer</item>
         <item key="vat_id">Umsatzsteuer-Identifikationsnummer</item>
     </keys>

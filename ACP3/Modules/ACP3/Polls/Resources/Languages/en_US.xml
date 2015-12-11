@@ -20,7 +20,7 @@
         <item key="mod_description">With this module you can administer the polls.</item>
         <item key="multiple_choice">Multiple choice</item>
         <item key="no_votes">No votes</item>
-        <item key="number_of_votes">%s votes</item>
+        <item key="number_of_votes">%votes% votes</item>
         <item key="one_vote">1 vote</item>
         <item key="per_cent">Per cent</item>
         <item key="poll">Poll</item>

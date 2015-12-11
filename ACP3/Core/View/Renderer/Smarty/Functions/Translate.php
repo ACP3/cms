@@ -4,22 +4,22 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 use ACP3\Core;
 
 /**
- * Class Lang
+ * Class Translate
  * @package ACP3\Core\View\Renderer\Smarty\Functions
  */
-class Lang extends AbstractFunction
+class Translate extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
 
     /**
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\I18n\Translator $translator
      */
-    public function __construct(Core\Lang $lang)
+    public function __construct(Core\I18n\Translator $translator)
     {
-        $this->lang = $lang;
+        $this->translator = $translator;
     }
 
     /**
@@ -36,6 +36,7 @@ class Lang extends AbstractFunction
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $values = explode('|', $params['t']);
-        return $this->lang->t($values[0], $values[1]);
+        $params = isset($params['args']) && is_array($params['args']) ? $params['args'] : [];
+        return $this->translator->t($values[0], $values[1], $params);
     }
 }

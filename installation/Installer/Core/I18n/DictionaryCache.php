@@ -1,12 +1,12 @@
 <?php
-namespace ACP3\Installer\Core\Lang;
+namespace ACP3\Installer\Core\I18n;
 use ACP3\Core\Filesystem;
 
 /**
- * Class Cache
- * @package ACP3\Installer\Core\Lang
+ * Class DictionaryCache
+ * @package ACP3\Installer\Core\I18n
  */
-class Cache
+class DictionaryCache
 {
     /**
      * @var array

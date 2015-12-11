@@ -70,8 +70,8 @@ class Index extends Core\Modules\FrontendController
         Users\Model\UserRepository $userRepository,
         Users\Validation\Register $usersValidator,
         Permissions\Helpers $permissionsHelpers,
-        Core\Helpers\SendEmail $sendEmail)
-    {
+        Core\Helpers\SendEmail $sendEmail
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -132,12 +132,11 @@ class Index extends Core\Modules\FrontendController
         if ($c_users > 0) {
             $this->pagination->setTotalResults($allUsers);
             $this->pagination->display();
-
-            $this->view->assign('users', $users);
         }
 
         return [
-            'LANG_users_found' => sprintf($this->lang->t('users', 'users_found'), $allUsers)
+            'users' => $users,
+            'all_users' => $allUsers
         ];
     }
 
@@ -164,7 +163,8 @@ class Index extends Core\Modules\FrontendController
             }
 
             return [
-                'error_msg' => $this->get('core.helpers.alerts')->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong'))
+                'error_msg' => $this->get('core.helpers.alerts')->errorBox($this->lang->t('users',
+                    $result == -1 ? 'account_locked' : 'nickname_or_password_wrong'))
             ];
         }
     }
@@ -198,7 +198,9 @@ class Index extends Core\Modules\FrontendController
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage(ROOT_DIR);
         } elseif ($settings['enable_registration'] == 0) {
-            $this->setContent($this->get('core.helpers.alerts')->errorBox($this->lang->t('users', 'user_registration_disabled')));
+            $this->setContent($this->get('core.helpers.alerts')->errorBox(
+                $this->lang->t('users', 'user_registration_disabled'))
+            );
         } else {
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->_registerPost($this->request->getPost()->all(), $settings);
@@ -231,7 +233,8 @@ class Index extends Core\Modules\FrontendController
     {
         if ($this->userRepository->resultExists($id) === true) {
             $user = $this->user->getUserInfo($id);
-            $user['gender'] = str_replace([1, 2, 3], ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
+            $user['gender'] = str_replace([1, 2, 3],
+                ['', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')], $user['gender']);
 
             return [
                 'user' => $user
@@ -268,13 +271,28 @@ class Index extends Core\Modules\FrontendController
                 $seoSettings = $this->config->getSettings('seo');
 
                 // E-Mail mit dem neuen Passwort versenden
-                $subject = str_replace(['{title}', '{host}'], [$seoSettings['title'], $host], $this->lang->t('users', 'forgot_pwd_mail_subject'));
-                $search = ['{name}', '{mail}', '{password}', '{title}', '{host}'];
-                $replace = [$user['nickname'], $user['mail'], $newPassword, $seoSettings['title'], $host];
-                $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
+                $subject = $this->lang->t(
+                    'users',
+                    'forgot_pwd_mail_subject',
+                    [
+                        '{title}' => $seoSettings['title'],
+                        '{host}' => $host
+                    ]
+                );
+                $body = $this->lang->t(
+                    'users',
+                    'forgot_pwd_mail_message', [
+                        '{name}' => $user['nickname'],
+                        '{mail}' => $user['mail'],
+                        '{password}' => $newPassword,
+                        '{title}' => $seoSettings['title'],
+                        '{host}' => $host
+                    ]
+                );
 
                 $settings = $this->config->getSettings('users');
-                $mailIsSent = $this->sendEmail->execute(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
+                $mailIsSent = $this->sendEmail->execute(substr($user['realname'], 0, -2), $user['mail'],
+                    $settings['mail'], $subject, $body);
 
                 // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                 if ($mailIsSent === true) {
@@ -290,7 +308,8 @@ class Index extends Core\Modules\FrontendController
                 $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'),
+                    $this->lang->t('users',
+                        $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'),
                     ROOT_DIR
                 ));
             },
@@ -313,16 +332,23 @@ class Index extends Core\Modules\FrontendController
                 $systemSettings = $this->config->getSettings('system');
                 $seoSettings = $this->config->getSettings('seo');
 
-                // E-Mail mit den Accountdaten zusenden
-                $subject = str_replace(
-                    ['{title}', '{host}'],
-                    [$seoSettings['title'], $this->request->getHostname()],
-                    $this->lang->t('users', 'register_mail_subject')
-                );
-                $body = str_replace(
-                    ['{name}', '{mail}', '{password}', '{title}', '{host}'],
-                    [$formData['nickname'], $formData['mail'], $formData['pwd'], $seoSettings['title'], $this->request->getHostname()],
-                    $this->lang->t('users', 'register_mail_message')
+                $subject = $this->lang->t(
+                    'users',
+                    'register_mail_subject',
+                    [
+                        '{title}' => $seoSettings['title'],
+                        '{host}' => $this->request->getHostname(),
+                    ]);
+                $body = $this->lang->t(
+                    'users',
+                    'register_mail_message',
+                    [
+                        '{name}' => $formData['nickname'],
+                        '{mail}' => $formData['mail'],
+                        '{password}' => $formData['pwd'],
+                        '{title}' => $seoSettings['title'],
+                        '{host}' => $this->request->getHostname()
+                    ]
                 );
                 $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
@@ -347,7 +373,8 @@ class Index extends Core\Modules\FrontendController
                 $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'),
+                    $this->lang->t('users',
+                        $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'),
                     ROOT_DIR
                 ));
             },

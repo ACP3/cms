@@ -165,7 +165,8 @@ class Index extends Core\Modules\AdminController
                 'custom' => [
                     'search' => [0, 1, 2, 3, 4],
                     'replace' => [
-                        sprintf($this->lang->t('seo', 'robots_use_system_default'), $this->seo->getRobotsSetting()),
+                        $this->lang->t('seo', 'robots_use_system_default',
+                            ['%default%' => $this->seo->getRobotsSetting()]),
                         $this->lang->t('seo', 'robots_index_follow'),
                         $this->lang->t('seo', 'robots_index_nofollow'),
                         $this->lang->t('seo', 'robots_noindex_follow'),

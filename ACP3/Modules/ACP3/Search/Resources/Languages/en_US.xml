@@ -12,7 +12,7 @@
         <item key="no_area_selected">Please specify which areas of the entries are to be searched.</item>
         <item key="no_sorting_selected">Please sepcify the order of search results.</item>
         <item key="no_module_selected">Please select at least one module, which is to be searched.</item>
-        <item key="no_search_results"><![CDATA[No entries matched search term &quot;%s&quot;.]]></item>
+        <item key="no_search_results"><![CDATA[No entries matched search term &quot;%search_term%&quot;.]]></item>
         <item key="search">Search</item>
         <item key="search_after_areas">Search through following areas</item>
         <item key="search_after_modules">Search through following modules</item>

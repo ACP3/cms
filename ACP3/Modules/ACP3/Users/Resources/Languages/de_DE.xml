@@ -112,7 +112,7 @@
         <item key="user_profile_not_exists">Das angeforderte Benutzerprofil konnte nicht gefunden werden.</item>
         <item key="user_registration_disabled">Die Registrierung für neue Benutzer ist derzeit deaktiviert!</item>
         <item key="users">Benutzer</item>
-        <item key="users_found">Insgesamt haben sich auf dieser Website %d Benutzer registriert.</item>
+        <item key="users_found">Insgesamt haben sich auf dieser Website %count% Benutzer registriert.</item>
         <item key="view_profile">Benutzerprofil ansehen</item>
         <item key="visit_website">Website besuchen</item>
     </keys>

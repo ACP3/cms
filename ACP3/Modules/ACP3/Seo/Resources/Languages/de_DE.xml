@@ -19,7 +19,7 @@
         <item key="mod_rewrite">mod_rewrite verwenden</item>
         <item key="mod_rewrite_description">Bitte nur aktivieren, wenn Sie den Apache Webserver verwenden.</item>
         <item key="robots">Robots</item>
-        <item key="robots_use_system_default">Systemstandard verwenden (%s)</item>
+        <item key="robots_use_system_default">Systemstandard verwenden (%default%)</item>
         <item key="robots_index_follow">index, follow</item>
         <item key="robots_index_nofollow">index, nofollow</item>
         <item key="robots_noindex_follow">noindex, follow</item>

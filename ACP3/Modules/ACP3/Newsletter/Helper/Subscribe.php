@@ -16,7 +16,7 @@ class Subscribe
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -54,7 +54,7 @@ class Subscribe
 
     /**
      * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Core\Lang                                       $lang
+     * @param \ACP3\Core\I18n\Translator                            $lang
      * @param \ACP3\Core\Mailer                                     $mailer
      * @param \ACP3\Core\Http\Request                               $request
      * @param \ACP3\Core\Router                                     $router
@@ -66,7 +66,7 @@ class Subscribe
      */
     public function __construct(
         Core\Date $date,
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         Core\Mailer $mailer,
         Core\Http\Request $request,
         Core\Router $router,
@@ -146,8 +146,9 @@ class Subscribe
         $seoSettings = $this->config->getSettings('seo');
         $settings = $this->config->getSettings('newsletter');
 
-        $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), $seoSettings['title']);
-        $body = str_replace('{host}', $this->request->getHostname(), $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+        $subject = $this->lang->t('newsletter', 'subscribe_mail_subject', ['%title%' => $seoSettings['title']]);
+        $body = $this->lang->t('newsletter', 'subscribe_mail_body',
+                ['{host}' => $this->request->getHostname()]) . "\n\n";
 
         $from = [
             'email' => $settings['mail'],

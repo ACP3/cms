@@ -7,7 +7,9 @@
     <keys>
         <item key="access_to_following_modules">You have access to the following %d modules.</item>
         <item key="acp">Administration Control Panel</item>
-        <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %1$shere%2$s to download the latest version.</item>
+        <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %link_start%here%link_end% to
+            download the latest version.
+        </item>
         <item key="acp3_up_to_date">You're already using the latest version of ACP3.</item>
         <item key="action">Action</item>
         <item key="activate_module"><![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.<br />Please enable the module, to resolve this problem.]]></item>
@@ -92,7 +94,7 @@
         <item key="date_november">November</item>
         <item key="date_oct">Oct</item>
         <item key="date_october">October</item>
-        <item key="date_published_since">Since %s</item>
+        <item key="date_published_since">Since %date%</item>
         <item key="date_sat">Sat</item>
         <item key="date_saturday">Saturday</item>
         <item key="date_sep">Sep</item>
@@ -126,7 +128,9 @@
         <item key="email_address">E-mail address</item>
         <item key="enable">Enable</item>
         <item key="enable_module">Enable module</item>
-        <item key="enable_following_modules_first">To install the module you have to enable the following modules first: %s</item>
+        <item key="enable_following_modules_first">To install the module you have to enable the following modules first:
+            %modules%
+        </item>
         <item key="end_date">End date</item>
         <item key="entries">Entries</item>
         <item key="entry">Entry</item>
@@ -197,7 +201,9 @@
         <item key="mod_uninstallation_success">The module has been successfully uninstalled.</item>
         <item key="module">Module</item>
         <item key="module_already_installed">The module is already installed!</item>
-        <item key="module_disable_not_possible">This module can not be disabled, because the following modules would otherwise cease to function: %s</item>
+        <item key="module_disable_not_possible">This module can not be disabled, because the following modules would
+            otherwise cease to function: %modules%
+        </item>
         <item key="module_installer_not_found">Unfortunately, this module does not have an installer!</item>
         <item key="module_name">Module name</item>
         <item key="modules">Modules</item>
@@ -223,7 +229,7 @@
         <item key="output_as_text">As text</item>
         <item key="output_as_file">As file</item>
         <item key="overview">Overview</item>
-        <item key="page_x">Page %d</item>
+        <item key="page_x">Page %page%</item>
         <item key="pagination">Pagination</item>
         <item key="performance">Performance</item>
         <item key="php_date_function"><![CDATA[see <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a> function of PHP.]]></item>
@@ -264,7 +270,7 @@
         <item key="title">Title</item>
         <item key="title_for_toc">Title for table of contents</item>
         <item key="title_to_short">Please type in a title.</item>
-        <item key="toc_page">Page %d</item>
+        <item key="toc_page">Page %page%</item>
         <item key="toggle_navigation">Toggle Navigation</item>
         <item key="type_in_flood_barrier">Please enter the number in seconds a user can not submit posts.</item>
         <item key="type_in_long_date_format">Please type in the long date format.</item>
@@ -274,7 +280,9 @@
         <item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
         <item key="type_in_short_date_format">Please type in the short date format.</item>
         <item key="uninstall">Uninstall</item>
-        <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following modules first: %s</item>
+        <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following
+            modules first: %modules%
+        </item>
         <item key="uninstall_module">Uninstall module</item>
         <item key="unmark_all">Unmark all</item>
         <item key="upload_error">While moving the file %s an error has occured.</item>

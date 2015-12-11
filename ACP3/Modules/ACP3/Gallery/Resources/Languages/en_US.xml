@@ -34,7 +34,7 @@
         <item key="picture">Picture</item>
         <item key="picture_index">Picture overview</item>
         <item key="picture_information">Picture information</item>
-        <item key="picture_x">Picture %d</item>
+        <item key="picture_x">Picture %picture%</item>
         <item key="pictures">Pictures</item>
         <item key="previous_image">Previous image</item>
         <item key="select_allow_comments">Please select whether you to allow users to comment pictures.</item>

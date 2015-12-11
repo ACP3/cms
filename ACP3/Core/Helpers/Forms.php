@@ -3,7 +3,7 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\Request;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 
 /**
  * Class Forms
@@ -12,7 +12,7 @@ use ACP3\Core\Lang;
 class Forms
 {
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -21,11 +21,11 @@ class Forms
     protected $request;
 
     /**
-     * @param \ACP3\Core\Lang                  $lang
+     * @param \ACP3\Core\I18n\Translator       $lang
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
-        Lang $lang,
+        Translator $lang,
         RequestInterface $request
     )
     {

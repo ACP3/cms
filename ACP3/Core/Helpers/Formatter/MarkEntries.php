@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers\Formatter;
 
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 
 /**
  * Class MarkEntries
@@ -10,16 +10,16 @@ use ACP3\Core\Lang;
 class MarkEntries
 {
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
 
     /**
      * MarkEntries constructor.
      *
-     * @param \ACP3\Core\Lang $lang
+     * @param \ACP3\Core\I18n\Translator $lang
      */
-    public function __construct(Lang $lang)
+    public function __construct(Translator $lang)
     {
         $this->lang = $lang;
     }

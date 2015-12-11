@@ -1,15 +1,17 @@
 <?php
-namespace ACP3\Core\Lang;
+namespace ACP3\Core\I18n;
+
+use ACP3\Core\Cache;
 use ACP3\Core\Modules\Vendors;
 
 /**
  * Class Cache
- * @package ACP3\Core\Lang
+ * @package ACP3\Core\I18n
  */
-class Cache
+class DictionaryCache
 {
     /**
-     * @var \ACP3\Core\Cache
+     * @var Cache
      */
     protected $cache;
     /**
@@ -18,11 +20,13 @@ class Cache
     protected $vendors;
 
     /**
+     * DictionaryCache constructor.
+     *
      * @param \ACP3\Core\Cache           $cache
      * @param \ACP3\Core\Modules\Vendors $vendors
      */
     public function __construct(
-        \ACP3\Core\Cache $cache,
+        Cache $cache,
         Vendors $vendors
     )
     {
@@ -71,7 +75,7 @@ class Cache
 
                     // Iterate over all language keys
                     foreach ($xml->keys->item as $item) {
-                        $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
+                        $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
                     }
                 }
             }

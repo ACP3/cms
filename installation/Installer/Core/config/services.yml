@@ -40,11 +40,11 @@ services:
     class: ACP3\Core\Helpers\Secure
 
   core.lang:
-    class: ACP3\Installer\Core\Lang
-    arguments: [@core.lang.cache, 'en_US']
+    class: ACP3\Installer\Core\I18n\Translator
+    arguments: [@core.lang.dictionary_cache, 'en_US']
 
-  core.lang.cache:
-    class: ACP3\Installer\Core\Lang\Cache
+  core.lang.dictionary_cache:
+    class: ACP3\Installer\Core\I18n\DictionaryCache
 
   core.modules.controller.install:
     abstract: true

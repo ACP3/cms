@@ -1,26 +1,24 @@
 <?php
 
-namespace ACP3\Installer\Core;
-
-use ACP3\Installer\Core\Lang\Cache;
+namespace ACP3\Installer\Core\I18n;
 
 /**
  * Class Lang
  * @package ACP3\Installer\Core
  */
-class Lang extends \ACP3\Core\Lang
+class Translator extends \ACP3\Core\I18n\Translator
 {
     /**
-     * @var \ACP3\Installer\Core\Lang\Cache
+     * @var \ACP3\Installer\Core\I18n\DictionaryCache
      */
     protected $cache;
 
     /**
-     * @param \ACP3\Installer\Core\Lang\Cache $cache
-     * @param string                          $lang
+     * @param \ACP3\Installer\Core\I18n\DictionaryCache $cache
+     * @param string                                    $lang
      */
     public function __construct(
-        Cache $cache,
+        DictionaryCache $cache,
         $lang
     )
     {

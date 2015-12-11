@@ -146,7 +146,14 @@ class Index extends Core\Modules\FrontendController
         // In Newsletter integrieren
         if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
             $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
-            $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), $this->config->getSettings('seo')['title']));
+            $this->view->assign(
+                'LANG_subscribe_to_newsletter',
+                $this->lang->t(
+                    'guestbook',
+                    'subscribe_to_newsletter',
+                    ['%title%' => $this->config->getSettings('seo')['title']]
+                )
+            );
         }
 
         $defaults = [

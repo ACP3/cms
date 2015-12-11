@@ -11,7 +11,7 @@ class DateRangeTest extends PHPUnit_Framework_TestCase
      */
     private $date;
     /**
-     * @var \ACP3\Core\Lang|\PHPUnit_Framework_MockObject_MockObject
+     * @var \ACP3\Core\I18n\Translator|\PHPUnit_Framework_MockObject_MockObject
      */
     private $langMock;
     /**
@@ -26,7 +26,7 @@ class DateRangeTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->langMock = $this->getMockBuilder(\ACP3\Core\Lang::class)
+        $this->langMock = $this->getMockBuilder(\ACP3\Core\I18n\Translator::class)
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();
@@ -59,14 +59,14 @@ class DateRangeTest extends PHPUnit_Framework_TestCase
     /**
      * @param string $langKey
      * @param string $langValue
+     * @param array  $params
      */
-    private function setUpLangMockExpectation($langKey, $langValue)
+    private function setUpLangMockExpectation($langKey, $langValue, array $params = [])
     {
         $this->langMock->expects($this->once())
             ->method('t')
-            ->with('system', $langKey)
+            ->with('system', $langKey, $params)
             ->willReturn($langValue);
-
     }
 
     public function testSingleDateWithLongFormat()
@@ -96,7 +96,8 @@ class DateRangeTest extends PHPUnit_Framework_TestCase
 
     public function testInvalidDateRangeWithLongFormat()
     {
-        $this->setUpLangMockExpectation('date_published_since', 'Published since %s');
+        $this->setUpLangMockExpectation('date_published_since', 'Published since 2012-12-20 13:12',
+            ['%date%' => '2012-12-20 13:12']);
         $dateStart = '2012-12-20 12:12:12';
         $dateEnd = '2012-12-19 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="Published since 2012-12-20 13:12">2012-12-20 13:12</time>';
@@ -106,7 +107,8 @@ class DateRangeTest extends PHPUnit_Framework_TestCase
 
     public function testInvalidDateRangeWithShortFormat()
     {
-        $this->setUpLangMockExpectation('date_published_since', 'Published since %s');
+        $this->setUpLangMockExpectation('date_published_since', 'Published since 2012-12-20',
+            ['%date%' => '2012-12-20']);
         $dateStart = '2012-12-20 12:12:12';
         $dateEnd = '2012-12-19 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="Published since 2012-12-20">2012-12-20</time>';

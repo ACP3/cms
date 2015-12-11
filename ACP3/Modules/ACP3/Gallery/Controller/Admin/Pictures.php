@@ -167,7 +167,8 @@ class Pictures extends Core\Modules\AdminController
             $this->breadcrumb
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
                 ->append($this->lang->t('gallery', 'admin_pictures_edit'))
-                ->setTitlePostfix($picture['title'] . $this->breadcrumb->getTitleSeparator() . sprintf($this->lang->t('gallery', 'picture_x'), $picture['pic']));
+                ->setTitlePostfix($picture['title'] . $this->breadcrumb->getTitleSeparator() . $this->lang->t('gallery',
+                        'picture_x', ['%picture%' => $picture['pic']]));
 
             $settings = $this->config->getSettings('gallery');
 

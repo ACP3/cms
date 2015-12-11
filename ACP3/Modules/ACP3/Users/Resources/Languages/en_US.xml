@@ -112,7 +112,7 @@
         <item key="user_profile_not_exists">The requested user profile doesn't exists.</item>
         <item key="user_registration_disabled">The registration for new users is currently diabled!</item>
         <item key="users">Users</item>
-        <item key="users_found">In total there are %d users registered on this Website.</item>
+        <item key="users_found">In total there are %count% users registered on this Website.</item>
         <item key="view_profile">View user profile</item>
         <item key="visit_website">Visit website</item>
     </keys>

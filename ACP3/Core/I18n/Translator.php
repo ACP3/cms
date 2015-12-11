@@ -1,20 +1,22 @@
 <?php
-namespace ACP3\Core;
+namespace ACP3\Core\I18n;
 
-use ACP3\Core\Lang\Cache as LanguageCache;
+use ACP3\Core\Config;
+use ACP3\Core\I18n\DictionaryCache as LanguageCache;
+use ACP3\Core\User;
 
 /**
- * Class Lang
- * @package ACP3\Core
+ * Class Translator
+ * @package ACP3\Core\I18n
  */
-class Lang
+class Translator
 {
     /**
      * @var \ACP3\Core\User
      */
     protected $user;
     /**
-     * @var \ACP3\Core\Lang\Cache
+     * @var \ACP3\Core\I18n\DictionaryCache
      */
     protected $cache;
     /**
@@ -41,9 +43,9 @@ class Lang
     protected $buffer = [];
 
     /**
-     * @param \ACP3\Core\User       $user
-     * @param \ACP3\Core\Lang\Cache $cache
-     * @param \ACP3\Core\Config     $config
+     * @param \ACP3\Core\User                 $user
+     * @param \ACP3\Core\I18n\DictionaryCache $cache
+     * @param \ACP3\Core\Config               $config
      */
     public function __construct(
         User $user,
@@ -126,16 +128,21 @@ class Lang
      *
      * @param string $module
      * @param string $key
+     * @param array  $arguments
      *
      * @return string
      */
-    public function t($module, $key)
+    public function t($module, $key, array $arguments = [])
     {
         if (isset($this->buffer[$this->getLanguage()]) === false) {
             $this->buffer[$this->getLanguage()] = $this->cache->getLanguageCache($this->getLanguage());
         }
 
-        return isset($this->buffer[$this->getLanguage()]['keys'][$module][$key]) ? $this->buffer[$this->getLanguage()]['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
+        if (isset($this->buffer[$this->getLanguage()]['keys'][$module . $key])) {
+            return strtr($this->buffer[$this->getLanguage()]['keys'][$module . $key], $arguments);
+        }
+
+        return strtoupper('{' . $module . '_' . $key . '}');
     }
 
     /**

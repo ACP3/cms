@@ -19,12 +19,12 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\Lang                 $lang
+     * @param \ACP3\Core\I18n\Translator      $lang
      * @param \ACP3\Core\Validation\Validator $validator
      * @param \ACP3\Core\Modules              $modules
      */
     public function __construct(
-        Core\Lang $lang,
+        Core\I18n\Translator $lang,
         Core\Validation\Validator $validator,
         Core\Modules $modules
     )

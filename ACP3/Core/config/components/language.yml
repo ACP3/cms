@@ -1,8 +1,8 @@
 services:
   core.lang:
-    class: ACP3\Core\Lang
-    arguments: ['@core.user', @core.lang.cache, '@core.config']
+    class: ACP3\Core\I18n\Translator
+    arguments: ['@core.user', @core.lang.dictionary_cache, '@core.config']
 
-  core.lang.cache:
-    class: ACP3\Core\Lang\Cache
+  core.lang.dictionary_cache:
+    class: ACP3\Core\I18n\DictionaryCache
     arguments: ['@core.cache.system', @core.modules.vendors]

@@ -44,7 +44,8 @@
             sollen oder nicht.
         </item>
         <item key="send_email">E-Mail senden</item>
-        <item key="subscribe_to_newsletter">Ja, ich möchte in Zukunft den Newsletter von &quot;%s&quot; erhalten.</item>
+        <item key="subscribe_to_newsletter">Ja, ich möchte in Zukunft den Newsletter von &quot;%title%&quot; erhalten.
+        </item>
         <item key="type_in_email_address_to_subscribe_to_newsletter">Um den Newsletter erhalten zu können, müssen Sie ihre
             E-Mail-Adresse angeben.
         </item>

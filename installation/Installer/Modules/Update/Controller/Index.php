@@ -89,7 +89,7 @@ class Index extends Core\Modules\Controller
         $result = $this->_updateModule($moduleName);
 
         return [
-            'text' => sprintf($this->lang->t('update', 'db_update_text'), ucfirst($moduleName)),
+            'text' => $this->lang->t('update', 'db_update_text', ['%module%' => ucfirst($moduleName)]),
             'class' => $result === 1 ? 'success' : ($result === 0 ? 'danger' : 'info'),
             'result_text' => $this->lang->t('update', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
         ];

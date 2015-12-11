@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Http\Request;
 
-use ACP3\Core\Lang;
+use ACP3\Core\I18n\Translator;
 use Symfony\Component\HttpFoundation\ServerBag;
 
 /**
@@ -70,7 +70,7 @@ class UserAgent
 
         // Über die Sprachen iterieren und das passende Sprachpaket auswählen
         foreach ($languages as $lang => $val) {
-            if (Lang::languagePackExists($lang) === true) {
+            if (Translator::languagePackExists($lang) === true) {
                 return $lang;
             }
         }

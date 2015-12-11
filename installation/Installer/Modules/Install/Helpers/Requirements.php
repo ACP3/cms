@@ -3,7 +3,7 @@ namespace ACP3\Installer\Modules\Install\Helpers;
 
 
 use ACP3\Core\Filesystem;
-use ACP3\Installer\Core\Lang;
+use ACP3\Installer\Core\I18n\Translator;
 
 /**
  * Class Requirements
@@ -24,9 +24,9 @@ class Requirements
     protected $lang;
 
     /**
-     * @param \ACP3\Installer\Core\Lang $lang
+     * @param \ACP3\Installer\Core\I18n\Translator $lang
      */
-    public function __construct(Lang $lang)
+    public function __construct(Translator $lang)
     {
         $this->lang = $lang;
     }

@@ -2,6 +2,8 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\I18n\Translator;
+
 /**
  * Class Date
  * @package ACP3\Core
@@ -26,7 +28,7 @@ class Date
     protected $dateTimeZone;
 
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -35,13 +37,13 @@ class Date
     protected $config;
 
     /**
-     * @param \ACP3\Core\User   $user
-     * @param \ACP3\Core\Lang   $lang
-     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\User            $user
+     * @param \ACP3\Core\I18n\Translator $lang
+     * @param \ACP3\Core\Config          $config
      */
     public function __construct(
         User $user,
-        Lang $lang,
+        Translator $lang,
         Config $config
     )
     {

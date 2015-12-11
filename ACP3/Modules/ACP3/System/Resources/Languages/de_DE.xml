@@ -7,7 +7,9 @@
     <keys>
         <item key="access_to_following_modules">Sie haben Zugriff auf folgende %d Module.</item>
         <item key="acp">Administration Control Panel</item>
-        <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen werden.</item>
+        <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %link_start%hier%link_end%
+            heruntergeladen werden.
+        </item>
         <item key="acp3_up_to_date">Sie verwenden bereits die aktuelle Version des ACP3.</item>
         <item key="action">Aktion</item>
         <item key="activate_module"><![CDATA[Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.<br />Bitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.]]></item>
@@ -92,7 +94,7 @@
         <item key="date_november">November</item>
         <item key="date_oct">Okt</item>
         <item key="date_october">Oktober</item>
-        <item key="date_published_since">Seit %s</item>
+        <item key="date_published_since">Seit %date%</item>
         <item key="date_sat">Sa</item>
         <item key="date_saturday">Samstag</item>
         <item key="date_sep">Sep</item>
@@ -126,7 +128,9 @@
         <item key="email_address">E-Mail-Adresse</item>
         <item key="enable">Aktivieren</item>
         <item key="enable_module">Modul aktivieren</item>
-        <item key="enable_following_modules_first">Um das Modul installieren zu können, müssen Sie zunächst folgende Module aktivieren: %s</item>
+        <item key="enable_following_modules_first">Um das Modul installieren zu können, müssen Sie zunächst folgende
+            Module aktivieren: %modules%
+        </item>
         <item key="end_date">Enddatum</item>
         <item key="entries">Einträge</item>
         <item key="entry">Eintrag</item>
@@ -197,7 +201,9 @@
         <item key="mod_uninstallation_success">Das Modul wurde erfolgreich deinstalliert.</item>
         <item key="module">Modul</item>
         <item key="module_already_installed">Das Modul ist bereits installiert!</item>
-        <item key="module_disable_not_possible">Das Modul kann nicht deaktiviert werden, da folgende Module sonst nicht mehr funktionieren würden: %s</item>
+        <item key="module_disable_not_possible">Das Modul kann nicht deaktiviert werden, da folgende Module sonst nicht
+            mehr funktionieren würden: %modules%
+        </item>
         <item key="module_installer_not_found">Es konnte für dieses Module leider keine Installationsroutine gefunden werden!</item>
         <item key="module_name">Modul Name</item>
         <item key="modules">Module</item>
@@ -223,7 +229,7 @@
         <item key="output_as_text">Als Text</item>
         <item key="output_as_file">Als Datei</item>
         <item key="overview">Übersicht</item>
-        <item key="page_x">Seite %d</item>
+        <item key="page_x">Seite %page%</item>
         <item key="pagination">Seitenauswahl</item>
         <item key="performance">Leistung</item>
         <item key="php_date_function"><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a>-Funktion von PHP.]]></item>
@@ -264,7 +270,7 @@
         <item key="title">Seitentitel</item>
         <item key="title_for_toc">Seitentitel für das Inhaltsverzeichnis</item>
         <item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
-        <item key="toc_page">Seite %d</item>
+        <item key="toc_page">Seite %page%</item>
         <item key="toggle_navigation">Navigation einblenden/ausblenden</item>
         <item key="type_in_flood_barrier">Bitte geben Sie ein, für wie viele Sekunden ein Benutzer keine Beiträge abschicken kann.</item>
         <item key="type_in_long_date_format">Bitte geben Sie die lange Datumsformatierung ein.</item>
@@ -274,7 +280,9 @@
         <item key="type_in_minify_cache_lifetime">Bitte geben Sie die Cache-Lebenszeit der CSS- und JavaScript-Dateien ein.</item>
         <item key="type_in_short_date_format">Bitte geben Sie die verkürzte Datumsformatierung ein.</item>
         <item key="uninstall">Deinstallieren</item>
-        <item key="uninstall_following_modules_first">Um das Modul deinstallieren zu können, müssen zunächst die Folgenden deinstalliert werden: %s</item>
+        <item key="uninstall_following_modules_first">Um das Modul deinstallieren zu können, müssen zunächst die
+            folgenden Module deinstalliert werden: %modules%
+        </item>
         <item key="uninstall_module">Modul deinstallieren</item>
         <item key="unmark_all">Markierung aufheben</item>
         <item key="upload_error">Die Datei %s konnte leider nicht verschoben werden.</item>

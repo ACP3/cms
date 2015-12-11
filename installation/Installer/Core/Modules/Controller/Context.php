@@ -3,7 +3,7 @@ namespace ACP3\Installer\Core\Modules\Controller;
 
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Installer\Core\Http\Request;
-use ACP3\Installer\Core\Lang;
+use ACP3\Installer\Core\I18n\Translator;
 use ACP3\Installer\Core\Router;
 
 /**
@@ -13,7 +13,7 @@ use ACP3\Installer\Core\Router;
 class Context
 {
     /**
-     * @var \ACP3\Installer\Core\Lang
+     * @var \ACP3\Installer\Core\I18n\Translator
      */
     protected $lang;
     /**
@@ -30,13 +30,13 @@ class Context
     protected $view;
 
     /**
-     * @param \ACP3\Installer\Core\Lang        $lang
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Installer\Core\Router      $router
-     * @param \ACP3\Core\View                  $view
+     * @param \ACP3\Installer\Core\I18n\Translator $lang
+     * @param \ACP3\Core\Http\RequestInterface     $request
+     * @param \ACP3\Installer\Core\Router          $router
+     * @param \ACP3\Core\View                      $view
      */
     public function __construct(
-        Lang $lang,
+        Translator $lang,
         RequestInterface $request,
         Router $router,
         \ACP3\Core\View $view)
@@ -48,7 +48,7 @@ class Context
     }
 
     /**
-     * @return Lang
+     * @return Translator
      */
     public function getLang()
     {

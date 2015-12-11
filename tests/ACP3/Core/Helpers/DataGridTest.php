@@ -11,7 +11,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
      */
     protected $aclMock;
     /**
-     * @var \ACP3\Core\Lang|PHPUnit_Framework_MockObject_MockObject
+     * @var \ACP3\Core\I18n\Translator|PHPUnit_Framework_MockObject_MockObject
      */
     protected $langMock;
 
@@ -22,7 +22,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
             ->setMethods(['hasPermission'])
             ->getMock();
 
-        $this->langMock = $this->getMockBuilder(\ACP3\Core\Lang::class)
+        $this->langMock = $this->getMockBuilder(\ACP3\Core\I18n\Translator::class)
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();

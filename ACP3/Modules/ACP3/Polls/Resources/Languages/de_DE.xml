@@ -20,7 +20,7 @@
         <item key="mod_description">Mit diesem Modul können die Umfragen verwaltet werden.</item>
         <item key="multiple_choice">Mehrfachauswahl erlauben</item>
         <item key="no_votes">Keine Stimmen</item>
-        <item key="number_of_votes">%s Stimmen</item>
+        <item key="number_of_votes">%votes% Stimmen</item>
         <item key="one_vote">Eine Stimme</item>
         <item key="per_cent">Prozent</item>
         <item key="poll">Umfrage</item>

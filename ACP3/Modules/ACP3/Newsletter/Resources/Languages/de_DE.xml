@@ -53,7 +53,7 @@
         <item key="subscribe">Eintragen</item>
         <item key="subscribe_error">Es ist ein Fehler beim Erstellen des Newsletterkontos aufgetreten.</item>
         <item key="subscribe_mail_body">Sie haben sich erfolgreich im Newsletter auf der Website {host} eingetragen. Um die Registrierung abzuschließen, klicken Sie bitte auf den unten stehenden Link. Falls Sie diese E-Mail fälschlicherweise zugestellt bekommen haben sollten, so ignorieren/löschen Sie sie bitte einfach.</item>
-        <item key="subscribe_mail_subject">Willkommen beim Newsletter von %s!</item>
+        <item key="subscribe_mail_subject">Willkommen beim Newsletter von %title%!</item>
         <item key="subscribe_newsletter">Newsletter bestellen</item>
         <item key="subscribe_success">Das Newsletterkonto wurde erfolgreich erstellt.</item>
         <item key="subscribe_unsubscribe_the_newsletter">In Newsletter eintragen/austragen</item>
