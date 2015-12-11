@@ -18,7 +18,7 @@ class Translator
     /**
      * @var \ACP3\Core\I18n\DictionaryCache
      */
-    protected $cache;
+    protected $dictionaryCache;
     /**
      * @var \ACP3\Core\Config
      */
@@ -44,17 +44,17 @@ class Translator
 
     /**
      * @param \ACP3\Core\User                 $user
-     * @param \ACP3\Core\I18n\DictionaryCache $cache
+     * @param \ACP3\Core\I18n\DictionaryCache $dictionaryCache
      * @param \ACP3\Core\Config               $config
      */
     public function __construct(
         User $user,
-        LanguageCache $cache,
+        LanguageCache $dictionaryCache,
         Config $config
     )
     {
         $this->user = $user;
-        $this->cache = $cache;
+        $this->dictionaryCache = $dictionaryCache;
         $this->config = $config;
     }
 
@@ -72,11 +72,9 @@ class Translator
     }
 
     /**
-     * Gibt die aktuell eingestellte Sprache zurück
-     *
      * @return string
      */
-    public function getLanguage()
+    public function getLocale()
     {
         if ($this->locale === '') {
             $locale = $this->user->getLanguage();
@@ -91,17 +89,15 @@ class Translator
      */
     public function getShortIsoCode()
     {
-        return substr($this->getLanguage(), 0, strpos($this->getLanguage(), '_'));
+        return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
     }
 
     /**
-     * Verändert die aktuell eingestellte Sprache
-     *
      * @param string $locale
      *
      * @return $this
      */
-    public function setLanguage($locale)
+    public function setLocale($locale)
     {
         if (self::languagePackExists($locale) === true) {
             $this->locale = $locale;
@@ -117,33 +113,31 @@ class Translator
      */
     public function getDirection()
     {
-        if (isset($this->buffer[$this->getLanguage()]) === false) {
-            $this->buffer[$this->getLanguage()] = $this->cache->getLanguageCache($this->getLanguage());
+        if (isset($this->buffer[$this->getLocale()]) === false) {
+            $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
         }
 
-        return isset($this->buffer[$this->getLanguage()]['info']['direction']) ? $this->buffer[$this->getLanguage()]['info']['direction'] : 'ltr';
+        return isset($this->buffer[$this->getLocale()]['info']['direction']) ? $this->buffer[$this->getLocale()]['info']['direction'] : 'ltr';
     }
 
     /**
-     * Gibt den angeforderten Sprachstring aus
-     *
      * @param string $module
-     * @param string $key
+     * @param string $phrase
      * @param array  $arguments
      *
      * @return string
      */
-    public function t($module, $key, array $arguments = [])
+    public function t($module, $phrase, array $arguments = [])
     {
-        if (isset($this->buffer[$this->getLanguage()]) === false) {
-            $this->buffer[$this->getLanguage()] = $this->cache->getLanguageCache($this->getLanguage());
+        if (isset($this->buffer[$this->getLocale()]) === false) {
+            $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
         }
 
-        if (isset($this->buffer[$this->getLanguage()]['keys'][$module . $key])) {
-            return strtr($this->buffer[$this->getLanguage()]['keys'][$module . $key], $arguments);
+        if (isset($this->buffer[$this->getLocale()]['keys'][$module . $phrase])) {
+            return strtr($this->buffer[$this->getLocale()]['keys'][$module . $phrase], $arguments);
         }
 
-        return strtoupper('{' . $module . '_' . $key . '}');
+        return strtoupper('{' . $module . '_' . $phrase . '}');
     }
 
     /**
@@ -156,7 +150,7 @@ class Translator
     public function getLanguagePack($currentLanguage)
     {
         if (empty($this->languagePacks)) {
-            $this->languagePacks = $this->cache->getLanguagePacksCache();
+            $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
         }
 
         $languages = $this->languagePacks;

@@ -61,7 +61,7 @@ class ModuleInfoCache
      */
     public function getCacheKey()
     {
-        return 'infos_' . $this->translator->getLanguage();
+        return 'infos_' . $this->translator->getLocale();
     }
 
     /**

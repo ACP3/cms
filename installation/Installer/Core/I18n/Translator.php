@@ -11,18 +11,18 @@ class Translator extends \ACP3\Core\I18n\Translator
     /**
      * @var \ACP3\Installer\Core\I18n\DictionaryCache
      */
-    protected $cache;
+    protected $dictionaryCache;
 
     /**
-     * @param \ACP3\Installer\Core\I18n\DictionaryCache $cache
+     * @param \ACP3\Installer\Core\I18n\DictionaryCache $dictionaryCache
      * @param string                                    $locale
      */
     public function __construct(
-        DictionaryCache $cache,
+        DictionaryCache $dictionaryCache,
         $locale
     )
     {
-        $this->cache = $cache;
+        $this->dictionaryCache = $dictionaryCache;
         $this->locale = $locale;
         $this->lang2Characters = substr($this->locale, 0, strpos($this->locale, '_'));
     }

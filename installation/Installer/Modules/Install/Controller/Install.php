@@ -236,7 +236,7 @@ class Install extends AbstractController
                 'date_format_short' => Functions::strEncode($formData['date_format_short']),
                 'date_time_zone' => $formData['date_time_zone'],
                 'maintenance_message' => $this->translator->t('install', 'offline_message'),
-                'lang' => $this->translator->getLanguage()
+                'lang' => $this->translator->getLocale()
             ],
             'seo' => [
                 'title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
@@ -277,7 +277,7 @@ class Install extends AbstractController
             "INSERT INTO
                 `{pre}users`
             VALUES
-                (1, 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->translator->getLanguage()}', '20', '', '{$currentDate}');",
+                (1, 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secureHelper->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, {$this->db->getConnection()->quote($formData["date_format_long"])}, {$this->db->getConnection()->quote($formData["date_format_short"])}, '{$formData["date_time_zone"]}', '{$this->translator->getLocale()}', '20', '', '{$currentDate}');",
             "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
         ];
 

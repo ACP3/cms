@@ -86,7 +86,7 @@ class Controller implements ControllerInterface
         $this->setLanguage();
 
         // Einige Template Variablen setzen
-        $this->view->assign('LANGUAGES', $this->_languagesDropdown($this->translator->getLanguage()));
+        $this->view->assign('LANGUAGES', $this->_languagesDropdown($this->translator->getLocale()));
         $this->view->assign('PHP_SELF', PHP_SELF);
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
         $this->view->assign('ROOT_DIR', ROOT_DIR);
@@ -94,7 +94,7 @@ class Controller implements ControllerInterface
         $this->view->assign('DESIGN_PATH', DESIGN_PATH);
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
 
-        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->translator->getLanguage() . '.xml');
+        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->translator->getLocale() . '.xml');
         $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
         $this->view->assign('LANG', $this->translator->getShortIsoCode());
     }
@@ -310,6 +310,6 @@ class Controller implements ControllerInterface
             $language = $this->request->getUserAgent()->parseAcceptLanguage();
         }
 
-        $this->translator->setLanguage($language);
+        $this->translator->setLocale($language);
     }
 }
