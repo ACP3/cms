@@ -19,7 +19,7 @@
   "require": {
     "php": ">=5.5.0",
     "doctrine/dbal": "2.5.2",
-    "doctrine/cache": "1.5.2",
+    "doctrine/cache": "1.5.4",
     "inlinestyle/inlinestyle": "1.2.6",
     "monolog/monolog": "1.17.2",
     "mrclay/minify": "2.2.1",
@@ -33,7 +33,7 @@
     "symfony/event-dispatcher": "2.8.0",
     "mibe/feedwriter": "1.0.3",
     "ckeditor/ckeditor": "dev-full/4.5.x",
-    "tinymce/tinymce": "4.3.1"
+    "tinymce/tinymce": "4.3.2"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.19",
