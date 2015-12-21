@@ -11,7 +11,6 @@ class ApplicationPath
      * @var string
      */
     protected $phpSelf;
-
     /**
      * @var string
      */
@@ -52,7 +51,7 @@ class ApplicationPath
     /**
      * DirectoryPath constructor.
      *
-     * @param $environment
+     * @param string $environment
      */
     public function __construct($environment)
     {

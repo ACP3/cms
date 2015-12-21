@@ -1,6 +1,8 @@
 services:
   core.assets:
     class: ACP3\Core\Assets
+    arguments:
+      - @core.environment.application_path
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache

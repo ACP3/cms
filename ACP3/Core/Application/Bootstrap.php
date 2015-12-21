@@ -55,13 +55,6 @@ class Bootstrap extends AbstractBootstrap
      */
     public function defineDirConstants()
     {
-//        define('PHP_SELF', $this->appPath->getPhpSelf());
-//        define('ROOT_DIR', $this->appPath->getWebRoot());
-//        define('ACP3_DIR', $this->appPath->getAppDir());
-//        define('CLASSES_DIR', $this->appPath->getClassesDir());
-//        define('MODULES_DIR', $this->appPath->getModulesDir());
-//        define('UPLOADS_DIR', $this->appPath->getUploadsDir());
-//        define('CACHE_DIR', $this->appPath->getCacheDir());
     }
 
     /**
@@ -111,9 +104,9 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * Pfade zum Theme setzen
+     * Sets the theme paths
      */
-    private function _setThemeConstants()
+    private function _setThemePaths()
     {
         $path = 'designs/' . $this->systemSettings['design'] . '/';
 
@@ -121,10 +114,6 @@ class Bootstrap extends AbstractBootstrap
             ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
             ->setDesignPathInternal(ACP3_ROOT_DIR . $path)
             ->setDesignPathAbsolute($this->container->get('core.request')->getDomain() . $this->appPath->getDesignPathWeb());
-
-        define('DESIGN_PATH', $this->appPath->getDesignPathWeb());
-        define('DESIGN_PATH_INTERNAL', $this->appPath->getDesignPathInternal());
-        define('DESIGN_PATH_ABSOLUTE', $this->appPath->getDesignPathAbsolute());
     }
 
     /**
@@ -134,7 +123,7 @@ class Bootstrap extends AbstractBootstrap
     {
         // Load system settings
         $this->systemSettings = $this->container->get('core.config')->getSettings('system');
-        $this->_setThemeConstants();
+        $this->_setThemePaths();
         $this->container->get('core.user')->authenticate();
 
         /** @var \ACP3\Core\Http\Request $request */

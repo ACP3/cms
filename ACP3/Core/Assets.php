@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Environment\ApplicationPath;
+
 /**
  * Class Assets
  * @package ACP3\Core
@@ -70,10 +72,12 @@ class Assets
 
     /**
      * Checks, whether the current design uses Twitter Bootstrap or not
+     *
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
-    public function __construct()
+    public function __construct(ApplicationPath $appPath)
     {
-        $this->designXml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
+        $this->designXml = simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
 
         if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
             $this->enableLibraries(['bootstrap']);

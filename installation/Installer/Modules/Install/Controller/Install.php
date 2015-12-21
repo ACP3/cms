@@ -150,7 +150,7 @@ class Install extends AbstractController
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load($this->appPath->getClassesDir() . 'config/services.yml');
-        $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
+        $loader->load($this->appPath->getInstallerClassesDir() . 'config/services.yml');
 
         $this->container->setParameter('core.environment', $environment);
 

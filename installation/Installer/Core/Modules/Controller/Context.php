@@ -1,9 +1,8 @@
 <?php
 namespace ACP3\Installer\Core\Modules\Controller;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Installer\Core\Http\Request;
+use ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Installer\Core\I18n\Translator;
 use ACP3\Installer\Core\Router;
 
@@ -30,16 +29,18 @@ class Context
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
     protected $appPath;
 
     /**
-     * @param \ACP3\Installer\Core\I18n\Translator   $translator
-     * @param \ACP3\Core\Http\RequestInterface       $request
-     * @param \ACP3\Installer\Core\Router            $router
-     * @param \ACP3\Core\View                        $view
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * Context constructor.
+     *
+     * @param \ACP3\Installer\Core\I18n\Translator             $translator
+     * @param \ACP3\Core\Http\RequestInterface                 $request
+     * @param \ACP3\Installer\Core\Router                      $router
+     * @param \ACP3\Core\View                                  $view
+     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Translator $translator,
@@ -57,7 +58,7 @@ class Context
     }
 
     /**
-     * @return Translator
+     * @return \ACP3\Installer\Core\I18n\Translator
      */
     public function getTranslator()
     {
@@ -65,7 +66,7 @@ class Context
     }
 
     /**
-     * @return Request
+     * @return \ACP3\Core\Http\RequestInterface
      */
     public function getRequest()
     {
@@ -73,7 +74,7 @@ class Context
     }
 
     /**
-     * @return Router
+     * @return \ACP3\Installer\Core\Router
      */
     public function getRouter()
     {
@@ -89,7 +90,7 @@ class Context
     }
 
     /**
-     * @return \ACP3\Core\Environment\ApplicationPath
+     * @return \ACP3\Installer\Core\Environment\ApplicationPath
      */
     public function getAppPath()
     {

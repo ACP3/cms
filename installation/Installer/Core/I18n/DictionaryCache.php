@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Installer\Core\I18n;
 use ACP3\Core\Filesystem;
+use ACP3\Installer\Core\Environment\ApplicationPath;
 
 /**
  * Class DictionaryCache
@@ -9,9 +10,23 @@ use ACP3\Core\Filesystem;
 class DictionaryCache
 {
     /**
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var array
      */
     protected $buffer = [];
+
+    /**
+     * DictionaryCache constructor.
+     *
+     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
+     */
+    public function __construct(ApplicationPath $appPath)
+    {
+        $this->appPath = $appPath;
+    }
 
     /**
      * Gibt die gecacheten Sprachstrings aus
@@ -40,8 +55,8 @@ class DictionaryCache
     {
         $data = [];
 
-        foreach (Filesystem::scandir(INSTALLER_MODULES_DIR) as $module) {
-            $path = INSTALLER_MODULES_DIR . $module . '/Resources/i18n/' . $language . '.xml';
+        foreach (Filesystem::scandir($this->appPath->getInstallerModulesDir()) as $module) {
+            $path = $this->appPath->getInstallerModulesDir() . $module . '/Resources/i18n/' . $language . '.xml';
             if (is_file($path) === true) {
                 $xml = simplexml_load_file($path);
                 if (isset($data['info']['direction']) === false) {
@@ -50,7 +65,7 @@ class DictionaryCache
 
                 // Über die einzelnen Sprachstrings iterieren
                 foreach ($xml->keys->item as $item) {
-                    $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
+                    $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
                 }
             }
         }

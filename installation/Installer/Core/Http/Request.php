@@ -12,10 +12,16 @@ class Request extends Core\Http\Request
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      *
-     * @param string $defaultPath
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param string                                 $defaultPath
      */
-    public function __construct($defaultPath = '')
+    public function __construct(
+        Core\Environment\ApplicationPath $appPath,
+        $defaultPath = ''
+    )
     {
+        $this->appPath = $appPath;
+
         $this->fillParameterBags($_SERVER, $_POST, $_FILES, $_COOKIE);
         $this->setBaseUrl();
 

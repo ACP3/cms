@@ -2,6 +2,8 @@
 
 namespace ACP3\Installer\Core\I18n;
 
+use ACP3\Installer\Core\Environment\ApplicationPath;
+
 /**
  * Class Lang
  * @package ACP3\Installer\Core
@@ -14,14 +16,16 @@ class Translator extends \ACP3\Core\I18n\Translator
     protected $dictionaryCache;
 
     /**
-     * @param \ACP3\Installer\Core\I18n\DictionaryCache $dictionaryCache
-     * @param string                                    $locale
+     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Installer\Core\I18n\DictionaryCache        $dictionaryCache
+     * @param string                                           $locale
      */
     public function __construct(
+        ApplicationPath $appPath,
         DictionaryCache $dictionaryCache,
         $locale
-    )
-    {
+    ) {
+        $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;
         $this->locale = $locale;
         $this->lang2Characters = substr($this->locale, 0, strpos($this->locale, '_'));
@@ -34,9 +38,9 @@ class Translator extends \ACP3\Core\I18n\Translator
      *
      * @return boolean
      */
-    public static function languagePackExists($locale)
+    public function languagePackExists($locale)
     {
         return !preg_match('=/=',
-            $locale) && is_file(INSTALLER_MODULES_DIR . 'Install/Resources/i18n/' . $locale . '.xml') === true;
+            $locale) && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $locale . '.xml') === true;
     }
 }
