@@ -15,6 +15,10 @@ class Helpers
     const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
 
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var \ACP3\Core\Router\Aliases
      */
     protected $aliases;
@@ -28,16 +32,19 @@ class Helpers
     protected $pictureRepository;
 
     /**
+     * @param \ACP3\Core\Environment\ApplicationPath             $appPath
      * @param \ACP3\Core\Router\Aliases                          $aliases
      * @param \ACP3\Core\SEO                                     $seo
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      */
     public function __construct(
+        Core\Environment\ApplicationPath $appPath,
         Core\Router\Aliases $aliases,
         Core\SEO $seo,
         PictureRepository $pictureRepository
     )
     {
+        $this->appPath = $appPath;
         $this->aliases = $aliases;
         $this->seo = $seo;
         $this->pictureRepository = $pictureRepository;
@@ -126,12 +133,12 @@ class Helpers
      */
     public function removePicture($file)
     {
-        $upload = new Core\Helpers\Upload('cache/images');
+        $upload = new Core\Helpers\Upload($this->appPath, 'cache/images');
 
         $upload->removeUploadedFile('gallery_thumb_' . $file);
         $upload->removeUploadedFile('gallery_' . $file);
 
-        $upload = new Core\Helpers\Upload('gallery');
+        $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
         $upload->removeUploadedFile($file);
     }
 }

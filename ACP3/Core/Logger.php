@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Environment\ApplicationPath;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 
@@ -13,20 +14,23 @@ use Monolog\Handler\StreamHandler;
 class Logger
 {
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * Contains all already set log channels
      * @var array
      */
-    private static $channels = [];
+    private $channels = [];
 
     /**
-     * Debug log
+     * Logger constructor.
      *
-     * @param string $channel
-     * @param mixed  $message
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
-    public static function debug($channel, $message)
+    public function __construct(ApplicationPath $appPath)
     {
-        self::_log($channel, 'debug', $message);
+        $this->appPath = $appPath;
     }
 
     /**
@@ -36,25 +40,25 @@ class Logger
      * @param string $level
      * @param mixed  $message
      */
-    private static function _log($channel, $level, $message)
+    private function _log($channel, $level, $message)
     {
         $channelName = $channel . '-' . $level;
 
-        if (!isset(self::$channels[$channelName])) {
+        if (!isset($this->channels[$channelName])) {
             $logger = new \Monolog\Logger($channelName);
 
-            $fileName = CACHE_DIR . 'logs/' . $channelName . '.log';
+            $fileName = $this->appPath->getCacheDir() . 'logs/' . $channelName . '.log';
             $logLevelConst = constant('\Monolog\Logger::' . strtoupper($level));
             $stream = new StreamHandler($fileName, $logLevelConst);
             $stream->setFormatter(new LineFormatter(null, null, true));
 
             $logger->pushHandler($stream);
 
-            self::$channels[$channelName] = $logger;
+            $this->channels[$channelName] = $logger;
         }
 
         /** @var \Monolog\Logger $logger */
-        $logger = self::$channels[$channelName];
+        $logger = $this->channels[$channelName];
 
         switch ($level) {
             case 'debug':
@@ -89,79 +93,90 @@ class Logger
     }
 
     /**
+     * Debug log
+     *
+     * @param string $channel
+     * @param mixed  $message
+     */
+    public function debug($channel, $message)
+    {
+        $this->_log($channel, 'debug', $message);
+    }
+
+    /**
      * Info log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed  $message
      */
-    public static function info($channel, $message)
+    public function info($channel, $message)
     {
-        self::_log($channel, 'info', $message);
+        $this->_log($channel, 'info', $message);
     }
 
     /**
      * Notice log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed  $message
      */
-    public static function notice($channel, $message)
+    public function notice($channel, $message)
     {
-        self::_log($channel, 'notice', $message);
+        $this->_log($channel, 'notice', $message);
     }
 
     /**
      * Warning log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed  $message
      */
-    public static function warning($channel, $message)
+    public function warning($channel, $message)
     {
-        self::_log($channel, 'warning', $message);
+        $this->_log($channel, 'warning', $message);
     }
 
     /**
      * Error log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed  $message
      */
-    public static function error($channel, $message)
+    public function error($channel, $message)
     {
-        self::_log($channel, 'error', $message);
+        $this->_log($channel, 'error', $message);
     }
 
     /**
      * Critical log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed  $message
      */
-    public static function critical($channel, $message)
+    public function critical($channel, $message)
     {
-        self::_log($channel, 'critical', $message);
+        $this->_log($channel, 'critical', $message);
     }
 
     /**
      * Alert log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed  $message
      */
-    public static function alert($channel, $message)
+    public function alert($channel, $message)
     {
-        self::_log($channel, 'alert', $message);
+        $this->_log($channel, 'alert', $message);
     }
 
     /**
      * Emergency log
      *
-     * @param $channel
-     * @param $message
+     * @param string $channel
+     * @param mixed  $message
      */
-    public static function emergency($channel, $message)
+    public function emergency($channel, $message)
     {
-        self::_log($channel, 'emergency', $message);
+        $this->_log($channel, 'emergency', $message);
     }
 }

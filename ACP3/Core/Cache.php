@@ -1,7 +1,8 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Core\Enum\Environment;
+use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -29,16 +30,17 @@ class Cache
 
     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param \ACP3\Core\Environment\ApplicationPath           $appPath
      * @param  string                                          $namespace
-     *
-     * @throws \InvalidArgumentException
      */
     public function __construct(
         Container $container,
+        ApplicationPath $appPath,
         $namespace
     )
     {
         $this->container = $container;
+        $this->appPath = $appPath;
         $this->namespace = $namespace;
     }
 
@@ -158,14 +160,14 @@ class Cache
             }
 
             // If debug mode is enabled, override the cache driver configuration
-            if ($this->container->getParameter('core.environment') === Environment::DEVELOPMENT) {
+            if ($this->container->getParameter('core.environment') === ApplicationMode::DEVELOPMENT) {
                 $driverName = 'Array';
             }
 
             $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
             if (class_exists($cacheDriverPath)) {
                 if ($driverName === 'PhpFile') {
-                    $cacheDir = CACHE_DIR . 'sql/';
+                    $cacheDir = $this->appPath->getCacheDir() . 'sql/';
                     $this->driver = new $cacheDriverPath($cacheDir);
                 } else {
                     $this->driver = new $cacheDriverPath();

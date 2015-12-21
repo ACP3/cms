@@ -4,9 +4,9 @@ namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core;
 use ACP3\Installer\Core\FrontController;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Config\FileLocator;
 
 /**
  * Class Bootstrap
@@ -21,7 +21,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     {
         $this->defineDirConstants();
 
-        if ($this->environment === Core\Enum\Environment::UPDATER && $this->startupChecks() === false) {
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER && $this->startupChecks() === false) {
             return;
         }
 
@@ -66,16 +66,16 @@ class Bootstrap extends Core\Application\AbstractBootstrap
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
 
-        if ($this->environment === Core\Enum\Environment::UPDATER) {
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
             $loader->load(INSTALLER_CLASSES_DIR . 'config/update.yml');
         } else {
             $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
         }
 
-        $this->container->setParameter('core.environment', $this->environment);
+        $this->container->setParameter('core.environment', $this->appMode);
 
         // When in updater context, also include "normal" module services
-        if ($this->environment === Core\Enum\Environment::UPDATER) {
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
             $vendors = $this->container->get('core.modules.vendors')->getVendors();
 
             foreach ($vendors as $vendor) {
@@ -105,7 +105,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             $redirect->temporary('errors/index/404')->send();
         } catch (\Exception $e) {
-            Core\Logger::critical('installer', $e->getMessage());
+            $this->container->get('core.logger')->critical('installer', $e->getMessage());
             $redirect->temporary('errors/index/500')->send();
         }
     }
@@ -118,7 +118,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         // Standardzeitzone festlegen
         date_default_timezone_set('UTC');
 
-        if ($this->environment === Core\Enum\Environment::UPDATER) {
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
             return $this->databaseConfigExists();
         }
 

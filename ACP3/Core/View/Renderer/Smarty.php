@@ -2,10 +2,8 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Core\Enum\Environment;
-use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
-use ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter;
-use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
+use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Environment\ApplicationPath;
 
 /**
  * Renderer for the Smarty template engine
@@ -18,6 +16,20 @@ class Smarty extends AbstractRenderer
      * @var \Smarty
      */
     public $renderer;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+
+    /**
+     * Smarty constructor.
+     *
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     */
+    public function __construct(ApplicationPath $appPath)
+    {
+        $this->appPath = $appPath;
+    }
 
     /**
      * @param array $params
@@ -32,8 +44,8 @@ class Smarty extends AbstractRenderer
         $this->renderer->error_reporting = $this->isDevOrInstall() ? E_ALL : 0;
         $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : $settings['design'];
         $this->renderer->compile_check = $this->isDevOrInstall();
-        $this->renderer->compile_dir = CACHE_DIR . 'tpl_compiled/';
-        $this->renderer->cache_dir = CACHE_DIR . 'tpl_cached/';
+        $this->renderer->compile_dir = $this->appPath->getCacheDir() . 'tpl_compiled/';
+        $this->renderer->cache_dir = $this->appPath->getCacheDir() . 'tpl_cached/';
     }
 
     /**
@@ -86,8 +98,8 @@ class Smarty extends AbstractRenderer
      */
     protected function isDevOrInstall()
     {
-        return $this->container->getParameter('core.environment') === Environment::DEVELOPMENT ||
-        $this->container->getParameter('core.environment') === Environment::INSTALLER ||
-        $this->container->getParameter('core.environment') === Environment::UPDATER;
+        return $this->container->getParameter('core.environment') === ApplicationMode::DEVELOPMENT ||
+        $this->container->getParameter('core.environment') === ApplicationMode::INSTALLER ||
+        $this->container->getParameter('core.environment') === ApplicationMode::UPDATER;
     }
 }

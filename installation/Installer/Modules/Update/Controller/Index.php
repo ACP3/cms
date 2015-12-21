@@ -65,7 +65,7 @@ class Index extends Core\Modules\Controller
 
         // ...danach die Restlichen
         foreach ($this->vendors->getVendors() as $vendor) {
-            foreach (Filesystem::scandir(MODULES_DIR . $vendor . '/') as $module) {
+            foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
                 if (in_array(strtolower($module), $coreModules) === false) {
                     $results[$module] = $this->_returnModuleUpdateResult($module);
                 }
@@ -125,7 +125,7 @@ class Index extends Core\Modules\Controller
 
     protected function _clearCaches()
     {
-        Cache::purge(CACHE_DIR);
-        Cache::purge(UPLOADS_DIR . 'assets');
+        Cache::purge($this->appPath->getCacheDir());
+        Cache::purge($this->appPath->getUploadsDir() . 'assets');
     }
 }

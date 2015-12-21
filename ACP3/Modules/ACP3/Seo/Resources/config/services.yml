@@ -26,7 +26,11 @@ services:
 
   seo.validation.validation_rules.uri_alias_validation_rule:
     class: %seo.validation.validation_rules.uri_alias_validation_rule.fqdn%
-    arguments: [@core.validation.validation_rules.internal_uri_validation_rule, @core.validation.validation_rules.uri_safe_validation_rule, @seo.model.seorepository]
+    arguments:
+      - @core.environment.application_path
+      - @core.validation.validation_rules.internal_uri_validation_rule
+      - @core.validation.validation_rules.uri_safe_validation_rule
+      - @seo.model.seorepository
 
   seo.installer.schema:
     class: %seo.installer.schema.fqdn%

@@ -2,8 +2,9 @@
 namespace ACP3\Core;
 
 use ACP3\Core\DB\SQLLogger;
-use ACP3\Core\Enum\Environment;
-use \Doctrine\DBAL;
+use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Environment\ApplicationPath;
+use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 
 /**
@@ -12,6 +13,14 @@ use Doctrine\DBAL\Cache\QueryCacheProfile;
  */
 class DB
 {
+    /**
+     * @var \ACP3\Core\Logger
+     */
+    protected $logger;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -26,19 +35,23 @@ class DB
     protected $prefix = '';
 
     /**
-     * @param string $environment
-     * @param string $host
-     * @param string $database
-     * @param string $userName
-     * @param string $password
-     * @param string $tablePrefix
-     * @param string $driver
-     * @param string $charset
-     * @param string $cacheDriverName
+     * @param \ACP3\Core\Logger                      $logger
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param string                                 $environment
+     * @param string                                 $host
+     * @param string                                 $database
+     * @param string                                 $userName
+     * @param string                                 $password
+     * @param string                                 $tablePrefix
+     * @param string                                 $driver
+     * @param string                                 $charset
+     * @param string                                 $cacheDriverName
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __construct(
+        Logger $logger,
+        ApplicationPath $appPath,
         $environment,
         $host,
         $database,
@@ -48,34 +61,13 @@ class DB
         $driver = 'pdo_mysql',
         $charset = 'utf8',
         $cacheDriverName = 'Array'
-    )
-    {
-        $config = new DBAL\Configuration();
-        $connectionParams = [
-            'dbname' => $database,
-            'user' => $userName,
-            'password' => $password,
-            'host' => $host,
-            'driver' => $driver,
-            'charset' => $charset
-        ];
-        if ($environment === Environment::DEVELOPMENT) {
-            $config->setSQLLogger(new SQLLogger());
-        }
+    ) {
+        $this->logger = $logger;
+        $this->appPath = $appPath;
 
-        $className = "\\Doctrine\\Common\\Cache\\" . $cacheDriverName . "Cache";
-        /** @var \Doctrine\Common\Cache\CacheProvider $cacheDriverName */
-        if (strtolower($cacheDriverName)) {
-            $cacheDriverName = new $className(CACHE_DIR . 'sql/');
-        } else {
-            $cacheDriverName = new $className();
-        }
-
-        $cacheDriverName->setNamespace('db-queries');
-
-        $config->setResultCacheImpl($cacheDriverName);
-
-        $this->connection = DBAL\DriverManager::getConnection($connectionParams, $config);
+        $this->connection = $this->attemptDbConnection(
+            $environment, $host, $database, $userName, $password, $driver, $charset, $cacheDriverName
+        );
 
         $this->prefix = $tablePrefix;
         $this->database = $database;
@@ -125,8 +117,14 @@ class DB
      *
      * @return array
      */
-    public function fetchAll($statement, array $params = [], array $types = [], $cache = false, $lifetime = 0, $cacheKey = null)
-    {
+    public function fetchAll(
+        $statement,
+        array $params = [],
+        array $types = [],
+        $cache = false,
+        $lifetime = 0,
+        $cacheKey = null
+    ) {
         $stmt = $this->executeQuery($statement, $params, $types, $cache, $lifetime, $cacheKey);
         $data = $stmt->fetchAll();
         $stmt->closeCursor();
@@ -183,13 +181,20 @@ class DB
      * @throws \Doctrine\DBAL\Cache\CacheException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function executeQuery($query, array $params = [], array $types = [], $cache = false, $lifetime = 0, $cacheKey = null)
-    {
+    public function executeQuery(
+        $query,
+        array $params = [],
+        array $types = [],
+        $cache = false,
+        $lifetime = 0,
+        $cacheKey = null
+    ) {
         if ($cache === false) {
             return $this->connection->executeQuery($query, $params, $types);
         }
 
-        return $this->connection->executeCacheQuery($query, $params, $types, new QueryCacheProfile($lifetime, $cacheKey ?: md5($query)));
+        return $this->connection->executeCacheQuery($query, $params, $types,
+            new QueryCacheProfile($lifetime, $cacheKey ?: md5($query)));
     }
 
     /**
@@ -208,10 +213,70 @@ class DB
             $this->connection->commit();
         } catch (\Exception $e) {
             $this->connection->rollBack();
-            Logger::error('database', $e->getMessage());
+            $this->logger->error('database', $e->getMessage());
             $result = false;
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $environment
+     * @param string $host
+     * @param string $database
+     * @param string $userName
+     * @param string $password
+     * @param string $driver
+     * @param string $charset
+     * @param string $cacheDriverName
+     *
+     * @return \Doctrine\DBAL\Connection
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function attemptDbConnection(
+        $environment,
+        $host,
+        $database,
+        $userName,
+        $password,
+        $driver,
+        $charset,
+        $cacheDriverName
+    ) {
+        $config = new DBAL\Configuration();
+        $connectionParams = [
+            'dbname' => $database,
+            'user' => $userName,
+            'password' => $password,
+            'host' => $host,
+            'driver' => $driver,
+            'charset' => $charset
+        ];
+        if ($environment === ApplicationMode::DEVELOPMENT) {
+            $config->setSQLLogger(new SQLLogger($this->logger));
+        }
+
+        $this->applyQueryCache($cacheDriverName, $config);
+
+        return DBAL\DriverManager::getConnection($connectionParams, $config);
+    }
+
+    /**
+     * @param string                       $cacheDriverName
+     * @param \Doctrine\DBAL\Configuration $config
+     */
+    protected function applyQueryCache($cacheDriverName, DBAL\Configuration $config)
+    {
+        $className = "\\Doctrine\\Common\\Cache\\" . $cacheDriverName . "Cache";
+        /** @var \Doctrine\Common\Cache\CacheProvider $cacheDriverName */
+        if (strtolower($cacheDriverName)) {
+            $cacheDriverName = new $className($this->appPath->getCacheDir() . 'sql/');
+        } else {
+            $cacheDriverName = new $className();
+        }
+
+        $cacheDriverName->setNamespace('db-queries');
+
+        $config->setResultCacheImpl($cacheDriverName);
     }
 }

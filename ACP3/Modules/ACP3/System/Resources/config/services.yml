@@ -34,7 +34,13 @@ services:
 
   system.helpers.installer:
     class: %system.helpers.installer.fqdn%
-    arguments: ['@core.modules', @core.modules.vendors, @core.modules.schemaInstaller, @core.xml, %core.environment%]
+    arguments:
+      - @core.environment.application_path
+      - @core.modules
+      - @core.modules.vendors
+      - @core.modules.schemaInstaller
+      - @core.xml
+      - %core.environment%
 
   system.validator.settings:
     class: %system.validator.settings.fqdn%

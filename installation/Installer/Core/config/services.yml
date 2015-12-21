@@ -10,7 +10,7 @@ imports:
 services:
   core.context.install:
     class: ACP3\Installer\Core\Modules\Controller\Context
-    arguments: ['@core.lang', '@core.request', '@core.router', '@core.view']
+    arguments: ['@core.lang', '@core.request', '@core.router', '@core.view', @core.environment.application_path]
     public: false
 
   core.date:
@@ -60,7 +60,7 @@ services:
 
   core.router:
     class: ACP3\Installer\Core\Router
-    arguments: ['@core.request']
+    arguments: ['@core.request', @core.environment.application_path]
 
   core.session:
     class: ACP3\Installer\Core\SessionHandler

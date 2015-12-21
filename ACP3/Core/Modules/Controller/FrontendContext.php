@@ -58,7 +58,8 @@ class FrontendContext extends Core\Modules\Controller\Context
             $context->getRouter(),
             $context->getValidator(),
             $context->getView(),
-            $context->getConfig()
+            $context->getConfig(),
+            $context->getAppPath()
         );
 
         $this->assets = $assets;

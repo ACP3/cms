@@ -33,7 +33,7 @@ services:
 
   files.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', 'files']
+    arguments: ['@service_container', @core.environment.application_path, 'files']
 
   files.model.filesrepository:
     class: %files.model.filesrepository.fqdn%

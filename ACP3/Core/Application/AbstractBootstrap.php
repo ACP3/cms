@@ -1,12 +1,12 @@
 <?php
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\BootstrapInterface;
-use ACP3\Core\Enum\Environment;
+use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\ErrorHandler;
-use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 /**
  * Class AbstractBootstrap
@@ -21,14 +21,27 @@ abstract class AbstractBootstrap implements BootstrapInterface
     /**
      * @var string
      */
-    protected $environment;
+    protected $appMode;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
 
     /**
-     * @param string $environment
+     * @param string $appMode
      */
-    public function __construct($environment = Environment::PRODUCTION)
+    public function __construct($appMode = ApplicationMode::PRODUCTION)
     {
-        $this->environment = $environment;
+        $this->appMode = $appMode;
+        $this->setAppPath($appMode);
+    }
+
+    /**
+     * @param string $appMode
+     */
+    protected function setAppPath($appMode)
+    {
+        $this->appPath = new ApplicationPath($appMode);
     }
 
     /**
@@ -36,7 +49,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function setErrorHandler()
     {
-        $stream = new StreamHandler(CACHE_DIR . 'logs/system.log', Logger::NOTICE);
+        $stream = new StreamHandler($this->appPath->getCacheDir() . 'logs/system.log', Logger::NOTICE);
         $stream->setFormatter(new LineFormatter(null, null, true));
 
         $logger = new Logger('system', [$stream]);
@@ -58,13 +71,12 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     protected function databaseConfigExists()
     {
-        $path = ACP3_DIR . 'config.yml';
+        $path = $this->appPath->getAppDir() . 'config.yml';
         if (is_file($path) === false || filesize($path) === 0) {
-            echo 'The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.';
+            echo 'The ACP3 is not correctly installed. Please navigate to the <a href="' . $this->appPath->getWebRoot() . 'installation/">installation wizard</a> and follow its instructions.';
             return false;
         }
 
         return true;
     }
-
 }

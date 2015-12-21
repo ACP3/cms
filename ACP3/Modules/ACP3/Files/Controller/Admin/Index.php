@@ -139,7 +139,7 @@ class Index extends Core\Modules\AdminController
             function ($items) {
                 $bool = false;
 
-                $upload = new Core\Helpers\Upload('files');
+                $upload = new Core\Helpers\Upload($this->appPath, 'files');
                 foreach ($items as $item) {
                     if (!empty($item)) {
                         $upload->removeUploadedFile($this->filesRepository->getFileById($item)); // Datei ebenfalls löschen
@@ -299,7 +299,7 @@ class Index extends Core\Modules\AdminController
             $this->filesValidator->validate($formData, $file);
 
             if (is_array($file) === true) {
-                $upload = new Core\Helpers\Upload('files');
+                $upload = new Core\Helpers\Upload($this->appPath, 'files');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
                 $newFile = $result['name'];
                 $filesize = $result['size'];
@@ -371,7 +371,7 @@ class Index extends Core\Modules\AdminController
 
             // Falls eine neue Datei angegeben wurde, Änderungen durchführen
             if (!empty($file)) {
-                $upload = new Core\Helpers\Upload('files');
+                $upload = new Core\Helpers\Upload($this->appPath, 'files');
 
                 if (is_array($file) === true) {
                     $result = $upload->moveFile($file['tmp_name'], $file['name']);

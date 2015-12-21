@@ -149,12 +149,12 @@ class Install extends AbstractController
         $this->container = new ContainerBuilder();
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
-        $loader->load(CLASSES_DIR . 'config/services.yml');
+        $loader->load($this->appPath->getClassesDir() . 'config/services.yml');
         $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
 
         $this->container->setParameter('core.environment', $environment);
 
-        $modulesServices = glob(MODULES_DIR . 'ACP3/*/Resources/config/services.yml');
+        $modulesServices = glob($this->appPath->getModulesDir() . 'ACP3/*/Resources/config/services.yml');
         foreach ($modulesServices as $moduleServices) {
             $loader->load($moduleServices);
         }
@@ -171,7 +171,7 @@ class Install extends AbstractController
     private function _installModules()
     {
         $bool = false;
-        $modules = array_merge(['system', 'users'], Filesystem::scandir(MODULES_DIR . 'ACP3/'));
+        $modules = array_merge(['system', 'users'], Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/'));
         $alreadyInstalled = [];
 
         foreach ($modules as $module) {
@@ -196,7 +196,7 @@ class Install extends AbstractController
     private function _installAclResources()
     {
         $bool = false;
-        foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
+        foreach (Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/') as $module) {
             $bool = $this->installHelper->installResources($module, $this->container);
             if ($bool === false) {
                 throw new \Exception("Error while installing ACL resources of the module {$module}.");
@@ -289,7 +289,7 @@ class Install extends AbstractController
      */
     private function installModuleSampleData()
     {
-        foreach (Filesystem::scandir(MODULES_DIR . 'ACP3/') as $module) {
+        foreach (Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/') as $module) {
             $module = strtolower($module);
 
             if ($this->installHelper->installSampleData($module, $this->container, $this->get('core.modules.schemaHelper')) === false) {

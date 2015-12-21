@@ -135,7 +135,7 @@ class Index extends Core\Modules\FrontendController
      */
     protected function downloadFile($file)
     {
-        $path = UPLOADS_DIR . 'files/';
+        $path = $this->appPath->getUploadsDir() . 'files/';
         if (is_file($path . $file['file'])) {
             $formatter = $this->get('core.helpers.stringFormatter');
 

@@ -102,7 +102,7 @@ class Index extends Core\Modules\FrontendController
     public function actionForgotPwd()
     {
         if ($this->user->isAuthenticated() === true) {
-            return $this->redirect()->toNewPage(ROOT_DIR);
+            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         }
 
         if ($this->request->getPost()->isEmpty() === false) {
@@ -147,7 +147,7 @@ class Index extends Core\Modules\FrontendController
     {
         // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
         if ($this->user->isAuthenticated() === true) {
-            return $this->redirect()->toNewPage(ROOT_DIR);
+            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($this->request->getPost()->isEmpty() === false) {
             $result = $this->user->login(
                 Core\Functions::strEncode($this->request->getPost()->get('nickname', '')),
@@ -159,7 +159,7 @@ class Index extends Core\Modules\FrontendController
                     return $this->redirect()->temporary(base64_decode($this->request->getParameters()->get('redirect')));
                 }
 
-                return $this->redirect()->toNewPage(ROOT_DIR);
+                return $this->redirect()->toNewPage($this->appPath->getWebRoot());
             }
 
             return [
@@ -185,7 +185,7 @@ class Index extends Core\Modules\FrontendController
                 return $this->redirect()->temporary($lastPage);
             }
         }
-        return $this->redirect()->toNewPage(ROOT_DIR);
+        return $this->redirect()->toNewPage($this->appPath->getWebRoot());
     }
 
     /**
@@ -196,7 +196,7 @@ class Index extends Core\Modules\FrontendController
         $settings = $this->config->getSettings('users');
 
         if ($this->user->isAuthenticated() === true) {
-            return $this->redirect()->toNewPage(ROOT_DIR);
+            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($settings['enable_registration'] == 0) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox(
                 $this->translator->t('users', 'user_registration_disabled'))
@@ -310,7 +310,7 @@ class Index extends Core\Modules\FrontendController
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('users',
                         $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'),
-                    ROOT_DIR
+                    $this->appPath->getWebRoot()
                 ));
             },
             $this->request->getFullPath()
@@ -375,7 +375,7 @@ class Index extends Core\Modules\FrontendController
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'),
-                    ROOT_DIR
+                    $this->appPath->getWebRoot()
                 ));
             },
             $this->request->getFullPath()

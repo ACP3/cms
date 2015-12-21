@@ -19,11 +19,11 @@ services:
 
   emoticons.cache:
     class: %emoticons.cache.fqdn%
-    arguments: ['@emoticons.cache.core', '@emoticons.model.emoticonrepository']
+    arguments: ['@emoticons.cache.core', @core.environment.application_path, '@emoticons.model.emoticonrepository']
 
   emoticons.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', 'emoticons']
+    arguments: ['@service_container', @core.environment.application_path, 'emoticons']
 
   emoticons.helpers:
     class: %emoticons.helpers.fqdn%

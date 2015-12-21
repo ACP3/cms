@@ -7,7 +7,14 @@ services:
     arguments: ['@core.cache.system']
 
   core.assets.abstractMinifier:
-    arguments: [@core.assets, @core.cache.system, @core.config, @core.modules, @core.assets.file_resolver, %core.environment%]
+    arguments:
+      - @core.assets
+      - @core.environment.application_path
+      - @core.cache.system
+      - @core.config
+      - @core.modules
+      - @core.assets.file_resolver
+      - %core.environment%
     abstract: true
 
   core.assets.minifier.css:
@@ -20,7 +27,7 @@ services:
 
   core.assets.file_resolver:
     class: ACP3\Core\Assets\FileResolver
-    arguments: ['@core.xml', '@core.assets.cache', @core.modules.vendors]
+    arguments: ['@core.xml', '@core.assets.cache', @core.environment.application_path, @core.modules.vendors]
 
   core.assets.pageCssClasses:
     class: ACP3\Core\Assets\PageCssClasses

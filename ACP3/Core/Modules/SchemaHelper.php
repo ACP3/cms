@@ -98,7 +98,7 @@ class SchemaHelper extends ContainerAware
             } catch (\Exception $e) {
                 $this->db->getConnection()->rollBack();
 
-                Core\Logger::warning('installer', $e);
+                $this->container->get('core.logger')->warning('installer', $e);
                 return false;
             }
         }

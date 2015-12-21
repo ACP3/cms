@@ -28,7 +28,7 @@ services:
 
   core.cache.system:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', 'system']
+    arguments: ['@service_container', @core.environment.application_path, 'system']
 
   core.config:
     class: ACP3\Core\Config
@@ -40,19 +40,39 @@ services:
 
   core.db:
     class: ACP3\Core\DB
-    arguments: [%core.environment%, '%db_host%', '%db_name%', '%db_user%', '%db_password%', '%db_table_prefix%', '%db_driver%', '%db_charset%', '%cache_driver%']
+    arguments:
+      - @core.logger
+      - @core.environment.application_path
+      - %core.environment%
+      - '%db_host%'
+      - '%db_name%'
+      - '%db_user%'
+      - '%db_password%'
+      - '%db_table_prefix%'
+      - '%db_driver%'
+      - '%db_charset%'
+      - '%cache_driver%'
 
   core.functions:
     class: ACP3\Core\Functions
 
   core.image:
     class: ACP3\Core\Picture
-    arguments: [@core.response, %core.environment%]
+    arguments: [@core.response, @core.environment.application_path, %core.environment%]
     scope: prototype
+
+  core.logger:
+    class: ACP3\Core\Logger
+    arguments:
+      - @core.environment.application_path
 
   core.mailer:
     class: ACP3\Core\Mailer
-    arguments: ['@core.view', '@core.config', @core.helpers.stringFormatter]
+    arguments:
+      - @core.logger
+      - '@core.view'
+      - '@core.config'
+      - @core.helpers.stringFormatter
 
   core.pagination:
     class: ACP3\Core\Pagination
@@ -68,11 +88,11 @@ services:
 
   core.session:
     class: ACP3\Core\SessionHandler
-    arguments: ['@core.db', @core.request]
+    arguments: ['@core.db', @core.environment.application_path, @core.request]
 
   core.user:
     class: ACP3\Core\User
-    arguments: [@core.request, @core.authentication, '@core.session', '@core.helpers.secure', '@core.config', '@users.model.userrepository']
+    arguments: [@core.request, @core.environment.application_path, @core.authentication, '@core.session', '@core.helpers.secure', '@core.config', '@users.model.userrepository']
 
   core.xml:
     class: ACP3\Core\XML

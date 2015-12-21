@@ -395,7 +395,7 @@ class Index extends Core\Modules\AdminController
             if ($formData['thumbwidth'] !== $settings['thumbwidth'] || $formData['thumbheight'] !== $settings['thumbheight'] ||
                 $formData['width'] !== $settings['width'] || $formData['height'] !== $settings['height']
             ) {
-                Core\Cache::purge(CACHE_DIR . 'images', 'gallery');
+                Core\Cache::purge($this->appPath->getCacheDir() . 'images', 'gallery');
 
                 $this->get('gallery.cache.core')->getDriver()->deleteAll();
             }

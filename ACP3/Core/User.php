@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Authentication\AuthenticationInterface;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Country;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
@@ -65,9 +66,14 @@ class User
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
 
     /**
      * @param \ACP3\Core\Http\RequestInterface                  $request
+     * @param \ACP3\Core\Environment\ApplicationPath            $appPath
      * @param \ACP3\Core\Authentication\AuthenticationInterface $authentication
      * @param \ACP3\Core\SessionHandler                         $sessionHandler
      * @param \ACP3\Core\Helpers\Secure                         $secureHelper
@@ -76,6 +82,7 @@ class User
      */
     public function __construct(
         RequestInterface $request,
+        ApplicationPath $appPath,
         AuthenticationInterface $authentication,
         SessionHandler $sessionHandler,
         Secure $secureHelper,
@@ -84,6 +91,7 @@ class User
     )
     {
         $this->request = $request;
+        $this->appPath = $appPath;
         $this->authentication = $authentication;
         $this->sessionHandler = $sessionHandler;
         $this->secureHelper = $secureHelper;
@@ -137,7 +145,7 @@ class User
             self::AUTH_NAME,
             $userId . '|' . $token,
             time() + $expiry,
-            ROOT_DIR,
+            $this->appPath->getWebRoot(),
             $this->getCookieDomain()
         );
     }

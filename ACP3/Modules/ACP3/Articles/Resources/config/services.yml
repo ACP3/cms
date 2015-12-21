@@ -37,7 +37,7 @@ services:
 
   articles.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', 'articles']
+    arguments: ['@service_container', @core.environment.application_path, 'articles']
 
   articles.helpers:
     class: %articles.helpers.fqdn%

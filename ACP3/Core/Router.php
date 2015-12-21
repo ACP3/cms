@@ -2,7 +2,8 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\Enum\Environment;
+use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\System;
@@ -24,6 +25,10 @@ class Router
      */
     protected $request;
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var \ACP3\Core\Config
      */
     protected $config;
@@ -33,20 +38,23 @@ class Router
     protected $environment;
 
     /**
-     * @param \ACP3\Core\Router\Aliases        $aliases
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Config                $config
-     * @param string                           $environment
+     * @param \ACP3\Core\Router\Aliases              $aliases
+     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Config                      $config
+     * @param string                                 $environment
      */
     public function __construct(
         Aliases $aliases,
         RequestInterface $request,
+        ApplicationPath $appPath,
         Config $config,
         $environment
     )
     {
         $this->aliases = $aliases;
         $this->request = $request;
+        $this->appPath = $appPath;
         $this->config = $config;
         $this->environment = $environment;
     }
@@ -90,7 +98,7 @@ class Router
             $prefix .= $this->request->getHostname();
         }
 
-        $prefix .= $this->useModRewrite($path) ? ROOT_DIR : PHP_SELF . '/';
+        $prefix .= $this->useModRewrite($path) ? $this->appPath->getWebRoot() : $this->appPath->getPhpSelf() . '/';
 
         return $prefix;
     }
@@ -153,7 +161,7 @@ class Router
      */
     protected function useModRewrite($path)
     {
-        return $this->environment === Environment::PRODUCTION &&
+        return $this->environment === ApplicationMode::PRODUCTION &&
         (bool)$this->config->getSettings('seo')['mod_rewrite'] === true &&
         $this->isAdminUri($path) === false;
     }

@@ -2,13 +2,11 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\AbstractBootstrap;
-use ACP3\Core\Enum\Environment;
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Exceptions;
 use ACP3\Core\FrontController;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
-use ACP3\Core\Logger as ACP3Logger;
 use ACP3\Core\Redirect;
 use ACP3\Core\ServiceContainerBuilder;
 use Patchwork\Utf8;
@@ -57,13 +55,13 @@ class Bootstrap extends AbstractBootstrap
      */
     public function defineDirConstants()
     {
-        define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-        define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
-        define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
-        define('CLASSES_DIR', ACP3_DIR . 'Core/');
-        define('MODULES_DIR', ACP3_DIR . 'Modules/');
-        define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
-        define('CACHE_DIR', ACP3_ROOT_DIR . 'cache/' . $this->environment . '/');
+//        define('PHP_SELF', $this->appPath->getPhpSelf());
+//        define('ROOT_DIR', $this->appPath->getWebRoot());
+//        define('ACP3_DIR', $this->appPath->getAppDir());
+//        define('CLASSES_DIR', $this->appPath->getClassesDir());
+//        define('MODULES_DIR', $this->appPath->getModulesDir());
+//        define('UPLOADS_DIR', $this->appPath->getUploadsDir());
+//        define('CACHE_DIR', $this->appPath->getCacheDir());
     }
 
     /**
@@ -83,7 +81,7 @@ class Bootstrap extends AbstractBootstrap
 
             $view = $this->container->get('core.view');
             $view->assign('PAGE_TITLE', 'ACP3');
-            $view->assign('ROOT_DIR', ROOT_DIR);
+            $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
             $view->assign('CONTENT', $this->systemSettings['maintenance_message']);
             $view->displayTemplate('system/maintenance.tpl');
 
@@ -102,12 +100,14 @@ class Bootstrap extends AbstractBootstrap
         Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
         Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
-        $file = CACHE_DIR . 'sql/container.php';
+        $file = $this->appPath->getCacheDir() . 'sql/container.php';
 
         $this->dumpContainer($file);
 
         require_once $file;
         $this->container = new \ACP3ServiceContainer();
+
+        $this->appPath = $this->container->get('core.environment.application_path');
     }
 
     /**
@@ -115,9 +115,16 @@ class Bootstrap extends AbstractBootstrap
      */
     private function _setThemeConstants()
     {
-        define('DESIGN_PATH', ROOT_DIR . 'designs/' . $this->systemSettings['design'] . '/');
-        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . $this->systemSettings['design'] . '/');
-        define('DESIGN_PATH_ABSOLUTE', $this->container->get('core.request')->getDomain() . DESIGN_PATH);
+        $path = 'designs/' . $this->systemSettings['design'] . '/';
+
+        $this->appPath
+            ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
+            ->setDesignPathInternal(ACP3_ROOT_DIR . $path)
+            ->setDesignPathAbsolute($this->container->get('core.request')->getDomain() . $this->appPath->getDesignPathWeb());
+
+        define('DESIGN_PATH', $this->appPath->getDesignPathWeb());
+        define('DESIGN_PATH_INTERNAL', $this->appPath->getDesignPathInternal());
+        define('DESIGN_PATH_ABSOLUTE', $this->appPath->getDesignPathAbsolute());
     }
 
     /**
@@ -144,9 +151,10 @@ class Bootstrap extends AbstractBootstrap
             (new FrontController($this->container))->dispatch();
         } catch (Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
-                ACP3Logger::error('404', $e);
+                $this->container->get('core.logger')->error('404', $e);
             } else {
-                ACP3Logger::error('404', 'Could not find any results for request: ' . $request->getQuery());
+                $this->container->get('core.logger')->error('404',
+                    'Could not find any results for request: ' . $request->getQuery());
             }
 
             $redirect->temporary('errors/index/404')->send();
@@ -156,12 +164,12 @@ class Bootstrap extends AbstractBootstrap
         } catch (Exceptions\AccessForbidden $e) {
             $redirect->temporary('errors/index/403');
         } catch (Exceptions\ControllerActionNotFound $e) {
-            ACP3Logger::error('404', 'Request: ' . $request->getQuery());
-            ACP3Logger::error('404', $e);
+            $this->container->get('core.logger')->error('404', 'Request: ' . $request->getQuery());
+            $this->container->get('core.logger')->error('404', $e);
 
             $this->handleException($e, $redirect, 'errors/index/404');
         } catch (\Exception $e) {
-            ACP3Logger::error('exception', $e);
+            $this->container->get('core.logger')->error('exception', $e);
 
             $this->handleException($e, $redirect, 'errors/index/500');
         }
@@ -183,7 +191,7 @@ class Bootstrap extends AbstractBootstrap
     private function _renderApplicationException($errorMessage)
     {
         $view = $this->container->get('core.view');
-        $view->assign('ROOT_DIR', ROOT_DIR);
+        $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
         $view->assign('PAGE_TITLE', 'ACP3');
         $view->assign('CONTENT', $errorMessage);
         $view->displayTemplate('system/exception.tpl');
@@ -196,7 +204,7 @@ class Bootstrap extends AbstractBootstrap
      */
     protected function handleException(\Exception $exception, Redirect $redirect, $path)
     {
-        if ($this->environment === Environment::DEVELOPMENT) {
+        if ($this->appMode === ApplicationMode::DEVELOPMENT) {
             $errorMessage = $exception->getMessage();
             $this->_renderApplicationException($errorMessage);
         } else {
@@ -209,10 +217,10 @@ class Bootstrap extends AbstractBootstrap
      */
     protected function dumpContainer($file)
     {
-        $containerConfigCache = new ConfigCache($file, ($this->environment === Environment::DEVELOPMENT));
+        $containerConfigCache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
         if (!$containerConfigCache->isFresh()) {
-            $containerBuilder = ServiceContainerBuilder::compileContainer($this->environment);
+            $containerBuilder = ServiceContainerBuilder::compileContainer($this->appMode, $this->appPath);
 
             $dumper = new PhpDumper($containerBuilder);
             $containerConfigCache->write(

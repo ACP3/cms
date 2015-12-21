@@ -14,16 +14,19 @@ class CKEditor extends Textarea
     /**
      * @var \ACP3\Core\Modules
      */
-    private $modules;
+    protected $modules;
     /**
      * @var \ACP3\Core\View
      */
-    private $view;
+    protected $view;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
      */
-    private $emoticonRepository;
-
+    protected $emoticonRepository;
     /**
      * @var \ACP3\Modules\ACP3\Filemanager\Helpers
      */
@@ -35,15 +38,20 @@ class CKEditor extends Textarea
     private $initialized = false;
 
     /**
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\View    $view
+     * CKEditor constructor.
+     *
+     * @param \ACP3\Core\Modules                     $modules
+     * @param \ACP3\Core\View                        $view
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Modules $modules,
-        Core\View $view)
-    {
+        Core\View $view,
+        Core\Environment\ApplicationPath $appPath
+    ) {
         $this->modules = $modules;
         $this->view = $view;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -140,64 +148,9 @@ class CKEditor extends Textarea
 
         // Full toolbar
         if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic')) {
-            $this->config['extraPlugins'] = 'codemirror,divarea,lineutils,oembed,widget';
-
-            if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
-                // Set paths to the KCFinder
-                $kcfinderPath = $this->filemanagerHelpers->getFilemanagerPath();
-                $fileBrowserUri = $kcfinderPath . 'browse.php?opener=ckeditor%s&cms=acp3';
-                $uploadUri = $kcfinderPath . 'upload.php?opener=ckeditor%s&cms=acp3';
-
-                $this->config['filebrowserBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
-                $this->config['filebrowserImageBrowseUrl'] = sprintf($fileBrowserUri, '&type=gallery');
-                $this->config['filebrowserFlashBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
-                $this->config['filebrowserUploadUrl'] = sprintf($uploadUri, '&type=files');
-                $this->config['filebrowserImageUploadUrl'] = sprintf($uploadUri, '&type=gallery');
-                $this->config['filebrowserFlashUploadUrl'] = sprintf($uploadUri, '&type=files');
-            }
-
-            // Toolbar configuration
-            $this->config['toolbarGroups'] = [
-                ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
-                ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
-                ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
-                ['name' => 'forms'],
-                '/',
-                ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
-                ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
-                ['name' => 'links'],
-                ['name' => 'insert'],
-                '/',
-                ['name' => 'styles'],
-                ['name' => 'colors'],
-                ['name' => 'tools'],
-                ['name' => 'others'],
-                ['name' => 'about']
-            ];;
-
-            // Include emoticons, if available
-            if ($this->modules->isActive('emoticons') === true) {
-                $this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
-                $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
-                $emoticons = $this->emoticonRepository->getAll();
-                $c_emoticons = count($emoticons);
-
-                $images = $descriptions = [];
-                for ($i = 0; $i < $c_emoticons; ++$i) {
-                    $images[] = $emoticons[$i]['img'];
-                    $descriptions[] = $emoticons[$i]['description'];
-                }
-
-                $this->config['smiley_images'] = [$images];
-                $this->config['smiley_descriptions'] = [$descriptions];
-            }
+            $this->configureFullToolbar();
         } else { // basic toolbar
-            $this->config['extraPlugins'] = 'divarea,codemirror';
-            $this->config['toolbar'] = [
-                [
-                    'Source', '-', 'Undo', 'Redo', '-', 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About'
-                ]
-            ];
+            $this->configureBasicToolbar();
         }
 
         return json_encode($this->config);
@@ -211,7 +164,7 @@ class CKEditor extends Textarea
         $out = $this->_init();
 
         // Add custom plugins
-        $ckeditorPluginsDir = ROOT_DIR . 'ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/';
+        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/';
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
@@ -257,7 +210,7 @@ class CKEditor extends Textarea
         }
 
         $this->initialized = true;
-        $basePath = ROOT_DIR . 'vendor/ckeditor/ckeditor/';
+        $basePath = $this->appPath->getWebRoot() . 'vendor/ckeditor/ckeditor/';
         $out = "";
 
         // Skip relative paths...
@@ -268,5 +221,94 @@ class CKEditor extends Textarea
         $out .= "<script type=\"text/javascript\" src=\"" . $basePath . "ckeditor.js\"></script>\n";
 
         return $out;
+    }
+
+    private function applyEmoticons()
+    {
+        $this->config['smiley_path'] = $this->appPath->getWebRoot() . 'uploads/emoticons/';
+        $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
+        $emoticons = $this->emoticonRepository->getAll();
+        $c_emoticons = count($emoticons);
+
+        $images = $descriptions = [];
+        for ($i = 0; $i < $c_emoticons; ++$i) {
+            $images[] = $emoticons[$i]['img'];
+            $descriptions[] = $emoticons[$i]['description'];
+        }
+
+        $this->config['smiley_images'] = [$images];
+        $this->config['smiley_descriptions'] = [$descriptions];
+    }
+
+    private function applyFileManagerPaths()
+    {
+        $kcfinderPath = $this->filemanagerHelpers->getFilemanagerPath();
+        $fileBrowserUri = $kcfinderPath . 'browse.php?opener=ckeditor%s&cms=acp3';
+        $uploadUri = $kcfinderPath . 'upload.php?opener=ckeditor%s&cms=acp3';
+
+        $this->config['filebrowserBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
+        $this->config['filebrowserImageBrowseUrl'] = sprintf($fileBrowserUri, '&type=gallery');
+        $this->config['filebrowserFlashBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
+        $this->config['filebrowserUploadUrl'] = sprintf($uploadUri, '&type=files');
+        $this->config['filebrowserImageUploadUrl'] = sprintf($uploadUri, '&type=gallery');
+        $this->config['filebrowserFlashUploadUrl'] = sprintf($uploadUri, '&type=files');
+    }
+
+    private function configureFullToolbar()
+    {
+        $this->config['extraPlugins'] = 'codemirror,divarea,lineutils,oembed,widget';
+
+        if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
+            $this->applyFileManagerPaths();
+
+        }
+
+        // Toolbar configuration
+        $this->config['toolbarGroups'] = [
+            ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
+            ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+            ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
+            ['name' => 'forms'],
+            '/',
+            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+            ['name' => 'links'],
+            ['name' => 'insert'],
+            '/',
+            ['name' => 'styles'],
+            ['name' => 'colors'],
+            ['name' => 'tools'],
+            ['name' => 'others'],
+            ['name' => 'about']
+        ];;
+
+        // Include emoticons, if available
+        if ($this->modules->isActive('emoticons') === true) {
+            $this->applyEmoticons();
+        }
+    }
+
+    private function configureBasicToolbar()
+    {
+        $this->config['extraPlugins'] = 'divarea,codemirror';
+        $this->config['toolbar'] = [
+            [
+                'Source',
+                '-',
+                'Undo',
+                'Redo',
+                '-',
+                'Bold',
+                'Italic',
+                '-',
+                'NumberedList',
+                'BulletedList',
+                '-',
+                'Link',
+                'Unlink',
+                '-',
+                'About'
+            ]
+        ];
     }
 }

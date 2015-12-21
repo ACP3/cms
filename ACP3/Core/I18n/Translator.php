@@ -2,6 +2,7 @@
 namespace ACP3\Core\I18n;
 
 use ACP3\Core\Config;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\DictionaryCache as LanguageCache;
 use ACP3\Core\User;
 
@@ -15,6 +16,10 @@ class Translator
      * @var \ACP3\Core\User
      */
     protected $user;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Core\I18n\DictionaryCache
      */
@@ -43,17 +48,20 @@ class Translator
     protected $buffer = [];
 
     /**
-     * @param \ACP3\Core\User                 $user
-     * @param \ACP3\Core\I18n\DictionaryCache $dictionaryCache
-     * @param \ACP3\Core\Config               $config
+     * @param \ACP3\Core\User                        $user
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\I18n\DictionaryCache        $dictionaryCache
+     * @param \ACP3\Core\Config                      $config
      */
     public function __construct(
         User $user,
+        ApplicationPath $appPath,
         LanguageCache $dictionaryCache,
         Config $config
     )
     {
         $this->user = $user;
+        $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;
         $this->config = $config;
     }
@@ -65,10 +73,10 @@ class Translator
      *
      * @return boolean
      */
-    public static function languagePackExists($locale)
+    public function languagePackExists($locale)
     {
         return !preg_match('=/=',
-            $locale) && is_file(MODULES_DIR . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
+            $locale) && is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
     }
 
     /**
@@ -78,7 +86,7 @@ class Translator
     {
         if ($this->locale === '') {
             $locale = $this->user->getLanguage();
-            $this->locale = self::languagePackExists($locale) === true ? $locale : $this->config->getSettings('system')['lang'];
+            $this->locale = $this->languagePackExists($locale) === true ? $locale : $this->config->getSettings('system')['lang'];
         }
 
         return $this->locale;
@@ -99,7 +107,7 @@ class Translator
      */
     public function setLocale($locale)
     {
-        if (self::languagePackExists($locale) === true) {
+        if ($this->languagePackExists($locale) === true) {
             $this->locale = $locale;
         }
 

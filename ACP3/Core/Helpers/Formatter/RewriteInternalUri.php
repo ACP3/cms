@@ -11,6 +11,10 @@ use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 class RewriteInternalUri
 {
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var \ACP3\Core\Modules\Helper\ControllerActionExists
      */
     protected $controllerActionExists;
@@ -28,18 +32,21 @@ class RewriteInternalUri
     protected $uriAliasValidationRule;
 
     /**
+     * @param \ACP3\Core\Environment\ApplicationPath                                   $appPath
      * @param \ACP3\Core\Modules\Helper\ControllerActionExists                         $controllerActionExists
      * @param \ACP3\Core\Http\Request                                                  $request
      * @param \ACP3\Core\Router                                                        $router
      * @param \ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
      */
     public function __construct(
+        Core\Environment\ApplicationPath $appPath,
         Core\Modules\Helper\ControllerActionExists $controllerActionExists,
         Core\Http\Request $request,
         Core\Router $router,
         UriAliasValidationRule $uriAliasValidationRule
     )
     {
+        $this->appPath = $appPath;
         $this->controllerActionExists = $controllerActionExists;
         $this->request = $request;
         $this->router = $router;
@@ -55,7 +62,7 @@ class RewriteInternalUri
      */
     public function rewriteInternalUri($text)
     {
-        $rootDir = str_replace('/', '\/', ROOT_DIR);
+        $rootDir = str_replace('/', '\/', $this->appPath->getWebRoot());
         $host = $this->request->getServer()->get('HTTP_HOST');
         return preg_replace_callback(
             '/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i',

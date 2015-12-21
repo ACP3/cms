@@ -236,7 +236,7 @@ class Pictures extends Core\Modules\AdminController
 
                 $this->pictureValidator->validate($file);
 
-                $upload = new Core\Helpers\Upload('gallery');
+                $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
                 $picNum = $this->pictureRepository->getLastPictureByGalleryId($id);
 
@@ -284,7 +284,7 @@ class Pictures extends Core\Modules\AdminController
                 ];
 
                 if (!empty($file)) {
-                    $upload = new Core\Helpers\Upload('gallery');
+                    $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
                     $result = $upload->moveFile($file['tmp_name'], $file['name']);
                     $oldFile = $this->pictureRepository->getFileById($id);
 
