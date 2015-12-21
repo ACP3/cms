@@ -2,8 +2,9 @@
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Config;
-use ACP3\Core\Modules;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request\ParameterBag;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Seo;
 
 /**
@@ -18,6 +19,10 @@ class Request extends AbstractRequest
      * @var \ACP3\Core\Config
      */
     protected $config;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
@@ -58,14 +63,17 @@ class Request extends AbstractRequest
 
     /**
      * @param \ACP3\Core\Config                          $config
+     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
         Config $config,
+        ApplicationPath $appPath,
         Seo\Model\SeoRepository $seoRepository
     )
     {
         $this->config = $config;
+        $this->appPath = $appPath;
         $this->seoRepository = $seoRepository;
 
         parent::__construct();
@@ -254,7 +262,8 @@ class Request extends AbstractRequest
 
     protected function setOriginalQuery()
     {
-        $this->originalQuery = substr(str_replace(PHP_SELF, '', htmlentities($this->getServer()->get('PHP_SELF', ''), ENT_QUOTES)), 1);
+        $this->originalQuery = substr(str_replace($this->appPath->getPhpSelf(), '',
+            htmlentities($this->getServer()->get('PHP_SELF', ''), ENT_QUOTES)), 1);
         $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
     }
 

@@ -14,6 +14,10 @@ class FileResolver
      */
     protected $xml;
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var \ACP3\Core\Assets\Cache
      */
     protected $resourcesCache;
@@ -32,27 +36,33 @@ class FileResolver
     /**
      * @var string
      */
-    protected $modulesAssetsPath = MODULES_DIR;
+    protected $modulesAssetsPath;
     /**
      * @var string
      */
-    protected $designAssetsPath = DESIGN_PATH_INTERNAL;
+    protected $designAssetsPath;
 
     /**
-     * @param \ACP3\Core\XML             $xml
-     * @param \ACP3\Core\Assets\Cache    $resourcesCache
-     * @param \ACP3\Core\Modules\Vendors $vendors
+     * @param \ACP3\Core\XML                         $xml
+     * @param \ACP3\Core\Assets\Cache                $resourcesCache
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Modules\Vendors             $vendors
      */
     public function __construct(
         Core\XML $xml,
         Core\Assets\Cache $resourcesCache,
+        Core\Environment\ApplicationPath $appPath,
         Core\Modules\Vendors $vendors
     )
     {
         $this->xml = $xml;
         $this->resourcesCache = $resourcesCache;
+        $this->appPath = $appPath;
         $this->vendors = $vendors;
         $this->cachedPaths = $resourcesCache->getCache();
+
+        $this->modulesAssetsPath = $appPath->getModulesDir();
+        $this->designAssetsPath = $appPath->getDesignPathInternal();
     }
 
     /**
@@ -118,7 +128,7 @@ class FileResolver
             if (!empty($designInfo['parent'])) {
                 $this->designAssetsPath = ACP3_ROOT_DIR . 'designs/' . $designInfo['parent'];
                 $assetPath = $this->getStaticAssetPath($modulePath, $designPath, $dir, $file);
-                $this->designAssetsPath = DESIGN_PATH_INTERNAL;
+                $this->designAssetsPath = $this->appPath->getDesignPathInternal();
             }
 
             // No overrides have been found -> iterate over all possible module namespaces

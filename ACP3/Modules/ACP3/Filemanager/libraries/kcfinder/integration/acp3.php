@@ -28,7 +28,6 @@ class ACP3
             require_once ACP3_ROOT_DIR . 'vendor/autoload.php';
 
             $application = new Bootstrap();
-            $application->defineDirConstants();
             if ($application->startupChecks()) {
                 $application->initializeClasses();
 

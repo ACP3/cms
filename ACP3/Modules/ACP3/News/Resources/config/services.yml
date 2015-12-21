@@ -34,7 +34,7 @@ services:
 
   news.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', 'news']
+    arguments: ['@service_container', @core.environment.application_path, 'news']
 
   news.model.newsrepository:
     class: %news.model.newsrepository.fqdn%

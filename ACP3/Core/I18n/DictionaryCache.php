@@ -2,6 +2,7 @@
 namespace ACP3\Core\I18n;
 
 use ACP3\Core\Cache;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Vendors;
 
 /**
@@ -15,6 +16,10 @@ class DictionaryCache
      */
     protected $cache;
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var \ACP3\Core\Modules\Vendors
      */
     protected $vendors;
@@ -22,15 +27,18 @@ class DictionaryCache
     /**
      * DictionaryCache constructor.
      *
-     * @param \ACP3\Core\Cache           $cache
-     * @param \ACP3\Core\Modules\Vendors $vendors
+     * @param \ACP3\Core\Cache                       $cache
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Modules\Vendors             $vendors
      */
     public function __construct(
         Cache $cache,
+        ApplicationPath $appPath,
         Vendors $vendors
     )
     {
         $this->cache = $cache;
+        $this->appPath = $appPath;
         $this->vendors = $vendors;
     }
 
@@ -62,7 +70,7 @@ class DictionaryCache
         $data = [];
 
         foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob(MODULES_DIR . $vendor . '/*/Resources/i18n/' . $language . '.xml');
+            $languageFiles = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $language . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -120,7 +128,7 @@ class DictionaryCache
         $languagePacks = [];
 
         foreach ($this->vendors->getVendors() as $vendors) {
-            $languageFiles = glob(MODULES_DIR . $vendors . '/*/Resources/i18n/*.xml');
+            $languageFiles = glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {

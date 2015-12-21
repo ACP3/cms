@@ -13,5 +13,7 @@ services:
 
   smarty.resource.asset:
     class: ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
+    arguments:
+      - @core.environment.application_path
     tags:
       - { name: core.view.extension }

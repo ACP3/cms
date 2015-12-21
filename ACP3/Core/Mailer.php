@@ -12,6 +12,22 @@ use InlineStyle\InlineStyle;
 class Mailer
 {
     /**
+     * @var \ACP3\Core\Logger
+     */
+    protected $logger;
+    /**
+     * @var \ACP3\Core\View
+     */
+    protected $view;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $config;
+    /**
+     * @var \ACP3\Core\Helpers\StringFormatter
+     */
+    protected $stringFormatter;
+    /**
      * @var string
      */
     private $subject = '';
@@ -55,30 +71,21 @@ class Mailer
      * @var \PHPMailer
      */
     private $phpMailer;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    private $config;
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
-     */
-    private $stringFormatter;
 
     /**
+     * @param \ACP3\Core\Logger                  $logger
      * @param \ACP3\Core\View                    $view
      * @param \ACP3\Core\Config                  $config
      * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(
+        Logger $logger,
         View $view,
         Config $config,
         StringFormatter $stringFormatter
     )
     {
+        $this->logger = $logger;
         $this->view = $view;
         $this->config = $config;
         $this->stringFormatter = $stringFormatter;
@@ -239,10 +246,10 @@ class Mailer
 
             return false;
         } catch (\phpmailerException $e) {
-            Logger::error('mailer', $e->getMessage());
+            $this->logger->error('mailer', $e->getMessage());
             return false;
         } catch (\Exception $e) {
-            Logger::error('mailer', $e->getMessage());
+            $this->logger->error('mailer', $e->getMessage());
             return false;
         }
     }

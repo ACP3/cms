@@ -14,6 +14,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @var string
      */
     const CACHE_ID = 'pics_id_';
+
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
@@ -25,17 +30,20 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param \ACP3\Core\Cache                                   $cache
+     * @param \ACP3\Core\Environment\ApplicationPath             $appPath
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      * @param \ACP3\Core\Config                                  $config
      */
     public function __construct(
         Core\Cache $cache,
+        Core\Environment\ApplicationPath $appPath,
         PictureRepository $pictureRepository,
         Core\Config $config
     )
     {
         parent::__construct($cache);
 
+        $this->appPath = $appPath;
         $this->pictureRepository = $pictureRepository;
         $this->config = $config;
     }
@@ -73,7 +81,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         for ($i = 0; $i < $c_pictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];
             $pictures[$i]['height'] = $settings['thumbheight'];
-            $picInfos = @getimagesize(UPLOADS_DIR . 'gallery/' . $pictures[$i]['file']);
+            $picInfos = @getimagesize($this->appPath->getModulesDir() . 'gallery/' . $pictures[$i]['file']);
             if ($picInfos !== false) {
                 if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
                     $newHeight = $settings['thumbheight'];

@@ -2,6 +2,7 @@
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 use ACP3\Installer\Core\I18n\Translator;
 
@@ -19,15 +20,26 @@ class Requirements
     const CLASS_WARNING = 'warning';
 
     /**
-     * @var
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
+     * @var \ACP3\Installer\Core\I18n\Translator
      */
     protected $translator;
 
     /**
-     * @param \ACP3\Installer\Core\I18n\Translator $translator
+     * Requirements constructor.
+     *
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Installer\Core\I18n\Translator   $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(
+        ApplicationPath $appPath,
+        Translator $translator
+    )
     {
+        $this->appPath = $appPath;
         $this->translator = $translator;
     }
 
@@ -150,7 +162,7 @@ class Requirements
     {
         $defaults = ['ACP3/config.yml', 'cache/'];
 
-        foreach (Filesystem::scandir(UPLOADS_DIR) as $row) {
+        foreach (Filesystem::scandir($this->appPath->getModulesDir()) as $row) {
             $path = 'uploads/' . $row . '/';
             if (is_dir(ACP3_ROOT_DIR . $path) === true) {
                 $defaults[] = $path;

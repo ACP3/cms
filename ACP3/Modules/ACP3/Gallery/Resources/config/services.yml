@@ -33,11 +33,15 @@ services:
 
   gallery.cache:
     class: %gallery.cache.fqdn%
-    arguments: ['@gallery.cache.core', '@gallery.model.picturerepository', '@core.config']
+    arguments:
+      - @gallery.cache.core
+      - @core.environment.application_path
+      - @gallery.model.picturerepository
+      - @core.config
 
   gallery.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', 'gallery']
+    arguments: ['@service_container', @core.environment.application_path, 'gallery']
 
   gallery.model.galleryrepository:
     class: %gallery.model.galleryrepository.fqdn%
@@ -49,7 +53,11 @@ services:
 
   gallery.helpers:
     class: %gallery.helpers.fqdn%
-    arguments: ['@core.router.aliases', '@core.seo', '@gallery.model.picturerepository']
+    arguments:
+      - @core.environment.application_path
+      - '@core.router.aliases'
+      - '@core.seo'
+      - '@gallery.model.picturerepository'
 
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer:
     class: ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer

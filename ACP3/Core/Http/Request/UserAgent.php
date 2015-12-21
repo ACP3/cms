@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Http\Request;
 
-use ACP3\Core\I18n\Translator;
 use Symfony\Component\HttpFoundation\ServerBag;
 
 /**
@@ -37,9 +36,9 @@ class UserAgent
 
     /**
      * Parst den ACCEPT-LANGUAGE Header des Browsers
-     * und selektiert die präferierte Sprache
+     * und gibt die präferierten Sprachen zurück
      *
-     * @return string
+     * @return array
      */
     public function parseAcceptLanguage()
     {
@@ -68,15 +67,6 @@ class UserAgent
             }
         }
 
-        // Über die Sprachen iterieren und das passende Sprachpaket auswählen
-        foreach ($locales as $locale => $val) {
-            if (Translator::languagePackExists($locale) === true) {
-                return $locale;
-            }
-        }
-
-        return 'en_US';
+        return $locales;
     }
-
-
 }

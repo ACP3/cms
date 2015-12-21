@@ -1,11 +1,11 @@
 <?php
-namespace ACP3\Core\Enum;
+namespace ACP3\Core\Environment;
 
 /**
- * Class Environment
- * @package ACP3\Core\Enum
+ * Class ApplicationMode
+ * @package ACP3\Core\Environment
  */
-class Environment
+class ApplicationMode
 {
     const PRODUCTION = 'prod';
     const DEVELOPMENT = 'dev';

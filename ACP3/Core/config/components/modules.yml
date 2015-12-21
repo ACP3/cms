@@ -1,7 +1,18 @@
 services:
   core.context:
     class: ACP3\Core\Modules\Controller\Context
-    arguments: [@core.eventDispatcher, '@core.acl', '@core.user', '@core.lang', '@core.modules', '@core.request', '@core.router', @core.validator, '@core.view', '@core.config']
+    arguments:
+      - @core.eventDispatcher
+      - @core.acl
+      - @core.user
+      - @core.lang
+      - @core.modules
+      - @core.request
+      - @core.router
+      - @core.validator
+      - @core.view
+      - @core.config
+      - @core.environment.application_path
     public: false
 
   core.context.admin:
@@ -16,7 +27,12 @@ services:
 
   core.modules:
     class: ACP3\Core\Modules
-    arguments: [@service_container, @core.modules.helper.controllerActionExists, @core.modules.moduleInfoCache, @core.modules.vendors]
+    arguments:
+      - @service_container
+      - @core.environment.application_path
+      - @core.modules.helper.controllerActionExists
+      - @core.modules.moduleInfoCache
+      - @core.modules.vendors
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
@@ -44,7 +60,13 @@ services:
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache
-    arguments: [@core.cache.system, @core.lang, @core.modules.vendors, @core.xml, @system.model.modulerepository]
+    arguments:
+      - @core.cache.system
+      - @core.environment.application_path
+      - @core.lang
+      - @core.modules.vendors
+      - @core.xml
+      - @system.model.modulerepository
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
@@ -70,3 +92,5 @@ services:
 
   core.modules.vendors:
     class: ACP3\Core\Modules\Vendors
+    arguments:
+      - @core.environment.application_path

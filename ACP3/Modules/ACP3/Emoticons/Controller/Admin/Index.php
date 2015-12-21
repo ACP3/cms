@@ -78,7 +78,7 @@ class Index extends Core\Modules\AdminController
 
             $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
 
-            $upload = new Core\Helpers\Upload('emoticons');
+            $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
             $result = $upload->moveFile($file['tmp_name'], $file['name']);
 
             $insertValues = [
@@ -112,7 +112,7 @@ class Index extends Core\Modules\AdminController
             function ($items) {
                 $bool = false;
 
-                $upload = new Core\Helpers\Upload('emoticons');
+                $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
                 foreach ($items as $item) {
                     if (!empty($item) && $this->emoticonRepository->resultExists($item) === true) {
                         // Datei ebenfalls löschen
@@ -174,7 +174,7 @@ class Index extends Core\Modules\AdminController
             ];
 
             if (empty($file) === false) {
-                $upload = new Core\Helpers\Upload('emoticons');
+                $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
                 $upload->removeUploadedFile($emoticon['img']);
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
                 $updateValues['img'] = $result['name'];
@@ -219,7 +219,7 @@ class Index extends Core\Modules\AdminController
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::NAME,
                 'fields' => ['img'],
                 'custom' => [
-                    'pattern' => ROOT_DIR . 'uploads/emoticons/%s'
+                    'pattern' => $this->appPath->getWebRoot() . 'uploads/emoticons/%s'
                 ]
             ], 20)
             ->addColumn([

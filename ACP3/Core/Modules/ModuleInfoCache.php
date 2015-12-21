@@ -2,6 +2,7 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Cache;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\XML;
@@ -17,6 +18,10 @@ class ModuleInfoCache
      * @var \ACP3\Core\Cache
      */
     protected $cache;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
@@ -36,6 +41,7 @@ class ModuleInfoCache
 
     /**
      * @param \ACP3\Core\Cache                                 $cache
+     * @param \ACP3\Core\Environment\ApplicationPath           $appPath
      * @param \ACP3\Core\I18n\Translator                       $translator
      * @param \ACP3\Core\Modules\Vendors                       $vendors
      * @param \ACP3\Core\XML                                   $xml
@@ -43,6 +49,7 @@ class ModuleInfoCache
      */
     public function __construct(
         Cache $cache,
+        ApplicationPath $appPath,
         Translator $translator,
         Vendors $vendors,
         XML $xml,
@@ -50,6 +57,7 @@ class ModuleInfoCache
     )
     {
         $this->cache = $cache;
+        $this->appPath = $appPath;
         $this->translator = $translator;
         $this->vendors = $vendors;
         $this->xml = $xml;
@@ -102,7 +110,7 @@ class ModuleInfoCache
     {
         $infos = [];
 
-        $modules = Filesystem::scandir(MODULES_DIR . $vendor . '/');
+        $modules = Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/');
 
         if (!empty($modules)) {
             foreach ($modules as $module) {
@@ -126,7 +134,7 @@ class ModuleInfoCache
     {
         $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($vendors as $vendor) {
-            $path = MODULES_DIR . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
+            $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
             if (is_file($path) === true) {
                 $moduleInfo = $this->xml->parseXmlFile($path, 'info');
 

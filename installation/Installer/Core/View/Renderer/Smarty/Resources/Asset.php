@@ -2,6 +2,7 @@
 namespace ACP3\Installer\Core\View\Renderer\Smarty\Resources;
 
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
+use ACP3\Installer\Core\Environment\ApplicationPath;
 
 /**
  * Class Asset
@@ -9,6 +10,11 @@ use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
  */
 class Asset extends AbstractResource
 {
+    /**
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+
     /**
      * @return string
      */
@@ -18,13 +24,15 @@ class Asset extends AbstractResource
     }
 
     /**
-     * @inheritdoc
+     * Asset constructor.
+     *
+     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
      */
-    public function populate(\Smarty_Template_Source $source, \Smarty_Internal_Template $_template = null)
+    public function __construct(ApplicationPath $appPath)
     {
-        parent::populate($source, $_template);
+        $this->appPath = $appPath;
 
-        $source->recompiled = true;
+        $this->recompiled = true;
     }
 
     /**
@@ -47,10 +55,10 @@ class Asset extends AbstractResource
                 $path = $fragments[0] . '/Resources/View/' . $fragments[1];
             }
 
-            return INSTALLER_MODULES_DIR . $path;
+            return $this->appPath->getInstallerModulesDir() . $path;
         }
 
-        return DESIGN_PATH_INTERNAL . $template;
+        return $this->appPath->getDesignPathInternal() . $template;
     }
 
     /**

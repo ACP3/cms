@@ -75,13 +75,13 @@ abstract class FrontendController extends Core\Modules\Controller
             define('POS', (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->user->getEntriesPerPage() : 0);
         }
 
-        $this->view->assign('PHP_SELF', PHP_SELF);
+        $this->view->assign('PHP_SELF', $this->appPath->getPhpSelf());
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
-        $this->view->assign('ROOT_DIR', ROOT_DIR);
+        $this->view->assign('ROOT_DIR', $this->appPath->getWebRoot());
         $this->view->assign('HOST_NAME', $this->request->getDomain());
-        $this->view->assign('ROOT_DIR_ABSOLUTE', $this->request->getDomain() . ROOT_DIR);
-        $this->view->assign('DESIGN_PATH', DESIGN_PATH);
-        $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
+        $this->view->assign('ROOT_DIR_ABSOLUTE', $this->request->getDomain() . $this->appPath->getWebRoot());
+        $this->view->assign('DESIGN_PATH', $this->appPath->getDesignPathWeb());
+        $this->view->assign('DESIGN_PATH_ABSOLUTE', $this->appPath->getDesignPathAbsolute());
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
         $this->view->assign('IN_ADM', $this->request->getArea() === 'admin');
         $this->view->assign('IS_HOMEPAGE', $this->request->isHomepage());

@@ -1,6 +1,8 @@
 <?php
 
 namespace ACP3\Core;
+
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 
 /**
@@ -28,20 +30,27 @@ class SessionHandler implements \SessionHandlerInterface
      */
     protected $db;
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
 
     /**
-     * @param \ACP3\Core\DB                    $db
-     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\DB                          $db
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Http\RequestInterface       $request
      */
     public function __construct(
         DB $db,
+        ApplicationPath $appPath,
         RequestInterface $request
     )
     {
         $this->db = $db;
+        $this->appPath = $appPath;
         $this->request = $request;
 
         $this->configureSession();
@@ -79,7 +88,7 @@ class SessionHandler implements \SessionHandlerInterface
     protected function startSession()
     {
         // Set the session cookie parameters
-        session_set_cookie_params(0, ROOT_DIR);
+        session_set_cookie_params(0, $this->appPath->getWebRoot());
 
         // Start the session
         session_start();
@@ -206,7 +215,7 @@ class SessionHandler implements \SessionHandlerInterface
 
         // Session-Cookie löschen
         if ($this->request->getCookies()->has(self::SESSION_NAME)) {
-            setcookie(self::SESSION_NAME, '', time() - 3600, ROOT_DIR);
+            setcookie(self::SESSION_NAME, '', time() - 3600, $this->appPath->getWebRoot());
         }
 
         // Delete the session from the database

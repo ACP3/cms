@@ -13,15 +13,19 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     /**
      * @var \ACP3\Core\Assets\MinifierInterface
      */
-    private $minifier;
+    protected $minifier;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    private $translator;
+    protected $translator;
     /**
      * @var \ACP3\Core\View
      */
-    private $view;
+    protected $view;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Modules\ACP3\Filemanager\Helpers
      */
@@ -33,19 +37,22 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     private $initialized = false;
 
     /**
-     * @param \ACP3\Core\Assets\MinifierInterface $minifier
-     * @param \ACP3\Core\I18n\Translator          $translator
-     * @param \ACP3\Core\View                     $view
+     * @param \ACP3\Core\Assets\MinifierInterface    $minifier
+     * @param \ACP3\Core\I18n\Translator             $translator
+     * @param \ACP3\Core\View                        $view
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Assets\MinifierInterface $minifier,
         Core\I18n\Translator $translator,
-        Core\View $view
+        Core\View $view,
+        Core\Environment\ApplicationPath $appPath
     )
     {
         $this->minifier = $minifier;
         $this->translator = $translator;
         $this->view = $view;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -89,7 +96,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
         if ($this->initialized === false) {
             $this->initialized = true;
 
-            $editor .= '<script type="text/javascript" src="' . ROOT_DIR . 'vendor/tinymce/tinymce/tinymce.min.js"></script>';
+            $editor .= '<script type="text/javascript" src="' . $this->appPath->getWebRoot() . 'vendor/tinymce/tinymce/tinymce.min.js"></script>';
         }
 
         $editor .= $this->_configure();

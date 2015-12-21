@@ -95,7 +95,7 @@ class Index extends Core\Modules\AdminController
                 'module_id' => (int)$formData['module'],
             ];
             if (!empty($file)) {
-                $upload = new Core\Helpers\Upload('categories');
+                $upload = new Core\Helpers\Upload($this->appPath, 'categories');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
                 $insertValues['picture'] = $result['name'];
             }
@@ -138,7 +138,7 @@ class Index extends Core\Modules\AdminController
                         }
 
                         // Kategoriebild ebenfalls löschen
-                        $upload = new Core\Helpers\Upload('categories');
+                        $upload = new Core\Helpers\Upload($this->appPath, 'categories');
                         $upload->removeUploadedFile($category['picture']);
                         $bool = $this->categoryRepository->delete($item);
                     }
@@ -205,7 +205,7 @@ class Index extends Core\Modules\AdminController
             ];
 
             if (empty($file) === false) {
-                $upload = new Core\Helpers\Upload('categories');
+                $upload = new Core\Helpers\Upload($this->appPath, 'categories');
                 $upload->removeUploadedFile($category['picture']);
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
                 $updateValues['picture'] = $result['name'];

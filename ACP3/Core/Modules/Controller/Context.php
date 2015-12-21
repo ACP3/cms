@@ -3,6 +3,7 @@ namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Config;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
@@ -58,6 +59,10 @@ class Context
      * @var \ACP3\Core\Config
      */
     protected $config;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
 
     /**
      * Context constructor.
@@ -72,6 +77,7 @@ class Context
      * @param \ACP3\Core\Validation\Validator                             $validator
      * @param \ACP3\Core\View                                             $view
      * @param \ACP3\Core\Config                                           $config
+     * @param \ACP3\Core\Environment\ApplicationPath                      $appPath
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -83,9 +89,9 @@ class Context
         Router $router,
         Validator $validator,
         View $view,
-        Config $config
-    )
-    {
+        Config $config,
+        ApplicationPath $appPath
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->acl = $acl;
         $this->user = $user;
@@ -96,6 +102,7 @@ class Context
         $this->validator = $validator;
         $this->view = $view;
         $this->config = $config;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -176,5 +183,13 @@ class Context
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * @return \ACP3\Core\Environment\ApplicationPath
+     */
+    public function getAppPath()
+    {
+        return $this->appPath;
     }
 }

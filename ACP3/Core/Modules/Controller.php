@@ -56,6 +56,11 @@ abstract class Controller implements ControllerInterface
      */
     protected $config;
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+
+    /**
      * Nichts ausgeben
      */
     protected $noOutput = false;
@@ -81,6 +86,7 @@ abstract class Controller implements ControllerInterface
         $this->view = $context->getView();
         $this->modules = $context->getModules();
         $this->config = $context->getConfig();
+        $this->appPath = $context->getAppPath();
     }
 
     /**

@@ -89,7 +89,7 @@ class Index extends Core\Modules\FrontendController
             // Bildabmessungen berechnen
             $picture['width'] = $this->settings['width'];
             $picture['height'] = $this->settings['height'];
-            $picInfos = @getimagesize(UPLOADS_DIR . 'gallery/' . $picture['file']);
+            $picInfos = @getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
             if ($picInfos !== false) {
                 if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
                     if ($picInfos[0] > $picInfos[1]) {
@@ -148,7 +148,7 @@ class Index extends Core\Modules\FrontendController
             ->setCachePrefix('gallery_' . $action)
             ->setMaxWidth($this->settings[$action . 'width'])
             ->setMaxHeight($this->settings[$action . 'height'])
-            ->setFile(UPLOADS_DIR . 'gallery/' . $picture)
+            ->setFile($this->appPath->getUploadsDir() . 'gallery/' . $picture)
             ->setPreferHeight($action === 'thumb');
 
         if ($image->process()) {

@@ -5,5 +5,7 @@ services:
 
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty
+    arguments:
+      - @core.environment.application_path
     calls:
       - ['setContainer', ['@service_container']]

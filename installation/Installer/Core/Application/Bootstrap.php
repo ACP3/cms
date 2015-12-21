@@ -3,10 +3,12 @@
 namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core;
+use ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Installer\Core\FrontController;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class Bootstrap
@@ -15,13 +17,16 @@ use Symfony\Component\Config\FileLocator;
 class Bootstrap extends Core\Application\AbstractBootstrap
 {
     /**
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath ApplicationPath
+     */
+    protected $appPath;
+
+    /**
      * @inheritdoc
      */
     public function run()
     {
-        $this->defineDirConstants();
-
-        if ($this->environment === Core\Enum\Environment::UPDATER && $this->startupChecks() === false) {
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER && $this->startupChecks() === false) {
             return;
         }
 
@@ -31,29 +36,11 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     }
 
     /**
-     * @inheritdoc
+     * @param string $appMode
      */
-    public function defineDirConstants()
+    protected function setAppPath($appMode)
     {
-        define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-        $phpSelf = dirname(PHP_SELF);
-        define('ROOT_DIR', substr($phpSelf !== '/' ? $phpSelf . '/' : '/', 0, -13));
-        define('INSTALLER_ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
-        define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
-        define('CLASSES_DIR', ACP3_DIR . 'Core/');
-        define('MODULES_DIR', ACP3_DIR . 'Modules/');
-        define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
-        define('CACHE_DIR', ACP3_ROOT_DIR . 'cache/');
-
-        define('INSTALLER_ACP3_DIR', realpath(ACP3_DIR . '../installation/') . '/Installer/');
-        define('INSTALLER_MODULES_DIR', INSTALLER_ACP3_DIR . 'Modules/');
-        define('INSTALLER_CLASSES_DIR', INSTALLER_ACP3_DIR . 'Core/');
-        define('INSTALLER_CACHE_DIR', CACHE_DIR . 'install/');
-        define('INSTALLATION_DIR', ACP3_ROOT_DIR . 'installation/');
-
-        // Set theme paths
-        define('DESIGN_PATH', INSTALLATION_DIR . 'design/');
-        define('DESIGN_PATH_INTERNAL', INSTALLATION_DIR . 'design/');
+        $this->appPath = new ApplicationPath($appMode);
     }
 
     /**
@@ -62,24 +49,26 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     public function initializeClasses()
     {
         $this->container = new ContainerBuilder();
+        $this->container->setDefinition('core.environment.application_path',
+            new Definition(ApplicationPath::class, [$this->appMode]));
         $this->container->addCompilerPass(new Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass());
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
 
-        if ($this->environment === Core\Enum\Environment::UPDATER) {
-            $loader->load(INSTALLER_CLASSES_DIR . 'config/update.yml');
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
+            $loader->load('../config/update.yml');
         } else {
-            $loader->load(INSTALLER_CLASSES_DIR . 'config/services.yml');
+            $loader->load('../config/services.yml');
         }
 
-        $this->container->setParameter('core.environment', $this->environment);
+        $this->container->setParameter('core.environment', $this->appMode);
 
         // When in updater context, also include "normal" module services
-        if ($this->environment === Core\Enum\Environment::UPDATER) {
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
             $vendors = $this->container->get('core.modules.vendors')->getVendors();
 
             foreach ($vendors as $vendor) {
-                $namespaceModules = glob(MODULES_DIR . $vendor . '/*/Resources/config/services.yml');
+                $namespaceModules = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/config/services.yml');
                 foreach ($namespaceModules as $module) {
                     $loader->load($module);
                 }
@@ -87,6 +76,15 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         }
 
         $this->container->compile();
+
+        $this->appPath = $this->container->get('core.environment.application_path');
+    }
+
+    private function applyThemePaths()
+    {
+        $this->appPath
+            ->setDesignPathWeb($this->appPath->getInstallerWebRoot() . 'design/')
+            ->setDesignPathInternal(ACP3_ROOT_DIR . 'installation/design/');
     }
 
     /**
@@ -94,6 +92,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     public function outputPage()
     {
+        $this->applyThemePaths();
         $request = $this->container->get('core.request');
         $redirect = $this->container->get('core.redirect');
 
@@ -105,7 +104,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             $redirect->temporary('errors/index/404')->send();
         } catch (\Exception $e) {
-            Core\Logger::critical('installer', $e->getMessage());
+            $this->container->get('core.logger')->critical('installer', $e->getMessage());
             $redirect->temporary('errors/index/500')->send();
         }
     }
@@ -118,7 +117,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         // Standardzeitzone festlegen
         date_default_timezone_set('UTC');
 
-        if ($this->environment === Core\Enum\Environment::UPDATER) {
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
             return $this->databaseConfigExists();
         }
 

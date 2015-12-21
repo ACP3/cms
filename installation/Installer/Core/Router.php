@@ -15,11 +15,16 @@ class Router extends Core\Router
     protected $request;
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
-    public function __construct(Core\Http\RequestInterface $request)
+    public function __construct(
+        Core\Http\RequestInterface $request,
+        Core\Environment\ApplicationPath $appPath
+    )
     {
         $this->request = $request;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -48,7 +53,7 @@ class Router extends Core\Router
             $prefix .= $this->request->getHostname();
         }
 
-        $prefix .= PHP_SELF . '/';
+        $prefix .= $this->appPath->getPhpSelf() . '/';
         return $prefix . $path;
     }
 }

@@ -147,7 +147,8 @@ class Index extends Core\Modules\AdminController
                     $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
                 }
 
-                return $this->redirectMessages()->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : '');
+                return $this->redirectMessages()->setMessage($bool, $text,
+                    $selfDelete === true ? $this->appPath->getWebRoot() : '');
             }
         );
     }

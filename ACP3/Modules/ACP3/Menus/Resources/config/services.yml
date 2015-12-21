@@ -41,7 +41,7 @@ services:
 
   menus.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', 'menus']
+    arguments: ['@service_container', @core.environment.application_path, 'menus']
 
   menus.helpers.menuitemslist:
     class: %menus.helpers.menuitemslist.fqdn%

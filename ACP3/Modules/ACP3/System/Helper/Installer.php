@@ -11,6 +11,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Installer
 {
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var Core\Modules
      */
     protected $modules;
@@ -32,13 +36,15 @@ class Installer
     protected $environment;
 
     /**
-     * @param \ACP3\Core\Modules                 $modules
-     * @param \ACP3\Core\Modules\Vendors         $vendors
-     * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
-     * @param \ACP3\Core\XML                     $xml
-     * @param string                             $environment
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Modules                     $modules
+     * @param \ACP3\Core\Modules\Vendors             $vendors
+     * @param \ACP3\Core\Modules\SchemaInstaller     $schemaInstaller
+     * @param \ACP3\Core\XML                         $xml
+     * @param string                                 $environment
      */
     public function __construct(
+        Core\Environment\ApplicationPath $appPath,
         Core\Modules $modules,
         Core\Modules\Vendors $vendors,
         Core\Modules\SchemaInstaller $schemaInstaller,
@@ -46,6 +52,7 @@ class Installer
         $environment
     )
     {
+        $this->appPath = $appPath;
         $this->modules = $modules;
         $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
@@ -114,7 +121,7 @@ class Installer
     {
         if ((bool)preg_match('=/=', $moduleName) === false) {
             foreach ($this->vendors->getVendors() as $vendor) {
-                $path = MODULES_DIR . $vendor . '/' . ucfirst($moduleName) . '/Resources/config/module.xml';
+                $path = $this->appPath->getModulesDir() . $vendor . '/' . ucfirst($moduleName) . '/Resources/config/module.xml';
 
                 if (is_file($path) === true) {
                     return array_values($this->xml->parseXmlFile($path, '/module/info/dependencies'));
@@ -132,6 +139,6 @@ class Installer
      */
     public function updateServiceContainer($allModules = false)
     {
-        return Core\ServiceContainerBuilder::compileContainer($this->environment, $allModules);
+        return Core\ServiceContainerBuilder::compileContainer($this->environment, null, $allModules);
     }
 }

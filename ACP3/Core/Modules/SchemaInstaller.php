@@ -76,7 +76,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             } catch (\Exception $e) {
                 $this->db->getConnection()->rollback();
 
-                Core\Logger::warning('installer', $e);
+                $this->container->get('core.logger')->warning('installer', $e);
                 return false;
             }
         }

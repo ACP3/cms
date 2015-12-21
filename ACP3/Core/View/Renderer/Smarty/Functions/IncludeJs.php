@@ -18,21 +18,28 @@ class IncludeJs extends AbstractFunction
      */
     protected $fileResolver;
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var array
      */
     protected $alreadyIncluded = [];
 
     /**
-     * @param \ACP3\Core\Assets              $assets
-     * @param \ACP3\Core\Assets\FileResolver $fileResolved
+     * @param \ACP3\Core\Assets                      $assets
+     * @param \ACP3\Core\Assets\FileResolver         $fileResolved
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Assets $assets,
-        Core\Assets\FileResolver $fileResolved
+        Core\Assets\FileResolver $fileResolved,
+        Core\Environment\ApplicationPath $appPath
     )
     {
         $this->assets = $assets;
         $this->fileResolver = $fileResolved;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -68,9 +75,9 @@ class IncludeJs extends AbstractFunction
                 $path = $this->fileResolver->getStaticAssetPath($module . '/Resources/', $module . '/', 'Assets/js', $file . '.js');
 
                 if (strpos($path, '/ACP3/Modules/') !== false) {
-                    $path = ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1);
+                    $path = $this->appPath->getWebRoot() . substr($path, strpos($path, '/ACP3/Modules/') + 1);
                 } else {
-                    $path = ROOT_DIR . substr($path, strlen(ACP3_ROOT_DIR));
+                    $path = $this->appPath->getWebRoot() . substr($path, strlen(ACP3_ROOT_DIR));
                 }
                 return sprintf($script, $path);
             }

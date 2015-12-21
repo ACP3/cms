@@ -9,7 +9,10 @@ class AssetsTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->assets = new \ACP3\Core\Assets();
+        $appPath = new \ACP3\Core\Environment\ApplicationPath(\ACP3\Core\Environment\ApplicationMode::DEVELOPMENT);
+        $appPath->setDesignPathInternal(ACP3_ROOT_DIR . 'tests/designs/acp3/');
+
+        $this->assets = new \ACP3\Core\Assets($appPath);
     }
 
     public function testDefaultLibrariesEnabled()

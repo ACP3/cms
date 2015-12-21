@@ -22,22 +22,22 @@ class Maintenance extends Core\Modules\AdminController
             $result = false;
             switch ($action) {
                 case 'general':
-                    $result = Core\Cache::purge(CACHE_DIR . 'sql');
+                    $result = Core\Cache::purge($this->appPath->getCacheDir() . 'sql');
                     $text = $this->translator->t('system',
                         $result === true ? 'cache_type_general_delete_success' : 'cache_type_general_delete_success');
                     break;
                 case 'images':
-                    $result = Core\Cache::purge(CACHE_DIR . 'images');
+                    $result = Core\Cache::purge($this->appPath->getCacheDir() . 'images');
                     $text = $this->translator->t('system',
                         $result === true ? 'cache_type_images_delete_success' : 'cache_type_images_delete_success');
                     break;
                 case 'minify':
-                    $result = Core\Cache::purge(UPLOADS_DIR . 'assets');
+                    $result = Core\Cache::purge($this->appPath->getUploadsDir() . 'assets');
                     $text = $this->translator->t('system',
                         $result === true ? 'cache_type_minify_delete_success' : 'cache_type_minify_delete_success');
                     break;
                 case 'templates':
-                    $result = (Core\Cache::purge(CACHE_DIR . 'tpl_compiled') && Core\Cache::purge(CACHE_DIR . 'tpl_cached'));
+                    $result = (Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled') && Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached'));
                     $text = $this->translator->t('system',
                         $result === true ? 'cache_type_templates_delete_success' : 'cache_type_templates_delete_success');
                     break;

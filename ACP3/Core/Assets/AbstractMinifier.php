@@ -4,6 +4,7 @@ namespace ACP3\Core\Assets;
 use ACP3\Core\Assets;
 use ACP3\Core\Cache;
 use ACP3\Core\Config;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 
 /**
@@ -20,6 +21,10 @@ abstract class AbstractMinifier implements MinifierInterface
      * @var \ACP3\Core\Assets
      */
     protected $assets;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Core\Cache
      */
@@ -55,15 +60,17 @@ abstract class AbstractMinifier implements MinifierInterface
     protected $assetGroup = '';
 
     /**
-     * @param \ACP3\Core\Assets              $assets
-     * @param \ACP3\Core\Cache               $systemCache
-     * @param \ACP3\Core\Config              $config
-     * @param \ACP3\Core\Modules             $modules
-     * @param \ACP3\Core\Assets\FileResolver $fileResolver
-     * @param string                         $environment
+     * @param \ACP3\Core\Assets                      $assets
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Cache                       $systemCache
+     * @param \ACP3\Core\Config                      $config
+     * @param \ACP3\Core\Modules                     $modules
+     * @param \ACP3\Core\Assets\FileResolver         $fileResolver
+     * @param string                                 $environment
      */
     public function __construct(
         Assets $assets,
+        ApplicationPath $appPath,
         Cache $systemCache,
         Config $config,
         Modules $modules,
@@ -72,6 +79,7 @@ abstract class AbstractMinifier implements MinifierInterface
     )
     {
         $this->assets = $assets;
+        $this->appPath = $appPath;
         $this->systemCache = $systemCache;
         $this->config = $config;
         $this->modules = $modules;
@@ -129,7 +137,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $path = $this->buildAssetPath($debug, $this->assetGroup, $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
-        if (is_file(UPLOADS_DIR . $path) === false || $debug === true) {
+        if (is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {
             // Get the enabled libraries and filter out empty entries
             $files = array_filter(
                 $this->processLibraries($layout),
@@ -138,13 +146,13 @@ abstract class AbstractMinifier implements MinifierInterface
                 }
             );
 
-            $this->saveMinifiedAsset($files, UPLOADS_DIR . $path);
+            $this->saveMinifiedAsset($files, $this->appPath->getUploadsDir() . $path);
 
             // Save the time of the generation if the requested file
             $this->systemCache->save($cacheId, $lastGenerated);
         }
 
-        return ROOT_DIR . 'uploads/' . $path . ($debug === true ? '?v=' . $lastGenerated : '');
+        return $this->appPath->getWebRoot() . 'uploads/' . $path . ($debug === true ? '?v=' . $lastGenerated : '');
     }
 
     /**

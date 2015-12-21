@@ -12,21 +12,28 @@ class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'list';
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
      */
     protected $emoticonRepository;
 
     /**
      * @param \ACP3\Core\Cache                                      $cache
+     * @param \ACP3\Core\Environment\ApplicationPath                $appPath
      * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository
      */
     public function __construct(
         Core\Cache $cache,
+        Core\Environment\ApplicationPath $appPath,
         EmoticonRepository $emoticonRepository
     )
     {
         parent::__construct($cache);
 
+        $this->appPath = $appPath;
         $this->emoticonRepository = $emoticonRepository;
     }
 
@@ -56,10 +63,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
         $data = [];
         for ($i = 0; $i < $c_emoticons; ++$i) {
-            $picInfos = getimagesize(UPLOADS_DIR . 'emoticons/' . $emoticons[$i]['img']);
+            $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
             $code = $emoticons[$i]['code'];
             $description = $emoticons[$i]['description'];
-            $data[$code] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
+            $data[$code] = '<img src="' . $this->appPath->getWebRoot() . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
         }
 
         return $this->cache->save(static::CACHE_ID, $data);

@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendors;
@@ -17,6 +18,10 @@ class Modules
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var \ACP3\Core\Modules\Helper\ControllerActionExists
      */
@@ -40,18 +45,21 @@ class Modules
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
      * @param \ACP3\Core\Modules\Helper\ControllerActionExists          $controllerActionExists
      * @param \ACP3\Core\Modules\ModuleInfoCache                        $moduleInfoCache
      * @param \ACP3\Core\Modules\Vendors                                $vendors
      */
     public function __construct(
         ContainerInterface $container,
+        ApplicationPath $appPath,
         ControllerActionExists $controllerActionExists,
         ModuleInfoCache $moduleInfoCache,
         Vendors $vendors
     )
     {
         $this->container = $container;
+        $this->appPath = $appPath;
         $this->controllerActionExists = $controllerActionExists;
         $this->moduleInfoCache = $moduleInfoCache;
         $this->vendors = $vendors;
@@ -167,7 +175,7 @@ class Modules
     {
         if (empty($this->allModules)) {
             foreach ($this->vendors->getVendors() as $vendor) {
-                foreach (Filesystem::scandir(MODULES_DIR . $vendor . '/') as $module) {
+                foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
                         $this->allModules[$info['name']] = $info;

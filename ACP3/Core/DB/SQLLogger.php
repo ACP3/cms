@@ -9,6 +9,10 @@ use ACP3\Core\Logger;
  */
 class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 {
+    /**
+     * @var \ACP3\Core\Logger
+     */
+    protected $logger;
 
     /**
      * Executed SQL queries.
@@ -36,8 +40,14 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
      */
     private $requestPath = '';
 
-    public function __construct()
+    /**
+     * SQLLogger constructor.
+     *
+     * @param \ACP3\Core\Logger $logger
+     */
+    public function __construct(Logger $logger)
     {
+        $this->logger = $logger;
         $this->requestPath = $_SERVER['REQUEST_URI'];
     }
 
@@ -69,7 +79,7 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
             $this->queries[$this->requestPath]['queryCount'] = count($this->queries[$this->requestPath]);
             $this->queries[$this->requestPath]['totalTime'] = $totalTime;
 
-            Logger::debug($this->logFilename, $this->queries);
+            $this->logger->debug($this->logFilename, $this->queries);
         }
     }
 }

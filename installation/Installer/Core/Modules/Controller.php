@@ -34,6 +34,10 @@ class Controller implements ControllerInterface
      * @var \ACP3\Core\View
      */
     protected $view;
+    /**
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
 
     /**
      * Nicht ausgeben
@@ -71,6 +75,7 @@ class Controller implements ControllerInterface
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
         $this->view = $context->getView();
+        $this->appPath = $context->getAppPath();
     }
 
     /**
@@ -87,15 +92,16 @@ class Controller implements ControllerInterface
 
         // Einige Template Variablen setzen
         $this->view->assign('LANGUAGES', $this->_languagesDropdown($this->translator->getLocale()));
-        $this->view->assign('PHP_SELF', PHP_SELF);
+        $this->view->assign('PHP_SELF', $this->appPath->getPhpSelf());
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
-        $this->view->assign('ROOT_DIR', ROOT_DIR);
-        $this->view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
-        $this->view->assign('DESIGN_PATH', DESIGN_PATH);
+        $this->view->assign('ROOT_DIR', $this->appPath->getWebRoot());
+        $this->view->assign('INSTALLER_ROOT_DIR', $this->appPath->getInstallerWebRoot());
+        $this->view->assign('DESIGN_PATH', $this->appPath->getDesignPathWeb());
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
 
-        $languageInfo = simplexml_load_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->translator->getLocale() . '.xml');
-        $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
+        $languageInfo = simplexml_load_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml');
+        $this->view->assign('LANG_DIRECTION',
+            isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
         $this->view->assign('LANG', $this->translator->getShortIsoCode());
     }
 
@@ -126,7 +132,7 @@ class Controller implements ControllerInterface
     {
         // Dropdown-Menü für die Sprachen
         $languages = [];
-        $path = INSTALLER_MODULES_DIR . 'Install/Resources/Languages/';
+        $path = $this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/';
 
         foreach (Filesystem::scandir($path) as $row) {
             $langInfo = simplexml_load_file($path . $row);
@@ -147,20 +153,6 @@ class Controller implements ControllerInterface
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
-
-        return $this;
-    }
-
-    /**
-     * Fügt weitere Daten an den Seiteninhalt an
-     *
-     * @param string $data
-     *
-     * @return $this
-     */
-    public function appendContent($data)
-    {
-        $this->contentAppend .= $data;
 
         return $this;
     }
@@ -229,20 +221,6 @@ class Controller implements ControllerInterface
     }
 
     /**
-     * Setter Methode für die $this->no_output Variable
-     *
-     * @param boolean $value
-     *
-     * @return $this
-     */
-    public function setNoOutput($value)
-    {
-        $this->noOutput = (bool)$value;
-
-        return $this;
-    }
-
-    /**
      * Gibt den auszugebenden Seiteninhalt zurück
      *
      * @return string
@@ -277,20 +255,6 @@ class Controller implements ControllerInterface
     }
 
     /**
-     * Weist der aktuell auszugebenden Seite den Content-Type zu
-     *
-     * @param string $data
-     *
-     * @return $this
-     */
-    public function setContentType($data)
-    {
-        $this->contentType = $data;
-
-        return $this;
-    }
-
-    /**
      * Gibt die anzuhängenden Inhalte an den Seiteninhalt zurück
      *
      * @return string
@@ -302,12 +266,21 @@ class Controller implements ControllerInterface
 
     private function setLanguage()
     {
-        if (!preg_match('=/=', $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '')) &&
-            is_file(INSTALLER_MODULES_DIR . 'Install/Resources/Languages/' . $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '') . '.xml') === true
+        $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
+        if (!preg_match('=/=', $cookieLocale) &&
+            is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
         ) {
-            $language = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
+            $language = $cookieLocale;
         } else {
-            $language = $this->request->getUserAgent()->parseAcceptLanguage();
+            $language = 'en_US';
+
+            foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
+                $locale = str_replace('-', '_', $locale);
+                if ($this->translator->languagePackExists($locale) === true) {
+                    $language = $locale;
+                    break;
+                }
+            }
         }
 
         $this->translator->setLocale($language);

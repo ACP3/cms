@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -54,24 +55,32 @@ class Picture
      */
     protected $response;
     /**
-     * @var resource
+     * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $image;
+    protected $appPath;
     /**
      * @var string
      */
     protected $environment = '';
 
     /**
+     * @var resource
+     */
+    protected $image;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
      * @param string                                     $environment
      */
     public function __construct(
         Response $response,
+        ApplicationPath $appPath,
         $environment
     )
     {
         $this->response = $response;
+        $this->appPath = $appPath;
         $this->environment = $environment;
     }
 
@@ -241,7 +250,7 @@ class Picture
      */
     public function getWebFilePath()
     {
-        return ROOT_DIR . 'cache/' . $this->environment . '/' . $this->cacheDir . $this->getCacheName();
+        return $this->appPath->getWebRoot() . 'cache/' . $this->environment . '/' . $this->cacheDir . $this->getCacheName();
     }
 
     /**
@@ -259,7 +268,7 @@ class Picture
      */
     protected function getCacheFileName()
     {
-        return CACHE_DIR . $this->cacheDir . $this->getCacheName();
+        return $this->appPath->getCacheDir() . $this->cacheDir . $this->getCacheName();
     }
 
     /**
@@ -384,8 +393,8 @@ class Picture
      */
     protected function createCacheDir()
     {
-        $path = CACHE_DIR . $this->cacheDir;
-        if (!is_dir($path) && is_writable(CACHE_DIR)) {
+        $path = $this->appPath->getCacheDir() . $this->cacheDir;
+        if (!is_dir($path) && is_writable($this->appPath->getCacheDir())) {
             mkdir($path);
         }
     }

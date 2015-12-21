@@ -10,7 +10,7 @@ imports:
 services:
   core.context.install:
     class: ACP3\Installer\Core\Modules\Controller\Context
-    arguments: ['@core.lang', '@core.request', '@core.router', '@core.view']
+    arguments: ['@core.lang', '@core.request', '@core.router', '@core.view', @core.environment.application_path]
     public: false
 
   core.date:
@@ -41,10 +41,20 @@ services:
 
   core.lang:
     class: ACP3\Installer\Core\I18n\Translator
-    arguments: [@core.lang.dictionary_cache, 'en_US']
+    arguments:
+      - @core.environment.application_path
+      - @core.lang.dictionary_cache
+      - 'en_US'
 
   core.lang.dictionary_cache:
     class: ACP3\Installer\Core\I18n\DictionaryCache
+    arguments:
+      - @core.environment.application_path
+
+  core.logger:
+    class: ACP3\Core\Logger
+    arguments:
+      - @core.environment.application_path
 
   core.modules.controller.install:
     abstract: true
@@ -56,11 +66,13 @@ services:
 
   core.request:
     class: ACP3\Installer\Core\Http\Request
-    arguments: [%default_request%]
+    arguments:
+      - @core.environment.application_path
+      - %default_request%
 
   core.router:
     class: ACP3\Installer\Core\Router
-    arguments: ['@core.request']
+    arguments: ['@core.request', @core.environment.application_path]
 
   core.session:
     class: ACP3\Installer\Core\SessionHandler
@@ -71,5 +83,7 @@ services:
 
   core.view.renderer.smarty:
     class: ACP3\Installer\Core\View\Renderer\Smarty
+    arguments:
+      - @core.environment.application_path
     calls:
       - ['setContainer', ['@service_container']]
