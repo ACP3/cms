@@ -130,13 +130,6 @@ class Bootstrap extends AbstractBootstrap
         try {
             (new FrontController($this->container))->dispatch();
         } catch (Exceptions\ResultNotExists $e) {
-            if ($e->getMessage()) {
-                $this->container->get('core.logger')->error('404', $e);
-            } else {
-                $this->container->get('core.logger')->error('404',
-                    'Could not find any results for request: ' . $request->getQuery());
-            }
-
             $redirect->temporary('errors/index/404')->send();
         } catch (Exceptions\UnauthorizedAccess $e) {
             $redirectUri = base64_encode($request->getOriginalQuery());
@@ -144,9 +137,6 @@ class Bootstrap extends AbstractBootstrap
         } catch (Exceptions\AccessForbidden $e) {
             $redirect->temporary('errors/index/403');
         } catch (Exceptions\ControllerActionNotFound $e) {
-            $this->container->get('core.logger')->error('404', 'Request: ' . $request->getQuery());
-            $this->container->get('core.logger')->error('404', $e);
-
             $this->handleException($e, $redirect, 'errors/index/404');
         } catch (\Exception $e) {
             $this->container->get('core.logger')->error('exception', $e);
@@ -166,14 +156,14 @@ class Bootstrap extends AbstractBootstrap
     /**
      * Renders an exception
      *
-     * @param string $errorMessage
+     * @param \Exception $exception
      */
-    private function _renderApplicationException($errorMessage)
+    private function _renderApplicationException(\Exception $exception)
     {
         $view = $this->container->get('core.view');
         $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
         $view->assign('PAGE_TITLE', 'ACP3');
-        $view->assign('CONTENT', $errorMessage);
+        $view->assign('EXCEPTION', $exception);
         $view->displayTemplate('system/exception.tpl');
     }
 
@@ -185,8 +175,7 @@ class Bootstrap extends AbstractBootstrap
     protected function handleException(\Exception $exception, Redirect $redirect, $path)
     {
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
-            $errorMessage = $exception->getMessage();
-            $this->_renderApplicationException($errorMessage);
+            $this->_renderApplicationException($exception);
         } else {
             $redirect->temporary($path)->send();
         }
