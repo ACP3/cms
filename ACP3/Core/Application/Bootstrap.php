@@ -30,8 +30,6 @@ class Bootstrap extends AbstractBootstrap
      */
     public function run()
     {
-        $this->defineDirConstants();
-
         if ($this->startupChecks()) {
             $this->setErrorHandler();
             $this->initializeClasses();
@@ -48,13 +46,6 @@ class Bootstrap extends AbstractBootstrap
         date_default_timezone_set('UTC');
 
         return $this->databaseConfigExists();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function defineDirConstants()
-    {
     }
 
     /**

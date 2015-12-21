@@ -23,11 +23,6 @@ interface BootstrapInterface
     function startUpChecks();
 
     /**
-     * Sets up the current environment
-     */
-    function defineDirConstants();
-
-    /**
      * Initializes the dependency injection container
      */
     function initializeClasses();

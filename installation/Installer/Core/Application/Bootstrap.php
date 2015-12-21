@@ -26,8 +26,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     public function run()
     {
-        $this->defineDirConstants();
-
         if ($this->appMode === Core\Environment\ApplicationMode::UPDATER && $this->startupChecks() === false) {
             return;
         }
@@ -43,13 +41,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     protected function setAppPath($appMode)
     {
         $this->appPath = new ApplicationPath($appMode);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function defineDirConstants()
-    {
     }
 
     /**
