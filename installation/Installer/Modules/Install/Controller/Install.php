@@ -60,7 +60,7 @@ class Install extends AbstractController
         $this->date = $date;
         $this->secureHelper = $secureHelper;
         $this->installHelper = $installHelper;
-        $this->configFilePath = ACP3_DIR . 'config.yml';
+        $this->configFilePath = $this->appPath->getAppDir() . 'config.yml';
     }
 
     public function actionIndex()
@@ -147,6 +147,7 @@ class Install extends AbstractController
     {
         $environment = $this->container->getParameter('core.environment');
         $this->container = new ContainerBuilder();
+        $this->container->set('core.environment.application_path', $this->appPath);
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load($this->appPath->getClassesDir() . 'config/services.yml');

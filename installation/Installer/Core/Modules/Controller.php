@@ -100,7 +100,8 @@ class Controller implements ControllerInterface
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
 
         $languageInfo = simplexml_load_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml');
-        $this->view->assign('LANG_DIRECTION', isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
+        $this->view->assign('LANG_DIRECTION',
+            isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
         $this->view->assign('LANG', $this->translator->getShortIsoCode());
     }
 
@@ -265,15 +266,16 @@ class Controller implements ControllerInterface
 
     private function setLanguage()
     {
-        if (!preg_match('=/=', $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '')) &&
-            is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->request->getCookies()->get('ACP3_INSTALLER_LANG',
-                    '') . '.xml') === true
+        $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
+        if (!preg_match('=/=', $cookieLocale) &&
+            is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
         ) {
-            $language = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
+            $language = $cookieLocale;
         } else {
             $language = 'en_US';
 
             foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
+                $locale = str_replace('-', '_', $locale);
                 if ($this->translator->languagePackExists($locale) === true) {
                     $language = $locale;
                     break;
