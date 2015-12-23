@@ -7,7 +7,6 @@ use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
@@ -28,8 +27,7 @@ class ServiceContainerBuilder
     {
         $containerBuilder = new ContainerBuilder();
 
-        $containerBuilder->setDefinition('core.environment.application_path',
-            new Definition(ApplicationPath::class, [$appMode]));
+        $containerBuilder->set('core.environment.application_path', $appPath);
         $containerBuilder->setParameter('core.environment', $appMode);
 
         $containerBuilder->addCompilerPass(new RegisterListenersPass('core.eventDispatcher', 'core.eventListener',

@@ -7,7 +7,6 @@ use ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Installer\Core\FrontController;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
@@ -49,8 +48,8 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     public function initializeClasses()
     {
         $this->container = new ContainerBuilder();
-        $this->container->setDefinition('core.environment.application_path',
-            new Definition(ApplicationPath::class, [$this->appMode]));
+
+        $this->container->set('core.environment.application_path', $this->appPath);
         $this->container->addCompilerPass(new Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass());
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
@@ -76,8 +75,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         }
 
         $this->container->compile();
-
-        $this->appPath = $this->container->get('core.environment.application_path');
     }
 
     private function applyThemePaths()

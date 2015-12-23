@@ -89,9 +89,9 @@ class Bootstrap extends AbstractBootstrap
         $this->dumpContainer($file);
 
         require_once $file;
-        $this->container = new \ACP3ServiceContainer();
 
-        $this->appPath = $this->container->get('core.environment.application_path');
+        $this->container = new \ACP3ServiceContainer();
+        $this->container->set('core.environment.application_path', $this->appPath);
     }
 
     /**

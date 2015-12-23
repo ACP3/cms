@@ -145,15 +145,14 @@ class Install extends AbstractController
      */
     private function _setContainer()
     {
-        $environment = $this->container->getParameter('core.environment');
         $this->container = new ContainerBuilder();
+
         $this->container->set('core.environment.application_path', $this->appPath);
+        $this->container->setParameter('core.environment', $this->container->getParameter('core.environment'));
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load($this->appPath->getClassesDir() . 'config/services.yml');
         $loader->load($this->appPath->getInstallerClassesDir() . 'config/services.yml');
-
-        $this->container->setParameter('core.environment', $environment);
 
         $modulesServices = glob($this->appPath->getModulesDir() . 'ACP3/*/Resources/config/services.yml');
         foreach ($modulesServices as $moduleServices) {
