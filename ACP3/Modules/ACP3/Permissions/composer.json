@@ -3,14 +3,16 @@
   "description": "Provides the permissions module for the ACP3 CMS.",
   "license": "GPL-2.0+",
   "type": "acp3-module",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "*",
-    "acp3/core": "dev-master",
-    "acp3/setup": "dev-master",
-    "acp3/module-errors": "dev-master",
-    "acp3/module-seo": "dev-master",
-    "acp3/module-system": "dev-master",
-    "acp3/module-users": "dev-master"
+    "acp3/core": "^4.0.0",
+    "acp3/setup": "^4.0.0",
+    "acp3/module-errors": "^4.0.0",
+    "acp3/module-seo": "^4.0.0",
+    "acp3/module-system": "^4.0.0",
+    "acp3/module-users": "^4.0.0"
   },
   "extra": {
     "installer-name": "ACP3/Permissions"
