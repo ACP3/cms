@@ -22,21 +22,21 @@
         <item key="readmore">weiterlesen</item>
         <item key="readmore_chars"><![CDATA[Benötigte Anzahl an Zeichen für &quot;weiterlesen...&quot;-Funktion]]></item>
         <item key="select_activate_readmore">
-            <![CDATA[Bitte wählen Sie aus, ob die &quot;weiterlesen...&quot;-Funktion aktiviert werden soll oder nicht]]></item>
+            <![CDATA[Bitte wählen Sie aus, ob die &quot;weiterlesen...&quot;-Funktion aktiviert werden soll oder nicht.]]></item>
         <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter News zugelassen werden sollen oder
-            nicht
+            nicht.
         </item>
-        <item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich die News befinden soll</item>
+        <item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich die News befinden soll.</item>
         <item key="select_display_category_in_breadcrumb">Bitte wählen Sie aus, ob der Kategoriename einer News in der
             Brotkrümelspur angezeigt werden soll.
         </item>
         <item key="target_page">Zielseite</item>
         <item key="text">Text</item>
-        <item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein</item>
+        <item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
         <item key="title">Titel</item>
-        <item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein</item>
+        <item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
         <item key="type_in_readmore_chars">
-            <![CDATA[Bitte geben Sie ein, wie viele Zeichen die News mindestens haben muss, um die &quot;weiterlesen...&quot;-Funktion zu aktivieren]]></item>
+            <![CDATA[Bitte geben Sie ein, wie viele Zeichen die News mindestens haben muss, um die &quot;weiterlesen...&quot;-Funktion zu aktivieren.]]></item>
         <item key="uri">URI</item>
     </keys>
 </language>
