@@ -337,7 +337,7 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->usersValidator->validate($formData, $id);
+            $this->usersValidator->validate($formData);
 
             $updateValues = [
                 'super_user' => (int)$formData['super_user'],

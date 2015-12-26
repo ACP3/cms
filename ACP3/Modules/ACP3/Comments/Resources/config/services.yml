@@ -5,6 +5,8 @@ parameters:
   comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
   comments.model.commentrepository.fqdn: 'ACP3\Modules\ACP3\Comments\Model\CommentRepository'
   comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\FormValidation'
+  comments.validation.admin_form_validation.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation'
+  comments.validation.admin_settings_form_validation: 'ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation'
   comments.validation.validation_rules.flood_barrier_validation_rule.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule'
   comments.validation.validation_rules.user_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\ValidationRules\UserNameValidationRule'
   comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'
@@ -13,17 +15,33 @@ parameters:
 services:
   comments.controller.admin.details:
     class: %comments.controller.admin.details.fqdn%
-    arguments: ['@core.context.admin', '@comments.model.commentrepository', '@comments.validator', '@system.model.modulerepository', '@core.helpers.formToken']
+    arguments:
+      - @core.context.admin
+      - @comments.model.commentrepository
+      - @comments.validation.admin_form_validation
+      - @system.model.modulerepository
+      - @core.helpers.formToken
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.admin.index:
     class: %comments.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@comments.model.commentrepository', '@comments.validator', '@core.helpers.formToken']
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @comments.model.commentrepository
+      - @comments.validation.admin_settings_form_validation
+      - @core.helpers.formToken
 
   comments.controller.frontend.index:
     class: %comments.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@comments.model.commentrepository', '@comments.validator', '@core.helpers.formToken']
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @core.pagination
+      - @comments.model.commentrepository
+      - @comments.validator
+      - @core.helpers.formToken
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
@@ -38,7 +56,18 @@ services:
 
   comments.validator:
     class: %comments.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.modules']
+    parent: core.validator.abstract
+
+  comments.validation.admin_form_validation:
+    class:  %comments.validation.admin_form_validation.fqdn%
+    parent: core.validator.abstract
+
+  comments.validation.admin_settings_form_validation:
+    class: %comments.validation.admin_settings_form_validation%
+    arguments:
+      - @core.lang
+      - @core.validator
+      - @core.modules
 
   comments.validation.validation_rules.flood_barrier_validation_rule:
     class: %comments.validation.validation_rules.flood_barrier_validation_rule.fqdn%

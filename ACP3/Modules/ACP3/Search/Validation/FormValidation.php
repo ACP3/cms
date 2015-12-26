@@ -12,7 +12,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @param array $formData
      *
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)
     {

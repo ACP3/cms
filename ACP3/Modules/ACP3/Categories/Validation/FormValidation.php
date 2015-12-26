@@ -6,7 +6,7 @@ use ACP3\Modules\ACP3\Categories\Model\CategoryRepository;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
 
 /**
- * Class Validator
+ * Class FormValidation
  * @package ACP3\Modules\ACP3\Categories\Validation
  */
 class FormValidation extends Core\Validation\AbstractFormValidation
@@ -15,6 +15,18 @@ class FormValidation extends Core\Validation\AbstractFormValidation
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
      */
     protected $categoryRepository;
+    /**
+     * @var array
+     */
+    protected $file = [];
+    /**
+     * @var array
+     */
+    protected $settings = [];
+    /**
+     * @var int
+     */
+    protected $categoryId = 0;
 
     /**
      * Validator constructor.
@@ -27,23 +39,49 @@ class FormValidation extends Core\Validation\AbstractFormValidation
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         CategoryRepository $categoryRepository
-    )
-    {
+    ) {
         parent::__construct($translator, $validator);
 
         $this->categoryRepository = $categoryRepository;
     }
 
     /**
-     * @param array      $formData
-     * @param null|array $file
-     * @param array      $settings
-     * @param int|string $categoryId
+     * @param array $file
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @return FormValidation
      */
-    public function validate(array $formData, $file, array $settings, $categoryId = '')
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return FormValidation
+     */
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+        return $this;
+    }
+
+    /**
+     * @param int $categoryId
+     *
+     * @return FormValidation
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -64,13 +102,13 @@ class FormValidation extends Core\Validation\AbstractFormValidation
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::NAME,
                 [
-                    'data' => $file,
+                    'data' => $this->file,
                     'field' => 'picture',
                     'message' => $this->translator->t('categories', 'invalid_image_selected'),
                     'extra' => [
-                        'width' => $settings['width'],
-                        'height' => $settings['height'],
-                        'filesize' => $settings['filesize'],
+                        'width' => $this->settings['width'],
+                        'height' => $this->settings['height'],
+                        'filesize' => $this->settings['filesize'],
                         'required' => false
                     ]
                 ])
@@ -81,8 +119,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'title',
                     'message' => $this->translator->t('categories', 'category_already_exists'),
                     'extra' => [
-                        'module_id' => empty($categoryId) ? $formData['module'] : $this->categoryRepository->getModuleIdByCategoryId($categoryId),
-                        'category_id' => $categoryId
+                        'module_id' => empty($this->categoryId) ? $formData['module'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
+                        'category_id' => $this->categoryId
                     ]
                 ]);
 
@@ -95,41 +133,6 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('categories', 'select_module')
                 ]);
         }
-
-        $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSettings(array $formData)
-    {
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'width',
-                    'message' => $this->translator->t('categories', 'invalid_image_width_entered')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'height',
-                    'message' => $this->translator->t('categories', 'invalid_image_height_entered')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'filesize',
-                    'message' => $this->translator->t('categories', 'invalid_image_filesize_entered')
-                ]);
 
         $this->validator->validate();
     }

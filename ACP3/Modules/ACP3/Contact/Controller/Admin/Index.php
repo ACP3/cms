@@ -16,24 +16,27 @@ class Index extends Core\Modules\AdminController
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation
      */
-    protected $contactValidator;
+    protected $adminSettingsFormValidation;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext           $context
-     * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $contactValidator
+     * Index constructor.
+     *
+     * @param \ACP3\Core\Modules\Controller\AdminContext                        $context
+     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Contact\Validation\FormValidation $contactValidator)
+        Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    )
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->contactValidator = $contactValidator;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
     }
 
     /**
@@ -62,7 +65,7 @@ class Index extends Core\Modules\AdminController
     protected function _indexPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->contactValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'address' => Core\Functions::strEncode($formData['address'], true),

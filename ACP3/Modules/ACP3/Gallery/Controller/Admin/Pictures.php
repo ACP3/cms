@@ -276,7 +276,7 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $picture, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->pictureValidator->validate($file, false);
+                $this->pictureValidator->validate($file);
 
                 $updateValues = [
                     'description' => Core\Functions::strEncode($formData['description'], true),

@@ -33,8 +33,7 @@ class Settings extends Core\Validation\AbstractFormValidation
     /**
      * @param array $formData
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)
     {

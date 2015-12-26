@@ -20,33 +20,40 @@ class Index extends Core\Modules\AdminController
      */
     protected $emoticonRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
      */
-    protected $emoticonsValidator;
+    protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation
+     */
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Cache
      */
     protected $emoticonsCache;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository  $emoticonRepository
-     * @param \ACP3\Modules\ACP3\Emoticons\Validation\FormValidation $emoticonsValidator
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache                     $emoticonsCache
+     * @param \ACP3\Core\Modules\Controller\AdminContext                          $context
+     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository               $emoticonRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation         $adminFormValidation
+     * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache                                  $emoticonsCache
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonRepository $emoticonRepository,
-        Emoticons\Validation\FormValidation $emoticonsValidator,
+        Emoticons\Validation\AdminFormValidation $adminFormValidation,
+        Emoticons\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->emoticonRepository = $emoticonRepository;
-        $this->emoticonsValidator = $emoticonsValidator;
+        $this->adminFormValidation = $adminFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->emoticonsCache = $emoticonsCache;
     }
 
@@ -76,7 +83,11 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
-            $this->emoticonsValidator->validateCreate($formData, $file, $this->config->getSettings('emoticons'));
+            $this->adminFormValidation
+                ->setFile($file)
+                ->setSettings($this->config->getSettings('emoticons'))
+                ->setFileRequired(true)
+                ->validate($formData);
 
             $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
             $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -166,7 +177,10 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $emoticon, $id) {
             $file = $this->request->getFiles()->get('picture');
 
-            $this->emoticonsValidator->validateEdit($formData, $file, $this->config->getSettings('emoticons'));
+            $this->adminFormValidation
+                ->setFile($file)
+                ->setSettings($this->config->getSettings('emoticons'))
+                ->validate($formData);
 
             $updateValues = [
                 'code' => Core\Functions::strEncode($formData['code']),
@@ -260,7 +274,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->emoticonsValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'width' => (int)$formData['width'],

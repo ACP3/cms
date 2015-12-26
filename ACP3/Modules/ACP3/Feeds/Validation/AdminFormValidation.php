@@ -5,18 +5,15 @@ namespace ACP3\Modules\ACP3\Feeds\Validation;
 use ACP3\Core;
 
 /**
- * Class Validator
+ * Class AdminFormValidation
  * @package ACP3\Modules\ACP3\Feeds\Validation
  */
-class FormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
-    public function validateSettings(array $formData)
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)

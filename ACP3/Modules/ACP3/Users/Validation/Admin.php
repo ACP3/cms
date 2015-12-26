@@ -54,12 +54,12 @@ class Admin extends AbstractUserFormValidation
 
     /**
      * @param array $formData
-     * @param int   $userId
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @internal param int $userId
+     *
      */
-    public function validate(array $formData, $userId = 0)
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)

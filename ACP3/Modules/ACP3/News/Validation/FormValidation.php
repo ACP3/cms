@@ -36,13 +36,13 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array  $formData
-     * @param string $uriAlias
+     * @param array $formData
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @internal param string $uriAlias
+     *
      */
-    public function validate(array $formData, $uriAlias = '')
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)

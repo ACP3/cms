@@ -221,7 +221,7 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $path, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $path, $id) {
-            $this->seoValidator->validate($formData, $path);
+            $this->seoValidator->validate($formData);
 
             $updateValues = [
                 'uri' => $formData['uri'],

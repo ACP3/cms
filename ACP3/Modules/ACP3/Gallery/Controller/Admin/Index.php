@@ -335,8 +335,7 @@ class Index extends Core\Modules\AdminController
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->galleryValidator->validate(
-                $formData,
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
+                $formData
             );
 
             $updateValues = [

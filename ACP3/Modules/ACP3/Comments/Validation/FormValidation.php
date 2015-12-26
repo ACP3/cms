@@ -6,42 +6,29 @@ use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
 use ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule;
 
 /**
- * Class Validator
+ * Class FormValidation
  * @package ACP3\Modules\ACP3\Comments\Validation
  */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
+    protected $ipAddress = '';
 
     /**
-     * Validator constructor.
+     * @param $ipAddress
      *
-     * @param \ACP3\Core\I18n\Translator      $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\Modules              $modules
+     * @return $this
      */
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Validation\Validator $validator,
-        Core\Modules $modules
-    )
+    public function setIpAddress($ipAddress)
     {
-        parent::__construct($translator, $validator);
+        $this->ipAddress = $ipAddress;
 
-        $this->modules = $modules;
+        return $this;
     }
 
     /**
-     * @param array  $formData
-     * @param string $ip
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
-    public function validateCreate(array $formData, $ip)
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -50,7 +37,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'message' => $this->translator->t('system', 'flood_no_entry_possible'),
                     'extra' => [
-                        'ip' => $ip
+                        'ip' => $this->ipAddress
                     ]
                 ])
             ->addConstraint(
@@ -75,74 +62,6 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ]
             );
-
-        $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateEdit(array $formData)
-    {
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Validator\ValidationRules\UserNameValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => ['name', 'user_id'],
-                    'message' => $this->translator->t('system', 'name_to_short')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short'),
-                ]);
-
-        $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSettings(array $formData)
-    {
-        $this->validateFormKey();
-
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'dateformat',
-                    'message' => $this->translator->t('system', 'select_date_format'),
-                    'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
-                ]);
-
-        if ($this->modules->isActive('emoticons')) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                    [
-                        'data' => $formData,
-                        'field' => 'emoticons',
-                        'message' => $this->translator->t('comments', 'select_emoticons'),
-                        'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
-        }
 
         $this->validator->validate();
     }

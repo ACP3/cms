@@ -7,43 +7,46 @@ use ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationR
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
- * Class Validator
+ * Class AdminFormValidation
  * @package ACP3\Modules\ACP3\Files\Validation
  */
-class FormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var Core\Modules
+     * @var string
      */
-    protected $modules;
+    protected $uriAlias = '';
+    /**
+     * @var null|array
+     */
+    protected $file;
 
     /**
-     * Validator constructor.
+     * @param string $uriAlias
      *
-     * @param \ACP3\Core\I18n\Translator      $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\Modules              $modules
+     * @return $this
      */
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Validation\Validator $validator,
-        Core\Modules $modules
-    )
+    public function setUriAlias($uriAlias)
     {
-        parent::__construct($translator, $validator);
-
-        $this->modules = $modules;
+        $this->uriAlias = $uriAlias;
+        return $this;
     }
 
     /**
-     * @param array  $formData
-     * @param array  $file
-     * @param string $uriAlias
+     * @param array|null $file
      *
-     * @throws \ACP3\Core\Exceptions\InvalidFormToken
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @return $this
      */
-    public function validate(array $formData, $file, $uriAlias = '')
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -75,7 +78,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => ['external', 'filesize', 'unit'],
                     'message' => $this->translator->t('files', 'type_in_external_resource'),
                     'extra' => [
-                        'file' => $file
+                        'file' => $this->file
                     ]
                 ])
             ->addConstraint(
@@ -85,7 +88,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'alias',
                     'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
-                        'path' => $uriAlias
+                        'path' => $this->uriAlias
                     ]
                 ])
             ->addConstraint(
@@ -101,56 +104,11 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 ->addConstraint(
                     Core\Validation\ValidationRules\FileUploadValidationRule::NAME,
                     [
-                        'data' => $file,
+                        'data' => $this->file,
                         'field' => 'file_internal',
                         'message' => $this->translator->t('files', 'select_internal_resource'),
                         'extra' => [
-                            'required' => empty($uriAlias)
-                        ]
-                    ]);
-        }
-
-        $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSettings(array $formData)
-    {
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'dateformat',
-                    'message' => $this->translator->t('system', 'select_date_format'),
-                    'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'sidebar',
-                    'message' => $this->translator->t('system', 'select_sidebar_entries')
-                ]);
-
-        if ($this->modules->isActive('comments')) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                    [
-                        'data' => $formData,
-                        'field' => 'comments',
-                        'message' => $this->translator->t('files', 'select_allow_comments'),
-                        'extra' => [
-                            'haystack' => [0, 1]
+                            'required' => empty($this->uriAlias)
                         ]
                     ]);
         }

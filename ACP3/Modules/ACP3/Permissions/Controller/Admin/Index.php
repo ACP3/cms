@@ -241,7 +241,7 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->roleValidator->validate($formData, $id);
+            $this->roleValidator->validate($formData);
 
             $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),

@@ -37,9 +37,9 @@ class Items extends Core\Modules\AdminController
      */
     protected $menusHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Validation\MenuItem
+     * @var \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation
      */
-    protected $menuItemValidator;
+    protected $menuItemFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Articles\Helpers
      */
@@ -54,16 +54,16 @@ class Items extends Core\Modules\AdminController
     protected $menuItemFormFieldsHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
-     * @param \ACP3\Core\Router\Aliases                           $aliases
-     * @param \ACP3\Core\NestedSet                                $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository       $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository   $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                      $menusCache
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList      $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItem        $menuItemValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
+     * @param \ACP3\Core\Router\Aliases                                  $aliases
+     * @param \ACP3\Core\NestedSet                                       $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository              $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository          $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Cache                             $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList             $menusHelpers
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
+     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -75,8 +75,8 @@ class Items extends Core\Modules\AdminController
         Menus\Cache $menusCache,
         Menus\Helpers\MenuItemsList $menusHelpers,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
-        Menus\Validation\MenuItem $menuItemValidator)
-    {
+        Menus\Validation\MenuItemFormValidation $menuItemFormValidation
+    ) {
         parent::__construct($context);
 
         $this->aliases = $aliases;
@@ -87,7 +87,7 @@ class Items extends Core\Modules\AdminController
         $this->menusCache = $menusCache;
         $this->menusHelpers = $menusHelpers;
         $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
-        $this->menuItemValidator = $menuItemValidator;
+        $this->menuItemFormValidation = $menuItemFormValidation;
     }
 
     /**
@@ -176,7 +176,8 @@ class Items extends Core\Modules\AdminController
         if (empty($menuItem) === false) {
             $this->breadcrumb->setTitlePostfix($menuItem['title']);
 
-            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->aliases->getUriAlias($menuItem['uri'], true) : '';
+            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->aliases->getUriAlias($menuItem['uri'],
+                true) : '';
             $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
@@ -190,7 +191,8 @@ class Items extends Core\Modules\AdminController
                     preg_match_all(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }
 
-                $this->view->assign('articles', $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
+                $this->view->assign('articles',
+                    $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
             }
 
             $this->view->assign(
@@ -250,7 +252,7 @@ class Items extends Core\Modules\AdminController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->menuItemValidator->validate($formData);
+                $this->menuItemFormValidation->validate($formData);
 
                 $insertValues = [
                     'id' => '',
@@ -313,7 +315,7 @@ class Items extends Core\Modules\AdminController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData, $menuItem, $id) {
-                $this->menuItemValidator->validate($formData);
+                $this->menuItemFormValidation->validate($formData);
 
                 $updateValues = [
                     'mode' => $this->fetchMenuItemModeForSave($formData),
@@ -367,7 +369,8 @@ class Items extends Core\Modules\AdminController
      */
     protected function fetchMenuItemModeForSave(array $formData)
     {
-        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX, $formData['uri']) ? '4' : $formData['mode'];
+        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX,
+            $formData['uri']) ? '4' : $formData['mode'];
     }
 
     /**
@@ -377,7 +380,8 @@ class Items extends Core\Modules\AdminController
      */
     protected function fetchMenuItemUriForSave(array $formData)
     {
-        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN, $formData['articles']) : $formData['uri']);
+        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN,
+            $formData['articles']) : $formData['uri']);
     }
 
     /**

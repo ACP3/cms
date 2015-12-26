@@ -11,13 +11,13 @@ use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array  $formData
-     * @param string $uriAlias
+     * @param array $formData
      *
-     * @throws \ACP3\Core\Exceptions\InvalidFormToken
      * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @internal param string $uriAlias
+     *
      */
-    public function validate(array $formData, $uriAlias = '')
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)

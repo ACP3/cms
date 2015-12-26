@@ -13,12 +13,12 @@ class Role extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData
-     * @param int   $roleId
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @internal param int $roleId
+     *
      */
-    public function validate(array $formData, $roleId = 0)
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)

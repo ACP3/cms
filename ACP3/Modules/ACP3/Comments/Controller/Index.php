@@ -194,7 +194,9 @@ class Index extends Core\Modules\FrontendController
             function () use ($formData, $module, $entryId) {
                 $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
 
-                $this->commentsValidator->validateCreate($formData, $ip);
+                $this->commentsValidator
+                    ->setIpAddress($ip)
+                    ->validate($formData);
 
                 $insertValues = [
                     'id' => '',

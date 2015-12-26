@@ -20,33 +20,35 @@ class Index extends Core\Modules\AdminController
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation
      */
-    protected $commentsValidator;
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
-     * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository   $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $commentsValidator
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
+     * Index constructor.
+     *
+     * @param \ACP3\Core\Modules\Controller\AdminContext                         $context
+     * @param \ACP3\Core\Date                                                    $date
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository                $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validation\FormValidation $commentsValidator,
+        Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->commentRepository = $commentRepository;
-        $this->commentsValidator = $commentsValidator;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->formTokenHelper = $formTokenHelper;
     }
 
@@ -142,7 +144,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->commentsValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),

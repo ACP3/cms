@@ -25,7 +25,7 @@ class Index extends Core\Modules\AdminController
      */
     protected $articlesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
      */
     protected $articlesValidator;
     /**
@@ -50,19 +50,19 @@ class Index extends Core\Modules\AdminController
     protected $menuItemFormFieldsHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
-     * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository   $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                     $articlesCache
-     * @param \ACP3\Modules\ACP3\Articles\Validation\FormValidation $articlesValidator
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
+     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
+     * @param \ACP3\Core\Date                                            $date
+     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository        $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Cache                          $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $articlesValidator
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
-        Articles\Validation\FormValidation $articlesValidator,
+        Articles\Validation\AdminFormValidation $articlesValidator,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
@@ -278,10 +278,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->articlesValidator->validate(
-                $formData,
-                sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)
-            );
+            $this->articlesValidator
+                ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
+                ->validate($formData);
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),

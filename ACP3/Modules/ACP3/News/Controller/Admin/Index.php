@@ -300,8 +300,7 @@ class Index extends Core\Modules\AdminController
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
             $this->newsValidator->validate(
-                $formData,
-                sprintf(News\Helpers::URL_KEY_PATTERN, $id)
+                $formData
             );
 
             $updateValues = [

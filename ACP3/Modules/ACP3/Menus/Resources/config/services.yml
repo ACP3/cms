@@ -8,8 +8,8 @@ parameters:
   menus.helpers.menuitemformfields.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields'
   menus.model.menurepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuRepository'
   menus.model.menuitemrepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuItemRepository'
-  menus.validator.menu.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\Menu'
-  menus.validator.menuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\MenuItem'
+  menus.validator.menu.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation'
+  menus.validator.menuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation'
   menus.validation.validation_rules.allowed_menu_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule'
   menus.validation.validation_rules.link_mode_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule'
   menus.validation.validation_rules.menu_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuExistsValidationRule'
@@ -23,25 +23,56 @@ parameters:
 services:
   core.breadcrumb:
     class: %core.breadcrumb.fqdn%
-    arguments: ['@service_container', '@core.lang', '@core.request', '@core.router', '@core.config', @menus.model.menuitemrepository]
+    arguments:
+      - @service_container
+      - @core.lang
+      - @core.request
+      - @core.router
+      - @core.config
+      - @menus.model.menuitemrepository
 
   menus.controller.admin.index:
     class: %menus.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.nested_set', '@core.helpers.formToken', '@menus.helpers.menuitemslist', '@menus.model.menurepository', @menus.model.menuitemrepository, '@menus.cache', '@menus.validator.menu']
+    arguments:
+      - @core.context.admin
+      - @core.nested_set
+      - @core.helpers.formToken
+      - @menus.helpers.menuitemslist
+      - @menus.model.menurepository
+      - @menus.model.menuitemrepository
+      - @menus.cache
+      - @menus.validator.menu
 
   menus.controller.admin.items:
     class: %menus.controller.admin.items.fqdn%
-    arguments: ['@core.context.admin', '@core.router.aliases', '@core.nested_set', '@core.helpers.formToken', '@menus.model.menurepository', @menus.model.menuitemrepository, '@menus.cache', '@menus.helpers.menuitemslist', @menus.helpers.menuitemformfields, '@menus.validator.menuitem']
+    arguments:
+      - @core.context.admin
+      - @core.router.aliases
+      - @core.nested_set
+      - @core.helpers.formToken
+      - @menus.model.menurepository
+      - @menus.model.menuitemrepository
+      - @menus.cache
+      - @menus.helpers.menuitemslist
+      - @menus.helpers.menuitemformfields
+      - @menus.validator.menuitem
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.cache:
     class: %menus.cache.fqdn%
-    arguments: ['@menus.cache.core', '@core.lang', '@menus.model.menurepository', @menus.model.menuitemrepository]
+    arguments:
+      - @menus.cache.core
+      - @core.lang
+      - @menus.model.menurepository
+      - @menus.model.menuitemrepository
 
   menus.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', @core.environment.application_path, 'menus']
+    arguments:
+      - @service_container
+      - @core.environment.application_path
+      - 'menus'
 
   menus.helpers.menuitemslist:
     class: %menus.helpers.menuitemslist.fqdn%

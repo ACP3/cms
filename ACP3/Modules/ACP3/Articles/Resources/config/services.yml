@@ -8,7 +8,7 @@ parameters:
   articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
   articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
-  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\FormValidation'
+  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation'
   articles.validation.validation_rules.article_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule'
   articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
   articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
@@ -16,7 +16,13 @@ parameters:
 services:
   articles.controller.admin.index:
     class: %articles.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@articles.model.articlerepository', '@articles.cache', '@articles.validator', '@core.helpers.formToken']
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @articles.model.articlerepository
+      - @articles.cache
+      - @articles.validator
+      - @core.helpers.formToken
     calls:
       - ['setMenusCache', ['@?menus.cache']]
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
@@ -25,7 +31,13 @@ services:
 
   articles.controller.frontend.index:
     class: %articles.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.pageBreaks', '@articles.model.articlerepository', '@articles.cache']
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @core.pagination
+      - @core.helpers.pageBreaks
+      - @articles.model.articlerepository
+      - @articles.cache
 
   articles.controller.sidebar.index:
     class: %articles.controller.sidebar.index.fqdn%

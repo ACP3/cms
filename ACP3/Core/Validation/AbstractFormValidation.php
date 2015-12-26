@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class AbstractFormValidation
  * @package ACP3\Core\Validation
  */
-class AbstractFormValidation
+abstract class AbstractFormValidation
 {
     /**
      * @var \ACP3\Core\I18n\Translator
@@ -30,4 +30,12 @@ class AbstractFormValidation
         $this->translator = $translator;
         $this->validator = $validator;
     }
+
+    /**
+     * @param array $formData
+     *
+     * @throws Core\Exceptions\InvalidFormToken
+     * @throws Core\Exceptions\ValidationFailed
+     */
+    abstract public function validate(array $formData);
 }
