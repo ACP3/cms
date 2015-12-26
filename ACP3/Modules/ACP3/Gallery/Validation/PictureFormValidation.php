@@ -4,17 +4,29 @@ namespace ACP3\Modules\ACP3\Gallery\Validation;
 use ACP3\Core;
 
 /**
- * Class Picture
- * @package ACP3\Modules\ACP3\Gallery\Validator
+ * Class PictureFormValidation
+ * @package ACP3\Modules\ACP3\Gallery\Validation
  */
-class Picture extends Core\Validation\AbstractFormValidation
+class PictureFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
+     * @var bool
+     */
+    protected $fileRequired = false;
+
+    /**
+     * @param boolean $fileRequired
      *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
-     * @internal param bool $fileRequired
-     *
+     * @return $this
+     */
+    public function setFileRequired($fileRequired)
+    {
+        $this->fileRequired = (bool)$fileRequired;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function validate(array $formData)
     {
@@ -27,7 +39,7 @@ class Picture extends Core\Validation\AbstractFormValidation
                     'field' => 'file',
                     'message' => $this->translator->t('gallery', 'invalid_image_selected'),
                     'extra' => [
-                        'required' => $fileRequired
+                        'required' => $this->fileRequired
                     ]
                 ]);
 

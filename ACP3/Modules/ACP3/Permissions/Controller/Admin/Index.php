@@ -48,7 +48,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository $userRoleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository     $ruleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\Role          $roleValidator
+     * @param \ACP3\Modules\ACP3\Permissions\Validation\Role          $roleFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +58,8 @@ class Index extends Core\Modules\AdminController
         Permissions\Model\UserRoleRepository $userRoleRepository,
         Permissions\Model\RuleRepository $ruleRepository,
         Permissions\Cache $permissionsCache,
-        Permissions\Validation\Role $roleValidator)
+        Permissions\Validation\Role $roleFormValidation
+    )
     {
         parent::__construct($context);
 
@@ -68,7 +69,7 @@ class Index extends Core\Modules\AdminController
         $this->userRoleRepository = $userRoleRepository;
         $this->ruleRepository = $ruleRepository;
         $this->permissionsCache = $permissionsCache;
-        $this->roleValidator = $roleValidator;
+        $this->roleValidator = $roleFormValidation;
     }
 
     /**

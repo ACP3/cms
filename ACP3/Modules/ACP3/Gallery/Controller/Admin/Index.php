@@ -32,28 +32,28 @@ class Index extends Core\Modules\AdminController
      */
     protected $galleryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validation\Gallery
+     * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
      */
-    protected $galleryValidator;
+    protected $galleryFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validation\Settings
+     * @var \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
      */
-    protected $settingsValidator;
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
     protected $pictureRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
-     * @param \ACP3\Core\Date                                    $date
-     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\Gallery      $galleryValidator
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\Settings     $settingsValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext                        $context
+     * @param \ACP3\Core\Date                                                   $date
+     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                                  $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                                $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository                $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository                $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation       $galleryFormValidation
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -63,8 +63,9 @@ class Index extends Core\Modules\AdminController
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryRepository $galleryRepository,
         Gallery\Model\PictureRepository $pictureRepository,
-        Gallery\Validation\Gallery $galleryValidator,
-        Gallery\Validation\Settings $settingsValidator)
+        Gallery\Validation\GalleryFormValidation $galleryFormValidation,
+        Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    )
     {
         parent::__construct($context);
 
@@ -74,8 +75,8 @@ class Index extends Core\Modules\AdminController
         $this->galleryHelpers = $galleryHelpers;
         $this->galleryRepository = $galleryRepository;
         $this->pictureRepository = $pictureRepository;
-        $this->galleryValidator = $galleryValidator;
-        $this->settingsValidator = $settingsValidator;
+        $this->galleryFormValidation = $galleryFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
     }
 
     /**
@@ -299,7 +300,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->galleryValidator->validate($formData);
+            $this->galleryFormValidation->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -334,9 +335,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->galleryValidator->validate(
-                $formData
-            );
+            $this->galleryFormValidation
+                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
+                ->validate($formData);
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
@@ -371,7 +372,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData, array $settings)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData, $settings) {
-            $this->settingsValidator->validate($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'width' => (int)$formData['width'],
