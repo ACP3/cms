@@ -6,15 +6,13 @@ use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AtLeastTwoAnswersValidati
 use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidationRule;
 
 /**
- * Class Validator
+ * Class AdminFormValidation
  * @package ACP3\Modules\ACP3\Polls\Validation
  */
-class FormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
     public function validate(array $formData)
     {

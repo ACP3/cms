@@ -24,6 +24,7 @@ services:
       - @news.model.newsrepository
       - @news.cache
       - @news.validator
+      - @news.validation.admin_settings_form_validation
       - @categories.helpers
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]

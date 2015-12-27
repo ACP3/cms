@@ -7,59 +7,15 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailVa
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule;
 
 /**
- * Class Register
- * @package ACP3\Modules\ACP3\Users\Validator
+ * Class RegistrationFormValidation
+ * @package ACP3\Modules\ACP3\Users\Validation
  */
-class Register extends AbstractUserFormValidation
+class RegistrationFormValidation extends AbstractUserFormValidation
 {
     /**
-     * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\InvalidFormToken
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
-    public function validateForgotPassword(array $formData)
-    {
-        if ($this->validator->is(Core\Validation\ValidationRules\EmailValidationRule::NAME, $formData['nick_mail'])) {
-            $ruleName = AccountNotExistsByEmailValidationRule::NAME;
-        } else {
-            $ruleName = AccountNotExistsByNameValidationRule::NAME;
-        }
-
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'nick_mail',
-                    'message' => $this->translator->t('users', 'type_in_nickname_or_email')
-                ])
-            ->addConstraint(
-                CaptchaValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'captcha',
-                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
-                ])
-            ->addConstraint(
-                $ruleName,
-                [
-                    'data' => $formData,
-                    'field' => 'nick_mail',
-                    'message' => $this->translator->t('users', 'user_not_exists')
-                ]);
-
-        $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws \ACP3\Core\Exceptions\InvalidFormToken
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
-     */
-    public function validateRegistration(array $formData)
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)

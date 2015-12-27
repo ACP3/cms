@@ -6,7 +6,7 @@ parameters:
   system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
   system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
   system.model.settingsrepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SettingsRepository'
-  system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validation\Settings'
+  system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation'
   system.validation.validation_rules.is_wysiwyg_editor_validation_rule.fqdn: 'ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule'
   system.installer.schema.fqdn: 'ACP3\Modules\ACP3\System\Installer\Schema'
   system.installer.migration.fqdn: 'ACP3\Modules\ACP3\System\Installer\Migration'
