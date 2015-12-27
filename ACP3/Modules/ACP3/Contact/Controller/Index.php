@@ -23,7 +23,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
      */
-    protected $contactValidator;
+    protected $formValidation;
     /**
      * @var \ACP3\Modules\ACP3\Captcha\Helpers
      */
@@ -33,19 +33,20 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Modules\Controller\FrontendContext        $context
      * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
      * @param \ACP3\Core\Helpers\SendEmail                         $sendEmailHelper
-     * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $contactValidator
+     * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
-        Contact\Validation\FormValidation $contactValidator)
+        Contact\Validation\FormValidation $formValidation
+    )
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->sendEmailHelper = $sendEmailHelper;
-        $this->contactValidator = $contactValidator;
+        $this->formValidation = $formValidation;
     }
 
     /**
@@ -112,7 +113,7 @@ class Index extends Core\Modules\FrontendController
                 $seoSettings = $this->config->getSettings('seo');
                 $settings = $this->config->getSettings('contact');
 
-                $this->contactValidator->validate($formData);
+                $this->formValidation->validate($formData);
 
                 $formData['message'] = Core\Functions::strEncode($formData['message'], true);
 

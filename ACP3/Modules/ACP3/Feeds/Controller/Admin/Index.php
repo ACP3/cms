@@ -18,23 +18,23 @@ class Index extends Core\Modules\AdminController
     /**
      * @var \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation
      */
-    protected $feedsValidator;
+    protected $adminFormValidation;
 
     /**
      * @param \ACP3\Core\Modules\Controller\AdminContext              $context
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation $feedsValidator
+     * @param \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Feeds\Validation\AdminFormValidation $feedsValidator
+        Feeds\Validation\AdminFormValidation $adminFormValidation
     )
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->feedsValidator = $feedsValidator;
+        $this->adminFormValidation = $adminFormValidation;
     }
 
     /**
@@ -70,7 +70,7 @@ class Index extends Core\Modules\AdminController
     protected function _indexPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->feedsValidator->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             $data = [
                 'feed_image' => Core\Functions::strEncode($formData['feed_image']),

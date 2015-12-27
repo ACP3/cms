@@ -20,9 +20,9 @@ class Index extends Core\Modules\AdminController
      */
     protected $categoriesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
      */
-    protected $categoriesValidator;
+    protected $adminFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation
      */
@@ -36,7 +36,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Modules\Controller\AdminContext                           $context
      * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository               $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Cache                                  $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Validation\FormValidation              $categoriesValidator
+     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation         $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
      */
@@ -44,7 +44,7 @@ class Index extends Core\Modules\AdminController
         Core\Modules\Controller\AdminContext $context,
         Categories\Model\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
-        Categories\Validation\FormValidation $categoriesValidator,
+        Categories\Validation\AdminFormValidation $adminFormValidation,
         Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
@@ -52,7 +52,7 @@ class Index extends Core\Modules\AdminController
 
         $this->categoryRepository = $categoryRepository;
         $this->categoriesCache = $categoriesCache;
-        $this->categoriesValidator = $categoriesValidator;
+        $this->adminFormValidation = $adminFormValidation;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->formTokenHelper = $formTokenHelper;
     }
@@ -93,7 +93,7 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
-            $this->categoriesValidator
+            $this->adminFormValidation
                 ->setFile($file)
                 ->setSettings($this->config->getSettings('categories'))
                 ->validate($formData);
@@ -207,7 +207,7 @@ class Index extends Core\Modules\AdminController
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $category, $id) {
             $file = $this->request->getFiles()->get('picture');
 
-            $this->categoriesValidator
+            $this->adminFormValidation
                 ->setFile($file)
                 ->setSettings($this->config->getSettings('categories'))
                 ->setCategoryId($id)

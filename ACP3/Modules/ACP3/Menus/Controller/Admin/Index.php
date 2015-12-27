@@ -59,8 +59,7 @@ class Index extends Core\Modules\AdminController
         Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
         Menus\Validation\MenuFormValidation $menuFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->nestedSet = $nestedSet;
@@ -160,12 +159,22 @@ class Index extends Core\Modules\AdminController
 
         if ($c_menus > 0) {
             $canDeleteItem = $this->acl->hasPermission('admin/menus/items/delete');
+            $canEditItem = $this->acl->hasPermission('admin/menus/items/edit');
             $canSortItem = $this->acl->hasPermission('admin/menus/items/order');
             $this->view->assign('can_delete_item', $canDeleteItem);
+            $this->view->assign('can_edit_item', $canEditItem);
             $this->view->assign('can_order_item', $canSortItem);
             $this->view->assign('can_delete', $this->acl->hasPermission('admin/menus/index/delete'));
             $this->view->assign('can_edit', $this->acl->hasPermission('admin/menus/index/edit'));
-            $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
+
+            $colspan = 4;
+            if ($canDeleteItem || $canEditItem) {
+                $colspan += 1;
+            }
+            if ($canSortItem) {
+                $colspan += 1;
+            }
+            $this->view->assign('colspan', $colspan);
 
             $menuItems = $this->menusHelpers->menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {

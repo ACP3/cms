@@ -9,6 +9,7 @@
         <item key="admin_index_delete">Rolle löschen</item>
         <item key="admin_index_edit">Rolle bearbeiten</item>
         <item key="admin_resources_create">Neue Ressource erstellen</item>
+        <item key="admin_resources_delete">Ressource löschen</item>
         <item key="admin_resources_edit">Ressource bearbeiten</item>
         <item key="admin_resources_index">Ressourcen verwalten</item>
         <item key="allow_access">Erlaubt</item>
@@ -29,6 +30,7 @@
         <item key="role_already_exists">Es existiert bereits eine Rolle mit diesem Namen.</item>
         <item key="role_not_deletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
         <item key="roles">Zugeordnete Rollen</item>
+        <item key="route">Route</item>
         <item key="superior_role">Übergeordnete Rolle</item>
         <item key="select_module">Bitte wählen Sie das Modul aus, für welches die Ressource erstellt werden soll.</item>
         <item key="select_privilege">Bitte wählen Sie für die gewählte Ressource ein Privileg aus.</item>

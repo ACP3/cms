@@ -6,10 +6,10 @@ use ACP3\Modules\ACP3\Categories\Model\CategoryRepository;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
 
 /**
- * Class FormValidation
+ * Class AdminFormValidation
  * @package ACP3\Modules\ACP3\Categories\Validation
  */
-class FormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
@@ -48,7 +48,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @param array $file
      *
-     * @return FormValidation
+     * @return AdminFormValidation
      */
     public function setFile($file)
     {
@@ -59,7 +59,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @param array $settings
      *
-     * @return FormValidation
+     * @return AdminFormValidation
      */
     public function setSettings($settings)
     {
@@ -70,7 +70,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @param int $categoryId
      *
-     * @return FormValidation
+     * @return AdminFormValidation
      */
     public function setCategoryId($categoryId)
     {

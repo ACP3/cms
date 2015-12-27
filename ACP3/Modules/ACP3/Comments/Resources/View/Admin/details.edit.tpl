@@ -28,7 +28,7 @@
                     <input type="hidden" name="user_id" value="{$form.user_id}">
                 {/if}
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/comments/index/index_comments/id_`$module_id`"}" class="btn btn-default">{lang t="system|cancel"}</a>
+                <a href="{uri args="acp/comments/details/index/id_`$module_id`"}" class="btn btn-default">{lang t="system|cancel"}</a>
                 {$form_token}
             </div>
         </div>

@@ -27,7 +27,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
      */
-    protected $articlesValidator;
+    protected $adminFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
@@ -54,7 +54,7 @@ class Index extends Core\Modules\AdminController
      * @param \ACP3\Core\Date                                            $date
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository        $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                          $articlesCache
-     * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $articlesValidator
+     * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
@@ -62,7 +62,7 @@ class Index extends Core\Modules\AdminController
         Core\Date $date,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
-        Articles\Validation\AdminFormValidation $articlesValidator,
+        Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
@@ -70,7 +70,7 @@ class Index extends Core\Modules\AdminController
         $this->date = $date;
         $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;
-        $this->articlesValidator = $articlesValidator;
+        $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
     }
 
@@ -160,7 +160,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->articlesValidator->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -278,7 +278,7 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->articlesValidator
+            $this->adminFormValidation
                 ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
