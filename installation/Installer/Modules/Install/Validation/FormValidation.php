@@ -6,18 +6,32 @@ use ACP3\Installer\Modules\Install\Validation\ValidationRules\ConfigFileValidati
 use ACP3\Installer\Modules\Install\Validation\ValidationRules\DatabaseConnectionValidationRule;
 
 /**
- * Class Validator
+ * Class FormValidation
  * @package ACP3\Installer\Modules\Install\Validation
  */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array  $formData
+     * @var string
+     */
+    protected $configFilePath = '';
+
+    /**
      * @param string $configFilePath
      *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @return $this
      */
-    public function validateConfiguration(array $formData, $configFilePath)
+    public function setConfigFilePath($configFilePath)
+    {
+        $this->configFilePath = $configFilePath;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(
@@ -93,7 +107,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
             ->addConstraint(
                 ConfigFileValidationRule::NAME,
                 [
-                    'data' => $configFilePath,
+                    'data' => $this->configFilePath,
                     'message' => $this->translator->t('install', 'wrong_chmod_for_config_file')
                 ]);
 
