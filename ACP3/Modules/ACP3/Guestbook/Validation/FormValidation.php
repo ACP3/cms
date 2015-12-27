@@ -13,36 +13,40 @@ use ACP3\Modules\ACP3\Newsletter;
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var string
      */
-    protected $modules;
+    protected $ipAddress = '';
+    /**
+     * @var bool
+     */
+    protected $newsletterAccess = false;
 
     /**
-     * Validator constructor.
+     * @param string $ipAddress
      *
-     * @param \ACP3\Core\I18n\Translator      $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\Modules              $modules
+     * @return $this
      */
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Validation\Validator $validator,
-        Core\Modules $modules)
+    public function setIpAddress($ipAddress)
     {
-        parent::__construct($translator, $validator);
-
-        $this->modules = $modules;
+        $this->ipAddress = $ipAddress;
+        return $this;
     }
 
     /**
-     * @param array   $formData
      * @param boolean $newsletterAccess
-     * @param string  $ipAddress
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @return $this
      */
-    public function validateCreate(array $formData, $newsletterAccess, $ipAddress)
+    public function setNewsletterAccess($newsletterAccess)
+    {
+        $this->newsletterAccess = (bool)$newsletterAccess;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -51,7 +55,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'message' => $this->translator->t('system', 'flood_no_entry_possible'),
                     'extra' => [
-                        'ip' => $ipAddress
+                        'ip' => $this->ipAddress
                     ]
                 ])
             ->addConstraint(
@@ -87,7 +91,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     ]);
         }
 
-        if ($newsletterAccess === true && isset($formData['subscribe_newsletter'])) {
+        if ($this->newsletterAccess === true && isset($formData['subscribe_newsletter'])) {
             $this->validator
                 ->addConstraint(
                     Core\Validation\ValidationRules\EmailValidationRule::NAME,
@@ -108,122 +112,5 @@ class FormValidation extends Core\Validation\AbstractFormValidation
         }
 
         $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     * @param array $settings
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateEdit(array $formData, array $settings)
-    {
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short')
-                ]);
-
-        if ($settings['notify'] == 2) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                    [
-                        'data' => $formData,
-                        'field' => 'active',
-                        'message' => $this->translator->t('guestbook', 'select_activate'),
-                        'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
-        }
-
-        $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSettings(array $formData)
-    {
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'dateformat',
-                    'message' => $this->translator->t('system', 'select_date_format'),
-                    'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'notify',
-                    'message' => $this->translator->t('guestbook', 'select_notification_type'),
-                    'extra' => [
-                        'haystack' => [0, 1, 2]
-                    ]
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'overlay',
-                    'message' => $this->translator->t('guestbook', 'select_use_overlay'),
-                    'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ]);
-
-        if ($formData['notify'] != 0) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\EmailValidationRule::NAME,
-                    [
-                        'data' => $formData,
-                        'field' => 'notify_email',
-                        'message' => $this->translator->t('system', 'wrong_email_format')
-                    ]);
-        }
-
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                    [
-                        'data' => $formData,
-                        'field' => 'emoticons',
-                        'message' => $this->translator->t('guestbook', 'select_emoticons'),
-                        'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
-        }
-
-        if ($this->modules->isActive('newsletter') === true) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
-                    [
-                        'data' => $formData,
-                        'field' => 'newsletter_integration',
-                        'message' => $this->translator->t('guestbook', 'select_newsletter_integration'),
-                        'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
-        }
     }
 }

@@ -3,6 +3,8 @@ parameters:
   guestbook.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Guestbook\Controller\Index'
   guestbook.model.guestbookrepository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository'
   guestbook.validator.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\FormValidation'
+  guestbook.validation.admin_form_validation.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation'
+  guestbook.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation'
   guestbook.validation.validation_rules.flood_barrier_validation_rule.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule'
   guestbook.installer.schema.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Schema'
   guestbook.installer.migration.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Migration'
@@ -10,13 +12,25 @@ parameters:
 services:
   guestbook.controller.admin.index:
     class: %guestbook.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@guestbook.model.guestbookrepository', '@guestbook.validator']
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @core.helpers.formToken
+      - @guestbook.model.guestbookrepository
+      - @guestbook.validation.admin_form_validation
+      - @guestbook.validation.admin_settings_form_validation
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   guestbook.controller.frontend.index:
     class: %guestbook.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@core.pagination', '@core.helpers.formToken', '@guestbook.model.guestbookrepository', '@guestbook.validator']
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @core.pagination
+      - @core.helpers.formToken
+      - @guestbook.model.guestbookrepository
+      - @guestbook.validator
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
@@ -28,7 +42,18 @@ services:
 
   guestbook.validator:
     class: %guestbook.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.modules']
+    parent: core.validator.abstract
+
+  guestbook.validation.admin_form_validation:
+    class: %guestbook.validation.admin_form_validation.fqdn%
+    parent: core.validator.abstract
+
+  guestbook.validation.admin_settings_form_validation:
+    class: %guestbook.validation.admin_settings_form_validation.fqdn%
+    arguments:
+      - @core.lang
+      - @core.validator
+      - @core.modules
 
   guestbook.validation.validation_rules.flood_barrier_validation_rule:
     class: %guestbook.validation.validation_rules.flood_barrier_validation_rule.fqdn%

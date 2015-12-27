@@ -17,42 +17,59 @@ class Index extends Core\Modules\FrontendController
      */
     protected $formTokenHelper;
     /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation
+     */
+    protected $activateAccountFormValidation;
+    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
      */
     protected $subscribeHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
+     */
+    protected $unsubscribeFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
     protected $accountStatusHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation
      */
-    protected $newsletterValidator;
+    protected $subscribeFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Captcha\Helpers
      */
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext           $context
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe          $subscribeHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus      $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation $newsletterValidator
+     * Index constructor.
+     *
+     * @param \ACP3\Core\Modules\Controller\FrontendContext                          $context
+     * @param \ACP3\Core\Helpers\FormToken                                           $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe                         $subscribeHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                     $accountStatusHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation       $subscribeFormValidation
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation     $unsubscribeFormValidation
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\Subscribe $subscribeHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
-        Newsletter\Validation\FormValidation $newsletterValidator)
+        Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation,
+        Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation,
+        Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
+    )
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->subscribeHelper = $subscribeHelper;
         $this->accountStatusHelper = $accountStatusHelper;
-        $this->newsletterValidator = $newsletterValidator;
+        $this->activateAccountFormValidation = $activateAccountFormValidation;
+        $this->subscribeFormValidation = $subscribeFormValidation;
+        $this->unsubscribeFormValidation = $unsubscribeFormValidation;
     }
 
     /**
@@ -73,7 +90,7 @@ class Index extends Core\Modules\FrontendController
     public function actionActivate($hash)
     {
         try {
-            $this->newsletterValidator->validateActivate($hash);
+            $this->activateAccountFormValidation->validate(['hash' => $hash]);
 
             $bool = $this->accountStatusHelper->changeAccountStatus(
                 Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
@@ -152,7 +169,7 @@ class Index extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->newsletterValidator->validateSubscribe($formData);
+                $this->subscribeFormValidation->validate($formData);
 
                 $bool = $this->subscribeHelper->subscribeToNewsletter(
                     $formData['mail'],
@@ -178,7 +195,7 @@ class Index extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->newsletterValidator->validateUnsubscribe($formData);
+                $this->unsubscribeFormValidation->validate($formData);
 
                 $bool = $this->accountStatusHelper->changeAccountStatus(
                     Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
