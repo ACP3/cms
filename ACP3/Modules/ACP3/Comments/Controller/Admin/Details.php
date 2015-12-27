@@ -18,9 +18,9 @@ class Details extends Core\Modules\AdminController
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
      */
-    protected $commentsValidator;
+    protected $adminFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
@@ -35,23 +35,25 @@ class Details extends Core\Modules\AdminController
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository   $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $commentsValidator
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository      $systemModuleRepository
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
+     * Details constructor.
+     *
+     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
+     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository        $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository           $systemModuleRepository
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validation\FormValidation $commentsValidator,
+        Comments\Validation\AdminFormValidation $adminFormValidation,
         System\Model\ModuleRepository $systemModuleRepository,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
-        $this->commentsValidator = $commentsValidator;
+        $this->adminFormValidation = $adminFormValidation;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->formTokenHelper = $formTokenHelper;
     }
@@ -219,7 +221,7 @@ class Details extends Core\Modules\AdminController
     {
         return $this->actionHelper->handleEditPostAction(
             function () use ($formData, $comment, $id) {
-                $this->commentsValidator->validateEdit($formData);
+                $this->adminFormValidation->validate($formData);
 
                 $updateValues = [];
                 $updateValues['message'] = Core\Functions::strEncode($formData['message']);

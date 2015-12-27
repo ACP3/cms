@@ -28,17 +28,22 @@ class Account extends Core\Modules\FrontendController
      */
     protected $userRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\Account
+     * @var \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
      */
-    protected $usersValidator;
+    protected $accountFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
+     */
+    protected $accountSettingsFormValidation;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                     $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validation\Account   $usersValidator
+     * @param \ACP3\Core\Modules\Controller\FrontendContext                     $context
+     * @param \ACP3\Core\Date                                                   $date
+     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository                     $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation         $accountFormValidation
+     * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -46,7 +51,9 @@ class Account extends Core\Modules\FrontendController
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UserRepository $userRepository,
-        Users\Validation\Account $usersValidator)
+        Users\Validation\AccountFormValidation $accountFormValidation,
+        Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
+    )
     {
         parent::__construct($context);
 
@@ -54,7 +61,8 @@ class Account extends Core\Modules\FrontendController
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->userRepository = $userRepository;
-        $this->usersValidator = $usersValidator;
+        $this->accountFormValidation = $accountFormValidation;
+        $this->accountSettingsFormValidation = $accountSettingsFormValidation;
     }
 
     public function preDispatch()
@@ -163,7 +171,9 @@ class Account extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->usersValidator->validateEditProfile($formData, $this->user->getUserId());
+                $this->accountFormValidation
+                    ->setUserId($this->user->getUserId())
+                    ->validate($formData);
 
                 $updateValues = [
                     'nickname' => Core\Functions::strEncode($formData['nickname']),
@@ -216,7 +226,9 @@ class Account extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData, $settings) {
-                $this->usersValidator->validateUserSettings($formData, $settings);
+                $this->accountSettingsFormValidation
+                    ->setSettings($settings)
+                    ->validate($formData);
 
                 $updateValues = [
                     'mail_display' => (int)$formData['mail_display'],

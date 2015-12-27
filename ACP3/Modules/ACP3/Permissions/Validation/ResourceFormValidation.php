@@ -5,16 +5,13 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule;
 
 /**
- * Class Resource
- * @package ACP3\Modules\ACP3\Permissions\Validator
+ * Class ResourceFormValidation
+ * @package ACP3\Modules\ACP3\Permissions\Validation
  */
-class Resource extends Core\Validation\AbstractFormValidation
+class ResourceFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
     public function validate(array $formData)
     {

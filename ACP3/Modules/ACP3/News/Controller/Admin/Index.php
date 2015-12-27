@@ -30,9 +30,13 @@ class Index extends Core\Modules\AdminController
      */
     protected $newsCache;
     /**
-     * @var \ACP3\Modules\ACP3\News\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
      */
-    protected $newsValidator;
+    protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation
+     */
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
@@ -43,13 +47,14 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
-     * @param \ACP3\Core\Date                                   $date
-     * @param \ACP3\Core\Helpers\FormToken                      $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository      $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                     $newsCache
-     * @param \ACP3\Modules\ACP3\News\Validation\FormValidation $newsValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers             $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext                     $context
+     * @param \ACP3\Core\Date                                                $date
+     * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
+     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository                   $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Cache                                  $newsCache
+     * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation         $adminFormValidation
+     * @param \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                          $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -57,7 +62,8 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
-        News\Validation\FormValidation $newsValidator,
+        News\Validation\AdminFormValidation $adminFormValidation,
+        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);
@@ -66,7 +72,8 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->newsRepository = $newsRepository;
         $this->newsCache = $newsCache;
-        $this->newsValidator = $newsValidator;
+        $this->adminFormValidation = $adminFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
@@ -256,7 +263,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData, array $settings)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
-            $this->newsValidator->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -299,10 +306,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, array $settings, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
-            $this->newsValidator->validate(
-                $formData,
-                sprintf(News\Helpers::URL_KEY_PATTERN, $id)
-            );
+            $this->adminFormValidation
+                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
+                ->validate($formData);
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
@@ -344,7 +350,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->newsValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),
@@ -398,18 +404,18 @@ class Index extends Core\Modules\AdminController
 
     /**
      * @param array $settings
-     * @param int   $readmoreValue
+     * @param int   $readMoreValue
      * @param int   $commentsValue
      *
      * @return array
      */
-    protected function fetchNewsOptions(array $settings, $readmoreValue, $commentsValue)
+    protected function fetchNewsOptions(array $settings, $readMoreValue, $commentsValue)
     {
         $options = [];
         if ($settings['readmore'] == 1) {
             $options[] = [
                 'name' => 'readmore',
-                'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $readmoreValue, 'checked'),
+                'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $readMoreValue, 'checked'),
                 'lang' => $this->translator->t('news', 'activate_readmore')
             ];
         }

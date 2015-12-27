@@ -32,7 +32,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
-    protected $commentsValidator;
+    protected $formValidation;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers
      */
@@ -55,7 +55,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Date                                       $date
      * @param \ACP3\Core\Pagination                                 $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository   $commentRepository
-     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $commentsValidator
+     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
@@ -63,7 +63,7 @@ class Index extends Core\Modules\FrontendController
         Core\Date $date,
         Core\Pagination $pagination,
         Comments\Model\CommentRepository $commentRepository,
-        Comments\Validation\FormValidation $commentsValidator,
+        Comments\Validation\FormValidation $formValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
@@ -71,7 +71,7 @@ class Index extends Core\Modules\FrontendController
         $this->date = $date;
         $this->pagination = $pagination;
         $this->commentRepository = $commentRepository;
-        $this->commentsValidator = $commentsValidator;
+        $this->formValidation = $formValidation;
         $this->formTokenHelper = $formTokenHelper;
     }
 
@@ -194,7 +194,9 @@ class Index extends Core\Modules\FrontendController
             function () use ($formData, $module, $entryId) {
                 $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
 
-                $this->commentsValidator->validateCreate($formData, $ip);
+                $this->formValidation
+                    ->setIpAddress($ip)
+                    ->validate($formData);
 
                 $insertValues = [
                     'id' => '',

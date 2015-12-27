@@ -36,24 +36,24 @@ class Pictures extends Core\Modules\AdminController
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validation\Picture
+     * @var \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
      */
-    protected $pictureValidator;
+    protected $pictureFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
     protected $pictureRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
-     * @param \ACP3\Core\Date                                    $date
-     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
-     * @param \ACP3\Core\Helpers\Sort                            $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\Picture      $pictureValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext                  $context
+     * @param \ACP3\Core\Date                                             $date
+     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
+     * @param \ACP3\Core\Helpers\Sort                                     $sortHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository          $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository          $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                            $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -64,7 +64,8 @@ class Pictures extends Core\Modules\AdminController
         Gallery\Model\GalleryRepository $galleryRepository,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
-        Gallery\Validation\Picture $pictureValidator)
+        Gallery\Validation\PictureFormValidation $pictureFormValidation
+    )
     {
         parent::__construct($context);
 
@@ -75,7 +76,7 @@ class Pictures extends Core\Modules\AdminController
         $this->galleryRepository = $galleryRepository;
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
-        $this->pictureValidator = $pictureValidator;
+        $this->pictureFormValidation = $pictureFormValidation;
     }
 
     /**
@@ -234,7 +235,9 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->pictureValidator->validate($file);
+                $this->pictureFormValidation
+                    ->setFileRequired(true)
+                    ->validate($file);
 
                 $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
@@ -276,7 +279,9 @@ class Pictures extends Core\Modules\AdminController
             function () use ($formData, $settings, $picture, $id) {
                 $file = $this->request->getFiles()->get('file');
 
-                $this->pictureValidator->validate($file, false);
+                $this->pictureFormValidation
+                    ->setFileRequired(false)
+                    ->validate($file);
 
                 $updateValues = [
                     'description' => Core\Functions::strEncode($formData['description'], true),

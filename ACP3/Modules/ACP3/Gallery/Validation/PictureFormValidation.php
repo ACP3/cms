@@ -4,29 +4,42 @@ namespace ACP3\Modules\ACP3\Gallery\Validation;
 use ACP3\Core;
 
 /**
- * Class Picture
- * @package ACP3\Modules\ACP3\Gallery\Validator
+ * Class PictureFormValidation
+ * @package ACP3\Modules\ACP3\Gallery\Validation
  */
-class Picture extends Core\Validation\AbstractFormValidation
+class PictureFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $file
-     * @param bool  $fileRequired
-     *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @var bool
      */
-    public function validate(array $file, $fileRequired = true)
+    protected $fileRequired = false;
+
+    /**
+     * @param boolean $fileRequired
+     *
+     * @return $this
+     */
+    public function setFileRequired($fileRequired)
+    {
+        $this->fileRequired = (bool)$fileRequired;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::NAME,
                 [
-                    'data' => $file,
+                    'data' => $formData,
                     'field' => 'file',
                     'message' => $this->translator->t('gallery', 'invalid_image_selected'),
                     'extra' => [
-                        'required' => $fileRequired
+                        'required' => $this->fileRequired
                     ]
                 ]);
 

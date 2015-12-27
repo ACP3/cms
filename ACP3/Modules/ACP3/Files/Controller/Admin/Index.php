@@ -31,9 +31,13 @@ class Index extends Core\Modules\AdminController
      */
     protected $filesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
      */
-    protected $filesValidator;
+    protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
+     */
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
@@ -44,13 +48,14 @@ class Index extends Core\Modules\AdminController
     protected $commentsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
-     * @param \ACP3\Core\Date                                    $date
-     * @param \ACP3\Core\Helpers\FormToken                       $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository     $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                     $filesCache
-     * @param \ACP3\Modules\ACP3\Files\Validation\FormValidation $filesValidator
-     * @param \ACP3\Modules\ACP3\Categories\Helpers              $categoriesHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext                      $context
+     * @param \ACP3\Core\Date                                                 $date
+     * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository                  $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                                  $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation         $adminFormValidation
+     * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                           $categoriesHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +63,8 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
-        Files\Validation\FormValidation $filesValidator,
+        Files\Validation\AdminFormValidation $adminFormValidation,
+        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);
@@ -67,7 +73,8 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
-        $this->filesValidator = $filesValidator;
+        $this->adminFormValidation = $adminFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
@@ -296,7 +303,9 @@ class Index extends Core\Modules\AdminController
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->filesValidator->validate($formData, $file);
+            $this->adminFormValidation
+                ->setFile($file)
+                ->validate($formData);
 
             if (is_array($file) === true) {
                 $upload = new Core\Helpers\Upload($this->appPath, 'files');
@@ -357,7 +366,10 @@ class Index extends Core\Modules\AdminController
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->filesValidator->validate($formData, $file, sprintf(Helpers::URL_KEY_PATTERN, $id));
+            $this->adminFormValidation
+                ->setFile($file)
+                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
+                ->validate($formData);
 
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
@@ -419,7 +431,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->filesValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),

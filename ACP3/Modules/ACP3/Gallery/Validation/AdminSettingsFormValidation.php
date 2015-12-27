@@ -4,10 +4,10 @@ namespace ACP3\Modules\ACP3\Gallery\Validation;
 use ACP3\Core;
 
 /**
- * Class Settings
- * @package ACP3\Modules\ACP3\Gallery\Validator
+ * Class AdminSettingsFormValidation
+ * @package ACP3\Modules\ACP3\Gallery\Validation
  */
-class Settings extends Core\Validation\AbstractFormValidation
+class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Core\Modules
@@ -15,9 +15,11 @@ class Settings extends Core\Validation\AbstractFormValidation
     protected $modules;
 
     /**
+     * AdminSettingsFormValidation constructor.
+     *
      * @param \ACP3\Core\I18n\Translator      $translator
      * @param \ACP3\Core\Validation\Validator $validator
-     * @param Core\Modules                    $modules
+     * @param \ACP3\Core\Modules              $modules
      */
     public function __construct(
         Core\I18n\Translator $translator,
@@ -31,10 +33,7 @@ class Settings extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
     public function validate(array $formData)
     {

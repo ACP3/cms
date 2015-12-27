@@ -33,23 +33,28 @@ class Index extends Core\Modules\AdminController
      */
     protected $userRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\Admin
+     * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
      */
-    protected $usersValidator;
+    protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation
+     */
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Helpers
      */
     protected $permissionsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext    $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                     $secureHelper
-     * @param \ACP3\Core\Helpers\Forms                      $formsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validation\Admin     $usersValidator
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext                      $context
+     * @param \ACP3\Core\Date                                                 $date
+     * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                       $secureHelper
+     * @param \ACP3\Core\Helpers\Forms                                        $formsHelpers
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository                   $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation         $adminFormValidation
+     * @param \ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers                          $permissionsHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +63,8 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
         Users\Model\UserRepository $userRepository,
-        Users\Validation\Admin $usersValidator,
+        Users\Validation\AdminFormValidation $adminFormValidation,
+        Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Permissions\Helpers $permissionsHelpers)
     {
         parent::__construct($context);
@@ -68,7 +74,8 @@ class Index extends Core\Modules\AdminController
         $this->secureHelper = $secureHelper;
         $this->formsHelpers = $formsHelpers;
         $this->userRepository = $userRepository;
-        $this->usersValidator = $usersValidator;
+        $this->adminFormValidation = $adminFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
     }
 
@@ -283,7 +290,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost($formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->usersValidator->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             $salt = $this->secureHelper->salt(15);
 
@@ -337,7 +344,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->usersValidator->validate($formData, $id);
+            $this->adminFormValidation
+                ->setUserId($id)
+                ->validate($formData);
 
             $updateValues = [
                 'super_user' => (int)$formData['super_user'],
@@ -401,7 +410,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->usersValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'enable_registration' => $formData['enable_registration'],

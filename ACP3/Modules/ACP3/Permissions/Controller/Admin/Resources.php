@@ -24,30 +24,31 @@ class Resources extends Core\Modules\AdminController
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Validation\Resource
+     * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
-    protected $resourceValidator;
+    protected $resourceFormValidation;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\Resource      $resourceValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext                       $context
+     * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository          $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                             $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache,
-        Permissions\Validation\Resource $resourceValidator)
+        Permissions\Validation\ResourceFormValidation $resourceFormValidation
+    )
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
-        $this->resourceValidator = $resourceValidator;
+        $this->resourceFormValidation = $resourceFormValidation;
     }
 
     /**
@@ -160,7 +161,8 @@ class Resources extends Core\Modules\AdminController
 
         return [
             'resources' => $output,
-            'can_delete_resource' => $this->acl->hasPermission('admin/permissions/resources/delete')
+            'can_delete_resource' => $this->acl->hasPermission('admin/permissions/resources/delete'),
+            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/edit')
         ];
     }
 
@@ -172,7 +174,7 @@ class Resources extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->resourceValidator->validate($formData);
+            $this->resourceFormValidation->validate($formData);
 
             $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
             $insertValues = [
@@ -203,7 +205,7 @@ class Resources extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->resourceValidator->validate($formData);
+            $this->resourceFormValidation->validate($formData);
 
             $updateValues = [
                 'controller' => $formData['controller'],

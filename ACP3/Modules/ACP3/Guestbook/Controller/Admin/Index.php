@@ -25,34 +25,44 @@ class Index extends Core\Modules\AdminController
      */
     protected $guestbookRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
      */
-    protected $guestbookValidator;
+    protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
+     */
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers
      */
     protected $emoticonsHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
-     * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $guestbookValidator
+     * Index constructor.
+     *
+     * @param \ACP3\Core\Modules\Controller\AdminContext                          $context
+     * @param \ACP3\Core\Date                                                     $date
+     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository              $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation         $adminFormValidation
+     * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
-        Guestbook\Validation\FormValidation $guestbookValidator)
+        Guestbook\Validation\AdminFormValidation $adminFormValidation,
+        Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    )
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->guestbookRepository = $guestbookRepository;
-        $this->guestbookValidator = $guestbookValidator;
+        $this->adminFormValidation = $adminFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
     }
 
     /**
@@ -224,7 +234,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, array $settings, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
-            $this->guestbookValidator->validateEdit($formData, $settings);
+            $this->adminFormValidation
+                ->setSettings($settings)
+                ->validate($formData);
 
             $updateValues = [
                 'message' => Core\Functions::strEncode($formData['message']),
@@ -247,7 +259,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->guestbookValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'dateformat' => Core\Functions::strEncode($formData['dateformat']),

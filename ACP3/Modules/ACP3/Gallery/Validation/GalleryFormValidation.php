@@ -5,19 +5,32 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
- * Class Gallery
- * @package ACP3\Modules\ACP3\Gallery\Validator
+ * Class GalleryFormValidation
+ * @package ACP3\Modules\ACP3\Gallery\Validation
  */
-class Gallery extends Core\Validation\AbstractFormValidation
+class GalleryFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array  $formData
+     * @var string
+     */
+    protected $uriAlias = '';
+
+    /**
      * @param string $uriAlias
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @return $this
      */
-    public function validate(array $formData, $uriAlias = '')
+    public function setUriAlias($uriAlias)
+    {
+        $this->uriAlias = $uriAlias;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -42,7 +55,7 @@ class Gallery extends Core\Validation\AbstractFormValidation
                     'field' => 'alias',
                     'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
-                        'path' => $uriAlias
+                        'path' => $this->uriAlias
                     ]
                 ]);
 

@@ -2,14 +2,17 @@ parameters:
   feeds.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Admin\Index'
   feeds.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Index'
   feeds.helper.feedgenerator.fqdn: 'ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator'
-  feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validation\FormValidation'
+  feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation'
   feeds.installer.schema.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Schema'
   feeds.installer.migration.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Migration'
 
 services:
   feeds.controller.admin.index:
     class: %feeds.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.formToken', '@feeds.validator']
+    arguments:
+      - @core.context.admin
+      - @core.helpers.formToken
+      - @feeds.validator
 
   feeds.controller.frontend.index:
     class: %feeds.controller.frontend.index.fqdn%

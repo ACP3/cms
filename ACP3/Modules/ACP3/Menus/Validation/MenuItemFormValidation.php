@@ -9,16 +9,13 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
- * Class MenuItem
- * @package ACP3\Modules\ACP3\Menus\Validator
+ * Class MenuItemFormValidation
+ * @package ACP3\Modules\ACP3\Menus\Validation
  */
-class MenuItem extends Core\Validation\AbstractFormValidation
+class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
     public function validate(array $formData)
     {

@@ -24,30 +24,37 @@ class Index extends Core\Modules\AdminController
      */
     protected $seoRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
-    protected $seoValidator;
+    protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation
+     */
+    protected $adminSettingsFormValidation;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext       $context
-     * @param \ACP3\Core\Helpers\FormToken                     $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache                     $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository       $seoRepository
-     * @param \ACP3\Modules\ACP3\Seo\Validation\FormValidation $seoValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext                    $context
+     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Seo\Cache                                  $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository                    $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation         $adminFormValidation
+     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Cache $seoCache,
         Seo\Model\SeoRepository $seoRepository,
-        Seo\Validation\FormValidation $seoValidator)
-    {
+        Seo\Validation\AdminFormValidation $adminFormValidation,
+        Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->seoCache = $seoCache;
         $this->seoRepository = $seoRepository;
-        $this->seoValidator = $seoValidator;
+        $this->adminFormValidation = $adminFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
     }
 
     /**
@@ -195,7 +202,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->seoValidator->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             $bool = $this->seo->insertUriAlias(
                 $formData['uri'],
@@ -221,7 +228,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $path, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $path, $id) {
-            $this->seoValidator->validate($formData, $path);
+            $this->adminFormValidation
+                ->setUriAlias($path)
+                ->validate($formData);
 
             $updateValues = [
                 'uri' => $formData['uri'],
@@ -263,8 +272,10 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper->generateFormToken();
 
         return [
-            'robots' => $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots, $seoSettings['robots']),
-            'mod_rewrite' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']),
+            'robots' => $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots,
+                $seoSettings['robots']),
+            'mod_rewrite' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite',
+                $seoSettings['mod_rewrite']),
             'form' => array_merge($seoSettings, $this->request->getPost()->all())
         ];
     }
@@ -277,7 +288,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->seoValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             // Config aktualisieren
             $data = [

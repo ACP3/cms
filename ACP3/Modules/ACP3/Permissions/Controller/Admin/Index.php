@@ -36,19 +36,19 @@ class Index extends Core\Modules\AdminController
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Validation\Role
+     * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
-    protected $roleValidator;
+    protected $roleFormValidation;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
-     * @param \ACP3\Core\NestedSet                                    $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository     $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository $userRoleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository     $ruleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\Role          $roleValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext                   $context
+     * @param \ACP3\Core\NestedSet                                         $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository          $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository      $userRoleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository          $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,7 +58,8 @@ class Index extends Core\Modules\AdminController
         Permissions\Model\UserRoleRepository $userRoleRepository,
         Permissions\Model\RuleRepository $ruleRepository,
         Permissions\Cache $permissionsCache,
-        Permissions\Validation\Role $roleValidator)
+        Permissions\Validation\RoleFormValidation $roleFormValidation
+    )
     {
         parent::__construct($context);
 
@@ -68,7 +69,7 @@ class Index extends Core\Modules\AdminController
         $this->userRoleRepository = $userRoleRepository;
         $this->ruleRepository = $ruleRepository;
         $this->permissionsCache = $permissionsCache;
-        $this->roleValidator = $roleValidator;
+        $this->roleFormValidation = $roleFormValidation;
     }
 
     /**
@@ -206,7 +207,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->roleValidator->validate($formData);
+            $this->roleFormValidation->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -241,7 +242,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->roleValidator->validate($formData, $id);
+            $this->roleFormValidation
+                ->setRoleId($id)
+                ->validate($formData);
 
             $updateValues = [
                 'name' => Core\Functions::strEncode($formData['name']),

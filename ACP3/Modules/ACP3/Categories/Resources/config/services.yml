@@ -3,7 +3,8 @@ parameters:
   categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
   categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
-  categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\FormValidation'
+  categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation'
+  categories.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation'
   categories.validation.validation_rules.category_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\ValidationRules\CategoryExistsValidationRule'
   categories.validation.validation_rules.duplicate_category_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule'
   categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'
@@ -12,7 +13,13 @@ parameters:
 services:
   categories.controller.admin.index:
     class: %categories.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@categories.model', '@categories.cache', '@categories.validator', '@core.helpers.formToken']
+    arguments:
+      - @core.context.admin
+      - @categories.model
+      - @categories.cache
+      - @categories.validator
+      - @categories.validation.admin_settings_form_validation
+      - @core.helpers.formToken
 
   categories.model:
     class: %categories.model.categoryrepository.fqdn%
@@ -33,6 +40,10 @@ services:
   categories.validator:
     class: %categories.validator.fqdn%
     arguments: ['@core.lang', @core.validator, '@categories.model']
+
+  categories.validation.admin_settings_form_validation:
+    class: %categories.validation.admin_settings_form_validation.fqdn%
+    parent: core.validator.abstract
 
   categories.validation.validation_rules.category_exists_validation_rule:
     class: %categories.validation.validation_rules.category_exists_validation_rule.fqdn%

@@ -32,23 +32,23 @@ class Index extends Core\Modules\AdminController
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Validation\Menu
+     * @var \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
      */
-    protected $menusValidator;
+    protected $menuFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */
     protected $menuItemRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext        $context
-     * @param \ACP3\Core\NestedSet                              $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken                      $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList    $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository     $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
-     * @param \ACP3\Modules\ACP3\Menus\Validation\Menu          $menusValidator
+     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
+     * @param \ACP3\Core\NestedSet                                   $nestedSet
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList         $menusHelpers
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository          $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository      $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Cache                         $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -58,8 +58,8 @@ class Index extends Core\Modules\AdminController
         Menus\Model\MenuRepository $menuRepository,
         Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
-        Menus\Validation\Menu $menusValidator)
-    {
+        Menus\Validation\MenuFormValidation $menuFormValidation
+    ) {
         parent::__construct($context);
 
         $this->nestedSet = $nestedSet;
@@ -68,7 +68,7 @@ class Index extends Core\Modules\AdminController
         $this->menuRepository = $menuRepository;
         $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
-        $this->menusValidator = $menusValidator;
+        $this->menuFormValidation = $menuFormValidation;
     }
 
     /**
@@ -159,12 +159,22 @@ class Index extends Core\Modules\AdminController
 
         if ($c_menus > 0) {
             $canDeleteItem = $this->acl->hasPermission('admin/menus/items/delete');
+            $canEditItem = $this->acl->hasPermission('admin/menus/items/edit');
             $canSortItem = $this->acl->hasPermission('admin/menus/items/order');
             $this->view->assign('can_delete_item', $canDeleteItem);
+            $this->view->assign('can_edit_item', $canEditItem);
             $this->view->assign('can_order_item', $canSortItem);
             $this->view->assign('can_delete', $this->acl->hasPermission('admin/menus/index/delete'));
             $this->view->assign('can_edit', $this->acl->hasPermission('admin/menus/index/edit'));
-            $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
+
+            $colspan = 4;
+            if ($canDeleteItem || $canEditItem) {
+                $colspan += 1;
+            }
+            if ($canSortItem) {
+                $colspan += 1;
+            }
+            $this->view->assign('colspan', $colspan);
 
             $menuItems = $this->menusHelpers->menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {
@@ -186,7 +196,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
-            $this->menusValidator->validate($formData);
+            $this->menuFormValidation->validate($formData);
 
             $insertValues = [
                 'id' => '',
@@ -211,7 +221,9 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
-            $this->menusValidator->validate($formData, $id);
+            $this->menuFormValidation
+                ->setMenuId($id)
+                ->validate($formData);
 
             $updateValues = [
                 'index_name' => $formData['index_name'],

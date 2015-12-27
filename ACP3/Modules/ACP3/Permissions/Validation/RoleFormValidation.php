@@ -6,19 +6,31 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistVali
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule;
 
 /**
- * Class Validator
- * @package ACP3\Modules\ACP3\Permissions
+ * Class RoleFormValidation
+ * @package ACP3\Modules\ACP3\Permissions\Validation
  */
-class Role extends Core\Validation\AbstractFormValidation
+class RoleFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     * @param int   $roleId
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @var int
      */
-    public function validate(array $formData, $roleId = 0)
+    protected $roleId = 0;
+
+    /**
+     * @param int $roleId
+     *
+     * @return $this
+     */
+    public function setRoleId($roleId)
+    {
+        $this->roleId = (int)$roleId;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -36,7 +48,7 @@ class Role extends Core\Validation\AbstractFormValidation
                     'field' => 'name',
                     'message' => $this->translator->t('permissions', 'role_already_exists'),
                     'extra' => [
-                        'role_id' => $roleId
+                        'role_id' => $this->roleId
                     ]
                 ])
             ->addConstraint(

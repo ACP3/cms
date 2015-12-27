@@ -6,15 +6,19 @@ use ACP3\Modules\ACP3\Menus;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
- * Class Validator
+ * Class AdminFormValidation
  * @package ACP3\Modules\ACP3\Articles\Validation
  */
-class FormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var \ACP3\Core\ACL
      */
     protected $acl;
+    /**
+     * @var string
+     */
+    protected $uriAlias = '';
 
     /**
      * Validator constructor.
@@ -34,13 +38,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array  $formData
-     * @param string $uriAlias
+     * @param $uriAlias
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @return $this
      */
-    public function validate(array $formData, $uriAlias = '')
+    public function setUriAlias($uriAlias)
+    {
+        $this->uriAlias = $uriAlias;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -78,7 +90,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'alias',
                     'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
                     'extra' => [
-                        'path' => $uriAlias
+                        'path' => $this->uriAlias
                     ]
                 ]);
         if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {

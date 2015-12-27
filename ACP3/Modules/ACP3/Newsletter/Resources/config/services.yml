@@ -14,7 +14,11 @@ parameters:
   newsletter.model.newsletterrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository'
   newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
   newsletter.model.accounthistoryrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository'
-  newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\FormValidation'
+  newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation'
+  newsletter.validation.activate_account_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation'
+  newsletter.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation'
+  newsletter.validation.subscribe_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation'
+  newsletter.validation.unsubscribe_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation'
   newsletter.validation.validation_rules.account_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule'
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule'
   newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
@@ -23,19 +27,40 @@ parameters:
 services:
   newsletter.controller.admin.accounts:
     class: %newsletter.controller.admin.accounts.fqdn%
-    arguments: ['@core.context.admin', @newsletter.helper.accountstatus, '@newsletter.model.accountrepository']
+    arguments:
+      - @core.context.admin
+      - @newsletter.helper.accountstatus
+      - @newsletter.model.accountrepository
 
   newsletter.controller.admin.index:
     class: %newsletter.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@newsletter.model.newsletterrepository', @newsletter.model.accountrepository, '@newsletter.validator', '@newsletter.helper.sendnewsletter']
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @core.helpers.formToken
+      - @newsletter.model.newsletterrepository
+      - @newsletter.model.accountrepository
+      - @newsletter.validator
+      - @newsletter.validation.admin_settings_form_validation
+      - @newsletter.helper.sendnewsletter
 
   newsletter.controller.frontend.archive:
     class: %newsletter.controller.frontend.archive.fqdn%
-    arguments: ['@core.context.frontend', '@core.pagination', '@newsletter.model.newsletterrepository']
+    arguments:
+      - @core.context.frontend
+      - @core.pagination
+      - @newsletter.model.newsletterrepository
 
   newsletter.controller.frontend.index:
     class: %newsletter.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.helpers.formToken', '@newsletter.helper.subscribe', '@newsletter.helper.accountstatus', '@newsletter.validator']
+    arguments:
+      - @core.context.frontend
+      - @core.helpers.formToken
+      - @newsletter.helper.subscribe
+      - @newsletter.helper.accountstatus
+      - @newsletter.validation.activate_account_form_validation
+      - @newsletter.validation.subscribe_form_validation
+      - @newsletter.validation.unsubscribe_form_validation
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
@@ -63,11 +88,25 @@ services:
 
   newsletter.helper.sendnewsletter:
     class: %newsletter.helper.sendnewsletter.fqdn%
-    arguments: ['@core.mailer', '@core.router', '@core.config', '@newsletter.model.newsletterrepository']
+    arguments:
+      - @core.mailer
+      - @core.router
+      - @core.config
+      - @newsletter.model.newsletterrepository
 
   newsletter.helper.subscribe:
     class: %newsletter.helper.subscribe.fqdn%
-    arguments: [@core.date, '@core.lang', '@core.mailer', @core.request, '@core.router', '@core.helpers.stringFormatter', @core.helpers.secure, '@core.config', @newsletter.helper.accountstatus, '@newsletter.model.accountrepository']
+    arguments:
+      - @core.date
+      - @core.lang
+      - @core.mailer
+      - @core.request
+      - @core.router
+      - @core.helpers.stringFormatter
+      - @core.helpers.secure
+      - @core.config
+      - @newsletter.helper.accountstatus
+      - @newsletter.model.accountrepository
 
   newsletter.helper.data_grid.column_renderer.account_status_column_renderer:
     class: %newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn%
@@ -77,6 +116,22 @@ services:
 
   newsletter.validator:
     class: %newsletter.validator.fqdn%
+    parent: core.validator.abstract
+
+  newsletter.validation.activate_account_form_validation:
+    class: %newsletter.validation.activate_account_form_validation.fqdn%
+    parent: core.validator.abstract
+
+  newsletter.validation.admin_settings_form_validation:
+    class: %newsletter.validation.admin_settings_form_validation.fqdn%
+    parent: core.validator.abstract
+
+  newsletter.validation.subscribe_form_validation:
+    class: %newsletter.validation.subscribe_form_validation.fqdn%
+    parent: core.validator.abstract
+
+  newsletter.validation.unsubscribe_form_validation:
+    class: %newsletter.validation.unsubscribe_form_validation.fqdn%
     parent: core.validator.abstract
 
   newsletter.validation.validation_rules.account_exists_validation_rule:

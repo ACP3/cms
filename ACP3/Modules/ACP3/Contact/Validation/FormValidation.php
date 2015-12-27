@@ -6,16 +6,13 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
 
 /**
- * Class Validator
+ * Class FormValidation
  * @package ACP3\Modules\ACP3\Contact\Validation
  */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
     public function validate(array $formData)
     {
@@ -48,27 +45,6 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'captcha',
                     'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
-                ]);
-
-        $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
-     */
-    public function validateSettings(array $formData)
-    {
-        $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
-            ->addConstraint(
-                Core\Validation\ValidationRules\EmailValidationRule::NAME,
-                [
-                    'data' => $formData,
-                    'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
                 ]);
 
         $this->validator->validate();

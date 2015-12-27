@@ -5,16 +5,15 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule;
 
 /**
- * Class Settings
- * @package ACP3\Modules\ACP3\System\Validator
+ * Class AdminSettingsFormValidation
+ * @package ACP3\Modules\ACP3\System\Validation
  */
-class Settings extends Core\Validation\AbstractFormValidation
+class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @param array $formData
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
     public function validate(array $formData)
     {

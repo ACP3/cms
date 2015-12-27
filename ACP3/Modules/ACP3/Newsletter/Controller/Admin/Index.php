@@ -24,9 +24,13 @@ class Index extends Core\Modules\AdminController
      */
     protected $newsletterRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
      */
-    protected $newsletterValidator;
+    protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation
+     */
+    protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
      */
@@ -37,13 +41,14 @@ class Index extends Core\Modules\AdminController
     protected $accountRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext               $context
-     * @param \ACP3\Core\Date                                          $date
-     * @param \ACP3\Core\Helpers\FormToken                             $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository    $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\FormValidation  $newsletterValidator
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter      $newsletterHelpers
+     * @param \ACP3\Core\Modules\Controller\AdminContext                           $context
+     * @param \ACP3\Core\Date                                                      $date
+     * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository             $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository                $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation         $adminFormValidation
+     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter                  $newsletterHelpers
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
@@ -51,7 +56,8 @@ class Index extends Core\Modules\AdminController
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterRepository $newsletterRepository,
         Newsletter\Model\AccountRepository $accountRepository,
-        Newsletter\Validation\FormValidation $newsletterValidator,
+        Newsletter\Validation\AdminFormValidation $adminFormValidation,
+        Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);
@@ -60,7 +66,8 @@ class Index extends Core\Modules\AdminController
         $this->formTokenHelper = $formTokenHelper;
         $this->newsletterRepository = $newsletterRepository;
         $this->accountRepository = $accountRepository;
-        $this->newsletterValidator = $newsletterValidator;
+        $this->adminFormValidation = $adminFormValidation;
+        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->newsletterHelpers = $newsletterHelpers;
     }
 
@@ -263,7 +270,7 @@ class Index extends Core\Modules\AdminController
     protected function _createPost(array $formData, array $settings)
     {
         return $this->actionHelper->handlePostAction(function () use ($formData, $settings) {
-            $this->newsletterValidator->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             // Newsletter archivieren
             $insertValues = [
@@ -308,7 +315,7 @@ class Index extends Core\Modules\AdminController
     protected function _editPost(array $formData, array $settings, $id)
     {
         return $this->actionHelper->handlePostAction(function () use ($formData, $settings, $id) {
-            $this->newsletterValidator->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             // Newsletter archivieren
             $updateValues = [
@@ -348,7 +355,7 @@ class Index extends Core\Modules\AdminController
     protected function _settingsPost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
-            $this->newsletterValidator->validateSettings($formData);
+            $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
                 'mail' => $formData['mail'],

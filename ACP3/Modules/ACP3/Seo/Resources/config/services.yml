@@ -2,7 +2,8 @@ parameters:
   seo.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index'
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
   seo.model.seorepository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\SeoRepository'
-  seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\FormValidation'
+  seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation'
+  seo.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation'
   seo.validation.validation_rules.uri_alias_validation_rule.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule'
   seo.installer.schema.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Schema'
   seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
@@ -10,7 +11,13 @@ parameters:
 services:
   seo.controller.admin.index:
     class: %seo.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.formToken', '@seo.cache', '@seo.model.seorepository', '@seo.validator']
+    arguments:
+      - @core.context.admin
+      - @core.helpers.formToken
+      - @seo.cache
+      - @seo.model.seorepository
+      - @seo.validator
+      - @seo.validation.admin_settings_form_validation
 
   seo.cache:
     class: %seo.cache.fqdn%
@@ -22,6 +29,10 @@ services:
 
   seo.validator:
     class: %seo.validator.fqdn%
+    parent: core.validator.abstract
+
+  seo.validation.admin_settings_form_validation:
+    class: %seo.validation.admin_settings_form_validation.fqdn%
     parent: core.validator.abstract
 
   seo.validation.validation_rules.uri_alias_validation_rule:

@@ -6,19 +6,32 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuExistsValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule;
 
 /**
- * Class Menu
- * @package ACP3\Modules\ACP3\Menus\Validator
+ * Class MenuFormValidation
+ * @package ACP3\Modules\ACP3\Menus\Validation
  */
-class Menu extends Core\Validation\AbstractFormValidation
+class MenuFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     * @param int   $menuId
-     *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @var int
      */
-    public function validate(array $formData, $menuId = 0)
+    protected $menuId = 0;
+
+    /**
+     * @param int $menuId
+     *
+     * @return $this
+     */
+    public function setMenuId($menuId)
+    {
+        $this->menuId = (int)$menuId;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validate(array $formData)
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
@@ -36,7 +49,7 @@ class Menu extends Core\Validation\AbstractFormValidation
                     'field' => 'index_name',
                     'message' => $this->translator->t('menus', 'index_name_unique'),
                     'extra' => [
-                        'menu_id' => $menuId
+                        'menu_id' => $this->menuId
                     ]
                 ])
             ->addConstraint(
@@ -49,5 +62,4 @@ class Menu extends Core\Validation\AbstractFormValidation
 
         $this->validator->validate();
     }
-
 }

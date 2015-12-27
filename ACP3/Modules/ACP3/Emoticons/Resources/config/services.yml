@@ -3,7 +3,8 @@ parameters:
   emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
   emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
-  emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\FormValidation'
+  emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation'
+  emoticons.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation'
   emoticons.installer.sampledata.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\SampleData'
   emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
   emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'
@@ -11,7 +12,13 @@ parameters:
 services:
   emoticons.controller.admin.index:
     class: %emoticons.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.formToken', '@emoticons.model.emoticonrepository', '@emoticons.validator', '@emoticons.cache']
+    arguments:
+      - @core.context.admin
+      - @core.helpers.formToken
+      - @emoticons.model.emoticonrepository
+      - @emoticons.validator
+      - @emoticons.validation.admin_settings_form_validation
+      - @emoticons.cache
 
   emoticons.model.emoticonrepository:
     class: %emoticons.model.emoticonrepository.fqdn%
@@ -31,6 +38,10 @@ services:
 
   emoticons.validator:
     class: %emoticons.validator.fqdn%
+    parent: core.validator.abstract
+
+  emoticons.validation.admin_settings_form_validation:
+    class: %emoticons.validation.admin_settings_form_validation.fqdn%
     parent: core.validator.abstract
 
   emoticons.installer.schema:

@@ -34,9 +34,13 @@ class Index extends Core\Modules\FrontendController
      */
     protected $userRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\Register
+     * @var \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation
      */
-    protected $usersValidator;
+    protected $registrationFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation
+     */
+    protected $accountForgotPasswordFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Helpers
      */
@@ -51,15 +55,16 @@ class Index extends Core\Modules\FrontendController
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Core\Pagination                         $pagination
-     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                     $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validation\Register  $usersValidator
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers        $permissionsHelpers
-     * @param \ACP3\Core\Helpers\SendEmail                  $sendEmail
+     * @param \ACP3\Core\Modules\Controller\FrontendContext                           $context
+     * @param \ACP3\Core\Date                                                         $date
+     * @param \ACP3\Core\Pagination                                                   $pagination
+     * @param \ACP3\Core\Helpers\FormToken                                            $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                               $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository                           $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation          $registrationFormValidation
+     * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers                                  $permissionsHelpers
+     * @param \ACP3\Core\Helpers\SendEmail                                            $sendEmail
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -68,7 +73,8 @@ class Index extends Core\Modules\FrontendController
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UserRepository $userRepository,
-        Users\Validation\Register $usersValidator,
+        Users\Validation\RegistrationFormValidation $registrationFormValidation,
+        Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
         Permissions\Helpers $permissionsHelpers,
         Core\Helpers\SendEmail $sendEmail
     ) {
@@ -79,7 +85,8 @@ class Index extends Core\Modules\FrontendController
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->userRepository = $userRepository;
-        $this->usersValidator = $usersValidator;
+        $this->registrationFormValidation = $registrationFormValidation;
+        $this->accountForgotPasswordFormValidation = $accountForgotPasswordFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->sendEmail = $sendEmail;
     }
@@ -253,7 +260,7 @@ class Index extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->usersValidator->validateForgotPassword($formData);
+                $this->accountForgotPasswordFormValidation->validate($formData);
 
                 // Neues Passwort und neuen Zufallsschlüssel erstellen
                 $newPassword = $this->secureHelper->salt(Core\User::SALT_LENGTH);
@@ -327,7 +334,7 @@ class Index extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData, $settings) {
-                $this->usersValidator->validateRegistration($formData);
+                $this->registrationFormValidation->validate($formData);
 
                 $systemSettings = $this->config->getSettings('system');
                 $seoSettings = $this->config->getSettings('seo');

@@ -10,6 +10,7 @@ use ACP3\Core\User;
 use ACP3\Installer\Core;
 use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
+use ACP3\Installer\Modules\Install\Validation\FormValidation;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -38,28 +39,42 @@ class Install extends AbstractController
      */
     protected $secureHelper;
     /**
+     * @var \ACP3\Core\Helpers\Date
+     */
+    protected $dateHelper;
+    /**
      * @var \ACP3\Installer\Modules\Install\Helpers\Install
      */
     protected $installHelper;
+    /**
+     * @var \ACP3\Installer\Modules\Install\Validation\FormValidation
+     */
+    protected $formValidation;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\Context $context
-     * @param \ACP3\Installer\Core\Date                       $date
-     * @param \ACP3\Core\Helpers\Secure                       $secureHelper
-     * @param \ACP3\Installer\Modules\Install\Helpers\Install $installHelper
+     * @param \ACP3\Installer\Core\Modules\Controller\Context           $context
+     * @param \ACP3\Installer\Core\Date                                 $date
+     * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
+     * @param \ACP3\Core\Helpers\Date                                   $dateHelper
+     * @param \ACP3\Installer\Modules\Install\Helpers\Install           $installHelper
+     * @param \ACP3\Installer\Modules\Install\Validation\FormValidation $formValidation
      */
     public function __construct(
         Core\Modules\Controller\Context $context,
         Date $date,
         Secure $secureHelper,
-        InstallerHelpers $installHelper
+        \ACP3\Core\Helpers\Date $dateHelper,
+        InstallerHelpers $installHelper,
+        FormValidation $formValidation
     )
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->secureHelper = $secureHelper;
+        $this->dateHelper = $dateHelper;
         $this->installHelper = $installHelper;
+        $this->formValidation = $formValidation;
         $this->configFilePath = $this->appPath->getAppDir() . 'config.yml';
     }
 
@@ -69,7 +84,7 @@ class Install extends AbstractController
             $this->_indexPost($this->request->getPost()->all());
         }
 
-        $this->view->assign('time_zones', $this->get('core.helpers.date')->getTimeZones(date_default_timezone_get()));
+        $this->view->assign('time_zones', $this->dateHelper->getTimeZones(date_default_timezone_get()));
 
         $defaults = [
             'db_host' => 'localhost',
@@ -92,8 +107,9 @@ class Install extends AbstractController
     private function _indexPost(array $formData)
     {
         try {
-            $validator = $this->get('install.validator');
-            $validator->validateConfiguration($formData, $this->configFilePath);
+            $this->formValidation
+                ->setConfigFilePath($this->configFilePath)
+                ->validate($formData);
 
             $this->_writeConfigFile($formData);
             $this->_setContainer();

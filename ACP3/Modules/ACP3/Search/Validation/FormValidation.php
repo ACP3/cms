@@ -4,15 +4,13 @@ namespace ACP3\Modules\ACP3\Search\Validation;
 use ACP3\Core;
 
 /**
- * Class Validator
+ * Class FormValidation
  * @package ACP3\Modules\ACP3\Search\Validation
  */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
-     * @throws Core\Exceptions\ValidationFailed
+     * @inheritdoc
      */
     public function validate(array $formData)
     {

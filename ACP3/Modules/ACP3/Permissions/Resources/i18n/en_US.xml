@@ -9,6 +9,7 @@
         <item key="admin_index_delete">Delete roles</item>
         <item key="admin_index_edit">Edit role</item>
         <item key="admin_resources_create">Create new resource</item>
+        <item key="admin_resources_delete">Delete resource</item>
         <item key="admin_resources_edit">Edit resource</item>
         <item key="admin_resources_index">Manage resources</item>
         <item key="allow_access">Allow</item>
@@ -29,6 +30,7 @@
         <item key="role_already_exists">There is already an role with the same name.</item>
         <item key="role_not_deletable">It's impossible to delete the guest, user and administrator roles!</item>
         <item key="roles">Assigned roles</item>
+        <item key="route">Route</item>
         <item key="superior_role">Superior role</item>
         <item key="select_module">Please select a module for which the resource is to be created.</item>
         <item key="select_privilege">Please select a privilege for the selected resource.</item>

@@ -33,7 +33,7 @@ class Index extends Core\Modules\FrontendController
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
-    protected $guestbookValidator;
+    protected $formValidation;
     /**
      * @var array
      */
@@ -65,7 +65,7 @@ class Index extends Core\Modules\FrontendController
      * @param \ACP3\Core\Pagination                                  $pagination
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $guestbookValidator
+     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
@@ -73,7 +73,8 @@ class Index extends Core\Modules\FrontendController
         Core\Pagination $pagination,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
-        Guestbook\Validation\FormValidation $guestbookValidator)
+        Guestbook\Validation\FormValidation $formValidation
+    )
     {
         parent::__construct($context);
 
@@ -81,7 +82,7 @@ class Index extends Core\Modules\FrontendController
         $this->pagination = $pagination;
         $this->formTokenHelper = $formTokenHelper;
         $this->guestbookRepository = $guestbookRepository;
-        $this->guestbookValidator = $guestbookValidator;
+        $this->formValidation = $formValidation;
     }
 
     public function preDispatch()
@@ -224,11 +225,10 @@ class Index extends Core\Modules\FrontendController
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                $this->guestbookValidator->validateCreate(
-                    $formData,
-                    $this->newsletterActive,
-                    $this->request->getServer()->get('REMOTE_ADDR', '')
-                );
+                $this->formValidation
+                    ->setIpAddress($this->request->getServer()->get('REMOTE_ADDR', ''))
+                    ->setNewsletterAccess($this->newsletterActive)
+                    ->validate($formData);
 
                 $insertValues = [
                     'id' => '',
