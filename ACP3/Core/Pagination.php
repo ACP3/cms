@@ -177,9 +177,10 @@ class Pagination
 
             for ($i = (int)$range['start']; $i <= $range['end']; ++$i) {
                 $this->pagination[] = $this->buildPageNumber(
-                    $this->currentPage === $i,
                     $i,
-                    $link . ($i > 1 ? 'page_' . $i . '/' : '') . $this->urlFragment
+                    $link . ($i > 1 ? 'page_' . $i . '/' : '') . $this->urlFragment,
+                    '',
+                    $this->currentPage === $i
                 );
             }
 
@@ -261,7 +262,6 @@ class Pagination
     {
         if ($this->totalPages > $this->showFirstLast && $range['start'] > 1) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&laquo;',
                 $link . $this->urlFragment,
                 $this->translator->t('system', 'first_page')
@@ -270,20 +270,20 @@ class Pagination
     }
 
     /**
-     * @param bool   $selected
      * @param int    $pageNumber
      * @param string $uri
      * @param string $title
+     * @param bool   $selected
      *
      * @return array
      */
-    private function buildPageNumber($selected, $pageNumber, $uri, $title = '')
+    private function buildPageNumber($pageNumber, $uri, $title = '', $selected = false)
     {
         return [
-            'selected' => (bool)$selected,
             'page' => $pageNumber,
             'uri' => $uri,
-            'title' => $title
+            'title' => $title,
+            'selected' => (bool)$selected
         ];
     }
 
@@ -294,7 +294,6 @@ class Pagination
     {
         if ($this->totalPages > $this->showPreviousNext && $this->currentPage !== 1) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&lsaquo;',
                 $link . ($this->currentPage - 1 > 1 ? 'page_' . ($this->currentPage - 1) . '/' : '') . $this->urlFragment,
                 $this->translator->t('system', 'previous_page')
@@ -309,7 +308,6 @@ class Pagination
     {
         if ($this->totalPages > $this->showPreviousNext && $this->currentPage !== $this->totalPages) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&rsaquo;',
                 $link . 'page_' . ($this->currentPage + 1) . '/' . $this->urlFragment,
                 $this->translator->t('system', 'next_page')
@@ -325,7 +323,6 @@ class Pagination
     {
         if ($this->totalPages > $this->showFirstLast && $this->totalPages !== $range['end']) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&raquo;',
                 $link . 'page_' . $this->totalPages . '/' . $this->urlFragment,
                 $this->translator->t('system', 'last_page')
