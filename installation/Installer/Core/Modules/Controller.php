@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Module Controller of the installer modules
  * @package ACP3\Installer\Core\Modules
  */
-class Controller implements ControllerInterface
+abstract class Controller implements ControllerInterface
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface

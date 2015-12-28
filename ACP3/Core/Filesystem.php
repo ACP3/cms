@@ -13,8 +13,8 @@ class Filesystem
     protected static $excluded = ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd'];
 
     /**
-     * @param       $directory
-     * @param array $excluded
+     * @param string $directory
+     * @param array  $excluded
      *
      * @return array
      */

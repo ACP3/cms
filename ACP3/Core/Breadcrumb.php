@@ -74,7 +74,6 @@ class Breadcrumb
     }
 
     /**
-     *
      * @param string $value
      *
      * @return $this
@@ -95,7 +94,6 @@ class Breadcrumb
     }
 
     /**
-     *
      * @param string $value
      *
      * @return $this
