@@ -63,13 +63,13 @@ abstract class Controller implements ControllerInterface
     /**
      * Nichts ausgeben
      */
-    protected $noOutput = false;
+    private $noOutput = false;
     /**
      * Das zu verwendende Template
      *
      * @var string
      */
-    protected $template = '';
+    private $template = '';
 
     /**
      * @param \ACP3\Core\Modules\Controller\Context $context

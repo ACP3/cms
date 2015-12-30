@@ -2,13 +2,13 @@
 
 namespace ACP3\Installer\Modules\Errors\Controller;
 
-use ACP3\Installer\Core\Modules\Controller;
+use ACP3\Installer\Core\Modules\AbstractInstallerController;
 
 /**
  * Class Index
  * @package ACP3\Installer\Modules\Errors\Controller
  */
-class Index extends Controller
+class Index extends AbstractInstallerController
 {
     public function action404()
     {

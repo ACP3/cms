@@ -4,16 +4,19 @@ namespace ACP3\Installer\Core\Modules;
 
 use ACP3\Core\Filesystem;
 use ACP3\Core\Modules\ControllerInterface;
+use ACP3\Core\Modules\DisplayControllerActionTrait;
 use ACP3\Core\Redirect;
-use ACP3\Installer\Core\Modules\Controller\Context;
+use ACP3\Installer\Core\Modules\Controller\InstallerContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Module Controller of the installer modules
  * @package ACP3\Installer\Core\Modules
  */
-abstract class Controller implements ControllerInterface
+abstract class AbstractInstallerController implements ControllerInterface
 {
+    use DisplayControllerActionTrait;
+
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
@@ -23,58 +26,24 @@ abstract class Controller implements ControllerInterface
      */
     protected $translator;
     /**
-     * @var \ACP3\Installer\Core\Http\Request
-     */
-    protected $request;
-    /**
      * @var \ACP3\Installer\Core\Router
      */
     protected $router;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
     /**
      * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
     protected $appPath;
 
     /**
-     * Nicht ausgeben
+     * @param \ACP3\Installer\Core\Modules\Controller\InstallerContext $context
      */
-    protected $noOutput = false;
-    /**
-     * Der auszugebende Content-Type der Seite
-     *
-     * @var string
-     */
-    protected $contentType = 'Content-Type: text/html; charset=UTF-8';
-    /**
-     * Das zuverwendende Template
-     *
-     * @var string
-     */
-    protected $template = '';
-    /**
-     * Der auszugebende Seiteninhalt
-     *
-     * @var string
-     */
-    protected $content = '';
-    /**
-     * @var string
-     */
-    protected $contentAppend = '';
-
-    /**
-     * @param \ACP3\Installer\Core\Modules\Controller\Context $context
-     */
-    public function __construct(Context $context)
+    public function __construct(InstallerContext $context)
     {
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
         $this->view = $context->getView();
+        $this->response = $context->getResponse();
         $this->appPath = $context->getAppPath();
     }
 
@@ -98,6 +67,7 @@ abstract class Controller implements ControllerInterface
         $this->view->assign('INSTALLER_ROOT_DIR', $this->appPath->getInstallerWebRoot());
         $this->view->assign('DESIGN_PATH', $this->appPath->getDesignPathWeb());
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
+        $this->view->assign('IS_AJAX', $this->request->isAjax());
 
         $languageInfo = simplexml_load_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml');
         $this->view->assign('LANG_DIRECTION',
@@ -160,108 +130,18 @@ abstract class Controller implements ControllerInterface
     /**
      * @inheritdoc
      */
-    public function display($controllerActionResult)
+    protected function applyTemplateAutomatically()
     {
-        if ($this->getNoOutput() === false) {
-            // Evtl. gesetzten Content-Type des Servers überschreiben
-            header($this->getContentType());
-
-            if ($this->getContent() == '') {
-                // Template automatisch setzen
-                if ($this->getTemplate() === '') {
-                    $this->setTemplate($this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
-                }
-
-                $this->view->assign('PAGE_TITLE', $this->translator->t('install', 'acp3_installation'));
-                $this->view->assign('TITLE', $this->translator->t($this->request->getModule(),
-                    $this->request->getController() . '_' . $this->request->getControllerAction()));
-                $this->view->assign('CONTENT', $this->getContentAppend());
-                $this->view->assign('IS_AJAX', $this->request->isAjax());
-
-                $this->view->displayTemplate($this->getTemplate());
-            } else {
-                echo $this->getContent();
-            }
-        }
+        return $this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl';
     }
 
-    /**
-     * Gibt das aktuell zugewiesene Template zurück
-     *
-     * @return string
-     */
-    public function getTemplate()
+    protected function addCustomTemplateVarsBeforeOutput()
     {
-        return $this->template;
-    }
-
-    /**
-     * Setzt das Template der Seite
-     *
-     * @param string $template
-     *
-     * @return $this
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
-     * erfolgen soll oder die Datei dies selber handelt
-     *
-     * @return boolean
-     */
-    public function getNoOutput()
-    {
-        return $this->noOutput;
-    }
-
-    /**
-     * Gibt den auszugebenden Seiteninhalt zurück
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Weist dem Template den auszugebenden Inhalt zu
-     *
-     * @param string $data
-     *
-     * @return $this
-     */
-    public function setContent($data)
-    {
-        $this->content = $data;
-
-        return $this;
-    }
-
-    /**
-     * Gibt den Content-Type der anzuzeigenden Seiten zurück
-     *
-     * @return string
-     */
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-
-    /**
-     * Gibt die anzuhängenden Inhalte an den Seiteninhalt zurück
-     *
-     * @return string
-     */
-    public function getContentAppend()
-    {
-        return $this->contentAppend;
+        $this->view->assign('PAGE_TITLE', $this->translator->t('install', 'acp3_installation'));
+        $this->view->assign('TITLE', $this->translator->t(
+            $this->request->getModule(),
+            $this->request->getController() . '_' . $this->request->getControllerAction())
+        );
     }
 
     private function setLanguage()
@@ -272,7 +152,7 @@ abstract class Controller implements ControllerInterface
         ) {
             $language = $cookieLocale;
         } else {
-            $language = 'en_US';
+            $language = 'en_US'; // Fallback default language
 
             foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
                 $locale = str_replace('-', '_', $locale);

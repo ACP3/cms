@@ -11,7 +11,7 @@ use ACP3\Installer\Core;
  * Class Index
  * @package ACP3\Installer\Modules\Update\Controller
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\AbstractInstallerController
 {
     /**
      * @var \ACP3\Core\Modules
@@ -27,13 +27,13 @@ class Index extends Core\Modules\Controller
     protected $vendors;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\Context $context
-     * @param \ACP3\Core\Modules                              $modules
-     * @param \ACP3\Core\Modules\Vendors                      $vendors
-     * @param \ACP3\Core\Modules\SchemaUpdater                $schemaUpdater
+     * @param \ACP3\Installer\Core\Modules\Controller\InstallerContext $context
+     * @param \ACP3\Core\Modules                                       $modules
+     * @param \ACP3\Core\Modules\Vendors                               $vendors
+     * @param \ACP3\Core\Modules\SchemaUpdater                         $schemaUpdater
      */
     public function __construct(
-        Core\Modules\Controller\Context $context,
+        Core\Modules\Controller\InstallerContext $context,
         Modules $modules,
         Modules\Vendors $vendors,
         Modules\SchemaUpdater $schemaUpdater

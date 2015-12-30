@@ -52,7 +52,7 @@ class Install extends AbstractController
     protected $formValidation;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\Context           $context
+     * @param \ACP3\Installer\Core\Modules\Controller\InstallerContext  $context
      * @param \ACP3\Installer\Core\Date                                 $date
      * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
      * @param \ACP3\Core\Helpers\Date                                   $dateHelper
@@ -60,7 +60,7 @@ class Install extends AbstractController
      * @param \ACP3\Installer\Modules\Install\Validation\FormValidation $formValidation
      */
     public function __construct(
-        Core\Modules\Controller\Context $context,
+        Core\Modules\Controller\InstallerContext $context,
         Date $date,
         Secure $secureHelper,
         \ACP3\Core\Helpers\Date $dateHelper,

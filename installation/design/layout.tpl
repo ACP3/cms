@@ -49,9 +49,7 @@
         </nav>
         <main role="main" id="content">
             <h2>{$TITLE}</h2>
-            {block CONTENT}
-                {$CONTENT}
-            {/block}
+            {block CONTENT}{/block}
         </main>
     </div>
     <script type="text/javascript">

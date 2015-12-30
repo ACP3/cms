@@ -3,7 +3,6 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FrontendController
@@ -11,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class FrontendController extends Core\Modules\Controller
 {
+    use DisplayControllerActionTrait;
+
     /**
      * @var \ACP3\Core\Assets
      */
@@ -31,19 +32,6 @@ abstract class FrontendController extends Core\Modules\Controller
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     */
-    protected $response;
-
-    /**
-     * @var string
-     */
-    private $contentType = 'text/html';
-    /**
-     * @var string
-     */
-    private $charset = "UTF-8";
 
     /**
      * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
@@ -108,109 +96,18 @@ abstract class FrontendController extends Core\Modules\Controller
     }
 
     /**
-     * Outputs the requested module controller action
-     *
-     * @param $controllerActionResult
+     * @inheritdoc
      */
-    public function display($controllerActionResult)
+    protected function applyTemplateAutomatically()
     {
-        if ($controllerActionResult instanceof Response) {
-            $controllerActionResult->send();
-            return;
-        } else if (is_array($controllerActionResult)) {
-            $this->view->assign($controllerActionResult);
-        } else if (is_string($controllerActionResult)) {
-            echo $controllerActionResult;
-            return;
-        }
-
-        // Output content through the controller
-        $this->response->headers->set('Content-Type', $this->getContentType());
-        $this->response->setCharset($this->getCharset());
-
-        if (!$this->getContent()) {
-            // Set the template automatically
-            if ($this->getTemplate() === '') {
-                $this->setTemplate($this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl');
-            }
-
-            $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
-            $this->view->assign('META', $this->seo->getMetaTags());
-
-            $this->response->setContent($this->view->fetchTemplate($this->getTemplate()));
-        }
-
-        $this->response->send();
+        return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl';
     }
 
-    /**
-     * Gibt den Content-Type der anzuzeigenden Seiten zurück
-     *
-     * @return string
-     */
-    public function getContentType()
+    protected function addCustomTemplateVarsBeforeOutput()
     {
-        return $this->contentType;
+        $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
+        $this->view->assign('META', $this->seo->getMetaTags());
     }
-
-    /**
-     * Weist der aktuell auszugebenden Seite den Content-Type zu
-     *
-     * @param string $data
-     *
-     * @return $this
-     */
-    public function setContentType($data)
-    {
-        $this->contentType = $data;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCharset()
-    {
-        return $this->charset;
-    }
-
-    /**
-     * @param string $charset
-     *
-     * @return $this
-     */
-    public function setCharset($charset)
-    {
-        $this->charset = $charset;
-
-        return $this;
-    }
-
-    /**
-     * Gibt den auszugebenden Seiteninhalt zurück
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->response->getContent();
-    }
-
-    /**
-     * Weist dem Template den auszugebenden Inhalt zu
-     *
-     * @param string $data
-     *
-     * @return $this
-     */
-    public function setContent($data)
-    {
-        $this->response->setContent($data);
-
-        return $this;
-    }
-
 
     /**
      * @return Core\Helpers\RedirectMessages

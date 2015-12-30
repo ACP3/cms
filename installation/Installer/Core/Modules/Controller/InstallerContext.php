@@ -5,12 +5,13 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Installer\Core\I18n\Translator;
 use ACP3\Installer\Core\Router;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class Context
+ * Class InstallerContext
  * @package ACP3\Installer\Core\Modules\Controller
  */
-class Context
+class InstallerContext
 {
     /**
      * @var \ACP3\Installer\Core\I18n\Translator
@@ -20,6 +21,10 @@ class Context
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
+    /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    protected $response;
     /**
      * @var \ACP3\Installer\Core\Router
      */
@@ -40,6 +45,7 @@ class Context
      * @param \ACP3\Core\Http\RequestInterface                 $request
      * @param \ACP3\Installer\Core\Router                      $router
      * @param \ACP3\Core\View                                  $view
+     * @param \Symfony\Component\HttpFoundation\Response       $response
      * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
@@ -47,6 +53,7 @@ class Context
         RequestInterface $request,
         Router $router,
         \ACP3\Core\View $view,
+        Response $response,
         ApplicationPath $appPath
     )
     {
@@ -54,6 +61,7 @@ class Context
         $this->request = $request;
         $this->router = $router;
         $this->view = $view;
+        $this->response = $response;
         $this->appPath = $appPath;
     }
 
@@ -87,6 +95,14 @@ class Context
     public function getView()
     {
         return $this->view;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 
     /**
