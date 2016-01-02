@@ -4,9 +4,8 @@ namespace ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
 /**
- * Access control lists
- *
- * @author Tino Goratsch
+ * Class ACL
+ * @package ACP3\Core
  */
 class ACL
 {
@@ -234,7 +233,6 @@ class ACL
      *
      * @param string $module
      * @param string $key
-     *    The key of the privilege
      *
      * @return boolean
      */
@@ -251,7 +249,6 @@ class ACL
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
      *
      * @param string $path
-     *    Zu überprüfendes Modul
      *
      * @return integer
      */

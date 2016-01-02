@@ -1,10 +1,12 @@
 <?php
 namespace ACP3\Core\Modules;
 
+use ACP3\Core\ACL\PermissionEnum;
+use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Cache;
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use Symfony\Component\DependencyInjection\Container;
 use ACP3\Modules\ACP3\Permissions;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class AclInstaller
@@ -12,6 +14,9 @@ use ACP3\Modules\ACP3\Permissions;
  */
 class AclInstaller implements InstallerInterface
 {
+    const INSTALL_RESOURCES_AND_RULES = 1;
+    const INSTALL_RESOURCES = 2;
+
     /**
      * @var \Symfony\Component\DependencyInjection\Container
      */
@@ -58,8 +63,7 @@ class AclInstaller implements InstallerInterface
         Permissions\Model\RuleRepository $ruleRepository,
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Model\PrivilegeRepository $privilegeRepository
-    )
-    {
+    ) {
         $this->container = $container;
         $this->aclCache = $aclCache;
         $this->schemaHelper = $schemaHelper;
@@ -74,12 +78,10 @@ class AclInstaller implements InstallerInterface
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      * @param int                                          $mode
-     *    1 = Ressourcen und Regeln einlesen
-     *    2 = Nur die Ressourcen einlesen
      *
      * @return bool
      */
-    public function install(SchemaInterface $schema, $mode = 1)
+    public function install(SchemaInterface $schema, $mode = self::INSTALL_RESOURCES_AND_RULES)
     {
         $serviceIds = $this->container->getServiceIds();
 
@@ -91,7 +93,7 @@ class AclInstaller implements InstallerInterface
         }
 
         // Regeln für die Rollen setzen
-        if ($mode === 1) {
+        if ($mode === self::INSTALL_RESOURCES_AND_RULES) {
             $this->_insertAclRules($schema->getModuleName());
         }
 
@@ -117,9 +119,7 @@ class AclInstaller implements InstallerInterface
         foreach ($actions as $action) {
             // Only add the actual module actions (methods which begin with "action")
             if (strpos($action, 'action') === 0) {
-                $actionUnderscored = strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
-                // Modulaktionen berücksichtigen, die mit Ziffern anfangen (Error pages)
-                $action = substr($actionUnderscored, strpos($actionUnderscored, '_') === 6 ? 7 : 6);
+                $action = $this->convertCamelCaseToUnderscore($action);
 
                 // Handle resources with differing access levels
                 if (isset($specialResources[$area][$controller][$action])) {
@@ -175,26 +175,41 @@ class AclInstaller implements InstallerInterface
      */
     protected function getDefaultAclPrivilegeId($area, $action)
     {
-        if ($area === 'Admin') {
-            if (strpos($action, 'create') === 0 || strpos($action, 'order') === 0) {
-                return 4;
-            } elseif (strpos($action, 'edit') === 0) {
-                return 5;
-            } elseif (strpos($action, 'delete') === 0) {
-                return 6;
-            } elseif (strpos($action, 'settings') === 0) {
-                return 7;
+        $area = strtolower($area);
+        $actionPrivilegeMapping = $this->getActionPrivilegeMapping();
+
+        if (isset($actionPrivilegeMapping[$area])) {
+            foreach ($actionPrivilegeMapping[$area] as $actionName => $privilegeId) {
+                if (strpos($action, $actionName) === 0) {
+                    return $privilegeId;
+                }
             }
-
-            return 3;
         }
 
-        // Frontend controller actions
-        if (strpos($action, 'create') === 0) {
-            return 2;
-        } else {
-            return 1;
+        if ($area === 'admin') {
+            return PrivilegeEnum::ADMIN_VIEW;
         }
+
+        return PrivilegeEnum::FRONTEND_VIEW;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getActionPrivilegeMapping()
+    {
+        return [
+            'admin' => [
+                'create' => PrivilegeEnum::ADMIN_CREATE,
+                'order' => PrivilegeEnum::ADMIN_CREATE,
+                'edit' => PrivilegeEnum::ADMIN_EDIT,
+                'delete' => PrivilegeEnum::ADMIN_DELETE,
+                'settings' => PrivilegeEnum::ADMIN_SETTINGS
+            ],
+            'frontend' => [
+                'create' => PrivilegeEnum::FRONTEND_CREATE
+            ]
+        ];
     }
 
     /**
@@ -206,17 +221,19 @@ class AclInstaller implements InstallerInterface
     protected function getDefaultAclRulePermission($role, $privilege)
     {
         $permission = 0;
-        if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2)) {
-            $permission = 1;
+        if ($role['id'] == 1 &&
+            ($privilege['id'] == PrivilegeEnum::FRONTEND_VIEW || $privilege['id'] == PrivilegeEnum::FRONTEND_CREATE)
+        ) {
+            $permission = PermissionEnum::PERMIT_ACCESS;
         }
         if ($role['id'] > 1 && $role['id'] < 4) {
-            $permission = 2;
+            $permission = PermissionEnum::INHERIT_ACCESS;
         }
-        if ($role['id'] == 3 && $privilege['id'] == 3) {
-            $permission = 1;
+        if ($role['id'] == 3 && $privilege['id'] == PrivilegeEnum::ADMIN_VIEW) {
+            $permission = PermissionEnum::PERMIT_ACCESS;
         }
         if ($role['id'] == 4) {
-            $permission = 1;
+            $permission = PermissionEnum::PERMIT_ACCESS;
         }
 
         return $permission;
@@ -236,4 +253,16 @@ class AclInstaller implements InstallerInterface
         return true;
     }
 
+    /**
+     * @param string $action
+     *
+     * @return string
+     */
+    protected function convertCamelCaseToUnderscore($action)
+    {
+        $actionUnderscored = strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
+
+        // Modulaktionen berücksichtigen, die mit Ziffern anfangen (Error pages)
+        return substr($actionUnderscored, strpos($actionUnderscored, '_') === 6 ? 7 : 6);
+    }
 }
