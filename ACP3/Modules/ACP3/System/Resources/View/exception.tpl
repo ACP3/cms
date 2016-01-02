@@ -8,7 +8,7 @@
     <style type="text/css">
         .alert-danger {
             width: 70%;
-            height: 320px;
+            min-height: 320px;
             margin: -160px auto;
             padding: 0 20px;
             text-align: center;

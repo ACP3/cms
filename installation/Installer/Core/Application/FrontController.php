@@ -1,14 +1,14 @@
 <?php
-namespace ACP3\Installer\Core;
+namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core\Exceptions;
 use ACP3\Core\Http\RequestInterface;
 
 /**
  * Class FrontController
- * @package ACP3\Installer\Core
+ * @package ACP3\Installer\Core\Application
  */
-class FrontController extends \ACP3\Core\FrontController
+class FrontController extends \ACP3\Core\Application\FrontController
 {
     /**
      * @inheritdoc

@@ -4,7 +4,6 @@ namespace ACP3\Core\Application;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Exceptions;
-use ACP3\Core\FrontController;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Redirect;

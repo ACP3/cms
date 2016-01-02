@@ -136,7 +136,12 @@ interface RequestInterface
     /**
      * Returns the parameter bag of the $_SERVER superglobal
      *
-     * @return \ACP3\Core\Http\Request\ParameterBag
+     * @return \Symfony\Component\HttpFoundation\ServerBag
      */
     public function getServer();
+
+    /**
+     * @return \ACP3\Core\Http\Request\UserAgent
+     */
+    public function getUserAgent();
 }

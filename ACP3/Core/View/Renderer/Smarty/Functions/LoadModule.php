@@ -1,8 +1,8 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\FrontController;
 use ACP3\Core\ACL;
+use ACP3\Core\Application\FrontController;
 use Symfony\Component\DependencyInjection\Container;
 
 /**

@@ -4,7 +4,6 @@ namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use ACP3\Installer\Core\FrontController;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -120,5 +119,4 @@ class Bootstrap extends Core\Application\AbstractBootstrap
 
         return true;
     }
-
 }

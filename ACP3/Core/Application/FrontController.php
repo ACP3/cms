@@ -1,6 +1,7 @@
 <?php
-namespace ACP3\Core;
+namespace ACP3\Core\Application;
 
+use ACP3\Core\Exceptions;
 use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules\ControllerInterface;
@@ -8,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class FrontController
- * @package ACP3\Core
+ * @package ACP3\Core\Application
  */
 class FrontController
 {
