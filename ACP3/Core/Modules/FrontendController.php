@@ -81,21 +81,6 @@ abstract class FrontendController extends Core\Modules\Controller
     }
 
     /**
-     * @param callable    $callback
-     * @param null|string $path
-     */
-    protected function handlePostAction(callable $callback, $path = null)
-    {
-        try {
-            $callback();
-        } catch (Core\Validation\Exceptions\InvalidFormTokenException $e) {
-            $this->redirectMessages()->setMessage(false, $e->getMessage(), $path);
-        } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
-        }
-    }
-
-    /**
      * @inheritdoc
      */
     protected function applyTemplateAutomatically()
