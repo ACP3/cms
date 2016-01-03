@@ -2,11 +2,11 @@
 
 namespace ACP3\Installer\Modules\Install\Controller;
 
-use ACP3\Core\Exceptions\ValidationFailed;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\User;
+use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Installer\Core;
 use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
@@ -128,7 +128,7 @@ class Install extends AbstractController
 
             $this->setTemplate('install/install.result.tpl');
             return;
-        } catch (ValidationFailed $e) {
+        } catch (ValidationFailedException $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         } catch (\Exception $e) {
             $this->setTemplate('install/install.error.tpl');

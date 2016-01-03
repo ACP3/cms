@@ -34,8 +34,8 @@ abstract class AbstractFormValidation
     /**
      * @param array $formData
      *
-     * @throws Core\Exceptions\InvalidFormToken
-     * @throws Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
     abstract public function validate(array $formData);
 }

@@ -1,7 +1,8 @@
 <?php
 namespace ACP3\Core\Validation;
 
-use ACP3\Core\Exceptions\ValidationFailed;
+use ACP3\Core\Validation\Exceptions\ValidationFailedException;
+use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\ValidationRuleInterface;
 
 /**
@@ -115,11 +116,13 @@ class Validator
                     $params['field'],
                     $params['extra']
                 );
+            } else {
+                throw new ValidationRuleNotFoundException('Can not find the validation rule with the name ' . $constraint['rule'] . '.');
             }
         }
 
         if ($this->hasErrors()) {
-            throw new ValidationFailed($this->errors);
+            throw new ValidationFailedException($this->errors);
         }
     }
 
@@ -128,6 +131,7 @@ class Validator
      * @param mixed  $field
      *
      * @return bool
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function is($validationRuleName, $field)
     {
@@ -135,7 +139,7 @@ class Validator
             return $this->validationRules[$validationRuleName]->isValid($field);
         }
 
-        return false;
+        throw new ValidationRuleNotFoundException('Can not find the validation rule with the name ' . $validationRuleName . '.');
     }
 
     /**

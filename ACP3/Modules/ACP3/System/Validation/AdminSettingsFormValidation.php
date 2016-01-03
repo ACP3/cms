@@ -13,7 +13,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @param array $formData
      *
-     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
     public function validate(array $formData)
     {

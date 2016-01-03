@@ -42,6 +42,8 @@ services:
       - @core.validation.validation_rules.internal_uri_validation_rule
       - @core.validation.validation_rules.uri_safe_validation_rule
       - @seo.model.seorepository
+    tags:
+      - { name: core.validation.validation_rule }
 
   seo.installer.schema:
     class: %seo.installer.schema.fqdn%

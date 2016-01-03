@@ -99,7 +99,7 @@ class Index extends Core\Modules\FrontendController
 
             $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->translator->t('newsletter',
                 $bool !== false ? 'activate_success' : 'activate_error'), $this->appPath->getWebRoot()));
-        } catch (Core\Exceptions\ValidationFailed $e) {
+        } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
             $this->setContent($this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         }
     }

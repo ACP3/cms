@@ -70,10 +70,10 @@ class Action
     {
         try {
             return $callback();
-        } catch (Core\Exceptions\InvalidFormToken $e) {
+        } catch (Core\Validation\Exceptions\InvalidFormTokenException $e) {
             return $this->redirectMessages->setMessage(false, $this->translator->t('system', 'form_already_submitted'),
                 $path);
-        } catch (Core\Exceptions\ValidationFailed $e) {
+        } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
             return [
                 'error_msg' => $this->alerts->errorBox($e->getMessage())
             ];

@@ -1,12 +1,12 @@
 <?php
 
-namespace ACP3\Core\Exceptions;
+namespace ACP3\Core\Validation\Exceptions;
 
 /**
- * Class ValidationFailed
- * @package ACP3\Core\Exceptions
+ * Class ValidationFailedException
+ * @package ACP3\Core\Validation\Exceptions
  */
-class ValidationFailed extends \Exception
+class ValidationFailedException extends \Exception
 {
     /**
      * ValidationFailed constructor.

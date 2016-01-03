@@ -1,9 +1,9 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-use ACP3\Core\Exceptions\InvalidFormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\SessionHandler;
+use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
 use ACP3\Core\Validation\Validator;
 
 /**
@@ -42,7 +42,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     public function validate(Validator $validator, $data, $field = '', array $extra = [])
     {
         if (!$this->isValid($data, $field, $extra)) {
-            throw new InvalidFormToken();
+            throw new InvalidFormTokenException();
         }
     }
 
