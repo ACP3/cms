@@ -236,8 +236,8 @@ class CKEditor extends Textarea
             $descriptions[] = $emoticons[$i]['description'];
         }
 
-        $this->config['smiley_images'] = [$images];
-        $this->config['smiley_descriptions'] = [$descriptions];
+        $this->config['smiley_images'] = $images;
+        $this->config['smiley_descriptions'] = $descriptions;
     }
 
     private function applyFileManagerPaths()
