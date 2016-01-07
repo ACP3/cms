@@ -6,17 +6,11 @@ use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\User;
-use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
-use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
 use ACP3\Installer\Core;
 use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
  * Class Install
@@ -115,7 +109,7 @@ class Install extends AbstractController
                 ->validate($formData);
 
             $this->_writeConfigFile($formData);
-            $this->_setContainer();
+            $this->_updateContainer();
             $resultModules = $this->_installModules();
             $resultAcl = false;
 
@@ -162,32 +156,13 @@ class Install extends AbstractController
     /**
      * @throws \Exception
      */
-    private function _setContainer()
+    private function _updateContainer()
     {
-        $environment = $this->container->getParameter('core.environment');
-        $this->container = new ContainerBuilder();
-
-        $this->container->set('core.environment.application_path', $this->appPath);
-        $this->container->setParameter('core.environment', $environment);
-
-        $this->container->addCompilerPass(
-            new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
+        $this->container = Core\ServiceContainerBuilder::compileContainer(
+            $this->container->getParameter('core.environment'),
+            $this->appPath,
+            true
         );
-        $this->container->addCompilerPass(new RegisterPluginsPass());
-        $this->container->addCompilerPass(new RegisterValidationRulesPass());
-
-        $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
-        $loader->load($this->appPath->getClassesDir() . 'config/services.yml');
-        $loader->load($this->appPath->getInstallerClassesDir() . 'config/services.yml');
-
-        $modulesServices = glob($this->appPath->getModulesDir() . 'ACP3/*/Resources/config/services.yml');
-        foreach ($modulesServices as $moduleServices) {
-            $loader->load($moduleServices);
-        }
-
-        $this->container->setParameter('cache_driver', 'Array');
-
-        $this->container->compile();
     }
 
     /**
