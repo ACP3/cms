@@ -30,8 +30,9 @@ class ServiceContainerBuilder
         $containerBuilder->set('core.environment.application_path', $appPath);
         $containerBuilder->setParameter('core.environment', $appMode);
 
-        $containerBuilder->addCompilerPass(new RegisterListenersPass('core.eventDispatcher', 'core.eventListener',
-            'core.eventSubscriber'));
+        $containerBuilder->addCompilerPass(
+            new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
+        );
         $containerBuilder->addCompilerPass(new RegisterPluginsPass());
         $containerBuilder->addCompilerPass(new RegisterColumnRendererPass());
         $containerBuilder->addCompilerPass(new RegisterValidationRulesPass());

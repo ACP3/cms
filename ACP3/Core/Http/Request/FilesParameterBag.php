@@ -8,14 +8,11 @@ namespace ACP3\Core\Http\Request;
 class FilesParameterBag extends ParameterBag
 {
     /**
-     * @param string $key
-     * @param array  $default
-     *
-     * @return mixed
+     * @inheritdoc
      */
-    public function get($key, $default = [])
+    public function get($key, $default = null, $deep = false)
     {
-        return $this->has($key) ? $this->all()[$key] : $default;
+        return $this->has($key) ? $this->all()[$key] : [];
     }
 
     /**

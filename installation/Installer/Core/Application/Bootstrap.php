@@ -3,10 +3,12 @@
 namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core;
+use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
  * Class Bootstrap
@@ -48,8 +50,13 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     {
         $this->container = new ContainerBuilder();
 
+        $this->container->setParameter('core.environment', $this->appMode);
         $this->container->set('core.environment.application_path', $this->appPath);
+        $this->container->addCompilerPass(
+            new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
+        );
         $this->container->addCompilerPass(new Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass());
+        $this->container->addCompilerPass(new RegisterValidationRulesPass());
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
 
@@ -58,8 +65,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         } else {
             $loader->load('../config/services.yml');
         }
-
-        $this->container->setParameter('core.environment', $this->appMode);
 
         // When in updater context, also include "normal" module services
         if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {

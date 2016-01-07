@@ -6,7 +6,9 @@ use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\User;
+use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
+use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
 use ACP3\Installer\Core;
 use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
@@ -14,6 +16,7 @@ use ACP3\Installer\Modules\Install\Validation\FormValidation;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
  * Class Install
@@ -166,6 +169,12 @@ class Install extends AbstractController
 
         $this->container->set('core.environment.application_path', $this->appPath);
         $this->container->setParameter('core.environment', $environment);
+
+        $this->container->addCompilerPass(
+            new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
+        );
+        $this->container->addCompilerPass(new RegisterPluginsPass());
+        $this->container->addCompilerPass(new RegisterValidationRulesPass());
 
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__));
         $loader->load($this->appPath->getClassesDir() . 'config/services.yml');
