@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 class ServiceContainerBuilder
 {
     /**
-     * @param string                                           $appMode
+     * @param string $appMode
      * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
-     * @param bool                                             $includeModules
+     * @param bool $includeModules
      *
      * @return \Symfony\Component\DependencyInjection\ContainerBuilder
      */
@@ -38,13 +38,47 @@ class ServiceContainerBuilder
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
 
-        if ($appMode === ApplicationMode::UPDATER) {
-            $loader->load('./config/update.yml');
-        } else {
-            $loader->load('./config/services.yml');
+        if (self::canIncludeModules($appMode, $includeModules) === true) {
+            $loader->load($appPath->getClassesDir() . 'config/services.yml');
         }
 
-        if ($appMode === ApplicationMode::UPDATER || $includeModules === true) {
+        $loader->load('./config/services.yml');
+        if ($appMode === ApplicationMode::UPDATER) {
+            $loader->load('./config/update.yml');
+        }
+
+        self::includeModules($appMode, $appPath, $container, $loader, $includeModules);
+
+        $container->compile();
+
+        return $container;
+    }
+
+    /**
+     * @param string $appMode
+     * @param boolean $includeModules
+     * @return bool
+     */
+    protected static function canIncludeModules($appMode, $includeModules)
+    {
+        return $appMode === ApplicationMode::UPDATER || $includeModules === true;
+    }
+
+    /**
+     * @param string $appMode
+     * @param ApplicationPath $appPath
+     * @param ContainerBuilder $container
+     * @param YamlFileLoader $loader
+     * @param boolean $includeModules
+     */
+    protected static function includeModules(
+        $appMode,
+        ApplicationPath $appPath,
+        ContainerBuilder $container,
+        YamlFileLoader $loader,
+        $includeModules
+    ) {
+        if (self::canIncludeModules($appMode, $includeModules) === true) {
             $vendors = $container->get('core.modules.vendors')->getVendors();
 
             foreach ($vendors as $vendor) {
@@ -54,9 +88,5 @@ class ServiceContainerBuilder
                 }
             }
         }
-
-        $container->compile();
-
-        return $container;
     }
 }
