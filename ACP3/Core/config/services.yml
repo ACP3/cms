@@ -44,13 +44,8 @@ services:
       - @core.logger
       - @core.environment.application_path
       - %core.environment%
-      - '%db_host%'
-      - '%db_name%'
-      - '%db_user%'
-      - '%db_password%'
+      - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%'}
       - '%db_table_prefix%'
-      - '%db_driver%'
-      - '%db_charset%'
       - '%cache_driver%'
 
   core.functions:
