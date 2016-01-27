@@ -8,8 +8,6 @@ use ACP3\Core\Helpers\StringFormatter;
  */
 class Nl2pColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'nl2p';
-
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */

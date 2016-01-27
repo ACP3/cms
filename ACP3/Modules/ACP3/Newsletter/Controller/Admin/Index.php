@@ -175,18 +175,18 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('system', 'date'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'subject'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'status'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
                 'fields' => ['status'],
                 'custom' => [
                     'search' => [0, 1],
@@ -198,7 +198,7 @@ class Index extends Core\Modules\AdminController
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

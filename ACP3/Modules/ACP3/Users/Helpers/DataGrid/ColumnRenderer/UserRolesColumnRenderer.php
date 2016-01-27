@@ -11,8 +11,6 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
  */
 class UserRolesColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'user_roles';
-
     /**
      * @var \ACP3\Core\ACL
      */

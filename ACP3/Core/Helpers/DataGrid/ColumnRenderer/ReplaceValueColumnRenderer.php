@@ -7,8 +7,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class ReplaceValueColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'replace_value';
-
     /**
      * @var array
      */

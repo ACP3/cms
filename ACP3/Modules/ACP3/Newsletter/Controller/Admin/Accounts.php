@@ -95,13 +95,13 @@ class Accounts extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('system', 'email_address'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['mail'],
                 'default_sort' => true
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'salutation'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
                 'fields' => ['salutation'],
                 'custom' => [
                     'search' => [0, 1, 2],
@@ -114,22 +114,22 @@ class Accounts extends Core\Modules\AdminController
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'first_name'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['first_name'],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'last_name'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['last_name'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'status'),
-                'type' => Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer::NAME,
+                'type' => Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer::class,
                 'fields' => ['status'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

@@ -190,7 +190,7 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'picture'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
                 'fields' => ['id'],
                 'custom' => [
                     'pattern' => 'gallery/index/image/id_%s/action_thumb',
@@ -199,18 +199,18 @@ class Index extends Core\Modules\AdminController
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'order'),
-                'type' => Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer::NAME,
+                'type' => Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer::class,
                 'fields' => ['pic'],
                 'default_sort' => true
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
@@ -240,23 +240,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'title'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'pictures'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['pictures'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

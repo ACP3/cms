@@ -7,8 +7,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class MassActionColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'mass_action';
-
     /**
      * @inheritdoc
      */

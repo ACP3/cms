@@ -220,17 +220,17 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('emoticons', 'code'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['code']
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('emoticons', 'picture'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
                 'fields' => ['img'],
                 'custom' => [
                     'pattern' => $this->appPath->getWebRoot() . 'uploads/emoticons/%s'
@@ -238,7 +238,7 @@ class Index extends Core\Modules\AdminController
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
                 'default_sort' => true

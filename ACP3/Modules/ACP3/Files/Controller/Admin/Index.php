@@ -230,23 +230,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => true
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('files', 'title'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('files', 'filesize'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['size'],
                 'customer' => [
                     'default_value' => $this->translator->t('files', 'unknown_filesize')
@@ -254,7 +254,7 @@ class Index extends Core\Modules\AdminController
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

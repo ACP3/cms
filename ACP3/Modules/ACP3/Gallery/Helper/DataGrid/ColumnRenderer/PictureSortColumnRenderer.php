@@ -12,8 +12,6 @@ use ACP3\Core\Router;
  */
 class PictureSortColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'picture_sort';
-
     /**
      * @var \ACP3\Core\I18n\Translator
      */

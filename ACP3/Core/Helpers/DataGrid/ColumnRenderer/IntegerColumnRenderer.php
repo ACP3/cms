@@ -7,8 +7,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
  */
 class IntegerColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'integer';
-
     /**
      * @param array  $dbResultRow
      * @param string $field

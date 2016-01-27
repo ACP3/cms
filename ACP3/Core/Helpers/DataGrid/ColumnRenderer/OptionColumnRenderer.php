@@ -13,8 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class OptionColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'options';
-
     /**
      * @var \ACP3\Core\I18n\Translator
      */

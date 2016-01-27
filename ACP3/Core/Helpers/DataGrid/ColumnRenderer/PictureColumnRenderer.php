@@ -9,8 +9,6 @@ use ACP3\Core\Router;
  */
 class PictureColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'picture';
-
     /**
      * @var \ACP3\Core\Router
      */

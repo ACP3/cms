@@ -10,7 +10,6 @@ use ACP3\Core\Helpers\Formatter\DateRange;
  */
 class DateColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'date';
     /**
      * @var \ACP3\Core\Date
      */

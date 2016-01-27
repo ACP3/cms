@@ -8,7 +8,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
     const CELL_TYPE = 'td';
-    const NAME = '';
 
     /**
      * @var string
@@ -18,14 +17,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      * @var string
      */
     protected $primaryKey = '';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return static::NAME;
-    }
 
     /**
      * @param string $identifier

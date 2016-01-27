@@ -87,7 +87,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
         $this->dataGrid->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => 'text'
+            'type' => \ACP3\Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class
         ], 10);
 
         $expected = array_merge(
@@ -133,7 +133,7 @@ class DataGridTest extends PHPUnit_Framework_TestCase
         $this->dataGrid->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => 'text'
+            'type' => \ACP3\Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class
         ], 10);
         $this->dataGrid->setResults($data);
 

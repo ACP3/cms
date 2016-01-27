@@ -255,23 +255,23 @@ class Index extends Core\Modules\AdminController
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('users', 'nickname'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['nickname'],
                 'default_sort' => true
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'email_address'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['mail'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('permissions', 'roles'),
-                'type' => Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer::NAME,
+                'type' => Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer::class,
                 'fields' => ['id'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);

@@ -9,8 +9,6 @@ use ACP3\Core\I18n\Translator;
  */
 class TranslateColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'translate';
-
     /**
      * @var
      */

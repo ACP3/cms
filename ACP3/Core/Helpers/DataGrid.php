@@ -4,6 +4,7 @@ namespace ACP3\Core\Helpers;
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\I18n\Translator;
@@ -84,7 +85,7 @@ class DataGrid
      */
     public function registerColumnRenderer(ColumnRendererInterface $columnRenderer)
     {
-        $this->columnRenderer[$columnRenderer->getName()] = $columnRenderer;
+        $this->columnRenderer[get_class($columnRenderer)] = $columnRenderer;
 
         return $this;
     }
@@ -233,7 +234,7 @@ class DataGrid
 
         foreach (clone $this->columns as $column) {
             if (!empty($column['label'])) {
-                $header .= $this->columnRenderer['table_header']
+                $header .= $this->columnRenderer[HeaderColumnRenderer::class]
                     ->setIdentifier($this->identifier)
                     ->setPrimaryKey($this->primaryKey)
                     ->fetchDataAndRenderColumn($column, []);
@@ -311,7 +312,7 @@ class DataGrid
         if ($this->enableMassAction && $canDelete) {
             $this->addColumn([
                 'label' => $this->identifier,
-                'type' => MassActionColumnRenderer::NAME,
+                'type' => MassActionColumnRenderer::class,
                 'class' => 'datagrid-column datagrid-column__mass-action',
                 'sortable' => false,
                 'custom' => [
@@ -323,7 +324,7 @@ class DataGrid
         if ($this->enableOptions) {
             $this->addColumn([
                 'label' => $this->translator->t('system', 'action'),
-                'type' => OptionColumnRenderer::NAME,
+                'type' => OptionColumnRenderer::class,
                 'class' => 'datagrid-column datagrid-column__actions',
                 'sortable' => false,
                 'custom' => [

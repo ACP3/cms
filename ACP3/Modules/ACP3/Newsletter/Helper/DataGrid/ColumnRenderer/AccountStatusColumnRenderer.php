@@ -11,8 +11,6 @@ use ACP3\Core\Router;
  */
 class AccountStatusColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'account_status';
-
     /**
      * @var \ACP3\Core\I18n\Translator
      */

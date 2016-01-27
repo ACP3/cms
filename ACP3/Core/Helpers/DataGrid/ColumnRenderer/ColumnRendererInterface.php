@@ -14,9 +14,4 @@ interface ColumnRendererInterface
      * @return string
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow);
-
-    /**
-     * @return string
-     */
-    public function getName();
 }

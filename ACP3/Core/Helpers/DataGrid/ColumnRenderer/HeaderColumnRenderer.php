@@ -8,7 +8,6 @@ use ACP3\Core\Helpers\Formatter\MarkEntries;
  */
 class HeaderColumnRenderer extends AbstractColumnRenderer
 {
-    const NAME = 'table_header';
     const CELL_TYPE = 'th';
 
     /**
@@ -31,7 +30,7 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
-        if ($column['type'] === 'mass_action') {
+        if ($column['type'] === MassActionColumnRenderer::class) {
             $id = preg_replace('=[^\w\d-_]=', '', $column['label']) . '-mark-all';
             $value = '<input type="checkbox" id="' . $id . '" value="1" ' . $this->markEntriesHelper->execute('entries', $id) . '>';
         } else {

@@ -174,28 +174,28 @@ class Details extends Core\Modules\AdminController
             $dataGrid
                 ->addColumn([
                     'label' => $this->translator->t('system', 'date'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::NAME,
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                     'fields' => ['date'],
                     'default_sort' => true
                 ], 50)
                 ->addColumn([
                     'label' => $this->translator->t('system', 'name'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                     'fields' => ['name'],
                 ], 40)
                 ->addColumn([
                     'label' => $this->translator->t('system', 'message'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::NAME,
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
                     'fields' => ['message'],
                 ], 30)
                 ->addColumn([
                     'label' => $this->translator->t('comments', 'ip'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::NAME,
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                     'fields' => ['ip'],
                 ], 20)
                 ->addColumn([
                     'label' => $this->translator->t('system', 'id'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::NAME,
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                     'fields' => ['id'],
                     'primary' => true
                 ], 10);
