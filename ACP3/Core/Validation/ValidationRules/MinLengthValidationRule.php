@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class MinLengthValidationRule extends AbstractValidationRule
 {
-    const NAME = 'min_length';
-
     /**
      * @inheritdoc
      */

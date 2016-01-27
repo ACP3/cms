@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class InArrayValidationRule extends AbstractValidationRule
 {
-    const NAME = 'in_array';
-
     /**
      * @inheritdoc
      */

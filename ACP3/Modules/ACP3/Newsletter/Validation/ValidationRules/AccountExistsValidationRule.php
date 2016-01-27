@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Newsletter\Model\AccountRepository;
  */
 class AccountExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'newsletter_account_exists';
-
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
      */

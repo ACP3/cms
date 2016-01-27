@@ -64,23 +64,23 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'code',
                     'message' => $this->translator->t('emoticons', 'type_in_code')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'description',
                     'message' => $this->translator->t('emoticons', 'type_in_description')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\PictureValidationRule::NAME,
+                Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
                     'data' => $this->file,
                     'field' => 'picture',

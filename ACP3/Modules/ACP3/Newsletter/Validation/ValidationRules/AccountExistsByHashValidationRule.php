@@ -7,8 +7,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
  */
 class AccountExistsByHashValidationRule extends AccountExistsValidationRule
 {
-    const NAME = 'newsletter_account_exists_by_hash';
-
     /**
      * @inheritdoc
      */

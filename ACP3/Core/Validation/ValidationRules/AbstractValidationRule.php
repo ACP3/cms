@@ -9,20 +9,10 @@ use ACP3\Core\Validation\Validator;
  */
 abstract class AbstractValidationRule implements ValidationRuleInterface
 {
-    const NAME = '';
-
     /**
      * @var string
      */
     protected $message = '';
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return static::NAME;
-    }
 
     /**
      * @inheritdoc

@@ -11,8 +11,6 @@ use ACP3\Modules\ACP3\Seo;
  */
 class UriAliasValidationRule extends AbstractValidationRule
 {
-    const NAME = 'seo_uri_alias';
-
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */

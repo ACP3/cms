@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class NumberGreaterThanValidationRule extends AbstractValidationRule
 {
-    const NAME = 'number_greater_than';
-
     /**
      * @inheritdoc
      */

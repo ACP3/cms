@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class UriSafeValidationRule extends AbstractValidationRule
 {
-    const NAME = 'uri_safe';
-
     /**
      * @inheritdoc
      */

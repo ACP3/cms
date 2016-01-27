@@ -55,16 +55,16 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\DateValidationRule::NAME,
+                Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
                     'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\MinLengthValidationRule::NAME,
+                Core\Validation\ValidationRules\MinLengthValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
@@ -74,7 +74,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\MinLengthValidationRule::NAME,
+                Core\Validation\ValidationRules\MinLengthValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'text',
@@ -84,7 +84,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                UriAliasValidationRule::NAME,
+                UriAliasValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'alias',
@@ -107,21 +107,21 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'block_id',
                     'message' => $this->translator->t('menus', 'select_menu_bar')
                 ])
             ->addConstraint(
-                Menus\Validation\ValidationRules\ParentIdValidationRule::NAME,
+                Menus\Validation\ValidationRules\ParentIdValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
                     'message' => $this->translator->t('menus', 'select_superior_page')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'display',
@@ -131,7 +131,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Menus\Validation\ValidationRules\AllowedMenuValidationRule::NAME,
+                Menus\Validation\ValidationRules\AllowedMenuValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'block_id'],

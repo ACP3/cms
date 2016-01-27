@@ -38,9 +38,9 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
@@ -53,7 +53,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
         if ($this->modules->isActive('emoticons')) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'emoticons',

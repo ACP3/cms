@@ -49,9 +49,9 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                FloodBarrierValidationRule::NAME,
+                FloodBarrierValidationRule::class,
                 [
                     'message' => $this->translator->t('system', 'flood_no_entry_possible'),
                     'extra' => [
@@ -59,21 +59,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'name',
                     'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',
                     'message' => $this->translator->t('system', 'message_to_short')
                 ])
             ->addConstraint(
-                CaptchaValidationRule::NAME,
+                CaptchaValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'captcha',
@@ -83,7 +83,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
         if (!empty($formData['mail'])) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\EmailValidationRule::NAME,
+                    Core\Validation\ValidationRules\EmailValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'mail',
@@ -94,7 +94,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
         if ($this->newsletterAccess === true && isset($formData['subscribe_newsletter'])) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\EmailValidationRule::NAME,
+                    Core\Validation\ValidationRules\EmailValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'mail',
@@ -102,7 +102,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                             'type_in_email_address_to_subscribe_to_newsletter')
                     ])
                 ->addConstraint(
-                    Newsletter\Validation\ValidationRules\AccountExistsValidationRule::NAME,
+                    Newsletter\Validation\ValidationRules\AccountExistsValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'mail',

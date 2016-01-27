@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Categories\Helpers;
  */
 class DuplicateCategoryValidationRule extends AbstractValidationRule
 {
-    const NAME = 'categories_duplicate_category';
-
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */

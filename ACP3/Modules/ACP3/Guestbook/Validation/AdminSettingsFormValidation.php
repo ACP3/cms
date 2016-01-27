@@ -38,9 +38,9 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
@@ -50,7 +50,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'notify',
@@ -60,7 +60,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'overlay',
@@ -73,7 +73,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
         if ($formData['notify'] != 0) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\EmailValidationRule::NAME,
+                    Core\Validation\ValidationRules\EmailValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'notify_email',
@@ -84,7 +84,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
         if ($this->modules->isActive('emoticons') === true) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'emoticons',
@@ -98,7 +98,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
         if ($this->modules->isActive('newsletter') === true) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'newsletter_integration',

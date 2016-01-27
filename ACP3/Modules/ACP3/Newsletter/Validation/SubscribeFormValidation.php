@@ -20,9 +20,9 @@ class SubscribeFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'salutation',
@@ -32,21 +32,21 @@ class SubscribeFormValidation extends AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\EmailValidationRule::NAME,
+                Core\Validation\ValidationRules\EmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
-                AccountExistsValidationRule::NAME,
+                AccountExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('newsletter', 'account_not_exists')
                 ])
             ->addConstraint(
-                CaptchaValidationRule::NAME,
+                CaptchaValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'captcha',

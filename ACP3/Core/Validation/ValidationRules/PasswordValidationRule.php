@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class PasswordValidationRule extends AbstractValidationRule
 {
-    const NAME = 'password';
-
     /**
      * @inheritdoc
      */

@@ -8,8 +8,6 @@ use ACP3\Core\Modules;
  */
 class ModuleIsInstalledValidationRule extends AbstractValidationRule
 {
-    const NAME = 'module_is_installed';
-
     /**
      * @var \ACP3\Core\Modules
      */

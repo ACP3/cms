@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository;
  */
 class PrivilegeExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'permissions_privilege_exists';
-
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
      */

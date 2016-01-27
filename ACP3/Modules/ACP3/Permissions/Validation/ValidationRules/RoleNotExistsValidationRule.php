@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
  */
 class RoleNotExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'permissions_role_exists';
-
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
      */

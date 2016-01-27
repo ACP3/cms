@@ -84,23 +84,23 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('categories', 'title_to_short')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'description',
                     'message' => $this->translator->t('categories', 'description_to_short')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\PictureValidationRule::NAME,
+                Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
                     'data' => $this->file,
                     'field' => 'picture',
@@ -113,7 +113,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                DuplicateCategoryValidationRule::NAME,
+                DuplicateCategoryValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
@@ -126,7 +126,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
 
         if (empty($categoryId)) {
             $this->validator->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'module',

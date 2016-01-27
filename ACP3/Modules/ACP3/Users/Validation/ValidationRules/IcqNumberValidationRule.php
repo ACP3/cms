@@ -9,8 +9,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
  */
 class IcqNumberValidationRule extends AbstractValidationRule
 {
-    const NAME = 'icq_number';
-
     /**
      * @inheritdoc
      */

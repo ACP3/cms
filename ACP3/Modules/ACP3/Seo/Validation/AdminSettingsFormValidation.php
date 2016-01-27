@@ -16,16 +16,16 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('system', 'title_to_short'),
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'robots',
@@ -35,7 +35,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mod_rewrite',

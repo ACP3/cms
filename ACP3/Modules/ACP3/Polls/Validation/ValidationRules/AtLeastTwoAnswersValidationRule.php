@@ -7,8 +7,6 @@ namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
  */
 class AtLeastTwoAnswersValidationRule extends AbstractAnswerValidationRule
 {
-    const NAME = 'polls_at_least_two_answers';
-
     /**
      * @inheritdoc
      */

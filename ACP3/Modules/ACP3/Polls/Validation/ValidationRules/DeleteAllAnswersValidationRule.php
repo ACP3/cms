@@ -7,8 +7,6 @@ namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
  */
 class DeleteAllAnswersValidationRule extends AbstractAnswerValidationRule
 {
-    const NAME = 'polls_delete_all_answers';
-
     /**
      * @inheritdoc
      */

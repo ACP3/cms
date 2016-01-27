@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
  */
 class AllowedMenuValidationRule extends AbstractValidationRule
 {
-    const NAME = 'menus_allowed_menu';
-
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */

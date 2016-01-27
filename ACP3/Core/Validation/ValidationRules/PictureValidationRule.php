@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class PictureValidationRule extends AbstractValidationRule
 {
-    const NAME = 'picture';
-
     /**
      * @var \ACP3\Core\Validation\ValidationRules\FileUploadValidationRule
      */

@@ -33,16 +33,16 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'name',
                     'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
-                RoleNotExistsValidationRule::NAME,
+                RoleNotExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'name',
@@ -52,7 +52,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                PrivilegesExistValidationRule::NAME,
+                PrivilegesExistValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'privileges',

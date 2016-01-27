@@ -10,8 +10,6 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
  */
 class UserNameValidationRule extends AbstractValidationRule
 {
-    const NAME = 'comments_user_name';
-
     /**
      * @var \ACP3\Core\Validation\ValidationRules\IntegerValidationRule
      */

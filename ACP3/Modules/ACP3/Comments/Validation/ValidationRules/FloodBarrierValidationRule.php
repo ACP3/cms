@@ -10,5 +10,4 @@ use ACP3\Core\Validation\ValidationRules\AbstractFloodBarrierValidationRule;
  */
 class FloodBarrierValidationRule extends AbstractFloodBarrierValidationRule
 {
-    const NAME = 'comments_flood_barrier';
 }

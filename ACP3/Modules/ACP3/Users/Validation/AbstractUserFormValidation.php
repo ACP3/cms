@@ -21,7 +21,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     protected function validateNewPassword(array $formData, $passwordField, $passwordConfirmationField)
     {
         $this->validator->addConstraint(
-            Core\Validation\ValidationRules\ChangePasswordValidationRule::NAME,
+            Core\Validation\ValidationRules\ChangePasswordValidationRule::class,
             [
                 'data' => $formData,
                 'field' => [$passwordField, $passwordConfirmationField],
@@ -37,7 +37,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     protected function validatePassword(array $formData, $passwordField, $passwordConfirmationField)
     {
         $this->validator->addConstraint(
-            Core\Validation\ValidationRules\PasswordValidationRule::NAME,
+            Core\Validation\ValidationRules\PasswordValidationRule::class,
             [
                 'data' => $formData,
                 'field' => [$passwordField, $passwordConfirmationField],
@@ -53,14 +53,14 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'nickname',
                     'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
-                AccountNotExistsByNameValidationRule::NAME,
+                AccountNotExistsByNameValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'nickname',
@@ -70,7 +70,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'gender',
@@ -80,21 +80,21 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     ]
                 ])
             ->addConstraint(
-                BirthdayValidationRule::NAME,
+                BirthdayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'birthday',
                     'message' => $this->translator->t('users', 'invalid_birthday')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\EmailValidationRule::NAME,
+                Core\Validation\ValidationRules\EmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
-                AccountNotExistsByEmailValidationRule::NAME,
+                AccountNotExistsByEmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
@@ -104,7 +104,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     ]
                 ])
             ->addConstraint(
-                IcqNumberValidationRule::NAME,
+                IcqNumberValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'icq',
@@ -121,7 +121,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     {
         if ($languageOverride == 1) {
             $this->validator->addConstraint(
-                Core\Validation\ValidationRules\LanguagePackExistsValidationRule::NAME,
+                Core\Validation\ValidationRules\LanguagePackExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'language',
@@ -130,7 +130,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
         }
         if ($entriesOverride == 1) {
             $this->validator->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'entries',
@@ -140,28 +140,28 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
 
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_format_long',
                     'message' => $this->translator->t('system', 'type_in_long_date_format')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
                     'message' => $this->translator->t('system', 'type_in_short_date_format')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\TimeZoneExistsValidationRule::NAME,
+                Core\Validation\ValidationRules\TimeZoneExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
                     'messgae' => $this->translator->t('system', 'select_time_zone')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail_display',
@@ -171,7 +171,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'address_display',
@@ -181,7 +181,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'country_display',
@@ -191,7 +191,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'birthday_display',

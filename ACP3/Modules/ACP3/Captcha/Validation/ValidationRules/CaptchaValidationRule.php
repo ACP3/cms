@@ -14,8 +14,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
  */
 class CaptchaValidationRule extends AbstractValidationRule
 {
-    const NAME = 'captcha';
-
     /**
      * @var \ACP3\Core\ACL
      */

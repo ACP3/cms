@@ -40,15 +40,6 @@ abstract class AbstractValidationRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->validationRule->isValid($data, $field, $extra));
     }
 
-    public function testGetName()
-    {
-        $this->assertNotEmpty($this->validationRule->getName());
-
-        /** @var \ACP3\Core\Validation\ValidationRules\AbstractValidationRule $className */
-        $className = get_class($this->validationRule);
-        $this->assertEquals($className::NAME, $this->validationRule->getName());
-    }
-
     /**
      * @dataProvider validationRuleProvider
      *

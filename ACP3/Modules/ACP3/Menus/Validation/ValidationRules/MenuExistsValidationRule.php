@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
  */
 class MenuExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'menus_menu_exists';
-
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
      */

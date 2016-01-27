@@ -10,8 +10,6 @@ use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
  */
 class ExternalLinkValidationRule extends AbstractValidationRule
 {
-    const NAME = 'news_external_link';
-
     /**
      * @var \ACP3\Core\Validation\ValidationRules\InArrayValidationRule
      */

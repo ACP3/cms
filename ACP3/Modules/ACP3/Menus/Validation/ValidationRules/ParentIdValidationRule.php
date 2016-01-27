@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
  */
 class ParentIdValidationRule extends AbstractValidationRule
 {
-    const NAME = 'menus_menu_item_parent_id';
-
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */

@@ -9,8 +9,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
  */
 class MenuNameValidationRule extends AbstractValidationRule
 {
-    const NAME = 'menus_menu_name';
-
     /**
      * @inheritdoc
      */

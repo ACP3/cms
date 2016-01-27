@@ -38,9 +38,9 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
@@ -50,14 +50,14 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
                     'message' => $this->translator->t('system', 'select_sidebar_entries')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'overlay',
@@ -67,28 +67,28 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'thumbwidth',
                     'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'width',
                     'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'thumbheight',
                     'message' => $this->translator->t('gallery', 'invalid_image_height_entered')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'height',
@@ -98,7 +98,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         if ($this->modules->isActive('comments') === true) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'comments',

@@ -32,16 +32,16 @@ class AdminFormValidation extends AbstractUserFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                RolesExistValidationRule::NAME,
+                RolesExistValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'roles',
                     'message' => $this->translator->t('users', 'select_access_level')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'super_user',

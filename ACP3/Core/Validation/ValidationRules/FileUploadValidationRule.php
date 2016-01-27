@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class FileUploadValidationRule extends AbstractValidationRule
 {
-    const NAME = 'file_upload';
-
     /**
      * @inheritdoc
      */

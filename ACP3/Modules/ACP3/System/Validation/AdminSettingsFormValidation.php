@@ -17,7 +17,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function validate(array $formData)
     {
-        $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME);
+        $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);
 
         $this->validateGeneralSettings($formData);
         $this->validateDateSettings($formData);
@@ -35,35 +35,35 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\InternalUriValidationRule::NAME,
+                Core\Validation\ValidationRules\InternalUriValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'homepage',
                     'message' => $this->translator->t('system', 'incorrect_homepage')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'entries',
                     'message' => $this->translator->t('system', 'select_records_per_page')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'flood',
                     'message' => $this->translator->t('system', 'type_in_flood_barrier')
                 ])
             ->addConstraint(
-                IsWysiwygEditorValidationRule::NAME,
+                IsWysiwygEditorValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'wysiwyg',
                     'message' => $this->translator->t('system', 'select_editor')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\LanguagePackExistsValidationRule::NAME,
+                Core\Validation\ValidationRules\LanguagePackExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'language',
@@ -78,21 +78,21 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_format_long',
                     'message' => $this->translator->t('system', 'type_in_long_date_format')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
                     'message' => $this->translator->t('system', 'type_in_short_date_format')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\TimeZoneExistsValidationRule::NAME,
+                Core\Validation\ValidationRules\TimeZoneExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
@@ -107,7 +107,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'maintenance_mode',
@@ -117,7 +117,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'maintenance_message',
@@ -132,7 +132,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'cache_images',
@@ -142,7 +142,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'cache_minify',
@@ -157,7 +157,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mailer_type',
@@ -170,14 +170,14 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         if ($formData['mailer_type'] === 'smtp') {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                    Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'mailer_smtp_host',
                         'message' => $this->translator->t('system', 'type_in_mailer_smtp_host')
                     ])
                 ->addConstraint(
-                    Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                    Core\Validation\ValidationRules\IntegerValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'mailer_smtp_port',
@@ -187,7 +187,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             if ($formData['mailer_smtp_auth'] == 1) {
                 $this->validator
                     ->addConstraint(
-                        Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                        Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                         [
                             'data' => $formData,
                             'field' => 'mailer_smtp_user',

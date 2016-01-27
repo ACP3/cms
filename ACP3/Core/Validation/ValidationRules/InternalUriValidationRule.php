@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class InternalUriValidationRule extends AbstractValidationRule
 {
-    const NAME = 'internal_uri';
-
     /**
      * @inheritdoc
      */

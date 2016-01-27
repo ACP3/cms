@@ -18,7 +18,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->validator->registerValidationRule(new ACP3\Core\Validation\ValidationRules\EmailValidationRule());
 
-        $this->validator->addConstraint(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::NAME, [
+        $this->validator->addConstraint(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::class, [
             'data' => 'test@example.com',
             'field' => 'mail',
             'message' => 'Invalid E-mail address'
@@ -35,7 +35,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->validator->registerValidationRule(new ACP3\Core\Validation\ValidationRules\EmailValidationRule());
 
-        $this->validator->addConstraint(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::NAME, [
+        $this->validator->addConstraint(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::class, [
             'data' => 'testexample.com',
             'field' => 'mail',
             'message' => 'Invalid E-mail address'
@@ -59,7 +59,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->validator->registerValidationRule(new ACP3\Core\Validation\ValidationRules\EmailValidationRule());
 
-        $this->validator->addConstraint(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::NAME, [
+        $this->validator->addConstraint(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::class, [
             'data' => 'testexample.com',
             'message' => 'Invalid E-mail address'
         ]);
@@ -103,7 +103,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->validator->registerValidationRule(new ACP3\Core\Validation\ValidationRules\EmailValidationRule());
 
-        $actual = $this->validator->is(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::NAME, $value);
+        $actual = $this->validator->is(\ACP3\Core\Validation\ValidationRules\EmailValidationRule::class, $value);
         $this->assertEquals($expected, $actual);
     }
 

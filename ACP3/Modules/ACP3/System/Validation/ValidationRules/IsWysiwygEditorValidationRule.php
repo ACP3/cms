@@ -12,8 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class IsWysiwygEditorValidationRule extends AbstractValidationRule
 {
-    const NAME = 'system_is_wysiwyg_editor';
-
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */

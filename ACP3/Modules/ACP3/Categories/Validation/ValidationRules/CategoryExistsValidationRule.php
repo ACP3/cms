@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Categories\Helpers;
  */
 class CategoryExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'categories_category_exists';
-
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */

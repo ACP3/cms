@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class IntegerValidationRule extends AbstractValidationRule
 {
-    const NAME = 'integer';
-
     /**
      * @inheritdoc
      */

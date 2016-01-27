@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class BirthdayValidationRule extends AbstractValidationRule
 {
-    const NAME = 'birthday';
-
     /**
      * @inheritdoc
      */

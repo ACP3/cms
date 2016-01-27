@@ -34,16 +34,16 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                MenuNameValidationRule::NAME,
+                MenuNameValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'index_name',
                     'message' => $this->translator->t('menus', 'type_in_index_name')
                 ])
             ->addConstraint(
-                MenuExistsValidationRule::NAME,
+                MenuExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'index_name',
@@ -53,7 +53,7 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',

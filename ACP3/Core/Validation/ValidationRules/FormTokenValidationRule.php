@@ -12,8 +12,6 @@ use ACP3\Core\Validation\Validator;
  */
 class FormTokenValidationRule extends AbstractValidationRule
 {
-    const NAME = 'form_token';
-
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */

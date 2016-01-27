@@ -18,23 +18,23 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
      */
     public function validate(array $formData)
     {
-        if ($this->validator->is(Core\Validation\ValidationRules\EmailValidationRule::NAME, $formData['nick_mail'])) {
-            $ruleName = AccountNotExistsByEmailValidationRule::NAME;
+        if ($this->validator->is(Core\Validation\ValidationRules\EmailValidationRule::class, $formData['nick_mail'])) {
+            $ruleName = AccountNotExistsByEmailValidationRule::class;
         } else {
-            $ruleName = AccountNotExistsByNameValidationRule::NAME;
+            $ruleName = AccountNotExistsByNameValidationRule::class;
         }
 
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
                     'message' => $this->translator->t('users', 'type_in_nickname_or_email')
                 ])
             ->addConstraint(
-                CaptchaValidationRule::NAME,
+                CaptchaValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'captcha',

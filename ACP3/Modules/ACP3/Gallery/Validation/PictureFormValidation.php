@@ -31,9 +31,9 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\PictureValidationRule::NAME,
+                Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'file',

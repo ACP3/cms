@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class NotEmptyValidationRule extends AbstractValidationRule
 {
-    const NAME = 'not_empty';
-
     /**
      * @inheritdoc
      */

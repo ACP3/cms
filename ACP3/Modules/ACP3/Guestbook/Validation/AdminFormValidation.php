@@ -33,9 +33,9 @@ class AdminFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',
@@ -45,7 +45,7 @@ class AdminFormValidation extends AbstractFormValidation
         if ($this->settings['notify'] == 2) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'active',

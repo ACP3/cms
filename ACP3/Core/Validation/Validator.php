@@ -31,7 +31,7 @@ class Validator
      */
     public function registerValidationRule(ValidationRuleInterface $validationRule)
     {
-        $this->validationRules[$validationRule->getName()] = $validationRule;
+        $this->validationRules[get_class($validationRule)] = $validationRule;
 
         return $this;
     }
@@ -50,15 +50,15 @@ class Validator
     }
 
     /**
-     * @param string $validationRuleName
+     * @param string $validationRule
      * @param array  $params
      *
      * @return $this
      */
-    public function addConstraint($validationRuleName, array $params = [])
+    public function addConstraint($validationRule, array $params = [])
     {
         $this->constraints[] = [
-            'rule' => $validationRuleName,
+            'rule' => $validationRule,
             'params' => array_merge($this->getDefaultConstraintParams(), $params)
         ];
 
@@ -127,19 +127,19 @@ class Validator
     }
 
     /**
-     * @param string $validationRuleName
+     * @param string $validationRule
      * @param mixed  $field
      *
      * @return bool
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
-    public function is($validationRuleName, $field)
+    public function is($validationRule, $field)
     {
-        if (isset($this->validationRules[$validationRuleName])) {
-            return $this->validationRules[$validationRuleName]->isValid($field);
+        if (isset($this->validationRules[$validationRule])) {
+            return $this->validationRules[$validationRule]->isValid($field);
         }
 
-        throw new ValidationRuleNotFoundException('Can not find the validation rule with the name ' . $validationRuleName . '.');
+        throw new ValidationRuleNotFoundException('Can not find the validation rule with the name ' . $validationRule . '.');
     }
 
     /**

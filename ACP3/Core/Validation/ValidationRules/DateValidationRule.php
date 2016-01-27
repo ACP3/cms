@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class DateValidationRule extends AbstractValidationRule
 {
-    const NAME = 'date';
-
     /**
      * @inheritdoc
      */

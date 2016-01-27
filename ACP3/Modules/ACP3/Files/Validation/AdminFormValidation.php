@@ -49,30 +49,30 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\DateValidationRule::NAME,
+                Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
                     'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('files', 'type_in_title')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'text',
                     'message' => $this->translator->t('files', 'description_to_short')
                 ])
             ->addConstraint(
-                IsExternalFileValidationRule::NAME,
+                IsExternalFileValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['external', 'filesize', 'unit'],
@@ -82,7 +82,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                UriAliasValidationRule::NAME,
+                UriAliasValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'alias',
@@ -92,7 +92,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Categories\Validation\ValidationRules\CategoryExistsValidationRule::NAME,
+                Categories\Validation\ValidationRules\CategoryExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['cat', 'cat_create'],
@@ -102,7 +102,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         if (!isset($formData['external'])) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\FileUploadValidationRule::NAME,
+                    Core\Validation\ValidationRules\FileUploadValidationRule::class,
                     [
                         'data' => $this->file,
                         'field' => 'file_internal',

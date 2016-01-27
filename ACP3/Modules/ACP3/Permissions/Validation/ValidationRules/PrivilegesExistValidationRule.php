@@ -10,8 +10,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
  */
 class PrivilegesExistValidationRule extends AbstractValidationRule
 {
-    const NAME = 'permissions_privileges_exist';
-
     /**
      * @var \ACP3\Core\ACL
      */

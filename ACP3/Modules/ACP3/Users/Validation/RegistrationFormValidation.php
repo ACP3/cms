@@ -18,37 +18,37 @@ class RegistrationFormValidation extends AbstractUserFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'nickname',
                     'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
-                AccountNotExistsByNameValidationRule::NAME,
+                AccountNotExistsByNameValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'nickname',
                     'message' => $this->translator->t('users', 'user_name_already_exists')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\EmailValidationRule::NAME,
+                Core\Validation\ValidationRules\EmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
-                AccountNotExistsByEmailValidationRule::NAME,
+                AccountNotExistsByEmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('users', 'user_email_already_exists')
                 ])
             ->addConstraint(
-                CaptchaValidationRule::NAME,
+                CaptchaValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'captcha',

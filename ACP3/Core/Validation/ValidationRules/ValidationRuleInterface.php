@@ -12,11 +12,6 @@ interface ValidationRuleInterface
     /**
      * @return string
      */
-    public function getName();
-
-    /**
-     * @return string
-     */
     public function getMessage();
 
     /**

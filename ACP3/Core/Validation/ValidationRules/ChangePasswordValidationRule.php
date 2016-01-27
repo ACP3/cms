@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class ChangePasswordValidationRule extends PasswordValidationRule
 {
-    const NAME = 'change_password';
-
     /**
      * @inheritdoc
      */

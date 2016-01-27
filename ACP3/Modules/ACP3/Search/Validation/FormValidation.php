@@ -16,7 +16,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\MinLengthValidationRule::NAME,
+                Core\Validation\ValidationRules\MinLengthValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'search_term',
@@ -26,21 +26,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mods',
                     'message' => $this->translator->t('search', 'no_module_selected')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'area',
                     'message' => $this->translator->t('search', 'no_area_selected')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sort',

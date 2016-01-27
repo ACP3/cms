@@ -38,9 +38,9 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'dateformat',
@@ -50,14 +50,14 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
                     'message' => $this->translator->t('system', 'select_sidebar_entries')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NumberGreaterThanValidationRule::NAME,
+                Core\Validation\ValidationRules\NumberGreaterThanValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'readmore_chars',
@@ -67,7 +67,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NumberGreaterThanValidationRule::NAME,
+                Core\Validation\ValidationRules\NumberGreaterThanValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'readmore',
@@ -77,7 +77,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'category_in_breadcrumb',
@@ -90,7 +90,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
         if ($this->modules->isActive('comments') === true) {
             $this->validator
                 ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'comments',

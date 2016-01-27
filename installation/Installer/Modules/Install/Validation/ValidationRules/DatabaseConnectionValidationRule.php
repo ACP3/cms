@@ -9,8 +9,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
  */
 class DatabaseConnectionValidationRule extends AbstractValidationRule
 {
-    const NAME = 'installer_database_connection';
-
     /**
      * @inheritdoc
      */

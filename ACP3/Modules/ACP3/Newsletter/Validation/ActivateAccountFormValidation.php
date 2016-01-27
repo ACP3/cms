@@ -19,7 +19,7 @@ class ActivateAccountFormValidation extends AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
-                AccountExistsByHashValidationRule::NAME,
+                AccountExistsByHashValidationRule::class,
                 [
                     'data' => $formData['hash'],
                     'message' => $this->translator->t('newsletter', 'account_not_exists')

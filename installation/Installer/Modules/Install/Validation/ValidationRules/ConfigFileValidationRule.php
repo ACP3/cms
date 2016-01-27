@@ -9,8 +9,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
  */
 class ConfigFileValidationRule extends AbstractValidationRule
 {
-    const NAME = 'installer_config_file';
-
     /**
      * @inheritdoc
      */

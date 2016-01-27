@@ -9,8 +9,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
  */
 class IsExternalFileValidationRule extends AbstractValidationRule
 {
-    const NAME = 'files_is_external_file';
-
     /**
      * @inheritdoc
      */

@@ -12,8 +12,6 @@ use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidatio
  */
 class LinkModeValidationRule extends AbstractValidationRule
 {
-    const NAME = 'menus_link_mode';
-
     /**
      * @var \ACP3\Core\Modules
      */

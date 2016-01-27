@@ -10,8 +10,6 @@ use ACP3\Modules\ACP3\Articles\Model\ArticleRepository;
  */
 class ArticleExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'articles_article_exists';
-
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
      */

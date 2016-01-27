@@ -9,5 +9,4 @@ use ACP3\Core\Validation\ValidationRules\AbstractFloodBarrierValidationRule;
  */
 class FloodBarrierValidationRule extends AbstractFloodBarrierValidationRule
 {
-    const NAME = 'guestbook_flood_barrier';
 }

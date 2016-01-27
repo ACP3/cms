@@ -9,8 +9,6 @@ use ACP3\Core\I18n\Translator;
  */
 class LanguagePackExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'language_pack_exists';
-
     /**
      * @var \ACP3\Core\I18n\Translator
      */

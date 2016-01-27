@@ -17,16 +17,16 @@ class AdminFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                UserNameValidationRule::NAME,
+                UserNameValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['name', 'user_id'],
                     'message' => $this->translator->t('system', 'name_to_short')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',

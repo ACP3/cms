@@ -20,9 +20,9 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mode',
@@ -32,35 +32,35 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('menus', 'title_to_short')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::NAME,
+                Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'block_id',
                     'message' => $this->translator->t('menus', 'select_menu_bar')
                 ])
             ->addConstraint(
-                ParentIdValidationRule::NAME,
+                ParentIdValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
                     'message' => $this->translator->t('menus', 'select_superior_page')
                 ])
             ->addConstraint(
-                AllowedMenuValidationRule::NAME,
+                AllowedMenuValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'block_id'],
                     'message' => $this->translator->t('menus', 'superior_page_not_allowed')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'display',
@@ -70,7 +70,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::NAME,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'target',
@@ -80,7 +80,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                LinkModeValidationRule::NAME,
+                LinkModeValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['mode', 'module', 'uri', 'articles'],
@@ -90,7 +90,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
         if ($formData['mode'] == 2) {
             $this->validator
                 ->addConstraint(
-                    UriAliasValidationRule::NAME,
+                    UriAliasValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'alias',

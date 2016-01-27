@@ -7,8 +7,6 @@ namespace ACP3\Core\Validation\ValidationRules;
  */
 class TimeZoneExistsValidationRule extends AbstractValidationRule
 {
-    const NAME = 'time_zone_exists';
-
     /**
      * @inheritdoc
      */

@@ -17,30 +17,30 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::NAME)
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\DateValidationRule::NAME,
+                Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
                     'message' => $this->translator->t('system', 'select_date')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::NAME,
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('polls', 'type_in_question')
                 ])
             ->addConstraint(
-                AtLeastTwoAnswersValidationRule::NAME,
+                AtLeastTwoAnswersValidationRule::class,
                 [
                     'data' => $formData['answers'],
                     'field' => 'answer',
                     'message' => $this->translator->t('polls', 'type_in_two_answers')
                 ])
             ->addConstraint(
-                DeleteAllAnswersValidationRule::NAME,
+                DeleteAllAnswersValidationRule::class,
                 [
                     'data' => $formData['answers'],
                     'field' => 'answer',
