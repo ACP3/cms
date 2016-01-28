@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use Monolog\Logger;
+use Monolog\Logger as MonologLogger;
 use Psr\Log\LogLevel;
 use Monolog\Handler\AbstractHandler;
 
@@ -37,7 +37,7 @@ class ErrorHandler
      * ErrorHandler constructor.
      * @param \Monolog\Logger $logger
      */
-    public function __construct(Logger $logger)
+    public function __construct(MonologLogger $logger)
     {
         $this->logger = $logger;
     }
@@ -54,7 +54,7 @@ class ErrorHandler
      * @return ErrorHandler
      */
     public static function register(
-        Logger $logger,
+        MonologLogger $logger,
         $errorLevelMap = array(),
         $exceptionLevel = null,
         $fatalLevel = null
