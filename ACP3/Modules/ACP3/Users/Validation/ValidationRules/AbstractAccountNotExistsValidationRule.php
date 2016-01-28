@@ -47,5 +47,5 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
      *
      * @return bool
      */
-    abstract function accountExists($data, $userId);
+    abstract protected function accountExists($data, $userId);
 }

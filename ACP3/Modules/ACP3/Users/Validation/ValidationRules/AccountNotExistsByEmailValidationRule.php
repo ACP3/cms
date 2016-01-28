@@ -10,7 +10,7 @@ class AccountNotExistsByEmailValidationRule extends AbstractAccountNotExistsVali
     /**
      * @inheritdoc
      */
-    function accountExists($data, $userId)
+    protected function accountExists($data, $userId)
     {
         return $this->userRepository->resultExistsByEmail($data, $userId) === false;
     }
