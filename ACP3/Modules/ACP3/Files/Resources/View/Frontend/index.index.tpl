@@ -1,7 +1,7 @@
 {extends file="asset:layout.tpl"}
 
 {block CONTENT}
-    {if isset($categories)}
+    {if !empty($categories)}
         <table class="table table-striped">
             <thead>
             <tr>

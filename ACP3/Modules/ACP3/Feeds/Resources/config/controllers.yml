@@ -1,0 +1,18 @@
+parameters:
+  feeds.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Index'
+  feeds.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index\Index'
+
+services:
+  feeds.controller.admin.index.index:
+    class: %feeds.controller.admin.index.index.fqdn%
+    arguments:
+      - @core.context.admin
+      - @core.helpers.formToken
+      - @feeds.validator
+
+  feeds.controller.frontend.index.index:
+    class: %feeds.controller.frontend.index.index.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @feeds.helper.feedgenerator
+

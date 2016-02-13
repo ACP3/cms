@@ -1,0 +1,87 @@
+parameters:
+  files.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index\Create'
+  files.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index\Delete'
+  files.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index\Edit'
+  files.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index\Index'
+  files.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index\Settings'
+  files.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Details'
+  files.controller.frontend.index.files.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files'
+  files.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index'
+  files.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Sidebar\Index\Index'
+
+services:
+  files.controller.admin.index.create:
+    class: %files.controller.admin.index.create.fqdn%
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @core.helpers.formToken
+      - @files.model.filesrepository
+      - @files.validator
+      - @categories.helpers
+
+  files.controller.admin.index.delete:
+    class: %files.controller.admin.index.delete.fqdn%
+    arguments:
+      - @core.context.admin
+      - @files.model.filesrepository
+      - @files.cache
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.controller.admin.index.edit:
+    class: %files.controller.admin.index.edit.fqdn%
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @core.helpers.formToken
+      - @files.model.filesrepository
+      - @files.cache
+      - @files.validator
+      - @categories.helpers
+
+  files.controller.admin.index.index:
+    class: %files.controller.admin.index.index.fqdn%
+    arguments:
+      - @core.context.admin
+      - @files.model.filesrepository
+
+  files.controller.admin.index.settings:
+    class: %files.controller.admin.index.settings.fqdn%
+    arguments:
+      - @core.context.admin
+      - @core.helpers.formToken
+      - @files.validation.admin_settings_form_validation
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.controller.frontend.index.details:
+    class: %files.controller.frontend.index.details.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @files.model.filesrepository
+      - @files.cache
+      - @categories.model
+
+  files.controller.frontend.index.files:
+    class: %files.controller.frontend.index.files.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @files.model.filesrepository
+      - @categories.model
+
+  files.controller.frontend.index.index:
+    class: %files.controller.frontend.index.index.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @categories.cache
+
+  files.controller.sidebar.index.index:
+    class: %files.controller.sidebar.index.index.fqdn%
+    arguments:
+      - @core.context
+      - @core.date
+      - @files.model.filesrepository
+

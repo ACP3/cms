@@ -1,7 +1,7 @@
 {extends file="asset:layout.tpl"}
 
 {block CONTENT}
-    {if isset($articles)}
+    {if !empty($articles)}
         {$pagination}
         {foreach $articles as $row}
             <div class="dataset-box">

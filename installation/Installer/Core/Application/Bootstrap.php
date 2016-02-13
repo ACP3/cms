@@ -67,7 +67,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
 
         try {
             $serviceId = $request->getModule() . '.controller.install.' . $request->getController();
-            $frontController->dispatch($serviceId, $request->getControllerAction());
+            $frontController->dispatch($serviceId);
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             $redirect->temporary('errors/index/404')->send();
         } catch (\Exception $e) {

@@ -1,0 +1,74 @@
+parameters:
+  comments.controller.admin.details.delete.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Delete'
+  comments.controller.admin.details.edit.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit'
+  comments.controller.admin.details.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index'
+  comments.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Delete'
+  comments.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index'
+  comments.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Settings'
+  comments.controller.frontend.index.create.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create'
+  comments.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index'
+
+services:
+  comments.controller.admin.details.delete:
+    class: %comments.controller.admin.details.delete.fqdn%
+    arguments:
+      - @core.context.admin
+      - @comments.model.commentrepository
+
+  comments.controller.admin.details.edit:
+    class: %comments.controller.admin.details.edit.fqdn%
+    arguments:
+      - @core.context.admin
+      - @comments.model.commentrepository
+      - @comments.validation.admin_form_validation
+      - @system.model.modulerepository
+      - @core.helpers.formToken
+    calls:
+      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+
+  comments.controller.admin.details.index:
+    class: %comments.controller.admin.details.index.fqdn%
+    arguments:
+      - @core.context.admin
+      - @comments.model.commentrepository
+      - @system.model.modulerepository
+
+  comments.controller.admin.index.delete:
+    class: %comments.controller.admin.index.delete.fqdn%
+    arguments:
+      - @core.context.admin
+      - @comments.model.commentrepository
+
+  comments.controller.admin.index.index:
+    class: %comments.controller.admin.index.index.fqdn%
+    arguments:
+      - @core.context.admin
+      - @comments.model.commentrepository
+
+  comments.controller.admin.index.settings:
+    class: %comments.controller.admin.index.settings.fqdn%
+    arguments:
+      - @core.context.admin
+      - @comments.validation.admin_settings_form_validation
+      - @core.helpers.formToken
+
+  comments.controller.frontend.index.create:
+    class: %comments.controller.frontend.index.create.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @comments.model.commentrepository
+      - @comments.validator
+      - @core.helpers.formToken
+    calls:
+      - ['setCaptchaHelpers', ['@?captcha.helpers']]
+      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+
+  comments.controller.frontend.index.index:
+    class: %comments.controller.frontend.index.index.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @core.pagination
+      - @comments.model.commentrepository
+    calls:
+      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]

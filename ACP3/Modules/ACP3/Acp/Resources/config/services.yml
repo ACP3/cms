@@ -1,13 +1,11 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  acp.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Acp\Controller\Admin\Index'
   acp.installer.schema.fqdn: 'ACP3\Modules\ACP3\Acp\Installer\Schema'
   acp.installer.migration.fqdn: 'ACP3\Modules\ACP3\Acp\Installer\Migration'
 
 services:
-  acp.controller.admin.index:
-    class: %acp.controller.admin.index.fqdn%
-    parent: core.modules.controller.admin
-
   acp.installer.schema:
     class: %acp.installer.schema.fqdn%
 

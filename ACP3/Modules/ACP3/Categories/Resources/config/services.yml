@@ -1,5 +1,7 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  categories.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index'
   categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
   categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
@@ -11,16 +13,6 @@ parameters:
   categories.installer.migration.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Migration'
 
 services:
-  categories.controller.admin.index:
-    class: %categories.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @categories.model
-      - @categories.cache
-      - @categories.validator
-      - @categories.validation.admin_settings_form_validation
-      - @core.helpers.formToken
-
   categories.model:
     class: %categories.model.categoryrepository.fqdn%
     arguments: ['@core.db']
@@ -31,15 +23,29 @@ services:
 
   categories.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', @core.environment.application_path, 'categories']
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+      - 'categories'
 
   categories.helpers:
     class: %categories.helpers.fqdn%
-    arguments: ['@core.acl', '@core.lang', '@core.modules', @core.request, '@core.view', '@core.helpers.forms', '@categories.cache', '@categories.model']
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
+      - '@core.modules'
+      - '@core.request'
+      - '@core.view'
+      - '@core.helpers.forms'
+      - '@categories.cache'
+      - '@categories.model'
 
   categories.validator:
     class: %categories.validator.fqdn%
-    arguments: ['@core.lang', @core.validator, '@categories.model']
+    arguments:
+      - '@core.lang'
+      - '@core.validator'
+      - '@categories.model'
 
   categories.validation.admin_settings_form_validation:
     class: %categories.validation.admin_settings_form_validation.fqdn%

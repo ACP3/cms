@@ -28,52 +28,41 @@ class FrontController
 
     /**
      * @param string $serviceId
-     * @param string $action
      * @param array  $arguments
      * @param bool   $resolveArguments
      *
      * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function dispatch($serviceId = '', $action = '', array $arguments = [], $resolveArguments = true)
+    public function dispatch($serviceId = '', array $arguments = [], $resolveArguments = true)
     {
         $request = $this->container->get('core.request');
 
         $this->checkForUriAlias($request);
 
         if (empty($serviceId)) {
-            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController();
+            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController() . '.' . $request->getControllerAction();
         }
 
         if ($this->container->has($serviceId)) {
             /** @var \ACP3\Core\Modules\ControllerInterface $controller */
             $controller = $this->container->get($serviceId);
+            $controller->setContainer($this->container);
+            $controller->preDispatch();
 
-            if (empty($action)) {
-                $action = $request->getControllerAction();
-            }
+            $result = $this->executeControllerAction(
+                $request,
+                $controller,
+                'execute',
+                $arguments,
+                $resolveArguments
+            );
 
-            $action = 'action' . str_replace('_', '', $action);
-
-            if (method_exists($controller, $action) === true) {
-                $controller->setContainer($this->container);
-                $controller->preDispatch();
-
-                $result = $this->executeControllerAction(
-                    $request,
-                    $controller,
-                    $action,
-                    $arguments,
-                    $resolveArguments
-                );
-
-                $controller->display($result);
-            } else {
-                throw new Exceptions\ControllerActionNotFound('Controller action ' . get_class($controller) . '::' . $action . '() was not found!');
-            }
-        } else {
-            throw new Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
+            $controller->display($result);
+            return;
         }
+
+        throw new Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
     }
 
     /**
@@ -109,8 +98,13 @@ class FrontController
      * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    private function executeControllerAction(RequestInterface $request, ControllerInterface $controller, $action, array $arguments, $resolveArguments)
-    {
+    private function executeControllerAction(
+        RequestInterface $request,
+        ControllerInterface $controller,
+        $action,
+        array $arguments,
+        $resolveArguments
+    ) {
         $reflection = new \ReflectionMethod($controller, $action);
         $parameterCount = $reflection->getNumberOfParameters();
 
