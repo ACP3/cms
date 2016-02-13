@@ -1,10 +1,19 @@
-languages:
-  Ruby: false
-  JavaScript: true
-  PHP: true
-  Python: false
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+      - javascript
+  phpcodesniffer:
+    enabled: true
+  phpmd:
+    enabled: true
+ratings:
+  paths:
+    - "**.php"
 exclude_paths:
-  - "ACP3/Modules/ACP3/Filemanager/libraries/kcfinder/*"
-  - "ACP3/Modules/ACP3/System/Resources/Assets/js/libs/*"
-  - "ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/*"
-  - "tests/*"
+  - "ACP3/Modules/ACP3/Filemanager/libraries/kcfinder/"
+  - "ACP3/Modules/ACP3/System/Resources/Assets/js/libs/"
+  - "ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/"
+  - "tests/"
