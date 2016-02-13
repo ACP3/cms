@@ -1,7 +1,8 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
   core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb'
-  menus.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Index'
-  menus.controller.admin.items.fqdn: 'ACP3\Modules\ACP3\Menus\Controller\Admin\Items'
   menus.cache.fqdn: 'ACP3\Modules\ACP3\Menus\Cache'
   menus.helpers.menuitemslist.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList'
   menus.helpers.managemenuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem'
@@ -30,34 +31,6 @@ services:
       - @core.router
       - @core.config
       - @menus.model.menuitemrepository
-
-  menus.controller.admin.index:
-    class: %menus.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.nested_set
-      - @core.helpers.formToken
-      - @menus.helpers.menuitemslist
-      - @menus.model.menurepository
-      - @menus.model.menuitemrepository
-      - @menus.cache
-      - @menus.validator.menu
-
-  menus.controller.admin.items:
-    class: %menus.controller.admin.items.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.router.aliases
-      - @core.nested_set
-      - @core.helpers.formToken
-      - @menus.model.menurepository
-      - @menus.model.menuitemrepository
-      - @menus.cache
-      - @menus.helpers.menuitemslist
-      - @menus.helpers.menuitemformfields
-      - @menus.validator.menuitem
-    calls:
-      - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.cache:
     class: %menus.cache.fqdn%
