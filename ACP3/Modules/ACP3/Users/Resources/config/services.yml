@@ -1,8 +1,4 @@
 parameters:
-  users.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Admin\Index'
-  users.controller.frontend.account.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Account'
-  users.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Index'
-  users.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index'
   users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer'
   users.helpers.forms.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\Forms'
   users.model.userrepository.fqdn: 'ACP3\Modules\ACP3\Users\Model\UserRepository'
@@ -19,50 +15,6 @@ parameters:
   users.installer.migration.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Migration'
 
 services:
-  users.controller.admin.index:
-    class: %users.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @core.helpers.forms
-      - @users.model.userrepository
-      - @users.validator.admin
-      - @users.validation.admin_settings_form_validation
-      - @permissions.helpers
-
-  users.controller.frontend.account:
-    class: %users.controller.frontend.account.fqdn%
-    arguments:
-      - @core.context.frontend
-      - @core.date
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @users.model.userrepository
-      - @users.validator.account
-      - @user.validation.account_settings_form_validation
-
-  users.controller.frontend.index:
-    class: %users.controller.frontend.index.fqdn%
-    arguments:
-      - @core.context.frontend
-      - @core.date
-      - @core.pagination
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @users.model.userrepository
-      - @users.validator.register
-      - @user.validation.account_forgot_password_form_validation
-      - @permissions.helpers
-      - @core.helpers.sendEmail
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
-
-  users.controller.sidebar.index:
-    class: %users.controller.sidebar.index.fqdn%
-    arguments: ['@core.context']
-
   users.helpers.forms:
     class: %users.helpers.forms.fqdn%
     arguments: [@core.lang, @core.request, @core.helpers.date, @core.helpers.forms]
