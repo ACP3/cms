@@ -6,7 +6,7 @@ parameters:
   articles.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details'
   articles.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index'
   articles.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index\Index'
-  articles.controller.sidebar.index.single.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index\Signle'
+  articles.controller.sidebar.index.single.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index\Single'
 
 services:
   articles.controller.admin.index.create:

@@ -6,7 +6,7 @@ parameters:
   system.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Index\Index'
   system.controller.admin.maintenance.cache.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache'
   system.controller.admin.maintenance.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index'
-  system.controller.admin.maintenance.update_check.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck'
+  system.controller.admin.maintenance.updatecheck.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck'
 
 services:
   system.controller.admin.extensions.designs:
@@ -47,6 +47,6 @@ services:
     class: %system.controller.admin.maintenance.index.fqdn%
     parent: core.modules.controller.admin
 
-  system.controller.admin.maintenance.update_check:
-    class: %system.controller.admin.maintenance.update_check.fqdn%
+  system.controller.admin.maintenance.updatecheck:
+    class: %system.controller.admin.maintenance.updatecheck.fqdn%
     parent: core.modules.controller.admin

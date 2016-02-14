@@ -1,3 +1,6 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
   search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
   search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validation\FormValidation'

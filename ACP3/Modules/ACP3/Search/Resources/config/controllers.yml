@@ -15,4 +15,3 @@ services:
     arguments:
       - '@core.context'
       - '@search.helpers'
-

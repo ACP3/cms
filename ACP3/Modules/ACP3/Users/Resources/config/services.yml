@@ -1,3 +1,6 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
   users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer'
   users.helpers.forms.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\Forms'

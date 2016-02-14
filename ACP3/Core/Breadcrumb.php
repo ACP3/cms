@@ -317,9 +317,8 @@ class Breadcrumb
 
     private function setControllerActionBreadcrumbs()
     {
-        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController();
-        if ($this->request->getController() !== 'index' &&
-            method_exists($this->container->get($serviceId), 'actionIndex')
+        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController() . '.' . $this->request->getControllerAction();
+        if ($this->request->getController() !== 'index' && $this->container->get($serviceId)
         ) {
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
