@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Users;
  * Class Edit
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
  */
-class Edit extends Core\Modules\FrontendController
+class Edit extends AbstractAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -54,15 +54,6 @@ class Edit extends Core\Modules\FrontendController
         $this->secureHelper = $secureHelper;
         $this->userRepository = $userRepository;
         $this->accountFormValidation = $accountFormValidation;
-    }
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        if ($this->user->isAuthenticated() === false) {
-            $this->redirect()->temporary('users/index/login')->send();
-        }
     }
 
     /**

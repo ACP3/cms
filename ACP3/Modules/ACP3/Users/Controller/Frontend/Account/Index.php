@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Users;
  * Class Index
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
  */
-class Index extends Core\Modules\FrontendController
+class Index extends AbstractAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
@@ -33,15 +33,6 @@ class Index extends Core\Modules\FrontendController
         parent::__construct($context);
 
         $this->userRepository = $userRepository;
-    }
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        if ($this->user->isAuthenticated() === false) {
-            $this->redirect()->temporary('users/index/login')->send();
-        }
     }
 
     /**

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Users;
  * Class Settings
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
  */
-class Settings extends Core\Modules\FrontendController
+class Settings extends AbstractAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -47,15 +47,6 @@ class Settings extends Core\Modules\FrontendController
         $this->formTokenHelper = $formTokenHelper;
         $this->userRepository = $userRepository;
         $this->accountSettingsFormValidation = $accountSettingsFormValidation;
-    }
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        if ($this->user->isAuthenticated() === false) {
-            $this->redirect()->temporary('users/index/login')->send();
-        }
     }
 
     /**
