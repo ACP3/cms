@@ -1,5 +1,7 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  seo.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index'
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
   seo.model.seorepository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\SeoRepository'
   seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation'
@@ -9,16 +11,6 @@ parameters:
   seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
 
 services:
-  seo.controller.admin.index:
-    class: %seo.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @seo.cache
-      - @seo.model.seorepository
-      - @seo.validator
-      - @seo.validation.admin_settings_form_validation
-
   seo.cache:
     class: %seo.cache.fqdn%
     arguments: ['@core.cache.system', '@seo.model.seorepository']
