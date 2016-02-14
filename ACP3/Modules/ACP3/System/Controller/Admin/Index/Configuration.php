@@ -1,63 +1,54 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\System\Controller\Admin;
+namespace ACP3\Modules\ACP3\System\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 
 /**
- * Class Index
- * @package ACP3\Modules\ACP3\System\Controller\Admin
+ * Class Configuration
+ * @package ACP3\Modules\ACP3\System\Controller\Admin\Index
  */
-class Index extends Core\Modules\AdminController
+class Configuration extends Core\Modules\AdminController
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
-     */
-    protected $systemModuleRepository;
     /**
      * @var \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
      */
     protected $systemValidator;
 
     /**
+     * Configuration constructor.
+     *
      * @param \ACP3\Core\Modules\Controller\AdminContext                       $context
-     * @param \ACP3\Core\Date                                                  $date
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository                 $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        System\Model\ModuleRepository $systemModuleRepository,
         System\Validation\AdminSettingsFormValidation $systemValidator
     )
     {
         parent::__construct($context);
 
-        $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->systemModuleRepository = $systemModuleRepository;
         $this->systemValidator = $systemValidator;
     }
 
     /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function actionConfiguration()
+    public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_configurationPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $systemSettings = $this->config->getSettings('system');
@@ -108,17 +99,12 @@ class Index extends Core\Modules\AdminController
         ];
     }
 
-    public function actionIndex()
-    {
-        return;
-    }
-
     /**
      * @param array $formData
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _configurationPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {

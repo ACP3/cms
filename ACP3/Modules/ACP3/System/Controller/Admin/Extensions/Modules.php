@@ -1,25 +1,24 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\System\Controller\Admin;
+namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
 /**
- * Class Extensions
- * @package ACP3\Modules\ACP3\System\Controller\Admin
+ * Class Modules
+ * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
  */
-class Extensions extends Core\Modules\AdminController
+class Modules extends Core\Modules\AdminController
 {
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCache
      */
     protected $moduleInfoCache;
-    /**
-     * @var \ACP3\Core\XML
-     */
-    protected $xml;
     /**
      * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
      */
@@ -34,9 +33,10 @@ class Extensions extends Core\Modules\AdminController
     protected $permissionsCache;
 
     /**
+     * Modules constructor.
+     *
      * @param \ACP3\Core\Modules\Controller\AdminContext       $context
      * @param \ACP3\Core\Modules\ModuleInfoCache               $moduleInfoCache
-     * @param \ACP3\Core\XML                                   $xml
      * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Helper\Installer       $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache             $permissionsCache
@@ -44,7 +44,6 @@ class Extensions extends Core\Modules\AdminController
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
-        Core\XML $xml,
         System\Model\ModuleRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache)
@@ -52,68 +51,9 @@ class Extensions extends Core\Modules\AdminController
         parent::__construct($context);
 
         $this->moduleInfoCache = $moduleInfoCache;
-        $this->xml = $xml;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
-    }
-
-    /**
-     * @param string $dir
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function actionDesigns($dir = '')
-    {
-        if (!empty($dir)) {
-            return $this->_designsPost($dir);
-        }
-
-        $designs = [];
-        $path = ACP3_ROOT_DIR . 'designs/';
-        $directories = Core\Filesystem::scandir($path);
-        $countDir = count($directories);
-        for ($i = 0; $i < $countDir; ++$i) {
-            $designInfo = $this->xml->parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
-            if (!empty($designInfo)) {
-                $designs[$i] = $designInfo;
-                $designs[$i]['selected'] = $this->config->getSettings('system')['design'] === $directories[$i] ? 1 : 0;
-                $designs[$i]['dir'] = $directories[$i];
-            }
-        }
-
-        return [
-            'designs' => $designs
-        ];
-    }
-
-    /**
-     * @param $design
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function _designsPost($design)
-    {
-        $bool = false;
-
-        if ((bool)preg_match('=/=', $design) === false &&
-            is_file(ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml') === true
-        ) {
-            $bool = $this->config->setSettings(['design' => $design], 'system');
-
-            // Template Cache leeren
-            Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled');
-            Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached');
-        }
-
-        $text = $this->translator->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
-
-        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
-    }
-
-    public function actionIndex()
-    {
-        return;
     }
 
     /**
@@ -123,19 +63,19 @@ class Extensions extends Core\Modules\AdminController
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionModules($action = '', $dir = '')
+    public function execute($action = '', $dir = '')
     {
         switch ($action) {
             case 'activate':
-                return $this->_enableModule($dir);
+                return $this->enableModule($dir);
             case 'deactivate':
-                return $this->_disableModule($dir);
+                return $this->disableModule($dir);
             case 'install':
-                return $this->_installModule($dir);
+                return $this->installModule($dir);
             case 'uninstall':
-                return $this->_uninstallModule($dir);
+                return $this->uninstallModule($dir);
             default:
-                $this->_renewCaches();
+                $this->renewCaches();
 
                 $modules = $this->modules->getAllModules();
                 $installedModules = $newModules = [];
@@ -161,7 +101,7 @@ class Extensions extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _enableModule($moduleDirectory)
+    protected function enableModule($moduleDirectory)
     {
         $bool = false;
         $info = $this->modules->getModuleInfo($moduleDirectory);
@@ -185,7 +125,7 @@ class Extensions extends Core\Modules\AdminController
                 if (empty($deps)) {
                     $bool = $this->systemModuleRepository->update(['active' => 1], ['name' => $moduleDirectory]);
 
-                    $this->_renewCaches();
+                    $this->renewCaches();
                     Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
 
                     $text = $this->translator->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
@@ -201,7 +141,7 @@ class Extensions extends Core\Modules\AdminController
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
     }
 
-    protected function _renewCaches()
+    protected function renewCaches()
     {
         $this->get('core.lang.cache')->saveLanguageCache($this->translator->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
@@ -214,7 +154,7 @@ class Extensions extends Core\Modules\AdminController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    protected function _disableModule($moduleDirectory)
+    protected function disableModule($moduleDirectory)
     {
         $bool = false;
         $info = $this->modules->getModuleInfo($moduleDirectory);
@@ -238,7 +178,7 @@ class Extensions extends Core\Modules\AdminController
                 if (empty($deps)) {
                     $bool = $this->systemModuleRepository->update(['active' => 0], ['name' => $moduleDirectory]);
 
-                    $this->_renewCaches();
+                    $this->renewCaches();
                     Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled');
                     Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached');
                     Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
@@ -261,7 +201,7 @@ class Extensions extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _installModule($moduleDirectory)
+    protected function installModule($moduleDirectory)
     {
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
@@ -282,7 +222,7 @@ class Extensions extends Core\Modules\AdminController
                     $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
                     $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
 
-                    $this->_renewCaches();
+                    $this->renewCaches();
                     Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
 
                     $text = $this->translator->t('system',
@@ -306,7 +246,7 @@ class Extensions extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _uninstallModule($moduleDirectory)
+    protected function uninstallModule($moduleDirectory)
     {
         $bool = false;
         $info = $this->modules->getModuleInfo($moduleDirectory);
@@ -331,7 +271,7 @@ class Extensions extends Core\Modules\AdminController
                     $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
                     $bool2 = $this->container->get('core.modules.aclInstaller')->uninstall($moduleSchema);
 
-                    $this->_renewCaches();
+                    $this->renewCaches();
                     Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled');
                     Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached');
                     Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
