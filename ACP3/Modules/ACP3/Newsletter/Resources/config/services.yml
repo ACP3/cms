@@ -1,12 +1,8 @@
 imports:
+  - { resource: controllers.yml }
   - { resource: events.yml }
 
 parameters:
-  newsletter.controller.admin.accounts.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts'
-  newsletter.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index'
-  newsletter.controller.frontend.archive.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Archive'
-  newsletter.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Index'
-  newsletter.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index'
   newsletter.helper.accountstatus.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus'
   newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer'
   newsletter.helper.sendnewsletter.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter'
@@ -25,51 +21,6 @@ parameters:
   newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
 
 services:
-  newsletter.controller.admin.accounts:
-    class: %newsletter.controller.admin.accounts.fqdn%
-    arguments:
-      - @core.context.admin
-      - @newsletter.helper.accountstatus
-      - @newsletter.model.accountrepository
-
-  newsletter.controller.admin.index:
-    class: %newsletter.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @newsletter.model.newsletterrepository
-      - @newsletter.model.accountrepository
-      - @newsletter.validator
-      - @newsletter.validation.admin_settings_form_validation
-      - @newsletter.helper.sendnewsletter
-
-  newsletter.controller.frontend.archive:
-    class: %newsletter.controller.frontend.archive.fqdn%
-    arguments:
-      - @core.context.frontend
-      - @core.pagination
-      - @newsletter.model.newsletterrepository
-
-  newsletter.controller.frontend.index:
-    class: %newsletter.controller.frontend.index.fqdn%
-    arguments:
-      - @core.context.frontend
-      - @core.helpers.formToken
-      - @newsletter.helper.subscribe
-      - @newsletter.helper.accountstatus
-      - @newsletter.validation.activate_account_form_validation
-      - @newsletter.validation.subscribe_form_validation
-      - @newsletter.validation.unsubscribe_form_validation
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
-
-  newsletter.controller.sidebar.index:
-    class: %newsletter.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.helpers.formToken']
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
-
   newsletter.model.newsletterrepository:
     class: %newsletter.model.newsletterrepository.fqdn%
     arguments: ['@core.db']

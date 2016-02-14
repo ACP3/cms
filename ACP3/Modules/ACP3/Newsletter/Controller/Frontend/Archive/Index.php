@@ -1,15 +1,18 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Newsletter\Controller;
+namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
 /**
- * Class Archive
- * @package ACP3\Modules\ACP3\Newsletter\Controller
+ * Class Index
+ * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive
  */
-class Archive extends Core\Modules\FrontendController
+class Index extends Core\Modules\FrontendController
 {
     /**
      * @var Core\Pagination
@@ -37,33 +40,9 @@ class Archive extends Core\Modules\FrontendController
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
-     */
-    public function actionDetails($id)
-    {
-        $newsletter = $this->newsletterRepository->getOneById($id, 1);
-
-        if (!empty($newsletter)) {
-            $this->breadcrumb
-                ->append($this->translator->t('newsletter', 'index'), 'newsletter')
-                ->append($this->translator->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
-                ->append($newsletter['title']);
-
-            return [
-                'newsletter' => $newsletter
-            ];
-        }
-
-        throw new Core\Exceptions\ResultNotExists();
-    }
-
-    /**
      * @return array
      */
-    public function actionIndex()
+    public function execute()
     {
         $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
         $this->pagination->display();

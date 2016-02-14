@@ -1,6 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Newsletter\Controller\Sidebar;
+namespace ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha;
@@ -48,7 +51,7 @@ class Index extends Core\Modules\Controller
     /**
      * @param string $template
      */
-    public function actionIndex($template = '')
+    public function execute($template = '')
     {
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', $this->captchaHelpers->captcha(3, 'captcha', true, 'newsletter'));

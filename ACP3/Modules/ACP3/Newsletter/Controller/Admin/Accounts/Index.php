@@ -1,80 +1,37 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin;
+namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
 /**
- * Class Accounts
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin
+ * Class Index
+ * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts
  */
-class Accounts extends Core\Modules\AdminController
+class Index extends Core\Modules\AdminController
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
-     */
-    protected $accountStatusHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
      */
     protected $accountRepository;
 
     /**
+     * Index constructor.
+     *
      * @param \ACP3\Core\Modules\Controller\AdminContext            $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus    $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository $accountRepository
      */
     public function __construct(
         Core\Modules\Controller\AdminContext $context,
-        Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Model\AccountRepository $accountRepository)
     {
         parent::__construct($context);
 
-        $this->accountStatusHelper = $accountStatusHelper;
         $this->accountRepository = $accountRepository;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function actionActivate($id)
-    {
-        $bool = $this->accountStatusHelper->changeAccountStatus(
-            Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
-            $id
-        );
-
-        return $this->redirectMessages()->setMessage($bool,
-            $this->translator->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
-    }
-
-    /**
-     * @param string $action
-     *
-     * @return mixed
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
-     */
-    public function actionDelete($action = '')
-    {
-        return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
-                foreach ($items as $item) {
-                    $bool = $this->accountStatusHelper->changeAccountStatus(
-                        Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
-                        $item
-                    );
-                }
-
-                return $bool;
-            }
-        );
     }
 
     /**
