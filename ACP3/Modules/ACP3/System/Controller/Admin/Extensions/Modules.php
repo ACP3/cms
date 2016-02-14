@@ -143,7 +143,7 @@ class Modules extends Core\Modules\AdminController
 
     protected function renewCaches()
     {
-        $this->get('core.lang.cache')->saveLanguageCache($this->translator->getLocale());
+        $this->get('core.lang.dictionary_cache')->saveLanguageCache($this->translator->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
         $this->permissionsCache->saveResourcesCache();
     }
