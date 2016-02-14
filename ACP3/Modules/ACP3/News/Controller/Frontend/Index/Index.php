@@ -1,6 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\News\Controller;
+namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
@@ -8,9 +11,9 @@ use ACP3\Modules\ACP3\News;
 
 /**
  * Class Index
- * @package ACP3\Modules\ACP3\News\Controller
+ * @package ACP3\Modules\ACP3\News\Controller\Frontend\Index
  */
-class Index extends Core\Modules\FrontendController
+class Index extends AbstractAction
 {
     /**
      * @var Core\Date
@@ -25,14 +28,6 @@ class Index extends Core\Modules\FrontendController
      */
     protected $newsRepository;
     /**
-     * @var News\Cache
-     */
-    protected $newsCache;
-    /**
-     * @var array
-     */
-    protected $newsSettings;
-    /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
     protected $categoriesHelpers;
@@ -40,17 +35,14 @@ class Index extends Core\Modules\FrontendController
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
      */
     protected $categoryRepository;
-    /**
-     * @var bool
-     */
-    protected $commentsActive;
 
     /**
+     * Index constructor.
+     *
      * @param \ACP3\Core\Modules\Controller\FrontendContext          $context
      * @param \ACP3\Core\Date                                        $date
      * @param \ACP3\Core\Pagination                                  $pagination
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository           $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                          $newsCache
      * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
      * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
@@ -59,7 +51,6 @@ class Index extends Core\Modules\FrontendController
         Core\Date $date,
         Core\Pagination $pagination,
         News\Model\NewsRepository $newsRepository,
-        News\Cache $newsCache,
         Categories\Helpers $categoriesHelpers,
         Categories\Model\CategoryRepository $categoryRepository)
     {
@@ -68,47 +59,8 @@ class Index extends Core\Modules\FrontendController
         $this->date = $date;
         $this->pagination = $pagination;
         $this->newsRepository = $newsRepository;
-        $this->newsCache = $newsCache;
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoryRepository = $categoryRepository;
-    }
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->newsSettings = $this->config->getSettings('news');
-        $this->commentsActive = ($this->newsSettings['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true);
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return array
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
-     */
-    public function actionDetails($id)
-    {
-        if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
-            $news = $this->newsCache->getCache($id);
-
-            $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
-
-            if ($this->newsSettings['category_in_breadcrumb'] == 1) {
-                $this->breadcrumb->append($news['category_title'], 'news/index/index/cat_' . $news['category_id']);
-            }
-            $this->breadcrumb->append($news['title']);
-
-            $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';
-
-            return [
-                'news' => $news,
-                'dateformat' => $this->newsSettings['dateformat'],
-                'comments_allowed' => $this->commentsActive === true && $news['comments'] == 1
-            ];
-        }
-
-        throw new Core\Exceptions\ResultNotExists();
     }
 
     /**
@@ -116,7 +68,7 @@ class Index extends Core\Modules\FrontendController
      *
      * @return array
      */
-    public function actionIndex($cat = 0)
+    public function execute($cat = 0)
     {
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
