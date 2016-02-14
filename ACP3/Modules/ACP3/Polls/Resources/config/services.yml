@@ -1,7 +1,7 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  polls.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Admin\Index'
-  polls.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Index'
-  polls.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Sidebar\Index'
   polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
   polls.model.answerrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\AnswerRepository'
   polls.model.voterepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\VoteRepository'
@@ -12,18 +12,6 @@ parameters:
   polls.installer.migration.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Migration'
 
 services:
-  polls.controller.admin.index:
-    class: %polls.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@polls.model.pollrepository', @polls.model.answerrepository, @polls.model.voterepository, '@polls.validator']
-
-  polls.controller.frontend.index:
-    class: %polls.controller.frontend.index.fqdn%
-    arguments: ['@core.context.frontend', '@core.date', '@polls.model.pollrepository', @polls.model.answerrepository, @polls.model.voterepository]
-
-  polls.controller.sidebar.index:
-    class: %polls.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.date', '@polls.model.pollrepository', @polls.model.answerrepository, @polls.model.voterepository]
-
   polls.model.pollrepository:
     class: %polls.model.pollrepository.fqdn%
     arguments: ['@core.db']

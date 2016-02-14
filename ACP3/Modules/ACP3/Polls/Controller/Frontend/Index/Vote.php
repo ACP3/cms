@@ -1,15 +1,18 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Polls\Controller;
+namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
 /**
- * Class Index
- * @package ACP3\Modules\ACP3\Polls\Controller
+ * Class Vote
+ * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
  */
-class Index extends Core\Modules\FrontendController
+class Vote extends Core\Modules\FrontendController
 {
     /**
      * @var Core\Date
@@ -50,59 +53,6 @@ class Index extends Core\Modules\FrontendController
         $this->voteRepository = $voteRepository;
     }
 
-    public function actionIndex()
-    {
-        $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
-        $c_polls = count($polls);
-
-        if ($c_polls > 0) {
-            for ($i = 0; $i < $c_polls; ++$i) {
-                if ($this->user->isAuthenticated() === true) {
-                    $query = $this->voteRepository->getVotesByUserId($polls[$i]['id'], $this->user->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
-                } else {
-                    $query = $this->voteRepository->getVotesByIpAddress($polls[$i]['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
-                }
-
-                if ($query != 0 ||
-                    $polls[$i]['start'] !== $polls[$i]['end'] && $this->date->timestamp($polls[$i]['end']) <= $this->date->timestamp()
-                ) {
-                    $polls[$i]['link'] = 'result';
-                } else {
-                    $polls[$i]['link'] = 'vote';
-                }
-            }
-            $this->view->assign('polls', $polls);
-        }
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return array
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
-     */
-    public function actionResult($id)
-    {
-        if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
-            $question = $this->pollRepository->getOneByIdWithTotalVotes($id);
-            $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);
-            $c_answers = count($answers);
-            $totalVotes = $question['total_votes'];
-
-            for ($i = 0; $i < $c_answers; ++$i) {
-                $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
-            }
-
-            return [
-                'question' => $question['title'],
-                'answers' => $answers,
-                'total_votes' => $totalVotes
-            ];
-        }
-
-        throw new Core\Exceptions\ResultNotExists();
-    }
-
     /**
      * @param int       $id
      *
@@ -111,13 +61,13 @@ class Index extends Core\Modules\FrontendController
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionVote($id, $answer)
+    public function execute($id, $answer)
     {
         $time = $this->date->getCurrentDateTime();
         if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
             // Wenn abgestimmt wurde
             if (!empty($answer) || is_array($answer) === true) {
-                return $this->_votePost($this->request->getPost()->all(), $time, $id);
+                return $this->executePost($this->request->getPost()->all(), $time, $id);
             }
 
             $poll = $this->pollRepository->getOneById($id);
@@ -139,7 +89,7 @@ class Index extends Core\Modules\FrontendController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _votePost(array $formData, $time, $id)
+    protected function executePost(array $formData, $time, $id)
     {
         $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
         $answers = $formData['answer'];

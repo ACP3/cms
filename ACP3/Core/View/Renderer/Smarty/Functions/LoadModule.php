@@ -49,7 +49,7 @@ class LoadModule extends AbstractFunction
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
 
         if ($this->container->get('core.acl')->hasPermission($path)) {
-            $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2]);
+            $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3]);
 
             $frontController = new FrontController($this->container);
             $frontController->dispatch($serviceId, isset($params['args']) ? $params['args'] : [], false);

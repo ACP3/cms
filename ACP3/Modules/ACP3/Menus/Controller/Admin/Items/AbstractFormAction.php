@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
  */
-class AbstractFormAction extends AdminController
+abstract class AbstractFormAction extends AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Helpers

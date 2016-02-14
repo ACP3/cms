@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories;
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
  */
-class AbstractFormAction extends AdminController
+abstract class AbstractFormAction extends AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers

@@ -14,28 +14,28 @@ services:
     class: %permissions.controller.admin.index.create.fqdn%
     arguments:
       - '@core.context.admin'
-      - @permissions.model.rulerepository
-      - @core.nested_set
+      - '@permissions.model.rulerepository'
+      - '@core.nested_set'
       - '@core.helpers.formToken'
-      - @permissions.cache'
+      - '@permissions.cache'
       - '@permissions.validator.role'
 
   permissions.controller.admin.index.delete:
     class: %permissions.controller.admin.index.delete.fqdn%
     arguments:
       - '@core.context.admin'
-      - @core.nested_set
-      - @permissions.cache'
+      - '@core.nested_set'
+      - '@permissions.cache'
 
   permissions.controller.admin.index.edit:
     class: %permissions.controller.admin.index.edit.fqdn%
     arguments:
       - '@core.context.admin'
-      - @permissions.model.rulerepository
-      - @core.nested_set
+      - '@permissions.model.rulerepository'
+      - '@core.nested_set'
       - '@core.helpers.formToken'
       - '@permissions.model.rolerepository'
-      - @permissions.cache'
+      - '@permissions.cache'
       - '@permissions.validator.role'
 
   permissions.controller.admin.index.index:
@@ -46,9 +46,9 @@ services:
     class: %permissions.controller.admin.index.order.fqdn%
     arguments:
       - '@core.context.admin'
-      - @core.nested_set
+      - '@core.nested_set'
       - '@permissions.model.rolerepository'
-      - @permissions.cache'
+      - '@permissions.cache'
 
   permissions.controller.admin.resources.create:
     class: %permissions.controller.admin.resources.create.fqdn%

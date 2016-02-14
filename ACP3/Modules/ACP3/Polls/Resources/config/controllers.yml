@@ -1,0 +1,79 @@
+parameters:
+  polls.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create'
+  polls.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete'
+  polls.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit'
+  polls.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Index'
+  polls.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Index'
+  polls.controller.frontend.index.result.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Result'
+  polls.controller.frontend.index.vote.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote'
+  polls.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Sidebar\Index\Index'
+
+services:
+  polls.controller.admin.index.create:
+    class: %polls.controller.admin.index.create.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.formToken'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
+      - '@polls.model.voterepository'
+      - '@polls.validator'
+
+  polls.controller.admin.index.delete:
+    class: %polls.controller.admin.index.delete.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@polls.model.pollrepository'
+
+  polls.controller.admin.index.edit:
+    class: %polls.controller.admin.index.edit.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.formToken'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
+      - '@polls.model.voterepository'
+      - '@polls.validator'
+
+  polls.controller.admin.index.index:
+    class: %polls.controller.admin.index.index.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@polls.model.pollrepository'
+
+  polls.controller.frontend.index.index:
+    class: %polls.controller.frontend.index.index.fqdn%
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@polls.model.pollrepository'
+      - '@polls.model.voterepository'
+
+  polls.controller.frontend.index.result:
+    class: %polls.controller.frontend.index.result.fqdn%
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
+
+  polls.controller.frontend.index.vote:
+    class: %polls.controller.frontend.index.vote.fqdn%
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
+      - '@polls.model.voterepository'
+
+  polls.controller.sidebar.index.index:
+    class: %polls.controller.sidebar.index.index.fqdn%
+    arguments:
+      - '@core.context'
+      - '@core.date'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
+      - '@polls.model.voterepository'
+
