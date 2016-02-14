@@ -7,6 +7,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha;
+use ACP3\Modules\ACP3\Newsletter\Controller\CaptchaHelperTrait;
 
 /**
  * Class Index
@@ -14,14 +15,12 @@ use ACP3\Modules\ACP3\Captcha;
  */
 class Index extends Core\Modules\Controller
 {
+    use CaptchaHelperTrait;
+
     /**
      * @var Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
 
     /**
      * @param \ACP3\Core\Modules\Controller\Context $context
@@ -34,18 +33,6 @@ class Index extends Core\Modules\Controller
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
     }
 
     /**

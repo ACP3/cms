@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Newsletter;
  */
 class Index extends Core\Modules\FrontendController
 {
+    use Newsletter\Controller\CaptchaHelperTrait;
+
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -27,10 +29,6 @@ class Index extends Core\Modules\FrontendController
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation
      */
     protected $subscribeFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
 
     /**
      * Index constructor.
@@ -52,18 +50,6 @@ class Index extends Core\Modules\FrontendController
         $this->formTokenHelper = $formTokenHelper;
         $this->subscribeHelper = $subscribeHelper;
         $this->subscribeFormValidation = $subscribeFormValidation;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
     }
 
     /**

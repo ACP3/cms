@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Newsletter;
  */
 class Unsubscribe extends Core\Modules\FrontendController
 {
+    use Newsletter\Controller\CaptchaHelperTrait;
+
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -27,10 +29,6 @@ class Unsubscribe extends Core\Modules\FrontendController
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
      */
     protected $unsubscribeFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
 
     /**
      * Unsubscribe constructor.
@@ -52,18 +50,6 @@ class Unsubscribe extends Core\Modules\FrontendController
         $this->formTokenHelper = $formTokenHelper;
         $this->accountStatusHelper = $accountStatusHelper;
         $this->unsubscribeFormValidation = $unsubscribeFormValidation;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
     }
 
     /**
