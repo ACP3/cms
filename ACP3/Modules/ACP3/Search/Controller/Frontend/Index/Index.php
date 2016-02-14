@@ -1,13 +1,16 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Search\Controller;
+namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 
 /**
  * Class Index
- * @package ACP3\Modules\ACP3\Search\Controller
+ * @package ACP3\Modules\ACP3\Search\Controller\Frontend\Index
  */
 class Index extends Core\Modules\FrontendController
 {
@@ -41,12 +44,12 @@ class Index extends Core\Modules\FrontendController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function actionIndex($q = '')
+    public function execute($q = '')
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_indexPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         } elseif (!empty($q)) {
-            return $this->_indexPost(['search_term' => (string)$q]);
+            return $this->executePost(['search_term' => (string)$q]);
         }
 
         // Zu durchsuchende Bereiche
@@ -78,7 +81,7 @@ class Index extends Core\Modules\FrontendController
      * @param string $area
      * @param string $sort
      */
-    protected function _displaySearchResults(array $modules, $searchTerm, $area, $sort)
+    protected function displaySearchResults(array $modules, $searchTerm, $area, $sort)
     {
         $this->breadcrumb
             ->append($this->translator->t('search', 'search'), 'search')
@@ -104,7 +107,7 @@ class Index extends Core\Modules\FrontendController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _indexPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
@@ -127,7 +130,7 @@ class Index extends Core\Modules\FrontendController
 
                 $this->searchValidator->validate($formData);
 
-                $this->_displaySearchResults(
+                $this->displaySearchResults(
                     $formData['mods'],
                     Core\Functions::strEncode($formData['search_term']),
                     $formData['area'],

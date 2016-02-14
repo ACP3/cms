@@ -1,13 +1,16 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Search\Controller\Sidebar;
+namespace ACP3\Modules\ACP3\Search\Controller\Sidebar\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 
 /**
  * Class Index
- * @package ACP3\Modules\ACP3\Search\Controller\Sidebar
+ * @package ACP3\Modules\ACP3\Search\Controller\Sidebar\Index
  */
 class Index extends Core\Modules\Controller
 {
@@ -29,7 +32,7 @@ class Index extends Core\Modules\Controller
         $this->searchHelpers = $searchHelpers;
     }
 
-    public function actionIndex()
+    public function execute()
     {
         $this->view->assign('search_mods', $this->searchHelpers->getModules());
 
