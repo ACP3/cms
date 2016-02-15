@@ -109,9 +109,10 @@ class AclInstaller implements InstallerInterface
      */
     protected function insertAclResources($serviceId, array $specialResources)
     {
+        list($module, , $area, $controller, $action) = explode('.', $serviceId);
+
         // Only add the actual module actions (methods which begin with "action")
-        if (method_exists($this->container->get($serviceId), 'execute') === true) {
-            list($module, , $area, $controller, $action) = explode('.', $serviceId);
+        if ($area !== 'install' && method_exists($this->container->get($serviceId), 'execute') === true) {
             $action = $this->convertCamelCaseToUnderscore($action);
 
             // Handle resources with differing access levels
