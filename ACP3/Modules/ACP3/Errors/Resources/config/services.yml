@@ -1,13 +1,11 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  errors.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\Index'
   errors.installer.schema.fqdn: 'ACP3\Modules\ACP3\Errors\Installer\Schema'
   errors.installer.migration.fqdn: 'ACP3\Modules\ACP3\Errors\Installer\Migration'
 
 services:
-  errors.controller.frontend.index:
-    class: %errors.controller.frontend.index.fqdn%
-    parent: core.modules.controller.frontend
-
   errors.installer.schema:
     class: %errors.installer.schema.fqdn%
 

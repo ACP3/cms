@@ -129,18 +129,18 @@ class Bootstrap extends AbstractBootstrap
         try {
             (new FrontController($this->container))->dispatch();
         } catch (Exceptions\ResultNotExists $e) {
-            $redirect->temporary('errors/index/404')->send();
+            $redirect->temporary('errors/index/not_found')->send();
         } catch (Exceptions\UnauthorizedAccess $e) {
             $redirectUri = base64_encode($request->getOriginalQuery());
             $redirect->temporary('users/index/login/redirect_' . $redirectUri)->send();
         } catch (Exceptions\AccessForbidden $e) {
-            $redirect->temporary('errors/index/403');
+            $redirect->temporary('errors/index/access_forbidden');
         } catch (Exceptions\ControllerActionNotFound $e) {
-            $this->handleException($e, $redirect, 'errors/index/404');
+            $this->handleException($e, $redirect, 'errors/index/not_found');
         } catch (\Exception $e) {
             $this->container->get('core.logger')->error('exception', $e);
 
-            $this->handleException($e, $redirect, 'errors/index/500');
+            $this->handleException($e, $redirect, 'errors/index/server_error');
         }
     }
 
