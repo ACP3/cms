@@ -67,7 +67,7 @@ class Edit extends Core\Modules\AdminController
 
         if (empty($emoticon) === false) {
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->editPost($this->request->getPost()->all(), $emoticon, $id);
+                return $this->executePost($this->request->getPost()->all(), $emoticon, $id);
             }
 
             $this->formTokenHelper->generateFormToken();
@@ -87,7 +87,7 @@ class Edit extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function editPost(array $formData, array $emoticon, $id)
+    protected function executePost(array $formData, array $emoticon, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $emoticon, $id) {
             $file = $this->request->getFiles()->get('picture');

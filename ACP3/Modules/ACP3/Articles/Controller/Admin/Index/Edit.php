@@ -107,7 +107,7 @@ class Edit extends AbstractFormAction
             $this->breadcrumb->setTitlePostfix($article['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->editPost($this->request->getPost()->all(), $id);
+                return $this->executePost($this->request->getPost()->all(), $id);
             }
 
             if ($this->acl->hasPermission('admin/menus/items/create') === true) {
@@ -144,7 +144,7 @@ class Edit extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function editPost(array $formData, $id)
+    protected function executePost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->adminFormValidation

@@ -42,7 +42,7 @@ class ViewProfile extends Core\Modules\FrontendController
      * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionViewProfile($id)
+    public function execute($id)
     {
         if ($this->userRepository->resultExists($id) === true) {
             $user = $this->user->getUserInfo($id);

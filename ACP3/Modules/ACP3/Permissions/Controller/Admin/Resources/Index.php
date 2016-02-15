@@ -38,7 +38,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @return array
      */
-    public function actionIndex()
+    public function execute()
     {
         $resources = $this->resourceRepository->getAllResources();
         $c_resources = count($resources);

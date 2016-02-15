@@ -71,7 +71,7 @@ class Create extends AbstractFormAction
         $settings = $this->config->getSettings('files');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->createPost($this->request->getPost()->all(), $settings);
+            return $this->executePost($this->request->getPost()->all(), $settings);
         }
 
         $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
@@ -111,7 +111,7 @@ class Create extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createPost(array $formData, array $settings)
+    protected function executePost(array $formData, array $settings)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
             if (isset($formData['external'])) {

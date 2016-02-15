@@ -39,7 +39,7 @@ class Activate extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function actionActivate($id)
+    public function execute($id)
     {
         $bool = $this->accountStatusHelper->changeAccountStatus(
             Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,

@@ -50,7 +50,7 @@ class Settings extends Core\Modules\AdminController
         $settings = $this->config->getSettings('gallery');
 
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->settingsPost($this->request->getPost()->all(), $settings);
+            return $this->executePost($this->request->getPost()->all(), $settings);
         }
 
         if ($this->modules->isActive('comments') === true) {
@@ -73,7 +73,7 @@ class Settings extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function settingsPost(array $formData, array $settings)
+    protected function executePost(array $formData, array $settings)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData, $settings) {
             $this->adminSettingsFormValidation->validate($formData);

@@ -91,10 +91,10 @@ class Create extends AbstractFormAction
     /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function actionCreate()
+    public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_createPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         if ($this->articlesHelpers) {
@@ -124,7 +124,7 @@ class Create extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _createPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {

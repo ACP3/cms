@@ -37,7 +37,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @return array
      */
-    public function actionIndex()
+    public function execute()
     {
         $accounts = $this->accountRepository->getAllAccounts();
 

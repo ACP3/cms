@@ -56,7 +56,7 @@ class Files extends Core\Modules\FrontendController
      * @return array
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionFiles($cat)
+    public function execute($cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
             $category = $this->categoryRepository->getOneById($cat);

@@ -84,7 +84,7 @@ class Edit extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($gallery['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->editPost($this->request->getPost()->all(), $id);
+                return $this->executePost($this->request->getPost()->all(), $id);
             }
 
             $this->formTokenHelper->generateFormToken();
@@ -159,7 +159,7 @@ class Edit extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function editPost(array $formData, $id)
+    protected function executePost(array $formData, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
             $this->galleryFormValidation

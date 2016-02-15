@@ -48,10 +48,10 @@ class Settings extends Core\Modules\AdminController
     /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function actionSettings()
+    public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->_settingsPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('news');
@@ -76,7 +76,7 @@ class Settings extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _settingsPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->adminSettingsFormValidation->validate($formData);

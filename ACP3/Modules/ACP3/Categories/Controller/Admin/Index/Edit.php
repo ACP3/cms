@@ -67,7 +67,7 @@ class Edit extends Core\Modules\AdminController
             $this->breadcrumb->setTitlePostfix($category['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->editPost($this->request->getPost()->all(), $category, $id);
+                return $this->executePost($this->request->getPost()->all(), $category, $id);
             }
 
             $this->formTokenHelper->generateFormToken();
@@ -87,7 +87,7 @@ class Edit extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function editPost(array $formData, array $category, $id)
+    protected function executePost(array $formData, array $category, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $category, $id) {
             $file = $this->request->getFiles()->get('picture');

@@ -61,7 +61,7 @@ class Create extends Core\Modules\AdminController
     public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->createPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $this->formTokenHelper->generateFormToken();
@@ -76,7 +76,7 @@ class Create extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $file = $this->request->getFiles()->get('picture');

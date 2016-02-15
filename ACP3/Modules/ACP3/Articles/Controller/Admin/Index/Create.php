@@ -76,7 +76,7 @@ class Create extends AbstractFormAction
     public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->createPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
@@ -105,7 +105,7 @@ class Create extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);

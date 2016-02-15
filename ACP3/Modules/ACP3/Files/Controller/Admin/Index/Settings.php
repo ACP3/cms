@@ -69,7 +69,7 @@ class Settings extends Core\Modules\AdminController
     public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            return $this->settingsPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings('files');
@@ -91,7 +91,7 @@ class Settings extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function settingsPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->adminSettingsFormValidation->validate($formData);

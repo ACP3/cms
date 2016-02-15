@@ -79,7 +79,7 @@ class Edit extends Core\Modules\AdminController
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionEdit($id)
+    public function execute($id)
     {
         $comment = $this->commentRepository->getOneById($id);
 
@@ -93,7 +93,7 @@ class Edit extends Core\Modules\AdminController
                 ->setTitlePostfix($comment['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->editPost(
+                return $this->executePost(
                     $this->request->getPost()->all(),
                     $comment,
                     $id,
@@ -124,7 +124,7 @@ class Edit extends Core\Modules\AdminController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function editPost(array $formData, array $comment, $id, $moduleId)
+    protected function executePost(array $formData, array $comment, $id, $moduleId)
     {
         return $this->actionHelper->handleEditPostAction(
             function () use ($formData, $comment, $id) {

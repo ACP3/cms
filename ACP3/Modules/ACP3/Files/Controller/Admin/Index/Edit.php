@@ -87,7 +87,7 @@ class Edit extends AbstractFormAction
             $this->breadcrumb->setTitlePostfix($file['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
-                return $this->editPost($this->request->getPost()->all(), $settings, $file, $id);
+                return $this->executePost($this->request->getPost()->all(), $settings, $file, $id);
             }
 
             $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
@@ -125,7 +125,7 @@ class Edit extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function editPost(array $formData, array $settings, array $dl, $id)
+    protected function executePost(array $formData, array $settings, array $dl, $id)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $dl, $id) {
             $file = [];

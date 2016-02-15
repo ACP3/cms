@@ -38,7 +38,7 @@ class Index extends Core\Modules\AdminController
     /**
      * @return array
      */
-    public function actionIndex()
+    public function execute()
     {
         $users = $this->userRepository->getAllInAcp();
 

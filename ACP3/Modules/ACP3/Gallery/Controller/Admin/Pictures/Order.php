@@ -57,7 +57,7 @@ Order extends Core\Modules\AdminController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionOrder($id, $action)
+    public function execute($id, $action)
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {

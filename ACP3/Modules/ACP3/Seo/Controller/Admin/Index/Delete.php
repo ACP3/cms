@@ -47,7 +47,7 @@ class Delete extends Core\Modules\AdminController
      * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function actionDelete($action = '')
+    public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $this,
