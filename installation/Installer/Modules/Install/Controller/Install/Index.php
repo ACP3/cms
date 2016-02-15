@@ -1,6 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Installer\Modules\Install\Controller;
+namespace ACP3\Installer\Modules\Install\Controller\Install;
 
 use ACP3\Core\Filesystem;
 use ACP3\Core\Functions;
@@ -9,14 +12,15 @@ use ACP3\Core\User;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Installer\Core;
 use ACP3\Installer\Core\Date;
+use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
 
 /**
- * Class Install
- * @package ACP3\Installer\Modules\Install\Controller
+ * Class Index
+ * @package ACP3\Installer\Modules\Install\Controller\Install
  */
-class Install extends AbstractController
+class Index extends AbstractAction
 {
     /**
      * @var string
@@ -75,10 +79,10 @@ class Install extends AbstractController
         $this->configFilePath = $this->appPath->getAppDir() . 'config.yml';
     }
 
-    public function actionIndex()
+    public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost($this->request->getPost()->all());
+            $this->executePost($this->request->getPost()->all());
         }
 
         $this->view->assign('time_zones', $this->dateHelper->getTimeZones(date_default_timezone_get()));
@@ -101,25 +105,25 @@ class Install extends AbstractController
     /**
      * @param array $formData
      */
-    private function _indexPost(array $formData)
+    private function executePost(array $formData)
     {
         try {
             $this->formValidation
                 ->setConfigFilePath($this->configFilePath)
                 ->validate($formData);
 
-            $this->_writeConfigFile($formData);
-            $this->_updateContainer();
-            $resultModules = $this->_installModules();
+            $this->writeConfigFile($formData);
+            $this->updateContainer();
+            $resultModules = $this->installModules();
             $resultAcl = false;
 
             if ($resultModules === true) {
-                $resultAcl = $this->_installAclResources();
+                $resultAcl = $this->installAclResources();
             }
 
             // Admin-User, Menüpunkte, News, etc. in die DB schreiben
             if ($resultModules === true && $resultAcl === true) {
-                $this->_installSampleData($formData);
+                $this->installSampleData($formData);
                 $this->configureModules($formData);
             }
 
@@ -135,7 +139,7 @@ class Install extends AbstractController
     /**
      * @param array $formData
      */
-    private function _writeConfigFile(array $formData)
+    private function writeConfigFile(array $formData)
     {
         // Systemkonfiguration erstellen
         $configParams = [
@@ -156,7 +160,7 @@ class Install extends AbstractController
     /**
      * @throws \Exception
      */
-    private function _updateContainer()
+    private function updateContainer()
     {
         $this->container = Core\ServiceContainerBuilder::compileContainer(
             $this->container->getParameter('core.environment'),
@@ -169,7 +173,7 @@ class Install extends AbstractController
      * @return bool
      * @throws \Exception
      */
-    private function _installModules()
+    private function installModules()
     {
         $bool = false;
         $modules = array_merge(['system', 'users'], Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/'));
@@ -194,7 +198,7 @@ class Install extends AbstractController
      *
      * @throws \Exception
      */
-    private function _installAclResources()
+    private function installAclResources()
     {
         $bool = false;
         foreach (Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/') as $module) {
@@ -212,7 +216,7 @@ class Install extends AbstractController
      *
      * @throws \Exception
      */
-    private function _installSampleData(array $formData)
+    private function installSampleData(array $formData)
     {
         $bool = $this->createSuperUser($formData);
 

@@ -1,6 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Installer\Modules\Update\Controller;
+namespace ACP3\Installer\Modules\Update\Controller\Index;
 
 use ACP3\Core\Cache;
 use ACP3\Core\Filesystem;
@@ -9,7 +12,7 @@ use ACP3\Installer\Core;
 
 /**
  * Class Index
- * @package ACP3\Installer\Modules\Update\Controller
+ * @package ACP3\Installer\Modules\Update\Controller\Index
  */
 class Index extends Core\Modules\AbstractInstallerController
 {
@@ -46,28 +49,28 @@ class Index extends Core\Modules\AbstractInstallerController
         $this->schemaUpdater = $schemaUpdater;
     }
 
-    public function actionIndex()
+    public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $this->_indexPost();
+            $this->executePost();
         }
     }
 
-    private function _indexPost()
+    private function executePost()
     {
         $results = [];
 
         // Zuerst die wichtigen System-Module aktualisieren...
         $coreModules = ['system', 'users', 'permissions'];
         foreach ($coreModules as $module) {
-            $results[$module] = $this->_returnModuleUpdateResult($module);
+            $results[$module] = $this->returnModuleUpdateResult($module);
         }
 
         // ...danach die Restlichen
         foreach ($this->vendors->getVendors() as $vendor) {
             foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
                 if (in_array(strtolower($module), $coreModules) === false) {
-                    $results[$module] = $this->_returnModuleUpdateResult($module);
+                    $results[$module] = $this->returnModuleUpdateResult($module);
                 }
             }
         }
@@ -76,7 +79,7 @@ class Index extends Core\Modules\AbstractInstallerController
 
         $this->view->assign('results', $results);
 
-        $this->_clearCaches();
+        $this->clearCaches();
     }
 
     /**
@@ -84,9 +87,9 @@ class Index extends Core\Modules\AbstractInstallerController
      *
      * @return array
      */
-    protected function _returnModuleUpdateResult($moduleName)
+    protected function returnModuleUpdateResult($moduleName)
     {
-        $result = $this->_updateModule($moduleName);
+        $result = $this->updateModule($moduleName);
 
         return [
             'text' => $this->translator->t('update', 'db_update_text', ['%module%' => ucfirst($moduleName)]),
@@ -103,7 +106,7 @@ class Index extends Core\Modules\AbstractInstallerController
      *
      * @return integer
      */
-    protected function _updateModule($module)
+    protected function updateModule($module)
     {
         $result = false;
 
@@ -123,7 +126,7 @@ class Index extends Core\Modules\AbstractInstallerController
         return $result;
     }
 
-    protected function _clearCaches()
+    protected function clearCaches()
     {
         Cache::purge($this->appPath->getCacheDir());
         Cache::purge($this->appPath->getUploadsDir() . 'assets');

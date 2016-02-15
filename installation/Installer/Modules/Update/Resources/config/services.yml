@@ -1,4 +1,2 @@
-services:
-  update.controller.install.index:
-    class: ACP3\Installer\Modules\Update\Controller\Index
-    arguments: ['@core.context.install', '@core.modules', @core.modules.vendors, @core.modules.schemaUpdater]
+imports:
+  - { resource: controllers.yml }

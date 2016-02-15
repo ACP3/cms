@@ -1,15 +1,19 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Installer\Modules\Install\Controller;
+namespace ACP3\Installer\Modules\Install\Controller\Index;
 
 use ACP3\Installer\Core;
-use ACP3\Installer\Modules\Install\Helpers\Requirements;
+use ACP3\Installer\Modules\Install\Controller\AbstractAction;
+use ACP3\Installer\Modules\Install\Helpers\Requirements as RequirementsHelper;
 
 /**
- * Class Index
- * @package ACP3\Installer\Modules\Install\Controller
+ * Class Requirements
+ * @package ACP3\Installer\Modules\Install\Controller\Index
  */
-class Index extends AbstractController
+class Requirements extends AbstractAction
 {
     /**
      * @var \ACP3\Installer\Modules\Install\Helpers\Requirements
@@ -17,19 +21,21 @@ class Index extends AbstractController
     protected $requirementsHelpers;
 
     /**
+     * Requirements constructor.
+     *
      * @param \ACP3\Installer\Core\Modules\Controller\InstallerContext $context
      * @param \ACP3\Installer\Modules\Install\Helpers\Requirements     $requirementsHelpers
      */
     public function __construct(
         Core\Modules\Controller\InstallerContext $context,
-        Requirements $requirementsHelpers)
+        RequirementsHelper $requirementsHelpers)
     {
         parent::__construct($context);
 
         $this->requirementsHelpers = $requirementsHelpers;
     }
 
-    public function actionRequirements()
+    public function execute()
     {
         list($requirements, $stopInstall) = $this->requirementsHelpers->checkMandatoryRequirements();
         list($requiredFilesAndDirs, $checkAgain) = $this->requirementsHelpers->checkFolderAndFilePermissions();
@@ -40,15 +46,4 @@ class Index extends AbstractController
         $this->view->assign('stop_install', $stopInstall);
         $this->view->assign('check_again', $checkAgain);
     }
-
-    public function actionLicence()
-    {
-        return;
-    }
-
-    public function actionIndex()
-    {
-        return;
-    }
-
 }

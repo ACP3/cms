@@ -7,14 +7,14 @@ parameters:
   users.controller.frontend.account.edit.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit'
   users.controller.frontend.account.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Index'
   users.controller.frontend.account.settings.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings'
-  users.controller.frontend.index.forgotpwd.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd'
+  users.controller.frontend.index.forgot_pwd.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd'
   users.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Index'
   users.controller.frontend.index.login.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login'
   users.controller.frontend.index.logout.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Logout'
   users.controller.frontend.index.register.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register'
-  users.controller.frontend.index.viewprofile.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile'
+  users.controller.frontend.index.view_profile.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile'
   users.controller.sidebar.index.login.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index\Login'
-  users.controller.sidebar.index.usermenu.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index\UserMenu'
+  users.controller.sidebar.index.user_menu.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index\UserMenu'
 
 services:
   users.controller.admin.index.create:
@@ -83,8 +83,8 @@ services:
       - @users.model.userrepository
       - @user.validation.account_settings_form_validation
 
-  users.controller.frontend.index.forgotpwd:
-    class: %users.controller.frontend.index.forgotpwd.fqdn%
+  users.controller.frontend.index.forgot_pwd:
+    class: %users.controller.frontend.index.forgot_pwd.fqdn%
     arguments:
       - @core.context.frontend
       - @core.helpers.formToken
@@ -124,8 +124,8 @@ services:
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
-  users.controller.frontend.index.viewprofile:
-    class: %users.controller.frontend.index.viewprofile.fqdn%
+  users.controller.frontend.index.view_profile:
+    class: %users.controller.frontend.index.view_profile.fqdn%
     arguments:
       - @core.context.frontend
       - @users.model.userrepository
@@ -134,6 +134,6 @@ services:
     class: %users.controller.sidebar.index.login.fqdn%
     parent: core.modules.controller
 
-  users.controller.sidebar.index.usermenu:
-    class: %users.controller.sidebar.index.usermenu.fqdn%
+  users.controller.sidebar.index.user_menu:
+    class: %users.controller.sidebar.index.user_menu.fqdn%
     parent: core.modules.controller

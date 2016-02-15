@@ -7,7 +7,7 @@ use ACP3\Installer\Core;
  * Class AbstractController
  * @package ACP3\Installer\Modules\Install\Controller
  */
-abstract class AbstractController extends Core\Modules\AbstractInstallerController
+abstract class AbstractAction extends Core\Modules\AbstractInstallerController
 {
     public function preDispatch()
     {

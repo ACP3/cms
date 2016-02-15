@@ -31,7 +31,7 @@ class ControllerActionExists
      */
     public function controllerActionExists($path)
     {
-        $pathArray = explode('/', strtolower(str_replace('_', '', $path)));
+        $pathArray = explode('/', strtolower($path));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';

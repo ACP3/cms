@@ -1,0 +1,25 @@
+services:
+  install.controller.install.index.index:
+    class: ACP3\Installer\Modules\Install\Controller\Index\Index
+    parent: core.modules.controller.install
+
+  install.controller.install.index.licence:
+    class: ACP3\Installer\Modules\Install\Controller\Index\Licence
+    parent: core.modules.controller.install
+
+  install.controller.install.index.requirements:
+    class: ACP3\Installer\Modules\Install\Controller\Index\Requirements
+    arguments:
+      - '@core.context.install'
+      - '@install.helpers.requirements'
+
+  install.controller.install.install.index:
+    class: ACP3\Installer\Modules\Install\Controller\Install\Index
+    arguments:
+      - @core.context.install
+      - @core.date
+      - @core.helpers.secure
+      - @core.helpers.date
+      - @install.helpers.install
+      - @install.validator
+
