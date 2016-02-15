@@ -87,14 +87,13 @@ class AclInstaller implements InstallerInterface
 
         foreach ($serviceIds as $serviceId) {
             if (strpos($serviceId, $schema->getModuleName() . '.controller.') !== false) {
-                list($module, , $area, $controller) = explode('.', $serviceId);
-                $this->_insertAclResources($module, $controller, $area, $schema->specialResources());
+                $this->insertAclResources($serviceId, $schema->specialResources());
             }
         }
 
         // Regeln für die Rollen setzen
         if ($mode === self::INSTALL_RESOURCES_AND_RULES) {
-            $this->_insertAclRules($schema->getModuleName());
+            $this->insertAclRules($schema->getModuleName());
         }
 
         $this->aclCache->getDriver()->deleteAll();
@@ -105,40 +104,33 @@ class AclInstaller implements InstallerInterface
     /**
      * Inserts a new resource into the database
      *
-     * @param string $module
-     * @param string $controller
-     * @param string $area
+     * @param string $serviceId
      * @param array  $specialResources
      */
-    protected function _insertAclResources($module, $controller, $area, array $specialResources)
+    protected function insertAclResources($serviceId, array $specialResources)
     {
-        $controllerService = $module . '.controller.' . $area . '.' . $controller;
-        $actions = get_class_methods($this->container->get($controllerService));
-        $moduleId = $this->schemaHelper->getModuleId($module);
+        // Only add the actual module actions (methods which begin with "action")
+        if (method_exists($this->container->get($serviceId), 'execute') === true) {
+            list($module, , $area, $controller, $action) = explode('.', $serviceId);
+            $action = $this->convertCamelCaseToUnderscore($action);
 
-        foreach ($actions as $action) {
-            // Only add the actual module actions (methods which begin with "action")
-            if (strpos($action, 'action') === 0) {
-                $action = $this->convertCamelCaseToUnderscore($action);
-
-                // Handle resources with differing access levels
-                if (isset($specialResources[$area][$controller][$action])) {
-                    $privilegeId = $specialResources[$area][$controller][$action];
-                } else {
-                    $privilegeId = $this->getDefaultAclPrivilegeId($area, $action);
-                }
-
-                $insertValues = [
-                    'id' => '',
-                    'module_id' => $moduleId,
-                    'area' => !empty($area) ? strtolower($area) : 'frontend',
-                    'controller' => strtolower($controller),
-                    'page' => $action,
-                    'params' => '',
-                    'privilege_id' => (int)$privilegeId
-                ];
-                $this->resourceRepository->insert($insertValues);
+            // Handle resources with differing access levels
+            if (isset($specialResources[$area][$controller][$action])) {
+                $privilegeId = $specialResources[$area][$controller][$action];
+            } else {
+                $privilegeId = $this->getDefaultAclPrivilegeId($area, $action);
             }
+
+            $insertValues = [
+                'id' => '',
+                'module_id' => $this->schemaHelper->getModuleId($module),
+                'area' => !empty($area) ? strtolower($area) : 'frontend',
+                'controller' => strtolower($controller),
+                'page' => $action,
+                'params' => '',
+                'privilege_id' => (int)$privilegeId
+            ];
+            $this->resourceRepository->insert($insertValues);
         }
     }
 
@@ -147,7 +139,7 @@ class AclInstaller implements InstallerInterface
      *
      * @param string $moduleName
      */
-    protected function _insertAclRules($moduleName)
+    protected function insertAclRules($moduleName)
     {
         $roles = $this->roleRepository->getAllRoles();
         $privileges = $this->privilegeRepository->getAllPrivilegeIds();
@@ -263,6 +255,6 @@ class AclInstaller implements InstallerInterface
         $actionUnderscored = strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
 
         // Modulaktionen berücksichtigen, die mit Ziffern anfangen (Error pages)
-        return substr($actionUnderscored, strpos($actionUnderscored, '_') === 6 ? 7 : 6);
+        return substr($actionUnderscored, strpos($actionUnderscored, '_') === 0 ? 1 : 0);
     }
 }
