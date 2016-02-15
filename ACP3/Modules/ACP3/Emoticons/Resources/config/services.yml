@@ -1,5 +1,7 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  emoticons.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index'
   emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
   emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
@@ -10,16 +12,6 @@ parameters:
   emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'
 
 services:
-  emoticons.controller.admin.index:
-    class: %emoticons.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @emoticons.model.emoticonrepository
-      - @emoticons.validator
-      - @emoticons.validation.admin_settings_form_validation
-      - @emoticons.cache
-
   emoticons.model.emoticonrepository:
     class: %emoticons.model.emoticonrepository.fqdn%
     arguments: ['@core.db']

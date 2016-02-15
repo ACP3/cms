@@ -1,0 +1,82 @@
+parameters:
+  permissions.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create'
+  permissions.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Delete'
+  permissions.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit'
+  permissions.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Index'
+  permissions.controller.admin.index.order.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order'
+  permissions.controller.admin.resources.create.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Create'
+  permissions.controller.admin.resources.delete.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Delete'
+  permissions.controller.admin.resources.edit.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit'
+  permissions.controller.admin.resources.index.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Index'
+
+services:
+  permissions.controller.admin.index.create:
+    class: %permissions.controller.admin.index.create.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model.rulerepository'
+      - '@core.nested_set'
+      - '@core.helpers.formToken'
+      - '@permissions.cache'
+      - '@permissions.validator.role'
+
+  permissions.controller.admin.index.delete:
+    class: %permissions.controller.admin.index.delete.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.nested_set'
+      - '@permissions.cache'
+
+  permissions.controller.admin.index.edit:
+    class: %permissions.controller.admin.index.edit.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model.rulerepository'
+      - '@core.nested_set'
+      - '@core.helpers.formToken'
+      - '@permissions.model.rolerepository'
+      - '@permissions.cache'
+      - '@permissions.validator.role'
+
+  permissions.controller.admin.index.index:
+    class: %permissions.controller.admin.index.index.fqdn%
+    parent: core.modules.controller.admin
+
+  permissions.controller.admin.index.order:
+    class: %permissions.controller.admin.index.order.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.nested_set'
+      - '@permissions.model.rolerepository'
+      - '@permissions.cache'
+
+  permissions.controller.admin.resources.create:
+    class: %permissions.controller.admin.resources.create.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.cache'
+      - '@permissions.validator.resource'
+
+  permissions.controller.admin.resources.delete:
+    class: %permissions.controller.admin.resources.delete.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.cache'
+
+  permissions.controller.admin.resources.edit:
+    class: %permissions.controller.admin.resources.edit.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.cache'
+      - '@permissions.validator.resource'
+
+  permissions.controller.admin.resources.index:
+    class: %permissions.controller.admin.resources.index.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model.resourcerepository'

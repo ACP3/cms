@@ -135,7 +135,7 @@ class Breadcrumb
     public function getBreadcrumb()
     {
         if (empty($this->breadcrumbCache)) {
-            $this->_setBreadcrumbCache();
+            $this->setBreadcrumbCache();
         }
 
         return $this->breadcrumbCache;
@@ -159,7 +159,7 @@ class Breadcrumb
     public function getPageTitle()
     {
         if (empty($this->breadcrumbCache)) {
-            $this->_setBreadcrumbCache();
+            $this->setBreadcrumbCache();
         }
 
         return $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
@@ -189,7 +189,7 @@ class Breadcrumb
     /**
      * Sets the breadcrumb cache for the current request
      */
-    private function _setBreadcrumbCache()
+    private function setBreadcrumbCache()
     {
         // Breadcrumb of the admin panel
         if ($this->request->getArea() === 'admin') {
@@ -210,8 +210,9 @@ class Breadcrumb
         if ($this->request->getModule() !== 'acp') {
             // An postfix for the page title has been already set
             if (!empty($this->title['postfix'])) {
-                $this->setTitlePostfix($this->title['postfix'] . $this->getTitleSeparator() . $this->translator->t('system',
-                        'acp'));
+                $this->setTitlePostfix(
+                    $this->title['postfix'] . $this->getTitleSeparator() . $this->translator->t('system', 'acp')
+                );
             } else {
                 $this->setTitlePostfix($this->translator->t('system', 'acp'));
             }
@@ -223,7 +224,10 @@ class Breadcrumb
 
             if ($this->request->getModule() !== 'acp') {
                 $this->append(
-                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
+                    $this->translator->t(
+                        $this->request->getModule(),
+                        $this->request->getModule()
+                    ),
                     'acp/' . $this->request->getModule()
                 );
 
@@ -232,7 +236,10 @@ class Breadcrumb
         } else { // Prepend breadcrumb steps, if there have been already some steps set
             if ($this->request->getModule() !== 'acp') {
                 $this->prepend(
-                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
+                    $this->translator->t(
+                        $this->request->getModule(),
+                        $this->request->getModule()
+                    ),
                     'acp/' . $this->request->getModule()
                 );
             }
@@ -317,10 +324,8 @@ class Breadcrumb
 
     private function setControllerActionBreadcrumbs()
     {
-        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController();
-        if ($this->request->getController() !== 'index' &&
-            method_exists($this->container->get($serviceId), 'actionIndex')
-        ) {
+        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController() . '.index';
+        if ($this->request->getController() !== 'index' && $this->container->has($serviceId)) {
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
                 $this->request->getModuleAndController()

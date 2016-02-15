@@ -60,19 +60,17 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     public function outputPage()
     {
         $this->applyThemePaths();
-        $request = $this->container->get('core.request');
         $redirect = $this->container->get('core.redirect');
 
         $frontController = new FrontController($this->container);
 
         try {
-            $serviceId = $request->getModule() . '.controller.install.' . $request->getController();
-            $frontController->dispatch($serviceId, $request->getControllerAction());
+            $frontController->dispatch();
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
-            $redirect->temporary('errors/index/404')->send();
+            $redirect->temporary('errors/index/not_found')->send();
         } catch (\Exception $e) {
             $this->container->get('core.logger')->critical('installer', $e->getMessage());
-            $redirect->temporary('errors/index/500')->send();
+            $redirect->temporary('errors/index/server_error')->send();
         }
     }
 

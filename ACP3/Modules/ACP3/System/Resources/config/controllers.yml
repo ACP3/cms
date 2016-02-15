@@ -1,0 +1,52 @@
+parameters:
+  system.controller.admin.extensions.designs.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs'
+  system.controller.admin.extensions.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Index'
+  system.controller.admin.extensions.modules.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules'
+  system.controller.admin.index.configuration.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Index\Configuration'
+  system.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Index\Index'
+  system.controller.admin.maintenance.cache.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache'
+  system.controller.admin.maintenance.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index'
+  system.controller.admin.maintenance.update_check.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck'
+
+services:
+  system.controller.admin.extensions.designs:
+    class: %system.controller.admin.extensions.designs.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.xml'
+
+  system.controller.admin.extensions.index:
+    class: %system.controller.admin.extensions.index.fqdn%
+    parent: core.modules.controller.admin
+
+  system.controller.admin.extensions.modules:
+    class: %system.controller.admin.extensions.modules.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.modules.moduleInfoCache'
+      - '@system.model.modulerepository'
+      - '@system.helpers.installer'
+      - '@permissions.cache'
+
+  system.controller.admin.index.configuration:
+    class: %system.controller.admin.index.configuration.fqdn%
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@system.validator.settings'
+
+  system.controller.admin.index.index:
+    class: %system.controller.admin.index.index.fqdn%
+    parent: core.modules.controller.admin
+
+  system.controller.admin.maintenance.cache:
+    class: %system.controller.admin.maintenance.cache.fqdn%
+    parent: core.modules.controller.admin
+
+  system.controller.admin.maintenance.index:
+    class: %system.controller.admin.maintenance.index.fqdn%
+    parent: core.modules.controller.admin
+
+  system.controller.admin.maintenance.update_check:
+    class: %system.controller.admin.maintenance.update_check.fqdn%
+    parent: core.modules.controller.admin

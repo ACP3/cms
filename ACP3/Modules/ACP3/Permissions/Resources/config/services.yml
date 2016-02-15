@@ -1,6 +1,7 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  permissions.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Index'
-  permissions.controller.admin.resources.fqdn: 'ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources'
   permissions.cache.fqdn: 'ACP3\Modules\ACP3\Permissions\Cache'
   permissions.helpers.fqdn: 'ACP3\Modules\ACP3\Permissions\Helpers'
   permissions.model.rolerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\RoleRepository'
@@ -18,14 +19,6 @@ parameters:
   permissions.installer.migration.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Migration'
 
 services:
-  permissions.controller.admin.index:
-    class: %permissions.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', @core.nested_set, '@core.helpers.formToken', '@permissions.model.rolerepository', @permissions.model.userrolerepository, @permissions.model.rulerepository, '@permissions.cache', '@permissions.validator.role']
-
-  permissions.controller.admin.resources:
-    class: %permissions.controller.admin.resources.fqdn%
-    arguments: ['@core.context.admin', '@core.helpers.formToken', '@permissions.model.resourcerepository', '@permissions.cache', '@permissions.validator.resource']
-
   permissions.cache:
     class: %permissions.cache.fqdn%
     arguments: ['@core.cache.system', '@permissions.model.rolerepository', @permissions.model.resourcerepository, @permissions.model.rulerepository]

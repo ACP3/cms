@@ -1,18 +1,22 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  captcha.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Captcha\Controller\Index'
   captcha.helpers.fqdn: 'ACP3\Modules\ACP3\Captcha\Helpers'
   captcha.installer.schema.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Schema'
   captcha.installer.migration.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Migration'
   captcha.validation.validation_rules.captcha_validation_rule.fqdn: 'ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule'
 
 services:
-  captcha.controller.frontend.index:
-    class: %captcha.controller.frontend.index.fqdn%
-    arguments: [@core.context.frontend, @core.session]
-
   captcha.helpers:
     class: %captcha.helpers.fqdn%
-    arguments: ['@core.user', '@core.request', '@core.router', @core.session, '@core.view', '@core.helpers.secure']
+    arguments:
+      - '@core.user'
+      - '@core.request'
+      - '@core.router'
+      - '@core.session'
+      - '@core.view'
+      - '@core.helpers.secure'
 
   captcha.installer.schema:
     class: %captcha.installer.schema.fqdn%

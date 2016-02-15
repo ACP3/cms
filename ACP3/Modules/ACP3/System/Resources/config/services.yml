@@ -1,7 +1,7 @@
+imports:
+  - { resource: controllers.yml }
+
 parameters:
-  system.controller.admin.extensions.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Extensions'
-  system.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Index'
-  system.controller.admin.maintenance.fqdn: 'ACP3\Modules\ACP3\System\Controller\Admin\Maintenance'
   system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
   system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
   system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
@@ -12,18 +12,6 @@ parameters:
   system.installer.migration.fqdn: 'ACP3\Modules\ACP3\System\Installer\Migration'
 
 services:
-  system.controller.admin.extensions:
-    class: %system.controller.admin.extensions.fqdn%
-    arguments: ['@core.context.admin', @core.modules.moduleInfoCache, '@core.xml', '@system.model.modulerepository', '@system.helpers.installer', '@permissions.cache']
-
-  system.controller.admin.index:
-    class: %system.controller.admin.index.fqdn%
-    arguments: ['@core.context.admin', '@core.date', '@core.helpers.formToken', '@system.model.modulerepository', '@system.validator.settings']
-
-  system.controller.admin.maintenance:
-    class: %system.controller.admin.maintenance.fqdn%
-    parent: core.modules.controller.admin
-
   system.model.modulerepository:
     class: %system.model.modulerepository.fqdn%
     arguments: ['@core.db']

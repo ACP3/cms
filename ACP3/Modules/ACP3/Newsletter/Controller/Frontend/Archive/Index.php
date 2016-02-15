@@ -1,0 +1,54 @@
+<?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
+
+use ACP3\Core;
+use ACP3\Modules\ACP3\Newsletter;
+
+/**
+ * Class Index
+ * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive
+ */
+class Index extends Core\Modules\FrontendController
+{
+    /**
+     * @var Core\Pagination
+     */
+    protected $pagination;
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     */
+    protected $newsletterRepository;
+
+    /**
+     * @param \ACP3\Core\Modules\Controller\FrontendContext            $context
+     * @param Core\Pagination                                          $pagination
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
+     */
+    public function __construct(
+        Core\Modules\Controller\FrontendContext $context,
+        Core\Pagination $pagination,
+        Newsletter\Model\NewsletterRepository $newsletterRepository)
+    {
+        parent::__construct($context);
+
+        $this->pagination = $pagination;
+        $this->newsletterRepository = $newsletterRepository;
+    }
+
+    /**
+     * @return array
+     */
+    public function execute()
+    {
+        $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
+        $this->pagination->display();
+
+        return [
+            'newsletters' => $this->newsletterRepository->getAll(1, POS, $this->user->getEntriesPerPage())
+        ];
+    }
+}

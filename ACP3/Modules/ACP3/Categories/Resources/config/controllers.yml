@@ -1,0 +1,45 @@
+parameters:
+  categories.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create'
+  categories.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete'
+  categories.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit'
+  categories.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index'
+  categories.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings'
+
+services:
+  categories.controller.admin.index.create:
+    class: %categories.controller.admin.index.create.fqdn%
+    arguments:
+      - @core.context.admin
+      - @categories.model
+      - @categories.cache
+      - @categories.validator
+      - @core.helpers.formToken
+
+  categories.controller.admin.index.delete:
+    class: %categories.controller.admin.index.delete.fqdn%
+    arguments:
+      - @core.context.admin
+      - @categories.model
+      - @categories.cache
+
+  categories.controller.admin.index.edit:
+    class: %categories.controller.admin.index.edit.fqdn%
+    arguments:
+      - @core.context.admin
+      - @categories.model
+      - @categories.cache
+      - @categories.validator
+      - @core.helpers.formToken
+
+  categories.controller.admin.index.index:
+    class: %categories.controller.admin.index.index.fqdn%
+    arguments:
+      - @core.context.admin
+      - @categories.model
+
+  categories.controller.admin.index.settings:
+    class: %categories.controller.admin.index.settings.fqdn%
+    arguments:
+      - @core.context.admin
+      - @categories.validation.admin_settings_form_validation
+      - @core.helpers.formToken

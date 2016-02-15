@@ -1,10 +1,8 @@
 imports:
+  - { resource: controllers.yml }
   - { resource: events.yml }
 
 parameters:
-  news.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Admin\Index'
-  news.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Index'
-  news.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Sidebar\Index'
   news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
   news.model.newsrepository.fqdn: 'ACP3\Modules\ACP3\News\Model\NewsRepository'
   news.validator.fqdn: 'ACP3\Modules\ACP3\News\Validation\AdminFormValidation'
@@ -15,35 +13,6 @@ parameters:
   news.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\News\Installer\SampleData'
 
 services:
-  news.controller.admin.index:
-    class: %news.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @news.model.newsrepository
-      - @news.cache
-      - @news.validator
-      - @news.validation.admin_settings_form_validation
-      - @categories.helpers
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
-
-  news.controller.frontend.index:
-    class: %news.controller.frontend.index.fqdn%
-    arguments:
-      - @core.context.frontend
-      - @core.date
-      - @core.pagination
-      - @news.model.newsrepository
-      - @news.cache
-      - @categories.helpers
-      - @categories.model
-
-  news.controller.sidebar.index:
-    class: %news.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.date', '@news.model.newsrepository']
-
   news.cache:
     class: %news.cache.fqdn%
     arguments: ['@news.cache.core', '@news.model.newsrepository']

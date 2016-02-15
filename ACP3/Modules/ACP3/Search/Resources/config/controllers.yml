@@ -1,0 +1,17 @@
+parameters:
+  search.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Frontend\Index\Index'
+  search.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Sidebar\Index\Index'
+
+services:
+  search.controller.frontend.index.index:
+    class: %search.controller.frontend.index.index.fqdn%
+    arguments:
+      - '@core.context.frontend'
+      - '@search.helpers'
+      - '@search.validator'
+
+  search.controller.sidebar.index.index:
+    class: %search.controller.sidebar.index.index.fqdn%
+    arguments:
+      - '@core.context'
+      - '@search.helpers'

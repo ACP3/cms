@@ -1,0 +1,18 @@
+parameters:
+  errors.controller.frontend.index.access_forbidden.fqdn: 'ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\AccessForbidden'
+  errors.controller.frontend.index.not_found.fqdn: 'ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\NotFound'
+  errors.controller.frontend.index.server_error.fqdn: 'ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\ServerError'
+
+services:
+  errors.controller.frontend.index.access_forbidden:
+    class: %errors.controller.frontend.index.access_forbidden.fqdn%
+    parent: core.modules.controller.frontend
+
+  errors.controller.frontend.index.not_found:
+    class: %errors.controller.frontend.index.not_found.fqdn%
+    parent: core.modules.controller.frontend
+
+  errors.controller.frontend.index.server_error:
+    class: %errors.controller.frontend.index.server_error.fqdn%
+    parent: core.modules.controller.frontend
+

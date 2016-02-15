@@ -1,10 +1,8 @@
 imports:
   - { resource: events.yml }
+  - { resource: controllers.yml }
 
 parameters:
-  articles.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index'
-  articles.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Index'
-  articles.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index'
   articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
   articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
@@ -14,35 +12,6 @@ parameters:
   articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
 
 services:
-  articles.controller.admin.index:
-    class: %articles.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.date
-      - @articles.model.articlerepository
-      - @articles.cache
-      - @articles.validator
-      - @core.helpers.formToken
-    calls:
-      - ['setMenusCache', ['@?menus.cache']]
-      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
-      - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
-      - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
-
-  articles.controller.frontend.index:
-    class: %articles.controller.frontend.index.fqdn%
-    arguments:
-      - @core.context.frontend
-      - @core.date
-      - @core.pagination
-      - @core.helpers.pageBreaks
-      - @articles.model.articlerepository
-      - @articles.cache
-
-  articles.controller.sidebar.index:
-    class: %articles.controller.sidebar.index.fqdn%
-    arguments: ['@core.context', '@core.date', '@articles.model.articlerepository', '@articles.cache']
-
   articles.cache:
     class: %articles.cache.fqdn%
     arguments: ['@articles.cache.core', '@articles.model.articlerepository']

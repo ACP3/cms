@@ -1,0 +1,82 @@
+parameters:
+  articles.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create'
+  articles.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete'
+  articles.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit'
+  articles.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index'
+  articles.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details'
+  articles.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index'
+  articles.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index\Index'
+  articles.controller.sidebar.index.single.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index\Single'
+
+services:
+  articles.controller.admin.index.create:
+    class: %articles.controller.admin.index.create.fqdn%
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @articles.model.articlerepository
+      - @articles.validator
+      - @core.helpers.formToken
+    calls:
+      - ['setMenusCache', ['@?menus.cache']]
+      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+      - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
+
+  articles.controller.admin.index.delete:
+    class: %articles.controller.admin.index.delete.fqdn%
+    arguments:
+      - @core.context.admin
+      - @articles.model.articlerepository
+      - @articles.cache
+    calls:
+      - ['setMenusCache', ['@?menus.cache']]
+      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+
+  articles.controller.admin.index.edit:
+    class: %articles.controller.admin.index.edit.fqdn%
+    arguments:
+      - @core.context.admin
+      - @core.date
+      - @articles.model.articlerepository
+      - @articles.cache
+      - @articles.validator
+      - @core.helpers.formToken
+    calls:
+      - ['setMenusCache', ['@?menus.cache']]
+      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+      - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
+      - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
+
+  articles.controller.admin.index.index:
+    class: %articles.controller.admin.index.index.fqdn%
+    arguments:
+      - @core.context.admin
+      - @articles.model.articlerepository
+
+  articles.controller.frontend.index.details:
+    class: %articles.controller.frontend.index.details.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @core.pagination
+      - @core.helpers.pageBreaks
+      - @articles.model.articlerepository
+      - @articles.cache
+
+  articles.controller.frontend.index.index:
+    class: %articles.controller.frontend.index.index.fqdn%
+    arguments:
+      - @core.context.frontend
+      - @core.date
+      - @core.pagination
+      - @core.helpers.pageBreaks
+      - @articles.model.articlerepository
+      - @articles.cache
+
+  articles.controller.sidebar.index.index:
+    class: %articles.controller.sidebar.index.index.fqdn%
+    arguments: ['@core.context', '@core.date', '@articles.model.articlerepository', '@articles.cache']
+
+  articles.controller.sidebar.index.single:
+    class: %articles.controller.sidebar.index.single.fqdn%
+    arguments: ['@core.context', '@core.date', '@articles.model.articlerepository', '@articles.cache']

@@ -1,10 +1,8 @@
 imports:
+  - { resource: controllers.yml }
   - { resource: events.yml }
 
 parameters:
-  files.controller.admin.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Admin\Index'
-  files.controller.frontend.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Index'
-  files.controller.sidebar.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Sidebar\Index'
   files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
   files.model.filesrepository.fqdn: 'ACP3\Modules\ACP3\Files\Model\FilesRepository'
   files.validator.fqdn: 'ACP3\Modules\ACP3\Files\Validation\AdminFormValidation'
@@ -14,36 +12,6 @@ parameters:
   files.installer.migration.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Migration'
 
 services:
-  files.controller.admin.index:
-    class: %files.controller.admin.index.fqdn%
-    arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @files.model.filesrepository
-      - @files.cache
-      - @files.validator
-      - @files.validation.admin_settings_form_validation
-      - @categories.helpers
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
-
-  files.controller.frontend.index:
-    class: %files.controller.frontend.index.fqdn%
-    arguments:
-      - @core.context.frontend
-      - @core.date
-      - @files.model.filesrepository
-      - @files.cache
-      - @categories.model
-
-  files.controller.sidebar.index:
-    class: %files.controller.sidebar.index.fqdn%
-    arguments:
-      - @core.context
-      - @core.date
-      - @files.model.filesrepository
-
   files.cache:
     class: %files.cache.fqdn%
     arguments: ['@files.cache.core', '@files.model.filesrepository']

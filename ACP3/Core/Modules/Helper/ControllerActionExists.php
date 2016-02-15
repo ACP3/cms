@@ -31,7 +31,7 @@ class ControllerActionExists
      */
     public function controllerActionExists($path)
     {
-        $pathArray = explode('/', strtolower(str_replace('_', '', $path)));
+        $pathArray = explode('/', strtolower($path));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';
@@ -40,12 +40,8 @@ class ControllerActionExists
             $pathArray[3] = 'index';
         }
 
-        $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2];
+        $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3];
 
-        if ($this->container->has($serviceId)) {
-            return method_exists($this->container->get($serviceId), 'action' . $pathArray[3]);
-        }
-
-        return false;
+        return $this->container->has($serviceId) && method_exists($this->container->get($serviceId), 'execute');
     }
 }
