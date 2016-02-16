@@ -9,6 +9,7 @@ parameters:
   gallery.controller.admin.pictures.edit.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit'
   gallery.controller.admin.pictures.order.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order'
   gallery.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details'
+  gallery.controller.frontend.index.image.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image'
   gallery.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index'
   gallery.controller.frontend.index.pics.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics'
   gallery.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Sidebar\Index\Index'
@@ -98,6 +99,12 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@gallery.model.picturerepository'
+
+  gallery.controller.frontend.index.image:
+    class: %gallery.controller.frontend.index.image.fqdn%
+    arguments:
+      - '@core.context.frontend'
       - '@gallery.model.picturerepository'
 
   gallery.controller.frontend.index.index:
