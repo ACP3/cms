@@ -13,7 +13,7 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'newsletters';
 
     /**
-     * @param        $id
+     * @param int    $id
      * @param string $status
      *
      * @return bool
@@ -21,7 +21,10 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     public function newsletterExists($id, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
-        return ((int)$this->db->fetchAssoc("SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where, ['id' => $id, 'status' => $status]) > 0);
+        return ((int)$this->db->fetchAssoc(
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where,
+                ['id' => $id, 'status' => $status]
+            ) > 0);
     }
 
     /**
@@ -33,7 +36,10 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     public function getOneById($id, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
-        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = :id {$where}", ['id' => $id, 'status' => $status]);
+        return $this->db->fetchAssoc(
+            "SELECT * FROM {$this->getTableName()} WHERE id = :id {$where}",
+            ['id' => $id, 'status' => $status]
+        );
     }
 
     /**
@@ -58,7 +64,10 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}{$where} ORDER BY `date` DESC {$limitStmt}", ['status' => $status]);
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `date` DESC {$limitStmt}",
+            ['status' => $status]
+        );
     }
 
     /**

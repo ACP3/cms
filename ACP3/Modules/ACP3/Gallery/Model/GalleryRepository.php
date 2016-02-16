@@ -10,6 +10,8 @@ use ACP3\Core;
  */
 class GalleryRepository extends Core\Model\AbstractRepository
 {
+    use Core\Model\PublicationPeriodAwareTrait;
+
     const TABLE_NAME = 'gallery';
 
     /**
@@ -20,7 +22,7 @@ class GalleryRepository extends Core\Model\AbstractRepository
      */
     public function galleryExists($id, $time = '')
     {
-        $period = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
         return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period, ['id' => $id, 'time' => $time]) > 0);
     }
 
@@ -63,9 +65,12 @@ class GalleryRepository extends Core\Model\AbstractRepository
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = $time !== '' ? ' WHERE (g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
+        $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod('g.') : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT g.*, COUNT(p.gallery_id) AS pics FROM ' . $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(PictureRepository::TABLE_NAME) . ' AS p ON(g.id = p.gallery_id) ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll(
+            'SELECT g.*, COUNT(p.gallery_id) AS pics FROM ' . $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(PictureRepository::TABLE_NAME) . ' AS p ON(g.id = p.gallery_id) ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC' . $limitStmt,
+            ['time' => $time]
+        );
     }
 
     /**

@@ -12,9 +12,9 @@ class VoteRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'poll_votes';
 
     /**
-     * @param $pollId
-     * @param $userId
-     * @param $ipAddress
+     * @param int $pollId
+     * @param int $userId
+     * @param string $ipAddress
      *
      * @return mixed
      */
@@ -24,8 +24,8 @@ class VoteRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $pollId
-     * @param $ipAddress
+     * @param int $pollId
+     * @param string $ipAddress
      *
      * @return mixed
      */

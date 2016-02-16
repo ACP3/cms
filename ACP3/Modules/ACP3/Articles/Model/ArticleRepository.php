@@ -9,30 +9,25 @@ use ACP3\Core;
  */
 class ArticleRepository extends Core\Model\AbstractRepository
 {
+    use Core\Model\PublicationPeriodAwareTrait;
+
     const TABLE_NAME = 'articles';
 
     /**
-     * @return string
-     */
-    protected function _getPeriod()
-    {
-        return '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-    }
-
-    /**
-     * @param        $id
+     * @param int    $id
      * @param string $time
      *
      * @return bool
      */
     public function resultExists($id, $time = '')
     {
-        $period = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}", ['id' => $id, 'time' => $time]) > 0;
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}",
+            ['id' => $id, 'time' => $time]) > 0;
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
@@ -60,9 +55,12 @@ class ArticleRepository extends Core\Model\AbstractRepository
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}{$where} ORDER BY title ASC{$limitStmt}", ['time' => $time]);
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `title` ASC{$limitStmt}",
+            ['time' => $time]
+        );
     }
 
     /**
@@ -74,9 +72,12 @@ class ArticleRepository extends Core\Model\AbstractRepository
      */
     public function getLatest($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}{$where} ORDER BY `start` DESC{$limitStmt}", ['time' => $time]);
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `start` DESC{$limitStmt}",
+            ['time' => $time]
+        );
     }
 
 
@@ -85,21 +86,21 @@ class ArticleRepository extends Core\Model\AbstractRepository
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY title ASC");
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `title` ASC");
     }
 
     /**
-     * @param $fields
-     * @param $searchTerm
-     * @param $sort
-     * @param $time
+     * @param string $fields
+     * @param string $searchTerm
+     * @param string $sortDirection
+     * @param string $time
      *
      * @return array
      */
-    public function getAllSearchResults($fields, $searchTerm, $sort, $time)
+    public function getAllSearchResults($fields, $searchTerm, $sortDirection, $time)
     {
         return $this->db->fetchAll(
-            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->_getPeriod()} ORDER BY START {$sort}, END {$sort}, title {$sort}",
+            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->getPublicationPeriod()} ORDER BY `start` {$sortDirection}, `end` {$sortDirection}, `title` {$sortDirection}",
             ['time' => $time]
         );
     }

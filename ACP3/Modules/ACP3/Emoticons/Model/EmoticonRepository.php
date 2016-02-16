@@ -13,7 +13,7 @@ class EmoticonRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'emoticons';
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */
@@ -23,17 +23,20 @@ class EmoticonRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $moduleId
+     * @param int $moduleId
      *
      * @return bool
      */
     public function resultsExist($moduleId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?', [$moduleId]) > 0;
+        return $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+            [$moduleId]
+        ) > 0;
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
@@ -43,7 +46,7 @@ class EmoticonRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return mixed
      */

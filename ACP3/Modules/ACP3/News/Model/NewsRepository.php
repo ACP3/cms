@@ -10,36 +10,36 @@ use ACP3\Core;
  */
 class NewsRepository extends Core\Model\AbstractRepository
 {
+    use Core\Model\PublicationPeriodAwareTrait;
+
     const TABLE_NAME = 'news';
 
     /**
-     * @return string
-     */
-    protected function _getPeriod()
-    {
-        return '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-    }
-
-    /**
-     * @param        $id
+     * @param int    $id
      * @param string $time
      *
      * @return bool
      */
     public function resultExists($id, $time = '')
     {
-        $period = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period, ['id' => $id, 'time' => $time]) > 0);
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        return ((int)$this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id' . $period,
+                ['id' => $id, 'time' => $time]
+            ) > 0);
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', [$id]);
+        return $this->db->fetchAssoc(
+            'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
+            [$id]
+        );
     }
 
     /**
@@ -51,17 +51,23 @@ class NewsRepository extends Core\Model\AbstractRepository
     public function countAll($time = '', $categoryId = '')
     {
         if (!empty($categoryId)) {
-            $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
+            $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
 
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY START DESC, END DESC, id DESC', ['time' => $time, 'categoryId' => $categoryId]);
-        } else {
-            $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY START DESC, END DESC, id DESC', ['time' => $time]);
+            return $this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
+                ['time' => $time, 'categoryId' => $categoryId]
+            );
         }
+
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
+        return $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
+            ['time' => $time]
+        );
     }
 
     /**
-     * @param        $categoryId
+     * @param int    $categoryId
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
@@ -70,9 +76,12 @@ class NewsRepository extends Core\Model\AbstractRepository
      */
     public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
+        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} WHERE category_id = :categoryId{$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
+            ['time' => $time, 'categoryId' => $categoryId]
+        );
     }
 
     /**
@@ -84,9 +93,13 @@ class NewsRepository extends Core\Model\AbstractRepository
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt, ['time' => $time]);
+
+        return $this->db->fetchAll(
+            'SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
+            ['time' => $time]
+        );
     }
 
     /**
@@ -98,39 +111,48 @@ class NewsRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $fields
-     * @param $searchTerm
-     * @param $sort
-     * @param $time
+     * @param string $fields
+     * @param string $searchTerm
+     * @param string $sort
+     * @param string $time
      *
      * @return array
      */
     public function getAllSearchResults($fields, $searchTerm, $sort, $time)
     {
-        $period = ' AND ' . $this->_getPeriod();
-        return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->getTableName() . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY START ' . $sort . ', END ' . $sort . ', id ' . $sort, ['time' => $time]);
+        $period = ' AND ' . $this->getPublicationPeriod();
+        return $this->db->fetchAll(
+            'SELECT id, title, `text` FROM ' . $this->getTableName() . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY `start` ' . $sort . ', `end` ' . $sort . ', id ' . $sort,
+            ['time' => $time]
+        );
     }
 
     /**
-     * @param $categoryId
-     * @param $time
+     * @param int    $categoryId
+     * @param string $time
      *
      * @return mixed
      */
     public function getLatestByCategoryId($categoryId, $time)
     {
-        $period = ' AND ' . $this->_getPeriod();
+        $period = ' AND ' . $this->getPublicationPeriod();
 
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :category_id ' . $period . ' ORDER BY START DESC LIMIT 1', ['category_id' => $categoryId, 'time' => $time]);
+        return $this->db->fetchAssoc(
+            'SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :category_id ' . $period . ' ORDER BY `start` DESC LIMIT 1',
+            ['category_id' => $categoryId, 'time' => $time]
+        );
     }
 
     /**
-     * @param $time
+     * @param string $time
      *
      * @return mixed
      */
     public function getLatest($time)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE ' . $this->_getPeriod() . ' ORDER BY START DESC LIMIT 1', ['time' => $time]);
+        return $this->db->fetchAssoc(
+            'SELECT * FROM ' . $this->getTableName() . ' WHERE ' . $this->getPublicationPeriod() . ' ORDER BY `start` DESC LIMIT 1',
+            ['time' => $time]
+        );
     }
 }

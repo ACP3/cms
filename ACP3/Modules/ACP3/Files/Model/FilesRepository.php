@@ -10,15 +10,9 @@ use ACP3\Core;
  */
 class FilesRepository extends Core\Model\AbstractRepository
 {
-    const TABLE_NAME = 'files';
+    use Core\Model\PublicationPeriodAwareTrait;
 
-    /**
-     * @return string
-     */
-    protected function _getPeriod()
-    {
-        return '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-    }
+    const TABLE_NAME = 'files';
 
     /**
      * @param int    $id
@@ -28,8 +22,11 @@ class FilesRepository extends Core\Model\AbstractRepository
      */
     public function resultExists($id, $time = '')
     {
-        $period = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period, ['id' => $id, 'time' => $time]) > 0);
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        return ((int)$this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
+                ['id' => $id, 'time' => $time]
+            ) > 0);
     }
 
     /**
@@ -39,7 +36,10 @@ class FilesRepository extends Core\Model\AbstractRepository
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', [$id]);
+        return $this->db->fetchAssoc(
+            'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
+            [$id]
+        );
     }
 
     /**
@@ -49,11 +49,11 @@ class FilesRepository extends Core\Model\AbstractRepository
      */
     public function getFileById($id)
     {
-        return $this->db->fetchColumn('SELECT file FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn('SELECT `file` FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
     }
 
     /**
-     * @param        $time
+     * @param string $time
      * @param string $categoryId
      *
      * @return int
@@ -70,7 +70,7 @@ class FilesRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param        $categoryId
+     * @param int    $categoryId
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
@@ -79,9 +79,12 @@ class FilesRepository extends Core\Model\AbstractRepository
      */
     public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' AND ' . $this->_getPeriod() : '';
+        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time, 'categoryId' => $categoryId]);
+        return $this->db->fetchAll(
+            'SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
+            ['time' => $time, 'categoryId' => $categoryId]
+        );
     }
 
     /**
@@ -93,9 +96,12 @@ class FilesRepository extends Core\Model\AbstractRepository
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE ' . $this->_getPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY START DESC, END DESC, id DESC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll(
+            'SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
+            ['time' => $time]
+        );
     }
 
     public function getAllInAcp()
@@ -104,16 +110,19 @@ class FilesRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $fields
-     * @param $searchTerm
-     * @param $sort
-     * @param $time
+     * @param string $fields
+     * @param string $searchTerm
+     * @param string $sortDirection
+     * @param string $time
      *
      * @return array
      */
-    public function getAllSearchResults($fields, $searchTerm, $sort, $time)
+    public function getAllSearchResults($fields, $searchTerm, $sortDirection, $time)
     {
-        $period = ' AND ' . $this->_getPeriod();
-        return $this->db->fetchAll('SELECT id, title, text FROM ' . $this->getTableName() . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY START ' . $sort . ', END ' . $sort . ', id ' . $sort, ['time' => $time]);
+        $period = ' AND ' . $this->getPublicationPeriod();
+        return $this->db->fetchAll(
+            'SELECT id, title, `text` FROM ' . $this->getTableName() . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY `start` ' . $sortDirection . ', `end` ' . $sortDirection . ', id ' . $sortDirection,
+            ['time' => $time]
+        );
     }
 }

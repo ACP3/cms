@@ -13,7 +13,7 @@ class UserRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'users';
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */
@@ -59,7 +59,7 @@ class UserRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
@@ -69,7 +69,7 @@ class UserRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $nickname
+     * @param string $nickname
      *
      * @return array
      */
@@ -79,7 +79,7 @@ class UserRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $nickname
+     * @param string $nickname
      *
      * @return array
      */
@@ -89,7 +89,7 @@ class UserRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $email
+     * @param string $email
      *
      * @return array
      */

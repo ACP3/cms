@@ -10,6 +10,8 @@ use ACP3\Core;
  */
 class PollRepository extends Core\Model\AbstractRepository
 {
+    use Core\Model\PublicationPeriodAwareTrait;
+
     const TABLE_NAME = 'polls';
 
     /**
@@ -21,7 +23,7 @@ class PollRepository extends Core\Model\AbstractRepository
      */
     public function pollExists($pollId, $time = '', $multiple = false)
     {
-        $where = !empty($time) ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
+        $where = !empty($time) ? ' AND ' . $this->getPublicationPeriod() : '';
         $multiple = ($multiple === true) ? ' AND multiple = :multiple' : '';
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $where . $multiple, ['id' => $pollId, 'time' => $time, 'multiple' => 1]) > 0 ? true : false;
     }
@@ -77,7 +79,7 @@ class PollRepository extends Core\Model\AbstractRepository
      */
     public function getLatestPoll($time)
     {
-        $period = 'p.start = p.end AND p.start <= :time OR p.start != p.end AND :time BETWEEN p.start AND p.end';
+        $period = $this->getPublicationPeriod('p.');
         return $this->db->fetchAssoc('SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1', ['time' => $time]);
     }
 
@@ -86,6 +88,6 @@ class PollRepository extends Core\Model\AbstractRepository
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY START DESC, END DESC, id DESC');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY `start` DESC, `end` DESC, `id` DESC');
     }
 }

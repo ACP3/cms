@@ -9,6 +9,8 @@ use ACP3\Core;
  */
 class PictureRepository extends Core\Model\AbstractRepository
 {
+    use Core\Model\PublicationPeriodAwareTrait;
+
     const TABLE_NAME = 'gallery_pictures';
 
     /**
@@ -19,7 +21,7 @@ class PictureRepository extends Core\Model\AbstractRepository
      */
     public function pictureExists($pictureId, $time = '')
     {
-        $period = empty($time) === false ? ' AND (g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod('g.') : '';
         return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, ['id' => $pictureId, 'time' => $time]) > 0);
     }
 

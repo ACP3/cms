@@ -13,7 +13,7 @@ class CommentRepository extends Core\Model\AbstractRepository implements Core\Mo
     const TABLE_NAME = 'comments';
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */
@@ -23,13 +23,16 @@ class CommentRepository extends Core\Model\AbstractRepository implements Core\Mo
     }
 
     /**
-     * @param $moduleId
+     * @param int $moduleId
      *
      * @return bool
      */
     public function resultsExistByModuleId($moduleId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?', [$moduleId]) > 0;
+        return $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+            [$moduleId]
+        ) > 0;
     }
 
     /**
@@ -43,32 +46,41 @@ class CommentRepository extends Core\Model\AbstractRepository implements Core\Mo
             return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
         }
 
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?', [$moduleId]);
+        return $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+            [$moduleId]
+        );
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
     public function getOneById($id)
     {
-        return $this->db->fetchAssoc('SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', [$id]);
+        return $this->db->fetchAssoc(
+            'SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
+            [$id]
+        );
     }
 
     /**
-     * @param $ipAddress
+     * @param string $ipAddress
      *
      * @return mixed
      */
     public function getLastDateFromIp($ipAddress)
     {
-        return $this->db->fetchColumn('SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?', [$ipAddress]);
+        return $this->db->fetchColumn(
+            'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',
+            [$ipAddress]
+        );
     }
 
     /**
-     * @param        $moduleId
-     * @param        $resultId
+     * @param int    $moduleId
+     * @param int    $resultId
      * @param string $limitStart
      * @param string $resultsPerPage
      *
@@ -77,28 +89,37 @@ class CommentRepository extends Core\Model\AbstractRepository implements Core\Mo
     public function getAllByModule($moduleId, $resultId, $limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt, [$moduleId, $resultId]);
+        return $this->db->fetchAll(
+            'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt,
+            [$moduleId, $resultId]
+        );
     }
 
     /**
-     * @param $moduleId
-     * @param $resultId
+     * @param int $moduleId
+     * @param int $resultId
      *
      * @return mixed
      */
     public function countAllByModule($moduleId, $resultId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ? AND entry_id = ?', [$moduleId, $resultId]);
+        return $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ? AND entry_id = ?',
+            [$moduleId, $resultId]
+        );
     }
 
     /**
-     * @param $moduleId
+     * @param int $moduleId
      *
      * @return array
      */
     public function getAllByModuleInAcp($moduleId)
     {
-        return $this->db->fetchAll('SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC', [$moduleId]);
+        return $this->db->fetchAll(
+            'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC',
+            [$moduleId]
+        );
     }
 
     /**

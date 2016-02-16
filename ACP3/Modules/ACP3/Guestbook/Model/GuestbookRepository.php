@@ -19,7 +19,8 @@ class GuestbookRepository extends Core\Model\AbstractRepository implements Core\
      */
     public function resultExists($id)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
+                ['id' => $id]) > 0);
     }
 
     /**

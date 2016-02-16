@@ -12,7 +12,7 @@ class ModuleRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'modules';
 
     /**
-     * @param $moduleName
+     * @param string $moduleName
      *
      * @return mixed
      */
@@ -22,7 +22,7 @@ class ModuleRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $moduleName
+     * @param string $moduleName
      *
      * @return mixed
      */
@@ -32,7 +32,7 @@ class ModuleRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $moduleName
+     * @param string $moduleName
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class ModuleRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $moduleName
+     * @param string $moduleName
      *
      * @return array
      */
@@ -52,7 +52,7 @@ class ModuleRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param $moduleId
+     * @param int $moduleId
      *
      * @return mixed
      */
