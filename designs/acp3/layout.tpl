@@ -10,7 +10,7 @@
     <body>
     <div class="container-fluid">
         <h1 id="logo" class="hidden-xs">
-            <a href="{uri args=""}">{site_title}</a>
+            <a href="{uri args=""}"><img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{site_title}"></a>
         </h1>
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">

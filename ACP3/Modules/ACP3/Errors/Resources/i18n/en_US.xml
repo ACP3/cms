@@ -7,6 +7,7 @@
     <keys>
         <item key="access_denied">You don't have the needed rights to view this page.</item>
         <item key="errors">Error messages</item>
+        <item key="retry">Retry</item>
         <item key="file_not_found"><![CDATA[The requested module or the requested file is either missing or has not been activated.<br />Please contact the administrator of this site, if the error should occur repeatedly.]]></item>
         <item key="frontend_index_access_forbidden">Access denied</item>
         <item key="frontend_index_not_found">File not found</item>

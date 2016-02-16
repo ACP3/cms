@@ -53,11 +53,7 @@ class Smarty extends AbstractRenderer
      */
     public function assign($name, $value = null)
     {
-        if (is_array($name)) {
-            $this->renderer->assign($name);
-        } else {
-            $this->renderer->assign($name, $value);
-        }
+        $this->renderer->assign($name, $value);
     }
 
     /**

@@ -5,7 +5,7 @@
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
-
+use ACP3\Core\Exceptions\UnauthorizedAccess;
 use ACP3\Core\Modules\FrontendController;
 
 /**
@@ -19,7 +19,7 @@ abstract class AbstractAction extends FrontendController
         parent::preDispatch();
 
         if ($this->user->isAuthenticated() === false) {
-            $this->redirect()->temporary('users/index/login')->send();
+            throw new UnauthorizedAccess();
         }
     }
 }
