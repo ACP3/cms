@@ -12,7 +12,7 @@
         <h1 id="logo" class="hidden-xs">
             <a href="{uri args=""}"><img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{site_title}"></a>
         </h1>
-        <nav class="navbar navbar-default" role="navigation">
+        <nav id="main-navigation" class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -21,7 +21,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">{site_title}</a>
+                    <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">
+                        <img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{site_title}">
+                    </a>
                 </div>
                 <div id="navbar-collapse" class="collapse navbar-collapse">
                     {navbar block="main"}

@@ -8,8 +8,8 @@
     </head>
 
     <body>
-    <div class="container">
-        <h1 id="logo" class="hidden-xs">
+    <div class="container text-center">
+        <h1 id="logo">
             <a href="{uri args=""}"><img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{site_title}"></a>
         </h1>
         <main role="main" id="content">

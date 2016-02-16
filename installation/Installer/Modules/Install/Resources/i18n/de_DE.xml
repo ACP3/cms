@@ -90,7 +90,8 @@
         <item key="required">Benötigt</item>
         <item key="safe_mode">Abgesicherter Modus</item>
         <item key="sincerely">Mit freundlichen Grüßen,</item>
-        <item key="site-title">Titel der Website</item>
+        <item key="site_title">Titel der Website</item>
+        <item key="select_language">Sprache auswählen</item>
         <item key="select_time_zone">Bitte wählen Sie die Zeitzone aus.</item>
         <item key="step_1_legend">Im Detail wird Sie die Installationsroutine durch folgende Schritte führen:</item>
         <item key="step_1_list_item_1">Einsicht in die Lizenz.</item>

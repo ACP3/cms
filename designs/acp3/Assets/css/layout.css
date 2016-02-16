@@ -6,3 +6,12 @@ ul {
 #logo {
     margin: 10px 20px;
 }
+
+#main-navigation .navbar-brand {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#main-navigation img {
+    height: 40px;
+}

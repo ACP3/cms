@@ -69,11 +69,16 @@ p {
 
 /* Layout */
 #logo {
-    width: 222px;
-    height: 89px;
     margin: 10px 20px;
-    background: url('../img/logo.png') no-repeat;
-    text-indent: -9999px;
+}
+
+#main-navigation .navbar-brand {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#main-navigation img {
+    height: 40px;
 }
 
 #content {

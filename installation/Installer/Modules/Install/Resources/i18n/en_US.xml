@@ -88,7 +88,8 @@
         <item key="required">Required</item>
         <item key="safe_mode">Safe mode</item>
         <item key="sincerely">Sincerely,</item>
-        <item key="site-title">Website title</item>
+        <item key="site_title">Website title</item>
+        <item key="select_language">Select language</item>
         <item key="select_time_zone">Please select the time zone.</item>
         <item key="step_1_legend">In detail, the installer will guide you through the following steps:</item>
         <item key="step_1_list_item_1">Access to the licence agreement.</item>
