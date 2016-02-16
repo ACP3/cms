@@ -40,7 +40,8 @@ class GuestbookRepository extends Core\Model\AbstractRepository implements Core\
      */
     public function countAll($notify = '')
     {
-        return count($this->getAll($notify));
+        $where = ($notify == 2) ? 'WHERE active = 1' : '';
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} {$where}");
     }
 
     /**

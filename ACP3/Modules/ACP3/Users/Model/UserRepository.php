@@ -103,7 +103,7 @@ class UserRepository extends Core\Model\AbstractRepository
      */
     public function countAll()
     {
-        return count($this->getAll());
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()}");
     }
 
     /**

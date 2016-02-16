@@ -43,7 +43,11 @@ class ArticleRepository extends Core\Model\AbstractRepository
      */
     public function countAll($time = '')
     {
-        return count($this->getAll($time));
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
+            ['time' => $time]
+        );
     }
 
     /**
