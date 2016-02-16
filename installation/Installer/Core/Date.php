@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Installer\Core;
 
-use ACP3\Installer\Core\I18n\Translator;
+use ACP3\Core\Date\DateTranslator;
 
 /**
  * Class Date
@@ -10,13 +10,15 @@ use ACP3\Installer\Core\I18n\Translator;
 class Date extends \ACP3\Core\Date
 {
     /**
-     * @param \ACP3\Installer\Core\I18n\Translator $translator
+     * Date constructor.
+     *
+     * @param \ACP3\Core\Date\DateTranslator $dateTranslator
      */
     public function __construct(
-        Translator $translator
+        DateTranslator $dateTranslator
     )
     {
-        $this->translator = $translator;
+        $this->dateTranslator = $dateTranslator;
 
         $defaultTimeZone = date_default_timezone_get();
 
@@ -25,6 +27,6 @@ class Date extends \ACP3\Core\Date
             'date_format_short' => 'd.m.y',
             'time_zone' => !empty($defaultTimeZone) ? $defaultTimeZone : 'UTC',
         ];
-        $this->_setFormatAndTimeZone($settings);
+        $this->setFormatAndTimeZone($settings);
     }
 }

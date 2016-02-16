@@ -5,8 +5,8 @@ namespace ACP3\Core\Modules;
 use ACP3\Core;
 use ACP3\Core\Modules\Installer\MigrationInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\System;
 
 /**
  * Class SchemaUpdater

@@ -2,7 +2,7 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\Date\DateTranslator;
 
 /**
  * Class Date
@@ -28,35 +28,37 @@ class Date
     protected $dateTimeZone;
 
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\Date\DateTranslator
      */
-    protected $translator;
+    protected $dateTranslator;
     /**
      * @var \ACP3\Core\Config
      */
     protected $config;
 
     /**
-     * @param \ACP3\Core\User            $user
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Config          $config
+     * Date constructor.
+     *
+     * @param \ACP3\Core\User                $user
+     * @param \ACP3\Core\Date\DateTranslator $dateTranslator
+     * @param \ACP3\Core\Config              $config
      */
     public function __construct(
         User $user,
-        Translator $translator,
+        DateTranslator $dateTranslator,
         Config $config
     )
     {
-        $this->translator = $translator;
+        $this->dateTranslator = $dateTranslator;
         $this->config = $config;
 
-        $this->_setFormatAndTimeZone($user->getUserInfo());
+        $this->setFormatAndTimeZone($user->getUserInfo());
     }
 
     /**
      * @param array $userInfo
      */
-    protected function _setFormatAndTimeZone(array $userInfo = [])
+    protected function setFormatAndTimeZone(array $userInfo = [])
     {
         if (!empty($userInfo)) {
             $this->dateFormatLong = $userInfo['date_format_long'];
@@ -146,106 +148,7 @@ class Date
                 $dateTime->setTimestamp($dateTime->getTimestamp() - $dateTime->getOffset());
             }
         }
-        return strtr($dateTime->format($format), $this->localizeDaysAndMonths($format));
-    }
-
-    /**
-     * @param string $format
-     *
-     * @return array
-     */
-    protected function localizeDaysAndMonths($format)
-    {
-        $replace = [];
-        // Localize days
-        if (strpos($format, 'D') !== false) {
-            $replace = $this->localizeDaysAbbr();
-        } elseif (strpos($format, 'l') !== false) {
-            $replace = $this->localizeDays();
-        }
-
-        // Localize months
-        if (strpos($format, 'M') !== false) {
-            $replace = array_merge($replace, $this->localizeMonthsAbbr());
-        } elseif (strpos($format, 'F') !== false) {
-            $replace = array_merge($replace, $this->localizeMonths());
-        }
-
-        return $replace;
-    }
-
-    /**
-     * @return array
-     */
-    protected function localizeDaysAbbr()
-    {
-        return [
-            'Mon' => $this->translator->t('system', 'date_mon'),
-            'Tue' => $this->translator->t('system', 'date_tue'),
-            'Wed' => $this->translator->t('system', 'date_wed'),
-            'Thu' => $this->translator->t('system', 'date_thu'),
-            'Fri' => $this->translator->t('system', 'date_fri'),
-            'Sat' => $this->translator->t('system', 'date_sat'),
-            'Sun' => $this->translator->t('system', 'date_sun')
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function localizeDays()
-    {
-        return [
-            'Monday' => $this->translator->t('system', 'date_monday'),
-            'Tuesday' => $this->translator->t('system', 'date_tuesday'),
-            'Wednesday' => $this->translator->t('system', 'date_wednesday'),
-            'Thursday' => $this->translator->t('system', 'date_thursday'),
-            'Friday' => $this->translator->t('system', 'date_friday'),
-            'Saturday' => $this->translator->t('system', 'date_saturday'),
-            'Sunday' => $this->translator->t('system', 'date_sunday')
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function localizeMonthsAbbr()
-    {
-        return [
-            'Jan' => $this->translator->t('system', 'date_jan'),
-            'Feb' => $this->translator->t('system', 'date_feb'),
-            'Mar' => $this->translator->t('system', 'date_mar'),
-            'Apr' => $this->translator->t('system', 'date_apr'),
-            'May' => $this->translator->t('system', 'date_may_abbr'),
-            'Jun' => $this->translator->t('system', 'date_jun'),
-            'Jul' => $this->translator->t('system', 'date_jul'),
-            'Aug' => $this->translator->t('system', 'date_aug'),
-            'Sep' => $this->translator->t('system', 'date_sep'),
-            'Oct' => $this->translator->t('system', 'date_oct'),
-            'Nov' => $this->translator->t('system', 'date_nov'),
-            'Dec' => $this->translator->t('system', 'date_dec')
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function localizeMonths()
-    {
-        return [
-            'January' => $this->translator->t('system', 'date_january'),
-            'February' => $this->translator->t('system', 'date_february'),
-            'March' => $this->translator->t('system', 'date_march'),
-            'April' => $this->translator->t('system', 'date_april'),
-            'May' => $this->translator->t('system', 'date_may_full'),
-            'June' => $this->translator->t('system', 'date_june'),
-            'July' => $this->translator->t('system', 'date_july'),
-            'August' => $this->translator->t('system', 'date_august'),
-            'September' => $this->translator->t('system', 'date_september'),
-            'October' => $this->translator->t('system', 'date_october'),
-            'November' => $this->translator->t('system', 'date_november'),
-            'December' => $this->translator->t('system', 'date_december')
-        ];
+        return strtr($dateTime->format($format), $this->dateTranslator->localize($format));
     }
 
     /**

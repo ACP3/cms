@@ -4,6 +4,7 @@ imports:
   - { resource: components/assets.yml }
   - { resource: components/authentication.yml }
   - { resource: components/datagrid.yml }
+  - { resource: components/date.yml }
   - { resource: components/helpers.yml }
   - { resource: components/http.yml }
   - { resource: components/language.yml }
@@ -33,10 +34,6 @@ services:
   core.config:
     class: ACP3\Core\Config
     arguments: ['@core.cache.system', '@system.model.modulerepository', @system.model.settingsrepository]
-
-  core.date:
-    class: ACP3\Core\Date
-    arguments: ['@core.user', '@core.lang', '@core.config']
 
   core.db:
     class: ACP3\Core\DB

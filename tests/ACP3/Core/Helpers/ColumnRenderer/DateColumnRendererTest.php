@@ -15,6 +15,10 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
      */
     protected $configMock;
     /**
+     * @var \ACP3\Core\Date\DateTranslator
+     */
+    protected $dateTranslator;
+    /**
      * @var \ACP3\Core\Date
      */
     protected $date;
@@ -29,6 +33,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();
+        $this->dateTranslator = new \ACP3\Core\Date\DateTranslator($this->langMock);
         $this->userMock = $this->getMockBuilder(\ACP3\Core\User::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -46,7 +51,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
 
         $this->date = new \ACP3\Core\Date(
             $this->userMock,
-            $this->langMock,
+            $this->dateTranslator,
             $this->configMock
         );
         $this->dateRange = new \ACP3\Core\Helpers\Formatter\DateRange(

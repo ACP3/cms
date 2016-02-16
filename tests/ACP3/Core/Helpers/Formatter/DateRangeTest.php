@@ -7,6 +7,10 @@ class DateRangeTest extends PHPUnit_Framework_TestCase
      */
     private $configMock;
     /**
+     * @var \ACP3\Core\Date\DateTranslator
+     */
+    private $dateTranslator;
+    /**
      * @var \ACP3\Core\Date
      */
     private $date;
@@ -45,9 +49,11 @@ class DateRangeTest extends PHPUnit_Framework_TestCase
                 'time_zone' => 'Europe/Berlin',
             ]);
 
+        $this->dateTranslator = new \ACP3\Core\Date\DateTranslator($this->langMock);
+
         $this->date = new \ACP3\Core\Date(
             $this->userMock,
-            $this->langMock,
+            $this->dateTranslator,
             $this->configMock
         );
         $this->dateRange = new \ACP3\Core\Helpers\Formatter\DateRange(

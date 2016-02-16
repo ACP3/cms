@@ -1,9 +1,9 @@
 <?php
 namespace ACP3\Core;
 
+use Monolog\Handler\AbstractHandler;
 use Monolog\Logger as MonologLogger;
 use Psr\Log\LogLevel;
-use Monolog\Handler\AbstractHandler;
 
 /**
  * Monolog error handler
