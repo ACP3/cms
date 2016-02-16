@@ -33,11 +33,11 @@ class DateTranslator
     /**
      * @var array
      */
-    protected $dateAbbr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    protected $monthsAbbr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     /**
      * @var array
      */
-    protected $dateFull = [
+    protected $monthsFull = [
         'January',
         'February',
         'March',
@@ -125,7 +125,7 @@ class DateTranslator
      */
     protected function localizeMonthsAbbr()
     {
-        return $this->cacheLocalizedDate($this->dateAbbr, 'date_abbr');
+        return $this->cacheLocalizedDate($this->monthsAbbr, 'month_abbr');
     }
 
     /**
@@ -133,6 +133,6 @@ class DateTranslator
      */
     protected function localizeMonths()
     {
-        return $this->cacheLocalizedDate($this->dateFull, 'date_full');
+        return $this->cacheLocalizedDate($this->monthsFull, 'month_full');
     }
 }
