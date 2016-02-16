@@ -18,7 +18,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=5.5.0",
-    "doctrine/dbal": "^2.5.3",
+    "doctrine/dbal": "^2.5.4",
     "doctrine/cache": "^1.6.0",
     "inlinestyle/inlinestyle": "^1.2.6",
     "monolog/monolog": "^1.17.2",
@@ -26,14 +26,14 @@
     "patchwork/utf8": "^1.3.0",
     "phpmailer/phpmailer": "^5.2.14",
     "smarty/smarty": "^3.1.29",
-    "symfony/config": "^2.8.0",
-    "symfony/dependency-injection": "^2.8.0",
-    "symfony/http-foundation": "^2.8.0",
-    "symfony/yaml": "^2.8.0",
-    "symfony/event-dispatcher": "^2.8.0",
+    "symfony/config": "^2.8.2",
+    "symfony/dependency-injection": "^2.8.2",
+    "symfony/http-foundation": "^2.8.2",
+    "symfony/yaml": "^2.8.2",
+    "symfony/event-dispatcher": "^2.8.2",
     "mibe/feedwriter": "^1.0.3",
     "ckeditor/ckeditor": "dev-full/4.5.x",
-    "tinymce/tinymce": "^4.3.2"
+    "tinymce/tinymce": "^4.3.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8.19",
