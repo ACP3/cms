@@ -1,6 +1,7 @@
 imports:
   - { resource: controllers.yml }
   - { resource: events.yml }
+  - { resource: validation.yml }
 
 parameters:
   newsletter.helper.accountstatus.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus'
@@ -10,13 +11,6 @@ parameters:
   newsletter.model.newsletterrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository'
   newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
   newsletter.model.accounthistoryrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository'
-  newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation'
-  newsletter.validation.activate_account_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation'
-  newsletter.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation'
-  newsletter.validation.subscribe_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation'
-  newsletter.validation.unsubscribe_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation'
-  newsletter.validation.validation_rules.account_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule'
-  newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule'
   newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
   newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
 
@@ -64,38 +58,6 @@ services:
     arguments: [@core.lang, @core.router]
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-
-  newsletter.validator:
-    class: %newsletter.validator.fqdn%
-    parent: core.validator.abstract
-
-  newsletter.validation.activate_account_form_validation:
-    class: %newsletter.validation.activate_account_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  newsletter.validation.admin_settings_form_validation:
-    class: %newsletter.validation.admin_settings_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  newsletter.validation.subscribe_form_validation:
-    class: %newsletter.validation.subscribe_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  newsletter.validation.unsubscribe_form_validation:
-    class: %newsletter.validation.unsubscribe_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  newsletter.validation.validation_rules.account_exists_validation_rule:
-    class: %newsletter.validation.validation_rules.account_exists_validation_rule.fqdn%
-    arguments: [@newsletter.model.accountrepository]
-    tags:
-      - { name: core.validation.validation_rule }
-
-  newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
-    class: %newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn%
-    arguments: [@newsletter.model.accountrepository]
-    tags:
-      - { name: core.validation.validation_rule }
 
   newsletter.installer.schema:
     class: %newsletter.installer.schema.fqdn%

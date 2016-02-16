@@ -1,12 +1,11 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
   emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
-  emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation'
-  emoticons.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation'
   emoticons.installer.sampledata.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\SampleData'
   emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
   emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'
@@ -27,14 +26,6 @@ services:
   emoticons.helpers:
     class: %emoticons.helpers.fqdn%
     arguments: ['@core.view', '@emoticons.cache']
-
-  emoticons.validator:
-    class: %emoticons.validator.fqdn%
-    parent: core.validator.abstract
-
-  emoticons.validation.admin_settings_form_validation:
-    class: %emoticons.validation.admin_settings_form_validation.fqdn%
-    parent: core.validator.abstract
 
   emoticons.installer.schema:
     class: %emoticons.installer.schema.fqdn%

@@ -1,0 +1,40 @@
+parameters:
+  permissions.validator.role.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation'
+  permissions.validator.resource.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation'
+  permissions.validation.validation_rules.privilege_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule'
+  permissions.validation.validation_rules.privileges_exist_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistValidationRule'
+  permissions.validation.validation_rules.role_not_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule'
+  permissions.validation.validation_rules.roles_exist_validation_rule.fqdn: 'ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidationRule'
+
+services:
+  permissions.validator.role:
+    class: %permissions.validator.role.fqdn%
+    parent: core.validator.abstract
+
+  permissions.validator.resource:
+    class: %permissions.validator.resource.fqdn%
+    parent: core.validator.abstract
+
+  permissions.validation.validation_rules.privilege_exists_validation_rule:
+    class: %permissions.validation.validation_rules.privilege_exists_validation_rule.fqdn%
+    arguments: [@permissions.model.privilegerepository]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.privileges_exist_validation_rule:
+    class: %permissions.validation.validation_rules.privileges_exist_validation_rule.fqdn%
+    arguments: [@core.acl]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.role_not_exists_validation_rule:
+    class: %permissions.validation.validation_rules.role_not_exists_validation_rule.fqdn%
+    arguments: [@permissions.model.rolerepository]
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.roles_exist_validation_rule:
+    class: %permissions.validation.validation_rules.roles_exist_validation_rule.fqdn%
+    arguments: [@core.acl]
+    tags:
+      - { name: core.validation.validation_rule }

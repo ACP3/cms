@@ -1,17 +1,13 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   feeds.helper.feedgenerator.fqdn: 'ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator'
-  feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation'
   feeds.installer.schema.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Schema'
   feeds.installer.migration.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Migration'
 
 services:
-  feeds.validator:
-    class: %feeds.validator.fqdn%
-    parent: core.validator.abstract
-
   feeds.installer.schema:
     class: %feeds.installer.schema.fqdn%
 

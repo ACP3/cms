@@ -81,7 +81,7 @@ services:
       - @core.context.frontend
       - @core.helpers.formToken
       - @users.model.userrepository
-      - @user.validation.account_settings_form_validation
+      - @users.validation.account_settings_form_validation
 
   users.controller.frontend.index.forgot_pwd:
     class: %users.controller.frontend.index.forgot_pwd.fqdn%
@@ -90,7 +90,7 @@ services:
       - @core.helpers.formToken
       - @core.helpers.secure
       - @users.model.userrepository
-      - @user.validation.account_forgot_password_form_validation
+      - @users.validation.account_forgot_password_form_validation
       - @core.helpers.sendEmail
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]

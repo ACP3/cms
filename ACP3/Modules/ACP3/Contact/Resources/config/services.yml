@@ -1,21 +1,12 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
-  contact.validator.fqdn: 'ACP3\Modules\ACP3\Contact\Validation\FormValidation'
-  contact.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation'
   contact.installer.schema.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Schema'
   contact.installer.migration.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Migration'
 
 services:
-  contact.validator:
-    class: %contact.validator.fqdn%
-    parent: core.validator.abstract
-
-  contact.validation.admin_settings_form_validation:
-    class: %contact.validation.admin_settings_form_validation.fqdn%
-    parent: core.validator.abstract
-
   contact.installer.schema:
     class: %contact.installer.schema.fqdn%
 

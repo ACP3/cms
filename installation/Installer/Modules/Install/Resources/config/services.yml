@@ -1,26 +1,13 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 services:
-  install.validator:
-    class: ACP3\Installer\Modules\Install\Validation\FormValidation
-    parent: core.validator.abstract
-
-  install.validation.validation_rules.config_file_validation_rule:
-    class: ACP3\Installer\Modules\Install\Validation\ValidationRules\ConfigFileValidationRule
-    tags:
-      - { name: core.validation.validation_rule }
-
-  install.validation.validation_rules.database_connection_validation_rule:
-    class: ACP3\Installer\Modules\Install\Validation\ValidationRules\DatabaseConnectionValidationRule
-    tags:
-      - { name: core.validation.validation_rule }
-
   install.helpers.install:
     class: ACP3\Installer\Modules\Install\Helpers\Install
 
   install.helpers.requirements:
     class: ACP3\Installer\Modules\Install\Helpers\Requirements
     arguments:
-      - @core.environment.application_path
-      - @core.lang
+      - '@core.environment.application_path'
+      - '@core.lang'

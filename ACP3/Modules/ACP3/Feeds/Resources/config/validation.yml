@@ -1,0 +1,7 @@
+parameters:
+  feeds.validator.fqdn: 'ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation'
+
+services:
+  feeds.validator:
+    class: %feeds.validator.fqdn%
+    parent: core.validator.abstract

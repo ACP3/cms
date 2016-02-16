@@ -1,5 +1,6 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   gallery.cache.fqdn: 'ACP3\Modules\ACP3\Gallery\Cache'
@@ -7,9 +8,6 @@ parameters:
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn: 'ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer'
   gallery.model.galleryrepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\GalleryRepository'
   gallery.model.picturerepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\PictureRepository'
-  gallery.validator.gallery.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation'
-  gallery.validator.picture.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation'
-  gallery.validator.settings.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation'
   gallery.installer.schema.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Schema'
   gallery.installer.migration.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Migration'
 
@@ -47,18 +45,6 @@ services:
     arguments: [@core.lang, @core.router]
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-
-  gallery.validator.gallery:
-    class: %gallery.validator.gallery.fqdn%
-    parent: core.validator.abstract
-
-  gallery.validator.picture:
-    class: %gallery.validator.picture.fqdn%
-    parent: core.validator.abstract
-
-  gallery.validator.settings:
-    class: %gallery.validator.settings.fqdn%
-    arguments: ['@core.lang', @core.validator, '@core.modules']
 
   gallery.installer.schema:
     class: %gallery.installer.schema.fqdn%

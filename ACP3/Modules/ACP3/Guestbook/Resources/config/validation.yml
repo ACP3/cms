@@ -1,0 +1,27 @@
+parameters:
+  guestbook.validator.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\FormValidation'
+  guestbook.validation.admin_form_validation.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation'
+  guestbook.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation'
+  guestbook.validation.validation_rules.flood_barrier_validation_rule.fqdn: 'ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule'
+
+services:
+  guestbook.validator:
+    class: %guestbook.validator.fqdn%
+    parent: core.validator.abstract
+
+  guestbook.validation.admin_form_validation:
+    class: %guestbook.validation.admin_form_validation.fqdn%
+    parent: core.validator.abstract
+
+  guestbook.validation.admin_settings_form_validation:
+    class: %guestbook.validation.admin_settings_form_validation.fqdn%
+    arguments:
+      - @core.lang
+      - @core.validator
+      - @core.modules
+
+  guestbook.validation.validation_rules.flood_barrier_validation_rule:
+    class: %guestbook.validation.validation_rules.flood_barrier_validation_rule.fqdn%
+    arguments: [@core.date, @guestbook.model.guestbookrepository]
+    tags:
+      - { name: core.validation.validation_rule }

@@ -1,14 +1,10 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
   comments.model.commentrepository.fqdn: 'ACP3\Modules\ACP3\Comments\Model\CommentRepository'
-  comments.validator.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\FormValidation'
-  comments.validation.admin_form_validation.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation'
-  comments.validation.admin_settings_form_validation: 'ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation'
-  comments.validation.validation_rules.flood_barrier_validation_rule.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule'
-  comments.validation.validation_rules.user_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Comments\Validation\ValidationRules\UserNameValidationRule'
   comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'
   comments.installer.migration.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Migration'
 
@@ -20,33 +16,6 @@ services:
   comments.model.commentrepository:
     class: %comments.model.commentrepository.fqdn%
     arguments: ['@core.db']
-
-  comments.validator:
-    class: %comments.validator.fqdn%
-    parent: core.validator.abstract
-
-  comments.validation.admin_form_validation:
-    class:  %comments.validation.admin_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  comments.validation.admin_settings_form_validation:
-    class: %comments.validation.admin_settings_form_validation%
-    arguments:
-      - @core.lang
-      - @core.validator
-      - @core.modules
-
-  comments.validation.validation_rules.flood_barrier_validation_rule:
-    class: %comments.validation.validation_rules.flood_barrier_validation_rule.fqdn%
-    arguments: [@core.date, @comments.model.commentrepository]
-    tags:
-      - { name: core.validation.validation_rule }
-
-  comments.validation.validation_rules.user_name_validation_rule:
-    class: %comments.validation.validation_rules.user_name_validation_rule.fqdn%
-    arguments: [@core.validation.validation_rules.integer_validation_rule]
-    tags:
-      - { name: core.validation.validation_rule }
 
   comments.installer.schema:
     class: %comments.installer.schema.fqdn%

@@ -1,13 +1,12 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
   system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
   system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
   system.model.settingsrepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SettingsRepository'
-  system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation'
-  system.validation.validation_rules.is_wysiwyg_editor_validation_rule.fqdn: 'ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule'
   system.installer.schema.fqdn: 'ACP3\Modules\ACP3\System\Installer\Schema'
   system.installer.migration.fqdn: 'ACP3\Modules\ACP3\System\Installer\Migration'
 
@@ -29,16 +28,6 @@ services:
       - @core.modules.schemaInstaller
       - @core.xml
       - %core.environment%
-
-  system.validator.settings:
-    class: %system.validator.settings.fqdn%
-    parent: core.validator.abstract
-
-  system.validation.validation_rules.is_wysiwyg_editor_validation_rule:
-    class: %system.validation.validation_rules.is_wysiwyg_editor_validation_rule.fqdn%
-    arguments: [@service_container]
-    tags:
-      - { name: core.validation.validation_rule }
 
   system.installer.schema:
     class: %system.installer.schema.fqdn%

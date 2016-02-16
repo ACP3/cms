@@ -1,0 +1,8 @@
+parameters:
+  search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validation\FormValidation'
+
+services:
+  search.validator:
+    class: %search.validator.fqdn%
+    parent: core.validator.abstract
+

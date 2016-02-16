@@ -1,20 +1,20 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
-  search.validator.fqdn: 'ACP3\Modules\ACP3\Search\Validation\FormValidation'
   search.installer.schema.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Schema'
   search.installer.migration.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Migration'
 
 services:
   search.helpers:
     class: %search.helpers.fqdn%
-    arguments: ['@core.acl', '@core.modules', '@core.helpers.forms', @core.eventDispatcher]
-
-  search.validator:
-    class: %search.validator.fqdn%
-    parent: core.validator.abstract
+    arguments:
+      - '@core.acl'
+      - '@core.modules'
+      - '@core.helpers.forms'
+      - '@core.eventDispatcher'
 
   search.installer.schema:
     class: %search.installer.schema.fqdn%

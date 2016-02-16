@@ -1,14 +1,11 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
   categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
-  categories.validator.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation'
-  categories.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation'
-  categories.validation.validation_rules.category_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\ValidationRules\CategoryExistsValidationRule'
-  categories.validation.validation_rules.duplicate_category_validation_rule.fqdn: 'ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule'
   categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'
   categories.installer.migration.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Migration'
 
@@ -39,29 +36,6 @@ services:
       - '@core.helpers.forms'
       - '@categories.cache'
       - '@categories.model'
-
-  categories.validator:
-    class: %categories.validator.fqdn%
-    arguments:
-      - '@core.lang'
-      - '@core.validator'
-      - '@categories.model'
-
-  categories.validation.admin_settings_form_validation:
-    class: %categories.validation.admin_settings_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  categories.validation.validation_rules.category_exists_validation_rule:
-    class: %categories.validation.validation_rules.category_exists_validation_rule.fqdn%
-    arguments: [@categories.helpers]
-    tags:
-      - { name: core.validation.validation_rule }
-
-  categories.validation.validation_rules.duplicate_category_validation_rule:
-    class: %categories.validation.validation_rules.duplicate_category_validation_rule.fqdn%
-    arguments: [@categories.helpers]
-    tags:
-      - { name: core.validation.validation_rule }
 
   categories.installer.schema:
     class: %categories.installer.schema.fqdn%

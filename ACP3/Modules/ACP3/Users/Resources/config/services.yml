@@ -1,19 +1,11 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: validation.yml }
 
 parameters:
   users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer'
   users.helpers.forms.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\Forms'
   users.model.userrepository.fqdn: 'ACP3\Modules\ACP3\Users\Model\UserRepository'
-  user.validation.account_forgot_password_form_validation.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation'
-  user.validation.account_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation'
-  users.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation'
-  users.validator.account.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AccountFormValidation'
-  users.validator.admin.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AdminFormValidation'
-  users.validator.register.fqdn: 'ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation'
-  users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule'
-  users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule'
-  users.validation.validation_rules.icq_number_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule'
   users.installer.schema.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Schema'
   users.installer.migration.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Migration'
 
@@ -31,47 +23,6 @@ services:
   users.model.userrepository:
     class: %users.model.userrepository.fqdn%
     arguments: ['@core.db']
-
-  users.validator.account:
-    class: %users.validator.account.fqdn%
-    parent: core.validator.abstract
-
-  user.validation.account_forgot_password_form_validation:
-    class: %user.validation.account_forgot_password_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  user.validation.account_settings_form_validation:
-    class: %user.validation.account_settings_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  users.validation.admin_settings_form_validation:
-    class: %users.validation.admin_settings_form_validation.fqdn%
-    parent: core.validator.abstract
-
-  users.validator.admin:
-    class: %users.validator.admin.fqdn%
-    parent: core.validator.abstract
-
-  users.validator.register:
-    class: %users.validator.register.fqdn%
-    parent: core.validator.abstract
-
-  users.validation.validation_rules.account_not_exists_by_email_validation_rule:
-    class: %users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn%
-    arguments: [@users.model.userrepository]
-    tags:
-      - { name: core.validation.validation_rule }
-
-  users.validation.validation_rules.account_not_exists_by_name_validation_rule:
-    class: %users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn%
-    arguments: [@users.model.userrepository]
-    tags:
-      - { name: core.validation.validation_rule }
-
-  users.validation.validation_rules.icq_number_validation_rule:
-    class: %users.validation.validation_rules.icq_number_validation_rule.fqdn%
-    tags:
-      - { name: core.validation.validation_rule }
 
   users.installer.schema:
     class: %users.installer.schema.fqdn%

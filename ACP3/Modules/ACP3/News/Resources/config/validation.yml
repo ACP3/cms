@@ -1,0 +1,22 @@
+parameters:
+  news.validator.fqdn: 'ACP3\Modules\ACP3\News\Validation\AdminFormValidation'
+  news.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation'
+  news.validation.validation_rules.external_link_validation_rule.fqdn: 'ACP3\Modules\ACP3\News\Validation\ValidationRules\ExternalLinkValidationRule'
+
+services:
+  news.validator:
+    class: %news.validator.fqdn%
+    parent: core.validator.abstract
+
+  news.validation.admin_settings_form_validation:
+    class: %news.validation.admin_settings_form_validation.fqdn%
+    arguments:
+      - @core.lang
+      - @core.validator
+      - @core.modules
+
+  news.validation.validation_rules.external_link_validation_rule:
+    class: %news.validation.validation_rules.external_link_validation_rule.fqdn%
+    arguments: [@core.validation.validation_rules.in_array_validation_rule]
+    tags:
+      - { name: core.validation.validation_rule }

@@ -1,0 +1,14 @@
+services:
+  install.validator:
+    class: ACP3\Installer\Modules\Install\Validation\FormValidation
+    parent: core.validator.abstract
+
+  install.validation.validation_rules.config_file_validation_rule:
+    class: ACP3\Installer\Modules\Install\Validation\ValidationRules\ConfigFileValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
+  install.validation.validation_rules.database_connection_validation_rule:
+    class: ACP3\Installer\Modules\Install\Validation\ValidationRules\DatabaseConnectionValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
