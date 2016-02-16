@@ -253,9 +253,6 @@ class AclInstaller implements InstallerInterface
      */
     protected function convertCamelCaseToUnderscore($action)
     {
-        $actionUnderscored = strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
-
-        // Modulaktionen berücksichtigen, die mit Ziffern anfangen (Error pages)
-        return substr($actionUnderscored, strpos($actionUnderscored, '_') === 0 ? 1 : 0);
+        return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 }
