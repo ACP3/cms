@@ -227,8 +227,7 @@ class Request extends AbstractRequest
         $this->controller = isset($query[1]) ? $query[1] : 'index';
         $this->controllerAction = isset($query[2]) ? $query[2] : 'index';
 
-        $query = $this->completeQuery($query);
-
+        $this->completeQuery($query);
         $this->setRequestParameters($query);
     }
 
@@ -268,9 +267,9 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @param $query
+     * @param array $query
      */
-    protected function setRequestParameters($query)
+    protected function setRequestParameters(array $query)
     {
         $this->parameters = new ParameterBag([]);
 
@@ -295,11 +294,9 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @param $query
-     *
-     * @return mixed
+     * @param array $query
      */
-    protected function completeQuery($query)
+    protected function completeQuery(array $query)
     {
         if (!isset($query[0])) {
             $this->query = $this->module . '/';
@@ -310,8 +307,6 @@ class Request extends AbstractRequest
         if (!isset($query[2])) {
             $this->query .= $this->controllerAction . '/';
         }
-
-        return $query;
     }
 
     /**

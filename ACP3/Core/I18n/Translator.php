@@ -169,5 +169,4 @@ class Translator
 
         return $languages;
     }
-
 }

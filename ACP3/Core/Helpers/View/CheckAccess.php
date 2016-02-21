@@ -46,7 +46,9 @@ class CheckAccess
     }
 
     /**
-     * @inheritdoc
+     * @param array $params
+     *
+     * @return string
      */
     public function outputLinkOrButton(array $params)
     {
@@ -110,7 +112,7 @@ class CheckAccess
         }
 
         $accessCheck['mode'] = $params['mode'];
+
         return $accessCheck;
     }
-
 }

@@ -54,7 +54,7 @@ class Helpers
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      */

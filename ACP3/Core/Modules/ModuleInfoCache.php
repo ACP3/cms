@@ -192,5 +192,4 @@ class ModuleInfoCache
 
         return $moduleInfo['name'];
     }
-
 }

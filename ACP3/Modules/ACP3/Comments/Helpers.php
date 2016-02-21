@@ -45,8 +45,8 @@ class Helpers
     }
 
     /**
-     * @param $moduleId
-     * @param $resultId
+     * @param int $moduleId
+     * @param int $resultId
      *
      * @return int
      */

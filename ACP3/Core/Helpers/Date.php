@@ -83,7 +83,8 @@ class Date
             $i = 0;
             foreach ($values as $row) {
                 unset($timeZones[$key][$i]);
-                $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry('date_time_zone', $row, $currentValue);
+                $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry('date_time_zone', $row,
+                    $currentValue);
                 ++$i;
             }
         }
@@ -91,11 +92,11 @@ class Date
     }
 
     /**
-     * Gibts ein Array mit den m�glichen Datumsformaten aus,
-     * um diese als Dropdownmen� darstellen zu k�nnen
+     * Gibts ein Array mit den möglichen Datumsformaten aus,
+     * um diese als Dropdownmenü darstellen zu können
      *
      * @param string $format
-     *    Optionaler Parameter f�r das aktuelle Datumsformat
+     *    Optionaler Parameter für das aktuelle Datumsformat
      *
      * @return array
      */
@@ -123,8 +124,7 @@ class Date
         $value = '',
         $showTime = true,
         $inputFieldOnly = false
-    )
-    {
+    ) {
         $datePicker = [
             'range' => $this->isRange($name),
             'with_time' => (bool)$showTime,
@@ -209,7 +209,7 @@ class Date
     /**
      * @param string $name
      * @param string $value
-     * @param bool $showTime
+     * @param bool   $showTime
      *
      * @return string
      */
@@ -253,5 +253,4 @@ class Date
     {
         return $showTime === true ? \ACP3\Core\Date::DEFAULT_DATE_FORMAT_LONG : \ACP3\Core\Date::DEFAULT_DATE_FORMAT_SHORT;
     }
-
 }

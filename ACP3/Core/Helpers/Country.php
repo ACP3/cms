@@ -8,7 +8,7 @@ namespace ACP3\Core\Helpers;
 class Country
 {
     /**
-     * Gibt ein Array mit allen Nationen auf der Erde zurück
+     * Gibt ein Array mit allen Nationen der Erde zurück
      */
     public static function worldCountries()
     {
@@ -261,5 +261,4 @@ class Country
             'ZW' => 'Zimbabwe'
         ];
     }
-
 }

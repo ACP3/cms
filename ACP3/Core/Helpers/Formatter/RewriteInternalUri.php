@@ -74,11 +74,11 @@ class RewriteInternalUri
     /**
      * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
      *
-     * @param string $matches
+     * @param array $matches
      *
      * @return string
      */
-    private function rewriteInternalUriCallback($matches)
+    private function rewriteInternalUriCallback(array $matches)
     {
         if ($this->uriAliasValidationRule->isValid($matches[7]) === true) {
             return $matches[0];

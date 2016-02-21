@@ -68,7 +68,6 @@ class SchemaHelper extends ContainerAware
      * Executes all given SQL queries
      *
      * @param array  $queries
-     *
      * @param string $moduleName
      *
      * @return bool
@@ -126,5 +125,4 @@ class SchemaHelper extends ContainerAware
     {
         return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->db->getPrefixedTableName(System\Model\ModuleRepository::TABLE_NAME)} WHERE `name` = ?", [$moduleName]) == 1;
     }
-
 }

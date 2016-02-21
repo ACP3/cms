@@ -18,7 +18,7 @@ class FileUploadValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param $data
+     * @param string|array $data
      *
      * @return bool
      */

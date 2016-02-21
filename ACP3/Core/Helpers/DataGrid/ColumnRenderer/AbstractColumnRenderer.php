@@ -31,7 +31,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param mixed $primaryKey
+     * @param string $primaryKey
      *
      * @return $this
      */

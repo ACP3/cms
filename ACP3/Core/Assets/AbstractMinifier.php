@@ -159,7 +159,7 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param array  $files
      * @param string $path
      */
-    protected function saveMinifiedAsset($files, $path)
+    protected function saveMinifiedAsset(array $files, $path)
     {
         $options = [];
         $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];

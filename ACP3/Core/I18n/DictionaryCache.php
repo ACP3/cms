@@ -145,7 +145,7 @@ class DictionaryCache
     }
 
     /**
-     * @param $file
+     * @param string $file
      *
      * @return array
      */
@@ -168,7 +168,7 @@ class DictionaryCache
     }
 
     /**
-     * @param $file
+     * @param string $file
      *
      * @return string
      */

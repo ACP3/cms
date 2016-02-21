@@ -38,7 +38,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param $uriAlias
+     * @param string $uriAlias
      *
      * @return $this
      */

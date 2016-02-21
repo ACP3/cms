@@ -41,7 +41,7 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @return array|int
+     * @inheritdoc
      */
     public function authenticate()
     {

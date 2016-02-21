@@ -74,7 +74,7 @@ class Edit extends Core\Modules\AdminController
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists

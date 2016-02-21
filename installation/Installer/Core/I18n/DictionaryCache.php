@@ -31,7 +31,7 @@ class DictionaryCache
     /**
      * Gibt die gecacheten Sprachstrings aus
      *
-     * @param $language
+     * @param string $language
      *
      * @return array
      */
@@ -47,7 +47,7 @@ class DictionaryCache
     /**
      * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
      *
-     * @param $language
+     * @param string $language
      *
      * @return array
      */

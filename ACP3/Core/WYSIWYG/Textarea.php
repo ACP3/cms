@@ -36,7 +36,7 @@ class Textarea extends AbstractWYSIWYG
     }
 
     /**
-     * @param $emoticonsHelpers
+     * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelpers
      *
      * @return $this
      */

@@ -2,13 +2,13 @@
 namespace ACP3\Core\Model;
 
 /**
- * Class FloodBarrierAwareRepositoryInterface
+ * Interface FloodBarrierAwareRepositoryInterface
  * @package ACP3\Core\Model
  */
 interface FloodBarrierAwareRepositoryInterface
 {
     /**
-     * @param $ipAddress
+     * @param string $ipAddress
      *
      * @return mixed
      */

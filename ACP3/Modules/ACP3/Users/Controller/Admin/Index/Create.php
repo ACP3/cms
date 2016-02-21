@@ -115,11 +115,11 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param $formData
+     * @param array $formData
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost($formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);

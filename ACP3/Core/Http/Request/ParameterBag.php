@@ -22,5 +22,4 @@ class ParameterBag extends \Symfony\Component\HttpFoundation\ParameterBag
     {
         return $this->count() === 0;
     }
-
 }

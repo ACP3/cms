@@ -20,5 +20,4 @@ interface MigrationInterface
      * @return array
      */
     public function renameModule();
-
 }

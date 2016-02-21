@@ -156,7 +156,7 @@ class Alerts
     }
 
     /**
-     * @param $errors
+     * @param string|array $errors
      *
      * @return string
      */

@@ -129,7 +129,7 @@ class Requirements
     }
 
     /**
-     * @param $fileOrDirectory
+     * @param string $fileOrDirectory
      *
      * @return array
      */

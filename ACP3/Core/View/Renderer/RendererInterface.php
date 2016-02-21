@@ -9,25 +9,25 @@ namespace ACP3\Core\View\Renderer;
 interface RendererInterface
 {
     /**
-     * @param      $name
-     * @param null $value
+     * @param string|array $name
+     * @param null         $value
      */
     public function assign($name, $value = null);
 
     /**
-     * @param $template
+     * @param string $template
      *
      * @return string
      */
     public function fetch($template);
 
     /**
-     * @param $template
+     * @param string $template
      */
     public function display($template);
 
     /**
-     * @param $template
+     * @param string $template
      *
      * @return bool
      */

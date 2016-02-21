@@ -35,7 +35,7 @@ trait DisplayControllerActionTrait
     /**
      * Outputs the requested module controller action
      *
-     * @param $controllerActionResult
+     * @param mixed $controllerActionResult
      */
     public function display($controllerActionResult)
     {
@@ -169,6 +169,4 @@ trait DisplayControllerActionTrait
 
         return $this;
     }
-
-
 }

@@ -14,7 +14,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     protected $ipAddress = '';
 
     /**
-     * @param $ipAddress
+     * @param string $ipAddress
      *
      * @return $this
      */

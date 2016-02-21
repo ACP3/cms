@@ -108,8 +108,8 @@ abstract class AbstractRepository
     /**
      * Build the SQL limit
      *
-     * @param $limitStart
-     * @param $resultsPerPage
+     * @param int|string $limitStart
+     * @param int|string $resultsPerPage
      *
      * @return string
      */

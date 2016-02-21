@@ -12,8 +12,8 @@ class Registry
     /**
      * Inject an object to the registry
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      */
     public static function set($key, $value)
     {
@@ -25,24 +25,24 @@ class Registry
     /**
      * Get an object from the registry
      *
-     * @param $class
+     * @param string $key
      *
      * @return mixed
      */
-    public static function get($class)
+    public static function get($key)
     {
-        return self::$registry[$class];
+        return self::$registry[$key];
     }
 
     /**
      * Remove an object from the registry
      *
-     * @param $class
+     * @param string $key
      */
-    public static function remove($class)
+    public static function remove($key)
     {
-        if (isset(self::$registry[$class])) {
-            unset(self::$registry[$class]);
+        if (isset(self::$registry[$key])) {
+            unset(self::$registry[$key]);
         }
     }
 

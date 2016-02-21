@@ -2,7 +2,7 @@
 namespace ACP3\Core\Environment;
 
 /**
- * Class AppPath
+ * Class ApplicationPath
  * @package ACP3\Core\Environment
  */
 class ApplicationPath

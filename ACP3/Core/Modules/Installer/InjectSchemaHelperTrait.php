@@ -21,5 +21,4 @@ trait InjectSchemaHelperTrait
     {
         $this->schemaHelper = $schemaHelper;
     }
-
 }

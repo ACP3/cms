@@ -14,7 +14,7 @@ interface ControllerInterface
     /**
      * Gets a class from the service container
      *
-     * @param $serviceId
+     * @param string $serviceId
      *
      * @return mixed
      */
@@ -28,7 +28,7 @@ interface ControllerInterface
     public function setContainer(ContainerInterface $container);
 
     /**
-     * @param $controllerActionResult
+     * @param mixed $controllerActionResult
      */
     public function display($controllerActionResult);
 }

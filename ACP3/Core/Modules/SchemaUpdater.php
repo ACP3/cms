@@ -98,7 +98,7 @@ class SchemaUpdater extends SchemaHelper
     }
 
     /**
-     * @param $queries
+     * @param string|array|callable $queries
      *
      * @return array
      */

@@ -74,7 +74,7 @@ class CSS extends AbstractMinifier
     /**
      * Fetches the theme stylesheets
      *
-     * @param $layout
+     * @param string $layout
      */
     protected function fetchThemeStylesheets($layout)
     {
