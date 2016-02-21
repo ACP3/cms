@@ -3,7 +3,6 @@ namespace ACP3\Core;
 
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Validation\Rules\Misc;
 
 /**
  * Class Pagination
@@ -154,11 +153,9 @@ class Pagination
     }
 
     /**
-     * @param string $tplVariable
-     *
      * @return string
      */
-    public function display($tplVariable = 'pagination')
+    public function render()
     {
         $output = '';
         if ($this->totalResults > $this->resultsPerPage) {
@@ -194,7 +191,8 @@ class Pagination
 
             $output = $this->view->fetchTemplate('system/pagination.tpl');
         }
-        $this->view->assign($tplVariable, $output);
+
+        return $output;
     }
 
     /**

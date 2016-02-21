@@ -54,7 +54,6 @@ class Index extends AbstractFrontendAction
 
         if ($c_comments > 0) {
             $this->pagination->setTotalResults($this->commentRepository->countAllByModule($this->modules->getModuleId($module), $entryId));
-            $this->pagination->display();
 
             for ($i = 0; $i < $c_comments; ++$i) {
                 if (empty($comments[$i]['name'])) {
@@ -64,8 +63,10 @@ class Index extends AbstractFrontendAction
                     $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
                 }
             }
+
             $this->view->assign('comments', $comments);
             $this->view->assign('dateformat', $this->commentsSettings['dateformat']);
+            $this->view->assign('pagination', $this->pagination->render());
         }
 
         return $this->view->fetchTemplate('Comments/Frontend/index.index.tpl');

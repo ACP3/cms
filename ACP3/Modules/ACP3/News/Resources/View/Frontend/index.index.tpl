@@ -18,7 +18,7 @@
         {/if}
     </div>
     </div>
-    {if isset($news)}
+    {if !empty($news)}
         {$pagination}
         {foreach $news as $row}
             <article class="dataset-box">

@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
@@ -23,54 +24,40 @@ class Index extends Core\Modules\FrontendController
      */
     protected $pagination;
     /**
-     * @var \ACP3\Core\Helpers\PageBreaks
-     */
-    protected $pageBreaksHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
      */
     protected $articleRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
-     */
-    protected $articlesCache;
 
     /**
+     * Index constructor.
+     *
      * @param \ACP3\Core\Modules\Controller\FrontendContext       $context
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Core\Pagination                               $pagination
-     * @param \ACP3\Core\Helpers\PageBreaks                       $pageBreaksHelper
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
      */
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Core\Helpers\PageBreaks $pageBreaksHelper,
-        Articles\Model\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache)
-    {
+        Articles\Model\ArticleRepository $articleRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->pagination = $pagination;
-        $this->pageBreaksHelper = $pageBreaksHelper;
         $this->articleRepository = $articleRepository;
-        $this->articlesCache = $articlesCache;
     }
 
     public function execute()
     {
         $time = $this->date->getCurrentDateTime();
-
         $articles = $this->articleRepository->getAll($time, POS, $this->user->getEntriesPerPage());
+        $this->pagination->setTotalResults($this->articleRepository->countAll($time));
 
-        if (count($articles) > 0) {
-            $this->pagination->setTotalResults($this->articleRepository->countAll($time));
-            $this->pagination->display();
-        }
-
-        return ['articles' => $articles];
+        return [
+            'articles' => $articles,
+            'pagination' => $this->pagination->render()
+        ];
     }
 }

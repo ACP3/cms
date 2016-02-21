@@ -45,10 +45,10 @@ class Index extends Core\Modules\FrontendController
     public function execute()
     {
         $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
-        $this->pagination->display();
 
         return [
-            'newsletters' => $this->newsletterRepository->getAll(1, POS, $this->user->getEntriesPerPage())
+            'newsletters' => $this->newsletterRepository->getAll(1, POS, $this->user->getEntriesPerPage()),
+            'pagination' => $this->pagination->render()
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -35,8 +36,8 @@ class Index extends Core\Modules\FrontendController
     public function __construct(
         Core\Modules\Controller\FrontendContext $context,
         Core\Pagination $pagination,
-        Users\Model\UserRepository $userRepository)
-    {
+        Users\Model\UserRepository $userRepository
+    ) {
         parent::__construct($context);
 
         $this->pagination = $pagination;
@@ -49,16 +50,13 @@ class Index extends Core\Modules\FrontendController
     public function execute()
     {
         $users = $this->userRepository->getAll(POS, $this->user->getEntriesPerPage());
-        $c_users = count($users);
         $allUsers = $this->userRepository->countAll();
 
-        if ($c_users > 0) {
-            $this->pagination->setTotalResults($allUsers);
-            $this->pagination->display();
-        }
+        $this->pagination->setTotalResults($allUsers);
 
         return [
             'users' => $users,
+            'pagination' => $this->pagination->render(),
             'all_users' => $allUsers
         ];
     }

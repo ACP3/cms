@@ -91,7 +91,6 @@ class Index extends AbstractAction
 
         if ($c_news > 0) {
             $this->pagination->setTotalResults($this->newsRepository->countAll($time, $cat));
-            $this->pagination->display();
 
             $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $c_news; ++$i) {
@@ -105,12 +104,13 @@ class Index extends AbstractAction
                             'readmore') . "]</a>\n");
                 }
             }
-            $this->view->assign('news', $news);
-            $this->view->assign('dateformat', $this->newsSettings['dateformat']);
         }
 
         return [
-            'categories' => $this->categoriesHelpers->categoriesList('news', $cat)
+            'news' => $news,
+            'dateformat' => $this->newsSettings['dateformat'],
+            'categories' => $this->categoriesHelpers->categoriesList('news', $cat),
+            'pagination' => $this->pagination->render()
         ];
     }
 }

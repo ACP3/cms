@@ -55,19 +55,19 @@ class Index extends AbstractAction
 
         if ($c_guestbook > 0) {
             $this->pagination->setTotalResults($this->guestbookRepository->countAll($this->guestbookSettings['notify']));
-            $this->pagination->display();
 
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 if ($this->guestbookSettings['emoticons'] == 1 && $this->emoticonsHelpers) {
                     $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($guestbook[$i]['message']);
                 }
             }
-            $this->view->assign('guestbook', $guestbook);
-            $this->view->assign('dateformat', $this->guestbookSettings['dateformat']);
         }
 
         return [
-            'overlay' => $this->guestbookSettings['overlay']
+            'guestbook' => $guestbook,
+            'overlay' => $this->guestbookSettings['overlay'],
+            'pagination' => $this->pagination->render(),
+            'dateformat' => $this->guestbookSettings['dateformat']
         ];
     }
 }

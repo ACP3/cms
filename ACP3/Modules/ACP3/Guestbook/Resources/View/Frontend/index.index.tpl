@@ -17,7 +17,7 @@
         </p>
     {/if}
     {redirect_message}
-    {if isset($guestbook)}
+    {if !empty($guestbook)}
         {$pagination}
         {foreach $guestbook as $row}
             <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">

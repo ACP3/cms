@@ -56,11 +56,11 @@ class Index extends AbstractAction
         $time = $this->date->getCurrentDateTime();
 
         $this->pagination->setTotalResults($this->galleryRepository->countAll($time));
-        $this->pagination->display();
 
         return [
             'galleries' => $this->galleryRepository->getAll($time, POS, $this->user->getEntriesPerPage()),
-            'dateformat' => $this->settings['dateformat']
+            'dateformat' => $this->settings['dateformat'],
+            'pagination' => $this->pagination->render()
         ];
     }
 }
