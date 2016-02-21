@@ -17,32 +17,26 @@ class FormToken
      * @var \ACP3\Core\SessionHandler
      */
     protected $sessionHandler;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
 
     /**
+     * FormToken constructor.
+     *
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\SessionHandler        $sessionHandler
-     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         Core\Http\RequestInterface $request,
-        Core\SessionHandler $sessionHandler,
-        Core\View $view
+        Core\SessionHandler $sessionHandler
     )
     {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
-        $this->view = $view;
     }
 
     /**
-     * Generiert für ein Formular ein Securitytoken
+     * Generates and renders the form token
      *
      * @param string $path
-     *    Optionaler ACP3 interner URI Pfad, für welchen das Token gelten soll
      *
      * @return string
      */
@@ -63,7 +57,7 @@ class FormToken
     }
 
     /**
-     * Entfernt das Securitytoken aus der Session
+     * Removed the form token from the session
      *
      * @param string $path
      * @param string $token
@@ -84,5 +78,4 @@ class FormToken
             }
         }
     }
-
 }

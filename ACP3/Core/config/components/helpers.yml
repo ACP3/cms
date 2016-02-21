@@ -31,7 +31,7 @@ services:
 
   core.helpers.formToken:
     class: ACP3\Core\Helpers\FormToken
-    arguments: [@core.request, @core.session, @core.view]
+    arguments: [@core.request, @core.session]
 
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
