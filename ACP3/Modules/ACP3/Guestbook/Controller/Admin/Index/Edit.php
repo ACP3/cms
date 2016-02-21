@@ -93,10 +93,9 @@ class Edit extends Core\Modules\AdminController
                 $this->view->assign('activate', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('active', $guestbook['active']));
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
-                'form' => array_merge($guestbook, $this->request->getPost()->all())
+                'form' => array_merge($guestbook, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

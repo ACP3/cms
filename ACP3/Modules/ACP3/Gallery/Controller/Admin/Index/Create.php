@@ -71,11 +71,10 @@ class Create extends Core\Modules\AdminController
             'end' => ''
         ];
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'SEO_FORM_FIELDS' => $this->seo->formFields(),
-            'form' => array_merge($defaults, $this->request->getPost()->all())
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

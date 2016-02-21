@@ -72,11 +72,10 @@ class Edit extends Core\Modules\AdminController
                 return $this->executePost($this->request->getPost()->all(), $seo['uri'], $id);
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'SEO_FORM_FIELDS' => $this->seo->formFields($seo['uri']),
-                'form' => array_merge(['uri' => $seo['uri']], $this->request->getPost()->all())
+                'form' => array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

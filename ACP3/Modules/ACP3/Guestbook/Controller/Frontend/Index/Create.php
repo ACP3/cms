@@ -155,10 +155,9 @@ class Create extends AbstractAction
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
-            'form' => array_merge($defaults, $this->request->getPost()->all())
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

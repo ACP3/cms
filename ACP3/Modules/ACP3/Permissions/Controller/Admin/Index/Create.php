@@ -67,12 +67,11 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'modules' => $this->fetchModulePermissions(0, 2),
             'parent' => $this->fetchRoles(),
-            'form' => array_merge(['name' => ''], $this->request->getPost()->all())
+            'form' => array_merge(['name' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

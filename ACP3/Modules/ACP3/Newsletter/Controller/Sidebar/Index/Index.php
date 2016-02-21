@@ -44,7 +44,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('captcha', $this->captchaHelpers->captcha(3, 'captcha', true, 'newsletter'));
         }
 
-        $this->formTokenHelper->generateFormToken('newsletter/index/index');
+        $this->view->assign('form_token', $this->formTokenHelper->renderFormToken('newsletter/index/index'));
 
         $this->setTemplate($template !== '' ? $template : 'Newsletter/Sidebar/index.index.tpl');
     }

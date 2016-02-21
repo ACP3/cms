@@ -94,14 +94,13 @@ class Create extends AbstractFormAction
             'end' => ''
         ];
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'units' => $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''),
             'categories' => $this->categoriesHelpers->categoriesList('files', '', true),
             'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
             'SEO_FORM_FIELDS' => $this->seo->formFields(),
-            'form' => array_merge($defaults, $this->request->getPost()->all())
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

@@ -78,13 +78,12 @@ class Create extends Core\Modules\AdminController
             $this->translator->t('newsletter', 'only_save')
         ];
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'settings' => $settings,
             'test' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0),
             'action' => $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1),
-            'form' => array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all())
+            'form' => array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

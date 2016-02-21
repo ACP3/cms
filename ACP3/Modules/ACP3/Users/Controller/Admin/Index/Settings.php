@@ -60,13 +60,12 @@ class Settings extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('users');
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'languages' => $this->formsHelpers->yesNoCheckboxGenerator('language_override', $settings['language_override']),
             'entries' => $this->formsHelpers->yesNoCheckboxGenerator('entries_override', $settings['entries_override']),
             'registration' => $this->formsHelpers->yesNoCheckboxGenerator('enable_registration', $settings['enable_registration']),
-            'form' => array_merge(['mail' => $settings['mail']], $this->request->getPost()->all())
+            'form' => array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

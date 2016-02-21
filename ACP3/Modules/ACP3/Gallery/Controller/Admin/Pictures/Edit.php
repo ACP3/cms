@@ -94,11 +94,10 @@ class Edit extends Core\Modules\AdminController
                 $this->view->assign('options', $options);
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'form' => array_merge($picture, $this->request->getPost()->all()),
-                'gallery_id' => $id
+                'gallery_id' => $id,
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

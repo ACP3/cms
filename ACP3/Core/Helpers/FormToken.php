@@ -43,8 +43,10 @@ class FormToken
      *
      * @param string $path
      *    Optionaler ACP3 interner URI Pfad, für welchen das Token gelten soll
+     *
+     * @return string
      */
-    public function generateFormToken($path = '')
+    public function renderFormToken($path = '')
     {
         $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
         $sessionTokens = $this->sessionHandler->get($tokenName, []);
@@ -57,7 +59,7 @@ class FormToken
             $this->sessionHandler->set($tokenName, $sessionTokens);
         }
 
-        $this->view->assign('form_token', '<input type="hidden" name="' . $tokenName . '" value="' . $sessionTokens[$path] . '" />');
+        return '<input type="hidden" name="' . $tokenName . '" value="' . $sessionTokens[$path] . '" />';
     }
 
     /**

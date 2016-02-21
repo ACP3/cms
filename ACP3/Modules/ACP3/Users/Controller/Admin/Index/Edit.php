@@ -102,8 +102,6 @@ class Edit extends AbstractFormAction
                 )
             );
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'roles' => $this->fetchUserRoles($userRoles),
                 'super_user' => $this->fetchIsSuperUser($user['super_user']),
@@ -113,7 +111,8 @@ class Edit extends AbstractFormAction
                     $user['icq'],
                     $user['skype']
                 ),
-                'form' => array_merge($user, $this->request->getPost()->all())
+                'form' => array_merge($user, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

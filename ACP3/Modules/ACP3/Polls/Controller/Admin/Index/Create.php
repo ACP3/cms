@@ -85,12 +85,11 @@ class Create extends AbstractFormAction
         $options = [];
         $options[] = $this->fetchMultipleChoiceOption(0);
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'answers' => $answers,
             'options' => $options,
-            'form' => array_merge($defaults, $this->request->getPost()->all())
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

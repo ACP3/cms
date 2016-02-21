@@ -72,10 +72,9 @@ class Edit extends Core\Modules\AdminController
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
-                'form' => array_merge($menu, $this->request->getPost()->all())
+                'form' => array_merge($menu, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

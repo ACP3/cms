@@ -53,10 +53,9 @@ class Index extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('contact');
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
-            'form' => array_merge($settings, $this->request->getPost()->all())
+            'form' => array_merge($settings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

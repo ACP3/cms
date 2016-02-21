@@ -75,8 +75,6 @@ class Edit extends AbstractAction
             )
         );
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'contact' => $this->get('users.helpers.forms')->fetchContactDetails(
                 $user['mail'],
@@ -84,7 +82,8 @@ class Edit extends AbstractAction
                 $user['icq'],
                 $user['skype']
             ),
-            'form' => array_merge($user, $this->request->getPost()->all())
+            'form' => array_merge($user, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

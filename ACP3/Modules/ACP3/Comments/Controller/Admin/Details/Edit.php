@@ -106,11 +106,10 @@ class Edit extends Core\Modules\AdminController
                 $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'form' => array_merge($comment, $this->request->getPost()->all()),
-                'module_id' => (int)$comment['module_id']
+                'module_id' => (int)$comment['module_id'],
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

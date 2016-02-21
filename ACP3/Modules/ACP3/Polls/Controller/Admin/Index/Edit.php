@@ -90,12 +90,11 @@ class Edit extends AbstractFormAction
                 ]
             ];
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'answers' => $answers,
                 'options' => $options,
-                'form' => array_merge($poll, $this->request->getPost()->all())
+                'form' => array_merge($poll, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

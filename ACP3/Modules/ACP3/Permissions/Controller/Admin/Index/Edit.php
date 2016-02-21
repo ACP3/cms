@@ -86,11 +86,10 @@ class Edit extends AbstractFormAction
                 $this->view->assign('parent', $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id']));
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'modules' => $this->fetchModulePermissions($id),
-                'form' => array_merge($role, $this->request->getPost()->all())
+                'form' => array_merge($role, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

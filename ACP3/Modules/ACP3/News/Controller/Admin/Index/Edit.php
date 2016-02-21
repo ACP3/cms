@@ -87,14 +87,13 @@ class Edit extends AbstractFormAction
                 return $this->executePost($this->request->getPost()->all(), $settings, $id);
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'categories' => $this->categoriesHelpers->categoriesList('news', $news['category_id'], true),
                 'options' => $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']),
                 'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $news['target']),
                 'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id)),
-                'form' => array_merge($news, $this->request->getPost()->all())
+                'form' => array_merge($news, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

@@ -57,11 +57,10 @@ class Index extends Core\Modules\AdminController
             'ATOM'
         ];
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'feed_types' => $this->get('core.helpers.forms')->selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']),
-            'form' => array_merge($settings, $this->request->getPost()->all())
+            'form' => array_merge($settings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

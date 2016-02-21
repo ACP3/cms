@@ -60,14 +60,13 @@ class Settings extends Core\Modules\AdminController
             $this->view->assign('allow_comments', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('comments', $settings['comments']));
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'readmore' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('readmore', $settings['readmore']),
             'readmore_chars' => $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']),
             'sidebar_entries' => $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10),
-            'category_in_breadcrumb' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('category_in_breadcrumb', $settings['category_in_breadcrumb'])
+            'category_in_breadcrumb' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('category_in_breadcrumb', $settings['category_in_breadcrumb']),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

@@ -109,7 +109,7 @@ class Create extends AbstractFrontendAction
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->formTokenHelper->generateFormToken();
+        $this->view->assign('form_token', $this->formTokenHelper->renderFormToken());
 
         return $this->view->fetchTemplate('Comments/Frontend/index.create.tpl');
     }

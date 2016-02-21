@@ -57,13 +57,12 @@ class Settings extends Core\Modules\AdminController
             $this->view->assign('comments', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('comments', $settings['comments']));
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'overlay' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'sidebar_entries' => $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10),
-            'form' => array_merge($settings, $this->request->getPost()->all())
+            'form' => array_merge($settings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

@@ -118,14 +118,14 @@ class Edit extends AbstractFormAction
                     $menuItem['display']
                 )
             );
-            $this->formTokenHelper->generateFormToken();
 
             return [
                 'mode' => $this->fetchMenuItemModes($menuItem['mode']),
                 'modules' => $this->fetchModules($menuItem),
                 'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $menuItem['target']),
                 'SEO_FORM_FIELDS' => $this->seo->formFields($menuItem['uri']),
-                'form' => array_merge($menuItem, $this->request->getPost()->all())
+                'form' => array_merge($menuItem, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

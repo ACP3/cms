@@ -74,12 +74,11 @@ class Settings extends AbstractAction
             )
         );
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'language_override' => $settings['language_override'],
             'entries_override' => $settings['entries_override'],
-            'form' => array_merge($user, $this->request->getPost()->all())
+            'form' => array_merge($user, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

@@ -83,8 +83,6 @@ class Configuration extends Core\Modules\AdminController
             $this->translator->t('system', 'mailer_smtp_security_tls')
         ];
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'entries' => $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $wysiwyg,
@@ -95,7 +93,8 @@ class Configuration extends Core\Modules\AdminController
             'mailer_type' => $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $lang_mailerType, $systemSettings['mailer_type']),
             'mailer_smtp_auth' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']),
             'mailer_smtp_security' => $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
-            'form' => array_merge($systemSettings, $this->request->getPost()->all())
+            'form' => array_merge($systemSettings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

@@ -74,13 +74,14 @@ class Create extends Core\Modules\AdminController
                 $privileges[$i]['id']);
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'modules' => $modules,
             'privileges' => $privileges,
-            'form' => array_merge(['resource' => '', 'area' => '', 'controller' => ''],
-                $this->request->getPost()->all())
+            'form' => array_merge(
+                ['resource' => '', 'area' => '', 'controller' => ''],
+                $this->request->getPost()->all()
+            ),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

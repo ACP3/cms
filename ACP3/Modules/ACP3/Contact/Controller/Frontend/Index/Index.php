@@ -95,12 +95,11 @@ class Index extends Core\Modules\FrontendController
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'copy_checked' => $this->get('core.helpers.forms')->selectEntry('copy', 1, 0, 'checked'),
-            'contact' => $this->config->getSettings('contact')
+            'contact' => $this->config->getSettings('contact'),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

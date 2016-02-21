@@ -87,13 +87,12 @@ class Edit extends Core\Modules\AdminController
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return array_merge(
                 [
                     'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)),
                     'gallery_id' => $id,
-                    'form' => array_merge($gallery, $this->request->getPost()->all())
+                    'form' => array_merge($gallery, $this->request->getPost()->all()),
+                    'form_token' => $this->formTokenHelper->renderFormToken()
                 ],
                 $this->executeListPictures($id)
             );

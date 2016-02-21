@@ -57,10 +57,9 @@ class Settings extends Core\Modules\AdminController
             $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('emoticons', $settings['emoticons']));
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat'])
+            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

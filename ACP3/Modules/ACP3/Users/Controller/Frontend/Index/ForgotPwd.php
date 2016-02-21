@@ -97,10 +97,9 @@ class ForgotPwd extends Core\Modules\FrontendController
             $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
-            'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all())
+            'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

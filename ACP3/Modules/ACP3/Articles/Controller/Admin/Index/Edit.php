@@ -127,11 +127,10 @@ class Edit extends AbstractFormAction
                 );
             }
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)),
-                'form' => array_merge($article, $this->request->getPost()->all())
+                'form' => array_merge($article, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 

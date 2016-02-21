@@ -70,13 +70,12 @@ class Settings extends Core\Modules\AdminController
             $this->view->assign('newsletter_integration', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration']));
         }
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'notify' => $this->get('core.helpers.forms')->selectGenerator('notify', [0, 1, 2], $lang_notify, $settings['notify']),
             'overlay' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'form' => array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all())
+            'form' => array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

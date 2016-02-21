@@ -60,14 +60,13 @@ class Settings extends Core\Modules\AdminController
             $this->translator->t('seo', 'robots_noindex_nofollow')
         ];
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'robots' => $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots,
                 $seoSettings['robots']),
             'mod_rewrite' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite',
                 $seoSettings['mod_rewrite']),
-            'form' => array_merge($seoSettings, $this->request->getPost()->all())
+            'form' => array_merge($seoSettings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

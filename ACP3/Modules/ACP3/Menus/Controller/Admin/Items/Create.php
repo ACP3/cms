@@ -108,14 +108,13 @@ class Create extends AbstractFormAction
 
         $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
 
-        $this->formTokenHelper->generateFormToken();
-
         return [
             'mode' => $this->fetchMenuItemModes(),
             'modules' => $this->fetchModules(),
             'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'),
             'SEO_FORM_FIELDS' => $this->seo->formFields(),
-            'form' => array_merge($defaults, $this->request->getPost()->all())
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 

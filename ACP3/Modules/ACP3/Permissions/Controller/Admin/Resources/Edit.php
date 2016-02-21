@@ -81,11 +81,10 @@ class Edit extends Core\Modules\AdminController
                 'modules' => $resource['module_name']
             ];
 
-            $this->formTokenHelper->generateFormToken();
-
             return [
                 'privileges' => $privileges,
-                'form' => array_merge($defaults, $this->request->getPost()->all())
+                'form' => array_merge($defaults, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
 
