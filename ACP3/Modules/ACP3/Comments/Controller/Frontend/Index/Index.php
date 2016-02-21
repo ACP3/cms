@@ -50,12 +50,12 @@ class Index extends AbstractFrontendAction
     public function execute($module, $entryId)
     {
         $comments = $this->commentRepository->getAllByModule($this->modules->getModuleId($module), $entryId, POS, $this->user->getEntriesPerPage());
-        $c_comments = count($comments);
+        $cComments = count($comments);
 
-        if ($c_comments > 0) {
+        if ($cComments > 0) {
             $this->pagination->setTotalResults($this->commentRepository->countAllByModule($this->modules->getModuleId($module), $entryId));
 
-            for ($i = 0; $i < $c_comments; ++$i) {
+            for ($i = 0; $i < $cComments; ++$i) {
                 if (empty($comments[$i]['name'])) {
                     $comments[$i]['name'] = $this->translator->t('users', 'deleted_user');
                 }

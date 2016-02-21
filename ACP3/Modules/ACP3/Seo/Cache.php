@@ -50,10 +50,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveCache()
     {
         $aliases = $this->seoRepository->getAllMetaTags();
-        $c_aliases = count($aliases);
+        $cAliases = count($aliases);
         $data = [];
 
-        for ($i = 0; $i < $c_aliases; ++$i) {
+        for ($i = 0; $i < $cAliases; ++$i) {
             $data[$aliases[$i]['uri']] = [
                 'alias' => $aliases[$i]['alias'],
                 'keywords' => $aliases[$i]['keywords'],

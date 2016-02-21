@@ -134,8 +134,8 @@ abstract class AbstractFormAction extends AdminController
     protected function fetchRoles($roleParentId = 0, $roleLeftId = 0, $roleRightId = 0)
     {
         $roles = $this->acl->getAllRoles();
-        $c_roles = count($roles);
-        for ($i = 0; $i < $c_roles; ++$i) {
+        $cRoles = count($roles);
+        for ($i = 0; $i < $cRoles; ++$i) {
             if ($roles[$i]['left_id'] >= $roleLeftId && $roles[$i]['right_id'] <= $roleRightId) {
                 unset($roles[$i]);
             } else {
@@ -157,11 +157,11 @@ abstract class AbstractFormAction extends AdminController
         $rules = $this->acl->getRules([$roleId]);
         $modules = $this->modules->getActiveModules();
         $privileges = $this->acl->getAllPrivileges();
-        $c_privileges = count($privileges);
+        $cPrivileges = count($privileges);
 
         foreach ($modules as $name => $moduleInfo) {
             $moduleDir = strtolower($moduleInfo['dir']);
-            for ($j = 0; $j < $c_privileges; ++$j) {
+            for ($j = 0; $j < $cPrivileges; ++$j) {
                 $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
                     $roleId,
                     $moduleInfo['id'],

@@ -51,12 +51,12 @@ class Index extends AbstractAction
     public function execute()
     {
         $guestbook = $this->guestbookRepository->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
-        $c_guestbook = count($guestbook);
+        $cGuestbook = count($guestbook);
 
-        if ($c_guestbook > 0) {
+        if ($cGuestbook > 0) {
             $this->pagination->setTotalResults($this->guestbookRepository->countAll($this->guestbookSettings['notify']));
 
-            for ($i = 0; $i < $c_guestbook; ++$i) {
+            for ($i = 0; $i < $cGuestbook; ++$i) {
                 if ($this->guestbookSettings['emoticons'] == 1 && $this->emoticonsHelpers) {
                     $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($guestbook[$i]['message']);
                 }

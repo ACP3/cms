@@ -66,7 +66,7 @@ class RewriteInternalUri
         $host = $this->request->getServer()->get('HTTP_HOST');
         return preg_replace_callback(
             '/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i',
-            [$this, "_rewriteInternalUriCallback"],
+            [$this, "rewriteInternalUriCallback"],
             $text
         );
     }
@@ -78,7 +78,7 @@ class RewriteInternalUri
      *
      * @return string
      */
-    private function _rewriteInternalUriCallback($matches)
+    private function rewriteInternalUriCallback($matches)
     {
         if ($this->uriAliasValidationRule->isValid($matches[7]) === true) {
             return $matches[0];

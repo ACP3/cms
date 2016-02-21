@@ -35,7 +35,7 @@ class Sort
      */
     public function up($table, $idField, $sortField, $id, $where = '')
     {
-        return $this->_moveOneStep('up', $table, $idField, $sortField, $id, $where);
+        return $this->moveOneStep('up', $table, $idField, $sortField, $id, $where);
     }
 
     /**
@@ -51,7 +51,7 @@ class Sort
      */
     public function down($table, $idField, $sortField, $id, $where = '')
     {
-        return $this->_moveOneStep('down', $table, $idField, $sortField, $id, $where);
+        return $this->moveOneStep('down', $table, $idField, $sortField, $id, $where);
     }
 
     /**
@@ -66,7 +66,7 @@ class Sort
      *
      * @return boolean
      */
-    private function _moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
+    private function moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
         $this->db->getConnection()->beginTransaction();
         try {

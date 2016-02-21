@@ -45,9 +45,9 @@ class PageCssClasses extends AbstractFilter
     /**
      * @inheritdoc
      */
-    public function process($tpl_output, \Smarty_Internal_Template $smarty)
+    public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        if (strpos($tpl_output, '<body') !== false) {
+        if (strpos($tplOutput, '<body') !== false) {
             if ($this->cssClassCache === '') {
                 $pieces = [
                     $this->pageCssClasses->getModule(),
@@ -65,9 +65,9 @@ class PageCssClasses extends AbstractFilter
                 $this->cssClassCache = 'class="' . implode(' ', $pieces) . '"';
             }
 
-            $tpl_output = str_replace('<body', '<body ' . $this->cssClassCache, $tpl_output);
+            $tplOutput = str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
         }
 
-        return $tpl_output;
+        return $tplOutput;
     }
 }

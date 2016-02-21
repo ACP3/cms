@@ -54,7 +54,7 @@ class GalleryRepository extends Core\Model\AbstractRepository
      */
     public function countAll($time)
     {
-        $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod('g.') : '';
+        $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod() : '';
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['time' => $time]

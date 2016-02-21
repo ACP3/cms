@@ -59,10 +59,10 @@ class Result extends Core\Modules\FrontendController
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             $question = $this->pollRepository->getOneByIdWithTotalVotes($id);
             $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);
-            $c_answers = count($answers);
+            $cAnswers = count($answers);
             $totalVotes = $question['total_votes'];
 
-            for ($i = 0; $i < $c_answers; ++$i) {
+            for ($i = 0; $i < $cAnswers; ++$i) {
                 $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
             }
 

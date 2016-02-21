@@ -56,9 +56,9 @@ class OnDisplayFeedListener
     {
         $items = [];
         $results = $this->filesRepository->getAll($this->date->getCurrentDateTime(), 10);
-        $c_results = count($results);
+        $cResults = count($results);
 
-        for ($i = 0; $i < $c_results; ++$i) {
+        for ($i = 0; $i < $cResults; ++$i) {
             $items[] = [
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),

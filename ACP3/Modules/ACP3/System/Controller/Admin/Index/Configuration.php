@@ -71,13 +71,13 @@ class Configuration extends Core\Modules\AdminController
         }
 
         // Mailertyp
-        $lang_mailerType = [
+        $langMailerType = [
             $this->translator->t('system', 'mailer_type_php_mail'),
             $this->translator->t('system', 'mailer_type_smtp')
         ];
 
         // Mailer SMTP Verschlüsselung
-        $lang_mailerSmtpSecurity = [
+        $langMailerSmtpSecurity = [
             $this->translator->t('system', 'mailer_smtp_security_none'),
             $this->translator->t('system', 'mailer_smtp_security_ssl'),
             $this->translator->t('system', 'mailer_smtp_security_tls')
@@ -90,9 +90,9 @@ class Configuration extends Core\Modules\AdminController
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']),
             'cache_images' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']),
-            'mailer_type' => $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $lang_mailerType, $systemSettings['mailer_type']),
+            'mailer_type' => $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $langMailerType, $systemSettings['mailer_type']),
             'mailer_smtp_auth' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']),
-            'mailer_smtp_security' => $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $lang_mailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
+            'mailer_smtp_security' => $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $langMailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
             'form' => array_merge($systemSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

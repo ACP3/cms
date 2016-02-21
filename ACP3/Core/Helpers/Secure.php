@@ -38,9 +38,9 @@ class Secure
     {
         $salt = '';
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        $c_chars = strlen($chars) - 1;
+        $cChars = strlen($chars) - 1;
         while (strlen($salt) < $strLength) {
-            $char = $chars[mt_rand(0, $c_chars)];
+            $char = $chars[mt_rand(0, $cChars)];
             // Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
             if (strpos($salt, $char) === false) {
                 $salt .= $char;

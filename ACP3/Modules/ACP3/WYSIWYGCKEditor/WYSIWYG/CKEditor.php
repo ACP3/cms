@@ -106,7 +106,7 @@ class CKEditor extends Textarea
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'js' => $this->_editor(),
+            'js' => $this->editor(),
             'advanced' => $this->advanced,
         ];
 
@@ -123,7 +123,7 @@ class CKEditor extends Textarea
      *
      * @return string
      */
-    private function _configure()
+    private function configure()
     {
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
         $this->config['allowedContent'] = true;
@@ -159,9 +159,9 @@ class CKEditor extends Textarea
     /**
      * @return string
      */
-    private function _editor()
+    private function editor()
     {
-        $out = $this->_init();
+        $out = $this->init();
 
         // Add custom plugins
         $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/';
@@ -172,14 +172,14 @@ class CKEditor extends Textarea
         $js .= "CKEDITOR.plugins.addExternal('oembed', '" . $ckeditorPluginsDir . "oembed/');\n";
         $js .= "CKEDITOR.plugins.addExternal('widget', '" . $ckeditorPluginsDir . "widget/');\n";
 
-        $_config = $this->_configure();
-        if (!empty($_config)) {
-            $js .= "CKEDITOR.replace('" . $this->id . "', " . $_config . ");";
+        $config = $this->configure();
+        if (!empty($config)) {
+            $js .= "CKEDITOR.replace('" . $this->id . "', " . $config . ");";
         } else {
             $js .= "CKEDITOR.replace('" . $this->id . "');";
         }
 
-        $out .= $this->_script($js);
+        $out .= $this->script($js);
 
         return $out;
     }
@@ -191,7 +191,7 @@ class CKEditor extends Textarea
      *
      * @return string
      */
-    private function _script($js)
+    private function script($js)
     {
         $out = "<script type=\"text/javascript\">";
         $out .= $js;
@@ -203,7 +203,7 @@ class CKEditor extends Textarea
     /**
      * @return string
      */
-    private function _init()
+    private function init()
     {
         if ($this->initialized === true) {
             return "";
@@ -215,7 +215,7 @@ class CKEditor extends Textarea
 
         // Skip relative paths...
         if (strpos($basePath, '..') !== 0) {
-            $out .= $this->_script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
+            $out .= $this->script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
         }
 
         $out .= "<script type=\"text/javascript\" src=\"" . $basePath . "ckeditor.js\"></script>\n";
@@ -228,10 +228,10 @@ class CKEditor extends Textarea
         $this->config['smiley_path'] = $this->appPath->getWebRoot() . 'uploads/emoticons/';
         $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
         $emoticons = $this->emoticonRepository->getAll();
-        $c_emoticons = count($emoticons);
+        $cEmoticons = count($emoticons);
 
         $images = $descriptions = [];
-        for ($i = 0; $i < $c_emoticons; ++$i) {
+        for ($i = 0; $i < $cEmoticons; ++$i) {
             $images[] = $emoticons[$i]['img'];
             $descriptions[] = $emoticons[$i]['description'];
         }

@@ -43,25 +43,25 @@ class MoveToBottom extends AbstractFilter
     /**
      * @inheritdoc
      */
-    public function process($tpl_output, \Smarty_Internal_Template $smarty)
+    public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
         $pattern = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
 
-        if (strpos($tpl_output, '<!-- JAVASCRIPTS -->') !== false) {
+        if (strpos($tplOutput, '<!-- JAVASCRIPTS -->') !== false) {
             $matches = [];
-            preg_match_all($pattern, $tpl_output, $matches);
+            preg_match_all($pattern, $tplOutput, $matches);
 
             // Remove placeholder comments
-            $tpl_output = preg_replace($pattern, '', $tpl_output);
+            $tplOutput = preg_replace($pattern, '', $tplOutput);
 
             $minifyJs = '';
             if (!$this->request->isAjax()) {
                 $minifyJs = '<script type="text/javascript" src="' . $this->minifier->getURI() . '"></script>' . "\n";
             }
 
-            return str_replace('<!-- JAVASCRIPTS -->', $minifyJs . implode("\n", array_unique($matches[1])) . "\n", $tpl_output);
+            return str_replace('<!-- JAVASCRIPTS -->', $minifyJs . implode("\n", array_unique($matches[1])) . "\n", $tplOutput);
         }
 
-        return $tpl_output;
+        return $tplOutput;
     }
 }

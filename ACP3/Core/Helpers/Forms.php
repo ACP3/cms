@@ -95,9 +95,9 @@ class Forms
     {
         $select = [];
         if (count($values) == count($phrases)) {
-            $c_values = count($values);
+            $cValues = count($values);
             $id = str_replace('_', '-', $name);
-            for ($i = 0; $i < $c_values; ++$i) {
+            for ($i = 0; $i < $cValues; ++$i) {
                 $select[] = [
                     'value' => $values[$i],
                     'id' => ($selected === 'checked' ? $id . '-' . $values[$i] : ''),

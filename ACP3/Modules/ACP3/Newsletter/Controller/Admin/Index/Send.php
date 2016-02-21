@@ -58,10 +58,10 @@ class Send extends Core\Modules\AdminController
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();
-            $c_accounts = count($accounts);
+            $cAccounts = count($accounts);
             $recipients = [];
 
-            for ($i = 0; $i < $c_accounts; ++$i) {
+            for ($i = 0; $i < $cAccounts; ++$i) {
                 $recipients[] = $accounts[$i]['mail'];
             }
 

@@ -96,7 +96,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * Sets the theme paths
      */
-    private function _setThemePaths()
+    private function setThemePaths()
     {
         $path = 'designs/' . $this->systemSettings['design'] . '/';
 
@@ -113,7 +113,7 @@ class Bootstrap extends AbstractBootstrap
     {
         // Load system settings
         $this->systemSettings = $this->container->get('core.config')->getSettings('system');
-        $this->_setThemePaths();
+        $this->setThemePaths();
         $this->container->get('core.user')->authenticate();
 
         /** @var \ACP3\Core\Http\Request $request */
@@ -157,7 +157,7 @@ class Bootstrap extends AbstractBootstrap
      *
      * @param \Exception $exception
      */
-    private function _renderApplicationException(\Exception $exception)
+    private function renderApplicationException(\Exception $exception)
     {
         $view = $this->container->get('core.view');
         $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
@@ -174,7 +174,7 @@ class Bootstrap extends AbstractBootstrap
     protected function handleException(\Exception $exception, Redirect $redirect, $path)
     {
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
-            $this->_renderApplicationException($exception);
+            $this->renderApplicationException($exception);
         } else {
             $redirect->temporary($path)->send();
         }

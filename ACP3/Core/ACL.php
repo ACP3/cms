@@ -105,9 +105,9 @@ class ACL
                 $this->userRoles[$userId][] = 1; // @TODO: Add config option for this
             } else {
                 $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
-                $c_userRoles = count($userRoles);
+                $cUserRoles = count($userRoles);
 
-                for ($i = 0; $i < $c_userRoles; ++$i) {
+                for ($i = 0; $i < $cUserRoles; ++$i) {
                     $this->userRoles[$userId][] = $userRoles[$i]['id'];
                 }
             }
@@ -126,10 +126,10 @@ class ACL
     public function getUserRoleNames($userId)
     {
         $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
-        $c_userRoles = count($userRoles);
+        $cUserRoles = count($userRoles);
         $roles = [];
 
-        for ($i = 0; $i < $c_userRoles; ++$i) {
+        for ($i = 0; $i < $cUserRoles; ++$i) {
             $roles[] = $userRoles[$i]['name'];
         }
         return $roles;

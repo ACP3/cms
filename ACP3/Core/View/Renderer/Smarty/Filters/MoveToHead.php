@@ -33,18 +33,18 @@ class MoveToHead extends AbstractFilter
     /**
      * @inheritdoc
      */
-    public function process($tpl_output, \Smarty_Internal_Template $smarty)
+    public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        if (strpos($tpl_output, '<!-- STYLESHEETS -->') !== false) {
+        if (strpos($tplOutput, '<!-- STYLESHEETS -->') !== false) {
             $matches = [];
-            preg_match_all('!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is', $tpl_output, $matches);
+            preg_match_all('!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is', $tplOutput, $matches);
 
             // Remove placeholder comments
-            $tpl_output = preg_replace("!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is", '', $tpl_output);
+            $tplOutput = preg_replace("!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is", '', $tplOutput);
             $minifyCss = '<link rel="stylesheet" type="text/css" href="' . $this->minifier->getURI() . '">' . "\n";
-            return str_replace('<!-- STYLESHEETS -->', $minifyCss . implode("\n", array_unique($matches[1])) . "\n", $tpl_output);
+            return str_replace('<!-- STYLESHEETS -->', $minifyCss . implode("\n", array_unique($matches[1])) . "\n", $tplOutput);
         }
 
-        return $tpl_output;
+        return $tplOutput;
     }
 }

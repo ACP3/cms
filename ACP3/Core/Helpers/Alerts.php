@@ -99,7 +99,7 @@ class Alerts
     /**
      * @param string|array $errors
      */
-    protected function _setErrorBoxData($errors)
+    protected function setErrorBoxData($errors)
     {
         $hasNonIntegerKeys = false;
 
@@ -162,7 +162,7 @@ class Alerts
      */
     public function errorBoxContent($errors)
     {
-        $this->_setErrorBoxData($errors);
+        $this->setErrorBoxData($errors);
 
         return 'system/alerts/error_box.tpl';
     }

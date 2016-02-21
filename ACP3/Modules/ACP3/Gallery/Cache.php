@@ -74,11 +74,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveCache($id)
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
-        $c_pictures = count($pictures);
+        $cPictures = count($pictures);
 
         $settings = $this->config->getSettings('gallery');
 
-        for ($i = 0; $i < $c_pictures; ++$i) {
+        for ($i = 0; $i < $cPictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];
             $pictures[$i]['height'] = $settings['thumbheight'];
             $picInfos = @getimagesize($this->appPath->getModulesDir() . 'gallery/' . $pictures[$i]['file']);

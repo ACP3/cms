@@ -99,7 +99,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
             $editor .= '<script type="text/javascript" src="' . $this->appPath->getWebRoot() . 'vendor/tinymce/tinymce/tinymce.min.js"></script>';
         }
 
-        $editor .= $this->_configure();
+        $editor .= $this->configure();
 
         $wysiwyg = [
             'id' => $this->id,
@@ -120,7 +120,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     /**
      * @return string
      */
-    private function _configure()
+    private function configure()
     {
 
         $config = [

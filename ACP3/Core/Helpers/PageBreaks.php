@@ -63,17 +63,17 @@ class PageBreaks
         }
 
         $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
-        $c_pages = count($pages);
+        $cPages = count($pages);
 
         // Return early, if an page breaks has been found but no content follows after it
-        if ($c_pages === 1) {
+        if ($cPages === 1) {
             return $text;
         }
 
         $matches = [];
         preg_match_all($this->getSplitPagesRegex(), $text, $matches);
 
-        $currentPage = ((int)$this->request->getParameters()->get('page', 1) <= $c_pages) ? (int)$this->request->getParameters()->get('page', 1) : 1;
+        $currentPage = ((int)$this->request->getParameters()->get('page', 1) <= $cPages) ? (int)$this->request->getParameters()->get('page', 1) : 1;
         $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
         $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 

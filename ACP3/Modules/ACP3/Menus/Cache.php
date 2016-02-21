@@ -69,18 +69,18 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveMenusCache()
     {
         $items = $this->menuItemRepository->getAllMenuItems();
-        $c_items = count($items);
+        $cItems = count($items);
 
-        if ($c_items > 0) {
+        if ($cItems > 0) {
             $menus = $this->menuModel->getAllMenus();
-            $c_menus = count($menus);
+            $cMenus = count($menus);
 
-            for ($i = 0; $i < $c_menus; ++$i) {
+            for ($i = 0; $i < $cMenus; ++$i) {
                 $this->saveVisibleMenuItemsCache($menus[$i]['index_name']);
             }
 
-            for ($i = 0; $i < $c_items; ++$i) {
-                for ($j = 0; $j < $c_menus; ++$j) {
+            for ($i = 0; $i < $cItems; ++$i) {
+                for ($j = 0; $j < $cMenus; ++$j) {
                     if ($items[$i]['block_id'] == $menus[$j]['id']) {
                         $items[$i]['block_title'] = $menus[$j]['title'];
                         $items[$i]['block_name'] = $menus[$j]['index_name'];
@@ -96,7 +96,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
                 $this->translator->t('menus', 'article')
             ];
 
-            for ($i = 0; $i < $c_items; ++$i) {
+            for ($i = 0; $i < $cItems; ++$i) {
                 $items[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $items[$i]['mode']);
                 $items[$i]['first'] = $this->isFirstItemInSet($i, $items);
                 $items[$i]['last'] = $this->isLastItemInSet($i, $items);
@@ -163,8 +163,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected function isLastItemInSet($index, array $items)
     {
-        $c_items = count($items);
-        for ($j = $index + 1; $j < $c_items; ++$j) {
+        $cItems = count($items);
+        for ($j = $index + 1; $j < $cItems; ++$j) {
             if ($items[$index]['parent_id'] == $items[$j]['parent_id'] && $items[$j]['block_name'] == $items[$index]['block_name']) {
                 return false;
             }

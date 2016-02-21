@@ -53,7 +53,7 @@ class Settings extends Core\Modules\AdminController
         $seoSettings = $this->config->getSettings('seo');
 
         // Robots
-        $lang_robots = [
+        $langRobots = [
             $this->translator->t('seo', 'robots_index_follow'),
             $this->translator->t('seo', 'robots_index_nofollow'),
             $this->translator->t('seo', 'robots_noindex_follow'),
@@ -61,7 +61,7 @@ class Settings extends Core\Modules\AdminController
         ];
 
         return [
-            'robots' => $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $lang_robots,
+            'robots' => $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $langRobots,
                 $seoSettings['robots']),
             'mod_rewrite' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite',
                 $seoSettings['mod_rewrite']),

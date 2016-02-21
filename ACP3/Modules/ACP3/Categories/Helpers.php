@@ -144,12 +144,12 @@ class Helpers
     {
         $categories = [];
         $data = $this->categoriesCache->getCache($module);
-        $c_data = count($data);
+        $cData = count($data);
 
         $categories['custom_text'] = !empty($customText) ? $customText : $this->translator->t('system', 'pls_select');
         $categories['name'] = $formFieldName;
-        if ($c_data > 0) {
-            for ($i = 0; $i < $c_data; ++$i) {
+        if ($cData > 0) {
+            for ($i = 0; $i < $cData; ++$i) {
                 $data[$i]['selected'] = $this->formsHelper->selectEntry('cat', $data[$i]['id'], $categoryId);
             }
             $categories['categories'] = $data;

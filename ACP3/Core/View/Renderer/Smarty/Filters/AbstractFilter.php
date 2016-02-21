@@ -19,10 +19,10 @@ abstract class AbstractFilter extends AbstractPlugin
     }
 
     /**
-     * @param string                    $tpl_output
+     * @param string                    $tplOutput
      * @param \Smarty_Internal_Template $smarty
      *
      * @return string
      */
-    abstract public function process($tpl_output, \Smarty_Internal_Template $smarty);
+    abstract public function process($tplOutput, \Smarty_Internal_Template $smarty);
 }

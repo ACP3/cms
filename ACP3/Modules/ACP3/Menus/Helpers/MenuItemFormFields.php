@@ -49,8 +49,8 @@ class MenuItemFormFields
     protected function menusDropdown($selected = 0)
     {
         $menus = $this->menusModel->getAllMenus();
-        $c_menus = count($menus);
-        for ($i = 0; $i < $c_menus; ++$i) {
+        $cMenus = count($menus);
+        for ($i = 0; $i < $cMenus; ++$i) {
             $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int)$menus[$i]['id'], (int)$selected);
         }
 

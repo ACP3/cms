@@ -44,9 +44,9 @@ class Index extends Core\Modules\AdminController
     public function execute()
     {
         $menus = $this->menuRepository->getAllMenus();
-        $c_menus = count($menus);
+        $cMenus = count($menus);
 
-        if ($c_menus > 0) {
+        if ($cMenus > 0) {
             $canDeleteItem = $this->acl->hasPermission('admin/menus/items/delete');
             $canEditItem = $this->acl->hasPermission('admin/menus/items/edit');
             $canSortItem = $this->acl->hasPermission('admin/menus/items/order');
@@ -66,7 +66,7 @@ class Index extends Core\Modules\AdminController
             $this->view->assign('colspan', $colspan);
 
             $menuItems = $this->menusHelpers->menuItemsList();
-            for ($i = 0; $i < $c_menus; ++$i) {
+            for ($i = 0; $i < $cMenus; ++$i) {
                 if (isset($menuItems[$menus[$i]['index_name']]) === false) {
                     $menuItems[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
                     $menuItems[$menus[$i]['index_name']]['menu_id'] = $menus[$i]['id'];

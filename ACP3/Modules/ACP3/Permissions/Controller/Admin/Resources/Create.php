@@ -68,10 +68,12 @@ class Create extends Core\Modules\AdminController
         }
 
         $privileges = $this->acl->getAllPrivileges();
-        $c_privileges = count($privileges);
-        for ($i = 0; $i < $c_privileges; ++$i) {
-            $privileges[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('privileges',
-                $privileges[$i]['id']);
+        $cPrivileges = count($privileges);
+        for ($i = 0; $i < $cPrivileges; ++$i) {
+            $privileges[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry(
+                'privileges',
+                $privileges[$i]['id']
+            );
         }
 
         return [

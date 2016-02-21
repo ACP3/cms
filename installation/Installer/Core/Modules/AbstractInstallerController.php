@@ -60,7 +60,7 @@ abstract class AbstractInstallerController implements ControllerInterface
         $this->setLanguage();
 
         // Einige Template Variablen setzen
-        $this->view->assign('LANGUAGES', $this->_languagesDropdown($this->translator->getLocale()));
+        $this->view->assign('LANGUAGES', $this->languagesDropdown($this->translator->getLocale()));
         $this->view->assign('PHP_SELF', $this->appPath->getPhpSelf());
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
         $this->view->assign('ROOT_DIR', $this->appPath->getWebRoot());
@@ -98,7 +98,7 @@ abstract class AbstractInstallerController implements ControllerInterface
      *
      * @return array
      */
-    private function _languagesDropdown($selectedLanguage)
+    private function languagesDropdown($selectedLanguage)
     {
         // Dropdown-Menü für die Sprachen
         $languages = [];

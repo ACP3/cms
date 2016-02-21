@@ -41,7 +41,7 @@ class Redirect
     public function toNewPage($url)
     {
         if ($this->request->isAjax() === true) {
-            return $this->_ajax($url);
+            return $this->ajax($url);
         }
 
         return new RedirectResponse($url);
@@ -56,7 +56,7 @@ class Redirect
      */
     public function temporary($path)
     {
-        return $this->_redirect($path, false);
+        return $this->redirect($path, false);
     }
 
     /**
@@ -67,12 +67,12 @@ class Redirect
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function _redirect($path, $movedPermanently)
+    protected function redirect($path, $movedPermanently)
     {
         $path = $this->router->route($path, true);
 
         if ($this->request->isAjax() === true) {
-            return $this->_ajax($path);
+            return $this->ajax($path);
         }
 
         $status = 302;
@@ -90,7 +90,7 @@ class Redirect
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function _ajax($path)
+    protected function ajax($path)
     {
         if ($this->request->isAjax() === true) {
             $return = [
@@ -112,6 +112,6 @@ class Redirect
      */
     public function permanent($path)
     {
-        return $this->_redirect($path, true);
+        return $this->redirect($path, true);
     }
 }

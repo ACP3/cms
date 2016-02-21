@@ -85,7 +85,7 @@ class Helpers
     public function generatePictureAliases($galleryId)
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-        $c_pictures = count($pictures);
+        $cPictures = count($pictures);
 
         $alias = $this->aliases->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
         if (!empty($alias)) {
@@ -94,7 +94,7 @@ class Helpers
         $seoKeywords = $this->seo->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
         $seoDescription = $this->seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
-        for ($i = 0; $i < $c_pictures; ++$i) {
+        for ($i = 0; $i < $cPictures; ++$i) {
             $this->seo->insertUriAlias(
                 sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']),
                 !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '',
@@ -117,9 +117,9 @@ class Helpers
     public function deletePictureAliases($galleryId)
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-        $c_pictures = count($pictures);
+        $cPictures = count($pictures);
 
-        for ($i = 0; $i < $c_pictures; ++$i) {
+        for ($i = 0; $i < $cPictures; ++$i) {
             $this->seo->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
         }
 

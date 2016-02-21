@@ -61,18 +61,18 @@ abstract class AbstractFormAction extends AdminController
      */
     protected function fetchMenuItemModes($value = '')
     {
-        $values_mode = [1, 2, 3];
-        $lang_mode = [
+        $valuesMode = [1, 2, 3];
+        $langMode = [
             $this->translator->t('menus', 'module'),
             $this->translator->t('menus', 'dynamic_page'),
             $this->translator->t('menus', 'hyperlink')
         ];
         if ($this->articlesHelpers) {
-            $values_mode[] = 4;
-            $lang_mode[] = $this->translator->t('menus', 'article');
+            $valuesMode[] = 4;
+            $langMode[] = $this->translator->t('menus', 'article');
         }
 
-        return $this->get('core.helpers.forms')->selectGenerator('mode', $values_mode, $lang_mode, $value);
+        return $this->get('core.helpers.forms')->selectGenerator('mode', $valuesMode, $langMode, $value);
     }
 
     /**

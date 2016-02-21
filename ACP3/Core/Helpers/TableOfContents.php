@@ -109,15 +109,15 @@ class TableOfContents
      *
      * @return array
      */
-    protected function _getHtmlAttributes($string)
+    protected function getHtmlAttributes($string)
     {
         $matches = [];
         preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
 
         $return = [];
         if (!empty($matches)) {
-            $c_matches = count($matches[1]);
-            for ($i = 0; $i < $c_matches; ++$i) {
+            $cMatches = count($matches[1]);
+            for ($i = 0; $i < $cMatches; ++$i) {
                 $return[$matches[1][$i]] = $matches[2][$i];
             }
         }
@@ -162,7 +162,7 @@ class TableOfContents
     protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
     {
         if ($titlesFromDb === false && is_array($page) === false) {
-            $attributes = $this->_getHtmlAttributes($page);
+            $attributes = $this->getHtmlAttributes($page);
             return !empty($attributes['title']) ? $attributes['title'] : $this->translator->t('system', 'toc_page',
                 ['%page%' => $pageNumber]);
         }

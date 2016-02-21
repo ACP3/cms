@@ -40,7 +40,7 @@ class Asset extends AbstractResource
      *
      * @return string
      */
-    protected function _resolveTemplatePath($template)
+    protected function resolveTemplatePath($template)
     {
         // If an template with directory is given, uppercase the first letter
         if (strpos($template, '/') !== false) {
@@ -70,7 +70,7 @@ class Asset extends AbstractResource
      */
     protected function fetch($name, &$source, &$mtime)
     {
-        $asset = $this->_resolveTemplatePath($name);
+        $asset = $this->resolveTemplatePath($name);
 
         if ($asset !== '') {
             $source = file_get_contents($asset);
@@ -90,7 +90,7 @@ class Asset extends AbstractResource
      */
     protected function fetchTimestamp($name)
     {
-        $asset = $this->_resolveTemplatePath($name);
+        $asset = $this->resolveTemplatePath($name);
 
         return filemtime($asset);
     }

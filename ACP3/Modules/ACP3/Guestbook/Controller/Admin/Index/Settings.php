@@ -54,7 +54,7 @@ class Settings extends Core\Modules\AdminController
 
         $settings = $this->config->getSettings('guestbook');
 
-        $lang_notify = [
+        $langNotify = [
             $this->translator->t('guestbook', 'no_notification'),
             $this->translator->t('guestbook', 'notify_on_new_entry'),
             $this->translator->t('guestbook', 'notify_and_enable')
@@ -72,7 +72,7 @@ class Settings extends Core\Modules\AdminController
 
         return [
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'notify' => $this->get('core.helpers.forms')->selectGenerator('notify', [0, 1, 2], $lang_notify, $settings['notify']),
+            'notify' => $this->get('core.helpers.forms')->selectGenerator('notify', [0, 1, 2], $langNotify, $settings['notify']),
             'overlay' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'form' => array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()

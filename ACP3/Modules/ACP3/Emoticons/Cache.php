@@ -59,10 +59,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveCache()
     {
         $emoticons = $this->emoticonRepository->getAll();
-        $c_emoticons = count($emoticons);
+        $cEmoticons = count($emoticons);
 
         $data = [];
-        for ($i = 0; $i < $c_emoticons; ++$i) {
+        for ($i = 0; $i < $cEmoticons; ++$i) {
             $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
             $code = $emoticons[$i]['code'];
             $description = $emoticons[$i]['description'];

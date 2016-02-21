@@ -41,9 +41,9 @@ class Index extends Core\Modules\AdminController
     public function execute()
     {
         $resources = $this->resourceRepository->getAllResources();
-        $c_resources = count($resources);
+        $cResources = count($resources);
         $output = [];
-        for ($i = 0; $i < $c_resources; ++$i) {
+        for ($i = 0; $i < $cResources; ++$i) {
             if ($this->modules->isActive($resources[$i]['module_name']) === true) {
                 $module = $this->translator->t($resources[$i]['module_name'], $resources[$i]['module_name']);
                 $output[$module][] = $resources[$i];

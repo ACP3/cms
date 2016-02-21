@@ -40,7 +40,7 @@ class Logger
      * @param string $level
      * @param mixed  $message
      */
-    private function _log($channel, $level, $message)
+    private function log($channel, $level, $message)
     {
         $channelName = $channel . '-' . $level;
 
@@ -100,7 +100,7 @@ class Logger
      */
     public function debug($channel, $message)
     {
-        $this->_log($channel, 'debug', $message);
+        $this->log($channel, 'debug', $message);
     }
 
     /**
@@ -111,7 +111,7 @@ class Logger
      */
     public function info($channel, $message)
     {
-        $this->_log($channel, 'info', $message);
+        $this->log($channel, 'info', $message);
     }
 
     /**
@@ -122,7 +122,7 @@ class Logger
      */
     public function notice($channel, $message)
     {
-        $this->_log($channel, 'notice', $message);
+        $this->log($channel, 'notice', $message);
     }
 
     /**
@@ -133,7 +133,7 @@ class Logger
      */
     public function warning($channel, $message)
     {
-        $this->_log($channel, 'warning', $message);
+        $this->log($channel, 'warning', $message);
     }
 
     /**
@@ -144,7 +144,7 @@ class Logger
      */
     public function error($channel, $message)
     {
-        $this->_log($channel, 'error', $message);
+        $this->log($channel, 'error', $message);
     }
 
     /**
@@ -155,7 +155,7 @@ class Logger
      */
     public function critical($channel, $message)
     {
-        $this->_log($channel, 'critical', $message);
+        $this->log($channel, 'critical', $message);
     }
 
     /**
@@ -166,7 +166,7 @@ class Logger
      */
     public function alert($channel, $message)
     {
-        $this->_log($channel, 'alert', $message);
+        $this->log($channel, 'alert', $message);
     }
 
     /**
@@ -177,6 +177,6 @@ class Logger
      */
     public function emergency($channel, $message)
     {
-        $this->_log($channel, 'emergency', $message);
+        $this->log($channel, 'emergency', $message);
     }
 }

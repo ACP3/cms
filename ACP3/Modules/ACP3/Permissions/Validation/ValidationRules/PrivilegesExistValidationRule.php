@@ -49,10 +49,10 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
     public function privilegesExist(array $privileges)
     {
         $allPrivileges = $this->acl->getAllPrivileges();
-        $c_allPrivileges = count($allPrivileges);
+        $cAllPrivileges = count($allPrivileges);
         $valid = false;
 
-        for ($i = 0; $i < $c_allPrivileges; ++$i) {
+        for ($i = 0; $i < $cAllPrivileges; ++$i) {
             $valid = false;
             foreach ($privileges as $module) {
                 foreach ($module as $privilegeId => $value) {

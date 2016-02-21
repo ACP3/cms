@@ -69,10 +69,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveResourcesCache()
     {
         $resources = $this->resourceRepository->getAllResources();
-        $c_resources = count($resources);
+        $cResources = count($resources);
         $data = [];
 
-        for ($i = 0; $i < $c_resources; ++$i) {
+        for ($i = 0; $i < $cResources; ++$i) {
             $area = $resources[$i]['area'];
             if (isset($data[$area]) === false) {
                 $data[$area] = [];
@@ -108,9 +108,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveRolesCache()
     {
         $roles = $this->roleRepository->getAllRoles();
-        $c_roles = count($roles);
+        $cRoles = count($roles);
 
-        for ($i = 0; $i < $c_roles; ++$i) {
+        for ($i = 0; $i < $cRoles; ++$i) {
             // Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
             $first = $last = true;
             if ($i > 0) {
@@ -122,7 +122,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
                 }
             }
 
-            for ($j = $i + 1; $j < $c_roles; ++$j) {
+            for ($j = $i + 1; $j < $cRoles; ++$j) {
                 if ($roles[$i]['parent_id'] === $roles[$j]['parent_id']) {
                     $last = false;
                     break;
@@ -163,15 +163,15 @@ class Cache extends Core\Modules\AbstractCacheStorage
     {
         // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
         $rules = $this->ruleRepository->getAllRulesByRoleIds($roles);
-        $c_rules = count($rules);
+        $cRules = count($rules);
         $privileges = [];
-        for ($i = 0; $i < $c_rules; ++$i) {
+        for ($i = 0; $i < $cRules; ++$i) {
             $key = strtolower($rules[$i]['key']);
             $privileges[$rules[$i]['module_name']][$key] = [
                 'id' => $rules[$i]['privilege_id'],
                 'description' => $rules[$i]['description'],
                 'permission' => $rules[$i]['permission'],
-                'access' => ($rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->_getPermissionValue($key, $rules[$i]['role_id']) == 1)),
+                'access' => ($rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->getPermissionValue($key, $rules[$i]['role_id']) == 1)),
             ];
         }
 
@@ -188,7 +188,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return integer
      */
-    protected function _getPermissionValue($key, $roleId)
+    protected function getPermissionValue($key, $roleId)
     {
         $value = $this->roleRepository->getPermissionByKeyAndRoleId($key, $roleId);
         return isset($value['permission']) ? $value['permission'] : 0;

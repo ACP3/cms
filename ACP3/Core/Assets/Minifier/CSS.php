@@ -23,7 +23,7 @@ class CSS extends AbstractMinifier
      */
     protected function processLibraries($layout)
     {
-        $cacheId = $this->_buildCacheId('css', $layout);
+        $cacheId = $this->buildCacheId('css', $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();

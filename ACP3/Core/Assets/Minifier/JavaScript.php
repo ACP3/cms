@@ -23,7 +23,7 @@ class JavaScript extends AbstractMinifier
      */
     protected function processLibraries($layout)
     {
-        $cacheId = $this->_buildCacheId('js', $layout);
+        $cacheId = $this->buildCacheId('js', $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();

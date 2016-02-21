@@ -112,23 +112,23 @@ class Navbar extends AbstractFunction
     protected function generateMenu($menu, Menus\Helpers\MenuConfiguration $menuConfig)
     {
         $items = $this->menusCache->getVisibleMenuItems($menu);
-        $c_items = count($items);
+        $cItems = count($items);
 
-        if ($c_items > 0) {
-            $selected = $this->_selectMenuItem($menu);
+        if ($cItems > 0) {
+            $selected = $this->selectMenuItem($menu);
 
             $this->menus[$menu] = '';
 
-            for ($i = 0; $i < $c_items; ++$i) {
+            for ($i = 0; $i < $cItems; ++$i) {
                 if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
-                    $this->menus[$menu] .= $this->_processMenuItemWithChildren(
+                    $this->menus[$menu] .= $this->processMenuItemWithChildren(
                         $menu,
                         $menuConfig,
                         $items[$i],
                         $this->getMenuItemSelector($items[$i], $selected)
                     );
                 } else {
-                    $this->menus[$menu] .= $this->_processMenuItemWithoutChildren(
+                    $this->menus[$menu] .= $this->processMenuItemWithoutChildren(
                         $menuConfig,
                         $items[$i],
                         $this->getMenuItemSelector($items[$i], $selected)
@@ -162,7 +162,7 @@ class Navbar extends AbstractFunction
      *
      * @return int
      */
-    protected function _selectMenuItem($menu)
+    protected function selectMenuItem($menu)
     {
         // Selektion nur vornehmen, wenn man sich im Frontend befindet
         if ($this->request->getArea() !== 'admin') {
@@ -186,7 +186,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function _processMenuItemWithoutChildren(Menus\Helpers\MenuConfiguration $menuConfig, $item, $cssSelectors)
+    protected function processMenuItemWithoutChildren(Menus\Helpers\MenuConfiguration $menuConfig, $item, $cssSelectors)
     {
         $link = sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
@@ -211,7 +211,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function _processMenuItemWithChildren($menu, Menus\Helpers\MenuConfiguration $menuConfig, $item, $cssSelectors)
+    protected function processMenuItemWithChildren($menu, Menus\Helpers\MenuConfiguration $menuConfig, $item, $cssSelectors)
     {
         $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig);
         $caret = $subMenuCss = '';

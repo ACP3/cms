@@ -189,7 +189,7 @@ class Request extends AbstractRequest
                 $this->query = $homepage;
             }
 
-            $this->_checkForUriAlias();
+            $this->checkForUriAlias();
         }
 
         $this->parseURI();
@@ -200,7 +200,7 @@ class Request extends AbstractRequest
     /**
      * Checks, whether the current request may equals an uri alias
      */
-    protected function _checkForUriAlias()
+    protected function checkForUriAlias()
     {
         list($params, $probableQuery) = $this->checkUriAliasForAdditionalParameters();
 
@@ -275,9 +275,9 @@ class Request extends AbstractRequest
         $this->parameters = new ParameterBag([]);
 
         if (isset($query[3])) {
-            $c_query = count($query);
+            $cQuery = count($query);
 
-            for ($i = 3; $i < $c_query; ++$i) {
+            for ($i = 3; $i < $cQuery; ++$i) {
                 // Position
                 if (preg_match('/^(page_(\d+))$/', $query[$i])) {
                     $this->parameters->add(['page' => (int)substr($query[$i], 5)]);

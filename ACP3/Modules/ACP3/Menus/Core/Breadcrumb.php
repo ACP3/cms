@@ -64,11 +64,11 @@ class Breadcrumb extends Core\Breadcrumb
             ];
 
             $items = $this->menuItemRepository->getMenuItemsByUri($in);
-            $c_items = count($items);
+            $cItems = count($items);
 
             // Populate the breadcrumb with internal pages
-            for ($i = 0; $i < $c_items; ++$i) {
-                $this->_appendFromDB($items[$i]['title'], $items[$i]['uri']);
+            for ($i = 0; $i < $cItems; ++$i) {
+                $this->appendFromDB($items[$i]['title'], $items[$i]['uri']);
             }
         }
     }
@@ -83,7 +83,7 @@ class Breadcrumb extends Core\Breadcrumb
      *
      * @return $this
      */
-    protected function _appendFromDB($title, $path = '')
+    protected function appendFromDB($title, $path = '')
     {
         $this->stepsFromDb[] = [
             'title' => $title,
@@ -128,8 +128,8 @@ class Breadcrumb extends Core\Breadcrumb
             $this->breadcrumbCache = $this->stepsFromDb;
 
             if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->steps[0]['uri']) {
-                $c_stepsFromModules = count($this->steps);
-                for ($i = 1; $i < $c_stepsFromModules; ++$i) {
+                $cStepsFromModules = count($this->steps);
+                for ($i = 1; $i < $cStepsFromModules; ++$i) {
                     $this->breadcrumbCache[] = $this->steps[$i];
                 }
             }

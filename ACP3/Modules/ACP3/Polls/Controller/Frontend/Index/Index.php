@@ -51,14 +51,21 @@ class Index extends Core\Modules\FrontendController
     public function execute()
     {
         $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
-        $c_polls = count($polls);
+        $cPolls = count($polls);
 
-        if ($c_polls > 0) {
-            for ($i = 0; $i < $c_polls; ++$i) {
+        if ($cPolls > 0) {
+            for ($i = 0; $i < $cPolls; ++$i) {
                 if ($this->user->isAuthenticated() === true) {
-                    $query = $this->voteRepository->getVotesByUserId($polls[$i]['id'], $this->user->getUserId(), $this->request->getServer()->get('REMOTE_ADDR', '')); // Check, whether the logged user has already voted
+                    $query = $this->voteRepository->getVotesByUserId(
+                        $polls[$i]['id'],
+                        $this->user->getUserId(),
+                        $this->request->getServer()->get('REMOTE_ADDR', '')
+                    ); // Check, whether the logged user has already voted
                 } else {
-                    $query = $this->voteRepository->getVotesByIpAddress($polls[$i]['id'], $this->request->getServer()->get('REMOTE_ADDR', '')); // For guest users check against the ip address
+                    $query = $this->voteRepository->getVotesByIpAddress(
+                        $polls[$i]['id'],
+                        $this->request->getServer()->get('REMOTE_ADDR', '')
+                    ); // For guest users check against the IP-address
                 }
 
                 if ($query != 0 ||

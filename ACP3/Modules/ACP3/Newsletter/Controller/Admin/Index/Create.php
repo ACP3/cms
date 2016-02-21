@@ -68,7 +68,7 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all(), $settings);
         }
 
-        $lang_action = [
+        $langAction = [
             $this->translator->t('newsletter', 'send_and_save'),
             $this->translator->t('newsletter', 'only_save')
         ];
@@ -76,7 +76,7 @@ class Create extends AbstractFormAction
         return [
             'settings' => $settings,
             'test' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0),
-            'action' => $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $lang_action, 1),
+            'action' => $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $langAction, 1),
             'form' => array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

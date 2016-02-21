@@ -57,28 +57,28 @@ class Smarty extends AbstractRenderer
     }
 
     /**
-     * @param      $template
-     * @param null $cache_id
-     * @param null $compile_id
-     * @param null $parent
-     * @param bool $display
+     * @param string      $template
+     * @param string|null $cacheId
+     * @param string|null $compileId
+     * @param string|null $parent
+     * @param bool        $display
      *
      * @return bool|mixed|string
      */
-    public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
+    public function fetch($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
     {
-        return $this->renderer->fetch($template, $cache_id, $compile_id, $parent, $display);
+        return $this->renderer->fetch($template, $cacheId, $compileId, $parent, $display);
     }
 
     /**
-     * @param      $template
-     * @param null $cache_id
-     * @param null $compile_id
-     * @param null $parent
+     * @param string      $template
+     * @param string|null $cacheId
+     * @param string|null $compileId
+     * @param string|null $parent
      */
-    public function display($template, $cache_id = null, $compile_id = null, $parent = null)
+    public function display($template, $cacheId = null, $compileId = null, $parent = null)
     {
-        $this->renderer->display($template, $cache_id, $compile_id, $parent);
+        $this->renderer->display($template, $cacheId, $compileId, $parent);
     }
 
     /**

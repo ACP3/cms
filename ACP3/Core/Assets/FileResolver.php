@@ -53,8 +53,7 @@ class FileResolver
         Core\Assets\Cache $resourcesCache,
         Core\Environment\ApplicationPath $appPath,
         Core\Modules\Vendors $vendors
-    )
-    {
+    ) {
         $this->xml = $xml;
         $this->resourcesCache = $resourcesCache;
         $this->appPath = $appPath;
@@ -76,10 +75,10 @@ class FileResolver
     }
 
     /**
-     * @param $modulePath
-     * @param $designPath
-     * @param $dir
-     * @param $file
+     * @param string $modulePath
+     * @param string $designPath
+     * @param string $dir
+     * @param string $file
      *
      * @return string
      */
@@ -102,18 +101,18 @@ class FileResolver
             return $this->cachedPaths[$systemAssetPath];
         }
 
-        return $this->_resolveAssetPath($modulePath, $designPath, $dir, $file);
+        return $this->resolveAssetPath($modulePath, $designPath, $dir, $file);
     }
 
     /**
-     * @param        $modulePath
-     * @param        $designPath
+     * @param string $modulePath
+     * @param string $designPath
      * @param string $dir
      * @param string $file
      *
      * @return string
      */
-    private function _resolveAssetPath($modulePath, $designPath, $dir, $file)
+    private function resolveAssetPath($modulePath, $designPath, $dir, $file)
     {
         $assetPath = '';
         $designAssetPath = $this->designAssetsPath . $designPath . $dir . $file;
@@ -149,7 +148,7 @@ class FileResolver
     }
 
     /**
-     * @param $template
+     * @param string $template
      *
      * @return string
      */

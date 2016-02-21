@@ -95,7 +95,7 @@ class ModuleInfoCache
         // 2. Fetch all 3rd party modules
         // 3. Fetch all local module customizations
         foreach ($this->vendors->getVendors() as $vendor) {
-            $infos += $this->_fetchVendorModules($vendor);
+            $infos += $this->fetchVendorModules($vendor);
         }
 
         $this->cache->save($this->getCacheKey(), $infos);
@@ -106,7 +106,7 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function _fetchVendorModules($vendor)
+    protected function fetchVendorModules($vendor)
     {
         $infos = [];
 
@@ -114,7 +114,7 @@ class ModuleInfoCache
 
         if (!empty($modules)) {
             foreach ($modules as $module) {
-                $moduleInfo = $this->_fetchModuleInfo($module);
+                $moduleInfo = $this->fetchModuleInfo($module);
 
                 if (!empty($moduleInfo)) {
                     $infos[strtolower($module)] = $moduleInfo;
@@ -130,7 +130,7 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function _fetchModuleInfo($moduleDirectory)
+    protected function fetchModuleInfo($moduleDirectory)
     {
         $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($vendors as $vendor) {

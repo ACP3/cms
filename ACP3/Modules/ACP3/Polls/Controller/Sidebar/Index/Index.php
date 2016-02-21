@@ -71,8 +71,8 @@ class Index extends Core\Modules\Controller
             if ($query > 0) {
                 $totalVotes = $poll['total_votes'];
 
-                $c_answers = count($answers);
-                for ($i = 0; $i < $c_answers; ++$i) {
+                $cAnswers = count($answers);
+                for ($i = 0; $i < $cAnswers; ++$i) {
                     $votes = $answers[$i]['votes'];
                     $answers[$i]['votes'] = ($votes > 1) ? $this->translator->t('polls', 'number_of_votes',
                         ['%votes%' => $votes]) : $this->translator->t('polls', ($votes == 1 ? 'one_vote' : 'no_votes'));

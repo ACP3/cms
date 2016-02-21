@@ -87,13 +87,13 @@ class Index extends AbstractAction
         } else {
             $news = $this->newsRepository->getAll($time, POS, $this->user->getEntriesPerPage());
         }
-        $c_news = count($news);
+        $cNews = count($news);
 
-        if ($c_news > 0) {
+        if ($cNews > 0) {
             $this->pagination->setTotalResults($this->newsRepository->countAll($time, $cat));
 
             $formatter = $this->get('core.helpers.stringFormatter');
-            for ($i = 0; $i < $c_news; ++$i) {
+            for ($i = 0; $i < $cNews; ++$i) {
                 if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
                 }

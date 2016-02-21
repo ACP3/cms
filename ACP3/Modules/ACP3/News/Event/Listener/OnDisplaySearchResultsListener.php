@@ -72,12 +72,12 @@ class OnDisplaySearchResultsListener extends Event
                 $displaySearchResults->getSortDirection(),
                 $this->date->getCurrentDateTime()
             );
-            $c_results = count($results);
+            $cResults = count($results);
 
-            if ($c_results > 0) {
+            if ($cResults > 0) {
                 $searchResults = [];
                 $searchResults['dir'] = 'news';
-                for ($i = 0; $i < $c_results; ++$i) {
+                for ($i = 0; $i < $cResults; ++$i) {
                     $searchResults['results'][$i] = $results[$i];
                     $searchResults['results'][$i]['hyperlink'] = $this->router->route('news/index/details/id_' . $results[$i]['id']);
                 }

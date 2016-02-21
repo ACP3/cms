@@ -93,7 +93,7 @@ abstract class AbstractMinifier implements MinifierInterface
      *
      * @return string
      */
-    protected function _buildCacheId($type, $layout)
+    protected function buildCacheId($type, $layout)
     {
         return 'assets_' . $this->generateFilenameHash($type, $layout);
     }
