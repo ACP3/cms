@@ -244,14 +244,13 @@ class Mailer
                 return $this->bcc === true ? $this->_sendBcc() : $this->_sendTo();
             }
 
-            return false;
         } catch (\phpmailerException $e) {
             $this->logger->error('mailer', $e->getMessage());
-            return false;
         } catch (\Exception $e) {
             $this->logger->error('mailer', $e->getMessage());
-            return false;
         }
+
+        return false;
     }
 
     /**

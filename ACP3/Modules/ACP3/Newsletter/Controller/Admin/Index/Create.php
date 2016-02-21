@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Create
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
  */
-class Create extends Core\Modules\AdminController
+class Create extends AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Date
@@ -30,10 +30,6 @@ class Create extends Core\Modules\AdminController
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
-     */
-    protected $newsletterHelpers;
 
     /**
      * Create constructor.
@@ -53,13 +49,12 @@ class Create extends Core\Modules\AdminController
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {
-        parent::__construct($context);
+        parent::__construct($context, $newsletterHelpers);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->newsletterRepository = $newsletterRepository;
         $this->adminFormValidation = $adminFormValidation;
-        $this->newsletterHelpers = $newsletterHelpers;
     }
 
     /**
@@ -110,22 +105,14 @@ class Create extends Core\Modules\AdminController
             ];
             $lastId = $this->newsletterRepository->insert($insertValues);
 
-            // Test-Newsletter
-            if ($formData['test'] == 1) {
-                $bool2 = $this->newsletterHelpers->sendNewsletter($lastId, $settings['mail']);
-
-                $text = $this->translator->t('newsletter', 'create_success');
-                $result = $lastId !== false && $bool2 !== false;
-            } else {
-                $text = $this->translator->t('newsletter', 'save_success');
-                $result = $lastId !== false;
-            }
+            list($text, $result) = $this->sendTestNewsletter(
+                $formData['test'] == 1,
+                $lastId,
+                $lastId,
+                $settings['mail']
+            );
 
             $this->formTokenHelper->unsetFormToken();
-
-            if ($result === false) {
-                $text = $this->translator->t('newsletter', 'create_save_error');
-            }
 
             return $this->redirectMessages()->setMessage($result, $text);
         });

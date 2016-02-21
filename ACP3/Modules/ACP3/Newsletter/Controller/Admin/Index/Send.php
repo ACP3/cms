@@ -72,9 +72,11 @@ class Send extends Core\Modules\AdminController
             }
 
             return $this->redirectMessages()->setMessage(
-                $bool && $bool2 !== false,
-                $this->translator->t('newsletter',
-                    $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error')
+                $bool === true && $bool2 !== false,
+                $this->translator->t(
+                    'newsletter',
+                    $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'
+                )
             );
         }
 

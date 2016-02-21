@@ -20,8 +20,11 @@ class AccountRepository extends AbstractRepository
      */
     public function accountExists($emailAddress, $hash = '')
     {
-        $where = empty($hash) === false ? ' AND hash = :hash' : '';
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE `mail` = :mail" . $where, ['mail' => $emailAddress, 'hash' => $hash]) > 0;
+        $where = empty($hash) === false ? ' AND `hash` = :hash' : '';
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `mail` = :mail" . $where,
+            ['mail' => $emailAddress, 'hash' => $hash]
+        ) > 0;
     }
 
     /**
@@ -31,7 +34,10 @@ class AccountRepository extends AbstractRepository
      */
     public function accountExistsByHash($hash)
     {
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE `hash` = :hash", ['hash' => $hash]) > 0;
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `hash` = :hash",
+            ['hash' => $hash]
+        ) > 0;
     }
 
     /**
@@ -41,7 +47,10 @@ class AccountRepository extends AbstractRepository
      */
     public function getOneByEmail($email)
     {
-        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE mail = :mail", ['mail' => $email]);
+        return $this->db->fetchAssoc(
+            "SELECT * FROM {$this->getTableName()} WHERE `mail` = :mail",
+            ['mail' => $email]
+        );
     }
 
     /**
@@ -51,7 +60,10 @@ class AccountRepository extends AbstractRepository
      */
     public function getOneByHash($hash)
     {
-        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE hash = :hash", ['hash' => $hash]);
+        return $this->db->fetchAssoc(
+            "SELECT * FROM {$this->getTableName()} WHERE `hash` = :hash",
+            ['hash' => $hash]
+        );
     }
 
     /**
@@ -59,7 +71,10 @@ class AccountRepository extends AbstractRepository
      */
     public function countAllAccounts()
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE status != ' . AccountStatus::ACCOUNT_STATUS_DISABLED);
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` != :status",
+            ['status' => AccountStatus::ACCOUNT_STATUS_DISABLED]
+        );
     }
 
     /**
@@ -67,7 +82,10 @@ class AccountRepository extends AbstractRepository
      */
     public function countAllActiveAccounts()
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `status` = ' . AccountStatus::ACCOUNT_STATUS_CONFIRMED);
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` = :status",
+            ['status' => AccountStatus::ACCOUNT_STATUS_CONFIRMED]
+        );
     }
 
     /**
@@ -75,7 +93,10 @@ class AccountRepository extends AbstractRepository
      */
     public function getAllAccounts()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE status != ' . AccountStatus::ACCOUNT_STATUS_DISABLED . ' ORDER BY `id` DESC');
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} WHERE `status` != :status ORDER BY `id` DESC",
+            ['status' => AccountStatus::ACCOUNT_STATUS_DISABLED]
+        );
     }
 
     /**
@@ -83,6 +104,9 @@ class AccountRepository extends AbstractRepository
      */
     public function getAllActiveAccounts()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE status = ' . AccountStatus::ACCOUNT_STATUS_CONFIRMED . ' ORDER BY `id` DESC');
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} WHERE `status` = :status ORDER BY `id` DESC",
+            ['status' => AccountStatus::ACCOUNT_STATUS_CONFIRMED]
+        );
     }
 }
