@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Feeds;
  * Class Index
  * @package ACP3\Modules\ACP3\Feeds\Controller\Admin\Index
  */
-class Index extends Core\Modules\AdminController
+class Index extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -24,12 +24,12 @@ class Index extends Core\Modules\AdminController
     protected $adminFormValidation;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
+     * @param \ACP3\Core\Controller\Context\AdminContext              $context
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Feeds\Validation\AdminFormValidation $adminFormValidation
     )

@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System;
  * Class Modules
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
  */
-class Modules extends Core\Modules\AdminController
+class Modules extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCache
@@ -35,14 +35,14 @@ class Modules extends Core\Modules\AdminController
     /**
      * Modules constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext       $context
+     * @param \ACP3\Core\Controller\Context\AdminContext       $context
      * @param \ACP3\Core\Modules\ModuleInfoCache               $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Helper\Installer       $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache             $permissionsCache
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\ModuleRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,

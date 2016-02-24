@@ -30,5 +30,5 @@ services:
   contact.controller.widget.index.index:
     class: %contact.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
 

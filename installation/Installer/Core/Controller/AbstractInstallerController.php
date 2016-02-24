@@ -1,17 +1,19 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Installer\Core\Modules;
+namespace ACP3\Installer\Core\Controller;
 
+use ACP3\Core\Controller\ControllerInterface;
 use ACP3\Core\Filesystem;
-use ACP3\Core\Modules\ControllerInterface;
 use ACP3\Core\Modules\DisplayControllerActionTrait;
 use ACP3\Core\Redirect;
-use ACP3\Installer\Core\Modules\Controller\InstallerContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Module Controller of the installer modules
- * @package ACP3\Installer\Core\Modules
+ * @package ACP3\Installer\Core\Controller
  */
 abstract class AbstractInstallerController implements ControllerInterface
 {
@@ -35,9 +37,9 @@ abstract class AbstractInstallerController implements ControllerInterface
     protected $appPath;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\InstallerContext $context
+     * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
      */
-    public function __construct(InstallerContext $context)
+    public function __construct(Context\InstallerContext $context)
     {
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();

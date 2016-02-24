@@ -45,7 +45,7 @@ class Edit extends AbstractFormAction
     protected $menuItemFormFieldsHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Core\Date                                            $date
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository        $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                          $articlesCache
@@ -53,7 +53,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Date $date,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,

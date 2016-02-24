@@ -2,7 +2,7 @@
 namespace ACP3\Core\Modules\Helper;
 
 use ACP3\Core;
-use ACP3\Core\Modules\FrontendController;
+use ACP3\Core\Controller\FrontendController;
 
 /**
  * Class Action
@@ -84,11 +84,11 @@ class Action
     }
 
     /**
-     * @param \ACP3\Core\Modules\FrontendController $context
-     * @param string                                $action
-     * @param callable                              $callback
-     * @param string|null                           $moduleConfirmUrl
-     * @param string|null                           $moduleIndexUrl
+     * @param \ACP3\Core\Controller\FrontendController $context
+     * @param string                                   $action
+     * @param callable                                 $callback
+     * @param string|null                              $moduleConfirmUrl
+     * @param string|null                              $moduleIndexUrl
      *
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
      * @throws \ACP3\Core\Exceptions\ResultNotExists
@@ -117,11 +117,11 @@ class Action
     }
 
     /**
-     * @param \ACP3\Core\Modules\FrontendController $context
-     * @param string                                $action
-     * @param callable                              $callback
-     * @param string|null                           $moduleConfirmUrl
-     * @param string|null                           $moduleIndexUrl
+     * @param \ACP3\Core\Controller\FrontendController $context
+     * @param string                                   $action
+     * @param callable                                 $callback
+     * @param string|null                              $moduleConfirmUrl
+     * @param string|null                              $moduleIndexUrl
      *
      * @return void|string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists

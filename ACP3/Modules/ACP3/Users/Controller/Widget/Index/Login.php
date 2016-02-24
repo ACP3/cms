@@ -11,7 +11,7 @@ use ACP3\Core;
  * Class Login
  * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
  */
-class Login extends Core\Modules\Controller
+class Login extends Core\Controller\WidgetController
 {
     /**
      * Displays the login mask, if the user is not already logged in

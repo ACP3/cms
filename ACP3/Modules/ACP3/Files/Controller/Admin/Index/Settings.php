@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Files;
  * Class Settings
  * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
  */
-class Settings extends Core\Modules\AdminController
+class Settings extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -36,12 +36,12 @@ class Settings extends Core\Modules\AdminController
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                      $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                      $context
      * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
     {

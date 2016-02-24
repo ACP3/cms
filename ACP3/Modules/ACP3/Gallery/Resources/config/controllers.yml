@@ -126,7 +126,7 @@ services:
   gallery.controller.widget.index.index:
     class: %gallery.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@gallery.model.galleryrepository'
 

@@ -1,5 +1,9 @@
 <?php
-namespace ACP3\Core\Modules\Controller;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Config;
@@ -14,10 +18,10 @@ use ACP3\Core\View;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class Context
- * @package ACP3\Core\Modules\Controller
+ * Class WidgetContext
+ * @package ACP3\Core\Controller\Context
  */
-class Context
+class WidgetContext
 {
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface

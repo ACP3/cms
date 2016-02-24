@@ -13,5 +13,5 @@ services:
   search.controller.widget.index.index:
     class: %search.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@search.helpers'

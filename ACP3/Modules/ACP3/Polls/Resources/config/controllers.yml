@@ -71,7 +71,7 @@ services:
   polls.controller.widget.index.index:
     class: %polls.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'

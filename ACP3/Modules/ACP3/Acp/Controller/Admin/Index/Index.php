@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class Index
  * @package ACP3\Modules\ACP3\Acp\Controller\Admin\Index
  */
-class Index extends Core\Modules\AdminController
+class Index extends Core\Controller\AdminController
 {
     /**
      * @return array

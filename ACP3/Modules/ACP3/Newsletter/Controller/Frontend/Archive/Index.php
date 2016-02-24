@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Index
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive
  */
-class Index extends Core\Modules\FrontendController
+class Index extends Core\Controller\FrontendController
 {
     /**
      * @var Core\Pagination
@@ -24,12 +24,12 @@ class Index extends Core\Modules\FrontendController
     protected $newsletterRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext            $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
      * @param Core\Pagination                                          $pagination
      * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
         Newsletter\Model\NewsletterRepository $newsletterRepository)
     {

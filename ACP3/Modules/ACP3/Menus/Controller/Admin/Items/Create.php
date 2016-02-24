@@ -55,7 +55,7 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Core\Router\Aliases                                  $aliases
      * @param \ACP3\Core\NestedSet                                       $nestedSet
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
@@ -66,7 +66,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Router\Aliases $aliases,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,

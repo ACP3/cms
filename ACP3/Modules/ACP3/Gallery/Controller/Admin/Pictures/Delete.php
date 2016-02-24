@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Delete
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
  */
-class Delete extends Core\Modules\AdminController
+class Delete extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers
@@ -30,13 +30,13 @@ class Delete extends Core\Modules\AdminController
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext         $context
+     * @param \ACP3\Core\Controller\Context\AdminContext         $context
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache

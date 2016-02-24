@@ -81,7 +81,6 @@ services:
   files.controller.widget.index.index:
     class: %files.controller.widget.index.index.fqdn%
     arguments:
-      - @core.context
+      - @core.context.widget
       - @core.date
       - @files.model.filesrepository
-

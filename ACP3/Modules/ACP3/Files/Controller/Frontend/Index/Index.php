@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories;
  * Class Index
  * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
  */
-class Index extends Core\Modules\FrontendController
+class Index extends Core\Controller\FrontendController
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Cache
@@ -23,11 +23,11 @@ class Index extends Core\Modules\FrontendController
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Categories\Cache           $categoriesCache
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Categories\Cache $categoriesCache
     ) {
         parent::__construct($context);

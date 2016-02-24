@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Feeds;
  * Class Index
  * @package ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index
  */
-class Index extends Core\Modules\FrontendController
+class Index extends Core\Controller\FrontendController
 {
     /**
      * @var \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
@@ -20,14 +20,14 @@ class Index extends Core\Modules\FrontendController
     protected $feedGenerator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator $feedGenerator
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $frontendContext,
+        Core\Controller\Context\FrontendContext $context,
         Feeds\Helper\FeedGenerator $feedGenerator)
     {
-        parent::__construct($frontendContext);
+        parent::__construct($context);
 
         $this->feedGenerator = $feedGenerator;
     }

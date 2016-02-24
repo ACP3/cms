@@ -5,7 +5,7 @@
 
 namespace ACP3\Installer\Modules\Errors\Controller\Index;
 
-use ACP3\Installer\Core\Modules\AbstractInstallerController;
+use ACP3\Installer\Core\Controller\AbstractInstallerController;
 
 /**
  * Class NotFound

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Contact;
  * Class Index
  * @package ACP3\Modules\ACP3\Contact\Controller\Widget\Index
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Controller\WidgetController
 {
     public function execute()
     {

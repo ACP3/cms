@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System;
  * Class Edit
  * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
  */
-class Edit extends Core\Modules\AdminController
+class Edit extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
@@ -40,14 +40,14 @@ class Edit extends Core\Modules\AdminController
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                 $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository        $commentRepository
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository           $systemModuleRepository
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Comments\Model\CommentRepository $commentRepository,
         Comments\Validation\AdminFormValidation $adminFormValidation,
         System\Model\ModuleRepository $systemModuleRepository,

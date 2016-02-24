@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Create
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Index
  */
-class Create extends Core\Modules\AdminController
+class Create extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -30,13 +30,13 @@ class Create extends Core\Modules\AdminController
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
+     * @param \ACP3\Core\Controller\Context\AdminContext             $context
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository          $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenuRepository $menuRepository,
         Menus\Validation\MenuFormValidation $menuFormValidation

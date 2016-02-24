@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System;
  * Class Designs
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
  */
-class Designs extends Core\Modules\AdminController
+class Designs extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Core\XML
@@ -23,11 +23,11 @@ class Designs extends Core\Modules\AdminController
     /**
      * Designs constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\XML                             $xml
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\XML $xml)
     {
         parent::__construct($context);

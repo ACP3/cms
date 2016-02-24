@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Emoticons;
  * Class Edit
  * @package ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index
  */
-class Edit extends Core\Modules\AdminController
+class Edit extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -34,14 +34,14 @@ class Edit extends Core\Modules\AdminController
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                  $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                  $context
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository       $emoticonRepository
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Emoticons\Cache                          $emoticonsCache
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonRepository $emoticonRepository,
         Emoticons\Validation\AdminFormValidation $adminFormValidation,

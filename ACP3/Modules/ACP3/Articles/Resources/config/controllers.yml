@@ -73,7 +73,7 @@ services:
   articles.controller.widget.index.index:
     class: %articles.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@articles.model.articlerepository'
       - '@articles.cache'
@@ -81,7 +81,7 @@ services:
   articles.controller.widget.index.single:
     class: %articles.controller.widget.index.single.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@articles.model.articlerepository'
       - '@articles.cache'

@@ -80,13 +80,13 @@ services:
   news.controller.widget.index.index:
     class: %news.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@news.model.newsrepository'
 
   news.controller.widget.index.latest:
     class: %news.controller.widget.index.latest.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@news.model.newsrepository'

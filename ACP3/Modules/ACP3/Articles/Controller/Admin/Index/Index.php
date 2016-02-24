@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Index
  * @package ACP3\Modules\ACP3\Articles\Controller\Admin\Index
  */
-class Index extends Core\Modules\AdminController
+class Index extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
@@ -21,11 +21,11 @@ class Index extends Core\Modules\AdminController
     protected $articleRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Core\Controller\Context\AdminContext          $context
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Articles\Model\ArticleRepository $articleRepository)
     {
         parent::__construct($context);

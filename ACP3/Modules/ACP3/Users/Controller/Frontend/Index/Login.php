@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Users;
  * Class Login
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
  */
-class Login extends Core\Modules\FrontendController
+class Login extends Core\Controller\FrontendController
 {
     /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse

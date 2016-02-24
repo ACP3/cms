@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Delete
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
  */
-class Delete extends Core\Modules\AdminController
+class Delete extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
@@ -26,12 +26,12 @@ class Delete extends Core\Modules\AdminController
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
+     * @param \ACP3\Core\Controller\Context\AdminContext              $context
      * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache
     )

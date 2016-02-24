@@ -11,7 +11,7 @@ use ACP3\Core;
  * Class AccessForbidden
  * @package ACP3\Modules\ACP3\Errors\Controller\Frontend\Index
  */
-class AccessForbidden extends Core\Modules\FrontendController
+class AccessForbidden extends Core\Controller\FrontendController
 {
     public function execute()
     {

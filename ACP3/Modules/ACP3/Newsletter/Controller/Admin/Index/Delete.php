@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Delete
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
  */
-class Delete extends Core\Modules\AdminController
+class Delete extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
@@ -22,11 +22,11 @@ class Delete extends Core\Modules\AdminController
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext               $context
+     * @param \ACP3\Core\Controller\Context\AdminContext               $context
      * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Newsletter\Model\NewsletterRepository $newsletterRepository)
     {
         parent::__construct($context);

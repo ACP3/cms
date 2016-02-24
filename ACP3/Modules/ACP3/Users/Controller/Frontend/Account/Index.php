@@ -22,11 +22,11 @@ class Index extends AbstractAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Users\Model\UserRepository $userRepository
     )
     {

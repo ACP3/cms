@@ -1,14 +1,18 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Modules\DisplayControllerActionTrait;
 
 /**
  * Class FrontendController
- * @package ACP3\Core\Modules
+ * @package ACP3\Core\Controller
  */
-abstract class FrontendController extends Core\Modules\Controller
+abstract class FrontendController extends Core\Controller\WidgetController
 {
     use DisplayControllerActionTrait;
 
@@ -34,17 +38,17 @@ abstract class FrontendController extends Core\Modules\Controller
     protected $actionHelper;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      */
-    public function __construct(Controller\FrontendContext $frontendContext)
+    public function __construct(Context\FrontendContext $context)
     {
-        parent::__construct($frontendContext);
+        parent::__construct($context);
 
-        $this->assets = $frontendContext->getAssets();
-        $this->breadcrumb = $frontendContext->getBreadcrumb();
-        $this->seo = $frontendContext->getSeo();
-        $this->actionHelper = $frontendContext->getActionHelper();
-        $this->response = $frontendContext->getResponse();
+        $this->assets = $context->getAssets();
+        $this->breadcrumb = $context->getBreadcrumb();
+        $this->seo = $context->getSeo();
+        $this->actionHelper = $context->getActionHelper();
+        $this->response = $context->getResponse();
     }
 
     /**

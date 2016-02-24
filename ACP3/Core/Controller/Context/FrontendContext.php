@@ -1,14 +1,18 @@
 <?php
-namespace ACP3\Core\Modules\Controller;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FrontendContext
- * @package ACP3\Core\Modules\Controller
+ * @package ACP3\Core\Controller\Context
  */
-class FrontendContext extends Core\Modules\Controller\Context
+class FrontendContext extends Core\Controller\Context\WidgetContext
 {
     /**
      * @var \ACP3\Core\Assets
@@ -32,15 +36,15 @@ class FrontendContext extends Core\Modules\Controller\Context
     protected $response;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context      $context
-     * @param \ACP3\Core\Assets                          $assets
-     * @param \ACP3\Core\Breadcrumb                      $breadcrumb
-     * @param \ACP3\Core\SEO                             $seo
-     * @param \ACP3\Core\Modules\Helper\Action           $actionHelper
-     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
+     * @param \ACP3\Core\Assets                           $assets
+     * @param \ACP3\Core\Breadcrumb                       $breadcrumb
+     * @param \ACP3\Core\SEO                              $seo
+     * @param \ACP3\Core\Modules\Helper\Action            $actionHelper
+     * @param \Symfony\Component\HttpFoundation\Response  $response
      */
     public function __construct(
-        Core\Modules\Controller\Context $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Assets $assets,
         Core\Breadcrumb $breadcrumb,
         Core\SEO $seo,

@@ -104,11 +104,11 @@ services:
 
   users.controller.frontend.index.login:
     class: %users.controller.frontend.index.login.fqdn%
-    parent: core.modules.controller.frontend
+    parent: core.controller.frontend
 
   users.controller.frontend.index.logout:
     class: %users.controller.frontend.index.logout.fqdn%
-    parent: core.modules.controller.frontend
+    parent: core.controller.frontend
 
   users.controller.frontend.index.register:
     class: %users.controller.frontend.index.register.fqdn%
@@ -132,8 +132,8 @@ services:
 
   users.controller.widget.index.login:
     class: %users.controller.widget.index.login.fqdn%
-    parent: core.modules.controller
+    parent: core.controller.widget
 
   users.controller.widget.index.user_menu:
     class: %users.controller.widget.index.user_menu.fqdn%
-    parent: core.modules.controller
+    parent: core.controller.widget

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\System;
  * Class Index
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Index
  */
-class Index extends Core\Modules\AdminController
+class Index extends Core\Controller\AdminController
 {
     public function execute()
     {

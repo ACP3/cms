@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Articles;
  * Class Index
  * @package ACP3\Modules\ACP3\Articles\Controller\Widget\Index
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Controller\WidgetController
 {
     /**
      * @var Core\Date
@@ -28,13 +28,13 @@ class Index extends Core\Modules\Controller
     protected $articleRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context               $context
+     * @param \ACP3\Core\Controller\Context\WidgetContext         $context
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
      */
     public function __construct(
-        Core\Modules\Controller\Context $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache)

@@ -6,7 +6,7 @@
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 
-use ACP3\Core\Modules\FrontendController;
+use ACP3\Core\Controller\FrontendController;
 
 /**
  * Class AbstractAction

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Comments;
  * Class Settings
  * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Index
  */
-class Settings extends Core\Modules\AdminController
+class Settings extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation
@@ -26,12 +26,12 @@ class Settings extends Core\Modules\AdminController
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                         $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                         $context
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {

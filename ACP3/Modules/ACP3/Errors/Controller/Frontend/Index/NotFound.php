@@ -11,7 +11,7 @@ use ACP3\Core;
  * Class NotFound
  * @package ACP3\Modules\ACP3\Errors\Controller\Frontend\Index
  */
-class NotFound extends Core\Modules\FrontendController
+class NotFound extends Core\Controller\FrontendController
 {
     public function execute()
     {

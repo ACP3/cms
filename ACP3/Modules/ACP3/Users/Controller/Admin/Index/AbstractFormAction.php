@@ -6,7 +6,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\AdminController;
+use ACP3\Core\Controller\AdminController;
 
 /**
  * Class AbstractFormAction
@@ -22,11 +22,11 @@ abstract class AbstractFormAction extends AdminController
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\Forms                   $formsHelpers
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelpers)
     {
         parent::__construct($context);

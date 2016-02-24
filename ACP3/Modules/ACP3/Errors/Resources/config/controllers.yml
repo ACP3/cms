@@ -6,13 +6,13 @@ parameters:
 services:
   errors.controller.frontend.index.access_forbidden:
     class: %errors.controller.frontend.index.access_forbidden.fqdn%
-    parent: core.modules.controller.frontend
+    parent: core.controller.frontend
 
   errors.controller.frontend.index.not_found:
     class: %errors.controller.frontend.index.not_found.fqdn%
-    parent: core.modules.controller.frontend
+    parent: core.controller.frontend
 
   errors.controller.frontend.index.server_error:
     class: %errors.controller.frontend.index.server_error.fqdn%
-    parent: core.modules.controller.frontend
+    parent: core.controller.frontend
 

@@ -1,11 +1,15 @@
 <?php
-namespace ACP3\Core\Modules\Controller;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core;
 
 /**
  * Class AdminContext
- * @package ACP3\Core\Modules\Controller
+ * @package ACP3\Core\Controller\Context
  */
 class AdminContext extends FrontendContext
 {
@@ -15,21 +19,21 @@ class AdminContext extends FrontendContext
     protected $session;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $frontendContext
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\SessionHandler                     $session
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $frontendContext,
+        Core\Controller\Context\FrontendContext $context,
         Core\SessionHandler $session
     )
     {
         parent::__construct(
-            $frontendContext,
-            $frontendContext->getAssets(),
-            $frontendContext->getBreadcrumb(),
-            $frontendContext->getSeo(),
-            $frontendContext->getActionHelper(),
-            $frontendContext->getResponse()
+            $context,
+            $context->getAssets(),
+            $context->getBreadcrumb(),
+            $context->getSeo(),
+            $context->getActionHelper(),
+            $context->getResponse()
         );
 
         $this->session = $session;

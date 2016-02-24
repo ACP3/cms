@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Guestbook;
  * Class Settings
  * @package ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index
  */
-class Settings extends Core\Modules\AdminController
+class Settings extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -27,12 +27,12 @@ class Settings extends Core\Modules\AdminController
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                          $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                          $context
      * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     )

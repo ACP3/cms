@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Users;
  * Class ViewProfile
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
  */
-class ViewProfile extends Core\Modules\FrontendController
+class ViewProfile extends Core\Controller\FrontendController
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
@@ -24,11 +24,11 @@ class ViewProfile extends Core\Modules\FrontendController
     /**
      * ViewProfile constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Users\Model\UserRepository $userRepository)
     {
         parent::__construct($context);

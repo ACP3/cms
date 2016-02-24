@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Polls;
  * Class Vote
  * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
  */
-class Vote extends Core\Modules\FrontendController
+class Vote extends Core\Controller\FrontendController
 {
     /**
      * @var Core\Date
@@ -32,14 +32,14 @@ class Vote extends Core\Modules\FrontendController
     protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext   $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext   $context
      * @param Core\Date                                       $date
      * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Polls\Model\PollRepository $pollRepository,
         Polls\Model\AnswerRepository $answerRepository,

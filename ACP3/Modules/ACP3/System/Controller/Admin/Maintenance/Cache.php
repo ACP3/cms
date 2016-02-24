@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\System;
  * Class Cache
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Maintenance
  */
-class Cache extends Core\Modules\AdminController
+class Cache extends Core\Controller\AdminController
 {
     /**
      * @param string $action

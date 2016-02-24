@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\News;
  * Class Latest
  * @package ACP3\Modules\ACP3\News\Controller\Widget\Index
  */
-class Latest extends Core\Modules\Controller
+class Latest extends Core\Controller\WidgetController
 {
     /**
      * @var Core\Date
@@ -24,12 +24,12 @@ class Latest extends Core\Modules\Controller
     protected $newsRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context        $context
+     * @param \ACP3\Core\Controller\Context\WidgetContext  $context
      * @param \ACP3\Core\Date                              $date
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
      */
     public function __construct(
-        Core\Modules\Controller\Context $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         News\Model\NewsRepository $newsRepository)
     {

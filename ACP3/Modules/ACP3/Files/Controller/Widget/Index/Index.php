@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Files;
  * Class Index
  * @package ACP3\Modules\ACP3\Files\Controller\Widget\Index
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Controller\WidgetController
 {
     /**
      * @var \ACP3\Core\Date
@@ -25,12 +25,12 @@ class Index extends Core\Modules\Controller
     protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context          $context
+     * @param \ACP3\Core\Controller\Context\WidgetContext    $context
      * @param \ACP3\Core\Date                                $date
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
-        Core\Modules\Controller\Context $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Files\Model\FilesRepository $filesRepository)
     {

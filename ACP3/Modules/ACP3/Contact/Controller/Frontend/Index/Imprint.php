@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Contact;
  * Class Imprint
  * @package ACP3\Modules\ACP3\Contact\Controller\Frontend\Index
  */
-class Imprint extends Core\Modules\FrontendController
+class Imprint extends Core\Controller\FrontendController
 {
     /**
      * @return array

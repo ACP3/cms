@@ -6,7 +6,7 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\AdminController;
+use ACP3\Core\Controller\AdminController;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 

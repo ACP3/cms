@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Categories;
  * Class Delete
  * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
  */
-class Delete extends Core\Modules\AdminController
+class Delete extends Core\Controller\AdminController
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
@@ -26,12 +26,12 @@ class Delete extends Core\Modules\AdminController
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext             $context
+     * @param \ACP3\Core\Controller\Context\AdminContext             $context
      * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Categories\Model\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache)
     {

@@ -11,7 +11,7 @@ use ACP3\Core;
  * Class UserMenu
  * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
  */
-class UserMenu extends Core\Modules\Controller
+class UserMenu extends Core\Controller\WidgetController
 {
     /**
      * Displays the user menu, if the user is logged in

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\System;
  * Class UpdateCheck
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Maintenance
  */
-class UpdateCheck extends Core\Modules\AdminController
+class UpdateCheck extends Core\Controller\AdminController
 {
     public function execute()
     {

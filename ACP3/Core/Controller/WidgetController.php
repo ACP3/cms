@@ -1,15 +1,18 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Controller;
 
 use ACP3\Core;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class Controller
- * @package ACP3\Core\Modules
+ * Class WidgetController
+ * @package ACP3\Core\Controller
  */
-abstract class Controller implements ControllerInterface
+abstract class WidgetController implements ControllerInterface
 {
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
@@ -72,9 +75,11 @@ abstract class Controller implements ControllerInterface
     private $template = '';
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context $context
+     * WidgetController constructor.
+     *
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
      */
-    public function __construct(Controller\Context $context)
+    public function __construct(Core\Controller\Context\WidgetContext $context)
     {
         $this->eventDispatcher = $context->getEventDispatcher();
         $this->acl = $context->getACL();

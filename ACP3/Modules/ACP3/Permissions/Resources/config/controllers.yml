@@ -40,7 +40,7 @@ services:
 
   permissions.controller.admin.index.index:
     class: %permissions.controller.admin.index.index.fqdn%
-    parent: core.modules.controller.admin
+    parent: core.controller.admin
 
   permissions.controller.admin.index.order:
     class: %permissions.controller.admin.index.order.fqdn%

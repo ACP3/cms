@@ -11,7 +11,7 @@ use ACP3\Core;
  * Class Index
  * @package ACP3\Modules\ACP3\Errors\Controller\Frontend\Index
  */
-class ServerError extends Core\Modules\FrontendController
+class ServerError extends Core\Controller\FrontendController
 {
     public function execute()
     {

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Polls;
  * Class Index
  * @package ACP3\Modules\ACP3\Polls\Controller\Widget\Index
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Controller\WidgetController
 {
     /**
      * @var Core\Date
@@ -32,14 +32,14 @@ class Index extends Core\Modules\Controller
     protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\Context           $context
+     * @param \ACP3\Core\Controller\Context\WidgetContext     $context
      * @param Core\Date                                       $date
      * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
      */
     public function __construct(
-        Core\Modules\Controller\Context $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Polls\Model\PollRepository $pollRepository,
         Polls\Model\AnswerRepository $answerRepository,
