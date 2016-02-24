@@ -15,6 +15,6 @@ class NotFound extends AbstractInstallerController
 {
     public function execute()
     {
-        header('HTTP/1.0 404 not found');
+        $this->response->setStatusCode(404);
     }
 }

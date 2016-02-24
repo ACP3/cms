@@ -15,6 +15,6 @@ class ServerError extends AbstractInstallerController
 {
     public function execute()
     {
-        header('HTTP/1.0 500 Internal Server Error');
+        $this->response->setStatusCode(500);
     }
 }
