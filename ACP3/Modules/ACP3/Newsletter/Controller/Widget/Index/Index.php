@@ -3,7 +3,7 @@
  * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index;
+namespace ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha;
@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\Newsletter\Controller\CaptchaHelperTrait;
 
 /**
  * Class Index
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Sidebar
+ * @package ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index
  */
 class Index extends Core\Modules\Controller
 {
@@ -46,6 +46,6 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('form_token', $this->formTokenHelper->renderFormToken('newsletter/index/index'));
 
-        $this->setTemplate($template !== '' ? $template : 'Newsletter/Sidebar/index.index.tpl');
+        $this->setTemplate($template !== '' ? $template : 'Newsletter/Widget/index.index.tpl');
     }
 }

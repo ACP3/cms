@@ -3,16 +3,16 @@
  * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index;
+namespace ACP3\Modules\ACP3\Articles\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 
 /**
- * Class Single
- * @package ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index
+ * Class Index
+ * @package ACP3\Modules\ACP3\Articles\Controller\Widget\Index
  */
-class Single extends Core\Modules\Controller
+class Index extends Core\Modules\Controller
 {
     /**
      * @var Core\Date
@@ -47,14 +47,12 @@ class Single extends Core\Modules\Controller
     }
 
     /**
-     * @param int $id
+     * @param string $template
      */
-    public function execute($id)
+    public function execute($template = '')
     {
-        if ($this->articleRepository->resultExists((int)$id, $this->date->getCurrentDateTime()) === true) {
-            $this->view->assign('sidebar_article', $this->articlesCache->getCache($id));
+        $this->view->assign('sidebar_articles', $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5));
 
-            $this->setTemplate('Articles/Sidebar/index.single.tpl');
-        }
+        $this->setTemplate($template !== '' ? $template : 'Articles/Widget/index.index.tpl');
     }
 }

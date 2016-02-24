@@ -50,6 +50,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}polls` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL",
                 "ALTER TABLE `{pre}poll_votes` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
                 "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
+            ],
+            37 => [
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
             ]
         ];
     }

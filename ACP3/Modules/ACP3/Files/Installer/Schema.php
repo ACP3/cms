@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 39;
+        return 40;
     }
 
     /**
@@ -82,5 +82,4 @@ class Schema implements Modules\Installer\SchemaInterface
             'sidebar' => 5,
         ];
     }
-
 }

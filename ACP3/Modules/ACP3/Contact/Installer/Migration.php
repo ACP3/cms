@@ -39,6 +39,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             37 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'ceo', '');"
+            ],
+            38 => [
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
             ]
         ];
     }

@@ -2,7 +2,7 @@ parameters:
   contact.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index'
   contact.controller.frontend.index.imprint.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint'
   contact.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index'
-  contact.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Sidebar\Index\Index'
+  contact.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Contact\Controller\Widget\Index\Index'
 
 services:
   contact.controller.admin.index.index:
@@ -27,8 +27,8 @@ services:
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
-  contact.controller.sidebar.index.index:
-    class: %contact.controller.sidebar.index.index.fqdn%
+  contact.controller.widget.index.index:
+    class: %contact.controller.widget.index.index.fqdn%
     arguments:
       - '@core.context'
 

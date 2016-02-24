@@ -3,13 +3,13 @@
  * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Users\Controller\Sidebar\Index;
+namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core;
 
 /**
  * Class UserMenu
- * @package ACP3\Modules\ACP3\Users\Controller\Sidebar\Index
+ * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
  */
 class UserMenu extends Core\Modules\Controller
 {
@@ -68,7 +68,7 @@ class UserMenu extends Core\Modules\Controller
 
             $this->view->assign('user_sidebar', $userSidebar);
 
-            $this->setTemplate('Users/Sidebar/index.user_menu.tpl');
+            $this->setTemplate('Users/Widget/index.user_menu.tpl');
         } else {
             $this->setNoOutput(true);
         }

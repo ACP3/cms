@@ -6,8 +6,8 @@ parameters:
   news.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings'
   news.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details'
   news.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index'
-  news.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Sidebar\Index\Index'
-  news.controller.sidebar.index.latest.fqdn: 'ACP3\Modules\ACP3\News\Controller\Sidebar\Index\Latest'
+  news.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Widget\Index\Index'
+  news.controller.widget.index.latest.fqdn: 'ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest'
 
 services:
   news.controller.admin.index.create:
@@ -77,15 +77,15 @@ services:
       - @categories.helpers
       - @categories.model
 
-  news.controller.sidebar.index.index:
-    class: %news.controller.sidebar.index.index.fqdn%
+  news.controller.widget.index.index:
+    class: %news.controller.widget.index.index.fqdn%
     arguments:
       - '@core.context'
       - '@core.date'
       - '@news.model.newsrepository'
 
-  news.controller.sidebar.index.latest:
-    class: %news.controller.sidebar.index.latest.fqdn%
+  news.controller.widget.index.latest:
+    class: %news.controller.widget.index.latest.fqdn%
     arguments:
       - '@core.context'
       - '@core.date'

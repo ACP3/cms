@@ -3,16 +3,16 @@
  * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Controller\Sidebar\Index;
+namespace ACP3\Modules\ACP3\News\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 
 /**
- * Class Latest
- * @package ACP3\Modules\ACP3\News\Controller\Sidebar\Index
+ * Class Index
+ * @package ACP3\Modules\ACP3\News\Controller\Widget\Index
  */
-class Latest extends Core\Modules\Controller
+class Index extends Core\Modules\Controller
 {
     /**
      * @var Core\Date
@@ -40,21 +40,21 @@ class Latest extends Core\Modules\Controller
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
+     * @param string $template
      */
-    public function execute($categoryId = 0)
+    public function execute($categoryId = 0, $template = '')
     {
         $settings = $this->config->getSettings('news');
 
         if (!empty($categoryId)) {
-            $news = $this->newsRepository->getLatestByCategoryId((int)$categoryId, $this->date->getCurrentDateTime());
+            $news = $this->newsRepository->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
         } else {
-            $news = $this->newsRepository->getLatest($this->date->getCurrentDateTime());
+            $news = $this->newsRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
-
-        $this->view->assign('sidebar_news_latest', $news);
+        $this->view->assign('sidebar_news', $news);
         $this->view->assign('dateformat', $settings['dateformat']);
 
-        $this->setTemplate('News/Sidebar/index.latest.tpl');
+        $this->setTemplate($template !== '' ? $template : 'News/Widget/index.index.tpl');
     }
 }

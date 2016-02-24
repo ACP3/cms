@@ -3,7 +3,7 @@
  * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Files\Controller\Sidebar\Index;
+namespace ACP3\Modules\ACP3\Files\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\Files;
 
 /**
  * Class Index
- * @package ACP3\Modules\ACP3\Files\Controller\Sidebar\Index
+ * @package ACP3\Modules\ACP3\Files\Controller\Widget\Index
  */
 class Index extends Core\Modules\Controller
 {
@@ -56,6 +56,6 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('sidebar_files', $categories);
 
-        $this->setTemplate($template !== '' ? $template : 'Files/Sidebar/index.index.tpl');
+        $this->setTemplate($template !== '' ? $template : 'Files/Widget/index.index.tpl');
     }
 }

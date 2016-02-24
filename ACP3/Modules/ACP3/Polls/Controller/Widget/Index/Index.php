@@ -3,14 +3,14 @@
  * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Polls\Controller\Sidebar\Index;
+namespace ACP3\Modules\ACP3\Polls\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
 /**
  * Class Index
- * @package ACP3\Modules\ACP3\Polls\Controller\Sidebar\Index
+ * @package ACP3\Modules\ACP3\Polls\Controller\Widget\Index
  */
 class Index extends Core\Modules\Controller
 {
@@ -80,13 +80,13 @@ class Index extends Core\Modules\Controller
                 }
 
                 $this->view->assign('sidebar_poll_answers', $answers);
-                $this->setTemplate('Polls/Sidebar/index.result.tpl');
+                $this->setTemplate('Polls/Widget/index.result.tpl');
                 return;
             } else {
                 $this->view->assign('sidebar_poll_answers', $answers);
             }
         }
 
-        $this->setTemplate('Polls/Sidebar/index.vote.tpl');
+        $this->setTemplate('Polls/Widget/index.vote.tpl');
     }
 }

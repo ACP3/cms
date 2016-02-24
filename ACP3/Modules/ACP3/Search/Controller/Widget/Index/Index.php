@@ -3,14 +3,14 @@
  * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Search\Controller\Sidebar\Index;
+namespace ACP3\Modules\ACP3\Search\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 
 /**
  * Class Index
- * @package ACP3\Modules\ACP3\Search\Controller\Sidebar\Index
+ * @package ACP3\Modules\ACP3\Search\Controller\Widget\Index
  */
 class Index extends Core\Modules\Controller
 {
@@ -36,6 +36,6 @@ class Index extends Core\Modules\Controller
     {
         $this->view->assign('search_mods', $this->searchHelpers->getModules());
 
-        $this->setTemplate('Search/Sidebar/index.index.tpl');
+        $this->setTemplate('Search/Widget/index.index.tpl');
     }
 }

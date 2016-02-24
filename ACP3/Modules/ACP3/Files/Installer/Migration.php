@@ -52,6 +52,9 @@ class Migration extends Modules\Installer\AbstractMigration
             39 => [
                 "ALTER TABLE `{pre}files` DROP INDEX `index`;",
                 "ALTER TABLE `{pre}files` ADD FULLTEXT `fulltext_index` (`title`, `file`, `text`)"
+            ],
+            40 => [
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
             ]
         ];
     }
