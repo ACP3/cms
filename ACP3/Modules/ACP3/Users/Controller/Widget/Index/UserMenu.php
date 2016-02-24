@@ -21,7 +21,7 @@ class UserMenu extends Core\Controller\WidgetAction
     {
         if ($this->user->isAuthenticated() === true) {
             $userSidebar = [];
-            $userSidebar['page'] = base64_encode(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getQuery());
+            $userSidebar['page'] = base64_encode($this->request->getOriginalQuery());
 
             $activeModules = $this->modules->getActiveModules();
             $navMods = $navSystem = [];
@@ -35,7 +35,7 @@ class UserMenu extends Core\Controller\WidgetAction
                     } else {
                         $navMods[$name]['name'] = $name;
                         $navMods[$name]['dir'] = $dir;
-                        $navMods[$name]['active'] = $this->request->getArea() === 'admin' && $dir === $this->request->getModule() ? ' class="active"' : '';
+                        $navMods[$name]['is_active'] = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule();
                     }
                 }
             }
@@ -50,19 +50,19 @@ class UserMenu extends Core\Controller\WidgetAction
                 if ($this->acl->hasPermission('admin/system/index/configuration') === true) {
                     $navSystem[$i]['path'] = 'system/index/configuration/';
                     $navSystem[$i]['name'] = $this->translator->t('system', 'configuration');
-                    $navSystem[$i]['active'] = $this->request->getQuery() === $navSystem[$i]['path'] ? ' class="active"' : '';
+                    $navSystem[$i]['is_active'] = $this->request->getQuery() === $navSystem[$i]['path'];
                 }
                 if ($this->acl->hasPermission('admin/system/extensions/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/extensions/';
                     $navSystem[$i]['name'] = $this->translator->t('system', 'extensions');
-                    $navSystem[$i]['active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
+                    $navSystem[$i]['is_active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0;
                 }
                 if ($this->acl->hasPermission('admin/system/maintenance/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/maintenance/';
                     $navSystem[$i]['name'] = $this->translator->t('system', 'maintenance');
-                    $navSystem[$i]['active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
+                    $navSystem[$i]['is_active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0;
                 }
                 $userSidebar['system'] = $navSystem;
             }

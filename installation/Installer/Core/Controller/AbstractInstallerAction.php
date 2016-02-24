@@ -8,7 +8,6 @@ namespace ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Filesystem;
-use ACP3\Core\Modules\DisplayControllerActionTrait;
 use ACP3\Core\Redirect;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -18,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
-    use DisplayControllerActionTrait;
+    use \ACP3\Core\Controller\DisplayActionTrait;
 
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface

@@ -20,7 +20,7 @@ class Login extends Core\Controller\WidgetAction
     public function execute()
     {
         if ($this->user->isAuthenticated() === false) {
-            $currentPage = base64_encode(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getQuery());
+            $currentPage = base64_encode($this->request->getOriginalQuery());
 
             $settings = $this->config->getSettings('users');
 

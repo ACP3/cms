@@ -7,7 +7,6 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
-use ACP3\Core\Modules\DisplayControllerActionTrait;
 
 /**
  * Class FrontendAction
@@ -15,7 +14,7 @@ use ACP3\Core\Modules\DisplayControllerActionTrait;
  */
 abstract class FrontendAction extends Core\Controller\WidgetAction
 {
-    use DisplayControllerActionTrait;
+    use Core\Controller\DisplayActionTrait;
 
     /**
      * @var \ACP3\Core\Assets
@@ -77,7 +76,7 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
             'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
             'DESIGN_PATH_ABSOLUTE' => $this->appPath->getDesignPathAbsolute(),
             'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
-            'IN_ADM' => $this->request->getArea() === 'admin',
+            'IN_ADM' => $this->request->getArea() === AreaEnum::AREA_ADMIN,
             'IS_HOMEPAGE' => $this->request->isHomepage(),
             'IS_AJAX' => $this->request->isAjax(),
             'LANG_DIRECTION' => $this->translator->getDirection(),

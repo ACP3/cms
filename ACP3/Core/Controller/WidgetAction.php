@@ -40,7 +40,7 @@ abstract class WidgetAction implements ActionInterface
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Http\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**

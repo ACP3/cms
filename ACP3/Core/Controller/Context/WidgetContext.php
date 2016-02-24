@@ -150,7 +150,7 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\Http\Request
+     * @return \ACP3\Core\Http\RequestInterface
      */
     public function getRequest()
     {

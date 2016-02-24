@@ -16,7 +16,7 @@
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu-admin-label">
                     {foreach $user_sidebar.modules as $row}
-                        <li{$row.active}><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
+                        <li{if $row.is_active} class="active"{/if}><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
                     {/foreach}
                 </ul>
             </div>
@@ -30,7 +30,7 @@
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system-label">
                     {foreach $user_sidebar.system as $row}
-                        <li{$row.active}><a href="{uri args="acp/`$row.path`"}">{$row.name}</a></li>
+                        <li{if $row.is_active} class="active"{/if}><a href="{uri args="acp/`$row.path`"}">{$row.name}</a></li>
                     {/foreach}
                 </ul>
             </div>
