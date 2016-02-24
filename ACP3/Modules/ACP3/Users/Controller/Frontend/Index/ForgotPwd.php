@@ -37,10 +37,6 @@ class ForgotPwd extends Core\Controller\FrontendAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     protected $sendEmail;
-    /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
 
     /**
      * ForgotPwd constructor.
@@ -70,18 +66,6 @@ class ForgotPwd extends Core\Controller\FrontendAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
-    }
-
-    /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute()
@@ -92,10 +76,6 @@ class ForgotPwd extends Core\Controller\FrontendAction
 
         if ($this->request->getPost()->isEmpty() === false) {
             return $this->executePost($this->request->getPost()->all());
-        }
-
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         return [

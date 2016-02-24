@@ -45,10 +45,6 @@ class Register extends Core\Controller\FrontendAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     protected $sendEmail;
-    /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
 
     /**
      * Register constructor.
@@ -84,18 +80,6 @@ class Register extends Core\Controller\FrontendAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
-    }
-
-    /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute()
@@ -117,10 +101,6 @@ class Register extends Core\Controller\FrontendAction
                 'nickname' => '',
                 'mail' => '',
             ];
-
-            if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-                $this->view->assign('captcha', $this->captchaHelpers->captcha());
-            }
 
             return [
                 'form' => array_merge($defaults, $this->request->getPost()->all()),

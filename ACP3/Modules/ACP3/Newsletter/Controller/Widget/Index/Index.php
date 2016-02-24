@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Captcha;
-use ACP3\Modules\ACP3\Newsletter\Controller\CaptchaHelperTrait;
 
 /**
  * Class Index
@@ -16,8 +15,6 @@ use ACP3\Modules\ACP3\Newsletter\Controller\CaptchaHelperTrait;
  */
 class Index extends Core\Controller\WidgetAction
 {
-    use CaptchaHelperTrait;
-
     /**
      * @var Core\Helpers\FormToken
      */
@@ -41,10 +38,6 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute($template = '')
     {
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->captchaHelpers->captcha(3, 'captcha', true, 'newsletter'));
-        }
-
         $this->view->assign('form_token', $this->formTokenHelper->renderFormToken('newsletter/index/index'));
 
         $this->setTemplate($template !== '' ? $template : 'Newsletter/Widget/index.index.tpl');

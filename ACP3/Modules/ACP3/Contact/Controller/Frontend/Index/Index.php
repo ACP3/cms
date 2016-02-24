@@ -28,10 +28,6 @@ class Index extends Core\Controller\FrontendAction
      * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
      */
     protected $formValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext        $context
@@ -51,18 +47,6 @@ class Index extends Core\Controller\FrontendAction
         $this->formTokenHelper = $formTokenHelper;
         $this->sendEmailHelper = $sendEmailHelper;
         $this->formValidation = $formValidation;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
     }
 
     /**
@@ -90,10 +74,6 @@ class Index extends Core\Controller\FrontendAction
             $defaults['name_disabled'] = $disabled;
             $defaults['mail'] = $user['mail'];
             $defaults['mail_disabled'] = $disabled;
-        }
-
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         return [

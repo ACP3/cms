@@ -108,8 +108,6 @@ services:
       - @core.helpers.formToken
       - @newsletter.helper.subscribe
       - @newsletter.validation.subscribe_form_validation
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   newsletter.controller.frontend.index.unsubscribe:
     class: %newsletter.controller.frontend.index.unsubscribe.fqdn%
@@ -118,13 +116,9 @@ services:
       - @core.helpers.formToken
       - @newsletter.helper.accountstatus
       - @newsletter.validation.unsubscribe_form_validation
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   newsletter.controller.widget.index.index:
     class: %newsletter.controller.widget.index.index.fqdn%
     arguments:
       - '@core.context.widget'
       - '@core.helpers.formToken'
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]

@@ -18,9 +18,7 @@
             <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
         </div>
     </div>
-    {if isset($captcha)}
-        {$captcha}
-    {/if}
+    {event name="captcha.event.display_captcha"}
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>

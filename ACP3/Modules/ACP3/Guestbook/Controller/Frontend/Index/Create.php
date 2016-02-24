@@ -34,10 +34,6 @@ class Create extends AbstractAction
      */
     protected $formValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
-    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
      */
     protected $newsletterSubscribeHelper;
@@ -76,18 +72,6 @@ class Create extends AbstractAction
         parent::preDispatch();
 
         $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1);
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
     }
 
     /**
@@ -149,10 +133,6 @@ class Create extends AbstractAction
             $defaults['mail_disabled'] = $disabled;
             $defaults['website'] = $users['website'];
             $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
-        }
-
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->captchaHelpers->captcha());
         }
 
         return [

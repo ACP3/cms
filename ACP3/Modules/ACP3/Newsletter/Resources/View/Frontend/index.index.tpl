@@ -34,9 +34,7 @@
                 <input class="form-control" type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required>
             </div>
         </div>
-        {if isset($captcha)}
-            {$captcha}
-        {/if}
+        {event name="captcha.event.display_captcha"}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>

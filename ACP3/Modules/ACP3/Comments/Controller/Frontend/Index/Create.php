@@ -32,10 +32,6 @@ class Create extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     protected $formValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
-     */
-    protected $captchaHelpers;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext         $context
@@ -57,18 +53,6 @@ class Create extends AbstractFrontendAction
         $this->commentRepository = $commentRepository;
         $this->formValidation = $formValidation;
         $this->formTokenHelper = $formTokenHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelpers
-     *
-     * @return $this
-     */
-    public function setCaptchaHelpers(Captcha\Helpers $captchaHelpers)
-    {
-        $this->captchaHelpers = $captchaHelpers;
-
-        return $this;
     }
 
     /**
@@ -104,10 +88,6 @@ class Create extends AbstractFrontendAction
         }
 
         $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->captchaHelpers->captcha());
-        }
 
         $this->view->assign('form_token', $this->formTokenHelper->renderFormToken());
 

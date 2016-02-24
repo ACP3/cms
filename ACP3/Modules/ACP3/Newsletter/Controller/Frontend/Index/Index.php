@@ -16,8 +16,6 @@ use ACP3\Modules\ACP3\Newsletter;
  */
 class Index extends Core\Controller\FrontendAction
 {
-    use Newsletter\Controller\CaptchaHelperTrait;
-
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -72,10 +70,6 @@ class Index extends Core\Controller\FrontendAction
             $this->translator->t('newsletter', 'salutation_female'),
             $this->translator->t('newsletter', 'salutation_male')
         ];
-
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->captchaHelpers->captcha());
-        }
 
         return [
             'salutation' => $this->get('core.helpers.forms')->selectGenerator('salutation', [1, 2], $salutationsLang),

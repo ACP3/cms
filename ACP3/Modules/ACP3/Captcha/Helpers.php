@@ -9,6 +9,9 @@ use ACP3\Core;
  */
 class Helpers
 {
+    const CAPTCHA_DEFAULT_LENGTH = 5;
+    const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
+
     /**
      * @var \ACP3\Core\User
      */
@@ -63,13 +66,18 @@ class Helpers
      * Erzeugt das Captchafeld für das Template
      *
      * @param integer $captchaLength
-     * @param string  $id
+     * @param string  $formFieldId
      * @param bool    $inputOnly
      * @param string  $path
      *
      * @return string
      */
-    public function captcha($captchaLength = 5, $id = 'captcha', $inputOnly = false, $path = '')
+    public function captcha(
+        $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
+        $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
+        $inputOnly = false,
+        $path = ''
+    )
     {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
         if ($this->user->isAuthenticated() === false) {
@@ -79,7 +87,7 @@ class Helpers
 
             $this->view->assign('captcha', [
                 'width' => $captchaLength * 25,
-                'id' => $id,
+                'id' => $formFieldId,
                 'height' => 30,
                 'input_only' => $inputOnly,
                 'path' => $path

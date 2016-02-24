@@ -45,7 +45,6 @@ services:
       - @guestbook.model.guestbookrepository
       - @guestbook.validator
     calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
 

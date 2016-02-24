@@ -61,7 +61,6 @@ services:
       - @comments.validator
       - @core.helpers.formToken
     calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.frontend.index.index:
