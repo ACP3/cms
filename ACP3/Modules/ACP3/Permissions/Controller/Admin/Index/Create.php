@@ -34,7 +34,7 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                   $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
      * @param \ACP3\Core\NestedSet                                         $nestedSet
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository          $ruleRepository
@@ -42,7 +42,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Permissions\Model\RuleRepository $ruleRepository,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,

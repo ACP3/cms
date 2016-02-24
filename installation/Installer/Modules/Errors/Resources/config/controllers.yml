@@ -1,8 +1,8 @@
 services:
   errors.controller.install.index.not_found:
     class: ACP3\Installer\Modules\Errors\Controller\Index\NotFound
-    parent: core.modules.controller.install
+    parent: core.controller.install
 
   errors.controller.install.index.server_error:
     class: ACP3\Installer\Modules\Errors\Controller\Index\ServerError
-    parent: core.modules.controller.install
+    parent: core.controller.install

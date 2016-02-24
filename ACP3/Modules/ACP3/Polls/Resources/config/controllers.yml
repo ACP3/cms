@@ -6,7 +6,7 @@ parameters:
   polls.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Index'
   polls.controller.frontend.index.result.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Result'
   polls.controller.frontend.index.vote.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote'
-  polls.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Sidebar\Index\Index'
+  polls.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index'
 
 services:
   polls.controller.admin.index.create:
@@ -68,10 +68,10 @@ services:
       - '@polls.model.answerrepository'
       - '@polls.model.voterepository'
 
-  polls.controller.sidebar.index.index:
-    class: %polls.controller.sidebar.index.index.fqdn%
+  polls.controller.widget.index.index:
+    class: %polls.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'

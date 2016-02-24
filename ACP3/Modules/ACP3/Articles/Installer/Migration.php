@@ -53,6 +53,9 @@ class Migration extends AbstractMigration
                 "ALTER TABLE `{pre}articles` ADD INDEX (`user_id`)",
                 "UPDATE `{pre}articles` SET `user_id` = NULL WHERE `user_id` = 0",
                 "ALTER TABLE `{pre}articles` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
+            ],
+            39 => [
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
             ]
         ];
     }

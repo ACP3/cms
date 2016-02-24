@@ -7,7 +7,7 @@ parameters:
   files.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Details'
   files.controller.frontend.index.files.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files'
   files.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index'
-  files.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Sidebar\Index\Index'
+  files.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Files\Controller\Widget\Index\Index'
 
 services:
   files.controller.admin.index.create:
@@ -78,10 +78,9 @@ services:
       - @core.context.frontend
       - @categories.cache
 
-  files.controller.sidebar.index.index:
-    class: %files.controller.sidebar.index.index.fqdn%
+  files.controller.widget.index.index:
+    class: %files.controller.widget.index.index.fqdn%
     arguments:
-      - @core.context
+      - @core.context.widget
       - @core.date
       - @files.model.filesrepository
-

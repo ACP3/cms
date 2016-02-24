@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Cache;
@@ -27,7 +32,7 @@ class ModuleInfoCache
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Modules\Vendors
+     * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
     /**
@@ -43,7 +48,7 @@ class ModuleInfoCache
      * @param \ACP3\Core\Cache                                 $cache
      * @param \ACP3\Core\Environment\ApplicationPath           $appPath
      * @param \ACP3\Core\I18n\Translator                       $translator
-     * @param \ACP3\Core\Modules\Vendors                       $vendors
+     * @param \ACP3\Core\Modules\Vendor                        $vendors
      * @param \ACP3\Core\XML                                   $xml
      * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
      */
@@ -51,7 +56,7 @@ class ModuleInfoCache
         Cache $cache,
         ApplicationPath $appPath,
         Translator $translator,
-        Vendors $vendors,
+        Vendor $vendors,
         XML $xml,
         ModuleRepository $systemModuleRepository
     )

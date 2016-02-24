@@ -32,7 +32,7 @@ class Create extends AbstractFormAction
     protected $pollsValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\AdminContext              $context
+     * @param \ACP3\Core\Controller\Context\AdminContext              $context
      * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository           $pollRepository
@@ -41,7 +41,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Polls\Model\PollRepository $pollRepository,

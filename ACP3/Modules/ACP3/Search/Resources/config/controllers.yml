@@ -1,6 +1,6 @@
 parameters:
   search.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Frontend\Index\Index'
-  search.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Sidebar\Index\Index'
+  search.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Search\Controller\Widget\Index\Index'
 
 services:
   search.controller.frontend.index.index:
@@ -10,8 +10,8 @@ services:
       - '@search.helpers'
       - '@search.validator'
 
-  search.controller.sidebar.index.index:
-    class: %search.controller.sidebar.index.index.fqdn%
+  search.controller.widget.index.index:
+    class: %search.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@search.helpers'

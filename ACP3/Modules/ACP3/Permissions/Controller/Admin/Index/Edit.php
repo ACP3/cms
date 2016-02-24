@@ -38,7 +38,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                   $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
      * @param \ACP3\Core\NestedSet                                         $nestedSet
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository          $roleRepository
@@ -47,7 +47,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Permissions\Model\RuleRepository $ruleRepository,
         Core\NestedSet $nestedSet,
         Core\Helpers\FormToken $formTokenHelper,

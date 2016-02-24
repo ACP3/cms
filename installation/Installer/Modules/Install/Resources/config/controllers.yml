@@ -1,11 +1,11 @@
 services:
   install.controller.install.index.index:
     class: ACP3\Installer\Modules\Install\Controller\Index\Index
-    parent: core.modules.controller.install
+    parent: core.controller.install
 
   install.controller.install.index.licence:
     class: ACP3\Installer\Modules\Install\Controller\Index\Licence
-    parent: core.modules.controller.install
+    parent: core.controller.install
 
   install.controller.install.index.requirements:
     class: ACP3\Installer\Modules\Install\Controller\Index\Requirements

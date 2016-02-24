@@ -86,6 +86,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             42 => [
                 "ALTER TABLE `{pre}users` CHANGE `id` `id` INT(10) UNSIGNED AUTO_INCREMENT",
+            ],
+            43 => [
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
             ]
         ];
     }

@@ -17,7 +17,7 @@ services:
 
   system.controller.admin.extensions.index:
     class: %system.controller.admin.extensions.index.fqdn%
-    parent: core.modules.controller.admin
+    parent: core.controller.admin
 
   system.controller.admin.extensions.modules:
     class: %system.controller.admin.extensions.modules.fqdn%
@@ -37,16 +37,16 @@ services:
 
   system.controller.admin.index.index:
     class: %system.controller.admin.index.index.fqdn%
-    parent: core.modules.controller.admin
+    parent: core.controller.admin
 
   system.controller.admin.maintenance.cache:
     class: %system.controller.admin.maintenance.cache.fqdn%
-    parent: core.modules.controller.admin
+    parent: core.controller.admin
 
   system.controller.admin.maintenance.index:
     class: %system.controller.admin.maintenance.index.fqdn%
-    parent: core.modules.controller.admin
+    parent: core.controller.admin
 
   system.controller.admin.maintenance.update_check:
     class: %system.controller.admin.maintenance.update_check.fqdn%
-    parent: core.modules.controller.admin
+    parent: core.controller.admin

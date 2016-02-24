@@ -1,11 +1,12 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
-use ACP3\Core\Modules\AdminController;
+use ACP3\Core\Controller\AdminAction;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
@@ -13,7 +14,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
  */
-abstract class AbstractFormAction extends AdminController
+abstract class AbstractFormAction extends AdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Helpers

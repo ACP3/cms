@@ -4,4 +4,4 @@ parameters:
 services:
   acp.controller.admin.index.index:
     class: %acp.controller.admin.index.index.fqdn%
-    parent: core.modules.controller.admin
+    parent: core.controller.admin

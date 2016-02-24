@@ -2,6 +2,7 @@
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Config;
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request\ParameterBag;
 use ACP3\Core\Modules;
@@ -150,7 +151,7 @@ class Request extends AbstractRequest
      */
     public function getModuleAndController()
     {
-        $path = ($this->area === 'admin') ? 'acp/' : '';
+        $path = ($this->area === AreaEnum::AREA_ADMIN) ? 'acp/' : '';
         $path .= $this->getModuleAndControllerWithoutArea();
 
         return $path;
@@ -176,11 +177,11 @@ class Request extends AbstractRequest
 
         // It's an request for the admin panel page
         if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
-            $this->area = 'admin';
+            $this->area = AreaEnum::AREA_ADMIN;
             // strip "acp/"
             $this->query = substr($this->query, 4);
         } else {
-            $this->area = 'frontend';
+            $this->area = AreaEnum::AREA_FRONTEND;
 
             $homepage = $this->config->getSettings('system')['homepage'];
 
@@ -221,7 +222,7 @@ class Request extends AbstractRequest
         if (isset($query[0])) {
             $this->module = $query[0];
         } else {
-            $this->module = ($this->area === 'admin') ? 'acp' : 'news';
+            $this->module = ($this->area === AreaEnum::AREA_ADMIN) ? 'acp' : 'news';
         }
 
         $this->controller = isset($query[1]) ? $query[1] : 'index';

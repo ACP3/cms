@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 
@@ -159,7 +160,7 @@ class Pagination
     {
         $output = '';
         if ($this->totalResults > $this->resultsPerPage) {
-            $link = $this->router->route(($this->request->getArea() === 'admin' ? 'acp/' : '') . $this->request->getUriWithoutPages());
+            $link = $this->router->route(($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages());
             $this->currentPage = (int)$this->request->getParameters()->get('page', 1);
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 

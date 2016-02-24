@@ -13,7 +13,7 @@ parameters:
   newsletter.controller.frontend.index.activate.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Activate'
   newsletter.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Index'
   newsletter.controller.frontend.index.unsubscribe.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Unsubscribe'
-  newsletter.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Sidebar\Index\Index'
+  newsletter.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index\Index'
 
 services:
   newsletter.controller.admin.accounts.activate:
@@ -121,10 +121,10 @@ services:
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
-  newsletter.controller.sidebar.index.index:
-    class: %newsletter.controller.sidebar.index.index.fqdn%
+  newsletter.controller.widget.index.index:
+    class: %newsletter.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.helpers.formToken'
     calls:
       - ['setCaptchaHelpers', ['@?captcha.helpers']]

@@ -1,19 +1,20 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\AdminController;
+use ACP3\Core\Controller\AdminAction;
 use ACP3\Modules\ACP3\Polls;
 
 /**
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Polls\Controller\Admin\Index
  */
-abstract class AbstractFormAction extends AdminController
+abstract class AbstractFormAction extends AdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Polls\Model\AnswerRepository
@@ -27,12 +28,12 @@ abstract class AbstractFormAction extends AdminController
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext      $context
+     * @param \ACP3\Core\Controller\Context\AdminContext      $context
      * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Polls\Model\AnswerRepository $answerRepository,
         Polls\Model\VoteRepository $voteRepository
     )

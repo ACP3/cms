@@ -5,8 +5,8 @@ parameters:
   articles.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index'
   articles.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details'
   articles.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index'
-  articles.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index\Index'
-  articles.controller.sidebar.index.single.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Sidebar\Index\Single'
+  articles.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Index'
+  articles.controller.widget.index.single.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single'
 
 services:
   articles.controller.admin.index.create:
@@ -70,18 +70,18 @@ services:
       - '@core.pagination'
       - '@articles.model.articlerepository'
 
-  articles.controller.sidebar.index.index:
-    class: %articles.controller.sidebar.index.index.fqdn%
+  articles.controller.widget.index.index:
+    class: %articles.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@articles.model.articlerepository'
       - '@articles.cache'
 
-  articles.controller.sidebar.index.single:
-    class: %articles.controller.sidebar.index.single.fqdn%
+  articles.controller.widget.index.single:
+    class: %articles.controller.widget.index.single.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@articles.model.articlerepository'
       - '@articles.cache'

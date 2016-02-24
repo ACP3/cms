@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
@@ -13,7 +14,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Activate
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
  */
-class Activate extends Core\Modules\FrontendController
+class Activate extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
@@ -27,12 +28,12 @@ class Activate extends Core\Modules\FrontendController
     /**
      * Activate constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext                          $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                          $context
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                     $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
     )

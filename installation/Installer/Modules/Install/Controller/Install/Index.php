@@ -53,7 +53,7 @@ class Index extends AbstractAction
     protected $formValidation;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\InstallerContext  $context
+     * @param \ACP3\Installer\Core\Controller\Context\InstallerContext  $context
      * @param \ACP3\Installer\Core\Date                                 $date
      * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
      * @param \ACP3\Core\Helpers\Date                                   $dateHelper
@@ -61,7 +61,7 @@ class Index extends AbstractAction
      * @param \ACP3\Installer\Modules\Install\Validation\FormValidation $formValidation
      */
     public function __construct(
-        Core\Modules\Controller\InstallerContext $context,
+        Core\Controller\Context\InstallerContext $context,
         Date $date,
         Secure $secureHelper,
         \ACP3\Core\Helpers\Date $dateHelper,

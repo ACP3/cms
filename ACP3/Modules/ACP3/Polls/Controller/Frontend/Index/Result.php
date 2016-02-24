@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
@@ -12,7 +13,7 @@ use ACP3\Modules\ACP3\Polls;
  * Class Result
  * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
  */
-class Result extends Core\Modules\FrontendController
+class Result extends Core\Controller\FrontendAction
 {
     /**
      * @var Core\Date
@@ -30,13 +31,13 @@ class Result extends Core\Modules\FrontendController
     /**
      * Result constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext   $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext   $context
      * @param \ACP3\Core\Date                                 $date
      * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Polls\Model\PollRepository $pollRepository,
         Polls\Model\AnswerRepository $answerRepository)

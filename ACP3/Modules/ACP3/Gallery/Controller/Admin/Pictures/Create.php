@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -12,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Create
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
  */
-class Create extends Core\Modules\AdminController
+class Create extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -42,7 +43,7 @@ class Create extends Core\Modules\AdminController
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                  $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                  $context
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository          $galleryRepository
@@ -51,7 +52,7 @@ class Create extends Core\Modules\AdminController
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryRepository $galleryRepository,

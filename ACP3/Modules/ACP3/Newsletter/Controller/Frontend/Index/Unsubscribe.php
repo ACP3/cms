@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
@@ -13,7 +14,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Unsubscribe
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
  */
-class Unsubscribe extends Core\Modules\FrontendController
+class Unsubscribe extends Core\Controller\FrontendAction
 {
     use Newsletter\Controller\CaptchaHelperTrait;
 
@@ -33,13 +34,13 @@ class Unsubscribe extends Core\Modules\FrontendController
     /**
      * Unsubscribe constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext                      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
      * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                 $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation

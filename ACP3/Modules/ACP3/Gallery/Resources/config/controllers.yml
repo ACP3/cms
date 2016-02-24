@@ -12,7 +12,7 @@ parameters:
   gallery.controller.frontend.index.image.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image'
   gallery.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index'
   gallery.controller.frontend.index.pics.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics'
-  gallery.controller.sidebar.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Sidebar\Index\Index'
+  gallery.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index'
 
 services:
   gallery.controller.admin.index.create:
@@ -123,10 +123,10 @@ services:
       - '@gallery.model.galleryrepository'
       - '@gallery.cache'
 
-  gallery.controller.sidebar.index.index:
-    class: %gallery.controller.sidebar.index.index.fqdn%
+  gallery.controller.widget.index.index:
+    class: %gallery.controller.widget.index.index.fqdn%
     arguments:
-      - '@core.context'
+      - '@core.context.widget'
       - '@core.date'
       - '@gallery.model.galleryrepository'
 

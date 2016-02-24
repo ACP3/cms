@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Installer\Modules\Update\Controller\Index;
@@ -14,7 +15,7 @@ use ACP3\Installer\Core;
  * Class Index
  * @package ACP3\Installer\Modules\Update\Controller\Index
  */
-class Index extends Core\Modules\AbstractInstallerController
+class Index extends Core\Controller\AbstractInstallerAction
 {
     /**
      * @var \ACP3\Core\Modules
@@ -25,20 +26,20 @@ class Index extends Core\Modules\AbstractInstallerController
      */
     protected $schemaUpdater;
     /**
-     * @var \ACP3\Core\Modules\Vendors
+     * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
 
     /**
-     * @param \ACP3\Installer\Core\Modules\Controller\InstallerContext $context
+     * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
      * @param \ACP3\Core\Modules                                       $modules
-     * @param \ACP3\Core\Modules\Vendors                               $vendors
+     * @param \ACP3\Core\Modules\Vendor                                $vendors
      * @param \ACP3\Core\Modules\SchemaUpdater                         $schemaUpdater
      */
     public function __construct(
-        Core\Modules\Controller\InstallerContext $context,
+        Core\Controller\Context\InstallerContext $context,
         Modules $modules,
-        Modules\Vendors $vendors,
+        Modules\Vendor $vendors,
         Modules\SchemaUpdater $schemaUpdater
     )
     {

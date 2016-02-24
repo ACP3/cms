@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
@@ -14,7 +15,7 @@ use ACP3\Modules\ACP3\System;
  * Class Delete
  * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
  */
-class Delete extends Core\Modules\AdminController
+class Delete extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
@@ -24,11 +25,11 @@ class Delete extends Core\Modules\AdminController
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext          $context
+     * @param \ACP3\Core\Controller\Context\AdminContext          $context
      * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Comments\Model\CommentRepository $commentRepository)
     {
         parent::__construct($context);

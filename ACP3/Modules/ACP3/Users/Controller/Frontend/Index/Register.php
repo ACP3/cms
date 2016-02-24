@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -14,7 +15,7 @@ use ACP3\Modules\ACP3\Users;
  * Class Register
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
  */
-class Register extends Core\Modules\FrontendController
+class Register extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Core\Date
@@ -52,7 +53,7 @@ class Register extends Core\Modules\FrontendController
     /**
      * Register constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext                  $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
      * @param \ACP3\Core\Date                                                $date
      * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
@@ -62,7 +63,7 @@ class Register extends Core\Modules\FrontendController
      * @param \ACP3\Core\Helpers\SendEmail                                   $sendEmail
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,

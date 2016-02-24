@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
@@ -23,7 +28,7 @@ class Installer
      */
     protected $schemaInstaller;
     /**
-     * @var \ACP3\Core\Modules\Vendors
+     * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
     /**
@@ -38,7 +43,7 @@ class Installer
     /**
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\Modules\Vendors             $vendors
+     * @param \ACP3\Core\Modules\Vendor              $vendors
      * @param \ACP3\Core\Modules\SchemaInstaller     $schemaInstaller
      * @param \ACP3\Core\XML                         $xml
      * @param string                                 $environment
@@ -46,7 +51,7 @@ class Installer
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
         Core\Modules $modules,
-        Core\Modules\Vendors $vendors,
+        Core\Modules\Vendor $vendors,
         Core\Modules\SchemaInstaller $schemaInstaller,
         Core\XML $xml,
         $environment

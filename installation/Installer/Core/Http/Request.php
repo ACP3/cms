@@ -43,9 +43,6 @@ class Request extends Core\Http\Request
         $this->setOriginalQuery();
 
         $this->query = $this->originalQuery;
-
-        $this->area = 'install';
-
-        return;
+        $this->area = Core\Controller\AreaEnum::AREA_INSTALL;
     }
 }

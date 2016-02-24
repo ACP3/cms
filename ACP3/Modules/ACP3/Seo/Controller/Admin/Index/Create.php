@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
@@ -12,7 +13,7 @@ use ACP3\Modules\ACP3\Seo;
  * Class Create
  * @package ACP3\Modules\ACP3\Seo\Controller\Admin\Index
  */
-class Create extends Core\Modules\AdminController
+class Create extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -30,13 +31,13 @@ class Create extends Core\Modules\AdminController
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext            $context
+     * @param \ACP3\Core\Controller\Context\AdminContext            $context
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository            $seoRepository
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Model\SeoRepository $seoRepository,
         Seo\Validation\AdminFormValidation $adminFormValidation

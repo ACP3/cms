@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
@@ -13,7 +14,7 @@ use ACP3\Modules\ACP3\Guestbook;
  * Class Edit
  * @package ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index
  */
-class Edit extends Core\Modules\AdminController
+class Edit extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -35,13 +36,13 @@ class Edit extends Core\Modules\AdminController
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                  $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                  $context
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository      $guestbookRepository
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
         Guestbook\Validation\AdminFormValidation $adminFormValidation

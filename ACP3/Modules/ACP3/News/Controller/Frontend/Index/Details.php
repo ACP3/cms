@@ -31,13 +31,13 @@ class Details extends AbstractAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date                               $date
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository  $newsRepository
      * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache)

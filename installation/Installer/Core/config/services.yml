@@ -2,23 +2,13 @@ parameters:
   default_request: 'install'
 
 imports:
-  - { resource: validation.yml }
+  - { resource: components/controller.yml }
+  - { resource: components/validation.yml }
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }
   - { resource: ../../Modules/Install/Resources/config/services.yml }
 
 services:
-  core.context.install:
-    class: ACP3\Installer\Core\Modules\Controller\InstallerContext
-    arguments:
-      - @core.lang
-      - @core.request
-      - @core.router
-      - @core.view
-      - @core.response
-      - @core.environment.application_path
-    public: false
-
   core.date:
     class: ACP3\Installer\Core\Date
     arguments: ['@core.date.date_translator']
@@ -70,10 +60,6 @@ services:
     class: ACP3\Core\Logger
     arguments:
       - @core.environment.application_path
-
-  core.modules.controller.install:
-    abstract: true
-    arguments: ['@core.context.install']
 
   core.redirect:
     class: ACP3\Core\Redirect

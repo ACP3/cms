@@ -22,11 +22,11 @@ class Image extends AbstractAction
     /**
      * Image constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Gallery\Model\PictureRepository $pictureRepository)
     {
         parent::__construct($context);

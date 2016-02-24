@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
@@ -13,7 +14,7 @@ use ACP3\Modules\ACP3\Contact;
  * Class Index
  * @package ACP3\Modules\ACP3\Contact\Controller\Frontend\Index
  */
-class Index extends Core\Modules\FrontendController
+class Index extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -33,13 +34,13 @@ class Index extends Core\Modules\FrontendController
     protected $captchaHelpers;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext        $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext        $context
      * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
      * @param \ACP3\Core\Helpers\SendEmail                         $sendEmailHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
         Contact\Validation\FormValidation $formValidation

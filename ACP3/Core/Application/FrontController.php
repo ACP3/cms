@@ -1,10 +1,15 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Core\Application;
 
+use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Exceptions;
 use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Modules\ControllerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -45,7 +50,7 @@ class FrontController
         }
 
         if ($this->container->has($serviceId)) {
-            /** @var \ACP3\Core\Modules\ControllerInterface $controller */
+            /** @var \ACP3\Core\Controller\ActionInterface $controller */
             $controller = $this->container->get($serviceId);
             $controller->setContainer($this->container);
             $controller->preDispatch();
@@ -89,18 +94,18 @@ class FrontController
     }
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface       $request
-     * @param \ACP3\Core\Modules\ControllerInterface $controller
-     * @param string                                 $action
-     * @param array                                  $arguments
-     * @param bool                                   $resolveArguments
+     * @param \ACP3\Core\Http\RequestInterface      $request
+     * @param \ACP3\Core\Controller\ActionInterface $controller
+     * @param string                                $action
+     * @param array                                 $arguments
+     * @param bool                                  $resolveArguments
      *
      * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
     private function executeControllerAction(
         RequestInterface $request,
-        ControllerInterface $controller,
+        ActionInterface $controller,
         $action,
         array $arguments,
         $resolveArguments

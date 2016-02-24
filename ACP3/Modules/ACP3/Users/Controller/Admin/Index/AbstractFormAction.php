@@ -1,18 +1,19 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\AdminController;
+use ACP3\Core\Controller\AdminAction;
 
 /**
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Users\Controller\Admin\Index
  */
-abstract class AbstractFormAction extends AdminController
+abstract class AbstractFormAction extends AdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms
@@ -22,11 +23,11 @@ abstract class AbstractFormAction extends AdminController
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\Forms                   $formsHelpers
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelpers)
     {
         parent::__construct($context);

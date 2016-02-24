@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
@@ -99,9 +100,9 @@ class SEO
     public function getMetaTags()
     {
         return [
-            'description' => $this->request->getArea() === 'admin' ? '' : $this->getPageDescription(),
-            'keywords' => $this->request->getArea() === 'admin' ? '' : $this->getPageKeywords(),
-            'robots' => $this->request->getArea() === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'description' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? '' : $this->getPageDescription(),
+            'keywords' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? '' : $this->getPageKeywords(),
+            'robots' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
             'canonical' => $this->canonicalUrl,

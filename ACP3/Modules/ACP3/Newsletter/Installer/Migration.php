@@ -112,6 +112,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}newsletters` ADD INDEX (`user_id`)",
                 "UPDATE `{pre}newsletters` SET `user_id` = NULL WHERE `user_id` = 0",
                 "ALTER TABLE `{pre}newsletters` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
+            ],
+            51 => [
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
             ]
         ];
     }

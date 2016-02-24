@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -14,7 +15,7 @@ use ACP3\Modules\ACP3\Files;
  * Class Index
  * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
  */
-class Index extends Core\Modules\AdminController
+class Index extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
@@ -24,11 +25,11 @@ class Index extends Core\Modules\AdminController
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext     $context
+     * @param \ACP3\Core\Controller\Context\AdminContext     $context
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
-        Core\Modules\Controller\AdminContext $context,
+        Core\Controller\Context\AdminContext $context,
         Files\Model\FilesRepository $filesRepository)
     {
         parent::__construct($context);

@@ -56,6 +56,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND name = 'filesize';",
                 "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND name = 'maxheight';",
                 "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND name = 'maxwidth';",
+            ],
+            40 => [
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
             ]
         ];
     }

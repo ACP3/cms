@@ -1,9 +1,14 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Core\I18n;
 
 use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Modules\Vendors;
+use ACP3\Core\Modules\Vendor;
 
 /**
  * Class Cache
@@ -20,7 +25,7 @@ class DictionaryCache
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Modules\Vendors
+     * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
 
@@ -29,12 +34,12 @@ class DictionaryCache
      *
      * @param \ACP3\Core\Cache                       $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Vendors             $vendors
+     * @param \ACP3\Core\Modules\Vendor              $vendors
      */
     public function __construct(
         Cache $cache,
         ApplicationPath $appPath,
-        Vendors $vendors
+        Vendor $vendors
     )
     {
         $this->cache = $cache;

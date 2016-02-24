@@ -34,14 +34,14 @@ class Edit extends AbstractAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext             $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
      * @param \ACP3\Core\Helpers\FormToken                              $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository             $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UserRepository $userRepository,

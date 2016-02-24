@@ -13,8 +13,8 @@ parameters:
   users.controller.frontend.index.logout.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Logout'
   users.controller.frontend.index.register.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register'
   users.controller.frontend.index.view_profile.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile'
-  users.controller.sidebar.index.login.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index\Login'
-  users.controller.sidebar.index.user_menu.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Sidebar\Index\UserMenu'
+  users.controller.widget.index.login.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login'
+  users.controller.widget.index.user_menu.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Widget\Index\UserMenu'
 
 services:
   users.controller.admin.index.create:
@@ -104,11 +104,11 @@ services:
 
   users.controller.frontend.index.login:
     class: %users.controller.frontend.index.login.fqdn%
-    parent: core.modules.controller.frontend
+    parent: core.controller.frontend
 
   users.controller.frontend.index.logout:
     class: %users.controller.frontend.index.logout.fqdn%
-    parent: core.modules.controller.frontend
+    parent: core.controller.frontend
 
   users.controller.frontend.index.register:
     class: %users.controller.frontend.index.register.fqdn%
@@ -130,10 +130,10 @@ services:
       - @core.context.frontend
       - @users.model.userrepository
 
-  users.controller.sidebar.index.login:
-    class: %users.controller.sidebar.index.login.fqdn%
-    parent: core.modules.controller
+  users.controller.widget.index.login:
+    class: %users.controller.widget.index.login.fqdn%
+    parent: core.controller.widget
 
-  users.controller.sidebar.index.user_menu:
-    class: %users.controller.sidebar.index.user_menu.fqdn%
-    parent: core.modules.controller
+  users.controller.widget.index.user_menu:
+    class: %users.controller.widget.index.user_menu.fqdn%
+    parent: core.controller.widget

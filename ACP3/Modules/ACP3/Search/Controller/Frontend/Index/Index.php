@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
@@ -12,7 +13,7 @@ use ACP3\Modules\ACP3\Search;
  * Class Index
  * @package ACP3\Modules\ACP3\Search\Controller\Frontend\Index
  */
-class Index extends Core\Modules\FrontendController
+class Index extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Search\Helpers
@@ -24,12 +25,12 @@ class Index extends Core\Modules\FrontendController
     protected $searchValidator;
 
     /**
-     * @param \ACP3\Core\Modules\Controller\FrontendContext       $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
      * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Search\Helpers $searchHelpers,
         Search\Validation\FormValidation $searchValidator)
     {

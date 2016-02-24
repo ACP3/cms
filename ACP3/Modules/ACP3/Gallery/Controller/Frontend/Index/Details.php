@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
@@ -12,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Details
  * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
  */
-class Details extends Core\Modules\FrontendController
+class Details extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Core\Date
@@ -30,12 +31,12 @@ class Details extends Core\Modules\FrontendController
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\FrontendContext      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
      * @param \ACP3\Core\Date                                    $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      */
     public function __construct(
-        Core\Modules\Controller\FrontendContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Gallery\Model\PictureRepository $pictureRepository)
     {
