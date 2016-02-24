@@ -35,6 +35,18 @@ abstract class AbstractInstallerAction implements ActionInterface
      * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
     protected $appPath;
+    /**
+     * @var \ACP3\Core\Http\RequestInterface
+     */
+    protected $request;
+    /**
+     * @var \ACP3\Core\View
+     */
+    protected $view;
+    /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    protected $response;
 
     /**
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
@@ -83,6 +95,22 @@ abstract class AbstractInstallerAction implements ActionInterface
     public function redirect()
     {
         return $this->get('core.redirect');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return \ACP3\Core\View
+     */
+    protected function getView()
+    {
+        return $this->view;
     }
 
     /**

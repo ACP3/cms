@@ -10,24 +10,11 @@ namespace ACP3\Core\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class DisplayControllerActionTrait
+ * Class DisplayActionTrait
  * @package ACP3\Core\Controller
  */
 trait DisplayActionTrait
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     */
-    protected $response;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-
     /**
      * @var string
      */
@@ -53,7 +40,7 @@ trait DisplayActionTrait
             return;
         } else {
             if (is_array($controllerActionResult)) {
-                $this->view->assign($controllerActionResult);
+                $this->getView()->assign($controllerActionResult);
             } else {
                 if (is_string($controllerActionResult)) {
                     echo $controllerActionResult;
@@ -63,8 +50,8 @@ trait DisplayActionTrait
         }
 
         // Output content through the controller
-        $this->response->headers->set('Content-Type', $this->getContentType());
-        $this->response->setCharset($this->getCharset());
+        $this->getResponse()->headers->set('Content-Type', $this->getContentType());
+        $this->getResponse()->setCharset($this->getCharset());
 
         if (!$this->getContent()) {
             // Set the template automatically
@@ -74,10 +61,10 @@ trait DisplayActionTrait
 
             $this->addCustomTemplateVarsBeforeOutput();
 
-            $this->response->setContent($this->view->fetchTemplate($this->getTemplate()));
+            $this->getResponse()->setContent($this->getView()->fetchTemplate($this->getTemplate()));
         }
 
-        $this->response->send();
+        $this->getResponse()->send();
     }
 
     /**
@@ -86,6 +73,16 @@ trait DisplayActionTrait
     abstract protected function applyTemplateAutomatically();
 
     abstract protected function addCustomTemplateVarsBeforeOutput();
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    abstract protected function getResponse();
+
+    /**
+     * @return \ACP3\Core\View
+     */
+    abstract protected function getView();
 
     /**
      * Gibt den Content-Type der anzuzeigenden Seiten zurück
@@ -138,7 +135,7 @@ trait DisplayActionTrait
      */
     public function getContent()
     {
-        return $this->response->getContent();
+        return $this->getResponse()->getContent();
     }
 
     /**
@@ -150,7 +147,7 @@ trait DisplayActionTrait
      */
     public function setContent($data)
     {
-        $this->response->setContent($data);
+        $this->getResponse()->setContent($data);
 
         return $this;
     }

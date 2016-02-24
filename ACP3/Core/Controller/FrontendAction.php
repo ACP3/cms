@@ -33,6 +33,10 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      */
     protected $redirectMessages;
     /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    protected $response;
+    /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
@@ -98,6 +102,22 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
     {
         $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
         $this->view->assign('META', $this->seo->getMetaTags());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return \ACP3\Core\View
+     */
+    protected function getView()
+    {
+        return $this->view;
     }
 
     /**
