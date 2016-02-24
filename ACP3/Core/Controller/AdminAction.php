@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Controller;
@@ -8,10 +9,10 @@ namespace ACP3\Core\Controller;
 use ACP3\Core;
 
 /**
- * Class AdminController
- * @package ACP3\Core\Modules
+ * Class AdminAction
+ * @package ACP3\Core\Controller
  */
-abstract class AdminController extends Core\Controller\FrontendController
+abstract class AdminAction extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Core\SessionHandler

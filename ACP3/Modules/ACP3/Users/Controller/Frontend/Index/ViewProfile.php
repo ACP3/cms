@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -14,7 +15,7 @@ use ACP3\Modules\ACP3\Users;
  * Class ViewProfile
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
  */
-class ViewProfile extends Core\Controller\FrontendController
+class ViewProfile extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserRepository

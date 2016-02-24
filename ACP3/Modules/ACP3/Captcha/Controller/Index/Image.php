@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Controller\Index;
@@ -11,7 +12,7 @@ use ACP3\Core;
  * Class Image
  * @package ACP3\Modules\ACP3\Captcha\Controller\Index
  */
-class Image extends Core\Controller\FrontendController
+class Image extends Core\Controller\FrontendAction
 {
     /**
      * @var \ACP3\Core\SessionHandler

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Core\Assets;
 
 use ACP3\Core;
@@ -22,7 +27,7 @@ class FileResolver
      */
     protected $resourcesCache;
     /**
-     * @var \ACP3\Core\Modules\Vendors
+     * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
     /**
@@ -46,13 +51,13 @@ class FileResolver
      * @param \ACP3\Core\XML                         $xml
      * @param \ACP3\Core\Assets\Cache                $resourcesCache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Vendors             $vendors
+     * @param \ACP3\Core\Modules\Vendor              $vendors
      */
     public function __construct(
         Core\XML $xml,
         Core\Assets\Cache $resourcesCache,
         Core\Environment\ApplicationPath $appPath,
-        Core\Modules\Vendors $vendors
+        Core\Modules\Vendor $vendors
     ) {
         $this->xml = $xml;
         $this->resourcesCache = $resourcesCache;

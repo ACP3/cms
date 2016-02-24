@@ -1,12 +1,12 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AdminController;
+use ACP3\Core\Controller\AdminAction;
 use ACP3\Core\Controller\Context\AdminContext;
 use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
 
@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
  */
-class AbstractFormAction extends AdminController
+class AbstractFormAction extends AdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter

@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Index;
@@ -12,7 +13,7 @@ use ACP3\Modules\ACP3\System;
  * Class Configuration
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Index
  */
-class Configuration extends Core\Controller\AdminController
+class Configuration extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Controller;
@@ -9,10 +10,10 @@ use ACP3\Core;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class WidgetController
+ * Class WidgetAction
  * @package ACP3\Core\Controller
  */
-abstract class WidgetController implements ControllerInterface
+abstract class WidgetAction implements ActionInterface
 {
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
@@ -149,7 +150,7 @@ abstract class WidgetController implements ControllerInterface
     /**
      * @inheritdoc
      */
-    public function display($controllerActionResult)
+    public function display($actionResult)
     {
         if ($this->getNoOutput() === false && $this->getTemplate() !== '') {
             $this->view->displayTemplate($this->getTemplate());

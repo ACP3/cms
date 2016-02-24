@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
@@ -13,7 +14,7 @@ use ACP3\Modules\ACP3\System;
  * Class Designs
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
  */
-class Designs extends Core\Controller\AdminController
+class Designs extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Core\XML

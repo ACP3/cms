@@ -60,6 +60,6 @@ services:
     parent: core.modules.schemaHelper
 
   core.modules.vendors:
-    class: ACP3\Core\Modules\Vendors
+    class: ACP3\Core\Modules\Vendor
     arguments:
       - @core.environment.application_path

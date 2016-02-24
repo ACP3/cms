@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
@@ -12,7 +13,7 @@ use ACP3\Modules\ACP3\Emoticons;
  * Class Index
  * @package ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index
  */
-class Index extends Core\Controller\AdminController
+class Index extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository

@@ -1,10 +1,15 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Modules\ModuleInfoCache;
-use ACP3\Core\Modules\Vendors;
+use ACP3\Core\Modules\Vendor;
 use ACP3\Modules\ACP3\System;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -31,7 +36,7 @@ class Modules
      */
     protected $moduleInfoCache;
     /**
-     * @var \ACP3\Core\Modules\Vendors
+     * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
     /**
@@ -48,14 +53,14 @@ class Modules
      * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
      * @param \ACP3\Core\Modules\Helper\ControllerActionExists          $controllerActionExists
      * @param \ACP3\Core\Modules\ModuleInfoCache                        $moduleInfoCache
-     * @param \ACP3\Core\Modules\Vendors                                $vendors
+     * @param \ACP3\Core\Modules\Vendor                                 $vendors
      */
     public function __construct(
         ContainerInterface $container,
         ApplicationPath $appPath,
         ControllerActionExists $controllerActionExists,
         ModuleInfoCache $moduleInfoCache,
-        Vendors $vendors
+        Vendor $vendors
     )
     {
         $this->container = $container;

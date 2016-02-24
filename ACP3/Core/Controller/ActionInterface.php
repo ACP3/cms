@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Controller;
@@ -8,10 +9,10 @@ namespace ACP3\Core\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Interface ControllerInterface
+ * Interface ActionInterface
  * @package ACP3\Core\Controller
  */
-interface ControllerInterface
+interface ActionInterface
 {
     public function preDispatch();
 
@@ -32,7 +33,7 @@ interface ControllerInterface
     public function setContainer(ContainerInterface $container);
 
     /**
-     * @param mixed $controllerActionResult
+     * @param mixed $actionResult
      */
-    public function display($controllerActionResult);
+    public function display($actionResult);
 }

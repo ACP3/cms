@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Controller;
@@ -9,10 +10,10 @@ use ACP3\Core;
 use ACP3\Core\Modules\DisplayControllerActionTrait;
 
 /**
- * Class FrontendController
+ * Class FrontendAction
  * @package ACP3\Core\Controller
  */
-abstract class FrontendController extends Core\Controller\WidgetController
+abstract class FrontendAction extends Core\Controller\WidgetAction
 {
     use DisplayControllerActionTrait;
 

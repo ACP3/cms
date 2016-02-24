@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -14,7 +15,7 @@ use ACP3\Modules\ACP3\News;
  * Class Delete
  * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AdminController
+class Delete extends Core\Controller\AdminAction
 {
     use CommentsHelperTrait;
 
