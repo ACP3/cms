@@ -42,8 +42,7 @@ class Unsubscribe extends Core\Controller\FrontendAction
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

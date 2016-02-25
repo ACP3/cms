@@ -49,8 +49,7 @@ class Navbar extends AbstractFunction
         Core\RouterInterface $router,
         Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
-    )
-    {
+    ) {
         $this->request = $request;
         $this->router = $router;
         $this->menuItemRepository = $menuItemRepository;

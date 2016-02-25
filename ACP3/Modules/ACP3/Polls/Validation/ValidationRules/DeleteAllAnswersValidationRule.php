@@ -17,7 +17,7 @@ class DeleteAllAnswersValidationRule extends AbstractAnswerValidationRule
         }
 
         if (is_array($data)) {
-            list($markedAnswers,) = $this->validateAnswers($data);
+            list($markedAnswers, ) = $this->validateAnswers($data);
 
             return count($data) - $markedAnswers >= 2;
         }

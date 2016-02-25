@@ -23,8 +23,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function __construct(
         Core\Cache $cache,
         NewsRepository $newsRepository
-    )
-    {
+    ) {
         parent::__construct($cache);
 
         $this->newsRepository = $newsRepository;

@@ -46,8 +46,7 @@ class Edit extends AbstractAction
         Core\Helpers\Secure $secureHelper,
         Users\Model\UserRepository $userRepository,
         Users\Validation\AccountFormValidation $accountFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

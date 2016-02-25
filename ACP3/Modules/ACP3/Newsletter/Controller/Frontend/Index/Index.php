@@ -42,8 +42,7 @@ class Index extends Core\Controller\FrontendAction
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\Subscribe $subscribeHelper,
         Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

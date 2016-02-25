@@ -128,5 +128,3 @@ $lang = array(
     "Confirmation" => "Megerősítés",
     "Warning" => "Figyelem"
 );
-
-?>

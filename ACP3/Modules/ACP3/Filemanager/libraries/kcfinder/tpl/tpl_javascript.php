@@ -1,20 +1,21 @@
 <?php
-    NAMESPACE kcfinder;
+    namespace kcfinder;
+
 ?>
 <script src="js/index.php" type="text/javascript"></script>
 <script src="js_localize.php?lng=<?php echo $this->lang ?>" type="text/javascript"></script>
 <?php
-    IF ($this->opener['name'] == "tinymce"):
+    if ($this->opener['name'] == "tinymce"):
 ?>
 <script src="<?php echo $this->config['_tinyMCEPath'] ?>/tiny_mce_popup.js" type="text/javascript"></script>
 <?php
-    ENDIF;
+    endif;
 
-    IF (file_exists("themes/{$this->config['theme']}/js.php")):
+    if (file_exists("themes/{$this->config['theme']}/js.php")):
 ?>
 <script src="themes/<?php echo $this->config['theme'] ?>/js.php" type="text/javascript"></script>
 <?php
-    ENDIF;
+    endif;
 ?>
 <script type="text/javascript">
 _.version = "<?php echo self::VERSION ?>";

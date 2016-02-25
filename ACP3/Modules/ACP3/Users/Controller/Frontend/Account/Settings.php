@@ -40,8 +40,7 @@ class Settings extends AbstractAction
         Core\Helpers\FormToken $formTokenHelper,
         Users\Model\UserRepository $userRepository,
         Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

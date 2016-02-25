@@ -57,8 +57,7 @@ class Create extends AbstractAction
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
         Guestbook\Validation\FormValidation $formValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

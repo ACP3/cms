@@ -40,8 +40,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         RoleRepository $roleRepository,
         ResourceRepository $resourceRepository,
         RuleRepository $ruleRepository
-    )
-    {
+    ) {
         parent::__construct($cache);
 
         $this->roleRepository = $roleRepository;

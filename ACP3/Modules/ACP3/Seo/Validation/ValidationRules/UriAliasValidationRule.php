@@ -41,8 +41,7 @@ class UriAliasValidationRule extends AbstractValidationRule
         Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule,
         Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule,
         Seo\Model\SeoRepository $seoRepository
-    )
-    {
+    ) {
         $this->appPath = $appPath;
         $this->internalUriValidationRule = $internalUriValidationRule;
         $this->uriSafeValidationRule = $uriSafeValidationRule;

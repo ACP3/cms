@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer;
 
-
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 

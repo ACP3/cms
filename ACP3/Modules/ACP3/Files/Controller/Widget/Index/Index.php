@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Files\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
 
-
 /**
  * Class Index
  * @package ACP3\Modules\ACP3\Files\Controller\Widget\Index

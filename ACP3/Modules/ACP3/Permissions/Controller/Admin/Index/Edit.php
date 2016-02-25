@@ -54,8 +54,7 @@ class Edit extends AbstractFormAction
         Permissions\Model\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
-    )
-    {
+    ) {
         parent::__construct($context, $ruleRepository);
 
         $this->nestedSet = $nestedSet;

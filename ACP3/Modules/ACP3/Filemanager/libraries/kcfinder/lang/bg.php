@@ -266,5 +266,3 @@ $lang = array(
     "Confirmation" => "Потвърждение",
     "Warning" => "Внимание"
 );
-
-?>

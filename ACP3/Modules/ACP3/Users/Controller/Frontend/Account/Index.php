@@ -28,8 +28,7 @@ class Index extends AbstractAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Users\Model\UserRepository $userRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->userRepository = $userRepository;

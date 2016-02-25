@@ -41,8 +41,7 @@ class Delete extends Core\Controller\AdminAction
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->galleryHelpers = $galleryHelpers;

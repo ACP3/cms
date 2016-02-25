@@ -26,8 +26,7 @@ class ManageMenuItem
     public function __construct(
         Core\NestedSet $nestedSet,
         MenuItemRepository $menuItemRepository
-    )
-    {
+    ) {
         $this->nestedSet = $nestedSet;
         $this->menuItemRepository = $menuItemRepository;
     }
@@ -90,5 +89,4 @@ class ManageMenuItem
 
         return true;
     }
-
 }

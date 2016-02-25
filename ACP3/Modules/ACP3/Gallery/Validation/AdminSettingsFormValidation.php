@@ -25,8 +25,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         Core\Modules $modules
-    )
-    {
+    ) {
         parent::__construct($translator, $validator);
 
         $this->modules = $modules;

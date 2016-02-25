@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Permissions;
+
 use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository;
 
@@ -25,8 +26,7 @@ class Helpers
     public function __construct(
         RoleRepository $roleRepository,
         UserRoleRepository $userRoleRepository
-    )
-    {
+    ) {
         $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
     }

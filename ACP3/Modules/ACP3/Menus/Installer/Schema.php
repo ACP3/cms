@@ -83,5 +83,4 @@ class Schema implements Modules\Installer\SchemaInterface
     {
         return [];
     }
-
 }

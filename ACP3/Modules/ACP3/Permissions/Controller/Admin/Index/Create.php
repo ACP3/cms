@@ -48,8 +48,7 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
-    )
-    {
+    ) {
         parent::__construct($context, $ruleRepository);
 
         $this->nestedSet = $nestedSet;

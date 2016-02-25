@@ -39,8 +39,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         Core\Environment\ApplicationPath $appPath,
         PictureRepository $pictureRepository,
         Core\Config $config
-    )
-    {
+    ) {
         parent::__construct($cache);
 
         $this->appPath = $appPath;

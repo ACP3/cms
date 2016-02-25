@@ -52,8 +52,7 @@ class OnDisplaySearchResultsListener extends Event
         Translator $translator,
         RouterInterface $router,
         FilesRepository $filesRepository
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->date = $date;
         $this->translator = $translator;

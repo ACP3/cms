@@ -35,8 +35,7 @@ class Delete extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->resourceRepository = $resourceRepository;

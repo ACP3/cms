@@ -59,8 +59,7 @@ class MenuConfiguration
         $dropdownWrapperTag = 'li',
         $linkSelectors = '',
         $inlineStyle = ''
-    )
-    {
+    ) {
         $this->useBootstrap = $useBootstrap;
         $this->selector = $class;
         $this->dropdownItemSelector = $dropdownItemSelector;
@@ -134,5 +133,4 @@ class MenuConfiguration
     {
         return $this->inlineStyle;
     }
-
 }

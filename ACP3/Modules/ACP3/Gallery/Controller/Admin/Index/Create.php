@@ -47,8 +47,7 @@ class Create extends Core\Controller\AdminAction
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\GalleryRepository $galleryRepository,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

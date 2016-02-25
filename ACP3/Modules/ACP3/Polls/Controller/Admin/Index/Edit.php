@@ -48,8 +48,7 @@ class Edit extends AbstractFormAction
         Polls\Model\AnswerRepository $answerRepository,
         Polls\Model\VoteRepository $voteRepository,
         Polls\Validation\AdminFormValidation $pollsValidator
-    )
-    {
+    ) {
         parent::__construct($context, $answerRepository, $voteRepository);
 
         $this->date = $date;

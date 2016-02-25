@@ -35,8 +35,7 @@ class Delete extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Core\NestedSet $nestedSet,
         Permissions\Cache $permissionsCache
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->nestedSet = $nestedSet;

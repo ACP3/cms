@@ -35,8 +35,7 @@ class Configuration extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         System\Validation\AdminSettingsFormValidation $systemValidator
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

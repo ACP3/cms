@@ -59,8 +59,7 @@ class Edit extends Core\Controller\AdminAction
         Gallery\Model\GalleryRepository $galleryRepository,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

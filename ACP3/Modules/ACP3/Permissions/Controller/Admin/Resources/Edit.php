@@ -45,8 +45,7 @@ class Edit extends Core\Controller\AdminAction
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

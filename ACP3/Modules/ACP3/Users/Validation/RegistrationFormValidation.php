@@ -59,5 +59,4 @@ class RegistrationFormValidation extends AbstractUserFormValidation
 
         $this->validator->validate();
     }
-
 }

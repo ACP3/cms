@@ -36,8 +36,7 @@ class Activate extends Core\Controller\FrontendAction
         Core\Controller\Context\FrontendContext $context,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->accountStatusHelper = $accountStatusHelper;

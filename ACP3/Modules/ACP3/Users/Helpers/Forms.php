@@ -40,8 +40,7 @@ class Forms
         RequestInterface $request,
         Date $dateHelpers,
         \ACP3\Core\Helpers\Forms $formsHelpers
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->request = $request;
         $this->dateHelpers = $dateHelpers;
@@ -61,8 +60,7 @@ class Forms
         $defaultWebsite = '',
         $defaultIcqNumber = '',
         $defaultSkypeName = ''
-    )
-    {
+    ) {
         return [
             [
                 'name' => 'mail',
@@ -129,8 +127,7 @@ class Forms
         $displayBirthday = 0,
         $displayCountry = 0,
         $displayMail = 0
-    )
-    {
+    ) {
         return [
             'entries' => $this->formsHelpers->recordsPerPage((int)$entries),
             'languages' => $this->translator->getLanguagePack($this->request->getPost()->get('language', $language)),
@@ -217,5 +214,4 @@ class Forms
         ];
         return $this->formsHelpers->selectGenerator('gender', [1, 2, 3], $langGender, $value);
     }
-
 }

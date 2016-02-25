@@ -37,8 +37,7 @@ class Index extends AbstractAction
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
         Guestbook\Model\GuestbookRepository $guestbookRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->pagination = $pagination;

@@ -30,8 +30,7 @@ class Request extends \ACP3\Core\Http\Request
     public function __construct(
         ApplicationPath $appPath,
         SeoRepository $seoRepository
-    )
-    {
+    ) {
         parent::__construct($appPath);
 
         $this->seoRepository = $seoRepository;

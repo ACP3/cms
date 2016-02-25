@@ -129,5 +129,3 @@ $lang = array(
     "Confirmation" => "Confirmation",
     "Warning" => "Avertissement",
 );
-
-?>

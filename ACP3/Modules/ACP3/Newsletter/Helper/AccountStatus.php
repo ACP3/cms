@@ -37,8 +37,7 @@ class AccountStatus
         Date $date,
         AccountRepository $accountRepository,
         AccountHistoryRepository $accountHistoryRepository
-    )
-    {
+    ) {
         $this->date = $date;
         $this->accountRepository = $accountRepository;
         $this->accountHistoryRepository = $accountHistoryRepository;

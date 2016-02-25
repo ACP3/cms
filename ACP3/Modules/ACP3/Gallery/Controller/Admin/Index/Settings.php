@@ -35,8 +35,7 @@ class Settings extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

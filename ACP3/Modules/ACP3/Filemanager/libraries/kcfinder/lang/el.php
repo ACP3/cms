@@ -128,5 +128,3 @@ $lang = array(
     "Confirmation" => "Επιβεβαίωση",
     "Warning" => "Προειδοποίηση",
 );
-
-?>

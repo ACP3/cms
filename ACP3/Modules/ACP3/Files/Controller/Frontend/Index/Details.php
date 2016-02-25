@@ -11,7 +11,6 @@ use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-
 /**
  * Class Details
  * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index

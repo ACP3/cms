@@ -10,5 +10,4 @@ use ACP3\Core;
 class AccountHistoryRepository extends Core\Model\AbstractRepository
 {
     const TABLE_NAME = 'newsletter_account_history';
-
 }

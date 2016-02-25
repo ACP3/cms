@@ -127,5 +127,3 @@ $lang = array(
     "Next" => "Sau",
     "Confirmation" => "Xác nhận",
     "Warning" => "Cảnh báo",);
-
-?>

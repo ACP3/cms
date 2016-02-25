@@ -49,6 +49,5 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
                 ]);
 
         $this->validator->validate();
-
     }
 }

@@ -24,8 +24,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function __construct(
         Core\Cache $cache,
         FilesRepository $filesRepository
-    )
-    {
+    ) {
         parent::__construct($cache);
 
         $this->filesRepository = $filesRepository;

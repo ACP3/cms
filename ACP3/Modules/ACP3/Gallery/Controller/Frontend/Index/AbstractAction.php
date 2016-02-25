@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
-
 use ACP3\Core\Controller\FrontendAction;
 
 /**

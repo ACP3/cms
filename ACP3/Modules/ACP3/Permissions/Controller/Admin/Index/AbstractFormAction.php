@@ -30,8 +30,7 @@ abstract class AbstractFormAction extends AdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\RuleRepository $ruleRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->ruleRepository = $ruleRepository;

@@ -35,8 +35,7 @@ class Router extends \ACP3\Core\Router
         ApplicationPath $appPath,
         Config $config,
         $environment
-    )
-    {
+    ) {
         parent::__construct($request, $appPath, $config, $environment);
 
         $this->aliases = $aliases;

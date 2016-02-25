@@ -118,5 +118,4 @@ class PictureRepository extends Core\Model\AbstractRepository
     {
         return $this->db->getConnection()->executeUpdate('UPDATE ' . $this->getTableName() . ' SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?', [$pictureNumber, $galleryId]);
     }
-
 }

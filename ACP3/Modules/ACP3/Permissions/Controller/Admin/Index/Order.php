@@ -41,8 +41,7 @@ class Order extends Core\Controller\AdminAction
         Core\NestedSet $nestedSet,
         Permissions\Model\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->nestedSet = $nestedSet;

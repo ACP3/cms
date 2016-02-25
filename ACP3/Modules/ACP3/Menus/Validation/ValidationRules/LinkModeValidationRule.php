@@ -34,8 +34,7 @@ class LinkModeValidationRule extends AbstractValidationRule
     public function __construct(
         Modules $modules,
         InternalUriValidationRule $internalUriValidationRule
-    )
-    {
+    ) {
         $this->modules = $modules;
         $this->internalUriValidationRule = $internalUriValidationRule;
     }

@@ -30,8 +30,7 @@ class Index extends Core\Controller\AdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Guestbook\Model\GuestbookRepository $guestbookRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->guestbookRepository = $guestbookRepository;

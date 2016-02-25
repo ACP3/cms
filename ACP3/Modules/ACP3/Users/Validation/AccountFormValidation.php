@@ -29,7 +29,8 @@ class AccountFormValidation extends AbstractUserFormValidation
      */
     public function validate(array $formData)
     {
-        $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);;
+        $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);
+        ;
 
         $this->validateAccountCoreData($formData, $this->userId);
         $this->validateNewPassword($formData, 'new_pwd', 'new_pwd_repeat');

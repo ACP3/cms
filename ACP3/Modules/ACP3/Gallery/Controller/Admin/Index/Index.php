@@ -29,8 +29,7 @@ class Index extends Core\Controller\AdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Gallery\Model\GalleryRepository $galleryRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->galleryRepository = $galleryRepository;

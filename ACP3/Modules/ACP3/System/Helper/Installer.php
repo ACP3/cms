@@ -55,8 +55,7 @@ class Installer
         Core\Modules\SchemaInstaller $schemaInstaller,
         Core\XML $xml,
         $environment
-    )
-    {
+    ) {
         $this->appPath = $appPath;
         $this->modules = $modules;
         $this->vendors = $vendors;

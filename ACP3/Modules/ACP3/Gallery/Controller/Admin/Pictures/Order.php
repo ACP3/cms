@@ -42,8 +42,7 @@ Order extends Core\Controller\AdminAction
         Core\Helpers\Sort $sortHelper,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->sortHelper = $sortHelper;

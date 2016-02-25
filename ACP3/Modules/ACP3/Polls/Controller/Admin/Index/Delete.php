@@ -29,8 +29,7 @@ class Delete extends Core\Controller\AdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Polls\Model\PollRepository $pollRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->pollRepository = $pollRepository;

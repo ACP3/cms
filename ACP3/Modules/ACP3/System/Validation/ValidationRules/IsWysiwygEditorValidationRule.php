@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\System\Validation\ValidationRules;
 
-
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\WYSIWYG\AbstractWYSIWYG;
 use Symfony\Component\DependencyInjection\ContainerInterface;

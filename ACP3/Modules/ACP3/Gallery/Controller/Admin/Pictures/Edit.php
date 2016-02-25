@@ -53,8 +53,7 @@ class Edit extends Core\Controller\AdminAction
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

@@ -42,8 +42,7 @@ class Breadcrumb extends Core\Breadcrumb
         Core\RouterInterface $router,
         Core\Config $config,
         Menus\Model\MenuItemRepository $menuItemRepository
-    )
-    {
+    ) {
         parent::__construct($container, $translator, $request, $router, $config);
 
         $this->menuItemRepository = $menuItemRepository;

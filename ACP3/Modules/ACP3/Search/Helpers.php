@@ -40,8 +40,7 @@ class Helpers
         Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
         EventDispatcher $eventDispatcher
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->modules = $modules;
         $this->formsHelper = $formsHelper;

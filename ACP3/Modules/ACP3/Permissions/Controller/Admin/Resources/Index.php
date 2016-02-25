@@ -29,8 +29,7 @@ class Index extends Core\Controller\AdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\ResourceRepository $resourceRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->resourceRepository = $resourceRepository;

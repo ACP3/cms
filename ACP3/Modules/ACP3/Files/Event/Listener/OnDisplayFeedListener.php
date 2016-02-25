@@ -44,8 +44,7 @@ class OnDisplayFeedListener
         RouterInterface $router,
         StringFormatter $formatter,
         FilesRepository $filesRepository
-    )
-    {
+    ) {
         $this->date = $date;
         $this->router = $router;
         $this->formatter = $formatter;

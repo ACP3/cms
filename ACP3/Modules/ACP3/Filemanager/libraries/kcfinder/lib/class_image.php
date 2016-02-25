@@ -14,7 +14,8 @@
 
 namespace kcfinder;
 
-abstract class image {
+abstract class class_image
+{
     const DEFAULT_JPEG_QUALITY = 75;
 
 /** Image resource or object
@@ -43,7 +44,8 @@ abstract class image {
   * @param string $property
   * @return mixed */
 
-    final public function __get($property) {
+    final public function __get($property)
+    {
         return property_exists($this, $property) ? $this->$property : null;
     }
 
@@ -59,14 +61,16 @@ abstract class image {
   * @param mixed $image
   * @param array $options */
 
-    public function __construct($image, array $options=array()) {
+    public function __construct($image, array $options=array())
+    {
         $this->image = $this->width = $this->height = null;
         $imageDetails = $this->buildImage($image);
 
-        if ($imageDetails !== false)
+        if ($imageDetails !== false) {
             list($this->image, $this->width, $this->height) = $imageDetails;
-        else
+        } else {
             $this->initError = true;
+        }
         $this->options = $options;
     }
 
@@ -77,7 +81,8 @@ abstract class image {
   * @param mixed $image
   * @return object */
 
-    final static function factory($driver, $image, array $options=array()) {
+    final public static function factory($driver, $image, array $options=array())
+    {
         $class = __NAMESPACE__ . "\\image_$driver";
         return new $class($image, $options);
     }
@@ -88,14 +93,18 @@ abstract class image {
   * @param array $drivers
   * @return string */
 
-    final static function getDriver(array $drivers=array('gd')) {
+    final public static function getDriver(array $drivers=array('gd'))
+    {
         foreach ($drivers as $driver) {
-            if (!preg_match('/^[a-z0-9\_]+$/i', $driver))
+            if (!preg_match('/^[a-z0-9\_]+$/i', $driver)) {
                 continue;
+            }
             $class = __NAMESPACE__ . "\\image_$driver";
             if (class_exists($class) && method_exists($class, "available")) {
                 eval("\$avail = $class::available();");
-                if ($avail) return $driver;
+                if ($avail) {
+                    return $driver;
+                }
             }
         }
         return false;
@@ -107,21 +116,21 @@ abstract class image {
   * @param mixed $image
   * @return array */
 
-    final protected function buildImage($image) {
+    final protected function buildImage($image)
+    {
         $class = get_class($this);
 
         if ($image instanceof $class) {
             $width = $image->width;
             $height = $image->height;
             $img = $image->image;
-
         } elseif (is_array($image)) {
             list($key, $width) = each($image);
             list($key, $height) = each($image);
             $img = $this->getBlankImage($width, $height);
-
-        } else
+        } else {
             $img = $this->getImage($image, $width, $height);
+        }
 
         return ($img !== false)
             ? array($img, $width, $height)
@@ -133,9 +142,12 @@ abstract class image {
   * @param integer $resizedHeight
   * @return integer */
 
-    final public function getPropWidth($resizedHeight) {
+    final public function getPropWidth($resizedHeight)
+    {
         $width = round(($this->width * $resizedHeight) / $this->height);
-        if (!$width) $width = 1;
+        if (!$width) {
+            $width = 1;
+        }
         return $width;
     }
 
@@ -144,9 +156,12 @@ abstract class image {
   * @param integer $resizedWidth
   * @return integer */
 
-    final public function getPropHeight($resizedWidth) {
+    final public function getPropHeight($resizedWidth)
+    {
         $height = round(($this->height * $resizedWidth) / $this->width);
-        if (!$height) $height = 1;
+        if (!$height) {
+            $height = 1;
+        }
         return $height;
     }
 
@@ -155,13 +170,19 @@ abstract class image {
   * static method should be implemented into driver classes like abstract
   * methods
   * @return bool */
-    static function available() { return false; }
+    public static function available()
+    {
+        return false;
+    }
 
 /** Checks if file is an image. This static method should be implemented into
   * driver classes like abstract methods
   * @param string $file
   * @return bool */
-    static function checkImage($file) { return false; }
+    public static function checkImage($file)
+    {
+        return false;
+    }
 
 /** Resize image. Should return TRUE on success or FALSE on failure
   * @param integer $width
@@ -237,7 +258,4 @@ abstract class image {
   * @param integer $height
   * @return mixed */
     abstract protected function getImage($image, &$width, &$height);
-
 }
-
-?>

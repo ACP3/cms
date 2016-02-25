@@ -260,7 +260,6 @@ class CKEditor extends Textarea
 
         if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
             $this->applyFileManagerPaths();
-
         }
 
         // Toolbar configuration
@@ -280,7 +279,8 @@ class CKEditor extends Textarea
             ['name' => 'tools'],
             ['name' => 'others'],
             ['name' => 'about']
-        ];;
+        ];
+        ;
 
         // Include emoticons, if available
         if ($this->modules->isActive('emoticons') === true) {

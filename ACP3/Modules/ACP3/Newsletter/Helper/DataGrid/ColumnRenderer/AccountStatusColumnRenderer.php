@@ -30,8 +30,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     public function __construct(
         Translator $translator,
         RouterInterface $router
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->router = $router;
     }

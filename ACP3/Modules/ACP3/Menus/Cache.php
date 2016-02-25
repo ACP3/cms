@@ -38,8 +38,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         Core\I18n\Translator $translator,
         MenuRepository $menuModel,
         MenuItemRepository $menuItemRepository
-    )
-    {
+    ) {
         parent::__construct($cache);
 
         $this->translator = $translator;

@@ -46,8 +46,7 @@ class Edit extends Core\Controller\AdminAction
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
         Guestbook\Validation\AdminFormValidation $adminFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

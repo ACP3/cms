@@ -32,8 +32,7 @@ class MenuItemFormFields
         Core\Helpers\Forms $formsHelper,
         MenuItemsList $menusHelper,
         MenuRepository $menusModel
-    )
-    {
+    ) {
         $this->formsHelper = $formsHelper;
         $this->menusHelper = $menusHelper;
         $this->menusModel = $menusModel;

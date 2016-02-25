@@ -32,8 +32,7 @@ class MenuItemsList
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         Cache $menusCache
-    )
-    {
+    ) {
         $this->formsHelper = $formsHelper;
         $this->menusCache = $menusCache;
     }

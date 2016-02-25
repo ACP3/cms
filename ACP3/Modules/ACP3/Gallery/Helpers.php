@@ -42,8 +42,7 @@ class Helpers
         Core\Router\Aliases $aliases,
         Core\SEO $seo,
         PictureRepository $pictureRepository
-    )
-    {
+    ) {
         $this->appPath = $appPath;
         $this->aliases = $aliases;
         $this->seo = $seo;

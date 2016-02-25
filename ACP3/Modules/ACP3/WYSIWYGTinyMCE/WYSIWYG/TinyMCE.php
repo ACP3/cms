@@ -47,8 +47,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
         Core\I18n\Translator $translator,
         Core\View $view,
         Core\Environment\ApplicationPath $appPath
-    )
-    {
+    ) {
         $this->minifier = $minifier;
         $this->translator = $translator;
         $this->view = $view;
@@ -122,7 +121,6 @@ class TinyMCE extends Core\WYSIWYG\Textarea
      */
     private function configure()
     {
-
         $config = [
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',

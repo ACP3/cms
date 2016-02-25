@@ -36,8 +36,7 @@ abstract class AbstractFormAction extends AdminAction
         Core\Controller\Context\AdminContext $context,
         Polls\Model\AnswerRepository $answerRepository,
         Polls\Model\VoteRepository $voteRepository
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->answerRepository = $answerRepository;
@@ -116,5 +115,4 @@ abstract class AbstractFormAction extends AdminAction
             'lang' => $this->translator->t('polls', 'multiple_choice')
         ];
     }
-
 }
