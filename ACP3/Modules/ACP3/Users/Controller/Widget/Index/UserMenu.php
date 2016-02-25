@@ -41,8 +41,10 @@ class UserMenu extends Core\Controller\WidgetAction
     public function execute()
     {
         if ($this->user->isAuthenticated() === true) {
+            $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
+
             $userSidebar = [
-                'current_page' => base64_encode($this->request->getOriginalQuery()),
+                'current_page' => base64_encode($prefix . $this->request->getQuery()),
                 'modules' => $this->addModules(),
                 'system' => $this->addSystemActions()
             ];

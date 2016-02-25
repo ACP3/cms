@@ -80,7 +80,7 @@ class ServiceContainerBuilder
         $includeModules
     ) {
         if (self::canIncludeModules($appMode, $includeModules) === true) {
-            // Ugly hack to prevent request override from ACP3 module
+            // Ugly hack to prevent request override from included ACP3 modules
             $request = $container->get('core.request');
 
             $vendors = $container->get('core.modules.vendors')->getVendors();
