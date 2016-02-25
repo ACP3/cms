@@ -1,7 +1,7 @@
 services:
   core.request:
     class: ACP3\Core\Http\Request
-    arguments: ['@core.config', @core.environment.application_path, '@seo.model.seorepository']
+    arguments: ['@core.config', @core.environment.application_path]
 
   core.response:
     class: Symfony\Component\HttpFoundation\Response

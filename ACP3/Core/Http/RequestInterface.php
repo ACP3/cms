@@ -58,7 +58,7 @@ interface RequestInterface
     /**
      * @return string
      */
-    public function getControllerAction();
+    public function getAction();
 
     /**
      * Returns the currently requested module, controller and controller action

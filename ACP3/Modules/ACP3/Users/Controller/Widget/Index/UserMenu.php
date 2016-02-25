@@ -25,18 +25,17 @@ class UserMenu extends Core\Controller\WidgetAction
 
             $activeModules = $this->modules->getActiveModules();
             $navMods = $navSystem = [];
-            $hasAccessToSystem = false;
 
             foreach ($activeModules as $name => $info) {
                 $dir = strtolower($info['dir']);
                 if ($dir !== 'acp' && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
                     if ($dir === 'system') {
-                        $hasAccessToSystem = true;
-                    } else {
-                        $navMods[$name]['name'] = $name;
-                        $navMods[$name]['dir'] = $dir;
-                        $navMods[$name]['is_active'] = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule();
+                        continue;
                     }
+
+                    $navMods[$name]['name'] = $name;
+                    $navMods[$name]['dir'] = $dir;
+                    $navMods[$name]['is_active'] = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule();
                 }
             }
 
@@ -45,12 +44,12 @@ class UserMenu extends Core\Controller\WidgetAction
             }
 
             // If the user has access to the system module, display some more options
-            if ($hasAccessToSystem === true) {
+            if ($this->acl->hasPermission('admin/system') === true) {
                 $i = 0;
                 if ($this->acl->hasPermission('admin/system/index/configuration') === true) {
                     $navSystem[$i]['path'] = 'system/index/configuration/';
                     $navSystem[$i]['name'] = $this->translator->t('system', 'configuration');
-                    $navSystem[$i]['is_active'] = $this->request->getQuery() === $navSystem[$i]['path'];
+                    $navSystem[$i]['is_active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0;
                 }
                 if ($this->acl->hasPermission('admin/system/extensions/index') === true) {
                     $i++;

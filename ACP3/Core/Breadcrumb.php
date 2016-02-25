@@ -332,7 +332,7 @@ class Breadcrumb
                 $this->request->getModuleAndController()
             );
         }
-        if ($this->request->getControllerAction() !== 'index') {
+        if ($this->request->getAction() !== 'index') {
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->getControllerActionTitle()),
                 $this->request->getFullPath()
@@ -345,7 +345,7 @@ class Breadcrumb
      */
     private function getControllerActionTitle()
     {
-        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getControllerAction();
+        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getAction();
     }
 
     /**

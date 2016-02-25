@@ -47,5 +47,4 @@ abstract class AbstractFrontendAction extends FrontendAction
 
         return $this;
     }
-
 }

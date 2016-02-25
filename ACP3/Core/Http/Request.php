@@ -24,10 +24,6 @@ class Request extends AbstractRequest
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
-     */
-    protected $seoRepository;
 
     /**
      * @var string
@@ -44,7 +40,7 @@ class Request extends AbstractRequest
     /**
      * @var string
      */
-    protected $controllerAction = '';
+    protected $action = '';
     /**
      * @var \ACP3\Core\Http\Request\ParameterBag
      */
@@ -63,19 +59,18 @@ class Request extends AbstractRequest
     protected $isHomepage;
 
     /**
-     * @param \ACP3\Core\Config                          $config
-     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * Request constructor.
+     *
+     * @param \ACP3\Core\Config                      $config
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Config $config,
-        ApplicationPath $appPath,
-        Seo\Model\SeoRepository $seoRepository
+        ApplicationPath $appPath
     )
     {
         $this->config = $config;
         $this->appPath = $appPath;
-        $this->seoRepository = $seoRepository;
 
         parent::__construct();
 
@@ -125,9 +120,9 @@ class Request extends AbstractRequest
     /**
      * @inheritdoc
      */
-    public function getControllerAction()
+    public function getAction()
     {
-        return $this->controllerAction;
+        return $this->action;
     }
 
     /**
@@ -135,7 +130,7 @@ class Request extends AbstractRequest
      */
     public function getFullPath()
     {
-        return $this->getModuleAndController() . $this->controllerAction . '/';
+        return $this->getModuleAndController() . $this->action . '/';
     }
 
     /**
@@ -143,7 +138,7 @@ class Request extends AbstractRequest
      */
     public function getFullPathWithoutArea()
     {
-        return $this->getModuleAndControllerWithoutArea() . $this->controllerAction . '/';
+        return $this->getModuleAndControllerWithoutArea() . $this->action . '/';
     }
 
     /**
@@ -164,7 +159,6 @@ class Request extends AbstractRequest
     {
         return $this->module . '/' . $this->controller . '/';
     }
-
 
     /**
      * Processes the URL of the current request
@@ -189,27 +183,9 @@ class Request extends AbstractRequest
             if ($this->query === '/' && $homepage !== '') {
                 $this->query = $homepage;
             }
-
-            $this->checkForUriAlias();
         }
 
         $this->parseURI();
-
-        return;
-    }
-
-    /**
-     * Checks, whether the current request may equals an uri alias
-     */
-    protected function checkForUriAlias()
-    {
-        list($params, $probableQuery) = $this->checkUriAliasForAdditionalParameters();
-
-        // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-        $alias = $this->seoRepository->getUriByAlias(substr($probableQuery, 0, -1));
-        if (!empty($alias)) {
-            $this->query = $alias . $params;
-        }
     }
 
     /**
@@ -226,7 +202,7 @@ class Request extends AbstractRequest
         }
 
         $this->controller = isset($query[1]) ? $query[1] : 'index';
-        $this->controllerAction = isset($query[2]) ? $query[2] : 'index';
+        $this->action = isset($query[2]) ? $query[2] : 'index';
 
         $this->completeQuery($query);
         $this->setRequestParameters($query);
@@ -306,40 +282,7 @@ class Request extends AbstractRequest
             $this->query .= $this->controller . '/';
         }
         if (!isset($query[2])) {
-            $this->query .= $this->controllerAction . '/';
+            $this->query .= $this->action . '/';
         }
-    }
-
-    /**
-     * Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
-     *
-     * @return string[]
-     */
-    protected function checkUriAliasForAdditionalParameters()
-    {
-        $params = '';
-        $probableQuery = $this->query;
-        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)*(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
-            $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
-            if (isset($query[1]) === false) {
-                $query[1] = 'index';
-            }
-            if (isset($query[2]) === false) {
-                $query[2] = 'index';
-            }
-
-            $length = 0;
-            foreach ($query as $row) {
-                if (strpos($row, '_') !== false) {
-                    break;
-                }
-
-                $length += strlen($row) + 1;
-            }
-            $params = substr($this->query, $length);
-            $probableQuery = substr($this->query, 0, $length);
-        }
-
-        return [$params, $probableQuery];
     }
 }

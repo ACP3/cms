@@ -49,7 +49,7 @@ class PageCssClasses
      */
     public function getControllerAction()
     {
-        return $this->request->getModule() . '-' . $this->request->getController() . '-' . $this->request->getControllerAction();
+        return $this->request->getModule() . '-' . $this->request->getController() . '-' . $this->request->getAction();
     }
 
     /**

@@ -162,7 +162,7 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     protected function applyTemplateAutomatically()
     {
-        return $this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl';
+        return $this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
     }
 
     protected function addCustomTemplateVarsBeforeOutput()
@@ -170,7 +170,7 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->view->assign('PAGE_TITLE', $this->translator->t('install', 'acp3_installation'));
         $this->view->assign('TITLE', $this->translator->t(
             $this->request->getModule(),
-            $this->request->getController() . '_' . $this->request->getControllerAction())
+            $this->request->getController() . '_' . $this->request->getAction())
         );
     }
 

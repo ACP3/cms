@@ -9,6 +9,13 @@ parameters:
   seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
 
 services:
+  core.request:
+    class: ACP3\Modules\ACP3\Seo\Core\Http\Request
+    arguments:
+      - '@core.config'
+      - '@core.environment.application_path'
+      - '@seo.model.seorepository'
+
   seo.cache:
     class: %seo.cache.fqdn%
     arguments:
