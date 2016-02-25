@@ -12,9 +12,11 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Core\Router;
+use ACP3\Core\RouterInterface;
 use ACP3\Core\User;
 use ACP3\Core\Validation\Validator;
 use ACP3\Core\View;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -23,6 +25,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class WidgetContext
 {
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    protected $container;
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
@@ -48,7 +54,7 @@ class WidgetContext
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -69,33 +75,36 @@ class WidgetContext
     protected $appPath;
 
     /**
-     * Context constructor.
+     * WidgetContext constructor.
      *
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Core\ACL                                              $acl
      * @param \ACP3\Core\User                                             $user
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router                                           $router
+     * @param \ACP3\Core\RouterInterface                                  $router
      * @param \ACP3\Core\Validation\Validator                             $validator
      * @param \ACP3\Core\View                                             $view
      * @param \ACP3\Core\Config                                           $config
      * @param \ACP3\Core\Environment\ApplicationPath                      $appPath
      */
     public function __construct(
+        ContainerInterface $container,
         EventDispatcherInterface $eventDispatcher,
         ACL $acl,
         User $user,
         Translator $translator,
         Modules $modules,
         RequestInterface $request,
-        Router $router,
+        RouterInterface $router,
         Validator $validator,
         View $view,
         Config $config,
         ApplicationPath $appPath
     ) {
+        $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
         $this->acl = $acl;
         $this->user = $user;
@@ -107,6 +116,14 @@ class WidgetContext
         $this->view = $view;
         $this->config = $config;
         $this->appPath = $appPath;
+    }
+
+    /**
+     * @return ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 
     /**
@@ -158,7 +175,7 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\Router
+     * @return \ACP3\Core\RouterInterface
      */
     public function getRouter()
     {

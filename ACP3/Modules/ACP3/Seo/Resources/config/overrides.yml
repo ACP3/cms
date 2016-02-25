@@ -1,0 +1,16 @@
+services:
+  core.request_factory:
+    class: ACP3\Modules\ACP3\Seo\Core\Http\RequestFactory
+    arguments:
+      - '@core.config'
+      - '@core.environment.application_path'
+      - '@seo.model.seorepository'
+
+  core.router:
+    class: ACP3\Modules\ACP3\Seo\Core\Router
+    arguments:
+      - '@core.router.aliases'
+      - '@core.request'
+      - '@core.environment.application_path'
+      - '@core.config'
+      - '%core.environment%'

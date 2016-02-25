@@ -16,17 +16,19 @@ class Redirect
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
 
     /**
+     * Redirect constructor.
+     *
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router                $router
+     * @param \ACP3\Core\RouterInterface       $router
      */
     public function __construct(
         RequestInterface $request,
-        Router $router
+        RouterInterface $router
     )
     {
         $this->request = $request;

@@ -44,7 +44,7 @@ class Breadcrumb
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -53,17 +53,19 @@ class Breadcrumb
     protected $config;
 
     /**
+     * Breadcrumb constructor.
+     *
      * @param \Symfony\Component\DependencyInjection\Container $container
      * @param \ACP3\Core\I18n\Translator                       $translator
      * @param \ACP3\Core\Http\RequestInterface                 $request
-     * @param \ACP3\Core\Router                                $router
+     * @param \ACP3\Core\RouterInterface                       $router
      * @param \ACP3\Core\Config                                $config
      */
     public function __construct(
         Container $container,
         Translator $translator,
         RequestInterface $request,
-        Router $router,
+        RouterInterface $router,
         Config $config
     )
     {

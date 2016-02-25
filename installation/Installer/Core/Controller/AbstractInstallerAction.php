@@ -9,7 +9,6 @@ namespace ACP3\Installer\Core\Controller;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Redirect;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Module Controller of the installer modules
@@ -28,7 +27,7 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     protected $translator;
     /**
-     * @var \ACP3\Installer\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -53,6 +52,7 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     public function __construct(Context\InstallerContext $context)
     {
+        $this->container = $context->getContainer();
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
@@ -145,16 +145,6 @@ abstract class AbstractInstallerAction implements ActionInterface
             }
         }
         return $languages;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setContainer(ContainerInterface $container)
-    {
-        $this->container = $container;
-
-        return $this;
     }
 
     /**

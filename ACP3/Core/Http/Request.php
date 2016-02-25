@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Http;
 
-use ACP3\Core\Config;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request\ParameterBag;
@@ -16,10 +15,6 @@ class Request extends AbstractRequest
 {
     const ADMIN_PANEL_PATTERN = '=^acp/=';
 
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $config;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -53,28 +48,17 @@ class Request extends AbstractRequest
      * @var string
      */
     protected $originalQuery = '';
-    /**
-     * @var bool
-     */
-    protected $isHomepage;
 
     /**
      * Request constructor.
      *
-     * @param \ACP3\Core\Config                      $config
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
-    public function __construct(
-        Config $config,
-        ApplicationPath $appPath
-    )
+    public function __construct(ApplicationPath $appPath)
     {
-        $this->config = $config;
-        $this->appPath = $appPath;
-
         parent::__construct();
 
-        $this->processQuery();
+        $this->appPath = $appPath;
     }
 
     /**
@@ -163,7 +147,7 @@ class Request extends AbstractRequest
     /**
      * Processes the URL of the current request
      */
-    protected function processQuery()
+    public function processQuery()
     {
         $this->setOriginalQuery();
 
@@ -177,11 +161,9 @@ class Request extends AbstractRequest
         } else {
             $this->area = AreaEnum::AREA_FRONTEND;
 
-            $homepage = $this->config->getSettings('system')['homepage'];
-
             // Set the user defined homepage of the website
-            if ($this->query === '/' && $homepage !== '') {
-                $this->query = $homepage;
+            if ($this->query === '/' && $this->homepage !== '') {
+                $this->query = $this->homepage;
             }
         }
 
@@ -213,11 +195,7 @@ class Request extends AbstractRequest
      */
     public function isHomepage()
     {
-        if ($this->isHomepage === null) {
-            $this->isHomepage = ($this->query === $this->config->getSettings('system')['homepage']);
-        }
-
-        return $this->isHomepage;
+        return ($this->query === $this->homepage);
     }
 
     /**
@@ -254,10 +232,9 @@ class Request extends AbstractRequest
             $cQuery = count($query);
 
             for ($i = 3; $i < $cQuery; ++$i) {
-                // Position
-                if (preg_match('/^(page_(\d+))$/', $query[$i])) {
+                if (preg_match('/^(page_(\d+))$/', $query[$i])) { // Current page
                     $this->parameters->add(['page' => (int)substr($query[$i], 5)]);
-                } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // ID eines Datensatzes
+                } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
                     $this->parameters->add(['id' => (int)substr($query[$i], 3)]);
                 } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);

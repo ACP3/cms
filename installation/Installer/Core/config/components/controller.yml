@@ -2,6 +2,7 @@ services:
   core.context.install:
     class: ACP3\Installer\Core\Controller\Context\InstallerContext
     arguments:
+      - '@service_container'
       - '@core.lang'
       - '@core.request'
       - '@core.router'

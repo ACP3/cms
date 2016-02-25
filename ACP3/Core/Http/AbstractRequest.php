@@ -22,6 +22,10 @@ abstract class AbstractRequest implements RequestInterface
      */
     protected $hostname = '';
     /**
+     * @var string
+     */
+    protected $homepage = '';
+    /**
      * @var bool
      */
     protected $isAjax;
@@ -149,6 +153,18 @@ abstract class AbstractRequest implements RequestInterface
     public function getUserAgent()
     {
         return $this->userAgent;
+    }
+
+    /**
+     * @param string $homepage
+     *
+     * @return $this
+     */
+    public function setHomepage($homepage)
+    {
+        $this->homepage = $homepage;
+
+        return $this;
     }
 
     /**

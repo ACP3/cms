@@ -7,7 +7,6 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class WidgetAction
@@ -15,6 +14,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class WidgetAction implements ActionInterface
 {
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    protected $container;
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
@@ -28,10 +31,6 @@ abstract class WidgetAction implements ActionInterface
      */
     protected $user;
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-    /**
      * @var \ACP3\Core\I18n\Translator
      */
     protected $translator;
@@ -44,7 +43,7 @@ abstract class WidgetAction implements ActionInterface
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -82,6 +81,7 @@ abstract class WidgetAction implements ActionInterface
      */
     public function __construct(Core\Controller\Context\WidgetContext $context)
     {
+        $this->container = $context->getContainer();
         $this->eventDispatcher = $context->getEventDispatcher();
         $this->acl = $context->getACL();
         $this->user = $context->getUser();
@@ -135,16 +135,6 @@ abstract class WidgetAction implements ActionInterface
     public function get($serviceId)
     {
         return $this->container->get($serviceId);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setContainer(ContainerInterface $container)
-    {
-        $this->container = $container;
-
-        return $this;
     }
 
     /**

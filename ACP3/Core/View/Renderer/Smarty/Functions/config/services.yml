@@ -55,7 +55,7 @@ services:
 
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
-    arguments: ['@service_container']
+    arguments: ['@core.acl', '@core.application.front_controller']
     tags:
       - { name: core.view.extension }
 

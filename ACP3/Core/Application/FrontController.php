@@ -52,7 +52,6 @@ class FrontController
         if ($this->container->has($serviceId)) {
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
             $controller = $this->container->get($serviceId);
-            $controller->setContainer($this->container);
             $controller->preDispatch();
 
             $result = $this->executeControllerAction(

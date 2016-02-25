@@ -5,6 +5,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router;
+use ACP3\Core\RouterInterface;
 use ACP3\Modules\ACP3\Articles\Model\ArticleRepository;
 use ACP3\Modules\ACP3\Search\Event\DisplaySearchResults;
 use Symfony\Component\EventDispatcher\Event;
@@ -28,7 +29,7 @@ class OnDisplaySearchResultsListener extends Event
      */
     private $translator;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     private $router;
     /**
@@ -37,17 +38,19 @@ class OnDisplaySearchResultsListener extends Event
     private $articleRepository;
 
     /**
+     * OnDisplaySearchResultsListener constructor.
+     *
      * @param \ACP3\Core\ACL                                      $acl
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Core\I18n\Translator                          $translator
-     * @param \ACP3\Core\Router                                   $router
+     * @param \ACP3\Core\RouterInterface                          $router
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
      */
     public function __construct(
         ACL $acl,
         Date $date,
         Translator $translator,
-        Router $router,
+        RouterInterface $router,
         ArticleRepository $articleRepository
     )
     {

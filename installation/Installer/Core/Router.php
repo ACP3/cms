@@ -10,11 +10,6 @@ use ACP3\Core;
 class Router extends Core\Router
 {
     /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-
-    /**
      * @param \ACP3\Core\Http\RequestInterface       $request
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */

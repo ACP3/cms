@@ -26,7 +26,7 @@ class TableOfContents
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -45,7 +45,7 @@ class TableOfContents
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\SEO                                              $seo
      * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router                                           $router
+     * @param \ACP3\Core\RouterInterface                                  $router
      * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
      * @param \ACP3\Core\View                                             $view
      */
@@ -54,7 +54,7 @@ class TableOfContents
         Core\I18n\Translator $translator,
         Core\SEO $seo,
         Core\Http\RequestInterface $request,
-        Core\Router $router,
+        Core\RouterInterface $router,
         Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
         Core\View $view
     )

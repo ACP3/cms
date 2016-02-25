@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
-use ACP3\Core\Config;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
@@ -23,19 +22,19 @@ class Request extends \ACP3\Core\Http\Request
     protected $seoRepository;
 
     /**
-     * @param \ACP3\Core\Config                          $config
+     * Request constructor.
+     *
      * @param \ACP3\Core\Environment\ApplicationPath     $appPath
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
-        Config $config,
         ApplicationPath $appPath,
         SeoRepository $seoRepository
     )
     {
-        $this->seoRepository = $seoRepository;
+        parent::__construct($appPath);
 
-        parent::__construct($config, $appPath);
+        $this->seoRepository = $seoRepository;
     }
 
     protected function parseURI()
