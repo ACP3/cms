@@ -33,8 +33,7 @@ class Index extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Feeds\Validation\AdminFormValidation $adminFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

@@ -1,6 +1,10 @@
 <?php
-namespace ACP3\Installer\Modules\Install\Helpers;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
+namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
@@ -37,8 +41,7 @@ class Requirements
     public function __construct(
         ApplicationPath $appPath,
         Translator $translator
-    )
-    {
+    ) {
         $this->appPath = $appPath;
         $this->translator = $translator;
     }

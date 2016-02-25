@@ -1,6 +1,10 @@
 <?php
-namespace ACP3\Installer\Core\Environment;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
+namespace ACP3\Installer\Core\Environment;
 
 class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
 {

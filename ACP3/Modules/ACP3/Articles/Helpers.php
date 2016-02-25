@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
@@ -27,8 +32,7 @@ class Helpers
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         ArticleRepository $articleRepository
-    )
-    {
+    ) {
         $this->formsHelper = $formsHelper;
         $this->articleRepository = $articleRepository;
     }

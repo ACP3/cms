@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Emoticons;
 
 use ACP3\Core;
@@ -29,8 +34,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         Core\Cache $cache,
         Core\Environment\ApplicationPath $appPath,
         EmoticonRepository $emoticonRepository
-    )
-    {
+    ) {
         parent::__construct($cache);
 
         $this->appPath = $appPath;

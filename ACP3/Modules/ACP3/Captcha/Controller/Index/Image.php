@@ -26,8 +26,7 @@ class Image extends Core\Controller\FrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\SessionHandler $sessionHandler
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->sessionHandler = $sessionHandler;

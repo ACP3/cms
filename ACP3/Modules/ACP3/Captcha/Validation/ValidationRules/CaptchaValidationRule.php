@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Captcha\Validation\ValidationRules;
 
 use ACP3\Core\ACL;
@@ -51,8 +56,7 @@ class CaptchaValidationRule extends AbstractValidationRule
         RouterInterface $router,
         SessionHandler $sessionHandler,
         User $user
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->request = $request;
         $this->router = $router;

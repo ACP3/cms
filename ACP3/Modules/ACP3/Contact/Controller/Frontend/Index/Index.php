@@ -40,8 +40,7 @@ class Index extends Core\Controller\FrontendAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
         Contact\Validation\FormValidation $formValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
@@ -92,7 +91,7 @@ class Index extends Core\Controller\FrontendAction
     protected function indexPost(array $formData)
     {
         return $this->actionHelper->handlePostAction(
-            function() use ($formData) {
+            function () use ($formData) {
                 $seoSettings = $this->config->getSettings('seo');
                 $settings = $this->config->getSettings('contact');
 

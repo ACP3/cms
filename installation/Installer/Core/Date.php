@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Installer\Core;
 
 use ACP3\Core\Date\DateTranslator;
@@ -16,8 +21,7 @@ class Date extends \ACP3\Core\Date
      */
     public function __construct(
         DateTranslator $dateTranslator
-    )
-    {
+    ) {
         $this->dateTranslator = $dateTranslator;
 
         $defaultTimeZone = date_default_timezone_get();

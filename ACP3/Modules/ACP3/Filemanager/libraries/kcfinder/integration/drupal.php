@@ -1,19 +1,13 @@
 <?php
 
-/** This file is part of KCFinder project
-  *
-  *      @desc CMS integration code: Drupal
-  *   @package KCFinder
-  *   @version 3.12
-  *    @author Dany Alejandro Cabrera <otello2040@gmail.com>
-  * @copyright 2010-2014 KCFinder Project
-  *   @license http://opensource.org/licenses/GPL-3.0 GPLv3
-  *   @license http://opensource.org/licenses/LGPL-3.0 LGPLv3
-  *      @link http://kcfinder.sunhater.com
-  */
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
 // gets a valid drupal_path
-function get_drupal_path() {
+function get_drupal_path()
+{
     if (!empty($_SERVER['SCRIPT_FILENAME'])) {
         $drupal_path = dirname(dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME']))));
         if (!file_exists($drupal_path . '/includes/bootstrap.inc')) {
@@ -39,15 +33,14 @@ function get_drupal_path() {
     return $drupal_path;
 }
 
-function CheckAuthentication($drupal_path) {
-
+function CheckAuthentication($drupal_path)
+{
     static $authenticated;
 
     if (!isset($authenticated)) {
-
         if (!isset($bootstrap_file_found) || $bootstrap_file_found) {
             $current_cwd = getcwd();
-            if (!defined('DRUPAL_ROOT')){
+            if (!defined('DRUPAL_ROOT')) {
                 define('DRUPAL_ROOT', $drupal_path);
             }
 
@@ -68,7 +61,7 @@ function CheckAuthentication($drupal_path) {
             $base_url = substr($base_url, 0, $pos); // drupal root absolute url
 
             // If we aren't in a Drupal installation, or if Drupal path hasn't been properly found, die
-            if(!file_exists(DRUPAL_ROOT . '/includes/bootstrap.inc')) {
+            if (!file_exists(DRUPAL_ROOT . '/includes/bootstrap.inc')) {
                 die("The CMS integration service for -drupal- requires KCFinder to be properly placed inside your Drupal installation.");
             }
 
@@ -85,7 +78,7 @@ function CheckAuthentication($drupal_path) {
                 }
 
                 // User has permission, so make sure KCFinder is not disabled!
-                if(!isset($_SESSION['KCFINDER']['disabled'])) {
+                if (!isset($_SESSION['KCFINDER']['disabled'])) {
                     $_SESSION['KCFINDER']['disabled'] = false;
                 }
 
@@ -109,5 +102,3 @@ function CheckAuthentication($drupal_path) {
 }
 
 CheckAuthentication(get_drupal_path());
-
-?>

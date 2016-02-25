@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace kcfinder\cms;
 
 use ACP3\Core\Application\Bootstrap;
@@ -7,7 +12,7 @@ use ACP3\Core\Application\Bootstrap;
  * Class ACP3
  * @package kcfinder\cms
  */
-class ACP3
+class acp3
 {
     /**
      * @var bool

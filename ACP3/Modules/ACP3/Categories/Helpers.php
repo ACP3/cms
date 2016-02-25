@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
@@ -62,8 +67,7 @@ class Helpers
         Core\Helpers\Forms $formsHelper,
         Cache $categoriesCache,
         CategoryRepository $categoryRepository
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->translator = $translator;
         $this->modules = $modules;

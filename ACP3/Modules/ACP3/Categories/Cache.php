@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
@@ -22,8 +27,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function __construct(
         Core\Cache $cache,
         CategoryRepository $categoryRepository
-    )
-    {
+    ) {
         parent::__construct($cache);
 
         $this->categoryRepository = $categoryRepository;

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Captcha;
 
 use ACP3\Core;
@@ -54,8 +59,7 @@ class Helpers
         Core\SessionHandler $sessionHandler,
         Core\View $view,
         Core\Helpers\Secure $secureHelper
-    )
-    {
+    ) {
         $this->user = $user;
         $this->request = $request;
         $this->router = $router;
@@ -79,8 +83,7 @@ class Helpers
         $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
         $inputOnly = false,
         $path = ''
-    )
-    {
+    ) {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
         if ($this->user->isAuthenticated() === false) {
             $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Installer\Core;
 
 /**
@@ -17,7 +22,6 @@ class SessionHandler extends \ACP3\Core\SessionHandler
      */
     protected function startSession()
     {
-
     }
 
     /**
@@ -25,7 +29,6 @@ class SessionHandler extends \ACP3\Core\SessionHandler
      */
     public function secureSession($force = false)
     {
-
     }
 
     /**
@@ -75,5 +78,4 @@ class SessionHandler extends \ACP3\Core\SessionHandler
     {
         return true;
     }
-
 }

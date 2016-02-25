@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Installer\Core;
 
 use ACP3\Core;
@@ -16,8 +21,7 @@ class Router extends Core\Router
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\Environment\ApplicationPath $appPath
-    )
-    {
+    ) {
         $this->request = $request;
         $this->appPath = $appPath;
     }

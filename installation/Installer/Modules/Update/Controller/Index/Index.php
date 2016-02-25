@@ -41,8 +41,7 @@ class Index extends Core\Controller\AbstractInstallerAction
         Modules $modules,
         Modules\Vendor $vendors,
         Modules\SchemaUpdater $schemaUpdater
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->modules = $modules;

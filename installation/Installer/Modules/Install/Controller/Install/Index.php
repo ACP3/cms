@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Controller\Install;
@@ -67,8 +68,7 @@ class Index extends AbstractAction
         \ACP3\Core\Helpers\Date $dateHelper,
         InstallerHelpers $installHelper,
         FormValidation $formValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
