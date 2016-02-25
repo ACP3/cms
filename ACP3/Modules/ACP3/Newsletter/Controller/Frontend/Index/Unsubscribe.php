@@ -16,8 +16,6 @@ use ACP3\Modules\ACP3\Newsletter;
  */
 class Unsubscribe extends Core\Controller\FrontendAction
 {
-    use Newsletter\Controller\CaptchaHelperTrait;
-
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -65,10 +63,6 @@ class Unsubscribe extends Core\Controller\FrontendAction
         $defaults = [
             'mail' => ''
         ];
-
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', $this->captchaHelpers->captcha());
-        }
 
         return [
             'form' => array_merge($defaults, $this->request->getPost()->all()),

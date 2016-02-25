@@ -31,26 +31,26 @@ trait DisplayActionTrait
     /**
      * Outputs the requested module controller action
      *
-     * @param mixed $controllerActionResult
+     * @param mixed $actionResult
      */
-    public function display($controllerActionResult)
+    public function display($actionResult)
     {
-        if ($controllerActionResult instanceof Response) {
-            $controllerActionResult->send();
+        if ($actionResult instanceof Response) {
+            $actionResult->send();
             return;
         } else {
-            if (is_array($controllerActionResult)) {
-                $this->getView()->assign($controllerActionResult);
+            if (is_array($actionResult)) {
+                $this->getView()->assign($actionResult);
             } else {
-                if (is_string($controllerActionResult)) {
-                    echo $controllerActionResult;
+                if (is_string($actionResult)) {
+                    echo $actionResult;
                     return;
                 }
             }
         }
 
         // Output content through the controller
-        $this->getResponse()->headers->set('Content-Type', $this->getContentType());
+        $this->getResponse()->headers->set('Content-type', $this->getContentType());
         $this->getResponse()->setCharset($this->getCharset());
 
         if (!$this->getContent()) {

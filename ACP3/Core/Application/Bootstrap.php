@@ -127,7 +127,7 @@ class Bootstrap extends AbstractBootstrap
         $redirect = $this->container->get('core.redirect');
 
         try {
-            (new FrontController($this->container))->dispatch();
+            $this->container->get('core.application.front_controller')->dispatch();
         } catch (Exceptions\ResultNotExists $e) {
             $redirect->temporary('errors/index/not_found')->send();
         } catch (Exceptions\UnauthorizedAccess $e) {

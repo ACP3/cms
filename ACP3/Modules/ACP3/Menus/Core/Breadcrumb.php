@@ -26,10 +26,12 @@ class Breadcrumb extends Core\Breadcrumb
     protected $menuItemRepository;
 
     /**
+     * Breadcrumb constructor.
+     *
      * @param \Symfony\Component\DependencyInjection\Container  $container
      * @param \ACP3\Core\I18n\Translator                        $translator
      * @param \ACP3\Core\Http\RequestInterface                  $request
-     * @param \ACP3\Core\Router                                 $router
+     * @param \ACP3\Core\RouterInterface                        $router
      * @param \ACP3\Core\Config                                 $config
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      */
@@ -37,7 +39,7 @@ class Breadcrumb extends Core\Breadcrumb
         Container $container,
         Core\I18n\Translator $translator,
         RequestInterface $request,
-        Core\Router $router,
+        Core\RouterInterface $router,
         Core\Config $config,
         Menus\Model\MenuItemRepository $menuItemRepository
     )

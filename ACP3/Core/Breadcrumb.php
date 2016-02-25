@@ -44,7 +44,7 @@ class Breadcrumb
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -53,17 +53,19 @@ class Breadcrumb
     protected $config;
 
     /**
+     * Breadcrumb constructor.
+     *
      * @param \Symfony\Component\DependencyInjection\Container $container
      * @param \ACP3\Core\I18n\Translator                       $translator
      * @param \ACP3\Core\Http\RequestInterface                 $request
-     * @param \ACP3\Core\Router                                $router
+     * @param \ACP3\Core\RouterInterface                       $router
      * @param \ACP3\Core\Config                                $config
      */
     public function __construct(
         Container $container,
         Translator $translator,
         RequestInterface $request,
-        Router $router,
+        RouterInterface $router,
         Config $config
     )
     {
@@ -332,7 +334,7 @@ class Breadcrumb
                 $this->request->getModuleAndController()
             );
         }
-        if ($this->request->getControllerAction() !== 'index') {
+        if ($this->request->getAction() !== 'index') {
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->getControllerActionTitle()),
                 $this->request->getFullPath()
@@ -345,7 +347,7 @@ class Breadcrumb
      */
     private function getControllerActionTitle()
     {
-        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getControllerAction();
+        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getAction();
     }
 
     /**

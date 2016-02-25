@@ -4,6 +4,7 @@ namespace ACP3\Modules\ACP3\Files\Event\Listener;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Router;
+use ACP3\Core\RouterInterface;
 use ACP3\Modules\ACP3\Feeds\Event\DisplayFeed;
 use ACP3\Modules\ACP3\Files\Model\FilesRepository;
 
@@ -18,7 +19,7 @@ class OnDisplayFeedListener
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -31,14 +32,16 @@ class OnDisplayFeedListener
     protected $filesRepository;
 
     /**
+     * OnDisplayFeedListener constructor.
+     *
      * @param \ACP3\Core\Date                                $date
-     * @param \ACP3\Core\Router                              $router
+     * @param \ACP3\Core\RouterInterface                     $router
      * @param \ACP3\Core\Helpers\StringFormatter             $formatter
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
         Date $date,
-        Router $router,
+        RouterInterface $router,
         StringFormatter $formatter,
         FilesRepository $filesRepository
     )

@@ -1,5 +1,6 @@
 imports:
   - { resource: controllers.yml }
+  - { resource: overrides.yml }
   - { resource: validation.yml }
 
 parameters:

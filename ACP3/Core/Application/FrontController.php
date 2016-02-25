@@ -46,13 +46,12 @@ class FrontController
         $this->checkForUriAlias($request);
 
         if (empty($serviceId)) {
-            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController() . '.' . $request->getControllerAction();
+            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController() . '.' . $request->getAction();
         }
 
         if ($this->container->has($serviceId)) {
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
             $controller = $this->container->get($serviceId);
-            $controller->setContainer($this->container);
             $controller->preDispatch();
 
             $result = $this->executeControllerAction(

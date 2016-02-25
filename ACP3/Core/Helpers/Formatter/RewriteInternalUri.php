@@ -23,7 +23,7 @@ class RewriteInternalUri
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -32,17 +32,19 @@ class RewriteInternalUri
     protected $uriAliasValidationRule;
 
     /**
+     * RewriteInternalUri constructor.
+     *
      * @param \ACP3\Core\Environment\ApplicationPath                                   $appPath
      * @param \ACP3\Core\Modules\Helper\ControllerActionExists                         $controllerActionExists
      * @param \ACP3\Core\Http\Request                                                  $request
-     * @param \ACP3\Core\Router                                                        $router
+     * @param \ACP3\Core\RouterInterface                                               $router
      * @param \ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
         Core\Modules\Helper\ControllerActionExists $controllerActionExists,
         Core\Http\Request $request,
-        Core\Router $router,
+        Core\RouterInterface $router,
         UriAliasValidationRule $uriAliasValidationRule
     )
     {

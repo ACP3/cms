@@ -16,7 +16,7 @@ class SendNewsletter
      */
     protected $mailer;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -29,14 +29,16 @@ class SendNewsletter
     protected $config;
 
     /**
+     * SendNewsletter constructor.
+     *
      * @param \ACP3\Core\Mailer                                        $mailer
-     * @param \ACP3\Core\Router                                        $router
+     * @param \ACP3\Core\RouterInterface                               $router
      * @param \ACP3\Core\Config                                        $config
      * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Mailer $mailer,
-        Core\Router $router,
+        Core\RouterInterface $router,
         Core\Config $config,
         NewsletterRepository $newsletterRepository)
     {

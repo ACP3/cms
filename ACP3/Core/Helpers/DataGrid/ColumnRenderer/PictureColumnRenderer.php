@@ -2,6 +2,7 @@
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Router;
+use ACP3\Core\RouterInterface;
 
 /**
  * Class PictureColumnRenderer
@@ -10,16 +11,16 @@ use ACP3\Core\Router;
 class PictureColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
 
     /**
      * PictureColumnRenderer constructor.
      *
-     * @param \ACP3\Core\Router $router
+     * @param \ACP3\Core\RouterInterface $router
      */
-    public function __construct(Router $router)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }

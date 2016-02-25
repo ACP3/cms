@@ -15,57 +15,39 @@ use ACP3\Core;
 class UserMenu extends Core\Controller\WidgetAction
 {
     /**
+     * @var array
+     */
+    protected $systemActions = [
+        [
+            'controller' => 'index',
+            'action' => 'configuration',
+            'phrase' => 'configuration'
+        ],
+        [
+            'controller' => 'extensions',
+            'action' => '',
+            'phrase' => 'extensions'
+        ],
+        [
+            'controller' => 'maintenance',
+            'action' => '',
+            'phrase' => 'maintenance'
+        ],
+    ];
+
+    /**
      * Displays the user menu, if the user is logged in
      */
     public function execute()
     {
         if ($this->user->isAuthenticated() === true) {
-            $userSidebar = [];
-            $userSidebar['page'] = base64_encode($this->request->getOriginalQuery());
+            $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
 
-            $activeModules = $this->modules->getActiveModules();
-            $navMods = $navSystem = [];
-            $hasAccessToSystem = false;
-
-            foreach ($activeModules as $name => $info) {
-                $dir = strtolower($info['dir']);
-                if ($dir !== 'acp' && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
-                    if ($dir === 'system') {
-                        $hasAccessToSystem = true;
-                    } else {
-                        $navMods[$name]['name'] = $name;
-                        $navMods[$name]['dir'] = $dir;
-                        $navMods[$name]['is_active'] = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule();
-                    }
-                }
-            }
-
-            if (!empty($navMods)) {
-                $userSidebar['modules'] = $navMods;
-            }
-
-            // If the user has access to the system module, display some more options
-            if ($hasAccessToSystem === true) {
-                $i = 0;
-                if ($this->acl->hasPermission('admin/system/index/configuration') === true) {
-                    $navSystem[$i]['path'] = 'system/index/configuration/';
-                    $navSystem[$i]['name'] = $this->translator->t('system', 'configuration');
-                    $navSystem[$i]['is_active'] = $this->request->getQuery() === $navSystem[$i]['path'];
-                }
-                if ($this->acl->hasPermission('admin/system/extensions/index') === true) {
-                    $i++;
-                    $navSystem[$i]['path'] = 'system/extensions/';
-                    $navSystem[$i]['name'] = $this->translator->t('system', 'extensions');
-                    $navSystem[$i]['is_active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0;
-                }
-                if ($this->acl->hasPermission('admin/system/maintenance/index') === true) {
-                    $i++;
-                    $navSystem[$i]['path'] = 'system/maintenance/';
-                    $navSystem[$i]['name'] = $this->translator->t('system', 'maintenance');
-                    $navSystem[$i]['is_active'] = strpos($this->request->getQuery(), $navSystem[$i]['path']) === 0;
-                }
-                $userSidebar['system'] = $navSystem;
-            }
+            $userSidebar = [
+                'current_page' => base64_encode($prefix . $this->request->getQuery()),
+                'modules' => $this->addModules(),
+                'system' => $this->addSystemActions()
+            ];
 
             $this->view->assign('user_sidebar', $userSidebar);
 
@@ -73,5 +55,47 @@ class UserMenu extends Core\Controller\WidgetAction
         } else {
             $this->setNoOutput(true);
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function addSystemActions()
+    {
+        $navSystem = [];
+        foreach ($this->systemActions as $action) {
+            $permissions = 'admin/system/' . $action['controller'] . '/' . $action['action'];
+            if ($this->acl->hasPermission($permissions) === true) {
+                $path = 'system/' . $action['controller'] . '/' . $action['action'];
+                $navSystem[] = [
+                    'path' => $path,
+                    'name' => $this->translator->t('system', $action['phrase']),
+                    'is_active' => strpos($this->request->getQuery(), $path) === 0
+                ];
+            }
+        }
+
+        return $navSystem;
+    }
+
+    /**
+     * @return array
+     */
+    protected function addModules()
+    {
+        $activeModules = $this->modules->getActiveModules();
+        $navMods = [];
+        foreach ($activeModules as $name => $info) {
+            $dir = strtolower($info['dir']);
+            if (!in_array($dir, ['acp', 'system']) && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
+                $navMods[$name] = [
+                    'path' => $dir,
+                    'name' => $name,
+                    'is_active' => $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule()
+                ];
+            }
+        }
+
+        return $navMods;
     }
 }

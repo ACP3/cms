@@ -28,7 +28,7 @@ class Subscribe
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -53,11 +53,13 @@ class Subscribe
     protected $accountStatusHelper;
 
     /**
+     * Subscribe constructor.
+     *
      * @param \ACP3\Core\Date                                       $date
      * @param \ACP3\Core\I18n\Translator                            $translator
      * @param \ACP3\Core\Mailer                                     $mailer
      * @param \ACP3\Core\Http\Request                               $request
-     * @param \ACP3\Core\Router                                     $router
+     * @param \ACP3\Core\RouterInterface                            $router
      * @param \ACP3\Core\Helpers\StringFormatter                    $stringFormatter
      * @param \ACP3\Core\Helpers\Secure                             $secureHelper
      * @param \ACP3\Core\Config                                     $config
@@ -69,7 +71,7 @@ class Subscribe
         Core\I18n\Translator $translator,
         Core\Mailer $mailer,
         Core\Http\Request $request,
-        Core\Router $router,
+        Core\RouterInterface $router,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Helpers\Secure $secureHelper,
         Core\Config $config,

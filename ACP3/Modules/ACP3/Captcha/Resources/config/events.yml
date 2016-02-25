@@ -1,0 +1,8 @@
+services:
+  captcha.event.on_form_after_listener:
+    class: ACP3\Modules\ACP3\Captcha\Event\Listener\OnDisplayCaptchaListener
+    arguments:
+      - '@core.acl'
+      - '@captcha.helpers'
+    tags:
+      - { name: core.eventListener, event: captcha.event.display_captcha, method: onDisplayCaptcha }

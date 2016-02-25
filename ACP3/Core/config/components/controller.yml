@@ -2,6 +2,7 @@ services:
   core.context.widget:
     class: ACP3\Core\Controller\Context\WidgetContext
     arguments:
+      - '@service_container'
       - '@core.eventDispatcher'
       - '@core.acl'
       - '@core.user'

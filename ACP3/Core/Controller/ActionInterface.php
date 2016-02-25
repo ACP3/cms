@@ -6,8 +6,6 @@
 
 namespace ACP3\Core\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Interface ActionInterface
  * @package ACP3\Core\Controller
@@ -24,13 +22,6 @@ interface ActionInterface
      * @return mixed
      */
     public function get($serviceId);
-
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     *
-     * @return $this
-     */
-    public function setContainer(ContainerInterface $container);
 
     /**
      * @param mixed $actionResult

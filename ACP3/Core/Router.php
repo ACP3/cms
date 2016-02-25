@@ -5,21 +5,16 @@ namespace ACP3\Core;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\System;
 
 /**
  * Class Router
  * @package ACP3\Core
  */
-class Router
+class Router implements RouterInterface
 {
     const ADMIN_PANEL_PATTERN = '=^(acp|admin)/=';
 
-    /**
-     * @var \ACP3\Core\Router\Aliases
-     */
-    protected $aliases;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -38,21 +33,20 @@ class Router
     protected $environment;
 
     /**
-     * @param \ACP3\Core\Router\Aliases              $aliases
+     * Router constructor.
+     *
      * @param \ACP3\Core\Http\RequestInterface       $request
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Config                      $config
      * @param string                                 $environment
      */
     public function __construct(
-        Aliases $aliases,
         RequestInterface $request,
         ApplicationPath $appPath,
         Config $config,
         $environment
     )
     {
-        $this->aliases = $aliases;
         $this->request = $request;
         $this->appPath = $appPath;
         $this->config = $config;
@@ -74,8 +68,7 @@ class Router
             $path = $this->preparePath($path);
 
             if ($this->isAdminUri($path) === false) {
-                $alias = $this->aliases->getUriAlias($path);
-                $path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
+                $path .= (!preg_match('/\/$/', $path) ? '/' : '');
             }
         }
 

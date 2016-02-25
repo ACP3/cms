@@ -95,7 +95,7 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      */
     protected function applyTemplateAutomatically()
     {
-        return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getControllerAction() . '.tpl';
+        return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
     }
 
     protected function addCustomTemplateVarsBeforeOutput()

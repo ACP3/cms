@@ -62,10 +62,8 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         $this->applyThemePaths();
         $redirect = $this->container->get('core.redirect');
 
-        $frontController = new FrontController($this->container);
-
         try {
-            $frontController->dispatch();
+            $this->container->get('core.application.front_controller')->dispatch();
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
             $redirect->temporary('errors/index/not_found')->send();
         } catch (\Exception $e) {

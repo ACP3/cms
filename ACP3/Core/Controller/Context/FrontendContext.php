@@ -53,6 +53,7 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     )
     {
         parent::__construct(
+            $context->getContainer(),
             $context->getEventDispatcher(),
             $context->getACL(),
             $context->getUser(),

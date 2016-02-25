@@ -75,14 +75,14 @@ class UriAliasValidationRule extends AbstractValidationRule
 
         if ($this->uriSafeValidationRule->isValid($alias)) {
             if (is_dir($this->appPath->getModulesDir() . $alias) === true) {
-                return true;
+                return false;
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
-                if ($path !== '/' && $this->internalUriValidationRule->isValid($path) === true) {
-                    return $this->seoRepository->uriAliasExistsByAlias($alias, $path);
-                } elseif ($this->seoRepository->uriAliasExistsByAlias($alias) === true) {
-                    return true;
+                if ($path !== '/' && $this->internalUriValidationRule->isValid($path) === false) {
+                    return false;
                 }
+
+                return !$this->seoRepository->uriAliasExistsByAlias($alias, $path);
             }
         }
         return false;

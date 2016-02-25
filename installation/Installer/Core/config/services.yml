@@ -3,12 +3,19 @@ parameters:
 
 imports:
   - { resource: components/controller.yml }
+  - { resource: components/helpers.yml }
+  - { resource: components/http.yml }
   - { resource: components/validation.yml }
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }
   - { resource: ../../Modules/Install/Resources/config/services.yml }
 
 services:
+  core.application.front_controller:
+    class: ACP3\Installer\Core\Application\FrontController
+    arguments:
+      - '@service_container'
+
   core.date:
     class: ACP3\Installer\Core\Date
     arguments: ['@core.date.date_translator']
@@ -16,33 +23,6 @@ services:
   core.date.date_translator:
     class: ACP3\Core\Date\DateTranslator
     arguments: ['@core.lang']
-
-  core.helpers.alerts:
-    class: ACP3\Installer\Core\Helpers\Alerts
-    arguments: ['@core.request', '@core.view', '@core.helpers.output']
-
-  core.helpers.date:
-    class: ACP3\Core\Helpers\Date
-    arguments:
-      - @core.date
-      - @core.lang
-      - @core.request
-      - @core.helpers.forms
-      - @core.validation.validation_rules.date_validation_rule
-
-  core.helpers.forms:
-    class: ACP3\Core\Helpers\Forms
-    arguments: [@core.lang, @core.request]
-
-  core.helpers.output:
-    class: ACP3\Core\Helpers\Output
-
-  core.helpers.redirect:
-    class: ACP3\Core\Helpers\RedirectMessages
-    arguments: ['@core.redirect', '@core.request', @core.session, '@core.view']
-
-  core.helpers.secure:
-    class: ACP3\Core\Helpers\Secure
 
   core.lang:
     class: ACP3\Installer\Core\I18n\Translator
@@ -64,19 +44,6 @@ services:
   core.redirect:
     class: ACP3\Core\Redirect
     arguments: ['@core.request', '@core.router']
-
-  core.request:
-    class: ACP3\Installer\Core\Http\Request
-    arguments:
-      - @core.environment.application_path
-      - %default_request%
-
-  core.response:
-    class: Symfony\Component\HttpFoundation\Response
-
-  core.router:
-    class: ACP3\Installer\Core\Router
-    arguments: ['@core.request', @core.environment.application_path]
 
   core.session:
     class: ACP3\Installer\Core\SessionHandler

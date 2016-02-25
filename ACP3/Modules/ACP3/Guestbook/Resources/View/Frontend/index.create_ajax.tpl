@@ -47,9 +47,7 @@
                     </div>
                 </div>
             {/if}
-            {if isset($captcha)}
-                {$captcha}
-            {/if}
+            {event name="captcha.event.display_captcha"}
         </div>
         <div class="modal-footer">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>

@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 class ServiceContainerBuilder
 {
     /**
-     * @param string $appMode
+     * @param string                                           $appMode
      * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
-     * @param bool $includeModules
+     * @param bool                                             $includeModules
      *
      * @return \Symfony\Component\DependencyInjection\ContainerBuilder
      */
@@ -55,8 +55,9 @@ class ServiceContainerBuilder
     }
 
     /**
-     * @param string $appMode
+     * @param string  $appMode
      * @param boolean $includeModules
+     *
      * @return bool
      */
     protected static function canIncludeModules($appMode, $includeModules)
@@ -65,11 +66,11 @@ class ServiceContainerBuilder
     }
 
     /**
-     * @param string $appMode
-     * @param ApplicationPath $appPath
+     * @param string           $appMode
+     * @param ApplicationPath  $appPath
      * @param ContainerBuilder $container
-     * @param YamlFileLoader $loader
-     * @param boolean $includeModules
+     * @param YamlFileLoader   $loader
+     * @param boolean          $includeModules
      */
     protected static function includeModules(
         $appMode,
@@ -79,14 +80,18 @@ class ServiceContainerBuilder
         $includeModules
     ) {
         if (self::canIncludeModules($appMode, $includeModules) === true) {
-            $vendors = $container->get('core.modules.vendors')->getVendors();
+            // Ugly hack to prevent request override from included ACP3 modules
+            $request = $container->get('core.request');
 
+            $vendors = $container->get('core.modules.vendors')->getVendors();
             foreach ($vendors as $vendor) {
                 $namespaceModules = glob($appPath->getModulesDir() . $vendor . '/*/Resources/config/services.yml');
                 foreach ($namespaceModules as $module) {
                     $loader->load($module);
                 }
             }
+
+            $container->set('core.request', $request);
         }
     }
 }

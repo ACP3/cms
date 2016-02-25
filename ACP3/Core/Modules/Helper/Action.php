@@ -24,7 +24,7 @@ class Action
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -41,9 +41,11 @@ class Action
     protected $redirectMessages;
 
     /**
+     * Action constructor.
+     *
      * @param \ACP3\Core\I18n\Translator          $translator
      * @param \ACP3\Core\Http\RequestInterface    $request
-     * @param \ACP3\Core\Router                   $router
+     * @param \ACP3\Core\RouterInterface          $router
      * @param \ACP3\Core\View                     $view
      * @param \ACP3\Core\Helpers\Alerts           $alerts
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
@@ -51,7 +53,7 @@ class Action
     public function __construct(
         Core\I18n\Translator $translator,
         Core\Http\RequestInterface $request,
-        Core\Router $router,
+        Core\RouterInterface $router,
         Core\View $view,
         Core\Helpers\Alerts $alerts,
         Core\Helpers\RedirectMessages $redirectMessages

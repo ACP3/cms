@@ -1,0 +1,18 @@
+services:
+  core.request:
+    class: ACP3\Installer\Core\Http\Request
+    factory: ['@core.request_factory', create]
+    arguments:
+      - '%default_request%'
+
+  core.request_factory:
+    class: ACP3\Installer\Core\Http\RequestFactory
+    arguments:
+      - '@core.environment.application_path'
+
+  core.response:
+    class: Symfony\Component\HttpFoundation\Response
+
+  core.router:
+    class: ACP3\Installer\Core\Router
+    arguments: ['@core.request', '@core.environment.application_path']

@@ -23,6 +23,12 @@ services:
     tags:
       - { name: core.view.extension }
 
+  smarty.plugin.event:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Event
+    arguments: ['@core.eventDispatcher']
+    tags:
+      - { name: core.view.extension }
+
   smarty.plugin.redirect_message:
     class: ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage
     arguments: ['@core.helpers.redirect']
@@ -49,7 +55,7 @@ services:
 
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
-    arguments: ['@service_container']
+    arguments: ['@core.acl', '@core.application.front_controller']
     tags:
       - { name: core.view.extension }
 

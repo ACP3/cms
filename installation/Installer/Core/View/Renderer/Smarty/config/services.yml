@@ -1,12 +1,12 @@
 services:
   smarty.plugin.lang:
-    class: ACP3\Installer\Core\View\Renderer\Smarty\Functions\Lang
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Translate
     arguments: ['@core.lang']
     tags:
       - { name: core.view.extension }
 
-  smarty.plugin.router:
-    class: ACP3\Installer\Core\View\Renderer\Smarty\Functions\Router
+  smarty.plugin.uri:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
     arguments: ['@core.router']
     tags:
       - { name: core.view.extension }

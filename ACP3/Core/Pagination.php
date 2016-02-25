@@ -32,7 +32,7 @@ class Pagination
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -77,12 +77,14 @@ class Pagination
     private $pagination = [];
 
     /**
+     * Pagination constructor.
+     *
      * @param \ACP3\Core\User                  $user
      * @param \ACP3\Core\Breadcrumb            $breadcrumb
      * @param \ACP3\Core\I18n\Translator       $translator
      * @param \ACP3\Core\SEO                   $seo
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router                $router
+     * @param \ACP3\Core\RouterInterface       $router
      * @param \ACP3\Core\View                  $view
      */
     public function __construct(
@@ -91,7 +93,7 @@ class Pagination
         Translator $translator,
         SEO $seo,
         RequestInterface $request,
-        Router $router,
+        RouterInterface $router,
         View $view)
     {
         $this->user = $user;

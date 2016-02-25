@@ -58,7 +58,7 @@ interface RequestInterface
     /**
      * @return string
      */
-    public function getControllerAction();
+    public function getAction();
 
     /**
      * Returns the currently requested module, controller and controller action
@@ -144,4 +144,16 @@ interface RequestInterface
      * @return \ACP3\Core\Http\Request\UserAgent
      */
     public function getUserAgent();
+
+    /**
+     * Processes the request
+     */
+    public function processQuery();
+
+    /**
+     * @param string $homepage
+     *
+     * @return $this
+     */
+    public function setHomepage($homepage);
 }

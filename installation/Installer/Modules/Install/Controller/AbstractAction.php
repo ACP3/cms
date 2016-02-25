@@ -37,7 +37,7 @@ abstract class AbstractAction extends Core\Controller\AbstractInstallerAction
             ]
         ];
 
-        $key = $this->request->getController() . '_' . $this->request->getControllerAction();
+        $key = $this->request->getController() . '_' . $this->request->getAction();
         if (isset($navbar[$key]) === true) {
             $navbar[$key]['active'] = true;
         }

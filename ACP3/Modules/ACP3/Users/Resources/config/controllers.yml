@@ -92,8 +92,6 @@ services:
       - @users.model.userrepository
       - @users.validation.account_forgot_password_form_validation
       - @core.helpers.sendEmail
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   users.controller.frontend.index.index:
     class: %users.controller.frontend.index.index.fqdn%
@@ -121,8 +119,6 @@ services:
       - @users.validator.register
       - @permissions.helpers
       - @core.helpers.sendEmail
-    calls:
-      - ['setCaptchaHelpers', ['@?captcha.helpers']]
 
   users.controller.frontend.index.view_profile:
     class: %users.controller.frontend.index.view_profile.fqdn%

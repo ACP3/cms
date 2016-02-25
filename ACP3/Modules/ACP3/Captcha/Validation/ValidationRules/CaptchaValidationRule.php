@@ -4,6 +4,7 @@ namespace ACP3\Modules\ACP3\Captcha\Validation\ValidationRules;
 use ACP3\Core\ACL;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router;
+use ACP3\Core\RouterInterface;
 use ACP3\Core\SessionHandler;
 use ACP3\Core\User;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
@@ -23,7 +24,7 @@ class CaptchaValidationRule extends AbstractValidationRule
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
@@ -40,14 +41,14 @@ class CaptchaValidationRule extends AbstractValidationRule
      *
      * @param \ACP3\Core\ACL                   $acl
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router                $router
-     * @param \ACP3\Core\User                  $user
+     * @param \ACP3\Core\RouterInterface       $router
      * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * @param \ACP3\Core\User                  $user
      */
     public function __construct(
         ACL $acl,
         RequestInterface $request,
-        Router $router,
+        RouterInterface $router,
         SessionHandler $sessionHandler,
         User $user
     )

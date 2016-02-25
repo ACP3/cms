@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Http;
 
-use ACP3\Core\Config;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request\ParameterBag;
@@ -17,17 +16,9 @@ class Request extends AbstractRequest
     const ADMIN_PANEL_PATTERN = '=^acp/=';
 
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $config;
-    /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
-     */
-    protected $seoRepository;
 
     /**
      * @var string
@@ -44,7 +35,7 @@ class Request extends AbstractRequest
     /**
      * @var string
      */
-    protected $controllerAction = '';
+    protected $action = '';
     /**
      * @var \ACP3\Core\Http\Request\ParameterBag
      */
@@ -57,29 +48,17 @@ class Request extends AbstractRequest
      * @var string
      */
     protected $originalQuery = '';
-    /**
-     * @var bool
-     */
-    protected $isHomepage;
 
     /**
-     * @param \ACP3\Core\Config                          $config
-     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * Request constructor.
+     *
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
-    public function __construct(
-        Config $config,
-        ApplicationPath $appPath,
-        Seo\Model\SeoRepository $seoRepository
-    )
+    public function __construct(ApplicationPath $appPath)
     {
-        $this->config = $config;
-        $this->appPath = $appPath;
-        $this->seoRepository = $seoRepository;
-
         parent::__construct();
 
-        $this->processQuery();
+        $this->appPath = $appPath;
     }
 
     /**
@@ -125,9 +104,9 @@ class Request extends AbstractRequest
     /**
      * @inheritdoc
      */
-    public function getControllerAction()
+    public function getAction()
     {
-        return $this->controllerAction;
+        return $this->action;
     }
 
     /**
@@ -135,7 +114,7 @@ class Request extends AbstractRequest
      */
     public function getFullPath()
     {
-        return $this->getModuleAndController() . $this->controllerAction . '/';
+        return $this->getModuleAndController() . $this->action . '/';
     }
 
     /**
@@ -143,7 +122,7 @@ class Request extends AbstractRequest
      */
     public function getFullPathWithoutArea()
     {
-        return $this->getModuleAndControllerWithoutArea() . $this->controllerAction . '/';
+        return $this->getModuleAndControllerWithoutArea() . $this->action . '/';
     }
 
     /**
@@ -165,11 +144,10 @@ class Request extends AbstractRequest
         return $this->module . '/' . $this->controller . '/';
     }
 
-
     /**
      * Processes the URL of the current request
      */
-    protected function processQuery()
+    public function processQuery()
     {
         $this->setOriginalQuery();
 
@@ -183,33 +161,13 @@ class Request extends AbstractRequest
         } else {
             $this->area = AreaEnum::AREA_FRONTEND;
 
-            $homepage = $this->config->getSettings('system')['homepage'];
-
             // Set the user defined homepage of the website
-            if ($this->query === '/' && $homepage !== '') {
-                $this->query = $homepage;
+            if ($this->query === '/' && $this->homepage !== '') {
+                $this->query = $this->homepage;
             }
-
-            $this->checkForUriAlias();
         }
 
         $this->parseURI();
-
-        return;
-    }
-
-    /**
-     * Checks, whether the current request may equals an uri alias
-     */
-    protected function checkForUriAlias()
-    {
-        list($params, $probableQuery) = $this->checkUriAliasForAdditionalParameters();
-
-        // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-        $alias = $this->seoRepository->getUriByAlias(substr($probableQuery, 0, -1));
-        if (!empty($alias)) {
-            $this->query = $alias . $params;
-        }
     }
 
     /**
@@ -226,7 +184,7 @@ class Request extends AbstractRequest
         }
 
         $this->controller = isset($query[1]) ? $query[1] : 'index';
-        $this->controllerAction = isset($query[2]) ? $query[2] : 'index';
+        $this->action = isset($query[2]) ? $query[2] : 'index';
 
         $this->completeQuery($query);
         $this->setRequestParameters($query);
@@ -237,11 +195,7 @@ class Request extends AbstractRequest
      */
     public function isHomepage()
     {
-        if ($this->isHomepage === null) {
-            $this->isHomepage = ($this->query === $this->config->getSettings('system')['homepage']);
-        }
-
-        return $this->isHomepage;
+        return ($this->query === $this->homepage);
     }
 
     /**
@@ -278,10 +232,9 @@ class Request extends AbstractRequest
             $cQuery = count($query);
 
             for ($i = 3; $i < $cQuery; ++$i) {
-                // Position
-                if (preg_match('/^(page_(\d+))$/', $query[$i])) {
+                if (preg_match('/^(page_(\d+))$/', $query[$i])) { // Current page
                     $this->parameters->add(['page' => (int)substr($query[$i], 5)]);
-                } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // ID eines Datensatzes
+                } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
                     $this->parameters->add(['id' => (int)substr($query[$i], 3)]);
                 } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);
@@ -306,40 +259,7 @@ class Request extends AbstractRequest
             $this->query .= $this->controller . '/';
         }
         if (!isset($query[2])) {
-            $this->query .= $this->controllerAction . '/';
+            $this->query .= $this->action . '/';
         }
-    }
-
-    /**
-     * Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
-     *
-     * @return string[]
-     */
-    protected function checkUriAliasForAdditionalParameters()
-    {
-        $params = '';
-        $probableQuery = $this->query;
-        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)*(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
-            $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
-            if (isset($query[1]) === false) {
-                $query[1] = 'index';
-            }
-            if (isset($query[2]) === false) {
-                $query[2] = 'index';
-            }
-
-            $length = 0;
-            foreach ($query as $row) {
-                if (strpos($row, '_') !== false) {
-                    break;
-                }
-
-                $length += strlen($row) + 1;
-            }
-            $params = substr($this->query, $length);
-            $probableQuery = substr($this->query, 0, $length);
-        }
-
-        return [$params, $probableQuery];
     }
 }
