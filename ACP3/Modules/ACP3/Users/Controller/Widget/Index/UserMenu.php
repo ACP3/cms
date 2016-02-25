@@ -25,12 +25,12 @@ class UserMenu extends Core\Controller\WidgetAction
         ],
         [
             'controller' => 'extensions',
-            'action' => 'index',
+            'action' => '',
             'phrase' => 'extensions'
         ],
         [
             'controller' => 'maintenance',
-            'action' => 'index',
+            'action' => '',
             'phrase' => 'maintenance'
         ],
     ];
@@ -64,7 +64,7 @@ class UserMenu extends Core\Controller\WidgetAction
         foreach ($this->systemActions as $action) {
             $permissions = 'admin/system/' . $action['controller'] . '/' . $action['action'];
             if ($this->acl->hasPermission($permissions) === true) {
-                $path = 'system/' . $action['controller'] . '/' . $action['action'] . '/';
+                $path = 'system/' . $action['controller'] . '/' . $action['action'];
                 $navSystem[] = [
                     'path' => $path,
                     'name' => $this->translator->t('system', $action['phrase']),
@@ -87,8 +87,8 @@ class UserMenu extends Core\Controller\WidgetAction
             $dir = strtolower($info['dir']);
             if (!in_array($dir, ['acp', 'system']) && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
                 $navMods[$name] = [
+                    'path' => $dir,
                     'name' => $name,
-                    'dir' => $dir,
                     'is_active' => $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule()
                 ];
             }
