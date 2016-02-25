@@ -1,9 +1,16 @@
 <?php
 
-/**
- * Copyright (c) 2016 by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
- */
+/** This file is part of KCFinder project
+  *
+  *      @desc CMS integration code: Drupal
+  *   @package KCFinder
+  *   @version 3.12
+  *    @author Dany Alejandro Cabrera <otello2040@gmail.com>
+  * @copyright 2010-2014 KCFinder Project
+  *   @license http://opensource.org/licenses/GPL-3.0 GPLv3
+  *   @license http://opensource.org/licenses/LGPL-3.0 LGPLv3
+  *      @link http://kcfinder.sunhater.com
+  */
 
 // gets a valid drupal_path
 function get_drupal_path()

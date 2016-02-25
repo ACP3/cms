@@ -1,9 +1,24 @@
 <?php
 
-/**
- * Copyright (c) 2016 by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
- */
+/** This file is part of KCFinder project
+  *
+  *      @desc This file is included first, before each other
+  *   @package KCFinder
+  *   @version 3.12
+  *    @author Pavel Tzonkov <sunhater@sunhater.com>
+  * @copyright 2010-2014 KCFinder Project
+  *   @license http://opensource.org/licenses/GPL-3.0 GPLv3
+  *   @license http://opensource.org/licenses/LGPL-3.0 LGPLv3
+  *      @link http://kcfinder.sunhater.com
+  *
+  * This file is the place you can put any code (at the end of the file),
+  * which will be executed before any other. Suitable for:
+  *     1. Set PHP ini settings using ini_set()
+  *     2. Custom session save handler with session_set_save_handler()
+  *     3. Any custom integration code. If you use any global variables
+  *        here, they can be accessed in conf/config.php via $GLOBALS
+  *        array. It's recommended to use constants instead.
+  */
 
 
 // PHP VERSION CHECK
