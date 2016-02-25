@@ -27,8 +27,7 @@ class FormToken
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\SessionHandler $sessionHandler
-    )
-    {
+    ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
     }

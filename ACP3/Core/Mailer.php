@@ -83,8 +83,7 @@ class Mailer
         View $view,
         Config $config,
         StringFormatter $stringFormatter
-    )
-    {
+    ) {
         $this->logger = $logger;
         $this->view = $view;
         $this->config = $config;
@@ -243,7 +242,6 @@ class Mailer
             if (!empty($this->recipients)) {
                 return $this->bcc === true ? $this->sendBcc() : $this->sendTo();
             }
-
         } catch (\phpmailerException $e) {
             $this->logger->error('mailer', $e->getMessage());
         } catch (\Exception $e) {

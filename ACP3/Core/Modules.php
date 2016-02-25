@@ -61,8 +61,7 @@ class Modules
         ControllerActionExists $controllerActionExists,
         ModuleInfoCache $moduleInfoCache,
         Vendor $vendors
-    )
-    {
+    ) {
         $this->container = $container;
         $this->appPath = $appPath;
         $this->controllerActionExists = $controllerActionExists;

@@ -61,5 +61,4 @@ class JavaScript extends AbstractMinifier
         // Include general js file of the layout
         $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
     }
-
 }

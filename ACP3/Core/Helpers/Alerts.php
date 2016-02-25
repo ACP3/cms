@@ -31,8 +31,7 @@ class Alerts
         Core\Http\RequestInterface $request,
         Core\View $view,
         Core\Helpers\Output $outputHelper
-    )
-    {
+    ) {
         $this->request = $request;
         $this->view = $view;
         $this->outputHelper = $outputHelper;

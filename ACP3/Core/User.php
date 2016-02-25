@@ -88,8 +88,7 @@ class User
         Secure $secureHelper,
         Config $config,
         Users\Model\UserRepository $userRepository
-    )
-    {
+    ) {
         $this->request = $request;
         $this->appPath = $appPath;
         $this->authentication = $authentication;
@@ -108,7 +107,7 @@ class User
 
         if (is_array($userData)) {
             $this->populateUserData($userData);
-        } else if ($userData === 0) {
+        } elseif ($userData === 0) {
             $settings = $this->config->getSettings('system');
 
             $this->entriesPerPage = $settings['entries'];

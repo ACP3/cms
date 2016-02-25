@@ -26,8 +26,7 @@ class Datepicker extends AbstractFunction
     public function __construct(
         View $view,
         Date $dateHelper
-    )
-    {
+    ) {
         $this->view = $view;
         $this->dateHelper = $dateHelper;
     }

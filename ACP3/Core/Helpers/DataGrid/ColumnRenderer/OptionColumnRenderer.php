@@ -35,8 +35,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
         Translator $translator,
         OptionRenderer $optionRenderer,
         EventDispatcher $eventDispatcher
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->optionRenderer = $optionRenderer;
         $this->eventDispatcher = $eventDispatcher;

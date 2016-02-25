@@ -47,8 +47,7 @@ class SessionHandler implements \SessionHandlerInterface
         DB $db,
         ApplicationPath $appPath,
         RequestInterface $request
-    )
-    {
+    ) {
         $this->db = $db;
         $this->appPath = $appPath;
         $this->request = $request;
@@ -234,5 +233,4 @@ class SessionHandler implements \SessionHandlerInterface
 
         return true;
     }
-
 }

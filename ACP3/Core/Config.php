@@ -35,8 +35,7 @@ class Config
         Cache $coreCache,
         System\Model\ModuleRepository $systemModuleRepository,
         System\Model\SettingsRepository $systemSettingsRepository
-    )
-    {
+    ) {
         $this->coreCache = $coreCache;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->systemSettingsRepository = $systemSettingsRepository;

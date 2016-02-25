@@ -37,8 +37,7 @@ class Cache
         Container $container,
         ApplicationPath $appPath,
         $namespace
-    )
-    {
+    ) {
         $this->container = $container;
         $this->appPath = $appPath;
         $this->namespace = $namespace;

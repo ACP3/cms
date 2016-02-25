@@ -30,8 +30,7 @@ class PageCssClasses
     public function __construct(
         Core\Breadcrumb $breadcrumb,
         Core\Http\RequestInterface $request
-    )
-    {
+    ) {
         $this->breadcrumb = $breadcrumb;
         $this->request = $request;
     }

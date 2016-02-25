@@ -67,8 +67,7 @@ class ACL
         Permissions\Model\UserRoleRepository $userRoleRepository,
         Permissions\Model\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache
-    )
-    {
+    ) {
         $this->user = $user;
         $this->modules = $modules;
         $this->roleRepository = $roleRepository;

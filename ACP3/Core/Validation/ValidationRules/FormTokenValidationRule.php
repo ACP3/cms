@@ -28,8 +28,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     public function __construct(
         RequestInterface $request,
         SessionHandler $sessionHandler
-    )
-    {
+    ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
     }

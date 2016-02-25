@@ -57,8 +57,7 @@ class Action
         Core\View $view,
         Core\Helpers\Alerts $alerts,
         Core\Helpers\RedirectMessages $redirectMessages
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
@@ -106,8 +105,7 @@ class Action
         callable $callback,
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
-    )
-    {
+    ) {
         return $this->handleCustomDeleteAction(
             $context,
             $action,
@@ -139,8 +137,7 @@ class Action
         callable $callback,
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
-    )
-    {
+    ) {
         list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl);
         $result = $this->deleteItem($action, $moduleConfirmUrl, $moduleIndexUrl);
 
@@ -288,5 +285,4 @@ class Action
 
         return str_replace('{items}', $entriesCount, $this->translator->t('system', 'confirm_delete_multiple'));
     }
-
 }

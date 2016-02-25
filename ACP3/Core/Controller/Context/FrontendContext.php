@@ -50,8 +50,7 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
         Core\SEO $seo,
         Core\Modules\Helper\Action $actionHelper,
         Response $response
-    )
-    {
+    ) {
         parent::__construct(
             $context->getContainer(),
             $context->getEventDispatcher(),

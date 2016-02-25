@@ -86,5 +86,4 @@ class CSS extends AbstractMinifier
         $this->stylesheets[] = $this->fileResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_CSS, 'style.css');
         $this->stylesheets[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_CSS, $layout . '.css');
     }
-
 }

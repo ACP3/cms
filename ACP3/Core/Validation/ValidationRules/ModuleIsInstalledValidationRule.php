@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
+
 use ACP3\Core\Modules;
 
 /**

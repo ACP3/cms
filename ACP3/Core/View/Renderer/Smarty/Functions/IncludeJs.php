@@ -35,8 +35,7 @@ class IncludeJs extends AbstractFunction
         Core\Assets $assets,
         Core\Assets\FileResolver $fileResolved,
         Core\Environment\ApplicationPath $appPath
-    )
-    {
+    ) {
         $this->assets = $assets;
         $this->fileResolver = $fileResolved;
         $this->appPath = $appPath;

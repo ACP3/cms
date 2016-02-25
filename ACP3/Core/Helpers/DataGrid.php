@@ -71,8 +71,7 @@ class DataGrid
     public function __construct(
         ACL $acl,
         Translator $translator
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->translator = $translator;
         $this->columns = new ColumnPriorityQueue();

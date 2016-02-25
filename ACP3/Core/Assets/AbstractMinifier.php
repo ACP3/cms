@@ -76,8 +76,7 @@ abstract class AbstractMinifier implements MinifierInterface
         Modules $modules,
         FileResolver $fileResolver,
         $environment
-    )
-    {
+    ) {
         $this->assets = $assets;
         $this->appPath = $appPath;
         $this->systemCache = $systemCache;
@@ -186,5 +185,4 @@ abstract class AbstractMinifier implements MinifierInterface
 
         return 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $group;
     }
-
 }

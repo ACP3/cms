@@ -22,5 +22,4 @@ class SiteAndPageTitle extends SiteTitle
     {
         return 'site_and_page_title';
     }
-
 }

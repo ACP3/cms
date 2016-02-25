@@ -7,7 +7,7 @@ namespace ACP3\Core\Http\Request;
  */
 class ParameterBag extends \Symfony\Component\HttpFoundation\ParameterBag
 {
-   /**
+    /**
      * @return int
      */
     public function count()

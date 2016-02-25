@@ -40,8 +40,7 @@ class DictionaryCache
         Cache $cache,
         ApplicationPath $appPath,
         Vendor $vendors
-    )
-    {
+    ) {
         $this->cache = $cache;
         $this->appPath = $appPath;
         $this->vendors = $vendors;
@@ -181,5 +180,4 @@ class DictionaryCache
     {
         return substr($file, strrpos($file, '/') + 1, -4);
     }
-
 }

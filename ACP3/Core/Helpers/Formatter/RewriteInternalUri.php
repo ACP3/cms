@@ -46,8 +46,7 @@ class RewriteInternalUri
         Core\Http\Request $request,
         Core\RouterInterface $router,
         UriAliasValidationRule $uriAliasValidationRule
-    )
-    {
+    ) {
         $this->appPath = $appPath;
         $this->controllerActionExists = $controllerActionExists;
         $this->request = $request;

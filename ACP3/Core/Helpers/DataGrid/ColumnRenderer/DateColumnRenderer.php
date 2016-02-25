@@ -26,8 +26,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
     public function __construct(
         Date $date,
         DateRange $dateRangeHelper
-    )
-    {
+    ) {
         $this->date = $date;
         $this->dateRangeHelper = $dateRangeHelper;
     }

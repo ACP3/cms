@@ -77,8 +77,7 @@ class Picture
         Response $response,
         ApplicationPath $appPath,
         $environment
-    )
-    {
+    ) {
         $this->response = $response;
         $this->appPath = $appPath;
         $this->environment = $environment;

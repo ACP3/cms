@@ -37,8 +37,7 @@ class RedirectMessages
         Core\Http\RequestInterface $request,
         Core\SessionHandler $sessionHandler,
         Core\View $view
-    )
-    {
+    ) {
         $this->redirect = $redirect;
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;

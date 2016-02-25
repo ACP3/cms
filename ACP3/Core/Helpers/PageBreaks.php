@@ -39,8 +39,7 @@ class PageBreaks
         Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
         TableOfContents $tableOfContents
-    )
-    {
+    ) {
         $this->tableOfContents = $tableOfContents;
         $this->seo = $seo;
         $this->request = $request;
@@ -99,5 +98,4 @@ class PageBreaks
     {
         return '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
     }
-
 }

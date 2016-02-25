@@ -39,8 +39,7 @@ class CheckAccess
         Core\I18n\Translator $translator,
         Core\RouterInterface $router,
         Core\View $view
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->acl = $acl;
         $this->router = $router;

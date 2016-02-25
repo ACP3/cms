@@ -25,8 +25,7 @@ class AdminContext extends FrontendContext
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\SessionHandler $session
-    )
-    {
+    ) {
         parent::__construct(
             $context,
             $context->getAssets(),

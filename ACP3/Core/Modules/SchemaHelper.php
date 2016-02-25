@@ -33,8 +33,7 @@ class SchemaHelper extends ContainerAware
         Core\DB $db,
         System\Model\ModuleRepository $systemModuleRepository,
         System\Model\SettingsRepository $systemSettingsRepository
-    )
-    {
+    ) {
         $this->db = $db;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->systemSettingsRepository = $systemSettingsRepository;

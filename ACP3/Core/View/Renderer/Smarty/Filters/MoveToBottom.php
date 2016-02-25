@@ -26,8 +26,7 @@ class MoveToBottom extends AbstractFilter
     public function __construct(
         Assets\MinifierInterface $minifier,
         RequestInterface $request
-    )
-    {
+    ) {
         $this->minifier = $minifier;
         $this->request = $request;
     }

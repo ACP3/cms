@@ -16,7 +16,7 @@ abstract class AbstractPlugin implements PluginInterface
             $this->getExtensionType() === static::EXTENSION_TYPE_FUNCTION ||
             $this->getExtensionType() === static::EXTENSION_TYPE_MODIFIER) {
             $smarty->registerPlugin($this->getExtensionType(), $this->getExtensionName(), [$this, 'process']);
-        } else if ($this->getExtensionType() === static::EXTENSION_TYPE_FILTER) {
+        } elseif ($this->getExtensionType() === static::EXTENSION_TYPE_FILTER) {
             $smarty->registerFilter($this->getExtensionName(), [$this, 'process']);
         }
     }

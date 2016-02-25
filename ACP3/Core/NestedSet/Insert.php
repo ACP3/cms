@@ -16,7 +16,7 @@ class Insert extends AbstractNestedSetOperation
      */
     public function execute(array $insertValues, $parentId = 0)
     {
-        $callback = function() use ($insertValues, $parentId) {
+        $callback = function () use ($insertValues, $parentId) {
             // No parent item has been assigned
             if ($this->nestedSetRepository->nodeExists($this->tableName, (int) $parentId) === false) {
                 // Select the last result set
@@ -59,7 +59,7 @@ class Insert extends AbstractNestedSetOperation
     protected function fetchMaximumRightId($blockId)
     {
         if ($this->enableBlocks === true) {
-            $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($this->tableName,$blockId);
+            $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($this->tableName, $blockId);
         }
         if (empty($maxRightId)) {
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightId($this->tableName);

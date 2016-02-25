@@ -58,8 +58,7 @@ class Translator
         ApplicationPath $appPath,
         LanguageCache $dictionaryCache,
         Config $config
-    )
-    {
+    ) {
         $this->user = $user;
         $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;

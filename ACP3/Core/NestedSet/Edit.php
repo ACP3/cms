@@ -22,7 +22,7 @@ class Edit extends AbstractNestedSetOperation
      */
     public function execute($id, $parentId, $blockId, array $updateValues)
     {
-        $callback = function() use ($id, $parentId, $blockId, $updateValues) {
+        $callback = function () use ($id, $parentId, $blockId, $updateValues) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $id);
 
             // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll

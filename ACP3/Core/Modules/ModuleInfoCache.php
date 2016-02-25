@@ -59,8 +59,7 @@ class ModuleInfoCache
         Vendor $vendors,
         XML $xml,
         ModuleRepository $systemModuleRepository
-    )
-    {
+    ) {
         $this->cache = $cache;
         $this->appPath = $appPath;
         $this->translator = $translator;

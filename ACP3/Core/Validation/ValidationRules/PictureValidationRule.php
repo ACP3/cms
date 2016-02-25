@@ -89,5 +89,4 @@ class PictureValidationRule extends AbstractValidationRule
         $height > 0 && $info[1] > $height ||
         $filesize > 0 && filesize($file) > $filesize;
     }
-
 }

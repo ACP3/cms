@@ -47,8 +47,7 @@ class Date
         Request $request,
         Forms $formsHelper,
         DateValidationRule $dateValidationRule
-    )
-    {
+    ) {
         $this->date = $date;
         $this->translator = $translator;
         $this->request = $request;

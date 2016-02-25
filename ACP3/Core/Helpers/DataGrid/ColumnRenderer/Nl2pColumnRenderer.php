@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
 use ACP3\Core\Helpers\StringFormatter;
 
 /**

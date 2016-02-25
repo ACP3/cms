@@ -47,8 +47,7 @@ class Date
         User $user,
         DateTranslator $dateTranslator,
         Config $config
-    )
-    {
+    ) {
         $this->dateTranslator = $dateTranslator;
         $this->config = $config;
 

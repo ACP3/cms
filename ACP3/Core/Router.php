@@ -45,8 +45,7 @@ class Router implements RouterInterface
         ApplicationPath $appPath,
         Config $config,
         $environment
-    )
-    {
+    ) {
         $this->request = $request;
         $this->appPath = $appPath;
         $this->config = $config;

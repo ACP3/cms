@@ -34,8 +34,7 @@ abstract class AbstractNestedSetOperation
     public function __construct(
         DB $db,
         NestedSetRepository $nestedSetRepository
-    )
-    {
+    ) {
         $this->db = $db;
         $this->nestedSetRepository = $nestedSetRepository;
     }

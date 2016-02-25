@@ -57,8 +57,7 @@ class TableOfContents
         Core\RouterInterface $router,
         Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
         Core\View $view
-    )
-    {
+    ) {
         $this->breadcrumb = $breadcrumb;
         $this->translator = $translator;
         $this->seo = $seo;

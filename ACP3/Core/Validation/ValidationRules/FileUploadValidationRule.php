@@ -26,5 +26,4 @@ class FileUploadValidationRule extends AbstractValidationRule
     {
         return (is_array($data) && !empty($data['tmp_name']) && !empty($data['size']) && $data['error'] === UPLOAD_ERR_OK);
     }
-
 }

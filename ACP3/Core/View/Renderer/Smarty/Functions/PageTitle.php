@@ -22,5 +22,4 @@ class PageTitle extends SiteTitle
     {
         return 'page_title';
     }
-
 }

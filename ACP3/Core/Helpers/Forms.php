@@ -27,8 +27,7 @@ class Forms
     public function __construct(
         Translator $translator,
         RequestInterface $request
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->request = $request;
     }

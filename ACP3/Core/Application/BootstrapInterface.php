@@ -15,25 +15,25 @@ interface BootstrapInterface
     /**
      * Executes the application bootstrapping process and outputs the requested page
      */
-    function run();
+    public function run();
 
     /**
      * Performs some startup checks
      */
-    function startUpChecks();
+    public function startUpChecks();
 
     /**
      * Initializes the dependency injection container
      */
-    function initializeClasses();
+    public function initializeClasses();
 
     /**
      * Handle the request and output the page
      */
-    function outputPage();
+    public function outputPage();
 
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    function getContainer();
+    public function getContainer();
 }

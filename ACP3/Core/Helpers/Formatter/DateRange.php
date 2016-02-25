@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\Formatter;
 
-
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
 
@@ -27,8 +26,7 @@ class DateRange
     public function __construct(
         Date $date,
         Translator $translator
-    )
-    {
+    ) {
         $this->date = $date;
         $this->translator = $translator;
     }
@@ -77,5 +75,4 @@ class DateRange
         $title = !empty($title) ? ' title="' . $title . '"' : '';
         return '<time datetime="' . $rfcDate . '"' . $title . '>' . $this->date->format($date, $format) . '</time>';
     }
-
 }

@@ -67,8 +67,7 @@ class Breadcrumb
         RequestInterface $request,
         RouterInterface $router,
         Config $config
-    )
-    {
+    ) {
         $this->container = $container;
         $this->translator = $translator;
         $this->request = $request;

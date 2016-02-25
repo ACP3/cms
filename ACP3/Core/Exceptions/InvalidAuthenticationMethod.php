@@ -7,5 +7,4 @@ namespace ACP3\Core\Exceptions;
  */
 class InvalidAuthenticationMethod extends \Exception
 {
-
 }

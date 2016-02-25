@@ -29,8 +29,7 @@ class Redirect
     public function __construct(
         RequestInterface $request,
         RouterInterface $router
-    )
-    {
+    ) {
         $this->request = $request;
         $this->router = $router;
     }

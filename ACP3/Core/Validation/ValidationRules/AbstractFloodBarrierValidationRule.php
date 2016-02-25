@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
+
 use ACP3\Core\Date;
 use ACP3\Core\Model\FloodBarrierAwareRepositoryInterface;
 

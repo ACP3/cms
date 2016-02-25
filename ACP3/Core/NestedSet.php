@@ -40,8 +40,7 @@ class NestedSet
         Edit $edit,
         Delete $delete,
         Sort $sort
-    )
-    {
+    ) {
         $this->insert = $insert;
         $this->edit = $edit;
         $this->delete = $delete;
@@ -107,8 +106,7 @@ class NestedSet
         array $updateValues,
         $tableName,
         $enableBlocks = false
-    )
-    {
+    ) {
         return $this->edit
             ->setTableName($tableName)
             ->setEnableBlocks($enableBlocks)

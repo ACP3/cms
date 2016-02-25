@@ -25,8 +25,7 @@ abstract class AbstractFormValidation
     public function __construct(
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->validator = $validator;
     }
