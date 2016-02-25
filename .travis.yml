@@ -22,4 +22,5 @@ after_script:
 
 cache:
   directories:
+    - vendor
     - $HOME/.composer/cache
