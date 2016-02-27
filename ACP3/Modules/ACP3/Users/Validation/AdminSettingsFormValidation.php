@@ -30,21 +30,30 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'language_override',
-                    'message' => $this->translator->t('users', 'select_languages_override')
+                    'message' => $this->translator->t('users', 'select_language_override'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'entries_override',
-                    'message' => $this->translator->t('users', 'select_entries_override')
+                    'message' => $this->translator->t('users', 'select_entries_override'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'enable_registration',
-                    'message' => $this->translator->t('users', 'select_enable_registration')
+                    'message' => $this->translator->t('users', 'select_enable_registration'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
                 ]);
 
         $this->validator->validate();
