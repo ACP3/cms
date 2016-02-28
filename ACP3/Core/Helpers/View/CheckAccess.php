@@ -62,13 +62,13 @@ class CheckAccess
                 $action[1] = (isset($query[2]) ? $query[2] : 'index');
                 $action[2] = isset($query[3]) ? $query[3] : 'index';
 
-                $area = 'admin';
+                $area = Core\Controller\AreaEnum::AREA_ADMIN;
             } else {
                 $action[0] = $query[0];
                 $action[1] = isset($query[1]) ? $query[1] : 'index';
                 $action[2] = isset($query[2]) ? $query[2] : 'index';
 
-                $area = 'frontend';
+                $area = Core\Controller\AreaEnum::AREA_FRONTEND;
             }
 
             $permissionPath = $area . '/' . $action[0] . '/' . $action[1] . '/' . $action[2];

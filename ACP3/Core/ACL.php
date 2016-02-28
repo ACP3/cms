@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Modules\ACP3\Permissions;
 
 /**
@@ -216,7 +217,7 @@ class ACL
         $resource = $resourceArray[1] . '/' . $resourceArray[2] . '/' . $resourceArray[3] . '/';
 
         // At least allow users to access the login page
-        if ($area === 'frontend' && $resource === 'users/index/login/') {
+        if ($area === AreaEnum::AREA_FRONTEND && $resource === 'users/index/login/') {
             return true;
         } elseif (isset($this->getResources()[$area][$resource])) {
             $module = $resourceArray[1];

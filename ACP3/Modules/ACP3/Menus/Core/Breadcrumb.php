@@ -55,7 +55,7 @@ class Breadcrumb extends Core\Breadcrumb
      */
     public function prePopulate()
     {
-        if ($this->request->getArea() !== 'admin') {
+        if ($this->request->getArea() !== Core\Controller\AreaEnum::AREA_ADMIN) {
             $in = [
                 $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),

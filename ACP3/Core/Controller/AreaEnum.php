@@ -15,4 +15,5 @@ class AreaEnum
     const AREA_ADMIN = 'admin';
     const AREA_FRONTEND = 'frontend';
     const AREA_INSTALL = 'install';
+    const AREA_WIDGET = 'widget';
 }

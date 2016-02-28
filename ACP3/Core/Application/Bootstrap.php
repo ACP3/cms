@@ -2,6 +2,7 @@
 
 namespace ACP3\Core\Application;
 
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Exceptions;
 use ACP3\Core\Http\RequestInterface;
@@ -57,7 +58,7 @@ class Bootstrap extends AbstractBootstrap
     private function maintenanceModeIsEnabled(RequestInterface $request)
     {
         if ((bool)$this->systemSettings['maintenance_mode'] === true &&
-            $request->getArea() !== 'admin' &&
+            $request->getArea() !== AreaEnum::AREA_ADMIN &&
             strpos($request->getQuery(), 'users/index/login/') !== 0
         ) {
             header('HTTP/1.0 503 Service Unavailable');

@@ -7,6 +7,7 @@
 namespace ACP3\Core\Application;
 
 use ACP3\Core\Controller\ActionInterface;
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Exceptions;
 use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
@@ -75,7 +76,7 @@ class FrontController
     protected function checkForUriAlias()
     {
         // Return early, if we are currently in the admin panel
-        if ($this->request->getArea() !== 'admin') {
+        if ($this->request->getArea() !== AreaEnum::AREA_ADMIN) {
             $routerAliases = $this->container->get('core.router.aliases');
 
             // If there is an URI alias available, set the alias as the canonical URI

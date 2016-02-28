@@ -4,6 +4,7 @@ namespace ACP3\Core\Modules;
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Cache;
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Modules\ACP3\Permissions;
 use Symfony\Component\DependencyInjection\Container;
@@ -112,7 +113,7 @@ class AclInstaller implements InstallerInterface
         list($module, , $area, $controller, $action) = explode('.', $serviceId);
 
         // Only add the actual module actions (methods which begin with "action")
-        if ($area !== 'install' && method_exists($this->container->get($serviceId), 'execute') === true) {
+        if ($area !== AreaEnum::AREA_INSTALL && method_exists($this->container->get($serviceId), 'execute') === true) {
             $action = $this->convertCamelCaseToUnderscore($action);
 
             // Handle resources with differing access levels
@@ -125,7 +126,7 @@ class AclInstaller implements InstallerInterface
             $insertValues = [
                 'id' => '',
                 'module_id' => $this->schemaHelper->getModuleId($module),
-                'area' => !empty($area) ? strtolower($area) : 'frontend',
+                'area' => !empty($area) ? strtolower($area) : AreaEnum::AREA_FRONTEND,
                 'controller' => strtolower($controller),
                 'page' => $action,
                 'params' => '',
@@ -179,7 +180,7 @@ class AclInstaller implements InstallerInterface
             }
         }
 
-        if ($area === 'admin') {
+        if ($area === AreaEnum::AREA_ADMIN) {
             return PrivilegeEnum::ADMIN_VIEW;
         }
 
@@ -192,14 +193,14 @@ class AclInstaller implements InstallerInterface
     protected function getActionPrivilegeMapping()
     {
         return [
-            'admin' => [
+            AreaEnum::AREA_ADMIN => [
                 'create' => PrivilegeEnum::ADMIN_CREATE,
                 'order' => PrivilegeEnum::ADMIN_CREATE,
                 'edit' => PrivilegeEnum::ADMIN_EDIT,
                 'delete' => PrivilegeEnum::ADMIN_DELETE,
                 'settings' => PrivilegeEnum::ADMIN_SETTINGS
             ],
-            'frontend' => [
+            AreaEnum::AREA_FRONTEND => [
                 'create' => PrivilegeEnum::FRONTEND_CREATE
             ]
         ];

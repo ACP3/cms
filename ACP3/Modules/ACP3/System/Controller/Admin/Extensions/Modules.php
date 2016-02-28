@@ -76,24 +76,7 @@ class Modules extends Core\Controller\AdminAction
             case 'uninstall':
                 return $this->uninstallModule($dir);
             default:
-                $this->renewCaches();
-
-                $modules = $this->modules->getAllModules();
-                $installedModules = $newModules = [];
-
-                foreach ($modules as $key => $values) {
-                    $values['dir'] = strtolower($values['dir']);
-                    if ($this->modules->isInstalled($values['dir']) === true) {
-                        $installedModules[$key] = $values;
-                    } else {
-                        $newModules[$key] = $values;
-                    }
-                }
-
-                return [
-                    'installed_modules' => $installedModules,
-                    'new_modules' => $newModules
-                ];
+                return $this->outputPage();
         }
     }
 
@@ -291,5 +274,30 @@ class Modules extends Core\Controller\AdminAction
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+    }
+
+    /**
+     * @return array
+     */
+    private function outputPage()
+    {
+        $this->renewCaches();
+
+        $modules = $this->modules->getAllModules();
+        $installedModules = $newModules = [];
+
+        foreach ($modules as $key => $values) {
+            $values['dir'] = strtolower($values['dir']);
+            if ($this->modules->isInstalled($values['dir']) === true) {
+                $installedModules[$key] = $values;
+            } else {
+                $newModules[$key] = $values;
+            }
+        }
+
+        return [
+            'installed_modules' => $installedModules,
+            'new_modules' => $newModules
+        ];
     }
 }

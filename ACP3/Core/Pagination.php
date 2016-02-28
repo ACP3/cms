@@ -209,7 +209,7 @@ class Pagination
         }
 
         // Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
-        if ($this->request->getArea() !== 'admin') {
+        if ($this->request->getArea() !== AreaEnum::AREA_ADMIN) {
             if ($this->currentPage - 1 > 0) {
                 // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
                 $this->seo->setDescriptionPostfix($this->translator->t('system', 'page_x',

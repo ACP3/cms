@@ -31,7 +31,11 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'area',
                     'message' => $this->translator->t('permissions', 'type_in_area'),
                     'extra' => [
-                        'haystack' => ['admin', 'frontend', 'sidebar']
+                        'haystack' => [
+                            Core\Controller\AreaEnum::AREA_ADMIN,
+                            Core\Controller\AreaEnum::AREA_FRONTEND,
+                            Core\Controller\AreaEnum::AREA_WIDGET
+                        ]
                     ]
                 ])
             ->addConstraint(

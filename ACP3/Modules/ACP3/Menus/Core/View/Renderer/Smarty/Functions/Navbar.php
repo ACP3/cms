@@ -166,7 +166,7 @@ class Navbar extends AbstractFunction
     protected function selectMenuItem($menu)
     {
         // Selektion nur vornehmen, wenn man sich im Frontend befindet
-        if ($this->request->getArea() !== 'admin') {
+        if ($this->request->getArea() !== Core\Controller\AreaEnum::AREA_ADMIN) {
             $in = [
                 $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),
