@@ -49,7 +49,7 @@ class ApplicationPath
     protected $designPathAbsolute;
 
     /**
-     * DirectoryPath constructor.
+     * ApplicationPath constructor.
      *
      * @param string $environment
      */
