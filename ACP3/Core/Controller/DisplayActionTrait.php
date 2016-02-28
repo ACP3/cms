@@ -37,15 +37,11 @@ trait DisplayActionTrait
         if ($actionResult instanceof Response) {
             $actionResult->send();
             return;
-        } else {
-            if (is_array($actionResult)) {
-                $this->getView()->assign($actionResult);
-            } else {
-                if (is_string($actionResult)) {
-                    echo $actionResult;
-                    return;
-                }
-            }
+        } elseif (is_string($actionResult)) {
+            echo $actionResult;
+            return;
+        } elseif (is_array($actionResult)) {
+            $this->getView()->assign($actionResult);
         }
 
         // Output content through the controller
@@ -71,6 +67,9 @@ trait DisplayActionTrait
      */
     abstract protected function applyTemplateAutomatically();
 
+    /**
+     * @return void
+     */
     abstract protected function addCustomTemplateVarsBeforeOutput();
 
     /**
