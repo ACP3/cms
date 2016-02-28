@@ -14,6 +14,7 @@ services:
   core.application.front_controller:
     class: ACP3\Installer\Core\Application\FrontController
     arguments:
+      - '@core.request'
       - '@service_container'
 
   core.date:

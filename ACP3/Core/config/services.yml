@@ -33,26 +33,38 @@ services:
   core.application.front_controller:
     class: ACP3\Core\Application\FrontController
     arguments:
+      - '@core.request'
       - '@service_container'
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb
-    arguments: ['@service_container', '@core.lang', '@core.request', '@core.router', '@core.config']
+    arguments:
+      - '@service_container'
+      - '@core.lang'
+      - '@core.request'
+      - '@core.router'
+      - '@core.config'
 
   core.cache.system:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', @core.environment.application_path, 'system']
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+      - 'system'
 
   core.config:
     class: ACP3\Core\Config
-    arguments: ['@core.cache.system', '@system.model.modulerepository', @system.model.settingsrepository]
+    arguments:
+      - '@core.cache.system'
+      - '@system.model.modulerepository'
+      - '@system.model.settingsrepository'
 
   core.db:
     class: ACP3\Core\DB
     arguments:
-      - @core.logger
-      - @core.environment.application_path
-      - %core.environment%
+      - '@core.logger'
+      - '@core.environment.application_path'
+      - '%core.environment%'
       - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%'}
       - '%db_table_prefix%'
       - '%cache_driver%'
@@ -62,45 +74,75 @@ services:
 
   core.image:
     class: ACP3\Core\Picture
-    arguments: [@core.response, @core.environment.application_path, %core.environment%]
+    arguments:
+      - '@core.response'
+      - '@core.environment.application_path'
+      - '%core.environment%'
     scope: prototype
 
   core.logger:
     class: ACP3\Core\Logger
     arguments:
-      - @core.environment.application_path
+      - '@core.environment.application_path'
 
   core.mailer:
     class: ACP3\Core\Mailer
     arguments:
-      - @core.logger
+      - '@core.logger'
       - '@core.view'
       - '@core.config'
-      - @core.helpers.stringFormatter
+      - '@core.helpers.stringFormatter'
 
   core.pagination:
     class: ACP3\Core\Pagination
-    arguments: ['@core.user', '@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', '@core.view']
+    arguments:
+      - '@core.user'
+      - '@core.breadcrumb'
+      - '@core.lang'
+      - '@core.seo'
+      - '@core.request'
+      - '@core.router'
+      - '@core.view'
 
   core.redirect:
     class: ACP3\Core\Redirect
-    arguments: ['@core.request', '@core.router']
+    arguments:
+      - '@core.request'
+      - '@core.router'
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments: ['@core.lang', '@core.request', '@core.router.aliases', '@core.helpers.forms', '@seo.cache', '@core.config', '@seo.model.seorepository']
+    arguments:
+      - '@core.lang'
+      - '@core.request'
+      - '@core.router.aliases'
+      - '@core.helpers.forms'
+      - '@seo.cache'
+      - '@core.config'
+      - '@seo.model.seorepository'
 
   core.session:
     class: ACP3\Core\SessionHandler
-    arguments: ['@core.db', @core.environment.application_path, @core.request]
+    arguments:
+      - '@core.db'
+      - '@core.environment.application_path'
+      - '@core.request'
 
   core.user:
     class: ACP3\Core\User
-    arguments: [@core.request, @core.environment.application_path, @core.authentication, '@core.session', '@core.helpers.secure', '@core.config', '@users.model.userrepository']
+    arguments:
+      - '@core.request'
+      - '@core.environment.application_path'
+      - '@core.authentication'
+      - '@core.session'
+      - '@core.helpers.secure'
+      - '@core.config'
+      - '@users.model.userrepository'
 
   core.xml:
     class: ACP3\Core\XML
 
   core.eventDispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
-    arguments: [@service_container]
+    arguments:
+      - '@service_container'

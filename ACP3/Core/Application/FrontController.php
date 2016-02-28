@@ -19,34 +19,39 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FrontController
 {
     /**
+     * @var \ACP3\Core\Http\RequestInterface
+     */
+    protected $request;
+    /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
 
     /**
+     * @param \ACP3\Core\Http\RequestInterface                          $request
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
-    {
+    public function __construct(
+        RequestInterface $request,
+        ContainerInterface $container
+    ) {
+        $this->request = $request;
         $this->container = $container;
     }
 
     /**
      * @param string $serviceId
      * @param array  $arguments
-     * @param bool   $resolveArguments
      *
      * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    public function dispatch($serviceId = '', array $arguments = [], $resolveArguments = true)
+    public function dispatch($serviceId = '', array $arguments = [])
     {
-        $request = $this->container->get('core.request');
-
-        $this->checkForUriAlias($request);
+        $this->checkForUriAlias();
 
         if (empty($serviceId)) {
-            $serviceId = $request->getModule() . '.controller.' . $request->getArea() . '.' . $request->getController() . '.' . $request->getAction();
+            $serviceId = $this->buildControllerServiceId();
         }
 
         if ($this->container->has($serviceId)) {
@@ -54,13 +59,7 @@ class FrontController
             $controller = $this->container->get($serviceId);
             $controller->preDispatch();
 
-            $result = $this->executeControllerAction(
-                $request,
-                $controller,
-                'execute',
-                $arguments,
-                $resolveArguments
-            );
+            $result = $this->executeControllerAction($controller, $arguments);
 
             $controller->display($result);
             return;
@@ -72,75 +71,72 @@ class FrontController
     /**
      * Checks, whether there is an URI alias available for the current request.
      * If so, set the alias as the canonical URI
-     *
-     * @param \ACP3\Core\Http\RequestInterface $request
      */
-    protected function checkForUriAlias(RequestInterface $request)
+    protected function checkForUriAlias()
     {
         // Return early, if we are currently in the admin panel
-        if ($request->getArea() !== 'admin') {
+        if ($this->request->getArea() !== 'admin') {
             $routerAliases = $this->container->get('core.router.aliases');
 
             // If there is an URI alias available, set the alias as the canonical URI
-            if ($routerAliases->uriAliasExists($request->getQuery()) === true &&
-                $request->getOriginalQuery() !== $routerAliases->getUriAlias($request->getQuery()) . '/'
+            if ($routerAliases->uriAliasExists($this->request->getQuery()) === true &&
+                $this->request->getOriginalQuery() !== $routerAliases->getUriAlias($this->request->getQuery()) . '/'
             ) {
                 $this->container->get('core.seo')->setCanonicalUri(
-                    $this->container->get('core.router')->route($request->getQuery())
+                    $this->container->get('core.router')->route($this->request->getQuery())
                 );
             }
         }
     }
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface      $request
      * @param \ACP3\Core\Controller\ActionInterface $controller
-     * @param string                                $action
      * @param array                                 $arguments
-     * @param bool                                  $resolveArguments
      *
      * @return mixed
      * @throws \ACP3\Core\Exceptions\ResultNotExists
      */
-    private function executeControllerAction(
-        RequestInterface $request,
-        ActionInterface $controller,
-        $action,
-        array $arguments,
-        $resolveArguments
-    ) {
-        $reflection = new \ReflectionMethod($controller, $action);
+    private function executeControllerAction(ActionInterface $controller, array $arguments)
+    {
+        $reflection = new \ReflectionMethod($controller, 'execute');
         $parameterCount = $reflection->getNumberOfParameters();
 
-        if ($parameterCount > 0 && $resolveArguments === true) {
-            $arguments = $this->fetchControllerActionArguments($request, $reflection);
+        if ($parameterCount > 0 && empty($arguments)) {
+            $arguments = $this->fetchControllerActionArguments($reflection);
 
             if ($reflection->getNumberOfRequiredParameters() > count($arguments)) {
                 throw new ResultNotExists();
             }
         }
 
-        return call_user_func_array([$controller, $action], $arguments);
+        return call_user_func_array([$controller, 'execute'], $arguments);
     }
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ReflectionMethod                $reflection
+     * @param \ReflectionMethod $reflection
      *
      * @return array
      */
-    private function fetchControllerActionArguments(RequestInterface $request, \ReflectionMethod $reflection)
+    private function fetchControllerActionArguments(\ReflectionMethod $reflection)
     {
         $arguments = [];
         foreach ($reflection->getParameters() as $parameter) {
-            if ($request->getPost()->has($parameter->getName())) {
-                $arguments[$parameter->getPosition()] = $request->getPost()->get($parameter->getName());
-            } elseif ($request->getParameters()->has($parameter->getName())) {
-                $arguments[$parameter->getPosition()] = $request->getParameters()->get($parameter->getName());
+            if ($this->request->getPost()->has($parameter->getName())) {
+                $arguments[$parameter->getPosition()] = $this->request->getPost()->get($parameter->getName());
+            } elseif ($this->request->getParameters()->has($parameter->getName())) {
+                $arguments[$parameter->getPosition()] = $this->request->getParameters()->get($parameter->getName());
             } elseif ($parameter->isOptional()) {
                 $arguments[$parameter->getPosition()] = $parameter->getDefaultValue();
             }
         }
         return $arguments;
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildControllerServiceId()
+    {
+        return $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController() . '.' . $this->request->getAction();
     }
 }
