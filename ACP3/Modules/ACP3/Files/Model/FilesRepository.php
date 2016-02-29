@@ -15,41 +15,41 @@ class FilesRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'files';
 
     /**
-     * @param int    $id
+     * @param int    $fileId
      * @param string $time
      *
      * @return bool
      */
-    public function resultExists($id, $time = '')
+    public function resultExists($fileId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
         return ((int)$this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
-                ['id' => $id, 'time' => $time]
+                ['id' => $fileId, 'time' => $time]
             ) > 0);
     }
 
     /**
-     * @param int $id
+     * @param int $fileId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($fileId)
     {
         return $this->db->fetchAssoc(
             'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
-            [$id]
+            [$fileId]
         );
     }
 
     /**
-     * @param int $id
+     * @param int $fileId
      *
      * @return mixed
      */
-    public function getFileById($id)
+    public function getFileById($fileId)
     {
-        return $this->db->fetchColumn('SELECT `file` FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn('SELECT `file` FROM ' . $this->getTableName() . ' WHERE id = ?', [$fileId]);
     }
 
     /**

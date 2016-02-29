@@ -15,30 +15,30 @@ class NewsRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'news';
 
     /**
-     * @param int    $id
+     * @param int    $newsId
      * @param string $time
      *
      * @return bool
      */
-    public function resultExists($id, $time = '')
+    public function resultExists($newsId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
         return ((int)$this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id' . $period,
-                ['id' => $id, 'time' => $time]
+                ['id' => $newsId, 'time' => $time]
             ) > 0);
     }
 
     /**
-     * @param int $id
+     * @param int $newsId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($newsId)
     {
         return $this->db->fetchAssoc(
             'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
-            [$id]
+            [$newsId]
         );
     }
 

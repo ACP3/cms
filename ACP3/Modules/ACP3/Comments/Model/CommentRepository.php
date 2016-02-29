@@ -13,13 +13,13 @@ class CommentRepository extends Core\Model\AbstractRepository implements Core\Mo
     const TABLE_NAME = 'comments';
 
     /**
-     * @param int $id
+     * @param int $commentId
      *
      * @return bool
      */
-    public function resultExists($id)
+    public function resultExists($commentId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$commentId]) > 0;
     }
 
     /**
@@ -53,15 +53,15 @@ class CommentRepository extends Core\Model\AbstractRepository implements Core\Mo
     }
 
     /**
-     * @param int $id
+     * @param int $commentId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($commentId)
     {
         return $this->db->fetchAssoc(
             'SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
-            [$id]
+            [$commentId]
         );
     }
 

@@ -26,13 +26,13 @@ class PictureRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int $id
+     * @param int $pictureId
      *
      * @return array
      */
-    public function getPictureById($id)
+    public function getPictureById($pictureId)
     {
-        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$id]);
+        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$pictureId]);
     }
 
     /**
@@ -56,11 +56,11 @@ class PictureRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int $id
+     * @param int $galleryId
      *
      * @return array
      */
-    public function getPicturesByGalleryId($id)
+    public function getPicturesByGalleryId($galleryId)
     {
         return $this->db->fetchAll(
             'SELECT
@@ -71,30 +71,30 @@ class PictureRepository extends Core\Model\AbstractRepository
               ' . $this->getTableName() . ' AS p
             WHERE p.gallery_id = ?
             ORDER BY p.pic ASC',
-            [$id]
+            [$galleryId]
         );
     }
 
     /**
-     * @param int $picture
+     * @param int $pictureNumber
      * @param int $galleryId
      *
      * @return mixed
      */
-    public function getPreviousPictureId($picture, $galleryId)
+    public function getPreviousPictureId($pictureNumber, $galleryId)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->getTableName() . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$picture, $galleryId]);
+        return $this->db->fetchColumn('SELECT id FROM ' . $this->getTableName() . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$pictureNumber, $galleryId]);
     }
 
     /**
-     * @param int $picture
+     * @param int $pictureNumber
      * @param int $galleryId
      *
      * @return mixed
      */
-    public function getNextPictureId($picture, $galleryId)
+    public function getNextPictureId($pictureNumber, $galleryId)
     {
-        return $this->db->fetchColumn('SELECT id FROM ' . $this->getTableName() . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$picture, $galleryId]);
+        return $this->db->fetchColumn('SELECT id FROM ' . $this->getTableName() . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', [$pictureNumber, $galleryId]);
     }
 
     /**

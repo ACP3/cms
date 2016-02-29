@@ -14,26 +14,26 @@ class ArticleRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'articles';
 
     /**
-     * @param int    $id
+     * @param int    $articleId
      * @param string $time
      *
      * @return bool
      */
-    public function resultExists($id, $time = '')
+    public function resultExists($articleId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
         return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}",
-            ['id' => $id, 'time' => $time]) > 0;
+            ['id' => $articleId, 'time' => $time]) > 0;
     }
 
     /**
-     * @param int $id
+     * @param int $articleId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($articleId)
     {
-        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$id]);
+        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$articleId]);
     }
 
     /**

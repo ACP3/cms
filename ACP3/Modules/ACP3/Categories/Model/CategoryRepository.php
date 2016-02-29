@@ -13,13 +13,13 @@ class CategoryRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'categories';
 
     /**
-     * @param int $id
+     * @param int $categoryId
      *
      * @return bool
      */
-    public function resultExists($id)
+    public function resultExists($categoryId)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]) > 0;
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$categoryId]) > 0;
     }
 
     /**

@@ -12,50 +12,50 @@ class MenuRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'menus';
 
     /**
-     * @param int $id
+     * @param int $menuId
      *
      * @return bool
      */
-    public function menuExists($id)
+    public function menuExists($menuId)
     {
-        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id", ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id", ['id' => $menuId]) > 0);
     }
 
     /**
-     * @param string $indexName
-     * @param int    $id
+     * @param string $menuName
+     * @param int    $menuId
      *
      * @return bool
      */
-    public function menuExistsByName($indexName, $id = 0)
+    public function menuExistsByName($menuName, $menuId = 0)
     {
-        $where = !empty($id) ? ' AND id != :id' : '';
-        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE index_name = :indexName" . $where, ['indexName' => $indexName, 'id' => $id]) > 0);
+        $where = !empty($menuId) ? ' AND id != :id' : '';
+        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE index_name = :indexName" . $where, ['indexName' => $menuName, 'id' => $menuId]) > 0);
     }
 
     /**
-     * @param int $id
+     * @param int $menuId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($menuId)
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE id = ?",
-            [$id]
+            [$menuId]
         );
     }
 
     /**
-     * @param int $id
+     * @param int $menuId
      *
      * @return mixed
      */
-    public function getMenuNameById($id)
+    public function getMenuNameById($menuId)
     {
         return $this->db->fetchColumn(
             "SELECT `index_name` FROM {$this->getTableName()} WHERE id = ?",
-            [$id]
+            [$menuId]
         );
     }
 

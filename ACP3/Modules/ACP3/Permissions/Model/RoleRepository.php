@@ -12,38 +12,38 @@ class RoleRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'acl_roles';
 
     /**
-     * @param int $id
+     * @param int $roleId
      *
      * @return bool
      */
-    public function roleExists($id)
+    public function roleExists($roleId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $roleId]) > 0);
     }
 
     /**
      * @param string $roleName
-     * @param int    $id
+     * @param int    $roleId
      *
      * @return bool
      */
-    public function roleExistsByName($roleName, $id = 0)
+    public function roleExistsByName($roleName, $roleId = 0)
     {
-        if ($id !== 0) {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?', [(int)$id, $roleName]) == 1;
+        if ($roleId !== 0) {
+            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?', [(int)$roleId, $roleName]) == 1;
         } else {
             return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$roleName]) == 1;
         }
     }
 
     /**
-     * @param int $id
+     * @param int $roleId
      *
      * @return array
      */
-    public function getRoleById($id)
+    public function getRoleById($roleId)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$roleId]);
     }
 
     /**

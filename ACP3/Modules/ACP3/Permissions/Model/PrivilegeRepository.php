@@ -12,13 +12,13 @@ class PrivilegeRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'acl_privileges';
 
     /**
-     * @param int $id
+     * @param int $privilegeId
      *
      * @return bool
      */
-    public function privilegeExists($id)
+    public function privilegeExists($privilegeId)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $id]) > 0;
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $privilegeId]) > 0;
     }
 
     /**

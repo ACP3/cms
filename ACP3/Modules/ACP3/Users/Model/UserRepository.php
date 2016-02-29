@@ -13,28 +13,27 @@ class UserRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'users';
 
     /**
-     * @param int $id
+     * @param int $userId
      *
      * @return bool
      */
-    public function resultExists($id)
+    public function resultExists($userId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $id]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $userId]) > 0);
     }
 
     /**
      * Überprüft, ob der übergebene Username bereits existiert
      *
      * @param string $nickname
-     *  Der zu überprüfende Nickname
-     * @param int    $id
+     * @param int    $userId
      *
      * @return boolean
      */
-    public function resultExistsByUserName($nickname, $id = 0)
+    public function resultExistsByUserName($nickname, $userId = 0)
     {
-        if (!empty($id)) {
-            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?', [(int)$id, $nickname]) == 1 ? true : false;
+        if (!empty($userId)) {
+            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?', [(int)$userId, $nickname]) == 1 ? true : false;
         }
 
         return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE nickname = ?', [$nickname]) == 1 ? true : false;
@@ -44,28 +43,27 @@ class UserRepository extends Core\Model\AbstractRepository
      * Überprüft, ob die übergebene E-Mail-Adresse bereits existiert
      *
      * @param string $mail
-     *  Die zu überprüfende E-Mail-Adresse
-     * @param int    $id
+     * @param int    $userId
      *
      * @return boolean
      */
-    public function resultExistsByEmail($mail, $id = 0)
+    public function resultExistsByEmail($mail, $userId = 0)
     {
-        if (!empty($id)) {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?', [(int)$id, $mail]) > 0 ? true : false;
+        if (!empty($userId)) {
+            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?', [(int)$userId, $mail]) > 0 ? true : false;
         } else {
             return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE mail = ?', [$mail]) > 0 ? true : false;
         }
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($userId)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$userId]);
     }
 
     /**

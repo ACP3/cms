@@ -15,26 +15,26 @@ class GalleryRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'gallery';
 
     /**
-     * @param int    $id
+     * @param int    $galleryId
      * @param string $time
      *
      * @return bool
      */
-    public function galleryExists($id, $time = '')
+    public function galleryExists($galleryId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
         return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
-                ['id' => $id, 'time' => $time]) > 0);
+                ['id' => $galleryId, 'time' => $time]) > 0);
     }
 
     /**
-     * @param int $id
+     * @param int $galleryId
      *
      * @return array
      */
-    public function getGalleryById($id)
+    public function getGalleryById($galleryId)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$galleryId]);
     }
 
     /**
