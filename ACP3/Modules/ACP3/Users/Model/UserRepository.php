@@ -19,7 +19,8 @@ class UserRepository extends Core\Model\AbstractRepository
      */
     public function resultExists($userId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $userId]) > 0);
+        $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id';
+        return ((int)$this->db->fetchColumn($query, ['id' => $userId]) > 0);
     }
 
     /**
@@ -33,10 +34,12 @@ class UserRepository extends Core\Model\AbstractRepository
     public function resultExistsByUserName($nickname, $userId = 0)
     {
         if (!empty($userId)) {
-            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?', [(int)$userId, $nickname]) == 1 ? true : false;
+            $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?';
+            return !empty($nickname) && $this->db->fetchColumn($query, [(int)$userId, $nickname]) == 1;
         }
 
-        return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE nickname = ?', [$nickname]) == 1 ? true : false;
+        $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE nickname = ?';
+        return !empty($nickname) && $this->db->fetchColumn($query, [$nickname]) == 1;
     }
 
     /**
@@ -50,10 +53,10 @@ class UserRepository extends Core\Model\AbstractRepository
     public function resultExistsByEmail($mail, $userId = 0)
     {
         if (!empty($userId)) {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?', [(int)$userId, $mail]) > 0 ? true : false;
-        } else {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE mail = ?', [$mail]) > 0 ? true : false;
+            $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?';
+            return $this->db->fetchColumn($query, [(int)$userId, $mail]) > 0;
         }
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE mail = ?', [$mail]) > 0;
     }
 
     /**
@@ -83,7 +86,10 @@ class UserRepository extends Core\Model\AbstractRepository
      */
     public function getOneActiveUserByNickname($nickname)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE nickname = ? AND login_errors < 3', [$nickname]);
+        return $this->db->fetchAssoc(
+            'SELECT * FROM ' . $this->getTableName() . ' WHERE nickname = ? AND login_errors < 3',
+            [$nickname]
+        );
     }
 
     /**
