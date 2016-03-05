@@ -2,9 +2,9 @@
 
 namespace ACP3\Core\View\Renderer;
 
+use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Renderer for the Smarty template engine
@@ -13,23 +13,36 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  */
 class Smarty extends \Smarty implements RendererInterface
 {
-    use ContainerAwareTrait;
-
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $config;
+    /**
+     * @var string
+     */
+    protected $environment;
 
     /**
      * Smarty constructor.
      *
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Config                      $config
+     * @param string                                 $environment
      */
-    public function __construct(ApplicationPath $appPath)
-    {
+    public function __construct(
+        ApplicationPath $appPath,
+        Config $config,
+        $environment
+    ) {
         parent::__construct();
 
+        $this->config = $config;
         $this->appPath = $appPath;
+        $this->environment = $environment;
     }
 
     /**
@@ -39,7 +52,7 @@ class Smarty extends \Smarty implements RendererInterface
      */
     public function configure(array $params = [])
     {
-        $settings = $this->container->get('core.config')->getSettings('system');
+        $settings = $this->config->getSettings('system');
 
         $this->setErrorReporting($this->isDevOrInstall() ? E_ALL : 0);
         $this->setCompileId(!empty($params['compile_id']) ? $params['compile_id'] : $settings['design']);
@@ -53,8 +66,7 @@ class Smarty extends \Smarty implements RendererInterface
      */
     protected function isDevOrInstall()
     {
-        return $this->container->getParameter('core.environment') === ApplicationMode::DEVELOPMENT ||
-        $this->container->getParameter('core.environment') === ApplicationMode::INSTALLER ||
-        $this->container->getParameter('core.environment') === ApplicationMode::UPDATER;
+        $environments = [ApplicationMode::DEVELOPMENT, ApplicationMode::INSTALLER, ApplicationMode::UPDATER];
+        return in_array($this->environment, $environments);
     }
 }
