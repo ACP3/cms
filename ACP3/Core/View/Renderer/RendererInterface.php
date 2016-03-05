@@ -16,8 +16,8 @@ interface RendererInterface
 
     /**
      * @param string      $template
-     * @param string|null $cacheId
-     * @param string|null $compileId
+     * @param mixed       $cacheId
+     * @param mixed       $compileId
      * @param object|null $parent
      *
      * @return string
@@ -26,8 +26,8 @@ interface RendererInterface
 
     /**
      * @param string      $template
-     * @param string|null $cacheId
-     * @param string|null $compileId
+     * @param mixed       $cacheId
+     * @param mixed       $compileId
      * @param object|null $parent
      *
      * @return void

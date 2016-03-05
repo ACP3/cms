@@ -39,10 +39,10 @@ class View
     /**
      * Fetches a template and outputs its contents
      *
-     * @param string $template
-     * @param mixed   $cacheId
-     * @param mixed   $compileId
-     * @param object $parent
+     * @param string      $template
+     * @param mixed       $cacheId
+     * @param mixed       $compileId
+     * @param object|null $parent
      */
     public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -52,10 +52,10 @@ class View
     /**
      * Fetches a template and returns its contents
      *
-     * @param string  $template
-     * @param mixed   $cacheId
-     * @param mixed   $compileId
-     * @param object  $parent
+     * @param string      $template
+     * @param mixed       $cacheId
+     * @param mixed       $compileId
+     * @param object|null $parent
      *
      * @return string
      */
