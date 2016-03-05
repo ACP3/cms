@@ -5,6 +5,7 @@ namespace ACP3\Core;
 use ACP3\Core\Environment\ApplicationPath;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Psr\Log\LogLevel;
 
 /**
  * Class for logging warnings, errors, etc.
@@ -47,35 +48,11 @@ class Logger
             $this->createChannel($channel, $level);
         }
 
-        /** @var \Monolog\Logger $logger */
-        $logger = $this->channels[$channel];
-
-        switch ($level) {
-            case 'debug':
-                $logger->debug($this->prettyPrintMessage($message), $context);
-                break;
-            case 'info':
-                $logger->info($message, $context);
-                break;
-            case 'notice':
-                $logger->notice($message, $context);
-                break;
-            case 'warning':
-                $logger->warning($message, $context);
-                break;
-            case 'error':
-                $logger->error($message, $context);
-                break;
-            case 'critical':
-                $logger->critical($message, $context);
-                break;
-            case 'alert':
-                $logger->alert($message, $context);
-                break;
-            case 'emergency':
-                $logger->emergency($message, $context);
-                break;
+        if ($level === LogLevel::DEBUG) {
+            $message = $this->prettyPrintMessage($message);
         }
+
+        $this->channels[$channel]->{$level}($message, $context);
     }
 
     /**
@@ -87,7 +64,7 @@ class Logger
      */
     public function debug($channel, $message, array $context = [])
     {
-        $this->log($channel, 'debug', $message, $context);
+        $this->log($channel, LogLevel::DEBUG, $message, $context);
     }
 
     /**
@@ -99,7 +76,7 @@ class Logger
      */
     public function info($channel, $message, array $context = [])
     {
-        $this->log($channel, 'info', $message, $context);
+        $this->log($channel, LogLevel::INFO, $message, $context);
     }
 
     /**
@@ -111,7 +88,7 @@ class Logger
      */
     public function notice($channel, $message, array $context = [])
     {
-        $this->log($channel, 'notice', $message, $context);
+        $this->log($channel, LogLevel::NOTICE, $message, $context);
     }
 
     /**
@@ -123,7 +100,7 @@ class Logger
      */
     public function warning($channel, $message, array $context = [])
     {
-        $this->log($channel, 'warning', $message, $context);
+        $this->log($channel, LogLevel::NOTICE, $message, $context);
     }
 
     /**
@@ -135,7 +112,7 @@ class Logger
      */
     public function error($channel, $message, array $context = [])
     {
-        $this->log($channel, 'error', $message, $context);
+        $this->log($channel, LogLevel::ERROR, $message, $context);
     }
 
     /**
@@ -147,7 +124,7 @@ class Logger
      */
     public function critical($channel, $message, array $context = [])
     {
-        $this->log($channel, 'critical', $message, $context);
+        $this->log($channel, LogLevel::CRITICAL, $message, $context);
     }
 
     /**
@@ -159,7 +136,7 @@ class Logger
      */
     public function alert($channel, $message, array $context = [])
     {
-        $this->log($channel, 'alert', $message, $context);
+        $this->log($channel, LogLevel::ALERT, $message, $context);
     }
 
     /**
@@ -171,7 +148,7 @@ class Logger
      */
     public function emergency($channel, $message, array $context = [])
     {
-        $this->log($channel, 'emergency', $message, $context);
+        $this->log($channel, LogLevel::EMERGENCY, $message, $context);
     }
 
     /**
@@ -181,7 +158,7 @@ class Logger
     private function createChannel($channel, $level)
     {
         $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
-        $logLevelConst = constant('\Monolog\Logger::' . strtoupper($level));
+        $logLevelConst = constant(\Monolog\Logger::class . '::' . strtoupper($level));
 
         $stream = new StreamHandler($fileName, $logLevelConst);
         $stream->setFormatter(new LineFormatter(null, null, true));
