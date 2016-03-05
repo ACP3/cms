@@ -35,6 +35,14 @@ class CheckAccess extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        return $this->checkAccess->outputLinkOrButton($params);
+        $return = $this->checkAccess->outputLinkOrButton($params);
+
+        if (is_array($return)) {
+            $smarty->smarty->assign('access_check', $return);
+
+            return $smarty->smarty->fetch('asset:system/access_check.tpl');
+        }
+
+        return $return;
     }
 }

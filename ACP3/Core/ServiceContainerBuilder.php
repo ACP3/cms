@@ -4,7 +4,7 @@ namespace ACP3\Core;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
-use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
+use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -33,7 +33,7 @@ class ServiceContainerBuilder
         $containerBuilder->addCompilerPass(
             new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
         );
-        $containerBuilder->addCompilerPass(new RegisterPluginsPass());
+        $containerBuilder->addCompilerPass(new RegisterSmartyPluginsPass());
         $containerBuilder->addCompilerPass(new RegisterColumnRendererPass());
         $containerBuilder->addCompilerPass(new RegisterValidationRulesPass());
 

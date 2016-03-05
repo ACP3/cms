@@ -57,4 +57,12 @@ class Smarty extends \Smarty implements RendererInterface
         $environments = [ApplicationMode::DEVELOPMENT, ApplicationMode::INSTALLER, ApplicationMode::UPDATER];
         return in_array($this->environment, $environments);
     }
+
+    /**
+     * @param \ACP3\Core\View\Renderer\Smarty\PluginInterface $plugin
+     */
+    public function registerSmartyPlugin(Smarty\PluginInterface $plugin)
+    {
+        $plugin->register($this);
+    }
 }

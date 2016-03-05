@@ -88,12 +88,4 @@ class View
     {
         return $this->renderer->assign($name, $value);
     }
-
-    /**
-     * @param \ACP3\Core\View\Renderer\Smarty\PluginInterface $plugin
-     */
-    public function registerPlugin(Smarty\PluginInterface $plugin)
-    {
-        $plugin->register($this->renderer);
-    }
 }

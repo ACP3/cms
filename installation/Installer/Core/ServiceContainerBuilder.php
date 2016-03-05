@@ -3,7 +3,7 @@ namespace ACP3\Installer\Core;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
-use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterPluginsPass;
+use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,7 +33,7 @@ class ServiceContainerBuilder
         $container->addCompilerPass(
             new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
         );
-        $container->addCompilerPass(new RegisterPluginsPass());
+        $container->addCompilerPass(new RegisterSmartyPluginsPass());
         $container->addCompilerPass(new RegisterValidationRulesPass());
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));

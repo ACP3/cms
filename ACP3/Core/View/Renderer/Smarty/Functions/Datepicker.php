@@ -2,7 +2,6 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Helpers\Date;
-use ACP3\Core\View;
 
 /**
  * Class Datepicker
@@ -11,23 +10,17 @@ use ACP3\Core\View;
 class Datepicker extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
      * @var \ACP3\Core\Helpers\Date
      */
     protected $dateHelper;
 
     /**
-     * @param \ACP3\Core\View         $view
+     * Datepicker constructor.
+     *
      * @param \ACP3\Core\Helpers\Date $dateHelper
      */
-    public function __construct(
-        View $view,
-        Date $dateHelper
-    ) {
-        $this->view = $view;
+    public function __construct(Date $dateHelper)
+    {
         $this->dateHelper = $dateHelper;
     }
 
@@ -40,14 +33,14 @@ class Datepicker extends AbstractFunction
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $params = $this->mergeParameters($params);
-        $this->view->assign('datepicker', $this->dateHelper->datepicker(
+        $smarty->smarty->assign('datepicker', $this->dateHelper->datepicker(
             $params['name'],
             $params['value'],
             $params['withTime'],
             $params['inputFieldOnly']
         ));
 
-        return $this->view->fetchTemplate('system/datepicker.tpl');
+        return $smarty->smarty->fetch('asset:System/datepicker.tpl');
     }
 
     private function mergeParameters(array $params)

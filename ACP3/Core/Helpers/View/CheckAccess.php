@@ -21,10 +21,6 @@ class CheckAccess
      * @var \ACP3\Core\RouterInterface
      */
     protected $router;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
 
     /**
      * CheckAccess constructor.
@@ -32,18 +28,15 @@ class CheckAccess
      * @param \ACP3\Core\ACL             $acl
      * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\RouterInterface $router
-     * @param \ACP3\Core\View            $view
      */
     public function __construct(
         Core\ACL $acl,
         Core\I18n\Translator $translator,
-        Core\RouterInterface $router,
-        Core\View $view
+        Core\RouterInterface $router
     ) {
         $this->translator = $translator;
         $this->acl = $acl;
         $this->router = $router;
-        $this->view = $view;
     }
 
     /**
@@ -74,9 +67,7 @@ class CheckAccess
             $permissionPath = $area . '/' . $action[0] . '/' . $action[1] . '/' . $action[2];
 
             if ($this->acl->hasPermission($permissionPath) === true) {
-                $this->view->assign('access_check', $this->collectData($params, $action, $area));
-
-                return $this->view->fetchTemplate('system/access_check.tpl');
+                return $this->collectData($params, $action, $area);
             } elseif ($params['mode'] === 'link' && isset($params['title'])) {
                 // If the user has no permission and the type is "link",
                 // just return the given title without the surrounding hyperlink

@@ -1,7 +1,7 @@
 services:
   core.helpers.view.checkAccess:
     class: ACP3\Core\Helpers\View\CheckAccess
-    arguments: ['@core.acl', '@core.lang', '@core.router', '@core.view']
+    arguments: ['@core.acl', '@core.lang', '@core.router']
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
@@ -9,11 +9,16 @@ services:
 
   core.helpers.date:
     class: ACP3\Core\Helpers\Date
-    arguments: [@core.date, @core.lang, @core.request, @core.helpers.forms, @core.validation.validation_rules.date_validation_rule]
+    arguments:
+      - '@core.date'
+      - '@core.lang'
+      - '@core.request'
+      - '@core.helpers.forms'
+      - '@core.validation.validation_rules.date_validation_rule'
 
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
-    arguments: [@core.lang, @core.request]
+    arguments: ['@core.lang', '@core.request']
 
   core.helpers.sendEmail:
     class: ACP3\Core\Helpers\SendEmail
@@ -24,18 +29,18 @@ services:
 
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages
-    arguments: ['@core.redirect', '@core.request', @core.session, '@core.view']
+    arguments: ['@core.redirect', '@core.request', '@core.session']
 
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
 
   core.helpers.formToken:
     class: ACP3\Core\Helpers\FormToken
-    arguments: [@core.request, @core.session]
+    arguments: ['@core.request', '@core.session']
 
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
-    arguments: ['@core.seo', '@core.request', '@core.router', @core.helpers.toc]
+    arguments: ['@core.seo', '@core.request', '@core.router', '@core.helpers.toc']
 
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort
@@ -43,24 +48,31 @@ services:
 
   core.helpers.toc:
     class: ACP3\Core\Helpers\TableOfContents
-    arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.request', '@core.router', @core.validation.validation_rules.integer_validation_rule, '@core.view']
+    arguments:
+      - '@core.breadcrumb'
+      - '@core.lang'
+      - '@core.seo'
+      - '@core.request'
+      - '@core.router'
+      - '@core.validation.validation_rules.integer_validation_rule'
+      - '@core.view'
 
   core.helpers.stringFormatter:
     class: ACP3\Core\Helpers\StringFormatter
 
   core.helpers.formatter.dateRange:
     class: ACP3\Core\Helpers\Formatter\DateRange
-    arguments: [@core.date, @core.lang]
+    arguments: ['@core.date', '@core.lang']
 
   core.helpers.formatter.mark_entries:
     class: ACP3\Core\Helpers\Formatter\MarkEntries
-    arguments: [@core.lang]
+    arguments: ['@core.lang']
 
   core.helpers.formatter.rewriteInternalUri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
     arguments:
-      - @core.environment.application_path
-      - @core.modules.helper.controllerActionExists
-      - @core.request
-      - @core.router
-      - @seo.validation.validation_rules.uri_alias_validation_rule
+      - '@core.environment.application_path'
+      - '@core.modules.helper.controllerActionExists'
+      - '@core.request'
+      - '@core.router'
+      - '@seo.validation.validation_rules.uri_alias_validation_rule'

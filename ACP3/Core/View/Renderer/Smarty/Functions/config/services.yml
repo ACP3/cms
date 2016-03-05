@@ -13,13 +13,13 @@ services:
 
   smarty.plugin.date_picker:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Datepicker
-    arguments: [@core.view, @core.helpers.date]
+    arguments: ['@core.helpers.date']
     tags:
       - { name: core.view.extension }
 
   smarty.plugin.date_ramge:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
-    arguments: [@core.helpers.formatter.dateRange]
+    arguments: ['@core.helpers.formatter.dateRange']
     tags:
       - { name: core.view.extension }
 
@@ -43,7 +43,7 @@ services:
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
-    arguments: ['@core.assets', '@core.assets.file_resolver', @core.environment.application_path]
+    arguments: ['@core.assets', '@core.assets.file_resolver', '@core.environment.application_path']
     tags:
       - { name: core.view.extension }
 

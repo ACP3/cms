@@ -21,47 +21,38 @@ class RedirectMessages
      * @var \ACP3\Core\SessionHandler
      */
     private $sessionHandler;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
 
     /**
+     * RedirectMessages constructor.
+     *
      * @param \ACP3\Core\Redirect              $redirect
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\SessionHandler        $sessionHandler
-     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         Core\Redirect $redirect,
         Core\Http\RequestInterface $request,
-        Core\SessionHandler $sessionHandler,
-        Core\View $view
+        Core\SessionHandler $sessionHandler
     ) {
         $this->redirect = $redirect;
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
-        $this->view = $view;
     }
 
     /**
      * Gets the generated redirect message from setMessage()
      *
-     * @return string
+     * @return array|null
      * @throws \Exception
      */
     public function getMessage()
     {
         $param = $this->sessionHandler->get('redirect_message');
         if (isset($param) && is_array($param)) {
-            $this->view->assign('redirect', $param);
-
             $this->sessionHandler->remove('redirect_message');
-
-            return $this->view->fetchTemplate('system/redirect_message.tpl');
         }
 
-        return '';
+        return $param;
     }
 
     /**

@@ -6,10 +6,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class RegisterPluginsPass
+ * Class RegisterSmartyPluginsPass
  * @package ACP3\Core\View\Renderer\Smarty\DependencyInjection
  */
-class RegisterPluginsPass implements CompilerPassInterface
+class RegisterSmartyPluginsPass implements CompilerPassInterface
 {
 
     /**
@@ -21,11 +21,11 @@ class RegisterPluginsPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.view');
+        $definition = $container->findDefinition('core.view.renderer.smarty');
         $plugins = $container->findTaggedServiceIds('core.view.extension');
 
         foreach ($plugins as $serviceId => $tags) {
-            $definition->addMethodCall('registerPlugin', [new Reference($serviceId)]);
+            $definition->addMethodCall('registerSmartyPlugin', [new Reference($serviceId)]);
         }
     }
 }
