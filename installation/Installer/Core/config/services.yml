@@ -28,19 +28,19 @@ services:
   core.lang:
     class: ACP3\Installer\Core\I18n\Translator
     arguments:
-      - @core.environment.application_path
-      - @core.lang.dictionary_cache
+      - '@core.environment.application_path'
+      - '@core.lang.dictionary_cache'
       - 'en_US'
 
   core.lang.dictionary_cache:
     class: ACP3\Installer\Core\I18n\DictionaryCache
     arguments:
-      - @core.environment.application_path
+      - '@core.environment.application_path'
 
   core.logger:
     class: ACP3\Core\Logger
     arguments:
-      - @core.environment.application_path
+      - '@core.environment.application_path'
 
   core.redirect:
     class: ACP3\Core\Redirect
@@ -51,11 +51,10 @@ services:
 
   core.view:
     class: ACP3\Core\View
-    arguments: [@core.view.renderer.smarty, [compile_id: installer]]
+    arguments: [@core.view.renderer.smarty]
 
   core.view.renderer.smarty:
-    class: ACP3\Installer\Core\View\Renderer\Smarty
+    class: ACP3\Core\View\Renderer\Smarty
     arguments:
-      - @core.environment.application_path
-    calls:
-      - ['setContainer', ['@service_container']]
+      - '@core.environment.application_path'
+      - %core.environment%

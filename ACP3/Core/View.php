@@ -27,26 +27,26 @@ class View
     }
 
     /**
-     * @param \ACP3\Core\View\Renderer\Smarty $smarty
+     * @param \ACP3\Core\View\Renderer\Smarty $renderer
      * @param array                           $params
      */
-    public function __construct(Smarty $smarty, array $params = [])
+    public function __construct(Smarty $renderer, array $params = [])
     {
-        $this->renderer = $smarty;
+        $this->renderer = $renderer;
         $this->renderer->configure($params);
     }
 
     /**
      * Fetches a template and outputs its contents
      *
-     * @param      string $template
-     * @param null        $cacheId
-     * @param null        $compileId
-     * @param null        $parent
+     * @param string $template
+     * @param mixed   $cacheId
+     * @param mixed   $compileId
+     * @param object $parent
      */
     public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
-        echo $this->fetchTemplate($template, $cacheId, $compileId, $parent, true);
+        $this->renderer->display('asset:' . $template, $cacheId, $compileId, $parent);
     }
 
     /**
@@ -56,14 +56,12 @@ class View
      * @param mixed   $cacheId
      * @param mixed   $compileId
      * @param object  $parent
-     * @param boolean $display
      *
-     * @throws \Exception
      * @return string
      */
-    public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
+    public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
-        return $this->renderer->fetch('asset:' . $template, $cacheId, $compileId, $parent, $display);
+        return $this->renderer->fetch('asset:' . $template, $cacheId, $compileId, $parent);
     }
 
     /**

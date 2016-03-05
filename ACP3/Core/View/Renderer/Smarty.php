@@ -2,7 +2,6 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 
@@ -18,10 +17,6 @@ class Smarty extends \Smarty implements RendererInterface
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $config;
-    /**
      * @var string
      */
     protected $environment;
@@ -30,17 +25,12 @@ class Smarty extends \Smarty implements RendererInterface
      * Smarty constructor.
      *
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Config                      $config
      * @param string                                 $environment
      */
-    public function __construct(
-        ApplicationPath $appPath,
-        Config $config,
-        $environment
-    ) {
+    public function __construct(ApplicationPath $appPath, $environment)
+    {
         parent::__construct();
 
-        $this->config = $config;
         $this->appPath = $appPath;
         $this->environment = $environment;
     }
@@ -52,10 +42,8 @@ class Smarty extends \Smarty implements RendererInterface
      */
     public function configure(array $params = [])
     {
-        $settings = $this->config->getSettings('system');
-
         $this->setErrorReporting($this->isDevOrInstall() ? E_ALL : 0);
-        $this->setCompileId(!empty($params['compile_id']) ? $params['compile_id'] : $settings['design']);
+        $this->setCompileId(!empty($params['compile_id']) ? $params['compile_id'] : $this->environment);
         $this->setCompileCheck($this->isDevOrInstall());
         $this->setCompileDir($this->appPath->getCacheDir() . 'tpl_compiled/');
         $this->setCacheDir($this->appPath->getCacheDir() . 'tpl_cached/');
