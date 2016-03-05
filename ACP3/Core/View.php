@@ -2,7 +2,7 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\View\Renderer\AbstractRenderer;
+use ACP3\Core\View\Renderer\RendererInterface;
 use ACP3\Core\View\Renderer\Smarty;
 
 /**
@@ -12,14 +12,14 @@ use ACP3\Core\View\Renderer\Smarty;
 class View
 {
     /**
-     * @var AbstractRenderer
+     * @var RendererInterface
      */
     protected $renderer;
 
     /**
      * Gets the renderer
      *
-     * @return AbstractRenderer
+     * @return RendererInterface
      */
     public function getRenderer()
     {
@@ -96,6 +96,6 @@ class View
      */
     public function registerPlugin(Smarty\PluginInterface $plugin)
     {
-        $plugin->register($this->renderer->renderer);
+        $plugin->register($this->renderer);
     }
 }

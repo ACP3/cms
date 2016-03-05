@@ -4,18 +4,17 @@ namespace ACP3\Core\View\Renderer;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Renderer for the Smarty template engine
  *
  * @package ACP3\Core\View\Renderer
  */
-class Smarty extends AbstractRenderer
+class Smarty extends \Smarty implements RendererInterface
 {
-    /**
-     * @var \Smarty
-     */
-    public $renderer;
+    use ContainerAwareTrait;
+
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -28,6 +27,8 @@ class Smarty extends AbstractRenderer
      */
     public function __construct(ApplicationPath $appPath)
     {
+        parent::__construct();
+
         $this->appPath = $appPath;
     }
 
@@ -40,53 +41,11 @@ class Smarty extends AbstractRenderer
     {
         $settings = $this->container->get('core.config')->getSettings('system');
 
-        $this->renderer = new \Smarty();
-        $this->renderer->error_reporting = $this->isDevOrInstall() ? E_ALL : 0;
-        $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : $settings['design'];
-        $this->renderer->compile_check = $this->isDevOrInstall();
-        $this->renderer->compile_dir = $this->appPath->getCacheDir() . 'tpl_compiled/';
-        $this->renderer->cache_dir = $this->appPath->getCacheDir() . 'tpl_cached/';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function assign($name, $value = null)
-    {
-        $this->renderer->assign($name, $value);
-    }
-
-    /**
-     * @param string      $template
-     * @param string|null $cacheId
-     * @param string|null $compileId
-     * @param string|null $parent
-     * @param bool        $display
-     *
-     * @return bool|mixed|string
-     */
-    public function fetch($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
-    {
-        return $this->renderer->fetch($template, $cacheId, $compileId, $parent, $display);
-    }
-
-    /**
-     * @param string      $template
-     * @param string|null $cacheId
-     * @param string|null $compileId
-     * @param string|null $parent
-     */
-    public function display($template, $cacheId = null, $compileId = null, $parent = null)
-    {
-        $this->renderer->display($template, $cacheId, $compileId, $parent);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function templateExists($template)
-    {
-        return $this->renderer->templateExists($template);
+        $this->setErrorReporting($this->isDevOrInstall() ? E_ALL : 0);
+        $this->setCompileId(!empty($params['compile_id']) ? $params['compile_id'] : $settings['design']);
+        $this->setCompileCheck($this->isDevOrInstall());
+        $this->setCompileDir($this->appPath->getCacheDir() . 'tpl_compiled/');
+        $this->setCacheDir($this->appPath->getCacheDir() . 'tpl_cached/');
     }
 
     /**

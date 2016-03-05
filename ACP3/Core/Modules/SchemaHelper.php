@@ -3,14 +3,16 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class SchemaHelper
  * @package ACP3\Core\Modules
  */
-class SchemaHelper extends ContainerAware
+class SchemaHelper
 {
+    use ContainerAwareTrait;
+
     /**
      * @var \ACP3\Core\DB
      */

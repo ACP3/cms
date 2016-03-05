@@ -15,11 +15,10 @@ class Smarty extends \ACP3\Core\View\Renderer\Smarty
      */
     public function configure(array $params = [])
     {
-        $this->renderer = new \Smarty();
-        $this->renderer->error_reporting = $this->isDevOrInstall() ? E_ALL : 0;
+        $this->setErrorReporting($this->isDevOrInstall() ? E_ALL : 0);
 
         if (!empty($params['compile_id'])) {
-            $this->renderer->compile_id = $params['compile_id'];
+            $this->setCompileId($params['compile_id']);
         }
     }
 }
