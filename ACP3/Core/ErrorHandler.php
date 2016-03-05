@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core;
 
-use Monolog\Handler\AbstractHandler;
-use Monolog\Logger as MonologLogger;
-use Psr\Log\LogLevel;
-
 /**
  * Monolog error handler
  *
@@ -18,13 +14,9 @@ use Psr\Log\LogLevel;
 class ErrorHandler
 {
     /**
-     * @var \Monolog\Logger
+     * @var \ACP3\Core\Logger
      */
     private $logger;
-    /**
-     * @var array
-     */
-    private $errorLevelMap = [];
     /**
      * @var array
      */
@@ -33,9 +25,9 @@ class ErrorHandler
     /**
      * ErrorHandler constructor.
      *
-     * @param \Monolog\Logger $logger
+     * @param \ACP3\Core\Logger $logger
      */
-    public function __construct(MonologLogger $logger)
+    public function __construct(Logger $logger)
     {
         $this->logger = $logger;
     }
@@ -45,11 +37,11 @@ class ErrorHandler
      *
      * By default it will handle errors, exceptions and fatal errors
      *
-     * @param  \Monolog\Logger $logger
+     * @param \ACP3\Core\Logger $logger
      *
-     * @return ErrorHandler
+     * @return $this
      */
-    public static function register(MonologLogger $logger)
+    public static function register(Logger $logger)
     {
         $handler = new static($logger);
         $handler->registerErrorHandler();
@@ -66,8 +58,7 @@ class ErrorHandler
 
     public function registerErrorHandler()
     {
-        set_error_handler([$this, 'handleError'], E_ALL);
-        $this->errorLevelMap = $this->defaultErrorLevelMap();
+        set_error_handler([$this, 'handleError'], -1);
     }
 
     public function registerFatalHandler()
@@ -76,45 +67,11 @@ class ErrorHandler
     }
 
     /**
-     * @return array
-     */
-    protected function defaultErrorLevelMap()
-    {
-        return [
-            E_ERROR => LogLevel::CRITICAL,
-            E_WARNING => LogLevel::WARNING,
-            E_PARSE => LogLevel::ALERT,
-            E_NOTICE => LogLevel::NOTICE,
-            E_CORE_ERROR => LogLevel::CRITICAL,
-            E_CORE_WARNING => LogLevel::WARNING,
-            E_COMPILE_ERROR => LogLevel::ALERT,
-            E_COMPILE_WARNING => LogLevel::WARNING,
-            E_USER_ERROR => LogLevel::ERROR,
-            E_USER_WARNING => LogLevel::WARNING,
-            E_USER_NOTICE => LogLevel::NOTICE,
-            E_STRICT => LogLevel::NOTICE,
-            E_RECOVERABLE_ERROR => LogLevel::ERROR,
-            E_DEPRECATED => LogLevel::NOTICE,
-            E_USER_DEPRECATED => LogLevel::NOTICE,
-        ];
-    }
-
-    /**
      * @param \Exception $e
      */
     public function handleException(\Exception $e)
     {
-        $this->logger->log(
-            LogLevel::ERROR,
-            sprintf(
-                'Uncaught Exception %s: "%s" at %s line %s',
-                get_class($e),
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine()
-            ),
-            ['exception' => $e]
-        );
+        $this->logger->error('exception', $e);
 
         exit(255);
     }
@@ -143,8 +100,8 @@ class ErrorHandler
     {
         $lastError = error_get_last();
         if ($lastError !== null && in_array($lastError['type'], self::$fatalErrors, true)) {
-            $this->logger->log(
-                LogLevel::ALERT,
+            $this->logger->alert(
+                'system',
                 'Fatal Error (' . self::errorCodeToString($lastError['type']) . '): ' . $lastError['message'],
                 [
                     'code' => $lastError['type'],
@@ -153,8 +110,6 @@ class ErrorHandler
                     'line' => $lastError['line']
                 ]
             );
-
-            $this->closeLoggerHandlers();
         }
     }
 
@@ -199,14 +154,5 @@ class ErrorHandler
         }
 
         return 'Unknown PHP error';
-    }
-
-    private function closeLoggerHandlers()
-    {
-        foreach ($this->logger->getHandlers() as $handler) {
-            if ($handler instanceof AbstractHandler) {
-                $handler->close();
-            }
-        }
     }
 }

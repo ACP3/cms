@@ -139,8 +139,6 @@ class Bootstrap extends AbstractBootstrap
         } catch (Exceptions\ControllerActionNotFound $e) {
             $this->handleException($e, $redirect, 'errors/index/not_found');
         } catch (\Exception $e) {
-            $this->container->get('core.logger')->error('exception', $e);
-
             $this->handleException($e, $redirect, 'errors/index/server_error');
         }
     }

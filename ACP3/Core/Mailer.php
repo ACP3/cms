@@ -243,9 +243,9 @@ class Mailer
                 return $this->bcc === true ? $this->sendBcc() : $this->sendTo();
             }
         } catch (\phpmailerException $e) {
-            $this->logger->error('mailer', $e->getMessage());
+            $this->logger->error('mailer', $e);
         } catch (\Exception $e) {
-            $this->logger->error('mailer', $e->getMessage());
+            $this->logger->error('mailer', $e);
         }
 
         return false;

@@ -19,7 +19,7 @@ class Logger
     protected $appPath;
     /**
      * Contains all already set log channels
-     * @var array
+     * @var \Monolog\Logger[]
      */
     private $channels = [];
 
@@ -39,55 +39,41 @@ class Logger
      * @param string $channel
      * @param string $level
      * @param mixed  $message
+     * @param array  $context
      */
-    private function log($channel, $level, $message)
+    private function log($channel, $level, $message, array $context = [])
     {
-        $channelName = $channel . '-' . $level;
-
-        if (!isset($this->channels[$channelName])) {
-            $logger = new \Monolog\Logger($channelName);
-
-            $fileName = $this->appPath->getCacheDir() . 'logs/' . $channelName . '.log';
-            $logLevelConst = constant('\Monolog\Logger::' . strtoupper($level));
-            $stream = new StreamHandler($fileName, $logLevelConst);
-            $stream->setFormatter(new LineFormatter(null, null, true));
-
-            $logger->pushHandler($stream);
-
-            $this->channels[$channelName] = $logger;
+        if (!isset($this->channels[$channel])) {
+            $this->createChannel($channel, $level);
         }
 
         /** @var \Monolog\Logger $logger */
-        $logger = $this->channels[$channelName];
+        $logger = $this->channels[$channel];
 
         switch ($level) {
             case 'debug':
-                if (is_array($message) || is_object($message)) {
-                    $message = var_export($message, true);
-                }
-
-                $logger->debug($message);
+                $logger->debug($this->prettyPrintMessage($message), $context);
                 break;
             case 'info':
-                $logger->info($message);
+                $logger->info($message, $context);
                 break;
             case 'notice':
-                $logger->notice($message);
+                $logger->notice($message, $context);
                 break;
             case 'warning':
-                $logger->warning($message);
+                $logger->warning($message, $context);
                 break;
             case 'error':
-                $logger->error($message);
+                $logger->error($message, $context);
                 break;
             case 'critical':
-                $logger->critical($message);
+                $logger->critical($message, $context);
                 break;
             case 'alert':
-                $logger->alert($message);
+                $logger->alert($message, $context);
                 break;
             case 'emergency':
-                $logger->emergency($message);
+                $logger->emergency($message, $context);
                 break;
         }
     }
@@ -97,10 +83,11 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function debug($channel, $message)
+    public function debug($channel, $message, array $context = [])
     {
-        $this->log($channel, 'debug', $message);
+        $this->log($channel, 'debug', $message, $context);
     }
 
     /**
@@ -108,10 +95,11 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function info($channel, $message)
+    public function info($channel, $message, array $context = [])
     {
-        $this->log($channel, 'info', $message);
+        $this->log($channel, 'info', $message, $context);
     }
 
     /**
@@ -119,10 +107,11 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function notice($channel, $message)
+    public function notice($channel, $message, array $context = [])
     {
-        $this->log($channel, 'notice', $message);
+        $this->log($channel, 'notice', $message, $context);
     }
 
     /**
@@ -130,10 +119,11 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function warning($channel, $message)
+    public function warning($channel, $message, array $context = [])
     {
-        $this->log($channel, 'warning', $message);
+        $this->log($channel, 'warning', $message, $context);
     }
 
     /**
@@ -141,10 +131,11 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function error($channel, $message)
+    public function error($channel, $message, array $context = [])
     {
-        $this->log($channel, 'error', $message);
+        $this->log($channel, 'error', $message, $context);
     }
 
     /**
@@ -152,10 +143,11 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function critical($channel, $message)
+    public function critical($channel, $message, array $context = [])
     {
-        $this->log($channel, 'critical', $message);
+        $this->log($channel, 'critical', $message, $context);
     }
 
     /**
@@ -163,10 +155,11 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function alert($channel, $message)
+    public function alert($channel, $message, array $context = [])
     {
-        $this->log($channel, 'alert', $message);
+        $this->log($channel, 'alert', $message, $context);
     }
 
     /**
@@ -174,9 +167,39 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
+     * @param array  $context
      */
-    public function emergency($channel, $message)
+    public function emergency($channel, $message, array $context = [])
     {
-        $this->log($channel, 'emergency', $message);
+        $this->log($channel, 'emergency', $message, $context);
+    }
+
+    /**
+     * @param string $channel
+     * @param string $level
+     */
+    private function createChannel($channel, $level)
+    {
+        $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
+        $logLevelConst = constant('\Monolog\Logger::' . strtoupper($level));
+
+        $stream = new StreamHandler($fileName, $logLevelConst);
+        $stream->setFormatter(new LineFormatter(null, null, true));
+
+        $this->channels[$channel] = new \Monolog\Logger($channel, [$stream]);
+    }
+
+    /**
+     * @param $message
+     *
+     * @return string
+     */
+    private function prettyPrintMessage($message)
+    {
+        if (is_array($message) || is_object($message)) {
+            $message = var_export($message, true);
+        }
+
+        return $message;
     }
 }

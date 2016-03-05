@@ -212,7 +212,7 @@ class DB
             $this->connection->commit();
         } catch (\Exception $e) {
             $this->connection->rollBack();
-            $this->logger->error('database', $e->getMessage());
+            $this->logger->error('database', $e);
             $result = false;
         }
 

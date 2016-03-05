@@ -4,9 +4,6 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\ErrorHandler;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 
 /**
  * Class AbstractBootstrap
@@ -49,10 +46,8 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function setErrorHandler()
     {
-        $stream = new StreamHandler($this->appPath->getCacheDir() . 'logs/system.log');
-        $stream->setFormatter(new LineFormatter(null, null, true));
+        $logger = new \ACP3\Core\Logger($this->appPath);
 
-        $logger = new Logger('system', [$stream]);
         ErrorHandler::register($logger);
     }
 
