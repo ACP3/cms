@@ -13,32 +13,32 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'newsletters';
 
     /**
-     * @param int    $id
+     * @param int    $newsletterId
      * @param string $status
      *
      * @return bool
      */
-    public function newsletterExists($id, $status = '')
+    public function newsletterExists($newsletterId, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
         return ((int)$this->db->fetchAssoc(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where,
-                ['id' => $id, 'status' => $status]
+                ['id' => $newsletterId, 'status' => $status]
             ) > 0);
     }
 
     /**
-     * @param int    $id
+     * @param int    $newsletterId
      * @param string $status
      *
      * @return array
      */
-    public function getOneById($id, $status = '')
+    public function getOneById($newsletterId, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE id = :id {$where}",
-            ['id' => $id, 'status' => $status]
+            ['id' => $newsletterId, 'status' => $status]
         );
     }
 

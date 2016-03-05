@@ -13,15 +13,15 @@ class NestedSetRepository extends \ACP3\Core\Model\AbstractRepository
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren
      *
      * @param string $tableName
-     * @param int    $id
+     * @param int    $nodeId
      *
      * @return array
      */
-    public function fetchNodeWithSiblings($tableName, $id)
+    public function fetchNodeWithSiblings($tableName, $nodeId)
     {
         return $this->db->fetchAll(
             "SELECT n.* FROM {$tableName} AS p, {$tableName} AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id ORDER BY n.left_id ASC",
-            [$id]
+            [$nodeId]
         );
     }
 
@@ -55,13 +55,13 @@ class NestedSetRepository extends \ACP3\Core\Model\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $id
+     * @param int    $nodeId
      *
      * @return bool
      */
-    public function nodeExists($tableName, $id)
+    public function nodeExists($tableName, $nodeId)
     {
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE id = ?", [$id]) > 0;
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE id = ?", [$nodeId]) > 0;
     }
 
     /**
@@ -92,13 +92,13 @@ class NestedSetRepository extends \ACP3\Core\Model\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $id
+     * @param int    $nodeId
      *
      * @return array
      */
-    public function fetchNodeById($tableName, $id)
+    public function fetchNodeById($tableName, $nodeId)
     {
-        return $this->db->fetchAssoc("SELECT `root_id`, `left_id`, `right_id` FROM {$tableName} WHERE id = ?", [$id]);
+        return $this->db->fetchAssoc("SELECT `root_id`, `left_id`, `right_id` FROM {$tableName} WHERE id = ?", [$nodeId]);
     }
 
     /**
@@ -169,15 +169,15 @@ class NestedSetRepository extends \ACP3\Core\Model\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $id
+     * @param int    $blockId
      *
      * @return int
      */
-    public function fetchMinimumLeftIdByBlockId($tableName, $id)
+    public function fetchMinimumLeftIdByBlockId($tableName, $blockId)
     {
         return (int)$this->db->fetchColumn(
             "SELECT MIN(`left_id`) AS left_id FROM {$tableName} WHERE block_id = ?",
-            [$id]
+            [$blockId]
         );
     }
 }

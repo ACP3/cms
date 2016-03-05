@@ -25,7 +25,8 @@ class PollRepository extends Core\Model\AbstractRepository
     {
         $where = !empty($time) ? ' AND ' . $this->getPublicationPeriod() : '';
         $multiple = ($multiple === true) ? ' AND multiple = :multiple' : '';
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $where . $multiple, ['id' => $pollId, 'time' => $time, 'multiple' => 1]) > 0 ? true : false;
+        $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $where . $multiple;
+        return $this->db->fetchColumn($query, ['id' => $pollId, 'time' => $time, 'multiple' => 1]) > 0;
     }
 
     /**
@@ -45,7 +46,10 @@ class PollRepository extends Core\Model\AbstractRepository
      */
     public function getOneByIdWithTotalVotes($pollId)
     {
-        return $this->db->fetchAssoc('SELECT p.*, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE p.id = ?', [$pollId]);
+        return $this->db->fetchAssoc(
+            'SELECT p.*, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE p.id = ?',
+            [$pollId]
+        );
     }
 
     /**
@@ -69,7 +73,10 @@ class PollRepository extends Core\Model\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt, ['time' => $time]);
+        return $this->db->fetchAll(
+            'SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt,
+            ['time' => $time]
+        );
     }
 
     /**
@@ -80,7 +87,10 @@ class PollRepository extends Core\Model\AbstractRepository
     public function getLatestPoll($time)
     {
         $period = $this->getPublicationPeriod('p.');
-        return $this->db->fetchAssoc('SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1', ['time' => $time]);
+        return $this->db->fetchAssoc(
+            'SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1',
+            ['time' => $time]
+        );
     }
 
     /**
@@ -88,6 +98,8 @@ class PollRepository extends Core\Model\AbstractRepository
      */
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY `start` DESC, `end` DESC, `id` DESC');
+        return $this->db->fetchAll(
+            'SELECT * FROM ' . $this->getTableName() . ' ORDER BY `start` DESC, `end` DESC, `id` DESC'
+        );
     }
 }

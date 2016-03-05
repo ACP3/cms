@@ -44,13 +44,13 @@ class SeoRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int $id
+     * @param int $seoId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($seoId)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE `id` = ?', [(int)$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE `id` = ?', [(int)$seoId]);
     }
 
     /**

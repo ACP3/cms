@@ -13,13 +13,13 @@ class EmoticonRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'emoticons';
 
     /**
-     * @param int $id
+     * @param int $emoticonId
      *
      * @return bool
      */
-    public function resultExists($id)
+    public function resultExists($emoticonId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]) > 0;
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$emoticonId]) > 0;
     }
 
     /**
@@ -36,23 +36,23 @@ class EmoticonRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int $id
+     * @param int $emoticonId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($emoticonId)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$emoticonId]);
     }
 
     /**
-     * @param int $id
+     * @param int $emoticonId
      *
      * @return mixed
      */
-    public function getOneImageById($id)
+    public function getOneImageById($emoticonId)
     {
-        return $this->db->fetchColumn('SELECT img FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchColumn('SELECT img FROM ' . $this->getTableName() . ' WHERE id = ?', [$emoticonId]);
     }
 
     /**

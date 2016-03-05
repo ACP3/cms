@@ -12,13 +12,13 @@ class ResourceRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'acl_resources';
 
     /**
-     * @param int $id
+     * @param int $resourceId
      *
      * @return array
      */
-    public function getResourceById($id)
+    public function getResourceById($resourceId)
     {
-        return $this->db->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', [$resourceId]);
     }
 
     /**

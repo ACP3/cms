@@ -13,24 +13,24 @@ class GuestbookRepository extends Core\Model\AbstractRepository implements Core\
     const TABLE_NAME = 'guestbook';
 
     /**
-     * @param int $id
+     * @param int $guestbookId
      *
      * @return bool
      */
-    public function resultExists($id)
+    public function resultExists($guestbookId)
     {
         return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
-                ['id' => $id]) > 0);
+                ['id' => $guestbookId]) > 0);
     }
 
     /**
-     * @param int $id
+     * @param int $guestbookId
      *
      * @return array
      */
-    public function getOneById($id)
+    public function getOneById($guestbookId)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$id]);
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$guestbookId]);
     }
 
     /**
