@@ -15,16 +15,24 @@ interface RendererInterface
     public function assign($name, $value = null);
 
     /**
-     * @param string $template
+     * @param string      $template
+     * @param string|null $cacheId
+     * @param string|null $compileId
+     * @param object|null $parent
      *
      * @return string
      */
-    public function fetch($template);
+    public function fetch($template, $cacheId = null, $compileId = null, $parent = null);
 
     /**
-     * @param string $template
+     * @param string      $template
+     * @param string|null $cacheId
+     * @param string|null $compileId
+     * @param object|null $parent
+     *
+     * @return void
      */
-    public function display($template);
+    public function display($template, $cacheId = null, $compileId = null, $parent = null);
 
     /**
      * @param string $template
