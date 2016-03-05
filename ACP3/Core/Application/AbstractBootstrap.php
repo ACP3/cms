@@ -49,7 +49,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function setErrorHandler()
     {
-        $stream = new StreamHandler($this->appPath->getCacheDir() . 'logs/system.log', Logger::NOTICE);
+        $stream = new StreamHandler($this->appPath->getCacheDir() . 'logs/system.log');
         $stream->setFormatter(new LineFormatter(null, null, true));
 
         $logger = new Logger('system', [$stream]);
