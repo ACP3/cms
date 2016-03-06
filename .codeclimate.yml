@@ -16,9 +16,9 @@ ratings:
     - "**.js"
     - "**.php"
 exclude_paths:
-  - "ACP3/Modules/ACP3/**/tests/**/*"
+  - "ACP3/Core/Test/**/*"
+  - "ACP3/Modules/ACP3/**/Test/**/*"
   - "ACP3/Modules/ACP3/Filemanager/libraries/kcfinder/**/*"
   - "ACP3/Modules/ACP3/System/Resources/Assets/js/libs/**/*"
   - "ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/**/*"
-  - "tests/**/*"
   - "vendor/**/*"
