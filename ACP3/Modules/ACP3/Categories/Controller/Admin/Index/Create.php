@@ -96,8 +96,8 @@ class Create extends Core\Controller\AdminAction
 
             $insertValues = [
                 'id' => '',
-                'title' => Core\Functions::strEncode($formData['title']),
-                'description' => Core\Functions::strEncode($formData['description']),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'description' => $this->get('core.helpers.secure')->strEncode($formData['description']),
                 'module_id' => (int)$formData['module'],
             ];
             if (!empty($file)) {

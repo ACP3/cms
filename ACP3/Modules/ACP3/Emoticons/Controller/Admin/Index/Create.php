@@ -92,8 +92,8 @@ class Create extends Core\Controller\AdminAction
 
             $insertValues = [
                 'id' => '',
-                'code' => Core\Functions::strEncode($formData['code']),
-                'description' => Core\Functions::strEncode($formData['description']),
+                'code' => $this->get('core.helpers.secure')->strEncode($formData['code']),
+                'description' => $this->get('core.helpers.secure')->strEncode($formData['description']),
                 'img' => $result['name'],
             ];
 

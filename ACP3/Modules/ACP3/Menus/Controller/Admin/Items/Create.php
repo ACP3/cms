@@ -135,7 +135,7 @@ class Create extends AbstractFormAction
                     'block_id' => (int)$formData['block_id'],
                     'parent_id' => (int)$formData['parent_id'],
                     'display' => $formData['display'],
-                    'title' => Core\Functions::strEncode($formData['title']),
+                    'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
                     'uri' => $this->fetchMenuItemUriForSave($formData),
                     'target' => $formData['display'] == 0 ? 1 : $formData['target'],
                 ];

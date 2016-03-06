@@ -87,7 +87,7 @@ class Create extends AbstractFormAction
 
             $insertValues = [
                 'id' => '',
-                'name' => Core\Functions::strEncode($formData['name']),
+                'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
                 'parent_id' => $formData['parent_id'],
             ];
 

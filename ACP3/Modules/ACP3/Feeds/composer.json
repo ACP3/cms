@@ -14,7 +14,7 @@
     "acp3/module-seo": "^4.0.0",
     "acp3/module-system": "^4.0.0",
     "acp3/module-users": "^4.0.0",
-    "mibe/feedwriter": "^1.0.3"
+    "mibe/feedwriter": "^1.0"
   },
   "suggest": {
     "acp3/module-files": "Makes it possible to show feeds for the Downloads module.",

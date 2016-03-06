@@ -13,33 +13,29 @@ class Secure
      * Generiert ein gesalzenes Passwort
      *
      * @param string $salt
-     *    Das zu verwendende Salz
-     * @param string $plaintext
-     *    Das Passwort in Klartextform, welches verschlüsselt werden soll
+     * @param string $password
      * @param string $algorithm
-     *    Der zu verwendende Hash-Algorithmus
      *
      * @return string
      */
-    public function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
+    public function generateSaltedPassword($salt, $password, $algorithm = 'sha1')
     {
-        return hash($algorithm, $salt . hash($algorithm, $plaintext));
+        return hash($algorithm, $salt . hash($algorithm, $password));
     }
 
     /**
      * Generiert einen Zufallsstring beliebiger Länge
      *
-     * @param integer $strLength
-     *  Länge des zufälligen Strings
+     * @param integer $length
      *
      * @return string
      */
-    public function salt($strLength)
+    public function salt($length)
     {
         $salt = '';
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $cChars = strlen($chars) - 1;
-        while (strlen($salt) < $strLength) {
+        while (strlen($salt) < $length) {
             $char = $chars[mt_rand(0, $cChars)];
             // Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
             if (strpos($salt, $char) === false) {
@@ -50,8 +46,7 @@ class Secure
     }
 
     /**
-     * Enkodiert alle HTML-Entitäten eines Strings
-     * zur Vermeidung von XSS
+     * Enkodiert alle HTML-Entitäten eines Strings zur Vermeidung von XSS
      *
      * @param string  $var
      * @param boolean $scriptTagOnly

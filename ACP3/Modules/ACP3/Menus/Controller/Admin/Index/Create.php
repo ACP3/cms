@@ -77,7 +77,7 @@ class Create extends Core\Controller\AdminAction
             $insertValues = [
                 'id' => '',
                 'index_name' => $formData['index_name'],
-                'title' => Core\Functions::strEncode($formData['title']),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
             ];
 
             $lastId = $this->menuRepository->insert($insertValues);

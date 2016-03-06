@@ -51,7 +51,7 @@ class ManageMenuItem
                     'block_id' => $data['block_id'],
                     'parent_id' => (int)$data['parent_id'],
                     'display' => $data['display'],
-                    'title' => Core\Functions::strEncode($data['title']),
+                    'title' => $this->get('core.helpers.secure')->strEncode($data['title']),
                     'uri' => $menuItemUri,
                     'target' => $data['target'],
                 ];
@@ -67,7 +67,7 @@ class ManageMenuItem
                     'block_id' => $data['block_id'],
                     'parent_id' => (int)$data['parent_id'],
                     'display' => $data['display'],
-                    'title' => Core\Functions::strEncode($data['title'])
+                    'title' => $this->get('core.helpers.secure')->strEncode($data['title'])
                 ];
 
                 return $this->nestedSet->editNode(

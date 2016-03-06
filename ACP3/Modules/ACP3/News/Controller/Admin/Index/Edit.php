@@ -117,14 +117,14 @@ class Edit extends AbstractFormAction
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
-                'title' => Core\Functions::strEncode($formData['title']),
-                'text' => Core\Functions::strEncode($formData['text'], true),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
                 'readmore' => $this->useReadMore($formData, $settings),
                 'comments' => $this->useComments($formData, $settings),
                 'category_id' => $this->fetchCategoryIdForSave($formData),
-                'uri' => Core\Functions::strEncode($formData['uri'], true),
+                'uri' => $this->get('core.helpers.secure')->strEncode($formData['uri'], true),
                 'target' => (int)$formData['target'],
-                'link_title' => Core\Functions::strEncode($formData['link_title']),
+                'link_title' => $this->get('core.helpers.secure')->strEncode($formData['link_title']),
                 'user_id' => $this->user->getUserId(),
             ];
 

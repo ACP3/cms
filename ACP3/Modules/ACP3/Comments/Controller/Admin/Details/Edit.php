@@ -131,11 +131,11 @@ class Edit extends Core\Controller\AdminAction
                 $this->adminFormValidation->validate($formData);
 
                 $updateValues = [];
-                $updateValues['message'] = Core\Functions::strEncode($formData['message']);
+                $updateValues['message'] = $this->get('core.helpers.secure')->strEncode($formData['message']);
                 if ((empty($comment['user_id']) || $this->validator->is(Core\Validation\ValidationRules\IntegerValidationRule::class, $comment['user_id']) === false) &&
                     !empty($formData['name'])
                 ) {
-                    $updateValues['name'] = Core\Functions::strEncode($formData['name']);
+                    $updateValues['name'] = $this->get('core.helpers.secure')->strEncode($formData['name']);
                 }
 
                 $bool = $this->commentRepository->update($updateValues, $id);

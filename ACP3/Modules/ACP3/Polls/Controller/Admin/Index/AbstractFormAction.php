@@ -85,7 +85,7 @@ abstract class AbstractFormAction extends AdminAction
                 // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                 if (!empty($row['text']) && !isset($row['delete'])) {
                     $bool = $this->answerRepository->insert(
-                        ['text' => Core\Functions::strEncode($row['text']), 'poll_id' => $id]
+                        ['text' => $this->get('core.helpers.secure')->strEncode($row['text']), 'poll_id' => $id]
                     );
                 }
             } elseif (isset($row['delete'])) { // Antwort mitsamt Stimmen löschen
@@ -93,7 +93,7 @@ abstract class AbstractFormAction extends AdminAction
                 $this->voteRepository->delete((int)$row['id'], 'answer_id');
             } elseif (!empty($row['text'])) { // Antwort aktualisieren
                 $bool = $this->answerRepository->update(
-                    ['text' => Core\Functions::strEncode($row['text'])],
+                    ['text' => $this->get('core.helpers.secure')->strEncode($row['text'])],
                     (int)$row['id']
                 );
             }

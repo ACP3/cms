@@ -99,8 +99,8 @@ class Edit extends Core\Controller\AdminAction
                 ->validate($formData);
 
             $updateValues = [
-                'title' => Core\Functions::strEncode($formData['title']),
-                'description' => Core\Functions::strEncode($formData['description']),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'description' => $this->get('core.helpers.secure')->strEncode($formData['description']),
             ];
 
             if (empty($file) === false) {

@@ -117,7 +117,7 @@ class Edit extends Core\Controller\AdminAction
                 ->validate($formData);
 
             $updateValues = [
-                'message' => Core\Functions::strEncode($formData['message']),
+                'message' => $this->get('core.helpers.secure')->strEncode($formData['message']),
                 'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
             ];
 

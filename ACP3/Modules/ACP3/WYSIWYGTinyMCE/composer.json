@@ -14,7 +14,7 @@
     "acp3/module-seo": "^4.0.0",
     "acp3/module-system": "^4.0.0",
     "acp3/module-users": "^4.0.0",
-    "tinymce/tinymce": "^4.3.4"
+    "tinymce/tinymce": "^4.3"
   },
   "extra": {
     "installer-name": "ACP3/WYSIWYGTinyMCE"

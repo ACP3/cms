@@ -83,7 +83,7 @@ class Settings extends Core\Controller\AdminAction
                 'thumbwidth' => (int)$formData['thumbwidth'],
                 'thumbheight' => (int)$formData['thumbheight'],
                 'overlay' => $formData['overlay'],
-                'dateformat' => Core\Functions::strEncode($formData['dateformat']),
+                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
                 'sidebar' => (int)$formData['sidebar'],
             ];
             if ($this->modules->isActive('comments') === true) {

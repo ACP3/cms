@@ -135,7 +135,7 @@ class Create extends Core\Controller\AdminAction
                     'pic' => !is_null($picNum) ? $picNum + 1 : 1,
                     'gallery_id' => $id,
                     'file' => $result['name'],
-                    'description' => Core\Functions::strEncode($formData['description'], true),
+                    'description' => $this->get('core.helpers.secure')->strEncode($formData['description'], true),
                     'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
                 ];
 

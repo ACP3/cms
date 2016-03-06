@@ -75,7 +75,7 @@ class Index extends Core\Controller\AdminAction
             $this->adminFormValidation->validate($formData);
 
             $data = [
-                'feed_image' => Core\Functions::strEncode($formData['feed_image']),
+                'feed_image' => $this->get('core.helpers.secure')->strEncode($formData['feed_image']),
                 'feed_type' => $formData['feed_type']
             ];
 

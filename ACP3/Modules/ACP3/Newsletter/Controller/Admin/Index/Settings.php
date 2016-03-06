@@ -72,7 +72,7 @@ class Settings extends Core\Controller\AdminAction
 
             $data = [
                 'mail' => $formData['mail'],
-                'mailsig' => Core\Functions::strEncode($formData['mailsig'], true),
+                'mailsig' => $this->get('core.helpers.secure')->strEncode($formData['mailsig'], true),
                 'html' => (int)$formData['html']
             ];
 

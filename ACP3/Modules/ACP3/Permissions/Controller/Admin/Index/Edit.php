@@ -110,7 +110,7 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $updateValues = [
-                'name' => Core\Functions::strEncode($formData['name']),
+                'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
                 'parent_id' => $id === 1 ? 0 : $formData['parent_id'],
             ];
 

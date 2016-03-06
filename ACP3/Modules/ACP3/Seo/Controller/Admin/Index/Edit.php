@@ -100,8 +100,8 @@ class Edit extends Core\Controller\AdminAction
             $updateValues = [
                 'uri' => $formData['uri'],
                 'alias' => $formData['alias'],
-                'keywords' => Core\Functions::strEncode($formData['seo_keywords']),
-                'description' => Core\Functions::strEncode($formData['seo_description']),
+                'keywords' => $this->get('core.helpers.secure')->strEncode($formData['seo_keywords']),
+                'description' => $this->get('core.helpers.secure')->strEncode($formData['seo_description']),
                 'robots' => (int)$formData['seo_robots']
             ];
 

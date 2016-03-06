@@ -133,7 +133,7 @@ class Index extends Core\Controller\FrontendAction
 
                 $this->displaySearchResults(
                     $formData['mods'],
-                    Core\Functions::strEncode($formData['search_term']),
+                    $this->get('core.helpers.secure')->strEncode($formData['search_term']),
                     $formData['area'],
                     strtoupper($formData['sort'])
                 );

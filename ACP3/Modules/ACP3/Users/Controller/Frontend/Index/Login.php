@@ -27,7 +27,7 @@ class Login extends Core\Controller\FrontendAction
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($this->request->getPost()->isEmpty() === false) {
             $result = $this->user->login(
-                Core\Functions::strEncode($this->request->getPost()->get('nickname', '')),
+                $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('nickname', '')),
                 $this->request->getPost()->get('pwd', ''),
                 $this->request->getPost()->has('remember')
             );

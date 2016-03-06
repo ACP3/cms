@@ -168,7 +168,7 @@ class Edit extends Core\Controller\AdminAction
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
-                'title' => Core\Functions::strEncode($formData['title']),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
                 'user_id' => $this->user->getUserId(),
             ];
 

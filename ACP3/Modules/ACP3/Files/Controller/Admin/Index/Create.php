@@ -141,8 +141,8 @@ class Create extends AbstractFormAction
                 'category_id' => $this->fetchCategoryId($formData),
                 'file' => $newFile,
                 'size' => $filesize,
-                'title' => Core\Functions::strEncode($formData['title']),
-                'text' => Core\Functions::strEncode($formData['text'], true),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
                 'comments' => $this->useComments($formData, $settings),
                 'user_id' => $this->user->getUserId(),
             ];

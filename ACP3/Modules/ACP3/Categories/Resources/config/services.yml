@@ -34,6 +34,7 @@ services:
       - '@core.request'
       - '@core.view'
       - '@core.helpers.forms'
+      - '@core.helpers.secure'
       - '@categories.cache'
       - '@categories.model'
 

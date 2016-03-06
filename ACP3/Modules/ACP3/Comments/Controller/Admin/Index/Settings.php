@@ -75,7 +75,7 @@ class Settings extends Core\Controller\AdminAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'dateformat' => Core\Functions::strEncode($formData['dateformat']),
+                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
                 'emoticons' => $formData['emoticons'],
             ];
 
