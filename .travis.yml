@@ -8,7 +8,7 @@ php:
 
 addons:
   code_climate:
-    repo_token: 6d92f4f3526685aabe4ba20b4de0dbe8583f862bfb6ce31b322161cd086162b0
+    repo_token: $CC_REPO_TOKEN
 
 script:
   phpunit --configuration ./tests/phpunit.dist.xml --coverage-clover build/logs/clover.xml
