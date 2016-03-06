@@ -10,13 +10,13 @@ addons:
   code_climate:
     repo_token: $CC_REPO_TOKEN
 
-script:
-  phpunit --configuration ./tests/phpunit.dist.xml --coverage-clover build/logs/clover.xml
-
 before_script:
   - composer self-update
   - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
   - composer install --prefer-dist -n -o
+
+script:
+  phpunit --configuration ./tests/phpunit.dist.xml --coverage-clover build/logs/clover.xml
 
 after_script:
   - vendor/bin/test-reporter
