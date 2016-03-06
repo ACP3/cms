@@ -13,74 +13,75 @@ services:
   files.controller.admin.index.create:
     class: %files.controller.admin.index.create.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @files.model.filesrepository
-      - @files.validator
-      - @categories.helpers
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.formToken'
+      - '@files.model.filesrepository'
+      - '@files.validator'
+      - '@categories.helpers'
 
   files.controller.admin.index.delete:
     class: %files.controller.admin.index.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @files.model.filesrepository
-      - @files.cache
+      - '@core.context.admin'
+      - '@files.model.filesrepository'
+      - '@files.cache'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   files.controller.admin.index.edit:
     class: %files.controller.admin.index.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @files.model.filesrepository
-      - @files.cache
-      - @files.validator
-      - @categories.helpers
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.formToken'
+      - '@files.model.filesrepository'
+      - '@files.cache'
+      - '@files.validator'
+      - '@categories.helpers'
 
   files.controller.admin.index.index:
     class: %files.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @files.model.filesrepository
+      - '@core.context.admin'
+      - '@files.model.filesrepository'
 
   files.controller.admin.index.settings:
     class: %files.controller.admin.index.settings.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @files.validation.admin_settings_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@files.validation.admin_settings_form_validation'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   files.controller.frontend.index.details:
     class: %files.controller.frontend.index.details.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.date
-      - @files.model.filesrepository
-      - @files.cache
-      - @categories.model
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@core.helpers.stringFormatter'
+      - '@files.model.filesrepository'
+      - '@files.cache'
+      - '@categories.model'
 
   files.controller.frontend.index.files:
     class: %files.controller.frontend.index.files.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.date
-      - @files.model.filesrepository
-      - @categories.model
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@files.model.filesrepository'
+      - '@categories.model'
 
   files.controller.frontend.index.index:
     class: %files.controller.frontend.index.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @categories.cache
+      - '@core.context.frontend'
+      - '@categories.cache'
 
   files.controller.widget.index.index:
     class: %files.controller.widget.index.index.fqdn%
     arguments:
-      - @core.context.widget
-      - @core.date
-      - @files.model.filesrepository
+      - '@core.context.widget'
+      - '@core.date'
+      - '@files.model.filesrepository'

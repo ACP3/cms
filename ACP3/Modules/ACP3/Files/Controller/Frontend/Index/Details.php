@@ -22,6 +22,10 @@ class Details extends Core\Controller\FrontendAction
      */
     protected $date;
     /**
+     * @var \ACP3\Core\Helpers\StringFormatter
+     */
+    protected $stringFormatter;
+    /**
      * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
      */
     protected $filesRepository;
@@ -33,18 +37,21 @@ class Details extends Core\Controller\FrontendAction
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext  $context
      * @param \ACP3\Core\Date                                $date
+     * @param \ACP3\Core\Helpers\StringFormatter             $stringFormatter
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Helpers\StringFormatter $stringFormatter,
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache)
     {
         parent::__construct($context);
 
         $this->date = $date;
+        $this->stringFormatter = $stringFormatter;
         $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
     }
@@ -71,6 +78,7 @@ class Details extends Core\Controller\FrontendAction
                 ->append($file['title']);
 
             $settings = $this->config->getSettings('files');
+            $file['text'] = $this->view->fetchStringAsTemplate($file['text']);
 
             return [
                 'file' => $file,
@@ -92,10 +100,8 @@ class Details extends Core\Controller\FrontendAction
     {
         $path = $this->appPath->getUploadsDir() . 'files/';
         if (is_file($path . $file['file'])) {
-            $formatter = $this->get('core.helpers.stringFormatter');
-
             $ext = strrchr($file['file'], '.');
-            $filename = $formatter->makeStringUrlSafe($file['title']) . $ext;
+            $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;
 
             $disposition = $this->response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
             $this->setContentType('application/force-download');

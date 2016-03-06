@@ -125,6 +125,7 @@ class CKEditor extends Textarea
      */
     private function configure()
     {
+        $this->config['entities'] = false;
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
         $this->config['allowedContent'] = true;
         $this->config['codemirror'] = [

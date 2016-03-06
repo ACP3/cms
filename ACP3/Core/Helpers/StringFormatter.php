@@ -12,7 +12,7 @@ class StringFormatter
     /**
      * Macht einen String URL sicher
      *
-     * @param string $var Die unzuwandelnde Variable
+     * @param string $var
      *
      * @return string
      */
@@ -47,16 +47,15 @@ class StringFormatter
      * Konvertiert Zeilenumbrüche zu neuen Absätzen
      *
      * @param string  $data
-     * @param boolean $isXhtml
      * @param boolean $lineBreaks
      *
      * @return string
      */
-    public function nl2p($data, $isXhtml = true, $lineBreaks = false)
+    public function nl2p($data, $lineBreaks = false)
     {
         $data = trim($data);
         if ($lineBreaks === true) {
-            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '<br' . ($isXhtml === true ? ' /' : '') . '>'], $data) . '</p>';
+            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '<br>'], $data) . '</p>';
         }
 
         return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
@@ -67,25 +66,21 @@ class StringFormatter
      * auf eine bestimmte Länge
      *
      * @param string  $data
-     *    Der zu kürzende String
      * @param integer $chars
-     *    Die anzuzeigenden Zeichen
-     * @param integer $diff
-     *    Anzahl der Zeichen, welche nach strlen($data) - $chars noch kommen müssen
+     * @param integer $offset
      * @param string  $append
-     *    Kann bspw. dazu genutzt werden, um an den gekürzten Text noch einen Weiterlesen-Link anzuhängen
      *
      * @return string
      */
-    public function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
+    public function shortenEntry($data, $chars = 300, $offset = 50, $append = '')
     {
-        if ($chars <= $diff) {
-            $diff = 0;
+        if ($chars <= $offset) {
+            $offset = 0;
         }
 
         $shortened = utf8_decode(html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8'));
-        if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $diff) {
-            return utf8_encode(substr($shortened, 0, $chars - $diff)) . $append;
+        if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $offset) {
+            return utf8_encode(substr($shortened, 0, $chars - $offset)) . $append;
         }
 
         return $data;

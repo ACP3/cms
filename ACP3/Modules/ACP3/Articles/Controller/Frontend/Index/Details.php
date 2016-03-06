@@ -70,7 +70,10 @@ class Details extends Core\Controller\FrontendAction
             $this->breadcrumb->replaceAncestor($article['title'], 0, true);
 
             return [
-                'page' => $this->pageBreaksHelper->splitTextIntoPages($article['text'], $this->request->getUriWithoutPages())
+                'page' => $this->pageBreaksHelper->splitTextIntoPages(
+                    $this->view->fetchStringAsTemplate($article['text']),
+                    $this->request->getUriWithoutPages()
+                )
             ];
         }
 

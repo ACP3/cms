@@ -11,6 +11,10 @@ use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
 class ManageMenuItem
 {
     /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
      * @var \ACP3\Core\NestedSet
      */
     protected $nestedSet;
@@ -20,13 +24,16 @@ class ManageMenuItem
     protected $menuItemRepository;
 
     /**
+     * @param \ACP3\Core\Helpers\Secure                         $secureHelper
      * @param \ACP3\Core\NestedSet                              $nestedSet
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
      */
     public function __construct(
+        Core\Helpers\Secure $secureHelper,
         Core\NestedSet $nestedSet,
         MenuItemRepository $menuItemRepository
     ) {
+        $this->secureHelper = $secureHelper;
         $this->nestedSet = $nestedSet;
         $this->menuItemRepository = $menuItemRepository;
     }
@@ -51,7 +58,7 @@ class ManageMenuItem
                     'block_id' => $data['block_id'],
                     'parent_id' => (int)$data['parent_id'],
                     'display' => $data['display'],
-                    'title' => $this->get('core.helpers.secure')->strEncode($data['title']),
+                    'title' => $this->secureHelper->strEncode($data['title']),
                     'uri' => $menuItemUri,
                     'target' => $data['target'],
                 ];
@@ -67,7 +74,7 @@ class ManageMenuItem
                     'block_id' => $data['block_id'],
                     'parent_id' => (int)$data['parent_id'],
                     'display' => $data['display'],
-                    'title' => $this->get('core.helpers.secure')->strEncode($data['title'])
+                    'title' => $this->secureHelper->strEncode($data['title'])
                 ];
 
                 return $this->nestedSet->editNode(

@@ -19,26 +19,26 @@ services:
   core.breadcrumb:
     class: %core.breadcrumb.fqdn%
     arguments:
-      - @service_container
-      - @core.lang
-      - @core.request
-      - @core.router
-      - @core.config
-      - @menus.model.menuitemrepository
+      - '@service_container'
+      - '@core.lang'
+      - '@core.request'
+      - '@core.router'
+      - '@core.config'
+      - '@menus.model.menuitemrepository'
 
   menus.cache:
     class: %menus.cache.fqdn%
     arguments:
-      - @menus.cache.core
-      - @core.lang
-      - @menus.model.menurepository
-      - @menus.model.menuitemrepository
+      - '@menus.cache.core'
+      - '@core.lang'
+      - '@menus.model.menurepository'
+      - '@menus.model.menuitemrepository'
 
   menus.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      - @service_container
-      - @core.environment.application_path
+      - '@service_container'
+      - '@core.environment.application_path'
       - 'menus'
 
   menus.helpers.menuitemslist:
@@ -47,11 +47,14 @@ services:
 
   menus.helpers.managemenuitem:
     class: %menus.helpers.managemenuitem.fqdn%
-    arguments: [@core.nested_set, '@menus.model.menuitemrepository']
+    arguments:
+      - '@core.helpers.secure'
+      - '@core.nested_set'
+      - '@menus.model.menuitemrepository'
 
   menus.helpers.menuitemformfields:
     class: %menus.helpers.menuitemformfields.fqdn%
-    arguments: ['@core.helpers.forms', @menus.helpers.menuitemslist, '@menus.model.menurepository']
+    arguments: ['@core.helpers.forms', '@menus.helpers.menuitemslist', '@menus.model.menurepository']
 
   menus.model.menurepository:
     class: %menus.model.menurepository.fqdn%

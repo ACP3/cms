@@ -9,6 +9,13 @@ namespace ACP3\Core\View\Renderer;
 interface RendererInterface
 {
     /**
+     * @param array $params
+     *
+     * @return void
+     */
+    public function configure(array $params = []);
+
+    /**
      * @param string|array $name
      * @param null         $value
      */

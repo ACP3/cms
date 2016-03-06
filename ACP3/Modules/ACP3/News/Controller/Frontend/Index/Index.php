@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
@@ -19,6 +20,10 @@ class Index extends AbstractAction
      * @var Core\Date
      */
     protected $date;
+    /**
+     * @var \ACP3\Core\Helpers\StringFormatter
+     */
+    protected $stringFormatter;
     /**
      * @var Core\Pagination
      */
@@ -41,6 +46,7 @@ class Index extends AbstractAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext          $context
      * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Helpers\StringFormatter                     $stringFormatter
      * @param \ACP3\Core\Pagination                                  $pagination
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository           $newsRepository
      * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
@@ -49,15 +55,17 @@ class Index extends AbstractAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Helpers\StringFormatter $stringFormatter,
         Core\Pagination $pagination,
         News\Model\NewsRepository $newsRepository,
         Categories\Helpers $categoriesHelpers,
-        Categories\Model\CategoryRepository $categoryRepository)
-    {
+        Categories\Model\CategoryRepository $categoryRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->pagination = $pagination;
+        $this->stringFormatter = $stringFormatter;
         $this->newsRepository = $newsRepository;
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoryRepository = $categoryRepository;
@@ -81,27 +89,27 @@ class Index extends AbstractAction
         }
 
         $time = $this->date->getCurrentDateTime();
-        // Falls Kategorie angegeben, News nur aus eben dieser selektieren
-        if (!empty($cat)) {
-            $news = $this->newsRepository->getAllByCategoryId($cat, $time, POS, $this->user->getEntriesPerPage());
-        } else {
-            $news = $this->newsRepository->getAll($time, POS, $this->user->getEntriesPerPage());
-        }
+        $news = $this->fetchNews($cat, $time);
         $cNews = count($news);
 
         if ($cNews > 0) {
             $this->pagination->setTotalResults($this->newsRepository->countAll($time, $cat));
 
-            $formatter = $this->get('core.helpers.stringFormatter');
             for ($i = 0; $i < $cNews; ++$i) {
+                $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
                 if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
-                    $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
+                    $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount(
+                        'news',
+                        $news[$i]['id']
+                    );
                 }
                 if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'],
+                    $news[$i]['text'] = $this->stringFormatter->shortenEntry(
+                        $news[$i]['text'],
                         $this->newsSettings['readmore_chars'], 50,
                         '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->translator->t('news',
-                            'readmore') . "]</a>\n");
+                            'readmore') . "]</a>\n"
+                    );
                 }
             }
         }
@@ -112,5 +120,22 @@ class Index extends AbstractAction
             'categories' => $this->categoriesHelpers->categoriesList('news', $cat),
             'pagination' => $this->pagination->render()
         ];
+    }
+
+    /**
+     * @param int    $cat
+     * @param string $time
+     *
+     * @return array
+     */
+    private function fetchNews($cat, $time)
+    {
+        if (!empty($cat)) {
+            $news = $this->newsRepository->getAllByCategoryId($cat, $time, POS, $this->user->getEntriesPerPage());
+        } else {
+            $news = $this->newsRepository->getAll($time, POS, $this->user->getEntriesPerPage());
+        }
+
+        return $news;
     }
 }

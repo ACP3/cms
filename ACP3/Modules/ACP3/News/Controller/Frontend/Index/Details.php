@@ -67,6 +67,7 @@ class Details extends AbstractAction
             }
             $this->breadcrumb->append($news['title']);
 
+            $news['text'] = $this->view->fetchStringAsTemplate($news['text']);
             $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';
 
             return [
