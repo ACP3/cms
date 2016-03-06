@@ -16,6 +16,10 @@ class Cache
      */
     protected $container;
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+    /**
      * @var string
      */
     protected $namespace = '';
