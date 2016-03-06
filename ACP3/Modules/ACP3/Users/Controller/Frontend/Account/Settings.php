@@ -100,8 +100,8 @@ class Settings extends AbstractAction
                     'birthday_display' => (int)$formData['birthday_display'],
                     'address_display' => (int)$formData['address_display'],
                     'country_display' => (int)$formData['country_display'],
-                    'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
-                    'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                    'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
+                    'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
                     'time_zone' => $formData['date_time_zone'],
                 ];
                 if ($settings['language_override'] == 1) {

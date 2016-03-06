@@ -97,7 +97,7 @@ class Edit extends Core\Controller\AdminAction
 
             $updateValues = [
                 'index_name' => $formData['index_name'],
-                'title' => Core\Functions::strEncode($formData['title']),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
             ];
 
             $bool = $this->menuRepository->update($updateValues, $id);

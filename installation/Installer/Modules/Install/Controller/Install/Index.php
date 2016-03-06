@@ -237,8 +237,8 @@ class Index extends AbstractAction
     {
         $settings = [
             'system' => [
-                'date_format_long' => Functions::strEncode($formData['date_format_long']),
-                'date_format_short' => Functions::strEncode($formData['date_format_short']),
+                'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
+                'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
                 'date_time_zone' => $formData['date_time_zone'],
                 'maintenance_message' => $this->translator->t('install', 'offline_message'),
                 'lang' => $this->translator->getLocale()

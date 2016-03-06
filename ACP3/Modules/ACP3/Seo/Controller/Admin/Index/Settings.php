@@ -81,13 +81,12 @@ class Settings extends Core\Controller\AdminAction
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->adminSettingsFormValidation->validate($formData);
 
-            // Config aktualisieren
             $data = [
-                'meta_description' => Core\Functions::strEncode($formData['meta_description']),
-                'meta_keywords' => Core\Functions::strEncode($formData['meta_keywords']),
+                'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
+                'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
                 'mod_rewrite' => (int)$formData['mod_rewrite'],
                 'robots' => (int)$formData['robots'],
-                'title' => Core\Functions::strEncode($formData['title']),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
             ];
 
             $bool = $this->config->setSettings($data, 'seo');

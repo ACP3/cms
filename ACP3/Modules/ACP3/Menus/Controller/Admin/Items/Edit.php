@@ -150,7 +150,7 @@ class Edit extends AbstractFormAction
                     'block_id' => $formData['block_id'],
                     'parent_id' => $formData['parent_id'],
                     'display' => $formData['display'],
-                    'title' => Core\Functions::strEncode($formData['title']),
+                    'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
                     'uri' => $this->fetchMenuItemUriForSave($formData),
                     'target' => $formData['display'] == 0 ? 1 : $formData['target'],
                 ];

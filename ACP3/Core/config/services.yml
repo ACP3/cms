@@ -117,6 +117,7 @@ services:
       - '@core.request'
       - '@core.router.aliases'
       - '@core.helpers.forms'
+      - '@core.helpers.secure'
       - '@seo.cache'
       - '@core.config'
       - '@seo.model.seorepository'

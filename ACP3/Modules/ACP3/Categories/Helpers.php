@@ -47,6 +47,10 @@ class Helpers
      * @var Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
 
     /**
      * @param \ACP3\Core\ACL                                         $acl
@@ -55,6 +59,7 @@ class Helpers
      * @param \ACP3\Core\Http\RequestInterface                       $request
      * @param \ACP3\Core\View                                        $view
      * @param \ACP3\Core\Helpers\Forms                               $formsHelper
+     * @param \ACP3\Core\Helpers\Secure                              $secureHelper
      * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
      */
@@ -65,6 +70,7 @@ class Helpers
         Core\Http\RequestInterface $request,
         Core\View $view,
         Core\Helpers\Forms $formsHelper,
+        Core\Helpers\Secure $secureHelper,
         Cache $categoriesCache,
         CategoryRepository $categoryRepository
     ) {
@@ -74,6 +80,7 @@ class Helpers
         $this->request = $request;
         $this->view = $view;
         $this->formsHelper = $formsHelper;
+        $this->secureHelper = $secureHelper;
         $this->categoriesCache = $categoriesCache;
         $this->categoryRepository = $categoryRepository;
     }
@@ -104,7 +111,7 @@ class Helpers
         if ($this->categoryIsDuplicate($title, $moduleInfo['id']) === false) {
             $insertValues = [
                 'id' => '',
-                'title' => Core\Functions::strEncode($title),
+                'title' => $this->secureHelper->strEncode($title),
                 'picture' => '',
                 'description' => '',
                 'module_id' => $moduleInfo['id'],

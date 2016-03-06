@@ -70,13 +70,13 @@ class Index extends Core\Controller\AdminAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'address' => Core\Functions::strEncode($formData['address'], true),
-                'ceo' => Core\Functions::strEncode($formData['ceo']),
-                'disclaimer' => Core\Functions::strEncode($formData['disclaimer'], true),
-                'fax' => Core\Functions::strEncode($formData['fax']),
+                'address' => $this->get('core.helpers.secure')->strEncode($formData['address'], true),
+                'ceo' => $this->get('core.helpers.secure')->strEncode($formData['ceo']),
+                'disclaimer' => $this->get('core.helpers.secure')->strEncode($formData['disclaimer'], true),
+                'fax' => $this->get('core.helpers.secure')->strEncode($formData['fax']),
                 'mail' => $formData['mail'],
-                'telephone' => Core\Functions::strEncode($formData['telephone']),
-                'vat_id' => Core\Functions::strEncode($formData['vat_id'], true),
+                'telephone' => $this->get('core.helpers.secure')->strEncode($formData['telephone']),
+                'vat_id' => $this->get('core.helpers.secure')->strEncode($formData['vat_id'], true),
             ];
 
             $this->formTokenHelper->unsetFormToken();

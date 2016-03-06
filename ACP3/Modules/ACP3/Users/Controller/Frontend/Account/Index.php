@@ -41,7 +41,7 @@ class Index extends AbstractAction
     {
         if ($this->request->getPost()->isEmpty() === false) {
             $updateValues = [
-                'draft' => Core\Functions::strEncode($this->request->getPost()->get('draft', ''), true)
+                'draft' => $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('draft', ''), true)
             ];
             $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 

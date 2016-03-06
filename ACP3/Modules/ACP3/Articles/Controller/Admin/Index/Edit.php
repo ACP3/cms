@@ -153,8 +153,8 @@ class Edit extends AbstractFormAction
             $updateValues = [
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
-                'title' => Core\Functions::strEncode($formData['title']),
-                'text' => Core\Functions::strEncode($formData['text'], true),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
                 'user_id' => $this->user->getUserId(),
             ];
 

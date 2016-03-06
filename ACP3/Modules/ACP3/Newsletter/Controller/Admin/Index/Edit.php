@@ -108,8 +108,8 @@ class Edit extends AbstractFormAction
             // Newsletter archivieren
             $updateValues = [
                 'date' => $this->date->toSQL($formData['date']),
-                'title' => Core\Functions::strEncode($formData['title']),
-                'text' => Core\Functions::strEncode($formData['text'], true),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
                 'user_id' => $this->user->getUserId(),
             ];
             $bool = $this->newsletterRepository->update($updateValues, $id);

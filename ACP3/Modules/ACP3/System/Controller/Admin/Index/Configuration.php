@@ -113,8 +113,8 @@ class Configuration extends Core\Controller\AdminAction
                 $data = [
                     'cache_images' => (int)$formData['cache_images'],
                     'cache_minify' => (int)$formData['cache_minify'],
-                    'date_format_long' => Core\Functions::strEncode($formData['date_format_long']),
-                    'date_format_short' => Core\Functions::strEncode($formData['date_format_short']),
+                    'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
+                    'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
                     'date_time_zone' => $formData['date_time_zone'],
                     'entries' => (int)$formData['entries'],
                     'flood' => (int)$formData['flood'],

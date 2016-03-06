@@ -97,7 +97,7 @@ class Index extends Core\Controller\FrontendAction
 
                 $this->formValidation->validate($formData);
 
-                $formData['message'] = Core\Functions::strEncode($formData['message'], true);
+                $formData['message'] = $this->get('core.helpers.secure')->strEncode($formData['message'], true);
 
                 $subject = $this->translator->t('contact', 'contact_subject', ['%title%' => $seoSettings['title']]);
                 $body = $this->translator->t(

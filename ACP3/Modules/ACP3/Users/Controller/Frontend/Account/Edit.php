@@ -100,19 +100,19 @@ class Edit extends AbstractAction
                     ->validate($formData);
 
                 $updateValues = [
-                    'nickname' => Core\Functions::strEncode($formData['nickname']),
-                    'realname' => Core\Functions::strEncode($formData['realname']),
+                    'nickname' => $this->get('core.helpers.secure')->strEncode($formData['nickname']),
+                    'realname' => $this->get('core.helpers.secure')->strEncode($formData['realname']),
                     'gender' => (int)$formData['gender'],
                     'birthday' => $formData['birthday'],
                     'mail' => $formData['mail'],
-                    'website' => Core\Functions::strEncode($formData['website']),
+                    'website' => $this->get('core.helpers.secure')->strEncode($formData['website']),
                     'icq' => $formData['icq'],
-                    'skype' => Core\Functions::strEncode($formData['skype']),
-                    'street' => Core\Functions::strEncode($formData['street']),
-                    'house_number' => Core\Functions::strEncode($formData['house_number']),
-                    'zip' => Core\Functions::strEncode($formData['zip']),
-                    'city' => Core\Functions::strEncode($formData['city']),
-                    'country' => Core\Functions::strEncode($formData['country']),
+                    'skype' => $this->get('core.helpers.secure')->strEncode($formData['skype']),
+                    'street' => $this->get('core.helpers.secure')->strEncode($formData['street']),
+                    'house_number' => $this->get('core.helpers.secure')->strEncode($formData['house_number']),
+                    'zip' => $this->get('core.helpers.secure')->strEncode($formData['zip']),
+                    'city' => $this->get('core.helpers.secure')->strEncode($formData['city']),
+                    'country' => $this->get('core.helpers.secure')->strEncode($formData['country']),
                 ];
 
                 // Neues Passwort

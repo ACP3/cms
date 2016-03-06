@@ -147,7 +147,7 @@ class Register extends Core\Controller\FrontendAction
                 $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
                 $insertValues = [
                     'id' => '',
-                    'nickname' => Core\Functions::strEncode($formData['nickname']),
+                    'nickname' => $this->get('core.helpers.secure')->strEncode($formData['nickname']),
                     'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                     'pwd_salt' => $salt,
                     'mail' => $formData['mail'],

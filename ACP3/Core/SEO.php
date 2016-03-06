@@ -3,6 +3,7 @@ namespace ACP3\Core;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Helpers\Forms;
+use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\Aliases;
@@ -31,6 +32,10 @@ class SEO
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
     /**
      * @var \ACP3\Core\Config
      */
@@ -70,6 +75,7 @@ class SEO
      * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\Router\Aliases                  $aliases
      * @param \ACP3\Core\Helpers\Forms                   $formsHelper
+     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
      * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
      * @param \ACP3\Core\Config                          $config
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
@@ -79,6 +85,7 @@ class SEO
         RequestInterface $request,
         Aliases $aliases,
         Forms $formsHelper,
+        Secure $secureHelper,
         SeoCache $seoCache,
         Config $config,
         seoRepository $seoRepository)
@@ -87,6 +94,7 @@ class SEO
         $this->request = $request;
         $this->aliases = $aliases;
         $this->formsHelper = $formsHelper;
+        $this->secureHelper = $secureHelper;
         $this->seoCache = $seoCache;
         $this->config = $config;
         $this->seoRepository = $seoRepository;
@@ -365,8 +373,8 @@ class SEO
     public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
-        $keywords = Functions::strEncode($keywords);
-        $description = Functions::strEncode($description);
+        $keywords = $this->secureHelper->strEncode($keywords);
+        $description = $this->secureHelper->strEncode($description);
         $values = [
             'alias' => $alias,
             'keywords' => $keywords,

@@ -97,8 +97,8 @@ class Create extends AbstractFormAction
             $insertValues = [
                 'id' => '',
                 'date' => $this->date->toSQL($formData['date']),
-                'title' => Core\Functions::strEncode($formData['title']),
-                'text' => Core\Functions::strEncode($formData['text'], true),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
                 'html' => $settings['html'],
                 'status' => 0,
                 'user_id' => $this->user->getUserId(),

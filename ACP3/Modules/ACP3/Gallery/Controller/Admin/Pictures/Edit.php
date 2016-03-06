@@ -123,7 +123,7 @@ class Edit extends Core\Controller\AdminAction
                     ->validate($file);
 
                 $updateValues = [
-                    'description' => Core\Functions::strEncode($formData['description'], true),
+                    'description' => $this->get('core.helpers.secure')->strEncode($formData['description'], true),
                     'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
                 ];
 

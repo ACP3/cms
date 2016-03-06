@@ -143,8 +143,8 @@ class Edit extends AbstractFormAction
                 'start' => $this->date->toSQL($formData['start']),
                 'end' => $this->date->toSQL($formData['end']),
                 'category_id' => $this->fetchCategoryId($formData),
-                'title' => Core\Functions::strEncode($formData['title']),
-                'text' => Core\Functions::strEncode($formData['text'], true),
+                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
+                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
                 'comments' => $this->useComments($formData, $settings),
                 'user_id' => $this->user->getUserId(),
             ];
