@@ -56,4 +56,14 @@ class SecureTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($expected, $this->secureHelper->strEncode($value, true));
     }
+
+    public function testSaltUniqueCharacters()
+    {
+        $length = 10;
+        $salt = $this->secureHelper->salt($length);
+        $saltArray = str_split($salt);
+
+        $this->assertEquals($length, strlen($salt));
+        $this->assertCount($length, array_unique($saltArray));
+    }
 }
