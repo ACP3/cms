@@ -106,7 +106,8 @@ class Index extends AbstractAction
                 if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
                     $news[$i]['text'] = $this->stringFormatter->shortenEntry(
                         $news[$i]['text'],
-                        $this->newsSettings['readmore_chars'], 50,
+                        $this->newsSettings['readmore_chars'],
+                        50,
                         '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->translator->t('news',
                             'readmore') . "]</a>\n"
                     );

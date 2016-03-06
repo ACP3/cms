@@ -10,8 +10,6 @@ use ACP3\Core;
 class StringFormatter
 {
     /**
-     * Macht einen String URL sicher
-     *
      * @param string $var
      *
      * @return string
@@ -44,26 +42,35 @@ class StringFormatter
     }
 
     /**
-     * Konvertiert Zeilenumbrüche zu neuen Absätzen
+     * Converts new lines to HTML paragraphs and/or line breaks
      *
      * @param string  $data
-     * @param boolean $lineBreaks
+     * @param boolean $useLineBreaks
      *
      * @return string
      */
-    public function nl2p($data, $lineBreaks = false)
+    public function nl2p($data, $useLineBreaks = false)
     {
         $data = trim($data);
-        if ($lineBreaks === true) {
-            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '<br>'], $data) . '</p>';
+        $pattern = "/([\n]{1,})/i";
+        $replace = "</p>\n<p>";
+
+        if ($useLineBreaks === true) {
+            $pattern = [
+                "/([\n]{2,})/i", // multiple new lines
+                "/([^>])\n([^<])/i" // get the remaining new lines
+            ];
+            $replace = [
+                "</p>\n<p>",
+                '${1}<br>${2}'
+            ];
         }
 
-        return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
+        return '<p>' . preg_replace($pattern, $replace, $data) . '</p>';
     }
 
     /**
-     * Kürzt einen String, welcher im UTF-8-Charset vorliegt
-     * auf eine bestimmte Länge
+     * Shortens a string to the given length
      *
      * @param string  $data
      * @param integer $chars
@@ -75,7 +82,7 @@ class StringFormatter
     public function shortenEntry($data, $chars = 300, $offset = 50, $append = '')
     {
         if ($chars <= $offset) {
-            $offset = 0;
+            throw new \InvalidArgumentException('The offset should not be bigger then the to be displayed characters.');
         }
 
         $shortened = utf8_decode(html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8'));
