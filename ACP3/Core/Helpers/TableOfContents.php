@@ -71,22 +71,22 @@ class TableOfContents
      * Generates the table of contents
      *
      * @param array   $pages
-     * @param string  $requestQuery
+     * @param string  $baseUrlPath
      * @param boolean $titlesFromDb
      * @param boolean $customUris
      *
      * @return string
      */
-    public function generateTOC(array $pages, $requestQuery = '', $titlesFromDb = false, $customUris = false)
+    public function generateTOC(array $pages, $baseUrlPath = '', $titlesFromDb = false, $customUris = false)
     {
         if (!empty($pages)) {
-            $requestQuery = $requestQuery === '' ? $this->request->getUriWithoutPages() : $requestQuery;
+            $baseUrlPath = $baseUrlPath === '' ? $this->request->getUriWithoutPages() : $baseUrlPath;
             $toc = [];
             $i = 0;
             foreach ($pages as $page) {
                 $pageNumber = $i + 1;
                 $toc[$i]['title'] = $this->fetchTocPageTitle($page, $pageNumber, $titlesFromDb);
-                $toc[$i]['uri'] = $this->fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery);
+                $toc[$i]['uri'] = $this->fetchTocPageUri($customUris, $page, $pageNumber, $baseUrlPath);
                 $toc[$i]['selected'] = $this->isCurrentPage($customUris, $page, $pageNumber, $i);
 
                 if ($toc[$i]['selected'] === true) {

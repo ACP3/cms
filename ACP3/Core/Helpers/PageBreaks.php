@@ -50,13 +50,11 @@ class PageBreaks
      * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
      *
      * @param string $text
-     *    Der zu parsende Text
-     * @param string $path
-     *    Der ACP3-interne URI-Pfad, um die Links zu generieren
+     * @param string $baseUrlPath
      *
      * @return string|array
      */
-    public function splitTextIntoPages($text, $path)
+    public function splitTextIntoPages($text, $baseUrlPath)
     {
         // Return early, if there are no page breaks
         if (strpos($text, 'class="page-break"') === false) {
@@ -75,20 +73,18 @@ class PageBreaks
         preg_match_all($this->getSplitPagesRegex(), $text, $matches);
 
         $currentPage = ((int)$this->request->getParameters()->get('page', 1) <= $cPages) ? (int)$this->request->getParameters()->get('page', 1) : 1;
-        $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-        $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
+        $nextPage = !empty($pages[$currentPage]) ? $this->router->route($baseUrlPath) . 'page_' . ($currentPage + 1) . '/' : '';
+        $previousPage = $currentPage > 1 ? $this->router->route($baseUrlPath) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
         $this->seo->setNextPage($nextPage);
         $this->seo->setPreviousPage($previousPage);
 
-        $page = [
-            'toc' => $this->tableOfContents->generateTOC($matches[0], $path),
+        return [
+            'toc' => $this->tableOfContents->generateTOC($matches[0], $baseUrlPath),
             'text' => $pages[$currentPage - 1],
             'next' => $nextPage,
             'previous' => $previousPage,
         ];
-
-        return $page;
     }
 
     /**
