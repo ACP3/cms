@@ -52,27 +52,15 @@ class PageBreaks
      * @param string $text
      * @param string $baseUrlPath
      *
-     * @return string|array
+     * @return array
      */
     public function splitTextIntoPages($text, $baseUrlPath)
     {
-        // Return early, if there are no page breaks
-        if (strpos($text, 'class="page-break"') === false) {
-            return $text;
-        }
-
-        $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
-        $cPages = count($pages);
-
-        // Return early, if an page breaks has been found but no content follows after it
-        if ($cPages === 1) {
-            return $text;
-        }
-
         $matches = [];
         preg_match_all($this->getSplitPagesRegex(), $text, $matches);
+        $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
 
-        $currentPage = ((int)$this->request->getParameters()->get('page', 1) <= $cPages) ? (int)$this->request->getParameters()->get('page', 1) : 1;
+        $currentPage = $this->getCurrentPage($pages);
         $nextPage = !empty($pages[$currentPage]) ? $this->router->route($baseUrlPath) . 'page_' . ($currentPage + 1) . '/' : '';
         $previousPage = $currentPage > 1 ? $this->router->route($baseUrlPath) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
@@ -93,5 +81,16 @@ class PageBreaks
     protected function getSplitPagesRegex()
     {
         return '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
+    }
+
+    /**
+     * @param array $pages
+     *
+     * @return int
+     */
+    private function getCurrentPage(array $pages)
+    {
+        $currentPage = (int)$this->request->getParameters()->get('page', 1);
+        return ($currentPage <= count($pages)) ? $currentPage : 1;
     }
 }

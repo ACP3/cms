@@ -140,12 +140,10 @@ class TableOfContents
             ) {
                 return true;
             }
-        } else {
-            if (($this->integerValidationRule->isValid($this->request->getParameters()->get('page')) === false && $currentIndex === 0) ||
-                $this->request->getParameters()->get('page') === $pageNumber
-            ) {
-                return true;
-            }
+        } elseif (($this->integerValidationRule->isValid($this->request->getParameters()->get('page')) === false && $currentIndex === 0) ||
+            $this->request->getParameters()->get('page') === $pageNumber
+        ) {
+            return true;
         }
 
         return false;
@@ -161,13 +159,11 @@ class TableOfContents
     protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
     {
         if ($titlesFromDb === false && is_array($page) === false) {
-            $attributes = $this->getHtmlAttributes($page);
-            return !empty($attributes['title']) ? $attributes['title'] : $this->translator->t('system', 'toc_page',
-                ['%page%' => $pageNumber]);
+            $page = $this->getHtmlAttributes($page);
         }
 
-        return !empty($page['title']) ? $page['title'] : $this->translator->t('system', 'toc_page',
-            ['%page%' => $pageNumber]);
+        $transPageNumber = $this->translator->t('system', 'toc_page', ['%page%' => $pageNumber]);
+        return !empty($page['title']) ? $page['title'] : $transPageNumber;
     }
 
     /**
