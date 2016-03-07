@@ -19,7 +19,7 @@ script:
   phpunit --configuration ./tests/phpunit.dist.xml --coverage-clover build/logs/clover.xml
 
 after_script:
-  - vendor/bin/test-reporter
+  - vendor/bin/coveralls -v
 
 cache:
   directories:

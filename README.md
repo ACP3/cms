@@ -1,6 +1,6 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ACP3/cms/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ACP3/cms/?branch=develop)
 [![Code Climate](https://codeclimate.com/github/ACP3/cms/badges/gpa.svg)](https://codeclimate.com/github/ACP3/cms)
-[![Test Coverage](https://codeclimate.com/github/ACP3/cms/badges/coverage.svg)](https://codeclimate.com/github/ACP3/cms/coverage)
+[![Coverage Status](https://coveralls.io/repos/github/ACP3/cms/badge.svg?branch=develop)](https://coveralls.io/github/ACP3/cms?branch=develop)
 [![Build Status](https://travis-ci.org/ACP3/cms.svg)](https://travis-ci.org/ACP3/cms)
 [![Dependency Status](https://www.versioneye.com/user/projects/55ca41bedfed0a001f000026/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55ca41bedfed0a001f000026)
 
