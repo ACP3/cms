@@ -16,6 +16,10 @@ use ACP3\Modules\ACP3\System;
 class Configuration extends Core\Controller\AdminAction
 {
     /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -28,16 +32,19 @@ class Configuration extends Core\Controller\AdminAction
      * Configuration constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                       $context
+     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         System\Validation\AdminSettingsFormValidation $systemValidator
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->systemValidator = $systemValidator;
     }
@@ -63,7 +70,7 @@ class Configuration extends Core\Controller\AdminAction
                 if ($editor instanceof Core\WYSIWYG\AbstractWYSIWYG) {
                     $wysiwyg[] = [
                         'value' => $service,
-                        'selected' => $this->get('core.helpers.forms')->selectEntry('wysiwyg', $service, $systemSettings['wysiwyg']),
+                        'selected' => $this->formsHelper->selectEntry('wysiwyg', $service, $systemSettings['wysiwyg']),
                         'lang' => $editor->getFriendlyName()
                     ];
                 }
@@ -71,28 +78,28 @@ class Configuration extends Core\Controller\AdminAction
         }
 
         // Mailertyp
-        $langMailerType = [
-            $this->translator->t('system', 'mailer_type_php_mail'),
-            $this->translator->t('system', 'mailer_type_smtp')
+        $mailerTypes = [
+            'mail' => $this->translator->t('system', 'mailer_type_php_mail'),
+            'smtp' => $this->translator->t('system', 'mailer_type_smtp')
         ];
 
         // Mailer SMTP Verschlüsselung
-        $langMailerSmtpSecurity = [
-            $this->translator->t('system', 'mailer_smtp_security_none'),
-            $this->translator->t('system', 'mailer_smtp_security_ssl'),
-            $this->translator->t('system', 'mailer_smtp_security_tls')
+        $mailerSmtpSecurity = [
+            'none' => $this->translator->t('system', 'mailer_smtp_security_none'),
+            'ssl' => $this->translator->t('system', 'mailer_smtp_security_ssl'),
+            'tls' => $this->translator->t('system', 'mailer_smtp_security_tls')
         ];
 
         return [
-            'entries' => $this->get('core.helpers.forms')->recordsPerPage($systemSettings['entries']),
+            'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $wysiwyg,
             'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
-            'maintenance' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']),
-            'cache_images' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']),
-            'mailer_type' => $this->get('core.helpers.forms')->selectGenerator('mailer_type', ['mail', 'smtp'], $langMailerType, $systemSettings['mailer_type']),
-            'mailer_smtp_auth' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']),
-            'mailer_smtp_security' => $this->get('core.helpers.forms')->selectGenerator('mailer_smtp_security', ['none', 'ssl', 'tls'], $langMailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
+            'maintenance' => $this->formsHelper->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']),
+            'cache_images' => $this->formsHelper->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']),
+            'mailer_type' => $this->formsHelper->selectGenerator('mailer_type', $mailerTypes, $systemSettings['mailer_type']),
+            'mailer_smtp_auth' => $this->formsHelper->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']),
+            'mailer_smtp_security' => $this->formsHelper->selectGenerator('mailer_smtp_security', $mailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
             'form' => array_merge($systemSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

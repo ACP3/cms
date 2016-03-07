@@ -24,21 +24,28 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Modules\ACP3\Polls\Model\VoteRepository
      */
     protected $voteRepository;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext      $context
+     * @param \ACP3\Core\Helpers\Forms                        $formsHelper
      * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository   $voteRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Polls\Model\AnswerRepository $answerRepository,
         Polls\Model\VoteRepository $voteRepository
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->answerRepository = $answerRepository;
         $this->voteRepository = $voteRepository;
     }
@@ -111,7 +118,7 @@ abstract class AbstractFormAction extends AdminAction
     {
         return [
             'name' => 'multiple',
-            'checked' => $this->get('core.helpers.forms')->selectEntry('multiple', '1', $currentValue, 'checked'),
+            'checked' => $this->formsHelper->selectEntry('multiple', '1', $currentValue, 'checked'),
             'lang' => $this->translator->t('polls', 'multiple_choice')
         ];
     }

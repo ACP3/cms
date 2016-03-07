@@ -20,19 +20,26 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
     protected $categoriesHelpers;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms                   $formsHelper
      * @param \ACP3\Modules\ACP3\Categories\Helpers      $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Categories\Helpers $categoriesHelpers)
     {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
@@ -82,14 +89,14 @@ abstract class AbstractFormAction extends AdminAction
         if ($settings['readmore'] == 1) {
             $options[] = [
                 'name' => 'readmore',
-                'checked' => $this->get('core.helpers.forms')->selectEntry('readmore', '1', $readMoreValue, 'checked'),
+                'checked' => $this->formsHelper->selectEntry('readmore', '1', $readMoreValue, 'checked'),
                 'lang' => $this->translator->t('news', 'activate_readmore')
             ];
         }
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $options[] = [
                 'name' => 'comments',
-                'checked' => $this->get('core.helpers.forms')->selectEntry('comments', '1', $commentsValue, 'checked'),
+                'checked' => $this->formsHelper->selectEntry('comments', '1', $commentsValue, 'checked'),
                 'lang' => $this->translator->t('system', 'allow_comments')
             ];
         }

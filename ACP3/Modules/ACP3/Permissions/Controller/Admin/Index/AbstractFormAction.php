@@ -20,19 +20,26 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
      */
     protected $ruleRepository;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext          $context
+     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository $ruleRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Permissions\Model\RuleRepository $ruleRepository
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->ruleRepository = $ruleRepository;
     }
 
@@ -139,7 +146,7 @@ abstract class AbstractFormAction extends AdminAction
             if ($roles[$i]['left_id'] >= $roleLeftId && $roles[$i]['right_id'] <= $roleRightId) {
                 unset($roles[$i]);
             } else {
-                $roles[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry('roles', $roles[$i]['id'], $roleParentId);
+                $roles[$i]['selected'] = $this->formsHelper->selectEntry('roles', $roles[$i]['id'], $roleParentId);
                 $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
             }
         }

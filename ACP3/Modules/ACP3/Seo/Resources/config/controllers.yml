@@ -9,36 +9,37 @@ services:
   seo.controller.admin.index.create:
     class: %seo.controller.admin.index.create.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @seo.model.seorepository
-      - @seo.validator
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@seo.model.seorepository'
+      - '@seo.validator'
 
   seo.controller.admin.index.delete:
     class: %seo.controller.admin.index.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @seo.cache
-      - @seo.model.seorepository
+      - '@core.context.admin'
+      - '@seo.cache'
+      - '@seo.model.seorepository'
 
   seo.controller.admin.index.edit:
     class: %seo.controller.admin.index.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @seo.cache
-      - @seo.model.seorepository
-      - @seo.validator
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@seo.cache'
+      - '@seo.model.seorepository'
+      - '@seo.validator'
 
   seo.controller.admin.index.index:
     class: %seo.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @seo.model.seorepository
+      - '@core.context.admin'
+      - '@seo.model.seorepository'
 
   seo.controller.admin.index.settings:
     class: %seo.controller.admin.index.settings.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @seo.validation.admin_settings_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@seo.validation.admin_settings_form_validation'

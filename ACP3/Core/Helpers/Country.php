@@ -8,7 +8,9 @@ namespace ACP3\Core\Helpers;
 class Country
 {
     /**
-     * Gibt ein Array mit allen Nationen der Erde zurück
+     * Returns an array with all countries on earth
+     *
+     * @return array
      */
     public static function worldCountries()
     {

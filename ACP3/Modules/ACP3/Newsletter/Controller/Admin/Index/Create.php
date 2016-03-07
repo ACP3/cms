@@ -30,12 +30,17 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
      * @param \ACP3\Core\Date                                              $date
+     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository     $newsletterRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
@@ -44,6 +49,7 @@ class Create extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterRepository $newsletterRepository,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
@@ -52,6 +58,7 @@ class Create extends AbstractFormAction
         parent::__construct($context, $newsletterHelpers);
 
         $this->date = $date;
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->newsletterRepository = $newsletterRepository;
         $this->adminFormValidation = $adminFormValidation;
@@ -68,15 +75,15 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all(), $settings);
         }
 
-        $langAction = [
-            $this->translator->t('newsletter', 'send_and_save'),
-            $this->translator->t('newsletter', 'only_save')
+        $actions = [
+            1 => $this->translator->t('newsletter', 'send_and_save'),
+            0 => $this->translator->t('newsletter', 'only_save')
         ];
 
         return [
             'settings' => $settings,
-            'test' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('test', 0),
-            'action' => $this->get('core.helpers.forms')->checkboxGenerator('action', [1, 0], $langAction, 1),
+            'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
+            'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),
             'form' => array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

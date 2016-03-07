@@ -40,6 +40,7 @@ class Create extends AbstractFormAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext             $context
      * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository           $newsRepository
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
@@ -48,12 +49,13 @@ class Create extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsRepository $newsRepository,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers)
     {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context, $formsHelper, $categoriesHelpers);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
@@ -84,7 +86,7 @@ class Create extends AbstractFormAction
         return [
             'categories' => $this->categoriesHelpers->categoriesList('news', '', true),
             'options' => $this->fetchNewsOptions($settings, 0, 0),
-            'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target'),
+            'target' => $this->formsHelper->linkTargetSelectGenerator('target'),
             'SEO_FORM_FIELDS' => $this->seo->formFields(),
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()

@@ -44,6 +44,7 @@ class Edit extends AbstractFormAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext             $context
      * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\News\Model\NewsRepository           $newsRepository
      * @param \ACP3\Modules\ACP3\News\Cache                          $newsCache
@@ -53,13 +54,14 @@ class Edit extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers)
     {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context, $formsHelper, $categoriesHelpers);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
@@ -90,7 +92,7 @@ class Edit extends AbstractFormAction
             return [
                 'categories' => $this->categoriesHelpers->categoriesList('news', $news['category_id'], true),
                 'options' => $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']),
-                'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $news['target']),
+                'target' => $this->formsHelper->linkTargetSelectGenerator('target', $news['target']),
                 'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id)),
                 'form' => array_merge($news, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()

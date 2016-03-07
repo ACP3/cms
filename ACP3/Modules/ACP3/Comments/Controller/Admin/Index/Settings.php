@@ -23,21 +23,28 @@ class Settings extends Core\Controller\AdminAction
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                         $context
+     * @param \ACP3\Core\Helpers\Forms                                           $formsHelper
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->formTokenHelper = $formTokenHelper;
     }
@@ -55,7 +62,7 @@ class Settings extends Core\Controller\AdminAction
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign('allow_emoticons', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('emoticons', $settings['emoticons']));
+            $this->view->assign('allow_emoticons', $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons']));
         }
 
         return [

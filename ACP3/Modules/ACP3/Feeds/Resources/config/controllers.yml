@@ -6,13 +6,14 @@ services:
   feeds.controller.admin.index.index:
     class: %feeds.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @feeds.validator
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@feeds.validator'
 
   feeds.controller.frontend.index.index:
     class: %feeds.controller.frontend.index.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @feeds.helper.feedgenerator
+      - '@core.context.frontend'
+      - '@feeds.helper.feedgenerator'
 

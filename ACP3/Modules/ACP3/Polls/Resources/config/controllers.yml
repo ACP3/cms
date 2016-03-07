@@ -14,6 +14,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.date'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'
@@ -31,6 +32,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.date'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'

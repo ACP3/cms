@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Edit
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
  */
-class Edit extends Core\Controller\AdminAction
+class Edit extends AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -40,6 +40,7 @@ class Edit extends Core\Controller\AdminAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                  $context
+     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository          $pictureRepository
@@ -48,13 +49,14 @@ class Edit extends Core\Controller\AdminAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryHelpers = $galleryHelpers;
@@ -87,11 +89,7 @@ class Edit extends Core\Controller\AdminAction
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options = [];
-                $options[0]['name'] = 'comments';
-                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $picture['comments'], 'checked');
-                $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
-                $this->view->assign('options', $options);
+                $this->view->assign('options', $this->getOptions($picture['comments']));
             }
 
             return [

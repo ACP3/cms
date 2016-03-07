@@ -156,12 +156,12 @@ class Forms
      */
     protected function displayBirthday($value)
     {
-        $langBirthdayDisplay = [
-            $this->translator->t('users', 'birthday_hide'),
-            $this->translator->t('users', 'birthday_display_completely'),
-            $this->translator->t('users', 'birthday_hide_year')
+        $displayBirthday = [
+            0 => $this->translator->t('users', 'birthday_hide'),
+            1 => $this->translator->t('users', 'birthday_display_completely'),
+            2 => $this->translator->t('users', 'birthday_hide_year')
         ];
-        return $this->formsHelpers->checkboxGenerator('birthday_display', [0, 1, 2], $langBirthdayDisplay, $value);
+        return $this->formsHelpers->checkboxGenerator('birthday_display', $displayBirthday, $value);
     }
 
     /**
@@ -201,17 +201,17 @@ class Forms
     }
 
     /**
-     * @param int $value
+     * @param int $currentValue
      *
      * @return array
      */
-    protected function fetchGenderField($value)
+    protected function fetchGenderField($currentValue)
     {
-        $langGender = [
-            $this->translator->t('users', 'gender_not_specified'),
-            $this->translator->t('users', 'gender_female'),
-            $this->translator->t('users', 'gender_male')
+        $genders = [
+            1 => $this->translator->t('users', 'gender_not_specified'),
+            2 => $this->translator->t('users', 'gender_female'),
+            3 => $this->translator->t('users', 'gender_male')
         ];
-        return $this->formsHelpers->selectGenerator('gender', [1, 2, 3], $langGender, $value);
+        return $this->formsHelpers->selectGenerator('gender', $genders, $currentValue);
     }
 }

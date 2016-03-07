@@ -23,19 +23,26 @@ class Index extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext              $context
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Feeds\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
     }
@@ -51,14 +58,14 @@ class Index extends Core\Controller\AdminAction
 
         $settings = $this->config->getSettings('feeds');
 
-        $feedType = [
-            'RSS 1.0',
-            'RSS 2.0',
-            'ATOM'
+        $feedTypes = [
+            'RSS 1.0' => 'RSS 1.0',
+            'RSS 2.0' => 'RSS 2.0',
+            'ATOM' => 'ATOM'
         ];
 
         return [
-            'feed_types' => $this->get('core.helpers.forms')->selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']),
+            'feed_types' => $this->formsHelper->selectGenerator('feed_type', $feedTypes, $settings['feed_type']),
             'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

@@ -23,21 +23,28 @@ class Settings extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation
      */
     protected $adminSettingsFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                    $context
+     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
     }
@@ -54,18 +61,16 @@ class Settings extends Core\Controller\AdminAction
         $seoSettings = $this->config->getSettings('seo');
 
         // Robots
-        $langRobots = [
-            $this->translator->t('seo', 'robots_index_follow'),
-            $this->translator->t('seo', 'robots_index_nofollow'),
-            $this->translator->t('seo', 'robots_noindex_follow'),
-            $this->translator->t('seo', 'robots_noindex_nofollow')
+        $robots = [
+            1 => $this->translator->t('seo', 'robots_index_follow'),
+            2 => $this->translator->t('seo', 'robots_index_nofollow'),
+            3 => $this->translator->t('seo', 'robots_noindex_follow'),
+            4 => $this->translator->t('seo', 'robots_noindex_nofollow')
         ];
 
         return [
-            'robots' => $this->get('core.helpers.forms')->selectGenerator('robots', [1, 2, 3, 4], $langRobots,
-                $seoSettings['robots']),
-            'mod_rewrite' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('mod_rewrite',
-                $seoSettings['mod_rewrite']),
+            'robots' => $this->formsHelper->selectGenerator('robots', $robots, $seoSettings['robots']),
+            'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']),
             'form' => array_merge($seoSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

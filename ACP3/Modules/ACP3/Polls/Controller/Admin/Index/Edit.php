@@ -34,6 +34,7 @@ class Edit extends AbstractFormAction
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext              $context
      * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository           $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository         $answerRepository
@@ -43,13 +44,14 @@ class Edit extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Polls\Model\PollRepository $pollRepository,
         Polls\Model\AnswerRepository $answerRepository,
         Polls\Model\VoteRepository $voteRepository,
         Polls\Validation\AdminFormValidation $pollsValidator
     ) {
-        parent::__construct($context, $answerRepository, $voteRepository);
+        parent::__construct($context, $formsHelper, $answerRepository, $voteRepository);
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
@@ -84,7 +86,7 @@ class Edit extends AbstractFormAction
                 $this->fetchMultipleChoiceOption($poll['multiple']),
                 [
                     'name' => 'reset',
-                    'checked' => $this->get('core.helpers.forms')->selectEntry('reset', '1', '0', 'checked'),
+                    'checked' => $this->formsHelper->selectEntry('reset', '1', '0', 'checked'),
                     'lang' => $this->translator->t('polls', 'reset_votes')
                 ]
             ];

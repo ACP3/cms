@@ -8,22 +8,22 @@ services:
   contact.controller.admin.index.index:
     class: %contact.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @contact.validation.admin_settings_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@contact.validation.admin_settings_form_validation'
 
   contact.controller.frontend.index.imprint:
     class: %contact.controller.frontend.index.imprint.fqdn%
-    arguments:
-      - @core.context.frontend
+    parent: core.controller.frontend
 
   contact.controller.frontend.index.index:
     class: %contact.controller.frontend.index.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.helpers.formToken
-      - @core.helpers.sendEmail
-      - @contact.validator
+      - '@core.context.frontend'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.helpers.sendEmail'
+      - '@contact.validator'
 
   contact.controller.widget.index.index:
     class: %contact.controller.widget.index.index.fqdn%

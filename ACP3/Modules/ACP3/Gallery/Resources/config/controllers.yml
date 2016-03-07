@@ -54,6 +54,7 @@ services:
     class: %gallery.controller.admin.index.settings.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.validator.settings'
 
@@ -61,6 +62,7 @@ services:
     class: %gallery.controller.admin.pictures.create.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.helpers'
       - '@gallery.model.galleryrepository'
@@ -80,6 +82,7 @@ services:
     class: %gallery.controller.admin.pictures.edit.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.helpers'
       - '@gallery.model.picturerepository'

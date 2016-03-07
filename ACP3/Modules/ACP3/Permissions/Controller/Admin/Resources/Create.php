@@ -31,9 +31,14 @@ class Create extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                       $context
+     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository          $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                             $permissionsCache
@@ -41,6 +46,7 @@ class Create extends Core\Controller\AdminAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache,
@@ -48,6 +54,7 @@ class Create extends Core\Controller\AdminAction
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
@@ -65,13 +72,13 @@ class Create extends Core\Controller\AdminAction
 
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $row) {
-            $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry('modules', $row['name']);
+            $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry('modules', $row['name']);
         }
 
         $privileges = $this->acl->getAllPrivileges();
         $cPrivileges = count($privileges);
         for ($i = 0; $i < $cPrivileges; ++$i) {
-            $privileges[$i]['selected'] = $this->get('core.helpers.forms')->selectEntry(
+            $privileges[$i]['selected'] = $this->formsHelper->selectEntry(
                 'privileges',
                 $privileges[$i]['id']
             );

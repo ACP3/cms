@@ -50,6 +50,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Core\Router\Aliases                                  $aliases
      * @param \ACP3\Core\NestedSet                                       $nestedSet
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository          $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                             $menusCache
@@ -60,13 +61,14 @@ class Edit extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Core\Router\Aliases $aliases,
         Core\NestedSet $nestedSet,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper);
 
         $this->aliases = $aliases;
         $this->nestedSet = $nestedSet;
@@ -120,9 +122,9 @@ class Edit extends AbstractFormAction
             );
 
             return [
-                'mode' => $this->fetchMenuItemModes($menuItem['mode']),
+                'mode' => $this->fetchMenuItemTypes($menuItem['mode']),
                 'modules' => $this->fetchModules($menuItem),
-                'target' => $this->get('core.helpers.forms')->linkTargetSelectGenerator('target', $menuItem['target']),
+                'target' => $this->formsHelper->linkTargetSelectGenerator('target', $menuItem['target']),
                 'SEO_FORM_FIELDS' => $this->seo->formFields($menuItem['uri']),
                 'form' => array_merge($menuItem, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()

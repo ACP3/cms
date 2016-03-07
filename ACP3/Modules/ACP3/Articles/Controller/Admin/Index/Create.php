@@ -35,10 +35,15 @@ class Create extends AbstractFormAction
      * @var Menus\Helpers\MenuItemFormFields
      */
     protected $menuItemFormFieldsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Core\Date                                            $date
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository        $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
@@ -46,6 +51,7 @@ class Create extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
@@ -53,6 +59,7 @@ class Create extends AbstractFormAction
         parent::__construct($context);
 
         $this->date = $date;
+        $this->formsHelper = $formsHelper;
         $this->articleRepository = $articleRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
@@ -80,8 +87,10 @@ class Create extends AbstractFormAction
         }
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-            $langOptions = [$this->translator->t('articles', 'create_menu_item')];
-            $this->view->assign('options', $this->get('core.helpers.forms')->checkboxGenerator('create', [1], $langOptions, 0));
+            $options = [
+                1 => $this->translator->t('articles', 'create_menu_item')
+            ];
+            $this->view->assign('options', $this->formsHelper->checkboxGenerator('create', $options, 0));
             $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
         }
 

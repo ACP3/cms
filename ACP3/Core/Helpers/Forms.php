@@ -84,26 +84,22 @@ class Forms
      *
      * @param string               $name
      * @param array                $values
-     * @param array                $phrases
      * @param string|integer|array $currentValue
      * @param string               $selected
      *
      * @return array
      */
-    public function selectGenerator($name, array $values, array $phrases, $currentValue = '', $selected = 'selected')
+    public function selectGenerator($name, array $values, $currentValue = '', $selected = 'selected')
     {
         $select = [];
-        if (count($values) == count($phrases)) {
-            $cValues = count($values);
-            $id = str_replace('_', '-', $name);
-            for ($i = 0; $i < $cValues; ++$i) {
-                $select[] = [
-                    'value' => $values[$i],
-                    'id' => ($selected === 'checked' ? $id . '-' . $values[$i] : ''),
-                    $selected => $this->selectEntry($name, $values[$i], $currentValue, $selected),
-                    'lang' => $phrases[$i]
-                ];
-            }
+        $id = str_replace('_', '-', $name);
+        foreach ($values as $value => $phrase) {
+            $select[] = [
+                'value' => $value,
+                'id' => ($selected === 'checked' ? $id . '-' . $value : ''),
+                $selected => $this->selectEntry($name, $value, $currentValue, $selected),
+                'lang' => $phrase
+            ];
         }
         return $select;
     }
@@ -117,8 +113,12 @@ class Forms
      */
     public function linkTargetSelectGenerator($name, $currentValue = '', $selected = 'selected')
     {
-        $langTarget = [$this->translator->t('system', 'window_self'), $this->translator->t('system', 'window_blank')];
-        return $this->selectGenerator($name, [1, 2], $langTarget, $currentValue, $selected);
+        $linkTargets = [
+            1 => $this->translator->t('system', 'window_self'),
+            2 => $this->translator->t('system', 'window_blank')
+        ];
+
+        return $this->selectGenerator($name, $linkTargets, $currentValue, $selected);
     }
 
     /**
@@ -130,26 +130,24 @@ class Forms
      */
     public function yesNoSelectGenerator($name, $currentValue = '', $selected = 'selected')
     {
-        return $this->selectGenerator(
-            $name,
-            [1, 0],
-            [$this->translator->t('system', 'yes'), $this->translator->t('system', 'no')],
-            $currentValue,
-            $selected
-        );
+        $values = [
+            1 => $this->translator->t('system', 'yes'),
+            0 => $this->translator->t('system', 'no')
+        ];
+
+        return $this->selectGenerator($name, $values, $currentValue, $selected);
     }
 
     /**
      * @param string               $name
      * @param array                $values
-     * @param array                $phrases
      * @param string|integer|array $currentValue
      *
      * @return array
      */
-    public function checkboxGenerator($name, array $values, array $phrases, $currentValue = '')
+    public function checkboxGenerator($name, array $values, $currentValue = '')
     {
-        return $this->selectGenerator($name, $values, $phrases, $currentValue, 'checked');
+        return $this->selectGenerator($name, $values, $currentValue, 'checked');
     }
 
     /**
@@ -160,11 +158,11 @@ class Forms
      */
     public function yesNoCheckboxGenerator($name, $currentValue = '')
     {
-        return $this->checkboxGenerator(
-            $name,
-            [1, 0],
-            [$this->translator->t('system', 'yes'), $this->translator->t('system', 'no')],
-            $currentValue
-        );
+        $values = [
+            1 => $this->translator->t('system', 'yes'),
+            0 => $this->translator->t('system', 'no')
+        ];
+
+        return $this->checkboxGenerator($name, $values, $currentValue);
     }
 }

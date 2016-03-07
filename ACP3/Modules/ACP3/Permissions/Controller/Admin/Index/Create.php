@@ -35,9 +35,10 @@ class Create extends AbstractFormAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Core\NestedSet                                         $nestedSet
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository          $ruleRepository
+     * @param \ACP3\Core\NestedSet                                         $nestedSet
+     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
@@ -45,11 +46,12 @@ class Create extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\RuleRepository $ruleRepository,
         Core\NestedSet $nestedSet,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
-        parent::__construct($context, $ruleRepository);
+        parent::__construct($context, $formsHelper, $ruleRepository);
 
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
