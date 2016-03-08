@@ -77,37 +77,37 @@ class Forms
     }
 
     /**
-     * @param string $attr
+     * @param string $htmlAttribute
      *
      * @return string
      */
-    private function buildHtmlAttribute($attr)
+    private function buildHtmlAttribute($htmlAttribute)
     {
-        if (empty($attr)) {
-            $attr = 'selected';
+        if (empty($htmlAttribute)) {
+            $htmlAttribute = 'selected';
         }
 
-        return ' ' . $attr . '="' . $attr . '"';
+        return ' ' . $htmlAttribute . '="' . $htmlAttribute . '"';
     }
 
     /**
      *
-     * @param string               $name
+     * @param string               $formFieldName
      * @param array                $values
      * @param string|integer|array $currentValue
-     * @param string               $selected
+     * @param string               $htmlAttribute
      *
      * @return array
      */
-    public function choicesGenerator($name, array $values, $currentValue = '', $selected = 'selected')
+    public function choicesGenerator($formFieldName, array $values, $currentValue = '', $htmlAttribute = 'selected')
     {
         $select = [];
-        $id = str_replace('_', '-', $name);
+        $id = str_replace('_', '-', $formFieldName);
         foreach ($values as $value => $phrase) {
             $select[] = [
                 'value' => $value,
-                'id' => ($selected === 'checked' ? $id . '-' . $value : ''),
-                $selected => $this->selectEntry($name, $value, $currentValue, $selected),
+                'id' => ($htmlAttribute === 'checked' ? $id . '-' . $value : ''),
+                $htmlAttribute => $this->selectEntry($formFieldName, $value, $currentValue, $htmlAttribute),
                 'lang' => $phrase
             ];
         }
@@ -115,64 +115,64 @@ class Forms
     }
 
     /**
-     * @param string $name
+     * @param string $formFieldName
      * @param string $currentValue
-     * @param string $selected
+     * @param string $htmlAttribute
      *
      * @return array
      */
-    public function linkTargetChoicesGenerator($name, $currentValue = '', $selected = 'selected')
+    public function linkTargetChoicesGenerator($formFieldName, $currentValue = '', $htmlAttribute = 'selected')
     {
         $linkTargets = [
             1 => $this->translator->t('system', 'window_self'),
             2 => $this->translator->t('system', 'window_blank')
         ];
 
-        return $this->choicesGenerator($name, $linkTargets, $currentValue, $selected);
+        return $this->choicesGenerator($formFieldName, $linkTargets, $currentValue, $htmlAttribute);
     }
 
     /**
-     * @param string $name
+     * @param string $formFieldName
      * @param string $currentValue
-     * @param string $selected
+     * @param string $htmlAttribute
      *
      * @return array
      */
-    public function yesNoChoicesGenerator($name, $currentValue = '', $selected = 'selected')
+    public function yesNoChoicesGenerator($formFieldName, $currentValue = '', $htmlAttribute = 'selected')
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),
             0 => $this->translator->t('system', 'no')
         ];
 
-        return $this->choicesGenerator($name, $values, $currentValue, $selected);
+        return $this->choicesGenerator($formFieldName, $values, $currentValue, $htmlAttribute);
     }
 
     /**
-     * @param string               $name
+     * @param string               $formFieldName
      * @param array                $values
      * @param string|integer|array $currentValue
      *
      * @return array
      */
-    public function checkboxGenerator($name, array $values, $currentValue = '')
+    public function checkboxGenerator($formFieldName, array $values, $currentValue = '')
     {
-        return $this->choicesGenerator($name, $values, $currentValue, 'checked');
+        return $this->choicesGenerator($formFieldName, $values, $currentValue, 'checked');
     }
 
     /**
-     * @param string $name
+     * @param string $formFieldName
      * @param string $currentValue
      *
      * @return array
      */
-    public function yesNoCheckboxGenerator($name, $currentValue = '')
+    public function yesNoCheckboxGenerator($formFieldName, $currentValue = '')
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),
             0 => $this->translator->t('system', 'no')
         ];
 
-        return $this->checkboxGenerator($name, $values, $currentValue);
+        return $this->checkboxGenerator($formFieldName, $values, $currentValue);
     }
 }
