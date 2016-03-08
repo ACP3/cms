@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Create
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
  */
-class Create extends Core\Controller\AdminAction
+class Create extends AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -44,6 +44,7 @@ class Create extends Core\Controller\AdminAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                  $context
+     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository          $galleryRepository
@@ -53,6 +54,7 @@ class Create extends Core\Controller\AdminAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryRepository $galleryRepository,
@@ -60,7 +62,7 @@ class Create extends Core\Controller\AdminAction
         Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryHelpers = $galleryHelpers;
@@ -92,11 +94,7 @@ class Create extends Core\Controller\AdminAction
             }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options = [];
-                $options[0]['name'] = 'comments';
-                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked');
-                $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
-                $this->view->assign('options', $options);
+                $this->view->assign('options', $this->getOptions('0'));
             }
 
             return [

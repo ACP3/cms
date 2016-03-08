@@ -12,77 +12,79 @@ services:
   menus.controller.admin.index.create:
     class: %menus.controller.admin.index.create.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @menus.model.menurepository
-      - @menus.validator.menu
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@menus.model.menurepository'
+      - '@menus.validator.menu'
 
   menus.controller.admin.index.delete:
     class: %menus.controller.admin.index.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.nested_set
-      - @menus.model.menurepository
-      - @menus.model.menuitemrepository
-      - @menus.cache
+      - '@core.context.admin'
+      - '@core.nested_set'
+      - '@menus.model.menurepository'
+      - '@menus.model.menuitemrepository'
+      - '@menus.cache'
 
   menus.controller.admin.index.edit:
     class: %menus.controller.admin.index.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @menus.model.menurepository
-      - @menus.cache
-      - @menus.validator.menu
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@menus.model.menurepository'
+      - '@menus.cache'
+      - '@menus.validator.menu'
 
   menus.controller.admin.index.index:
     class: %menus.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @menus.helpers.menuitemslist
-      - @menus.model.menurepository
+      - '@core.context.admin'
+      - '@menus.helpers.menuitemslist'
+      - '@menus.model.menurepository'
 
   menus.controller.admin.items.create:
     class: %menus.controller.admin.items.create.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.router.aliases
-      - @core.nested_set
-      - @core.helpers.formToken
-      - @menus.model.menurepository
-      - @menus.model.menuitemrepository
-      - @menus.cache
-      - @menus.helpers.menuitemformfields
-      - @menus.validator.menuitem
+      - '@core.context.admin'
+      - '@core.router.aliases'
+      - '@core.nested_set'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@menus.model.menurepository'
+      - '@menus.model.menuitemrepository'
+      - '@menus.cache'
+      - '@menus.helpers.menuitemformfields'
+      - '@menus.validator.menuitem'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.controller.admin.items.delete:
     class: %menus.controller.admin.items.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.nested_set
-      - @menus.model.menuitemrepository
-      - @menus.cache
+      - '@core.context.admin'
+      - '@core.nested_set'
+      - '@menus.model.menuitemrepository'
+      - '@menus.cache'
 
   menus.controller.admin.items.edit:
     class: %menus.controller.admin.items.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.router.aliases
-      - @core.nested_set
-      - @core.helpers.formToken
-      - @menus.model.menuitemrepository
-      - @menus.cache
-      - @menus.helpers.menuitemformfields
-      - @menus.validator.menuitem
+      - '@core.context.admin'
+      - '@core.router.aliases'
+      - '@core.nested_set'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@menus.model.menuitemrepository'
+      - '@menus.cache'
+      - '@menus.helpers.menuitemformfields'
+      - '@menus.validator.menuitem'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.controller.admin.items.order:
     class: %menus.controller.admin.items.order.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.nested_set
-      - @menus.model.menuitemrepository
-      - @menus.cache
+      - '@core.context.admin'
+      - '@core.nested_set'
+      - '@menus.model.menuitemrepository'
+      - '@menus.cache'

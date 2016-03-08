@@ -16,6 +16,7 @@ services:
       - '@core.context.admin'
       - '@permissions.model.rulerepository'
       - '@core.nested_set'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.cache'
       - '@permissions.validator.role'
@@ -33,6 +34,7 @@ services:
       - '@core.context.admin'
       - '@permissions.model.rulerepository'
       - '@core.nested_set'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.rolerepository'
       - '@permissions.cache'
@@ -54,6 +56,7 @@ services:
     class: %permissions.controller.admin.resources.create.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.resourcerepository'
       - '@permissions.cache'
@@ -70,6 +73,7 @@ services:
     class: %permissions.controller.admin.resources.edit.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.resourcerepository'
       - '@permissions.cache'

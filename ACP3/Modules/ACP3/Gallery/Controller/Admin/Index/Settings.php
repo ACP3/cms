@@ -23,21 +23,28 @@ class Settings extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
      */
     protected $adminSettingsFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                        $context
+     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
     }
@@ -54,13 +61,13 @@ class Settings extends Core\Controller\AdminAction
         }
 
         if ($this->modules->isActive('comments') === true) {
-            $this->view->assign('comments', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('comments', $settings['comments']));
+            $this->view->assign('comments', $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
         }
 
         return [
-            'overlay' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('overlay', $settings['overlay']),
+            'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->get('core.helpers.forms')->recordsPerPage((int)$settings['sidebar'], 1, 10),
+            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10),
             'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

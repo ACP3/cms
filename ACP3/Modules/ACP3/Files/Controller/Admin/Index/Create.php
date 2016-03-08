@@ -36,12 +36,17 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     protected $commentsHelpers;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext              $context
      * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository          $filesRepository
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
@@ -50,6 +55,7 @@ class Create extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesRepository $filesRepository,
         Files\Validation\AdminFormValidation $adminFormValidation,
@@ -58,6 +64,7 @@ class Create extends AbstractFormAction
         parent::__construct($context, $categoriesHelpers);
 
         $this->date = $date;
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->filesRepository = $filesRepository;
         $this->adminFormValidation = $adminFormValidation;
@@ -74,12 +81,10 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all(), $settings);
         }
 
-        $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
-
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $options = [];
             $options[0]['name'] = 'comments';
-            $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', '0', 'checked');
+            $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', '0', 'checked');
             $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
             $this->view->assign('options', $options);
         }
@@ -95,7 +100,7 @@ class Create extends AbstractFormAction
         ];
 
         return [
-            'units' => $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, ''),
+            'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
             'categories' => $this->categoriesHelpers->categoriesList('files', '', true),
             'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
             'SEO_FORM_FIELDS' => $this->seo->formFields(),

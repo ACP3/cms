@@ -32,6 +32,7 @@ services:
     class: %system.controller.admin.index.configuration.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@system.validator.settings'
 

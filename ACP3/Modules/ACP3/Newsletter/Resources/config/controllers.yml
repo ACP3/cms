@@ -19,103 +19,108 @@ services:
   newsletter.controller.admin.accounts.activate:
     class: %newsletter.controller.admin.accounts.activate.fqdn%
     arguments:
-      - @core.context.admin
-      - @newsletter.helper.accountstatus
+      - '@core.context.admin'
+      - '@newsletter.helper.accountstatus'
 
   newsletter.controller.admin.accounts.delete:
     class: %newsletter.controller.admin.accounts.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @newsletter.helper.accountstatus
+      - '@core.context.admin'
+      - '@newsletter.helper.accountstatus'
 
   newsletter.controller.admin.accounts.index:
     class: %newsletter.controller.admin.accounts.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @newsletter.model.accountrepository
+      - '@core.context.admin'
+      - '@newsletter.model.accountrepository'
 
   newsletter.controller.admin.index.create:
     class: %newsletter.controller.admin.index.create.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @newsletter.model.newsletterrepository
-      - @newsletter.validator
-      - @newsletter.helper.sendnewsletter
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.validator'
+      - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.delete:
     class: %newsletter.controller.admin.index.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @newsletter.model.newsletterrepository
+      - '@core.context.admin'
+      - '@newsletter.model.newsletterrepository'
 
   newsletter.controller.admin.index.edit:
     class: %newsletter.controller.admin.index.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @newsletter.model.newsletterrepository
-      - @newsletter.validator
-      - @newsletter.helper.sendnewsletter
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.validator'
+      - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.index:
     class: %newsletter.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @newsletter.model.newsletterrepository
+      - '@core.context.admin'
+      - '@newsletter.model.newsletterrepository'
 
   newsletter.controller.admin.index.send:
     class: %newsletter.controller.admin.index.send.fqdn%
     arguments:
-      - @core.context.admin
-      - @newsletter.model.newsletterrepository
-      - @newsletter.model.accountrepository
-      - @newsletter.helper.sendnewsletter
+      - '@core.context.admin'
+      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model.accountrepository'
+      - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.settings:
     class: %newsletter.controller.admin.index.settings.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @newsletter.validation.admin_settings_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@newsletter.validation.admin_settings_form_validation'
 
   newsletter.controller.frontend.archive.details:
     class: %newsletter.controller.frontend.archive.details.fqdn%
     arguments:
-      - @core.context.frontend
-      - @newsletter.model.newsletterrepository
+      - '@core.context.frontend'
+      - '@newsletter.model.newsletterrepository'
 
   newsletter.controller.frontend.archive.index:
     class: %newsletter.controller.frontend.archive.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.pagination
-      - @newsletter.model.newsletterrepository
+      - '@core.context.frontend'
+      - '@core.pagination'
+      - '@newsletter.model.newsletterrepository'
 
   newsletter.controller.frontend.index.activate:
     class: %newsletter.controller.frontend.index.activate.fqdn%
     arguments:
-      - @core.context.frontend
-      - @newsletter.helper.accountstatus
-      - @newsletter.validation.activate_account_form_validation
+      - '@core.context.frontend'
+      - '@newsletter.helper.accountstatus'
+      - '@newsletter.validation.activate_account_form_validation'
 
   newsletter.controller.frontend.index.index:
     class: %newsletter.controller.frontend.index.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.helpers.formToken
-      - @newsletter.helper.subscribe
-      - @newsletter.validation.subscribe_form_validation
+      - '@core.context.frontend'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@newsletter.helper.subscribe'
+      - '@newsletter.validation.subscribe_form_validation'
 
   newsletter.controller.frontend.index.unsubscribe:
     class: %newsletter.controller.frontend.index.unsubscribe.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.helpers.formToken
-      - @newsletter.helper.accountstatus
-      - @newsletter.validation.unsubscribe_form_validation
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@newsletter.helper.accountstatus'
+      - '@newsletter.validation.unsubscribe_form_validation'
 
   newsletter.controller.widget.index.index:
     class: %newsletter.controller.widget.index.index.fqdn%

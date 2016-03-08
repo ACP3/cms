@@ -23,22 +23,36 @@ class Settings extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation
      */
     protected $adminSettingsFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                           $context
+     * @param \ACP3\Core\Helpers\Forms                                             $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                            $secureHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\Secure $secureHelper,
         Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
     {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
+        $this->secureHelper = $secureHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
     }
 
@@ -54,7 +68,7 @@ class Settings extends Core\Controller\AdminAction
         $settings = $this->config->getSettings('newsletter');
 
         return [
-            'html' => $this->get('core.helpers.forms')->yesNoCheckboxGenerator('html', $settings['html']),
+            'html' => $this->formsHelper->yesNoCheckboxGenerator('html', $settings['html']),
             'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -72,7 +86,7 @@ class Settings extends Core\Controller\AdminAction
 
             $data = [
                 'mail' => $formData['mail'],
-                'mailsig' => $this->get('core.helpers.secure')->strEncode($formData['mailsig'], true),
+                'mailsig' => $this->secureHelper->strEncode($formData['mailsig'], true),
                 'html' => (int)$formData['html']
             ];
 

@@ -10,40 +10,43 @@ services:
   guestbook.controller.admin.index.delete:
     class: %guestbook.controller.admin.index.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @guestbook.model.guestbookrepository
+      - '@core.context.admin'
+      - '@guestbook.model.guestbookrepository'
 
   guestbook.controller.admin.index.edit:
     class: %guestbook.controller.admin.index.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @guestbook.model.guestbookrepository
-      - @guestbook.validation.admin_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.validation.admin_form_validation'
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   guestbook.controller.admin.index.index:
     class: %guestbook.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @guestbook.model.guestbookrepository
+      - '@core.context.admin'
+      - '@guestbook.model.guestbookrepository'
 
   guestbook.controller.admin.index.settings:
     class: %guestbook.controller.admin.index.settings.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @guestbook.validation.admin_settings_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@guestbook.validation.admin_settings_form_validation'
 
   guestbook.controller.frontend.index.create:
     class: %guestbook.controller.frontend.index.create.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.date
-      - @core.helpers.formToken
-      - @guestbook.model.guestbookrepository
-      - @guestbook.validator
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.validator'
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
@@ -51,8 +54,8 @@ services:
   guestbook.controller.frontend.index.index:
     class: %guestbook.controller.frontend.index.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.pagination
-      - @guestbook.model.guestbookrepository
+      - '@core.context.frontend'
+      - '@core.pagination'
+      - '@guestbook.model.guestbookrepository'
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]

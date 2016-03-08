@@ -31,9 +31,14 @@ class Create extends Core\Controller\AdminAction
      * @var Core\Helpers\FormToken
      */
     protected $formTokenHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
+     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository       $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Cache                          $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
@@ -41,6 +46,7 @@ class Create extends Core\Controller\AdminAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
         Categories\Validation\AdminFormValidation $adminFormValidation,
@@ -48,6 +54,7 @@ class Create extends Core\Controller\AdminAction
     {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->categoryRepository = $categoryRepository;
         $this->categoriesCache = $categoriesCache;
         $this->adminFormValidation = $adminFormValidation;
@@ -66,7 +73,7 @@ class Create extends Core\Controller\AdminAction
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
             if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->get('core.helpers.forms')->selectEntry('module', $info['id']);
+                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module', $info['id']);
             } else {
                 unset($modules[$name]);
             }

@@ -28,21 +28,28 @@ class Index extends Core\Controller\FrontendAction
      * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
      */
     protected $formValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext        $context
+     * @param \ACP3\Core\Helpers\Forms                             $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
      * @param \ACP3\Core\Helpers\SendEmail                         $sendEmailHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
         Contact\Validation\FormValidation $formValidation
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->sendEmailHelper = $sendEmailHelper;
         $this->formValidation = $formValidation;
@@ -77,7 +84,7 @@ class Index extends Core\Controller\FrontendAction
 
         return [
             'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'copy_checked' => $this->get('core.helpers.forms')->selectEntry('copy', 1, 0, 'checked'),
+            'copy_checked' => $this->formsHelper->selectEntry('copy', 1, 0, 'checked'),
             'contact' => $this->config->getSettings('contact'),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

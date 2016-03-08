@@ -23,19 +23,26 @@ class Index extends Core\Controller\FrontendAction
      * @var \ACP3\Modules\ACP3\Search\Validation\FormValidation
      */
     protected $searchValidator;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext       $context
+     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
      * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\Forms $formsHelper,
         Search\Helpers $searchHelpers,
         Search\Validation\FormValidation $searchValidator)
     {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->searchHelpers = $searchHelpers;
         $this->searchValidator = $searchValidator;
     }
@@ -53,26 +60,26 @@ class Index extends Core\Controller\FrontendAction
             return $this->executePost(['search_term' => (string)$q]);
         }
 
-        // Zu durchsuchende Bereiche
-        $langSearchAreas = [
-            $this->translator->t('search', 'title_and_content'),
-            $this->translator->t('search', 'title_only'),
-            $this->translator->t('search', 'content_only')
+        $searchAreas = [
+            'title_content' => $this->translator->t('search', 'title_and_content'),
+            'title' => $this->translator->t('search', 'title_only'),
+            'content' => $this->translator->t('search', 'content_only')
         ];
 
-        // Treffer sortieren
-        $langSortHits = [$this->translator->t('search', 'asc'), $this->translator->t('search', 'desc')];
+        $sortDirections = [
+            'asc' => $this->translator->t('search', 'asc'),
+            'desc' => $this->translator->t('search', 'desc')
+        ];
 
         return [
             'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
             'search_mods' => $this->searchHelpers->getModules(),
-            'search_areas' => $this->get('core.helpers.forms')->checkboxGenerator(
+            'search_areas' => $this->formsHelper->checkboxGenerator(
                 'area',
-                ['title_content', 'title', 'content'],
-                $langSearchAreas,
+                $searchAreas,
                 'title_content'
             ),
-            'sort_hits' => $this->get('core.helpers.forms')->checkboxGenerator('sort', ['asc', 'desc'], $langSortHits, 'asc')
+            'sort_hits' => $this->formsHelper->checkboxGenerator('sort', $sortDirections, 'asc')
         ];
     }
 

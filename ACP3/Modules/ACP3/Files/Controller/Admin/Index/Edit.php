@@ -41,12 +41,17 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     protected $commentsHelpers;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext              $context
      * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository          $filesRepository
      * @param \ACP3\Modules\ACP3\Files\Cache                          $filesCache
@@ -56,6 +61,7 @@ class Edit extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
@@ -65,6 +71,7 @@ class Edit extends AbstractFormAction
         parent::__construct($context, $categoriesHelpers);
 
         $this->date = $date;
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
@@ -90,20 +97,18 @@ class Edit extends AbstractFormAction
                 return $this->executePost($this->request->getPost()->all(), $settings, $file, $id);
             }
 
-            $units = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB'];
-
             $file['filesize'] = substr($file['size'], 0, strpos($file['size'], ' '));
 
             if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = [];
                 $options[0]['name'] = 'comments';
-                $options[0]['checked'] = $this->get('core.helpers.forms')->selectEntry('comments', '1', $file['comments'], 'checked');
+                $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', $file['comments'], 'checked');
                 $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
                 $this->view->assign('options', $options);
             }
 
             return [
-                'units' => $this->get('core.helpers.forms')->selectGenerator('units', $units, $units, trim(strrchr($file['size'], ' '))),
+                'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), trim(strrchr($file['size'], ' '))),
                 'categories' => $this->categoriesHelpers->categoriesList('files', $file['category_id'], true),
                 'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
                 'current_file' => $file['file'],

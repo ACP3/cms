@@ -94,18 +94,17 @@ class Date
      * Gibts ein Array mit den möglichen Datumsformaten aus,
      * um diese als Dropdownmenü darstellen zu können
      *
-     * @param string $format
-     *    Optionaler Parameter für das aktuelle Datumsformat
+     * @param string $currentDateFormat
      *
      * @return array
      */
-    public function dateFormatDropdown($format = '')
+    public function dateFormatDropdown($currentDateFormat = '')
     {
-        $dateFormatLang = [
-            $this->translator->t('system', 'date_format_short'),
-            $this->translator->t('system', 'date_format_long')
+        $dateFormats = [
+            'short' => $this->translator->t('system', 'date_format_short'),
+            'long' => $this->translator->t('system', 'date_format_long')
         ];
-        return $this->formsHelper->selectGenerator('dateformat', ['short', 'long'], $dateFormatLang, $format);
+        return $this->formsHelper->choicesGenerator('dateformat', $dateFormats, $currentDateFormat);
     }
 
     /**

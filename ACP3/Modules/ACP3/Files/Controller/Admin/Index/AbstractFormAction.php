@@ -29,8 +29,8 @@ abstract class AbstractFormAction extends AdminAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Categories\Helpers $categoriesHelpers)
-    {
+        Categories\Helpers $categoriesHelpers
+    ) {
         parent::__construct($context);
 
         $this->categoriesHelpers = $categoriesHelpers;
@@ -43,7 +43,8 @@ abstract class AbstractFormAction extends AdminAction
      */
     protected function fetchCategoryId(array $formData)
     {
-        return !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'files') : $formData['cat'];
+        return !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'],
+            'files') : $formData['cat'];
     }
 
     /**
@@ -55,5 +56,19 @@ abstract class AbstractFormAction extends AdminAction
     protected function useComments(array $formData, array $settings)
     {
         return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUnits()
+    {
+        return [
+            'Byte' => 'Byte',
+            'KiB' => 'KiB',
+            'MiB' => 'MiB',
+            'GiB' => 'GiB',
+            'TiB' => 'TiB'
+        ];
     }
 }

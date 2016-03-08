@@ -328,19 +328,19 @@ class SEO
             $robots = 0;
         }
 
-        $langRobots = [
-            $this->translator->t('seo', 'robots_use_system_default', ['%default%' => $this->getRobotsSetting()]),
-            $this->translator->t('seo', 'robots_index_follow'),
-            $this->translator->t('seo', 'robots_index_nofollow'),
-            $this->translator->t('seo', 'robots_noindex_follow'),
-            $this->translator->t('seo', 'robots_noindex_nofollow')
+        $values = [
+            0 => $this->translator->t('seo', 'robots_use_system_default', ['%default%' => $this->getRobotsSetting()]),
+            1 => $this->translator->t('seo', 'robots_index_follow'),
+            2 => $this->translator->t('seo', 'robots_index_nofollow'),
+            3 => $this->translator->t('seo', 'robots_noindex_follow'),
+            4 => $this->translator->t('seo', 'robots_noindex_nofollow')
         ];
 
         return [
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
-            'robots' => $this->formsHelper->selectGenerator('seo_robots', [0, 1, 2, 3, 4], $langRobots, $robots)
+            'robots' => $this->formsHelper->choicesGenerator('seo_robots', $values, $robots)
         ];
     }
 

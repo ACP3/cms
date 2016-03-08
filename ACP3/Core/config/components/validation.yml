@@ -2,6 +2,11 @@ services:
   core.validator:
     class: ACP3\Core\Validation\Validator
 
+  core.validation.validation_rules.birthday_validation_rule:
+    class: ACP3\Core\Validation\ValidationRules\BirthdayValidationRule
+    tags:
+      - { name: core.validation.validation_rule }
+
   core.validation.validation_rules.change_password_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\ChangePasswordValidationRule
     tags:

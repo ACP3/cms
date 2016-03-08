@@ -7,6 +7,8 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core\Controller\AdminAction;
+use ACP3\Core\Controller\Context\AdminContext;
+use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
@@ -20,6 +22,23 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Modules\ACP3\Articles\Helpers
      */
     protected $articlesHelpers;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
+
+    /**
+     * AbstractFormAction constructor.
+     *
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms                   $formsHelper
+     */
+    public function __construct(AdminContext $context, Forms $formsHelper)
+    {
+        parent::__construct($context);
+
+        $this->formsHelper = $formsHelper;
+    }
 
     /**
      * @param \ACP3\Modules\ACP3\Articles\Helpers $articlesHelpers
@@ -60,20 +79,18 @@ abstract class AbstractFormAction extends AdminAction
      *
      * @return string
      */
-    protected function fetchMenuItemModes($value = '')
+    protected function fetchMenuItemTypes($value = '')
     {
-        $valuesMode = [1, 2, 3];
-        $langMode = [
-            $this->translator->t('menus', 'module'),
-            $this->translator->t('menus', 'dynamic_page'),
-            $this->translator->t('menus', 'hyperlink')
+        $menuItemTypes = [
+            1 => $this->translator->t('menus', 'module'),
+            2 => $this->translator->t('menus', 'dynamic_page'),
+            3 => $this->translator->t('menus', 'hyperlink')
         ];
         if ($this->articlesHelpers) {
-            $valuesMode[] = 4;
-            $langMode[] = $this->translator->t('menus', 'article');
+            $menuItemTypes[4] = $this->translator->t('menus', 'article');
         }
 
-        return $this->get('core.helpers.forms')->selectGenerator('mode', $valuesMode, $langMode, $value);
+        return $this->formsHelper->choicesGenerator('mode', $menuItemTypes, $value);
     }
 
     /**
@@ -86,7 +103,7 @@ abstract class AbstractFormAction extends AdminAction
         $modules = $this->modules->getAllModules();
         foreach ($modules as $row) {
             $row['dir'] = strtolower($row['dir']);
-            $modules[$row['name']]['selected'] = $this->get('core.helpers.forms')->selectEntry(
+            $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
                 'module',
                 $row['dir'],
                 !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : ''

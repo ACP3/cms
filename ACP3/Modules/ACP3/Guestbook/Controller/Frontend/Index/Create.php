@@ -38,6 +38,10 @@ class Create extends AbstractAction
      */
     protected $newsletterSubscribeHelper;
     /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
      * @var bool
      */
     protected $newsletterActive = false;
@@ -47,6 +51,7 @@ class Create extends AbstractAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext          $context
      * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
@@ -54,6 +59,7 @@ class Create extends AbstractAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
         Guestbook\Validation\FormValidation $formValidation
@@ -61,6 +67,7 @@ class Create extends AbstractAction
         parent::__construct($context);
 
         $this->date = $date;
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->guestbookRepository = $guestbookRepository;
         $this->formValidation = $formValidation;
@@ -101,7 +108,7 @@ class Create extends AbstractAction
 
         // In Newsletter integrieren
         if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
-            $this->view->assign('subscribe_newsletter', $this->get('core.helpers.forms')->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
+            $this->view->assign('subscribe_newsletter', $this->formsHelper->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
             $this->view->assign(
                 'LANG_subscribe_to_newsletter',
                 $this->translator->t(

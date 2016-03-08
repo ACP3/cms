@@ -32,23 +32,30 @@ class Edit extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers
      */
     protected $emoticonsHelpers;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                  $context
+     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository      $guestbookRepository
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookRepository $guestbookRepository,
         Guestbook\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->guestbookRepository = $guestbookRepository;
         $this->adminFormValidation = $adminFormValidation;
@@ -90,7 +97,7 @@ class Edit extends Core\Controller\AdminAction
             }
 
             if ($settings['notify'] == 2) {
-                $this->view->assign('activate', $this->get('core.helpers.forms')->yesNoCheckboxGenerator('active', $guestbook['active']));
+                $this->view->assign('activate', $this->formsHelper->yesNoCheckboxGenerator('active', $guestbook['active']));
             }
 
             return [

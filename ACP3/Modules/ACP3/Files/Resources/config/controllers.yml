@@ -15,6 +15,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.date'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@files.model.filesrepository'
       - '@files.validator'
@@ -34,6 +35,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.date'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@files.model.filesrepository'
       - '@files.cache'
@@ -50,6 +52,7 @@ services:
     class: %files.controller.admin.index.settings.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@files.validation.admin_settings_form_validation'
     calls:
