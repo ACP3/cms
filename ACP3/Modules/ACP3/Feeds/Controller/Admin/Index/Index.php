@@ -65,7 +65,7 @@ class Index extends Core\Controller\AdminAction
         ];
 
         return [
-            'feed_types' => $this->formsHelper->selectGenerator('feed_type', $feedTypes, $settings['feed_type']),
+            'feed_types' => $this->formsHelper->choicesGenerator('feed_type', $feedTypes, $settings['feed_type']),
             'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

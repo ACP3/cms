@@ -108,7 +108,7 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'units' => $this->formsHelper->selectGenerator('units', $this->getUnits(), trim(strrchr($file['size'], ' '))),
+                'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), trim(strrchr($file['size'], ' '))),
                 'categories' => $this->categoriesHelpers->categoriesList('files', $file['category_id'], true),
                 'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
                 'current_file' => $file['file'],

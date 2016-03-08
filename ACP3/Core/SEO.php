@@ -340,7 +340,7 @@ class SEO
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
-            'robots' => $this->formsHelper->selectGenerator('seo_robots', $values, $robots)
+            'robots' => $this->formsHelper->choicesGenerator('seo_robots', $values, $robots)
         ];
     }
 

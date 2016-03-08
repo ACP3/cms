@@ -104,7 +104,7 @@ class Date
             'short' => $this->translator->t('system', 'date_format_short'),
             'long' => $this->translator->t('system', 'date_format_long')
         ];
-        return $this->formsHelper->selectGenerator('dateformat', $dateFormats, $currentDateFormat);
+        return $this->formsHelper->choicesGenerator('dateformat', $dateFormats, $currentDateFormat);
     }
 
     /**

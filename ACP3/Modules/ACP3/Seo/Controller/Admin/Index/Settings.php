@@ -69,7 +69,7 @@ class Settings extends Core\Controller\AdminAction
         ];
 
         return [
-            'robots' => $this->formsHelper->selectGenerator('robots', $robots, $seoSettings['robots']),
+            'robots' => $this->formsHelper->choicesGenerator('robots', $robots, $seoSettings['robots']),
             'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']),
             'form' => array_merge($seoSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()

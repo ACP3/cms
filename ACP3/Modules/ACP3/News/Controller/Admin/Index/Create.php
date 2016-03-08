@@ -86,7 +86,7 @@ class Create extends AbstractFormAction
         return [
             'categories' => $this->categoriesHelpers->categoriesList('news', '', true),
             'options' => $this->fetchNewsOptions($settings, 0, 0),
-            'target' => $this->formsHelper->linkTargetSelectGenerator('target'),
+            'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
             'SEO_FORM_FIELDS' => $this->seo->formFields(),
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()

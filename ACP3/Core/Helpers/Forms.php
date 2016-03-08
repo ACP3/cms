@@ -56,7 +56,7 @@ class Forms
      * Selektion eines Eintrages in einem Dropdown-Menü
      *
      * @param string               $formFieldName
-     * @param string|integer|array $defaultValue
+     * @param mixed                $defaultValue
      * @param string|integer|array $currentValue
      * @param string               $htmlAttribute
      *
@@ -99,7 +99,7 @@ class Forms
      *
      * @return array
      */
-    public function selectGenerator($name, array $values, $currentValue = '', $selected = 'selected')
+    public function choicesGenerator($name, array $values, $currentValue = '', $selected = 'selected')
     {
         $select = [];
         $id = str_replace('_', '-', $name);
@@ -121,14 +121,14 @@ class Forms
      *
      * @return array
      */
-    public function linkTargetSelectGenerator($name, $currentValue = '', $selected = 'selected')
+    public function linkTargetChoicesGenerator($name, $currentValue = '', $selected = 'selected')
     {
         $linkTargets = [
             1 => $this->translator->t('system', 'window_self'),
             2 => $this->translator->t('system', 'window_blank')
         ];
 
-        return $this->selectGenerator($name, $linkTargets, $currentValue, $selected);
+        return $this->choicesGenerator($name, $linkTargets, $currentValue, $selected);
     }
 
     /**
@@ -138,14 +138,14 @@ class Forms
      *
      * @return array
      */
-    public function yesNoSelectGenerator($name, $currentValue = '', $selected = 'selected')
+    public function yesNoChoicesGenerator($name, $currentValue = '', $selected = 'selected')
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),
             0 => $this->translator->t('system', 'no')
         ];
 
-        return $this->selectGenerator($name, $values, $currentValue, $selected);
+        return $this->choicesGenerator($name, $values, $currentValue, $selected);
     }
 
     /**
@@ -157,7 +157,7 @@ class Forms
      */
     public function checkboxGenerator($name, array $values, $currentValue = '')
     {
-        return $this->selectGenerator($name, $values, $currentValue, 'checked');
+        return $this->choicesGenerator($name, $values, $currentValue, 'checked');
     }
 
     /**

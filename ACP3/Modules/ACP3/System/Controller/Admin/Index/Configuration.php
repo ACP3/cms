@@ -97,9 +97,9 @@ class Configuration extends Core\Controller\AdminAction
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->formsHelper->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']),
             'cache_images' => $this->formsHelper->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']),
-            'mailer_type' => $this->formsHelper->selectGenerator('mailer_type', $mailerTypes, $systemSettings['mailer_type']),
+            'mailer_type' => $this->formsHelper->choicesGenerator('mailer_type', $mailerTypes, $systemSettings['mailer_type']),
             'mailer_smtp_auth' => $this->formsHelper->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']),
-            'mailer_smtp_security' => $this->formsHelper->selectGenerator('mailer_smtp_security', $mailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
+            'mailer_smtp_security' => $this->formsHelper->choicesGenerator('mailer_smtp_security', $mailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
             'form' => array_merge($systemSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

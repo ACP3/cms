@@ -124,7 +124,7 @@ class Edit extends AbstractFormAction
             return [
                 'mode' => $this->fetchMenuItemTypes($menuItem['mode']),
                 'modules' => $this->fetchModules($menuItem),
-                'target' => $this->formsHelper->linkTargetSelectGenerator('target', $menuItem['target']),
+                'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $menuItem['target']),
                 'SEO_FORM_FIELDS' => $this->seo->formFields($menuItem['uri']),
                 'form' => array_merge($menuItem, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()

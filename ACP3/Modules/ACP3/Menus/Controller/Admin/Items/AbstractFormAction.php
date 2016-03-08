@@ -90,7 +90,7 @@ abstract class AbstractFormAction extends AdminAction
             $menuItemTypes[4] = $this->translator->t('menus', 'article');
         }
 
-        return $this->formsHelper->selectGenerator('mode', $menuItemTypes, $value);
+        return $this->formsHelper->choicesGenerator('mode', $menuItemTypes, $value);
     }
 
     /**

@@ -100,7 +100,7 @@ class Create extends AbstractFormAction
         ];
 
         return [
-            'units' => $this->formsHelper->selectGenerator('units', $this->getUnits(), ''),
+            'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
             'categories' => $this->categoriesHelpers->categoriesList('files', '', true),
             'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
             'SEO_FORM_FIELDS' => $this->seo->formFields(),

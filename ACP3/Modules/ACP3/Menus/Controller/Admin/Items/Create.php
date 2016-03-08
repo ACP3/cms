@@ -113,7 +113,7 @@ class Create extends AbstractFormAction
         return [
             'mode' => $this->fetchMenuItemTypes(),
             'modules' => $this->fetchModules(),
-            'target' => $this->formsHelper->linkTargetSelectGenerator('target'),
+            'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
             'SEO_FORM_FIELDS' => $this->seo->formFields(),
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()

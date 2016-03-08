@@ -78,7 +78,7 @@ class Index extends Core\Controller\FrontendAction
         ];
 
         return [
-            'salutation' => $this->formsHelper->selectGenerator('salutation', $salutations),
+            'salutation' => $this->formsHelper->choicesGenerator('salutation', $salutations),
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
