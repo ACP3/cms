@@ -77,7 +77,7 @@ abstract class AbstractFormAction extends AdminAction
     /**
      * @param string $value
      *
-     * @return string
+     * @return array
      */
     protected function fetchMenuItemTypes($value = '')
     {
