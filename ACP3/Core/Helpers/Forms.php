@@ -55,29 +55,39 @@ class Forms
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
      *
-     * @param string               $name
-     * @param mixed                $value
+     * @param string               $formFieldName
+     * @param string|integer|array $defaultValue
      * @param string|integer|array $currentValue
-     * @param string               $attr
+     * @param string               $htmlAttribute
      *
      * @return string
      */
-    public function selectEntry($name, $value, $currentValue = '', $attr = 'selected')
+    public function selectEntry($formFieldName, $defaultValue, $currentValue = '', $htmlAttribute = '')
     {
-        $attr = ' ' . $attr . '="' . $attr . '"';
-        $currentValue = $this->request->getPost()->get($name, $currentValue);
+        $htmlAttribute = $this->buildHtmlAttribute($htmlAttribute);
+        $currentValue = $this->request->getPost()->get($formFieldName, $currentValue);
 
-        if (is_array($currentValue) === false && $currentValue == $value) {
-            return $attr;
-        } elseif (is_array($currentValue) === true) {
-            foreach ($currentValue as $row) {
-                if ($row == $value) {
-                    return $attr;
-                }
-            }
+        if (is_array($currentValue) === false && $currentValue == $defaultValue) {
+            return $htmlAttribute;
+        } elseif (is_array($currentValue) === true && in_array($defaultValue, $currentValue)) {
+            return $htmlAttribute;
         }
 
         return '';
+    }
+
+    /**
+     * @param string $attr
+     *
+     * @return string
+     */
+    private function buildHtmlAttribute($attr)
+    {
+        if (empty($attr)) {
+            $attr = 'selected';
+        }
+
+        return ' ' . $attr . '="' . $attr . '"';
     }
 
     /**
