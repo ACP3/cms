@@ -73,8 +73,6 @@ class FormsTest extends \PHPUnit_Framework_TestCase
             $postValues = [$formFieldName => $postValue];
         }
 
-        var_dump($postValues);
-
         $this->requestMock->expects($this->once())
             ->method('getPost')
             ->willReturn(new Request\ParameterBag($postValues));
