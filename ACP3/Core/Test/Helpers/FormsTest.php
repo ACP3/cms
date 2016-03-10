@@ -10,6 +10,8 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\Request;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Test\DataProvider\Helpers\RecordsPerPageDataProvider;
+use ACP3\Core\Test\DataProvider\Helpers\SelectEntryDataProvider;
 
 class FormsTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +56,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
      */
     public function testSelectEntry($formFieldName, $defaultValue, $currentValue, $htmlAttribute, $postValue, $expected)
     {
-        $this->setUpSelectEntryExpectations($formFieldName, $postValue);
+        $this->setUpRequestExpectations($formFieldName, $postValue);
 
         $this->assertEquals(
             $expected,
@@ -63,17 +65,33 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider recordsPerPageDataProvider
+     *
+     * @param integer $currentValue
+     * @param integer $steps
+     * @param integer $maxValue
+     * @param integer $postValue
+     * @param array   $expected
+     */
+    public function testRecordsPerPage($currentValue, $steps, $maxValue, $postValue, $expected)
+    {
+        $this->setUpRequestExpectations('entries', $postValue);
+
+        $this->assertEquals($expected, $this->formsHelper->recordsPerPage($currentValue, $steps, $maxValue));
+    }
+
+    /**
      * @param string $formFieldName
      * @param mixed  $postValue
      */
-    private function setUpSelectEntryExpectations($formFieldName, $postValue)
+    private function setUpRequestExpectations($formFieldName, $postValue)
     {
         $postValues = [];
         if ($postValue !== null) {
             $postValues = [$formFieldName => $postValue];
         }
 
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects($this->atLeastOnce())
             ->method('getPost')
             ->willReturn(new Request\ParameterBag($postValues));
     }
@@ -83,70 +101,14 @@ class FormsTest extends \PHPUnit_Framework_TestCase
      */
     public function selectEntryDataProvider()
     {
-        return [
-            'not_selected' => [
-                'foo',
-                1,
-                0,
-                'selected',
-                null,
-                ''
-            ],
-            'value_array_not_selected' => [
-                'foo',
-                '',
-                [
-                    'a',
-                    'b',
-                    'c'
-                ],
-                'selected',
-                null,
-                ''
-            ],
-            'value_array_selected' => [
-                'foo',
-                'a',
-                [
-                    'a',
-                    'b',
-                    'c'
-                ],
-                'selected',
-                null,
-                ' selected="selected"'
-            ],
-            'value_array_post_selected' => [
-                'foo',
-                'b',
-                [
-                    'a',
-                    'c'
-                ],
-                'selected',
-                [
-                    'a',
-                    'b',
-                    'c'
-                ],
-                ' selected="selected"'
-            ],
-            'empty_attribute_selected' => [
-                'foo',
-                1,
-                1,
-                '',
-                1,
-                ' selected="selected"'
-            ],
-            'checked' => [
-                'foo',
-                1,
-                1,
-                'checked',
-                1,
-                ' checked="checked"'
-            ],
-        ];
+        return (new SelectEntryDataProvider())->getData();
+    }
+
+    /**
+     * @return array
+     */
+    public function recordsPerPageDataProvider()
+    {
+        return (new RecordsPerPageDataProvider())->getData();
     }
 }
