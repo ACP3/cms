@@ -21,7 +21,7 @@ services:
   users.helpers.data_grid.column_renderer.user_roles_column_renderer:
     class: %users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn%
     arguments:
-      - '@core.acl
+      - '@core.acl'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
