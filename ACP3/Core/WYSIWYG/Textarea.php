@@ -67,7 +67,10 @@ class Textarea extends AbstractWYSIWYG
         if ($this->modules->isActive('emoticons') === true) {
             $out .= $this->emoticonsHelpers->emoticonsList($this->id);
         }
-        $out .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="60" rows="6" class="form-control">' . $this->value . '</textarea>';
+        $out .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="60" rows="6" class="form-control">';
+        $out .= $this->value;
+        $out .= '</textarea>';
+
         return $out;
     }
 }

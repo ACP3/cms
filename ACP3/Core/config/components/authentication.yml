@@ -3,7 +3,7 @@ parameters:
 
 services:
   core.authentication.factory:
-    class: ACP3\Core\AuthenticationFactory
+    class: ACP3\Core\Authentication\AuthenticationFactory
     arguments:
       - '@service_container'
 

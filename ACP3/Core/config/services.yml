@@ -14,7 +14,7 @@ imports:
   - { resource: components/nestedsets.yml }
   - { resource: components/validation.yml }
   - { resource: components/view.yml }
-  - { resource: ../WYSIWYG/config/services.yml }
+  - { resource: components/wysiwyg.yml }
   - { resource: ../../Modules/ACP3/Permissions/Resources/config/services.yml }
   - { resource: ../../Modules/ACP3/Seo/Resources/config/services.yml }
   - { resource: ../../Modules/ACP3/System/Resources/config/services.yml }

@@ -1,0 +1,7 @@
+services:
+  core.wysiwyg.textarea:
+    class: ACP3\Core\WYSIWYG\Textarea
+    arguments:
+      - '@core.modules'
+    calls:
+      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]

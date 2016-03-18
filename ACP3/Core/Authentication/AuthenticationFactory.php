@@ -1,12 +1,17 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Authentication;
 
 use ACP3\Core\Exceptions\InvalidAuthenticationMethod;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class AuthenticationFactory
- * @package ACP3\Core
+ * @package ACP3\Core\Authentication
  */
 class AuthenticationFactory
 {
