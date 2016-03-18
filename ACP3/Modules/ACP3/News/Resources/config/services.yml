@@ -13,15 +13,21 @@ parameters:
 services:
   news.cache:
     class: %news.cache.fqdn%
-    arguments: ['@news.cache.core', '@news.model.newsrepository']
+    arguments:
+      - '@news.cache.core'
+      - '@news.model.newsrepository'
 
   news.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', @core.environment.application_path, 'news']
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+      - 'news'
 
   news.model.newsrepository:
     class: %news.model.newsrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   news.installer.schema:
     class: %news.installer.schema.fqdn%

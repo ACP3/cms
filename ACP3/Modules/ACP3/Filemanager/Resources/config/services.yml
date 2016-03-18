@@ -13,4 +13,4 @@ services:
   filemanager.helpers:
     class: %filemanager.helpers.fqdn%
     arguments:
-      - @core.environment.application_path
+      - '@core.environment.application_path'

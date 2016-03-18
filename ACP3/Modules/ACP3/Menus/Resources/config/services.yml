@@ -43,7 +43,9 @@ services:
 
   menus.helpers.menuitemslist:
     class: %menus.helpers.menuitemslist.fqdn%
-    arguments: ['@core.helpers.forms', '@menus.cache']
+    arguments:
+      - '@core.helpers.forms'
+      - '@menus.cache'
 
   menus.helpers.managemenuitem:
     class: %menus.helpers.managemenuitem.fqdn%
@@ -54,15 +56,20 @@ services:
 
   menus.helpers.menuitemformfields:
     class: %menus.helpers.menuitemformfields.fqdn%
-    arguments: ['@core.helpers.forms', '@menus.helpers.menuitemslist', '@menus.model.menurepository']
+    arguments:
+      - '@core.helpers.forms'
+      - '@menus.helpers.menuitemslist'
+      - '@menus.model.menurepository'
 
   menus.model.menurepository:
     class: %menus.model.menurepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   menus.model.menuitemrepository:
     class: %menus.model.menuitemrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   menus.installer.schema:
     class: %menus.installer.schema.fqdn%
@@ -76,6 +83,10 @@ services:
 
   smarty.plugin.navbar:
     class: %smarty.plugin.navbar.fqdn%
-    arguments: ['@core.request', '@core.router', '@menus.model.menuitemrepository', '@menus.cache']
+    arguments:
+      - '@core.request'
+      - '@core.router'
+      - '@menus.model.menuitemrepository'
+      - '@menus.cache'
     tags:
       - { name: core.view.extension }

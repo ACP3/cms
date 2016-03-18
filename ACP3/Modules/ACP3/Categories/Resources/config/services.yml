@@ -12,11 +12,14 @@ parameters:
 services:
   categories.model:
     class: %categories.model.categoryrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   categories.cache:
     class: %categories.cache.fqdn%
-    arguments: ['@categories.cache.core', '@categories.model']
+    arguments:
+      - '@categories.cache.core'
+      - '@categories.model'
 
   categories.cache.core:
     class: ACP3\Core\Cache

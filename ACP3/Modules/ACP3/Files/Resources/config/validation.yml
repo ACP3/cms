@@ -11,9 +11,9 @@ services:
   files.validation.admin_settings_form_validation:
     class: %files.validation.admin_settings_form_validation.fqdn%
     arguments:
-      - @core.lang
-      - @core.validator
-      - @core.modules
+      - '@core.lang'
+      - '@core.validator'
+      - '@core.modules'
 
   files.validation.validation_rules.is_external_file_validation_rule:
     class: %files.validation.validation_rules.is_external_file_validation_rule.fqdn%

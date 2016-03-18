@@ -12,6 +12,10 @@ services:
 
   core.wysiwyg.tinymce:
     class: %core.wysiwyg.tinymce.fqdn%
-    arguments: ['@core.assets.minifier.css', @core.lang, '@core.view', @core.environment.application_path]
+    arguments:
+      - '@core.assets.minifier.css'
+      - '@core.lang'
+      - '@core.view'
+      - '@core.environment.application_path'
     calls:
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]

@@ -10,7 +10,8 @@ parameters:
 services:
   guestbook.model.guestbookrepository:
     class: %guestbook.model.guestbookrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   guestbook.installer.schema:
     class: %guestbook.installer.schema.fqdn%

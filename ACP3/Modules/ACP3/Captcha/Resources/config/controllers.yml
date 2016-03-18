@@ -4,4 +4,6 @@ parameters:
 services:
   captcha.controller.frontend.index.image:
     class: %captcha.controller.frontend.index.image.fqdn%
-    arguments: [@core.context.frontend, @core.session]
+    arguments:
+      - '@core.context.frontend'
+      - '@core.session'

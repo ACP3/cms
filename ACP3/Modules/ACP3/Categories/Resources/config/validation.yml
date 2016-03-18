@@ -18,12 +18,14 @@ services:
 
   categories.validation.validation_rules.category_exists_validation_rule:
     class: %categories.validation.validation_rules.category_exists_validation_rule.fqdn%
-    arguments: [@categories.helpers]
+    arguments:
+      - '@categories.helpers'
     tags:
       - { name: core.validation.validation_rule }
 
   categories.validation.validation_rules.duplicate_category_validation_rule:
     class: %categories.validation.validation_rules.duplicate_category_validation_rule.fqdn%
-    arguments: [@categories.helpers]
+    arguments:
+      - '@categories.helpers'
     tags:
       - { name: core.validation.validation_rule }

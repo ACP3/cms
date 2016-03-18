@@ -11,11 +11,14 @@ parameters:
 services:
   comments.helpers:
     class: %comments.helpers.fqdn%
-    arguments: ['@core.modules', '@comments.model.commentrepository']
+    arguments:
+      - '@core.modules'
+      - '@comments.model.commentrepository'
 
   comments.model.commentrepository:
     class: %comments.model.commentrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   comments.installer.schema:
     class: %comments.installer.schema.fqdn%

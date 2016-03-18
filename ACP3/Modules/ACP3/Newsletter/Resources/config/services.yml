@@ -17,45 +17,53 @@ parameters:
 services:
   newsletter.model.newsletterrepository:
     class: %newsletter.model.newsletterrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   newsletter.model.accountrepository:
     class: %newsletter.model.accountrepository.fqdn%
-    arguments: [@core.db]
+    arguments:
+      - '@core.db'
 
   newsletter.model.accounthistoryrepository:
     class: %newsletter.model.accounthistoryrepository.fqdn%
-    arguments: [@core.db]
+    arguments:
+      - '@core.db'
 
   newsletter.helper.accountstatus:
     class: %newsletter.helper.accountstatus.fqdn%
-    arguments: [@core.date, @newsletter.model.accountrepository, @newsletter.model.accounthistoryrepository]
+    arguments:
+      - '@core.date'
+      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.accounthistoryrepository'
 
   newsletter.helper.sendnewsletter:
     class: %newsletter.helper.sendnewsletter.fqdn%
     arguments:
-      - @core.mailer
-      - @core.router
-      - @core.config
-      - @newsletter.model.newsletterrepository
+      - '@core.mailer'
+      - '@core.router'
+      - '@core.config'
+      - '@newsletter.model.newsletterrepository'
 
   newsletter.helper.subscribe:
     class: %newsletter.helper.subscribe.fqdn%
     arguments:
-      - @core.date
-      - @core.lang
-      - @core.mailer
-      - @core.request
-      - @core.router
-      - @core.helpers.stringFormatter
-      - @core.helpers.secure
-      - @core.config
-      - @newsletter.helper.accountstatus
-      - @newsletter.model.accountrepository
+      - '@core.date'
+      - '@core.lang'
+      - '@core.mailer'
+      - '@core.request'
+      - '@core.router'
+      - '@core.helpers.stringFormatter'
+      - '@core.helpers.secure'
+      - '@core.config'
+      - '@newsletter.helper.accountstatus'
+      - '@newsletter.model.accountrepository'
 
   newsletter.helper.data_grid.column_renderer.account_status_column_renderer:
     class: %newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn%
-    arguments: [@core.lang, @core.router]
+    arguments:
+      - '@core.lang'
+      - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 

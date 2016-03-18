@@ -12,15 +12,18 @@ parameters:
 services:
   polls.model.pollrepository:
     class: %polls.model.pollrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   polls.model.answerrepository:
     class: %polls.model.answerrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   polls.model.voterepository:
     class: %polls.model.voterepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   polls.installer.schema:
     class: %polls.installer.schema.fqdn%

@@ -30,12 +30,14 @@ services:
 
   newsletter.validation.validation_rules.account_exists_validation_rule:
     class: %newsletter.validation.validation_rules.account_exists_validation_rule.fqdn%
-    arguments: [@newsletter.model.accountrepository]
+    arguments:
+      - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
     class: %newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn%
-    arguments: [@newsletter.model.accountrepository]
+    arguments:
+      - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }

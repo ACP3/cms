@@ -4,6 +4,11 @@ parameters:
 services:
   captcha.validation.validation_rules.captcha_validation_rule:
     class: %captcha.validation.validation_rules.captcha_validation_rule.fqdn%
-    arguments: [@core.acl, @core.request, @core.router, @core.session, @core.user]
+    arguments:
+      - '@core.acl'
+      - '@core.request'
+      - '@core.router'
+      - '@core.session'
+      - '@core.user'
     tags:
       - { name: core.validation.validation_rule }

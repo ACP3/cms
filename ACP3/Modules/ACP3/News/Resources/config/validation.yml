@@ -11,12 +11,13 @@ services:
   news.validation.admin_settings_form_validation:
     class: %news.validation.admin_settings_form_validation.fqdn%
     arguments:
-      - @core.lang
-      - @core.validator
-      - @core.modules
+      - '@core.lang'
+      - '@core.validator'
+      - '@core.modules'
 
   news.validation.validation_rules.external_link_validation_rule:
     class: %news.validation.validation_rules.external_link_validation_rule.fqdn%
-    arguments: [@core.validation.validation_rules.in_array_validation_rule]
+    arguments:
+      - '@core.validation.validation_rules.in_array_validation_rule'
     tags:
       - { name: core.validation.validation_rule }

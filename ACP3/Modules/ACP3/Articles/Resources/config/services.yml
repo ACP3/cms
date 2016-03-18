@@ -13,19 +13,27 @@ parameters:
 services:
   articles.cache:
     class: %articles.cache.fqdn%
-    arguments: ['@articles.cache.core', '@articles.model.articlerepository']
+    arguments:
+      - '@articles.cache.core'
+      - '@articles.model.articlerepository'
 
   articles.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', @core.environment.application_path, 'articles']
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+      - 'articles'
 
   articles.helpers:
     class: %articles.helpers.fqdn%
-    arguments: ['@core.helpers.forms', '@articles.model.articlerepository']
+    arguments:
+      - '@core.helpers.forms'
+      - '@articles.model.articlerepository'
 
   articles.model.articlerepository:
     class: %articles.model.articlerepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   articles.installer.schema:
     class: %articles.installer.schema.fqdn%

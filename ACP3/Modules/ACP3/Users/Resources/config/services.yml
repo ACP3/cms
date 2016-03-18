@@ -12,17 +12,23 @@ parameters:
 services:
   users.helpers.forms:
     class: %users.helpers.forms.fqdn%
-    arguments: [@core.lang, @core.request, @core.helpers.date, @core.helpers.forms]
+    arguments:
+      - '@core.lang'
+      - '@core.request'
+      - '@core.helpers.date'
+      - '@core.helpers.forms'
 
   users.helpers.data_grid.column_renderer.user_roles_column_renderer:
     class: %users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn%
-    arguments: [@core.acl]
+    arguments:
+      - '@core.acl
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
   users.model.userrepository:
     class: %users.model.userrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   users.installer.schema:
     class: %users.installer.schema.fqdn%

@@ -12,15 +12,21 @@ parameters:
 services:
   files.cache:
     class: %files.cache.fqdn%
-    arguments: ['@files.cache.core', '@files.model.filesrepository']
+    arguments:
+      - '@files.cache.core'
+      - '@files.model.filesrepository'
 
   files.cache.core:
     class: ACP3\Core\Cache
-    arguments: ['@service_container', @core.environment.application_path, 'files']
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+      - 'files'
 
   files.model.filesrepository:
     class: %files.model.filesrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   files.installer.schema:
     class: %files.installer.schema.fqdn%

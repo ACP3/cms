@@ -17,24 +17,28 @@ services:
 
   permissions.validation.validation_rules.privilege_exists_validation_rule:
     class: %permissions.validation.validation_rules.privilege_exists_validation_rule.fqdn%
-    arguments: [@permissions.model.privilegerepository]
+    arguments:
+      - '@permissions.model.privilegerepository'
     tags:
       - { name: core.validation.validation_rule }
 
   permissions.validation.validation_rules.privileges_exist_validation_rule:
     class: %permissions.validation.validation_rules.privileges_exist_validation_rule.fqdn%
-    arguments: [@core.acl]
+    arguments:
+      - '@core.acl'
     tags:
       - { name: core.validation.validation_rule }
 
   permissions.validation.validation_rules.role_not_exists_validation_rule:
     class: %permissions.validation.validation_rules.role_not_exists_validation_rule.fqdn%
-    arguments: [@permissions.model.rolerepository]
+    arguments:
+      - '@permissions.model.rolerepository'
     tags:
       - { name: core.validation.validation_rule }
 
   permissions.validation.validation_rules.roles_exist_validation_rule:
     class: %permissions.validation.validation_rules.roles_exist_validation_rule.fqdn%
-    arguments: [@core.acl]
+    arguments:
+      - '@core.acl'
     tags:
       - { name: core.validation.validation_rule }

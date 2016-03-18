@@ -13,20 +13,22 @@ parameters:
 services:
   system.model.modulerepository:
     class: %system.model.modulerepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   system.model.settingsrepository:
     class: %system.model.settingsrepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   system.helpers.installer:
     class: %system.helpers.installer.fqdn%
     arguments:
-      - @core.environment.application_path
-      - @core.modules
-      - @core.modules.vendors
-      - @core.modules.schemaInstaller
-      - @core.xml
+      - '@core.environment.application_path'
+      - '@core.modules'
+      - '@core.modules.vendors'
+      - '@core.modules.schemaInstaller'
+      - '@core.xml'
       - %core.environment%
 
   system.installer.schema:

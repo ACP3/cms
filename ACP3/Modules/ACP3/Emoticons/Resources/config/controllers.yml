@@ -9,37 +9,37 @@ services:
   emoticons.controller.admin.index.create:
     class: %emoticons.controller.admin.index.create.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @emoticons.model.emoticonrepository
-      - @emoticons.validator
-      - @emoticons.cache
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.validator'
+      - '@emoticons.cache'
 
   emoticons.controller.admin.index.delete:
     class: %emoticons.controller.admin.index.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @emoticons.model.emoticonrepository
-      - @emoticons.cache
+      - '@core.context.admin'
+      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.cache'
 
   emoticons.controller.admin.index.edit:
     class: %emoticons.controller.admin.index.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @emoticons.model.emoticonrepository
-      - @emoticons.validator
-      - @emoticons.cache
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.validator'
+      - '@emoticons.cache'
 
   emoticons.controller.admin.index.index:
     class: %emoticons.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @emoticons.model.emoticonrepository
+      - '@core.context.admin'
+      - '@emoticons.model.emoticonrepository'
 
   emoticons.controller.admin.index.settings:
     class: %emoticons.controller.admin.index.settings.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @emoticons.validation.admin_settings_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@emoticons.validation.admin_settings_form_validation'

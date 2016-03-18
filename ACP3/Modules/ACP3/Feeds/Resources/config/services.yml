@@ -16,4 +16,6 @@ services:
 
   feeds.helper.feedgenerator:
     class: %feeds.helper.feedgenerator.fqdn%
-    arguments: [@core.config, @core.router]
+    arguments:
+      - '@core.config'
+      - '@core.router'

@@ -20,85 +20,85 @@ services:
   users.controller.admin.index.create:
     class: %users.controller.admin.index.create.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.date
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @core.helpers.forms
-      - @users.model.userrepository
-      - @users.validator.admin
-      - @permissions.helpers
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@core.helpers.forms'
+      - '@users.model.userrepository'
+      - '@users.validator.admin'
+      - '@permissions.helpers'
 
   users.controller.admin.index.delete:
     class: %users.controller.admin.index.delete.fqdn%
     arguments:
-      - @core.context.admin
-      - @users.model.userrepository
+      - '@core.context.admin'
+      - '@users.model.userrepository'
 
   users.controller.admin.index.edit:
     class: %users.controller.admin.index.edit.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @core.helpers.forms
-      - @users.model.userrepository
-      - @users.validator.admin
-      - @permissions.helpers
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@core.helpers.forms'
+      - '@users.model.userrepository'
+      - '@users.validator.admin'
+      - '@permissions.helpers'
 
   users.controller.admin.index.index:
     class: %users.controller.admin.index.index.fqdn%
     arguments:
-      - @core.context.admin
-      - @users.model.userrepository
+      - '@core.context.admin'
+      - '@users.model.userrepository'
 
   users.controller.admin.index.settings:
     class: %users.controller.admin.index.settings.fqdn%
     arguments:
-      - @core.context.admin
-      - @core.helpers.formToken
-      - @core.helpers.forms
-      - @users.validation.admin_settings_form_validation
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@core.helpers.forms'
+      - '@users.validation.admin_settings_form_validation'
 
   users.controller.frontend.account.edit:
     class: %users.controller.frontend.account.edit.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @users.model.userrepository
-      - @users.validator.account
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@users.model.userrepository'
+      - '@users.validator.account'
 
   users.controller.frontend.account.index:
     class: %users.controller.frontend.account.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @users.model.userrepository
+      - '@core.context.frontend'
+      - '@users.model.userrepository'
 
   users.controller.frontend.account.settings:
     class: %users.controller.frontend.account.settings.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.helpers.formToken
-      - @users.model.userrepository
-      - @users.validation.account_settings_form_validation
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@users.model.userrepository'
+      - '@users.validation.account_settings_form_validation'
 
   users.controller.frontend.index.forgot_pwd:
     class: %users.controller.frontend.index.forgot_pwd.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @users.model.userrepository
-      - @users.validation.account_forgot_password_form_validation
-      - @core.helpers.sendEmail
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@users.model.userrepository'
+      - '@users.validation.account_forgot_password_form_validation'
+      - '@core.helpers.sendEmail'
 
   users.controller.frontend.index.index:
     class: %users.controller.frontend.index.index.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.pagination
-      - @users.model.userrepository
+      - '@core.context.frontend'
+      - '@core.pagination'
+      - '@users.model.userrepository'
 
   users.controller.frontend.index.login:
     class: %users.controller.frontend.index.login.fqdn%
@@ -111,20 +111,20 @@ services:
   users.controller.frontend.index.register:
     class: %users.controller.frontend.index.register.fqdn%
     arguments:
-      - @core.context.frontend
-      - @core.date
-      - @core.helpers.formToken
-      - @core.helpers.secure
-      - @users.model.userrepository
-      - @users.validator.register
-      - @permissions.helpers
-      - @core.helpers.sendEmail
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@users.model.userrepository'
+      - '@users.validator.register'
+      - '@permissions.helpers'
+      - '@core.helpers.sendEmail'
 
   users.controller.frontend.index.view_profile:
     class: %users.controller.frontend.index.view_profile.fqdn%
     arguments:
-      - @core.context.frontend
-      - @users.model.userrepository
+      - '@core.context.frontend'
+      - '@users.model.userrepository'
 
   users.controller.widget.index.login:
     class: %users.controller.widget.index.login.fqdn%

@@ -36,13 +36,15 @@ services:
 
   users.validation.validation_rules.account_not_exists_by_email_validation_rule:
     class: %users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn%
-    arguments: [@users.model.userrepository]
+    arguments:
+      - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   users.validation.validation_rules.account_not_exists_by_name_validation_rule:
     class: %users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn%
-    arguments: [@users.model.userrepository]
+    arguments:
+      - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
 

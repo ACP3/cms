@@ -16,31 +16,42 @@ parameters:
 services:
   permissions.cache:
     class: %permissions.cache.fqdn%
-    arguments: ['@core.cache.system', '@permissions.model.rolerepository', @permissions.model.resourcerepository, @permissions.model.rulerepository]
+    arguments:
+      - '@core.cache.system'
+      - '@permissions.model.rolerepository'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.model.rulerepository'
 
   permissions.helpers:
     class: %permissions.helpers.fqdn%
-    arguments: ['@permissions.model.rolerepository', @permissions.model.userrolerepository]
+    arguments:
+      - '@permissions.model.rolerepository'
+      - '@permissions.model.userrolerepository'
 
   permissions.model.rolerepository:
     class: %permissions.model.rolerepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   permissions.model.rulerepository:
     class: %permissions.model.rulerepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   permissions.model.resourcerepository:
     class: %permissions.model.resourcerepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   permissions.model.privilegerepository:
     class: %permissions.model.privilegerepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   permissions.model.userrolerepository:
     class: %permissions.model.userrolerepository.fqdn%
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   permissions.installer.schema:
     class: %permissions.installer.schema.fqdn%
