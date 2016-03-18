@@ -4,6 +4,7 @@ imports:
   - { resource: components/assets.yml }
   - { resource: components/authentication.yml }
   - { resource: components/controller.yml }
+  - { resource: components/database.yml }
   - { resource: components/datagrid.yml }
   - { resource: components/date.yml }
   - { resource: components/helpers.yml }
@@ -58,16 +59,6 @@ services:
       - '@core.cache.system'
       - '@system.model.modulerepository'
       - '@system.model.settingsrepository'
-
-  core.db:
-    class: ACP3\Core\DB
-    arguments:
-      - '@core.logger'
-      - '@core.environment.application_path'
-      - '%core.environment%'
-      - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%'}
-      - '%db_table_prefix%'
-      - '%cache_driver%'
 
   core.functions:
     class: ACP3\Core\Functions

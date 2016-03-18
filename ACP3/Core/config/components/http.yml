@@ -22,4 +22,5 @@ services:
 
   core.router.aliases:
     class: ACP3\Core\Router\Aliases
-    arguments: ['@seo.cache']
+    arguments:
+      - '@seo.cache'

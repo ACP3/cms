@@ -19,7 +19,9 @@ services:
 
   core.validation.validation_rules.form_token_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\FormTokenValidationRule
-    arguments: ['@core.request', '@core.session']
+    arguments:
+      - '@core.request'
+      - '@core.session'
     tags:
       - { name: core.validation.validation_rule }
 
@@ -45,4 +47,6 @@ services:
 
   core.validator.abstract:
     abstract: true
-    arguments: ['@core.lang', '@core.validator']
+    arguments:
+      - '@core.lang'
+      - '@core.validator'

@@ -1,17 +1,22 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-use ACP3\Core\DB\SQLLogger;
+namespace ACP3\Core\Database;
+
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Logger;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 
 /**
- * Class DB
- * @package ACP3\Core
+ * Class Connection
+ * @package ACP3\Core\Database
  */
-class DB
+class Connection
 {
     /**
      * @var \ACP3\Core\Logger

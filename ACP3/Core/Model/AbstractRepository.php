@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Model;
 
-use ACP3\Core\DB;
+use ACP3\Core\Database\Connection;
 
 /**
  * Class AbstractRepository
@@ -14,14 +14,14 @@ abstract class AbstractRepository
      */
     const TABLE_NAME = '';
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\Database\Connection
      */
     protected $db;
 
     /**
-     * @param \ACP3\Core\DB $db
+     * @param \ACP3\Core\Database\Connection $db
      */
-    public function __construct(DB $db)
+    public function __construct(Connection $db)
     {
         $this->db = $db;
     }

@@ -16,10 +16,10 @@ services:
   install.controller.install.install.index:
     class: ACP3\Installer\Modules\Install\Controller\Install\Index
     arguments:
-      - @core.context.install
-      - @core.date
-      - @core.helpers.secure
-      - @core.helpers.date
-      - @install.helpers.install
-      - @install.validator
+      - '@core.context.install'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@core.helpers.date'
+      - '@install.helpers.install'
+      - '@install.validator'
 

@@ -4,13 +4,18 @@ parameters:
 services:
   core.authentication.factory:
     class: ACP3\Core\AuthenticationFactory
-    arguments: [@service_container]
+    arguments:
+      - '@service_container'
+
   core.authentication:
     class: ACP3\Core\Authentication\AuthenticationInterface
-    factory: [@core.authentication.factory, get]
+    factory: ['@core.authentication.factory', get]
     arguments:
       - %core.authentication.method%
 
   core.authentication.native:
     class: ACP3\Core\Authentication\Native
-    arguments: [@core.request, @core.session, @users.model.userrepository]
+    arguments:
+      - '@core.request'
+      - '@core.session'
+      - '@users.model.userrepository'

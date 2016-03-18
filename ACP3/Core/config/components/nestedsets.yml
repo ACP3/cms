@@ -1,28 +1,41 @@
 services:
   core.nested_set:
     class: ACP3\Core\NestedSet
-    arguments: [@core.nested_set.insert, @core.nested_set.edit, @core.nested_set.delete, @core.nested_set.sort]
+    arguments:
+      - '@core.nested_set.insert'
+      - '@core.nested_set.edit'
+      - '@core.nested_set.delete'
+      - '@core.nested_set.sort'
 
   core.nested_set.nested_set_repository:
     class: ACP3\Core\NestedSet\NestedSetRepository
-    arguments: [@core.db]
+    arguments:
+      - '@core.db'
 
   core.nested_set.insert:
     class: ACP3\Core\NestedSet\Insert
-    arguments: [@core.db, @core.nested_set.nested_set_repository]
+    arguments:
+      - '@core.db'
+      - '@core.nested_set.nested_set_repository'
     public: false
 
   core.nested_set.delete:
     class: ACP3\Core\NestedSet\Delete
-    arguments: [@core.db, @core.nested_set.nested_set_repository]
+    arguments:
+      - '@core.db'
+      - '@core.nested_set.nested_set_repository'
     public: false
 
   core.nested_set.edit:
     class: ACP3\Core\NestedSet\Edit
-    arguments: [@core.db, @core.nested_set.nested_set_repository]
+    arguments:
+      - '@core.db'
+      - '@core.nested_set.nested_set_repository'
     public: false
 
   core.nested_set.sort:
     class: ACP3\Core\NestedSet\Sort
-    arguments: [@core.db, @core.nested_set.nested_set_repository]
+    arguments:
+      - '@core.db'
+      - '@core.nested_set.nested_set_repository'
     public: false

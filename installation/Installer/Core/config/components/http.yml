@@ -15,4 +15,6 @@ services:
 
   core.router:
     class: ACP3\Installer\Core\Router
-    arguments: ['@core.request', '@core.environment.application_path']
+    arguments:
+      - '@core.request'
+      - '@core.environment.application_path'

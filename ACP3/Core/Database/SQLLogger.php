@@ -1,11 +1,16 @@
 <?php
-namespace ACP3\Core\DB;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Database;
 
 use ACP3\Core\Logger;
 
 /**
  * Class SQLLogger
- * @package ACP3\Core\DB
+ * @package ACP3\Core\Database
  */
 class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 {

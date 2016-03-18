@@ -1,11 +1,17 @@
 services:
   core.helpers.view.checkAccess:
     class: ACP3\Core\Helpers\View\CheckAccess
-    arguments: ['@core.acl', '@core.lang', '@core.router']
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
+      - '@core.router'
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
-    arguments: ['@core.request', '@core.view', '@core.helpers.output']
+    arguments:
+      - '@core.request'
+      - '@core.view'
+      - '@core.helpers.output'
 
   core.helpers.date:
     class: ACP3\Core\Helpers\Date
@@ -18,33 +24,46 @@ services:
 
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
-    arguments: ['@core.lang', '@core.request']
+    arguments:
+      - '@core.lang'
+      - '@core.request'
 
   core.helpers.sendEmail:
     class: ACP3\Core\Helpers\SendEmail
-    arguments: ['@core.mailer']
+    arguments:
+      - '@core.mailer'
 
   core.helpers.output:
     class: ACP3\Core\Helpers\Output
 
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages
-    arguments: ['@core.redirect', '@core.request', '@core.session']
+    arguments:
+      - '@core.redirect'
+      - '@core.request'
+      - '@core.session'
 
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
 
   core.helpers.formToken:
     class: ACP3\Core\Helpers\FormToken
-    arguments: ['@core.request', '@core.session']
+    arguments:
+      - '@core.request'
+      - '@core.session'
 
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
-    arguments: ['@core.seo', '@core.request', '@core.router', '@core.helpers.toc']
+    arguments:
+      - '@core.seo'
+      - '@core.request'
+      - '@core.router'
+      - '@core.helpers.toc'
 
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort
-    arguments: ['@core.db']
+    arguments:
+      - '@core.db'
 
   core.helpers.toc:
     class: ACP3\Core\Helpers\TableOfContents
@@ -62,11 +81,14 @@ services:
 
   core.helpers.formatter.dateRange:
     class: ACP3\Core\Helpers\Formatter\DateRange
-    arguments: ['@core.date', '@core.lang']
+    arguments:
+      - '@core.date'
+      - '@core.lang'
 
   core.helpers.formatter.mark_entries:
     class: ACP3\Core\Helpers\Formatter\MarkEntries
-    arguments: ['@core.lang']
+    arguments:
+      - '@core.lang'
 
   core.helpers.formatter.rewriteInternalUri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri

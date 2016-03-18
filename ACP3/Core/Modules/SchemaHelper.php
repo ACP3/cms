@@ -14,7 +14,7 @@ class SchemaHelper
     use ContainerAwareTrait;
 
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\Database\Connection
      */
     protected $db;
     /**
@@ -27,12 +27,12 @@ class SchemaHelper
     protected $systemSettingsRepository;
 
     /**
-     * @param \ACP3\Core\DB                                      $db
+     * @param \ACP3\Core\Database\Connection                     $db
      * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository   $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Model\SettingsRepository $systemSettingsRepository
      */
     public function __construct(
-        Core\DB $db,
+        Core\Database\Connection $db,
         System\Model\ModuleRepository $systemModuleRepository,
         System\Model\SettingsRepository $systemSettingsRepository
     ) {
@@ -50,7 +50,7 @@ class SchemaHelper
     }
 
     /**
-     * @return \ACP3\Core\DB
+     * @return \ACP3\Core\Database\Connection
      */
     public function getDb()
     {

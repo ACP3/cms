@@ -33,7 +33,7 @@ class Index extends AbstractAction
      */
     protected $date;
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\Database\Connection
      */
     protected $db;
     /**
@@ -272,7 +272,7 @@ class Index extends AbstractAction
      */
     private function createSuperUser(array $formData)
     {
-        /** @var \ACP3\Core\DB db */
+        /** @var \ACP3\Core\Database\Connection db */
         $this->db = $this->get('core.db');
 
         $salt = $this->secureHelper->salt(User::SALT_LENGTH);

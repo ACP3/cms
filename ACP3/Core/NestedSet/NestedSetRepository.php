@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Core\NestedSet;
 
-use ACP3\Core\DB;
-
 /**
  * Class NestedSetRepository
  * @package ACP3\Core\NestedSet

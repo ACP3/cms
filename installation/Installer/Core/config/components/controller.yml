@@ -13,4 +13,5 @@ services:
 
   core.controller.install:
     abstract: true
-    arguments: ['@core.context.install']
+    arguments:
+      - '@core.context.install'

@@ -19,11 +19,13 @@ services:
 
   core.date:
     class: ACP3\Installer\Core\Date
-    arguments: ['@core.date.date_translator']
+    arguments:
+      - '@core.date.date_translator'
 
   core.date.date_translator:
     class: ACP3\Core\Date\DateTranslator
-    arguments: ['@core.lang']
+    arguments:
+      - '@core.lang'
 
   core.lang:
     class: ACP3\Installer\Core\I18n\Translator
@@ -44,14 +46,17 @@ services:
 
   core.redirect:
     class: ACP3\Core\Redirect
-    arguments: ['@core.request', '@core.router']
+    arguments:
+      - '@core.request'
+      - '@core.router'
 
   core.session:
     class: ACP3\Installer\Core\SessionHandler
 
   core.view:
     class: ACP3\Core\View
-    arguments: [@core.view.renderer.smarty]
+    arguments:
+      - '@core.view.renderer.smarty'
 
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty

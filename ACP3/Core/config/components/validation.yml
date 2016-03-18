@@ -50,7 +50,8 @@ services:
 
   core.validation.validation_rules.language_pack_exists_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\LanguagePackExistsValidationRule
-    arguments: [@core.lang]
+    arguments:
+      - '@core.lang'
     tags:
       - { name: core.validation.validation_rule }
 
@@ -61,7 +62,8 @@ services:
 
   core.validation.validation_rules.module_is_installed_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\ModuleIsInstalledValidationRule
-    arguments: [@core.modules]
+    arguments:
+      - '@core.modules'
     tags:
       - { name: core.validation.validation_rule }
 
@@ -98,4 +100,6 @@ services:
 
   core.validator.abstract:
     abstract: true
-    arguments: ['@core.lang', @core.validator]
+    arguments:
+      - '@core.lang'
+      - '@core.validator'

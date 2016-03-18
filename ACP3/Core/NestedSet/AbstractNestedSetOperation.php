@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\NestedSet;
 
-use ACP3\Core\DB;
+use ACP3\Core\Database\Connection;
 
 /**
  * Class AbstractNestedSetOperation
@@ -10,7 +10,7 @@ use ACP3\Core\DB;
 abstract class AbstractNestedSetOperation
 {
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\Database\Connection
      */
     protected $db;
     /**
@@ -28,11 +28,11 @@ abstract class AbstractNestedSetOperation
     protected $tableName;
 
     /**
-     * @param \ACP3\Core\DB                            $db
+     * @param \ACP3\Core\Database\Connection           $db
      * @param \ACP3\Core\NestedSet\NestedSetRepository $nestedSetRepository
      */
     public function __construct(
-        DB $db,
+        Connection $db,
         NestedSetRepository $nestedSetRepository
     ) {
         $this->db = $db;

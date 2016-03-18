@@ -1,18 +1,23 @@
 services:
   core.helpers.data_grid:
     class: ACP3\Core\Helpers\DataGrid
-    arguments: [@core.acl, @core.lang]
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
     scope: prototype
 
   core.helpers.data_grid.column_renderer.date_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer
-    arguments: [@core.date, @core.helpers.formatter.dateRange]
+    arguments:
+      - '@core.date'
+      - '@core.helpers.formatter.dateRange'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
   core.helpers.data_grid.column_renderer.header_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer
-    arguments: [@core.helpers.formatter.mark_entries]
+    arguments:
+      - '@core.helpers.formatter.mark_entries'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
@@ -28,23 +33,29 @@ services:
 
   core.helpers.data_grid.column_renderer.nl2p_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer
-    arguments: [@core.helpers.stringFormatter]
+    arguments:
+      - '@core.helpers.stringFormatter'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
   core.helpers.data_grid.column_renderer.option_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer
-    arguments: [@core.lang, @core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer, @core.eventDispatcher]
+    arguments:
+      - '@core.lang'
+      - '@core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer'
+      - '@core.eventDispatcher'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
   core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
-    arguments: [@core.router]
+    arguments:
+      - '@core.router'
 
   core.helpers.data_grid.column_renderer.picture_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer
-    arguments: [@core.router]
+    arguments:
+      - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
@@ -60,6 +71,7 @@ services:
 
   core.helpers.data_grid.column_renderer.translate_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer
-    arguments: [@core.lang]
+    arguments:
+      - '@core.lang'
     tags:
       - { name: core.helpers.data_grid.column_renderer }

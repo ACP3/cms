@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\DB;
+use ACP3\Core\Database\Connection;
 
 /**
  * Class Sort
@@ -10,14 +10,14 @@ use ACP3\Core\DB;
 class Sort
 {
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\Database\Connection
      */
     protected $db;
 
     /**
-     * @param \ACP3\Core\DB $db
+     * @param \ACP3\Core\Database\Connection $db
      */
-    public function __construct(DB $db)
+    public function __construct(Connection $db)
     {
         $this->db = $db;
     }

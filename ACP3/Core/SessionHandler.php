@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Database\Connection;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 
@@ -26,7 +27,7 @@ class SessionHandler implements \SessionHandlerInterface
      */
     private $gcCalled = false;
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\Database\Connection
      */
     protected $db;
     /**
@@ -39,12 +40,12 @@ class SessionHandler implements \SessionHandlerInterface
     protected $request;
 
     /**
-     * @param \ACP3\Core\DB                          $db
+     * @param \ACP3\Core\Database\Connection         $db
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Http\RequestInterface       $request
      */
     public function __construct(
-        DB $db,
+        Connection $db,
         ApplicationPath $appPath,
         RequestInterface $request
     ) {

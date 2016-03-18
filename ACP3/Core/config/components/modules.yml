@@ -2,54 +2,66 @@ services:
   core.modules:
     class: ACP3\Core\Modules
     arguments:
-      - @service_container
-      - @core.environment.application_path
-      - @core.modules.helper.controllerActionExists
-      - @core.modules.moduleInfoCache
-      - @core.modules.vendors
+      - '@service_container'
+      - '@core.environment.application_path'
+      - '@core.modules.helper.controllerActionExists'
+      - '@core.modules.moduleInfoCache'
+      - '@core.modules.vendors'
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
     arguments:
-      - @service_container
-      - @core.cache.system
-      - @core.modules.schemaHelper
-      - @permissions.model.rolerepository
-      - @permissions.model.rulerepository
-      - @permissions.model.resourcerepository
-      - @permissions.model.privilegerepository
+      - '@service_container'
+      - '@core.cache.system'
+      - '@core.modules.schemaHelper'
+      - '@permissions.model.rolerepository'
+      - '@permissions.model.rulerepository'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.model.privilegerepository'
 
   core.modules.helper.action:
     class: ACP3\Core\Modules\Helper\Action
-    arguments: [@core.lang, @core.request, @core.router, @core.view, @core.helpers.alerts, @core.helpers.redirect]
+    arguments:
+      - '@core.lang'
+      - '@core.request'
+      - '@core.router'
+      - '@core.view'
+      - '@core.helpers.alerts'
+      - '@core.helpers.redirect'
 
   core.modules.helper.controllerActionExists:
     class: ACP3\Core\Modules\Helper\ControllerActionExists
-    arguments: [@service_container]
+    arguments:
+      - '@service_container'
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache
     arguments:
-      - @core.cache.system
-      - @core.environment.application_path
-      - @core.lang
-      - @core.modules.vendors
-      - @core.xml
-      - @system.model.modulerepository
+      - '@core.cache.system'
+      - '@core.environment.application_path'
+      - '@core.lang'
+      - '@core.modules.vendors'
+      - '@core.xml'
+      - '@system.model.modulerepository'
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
-    arguments: [@core.db, @system.model.modulerepository, @system.model.settingsrepository]
+    arguments:
+      - '@core.db'
+      - '@system.model.modulerepository'
+      - '@system.model.settingsrepository'
     calls:
       - ['setContainer', ['@service_container']]
 
   core.modules.installer.abstractMigration:
     abstract: true
-    arguments: [@core.modules.schemaHelper]
+    arguments:
+      - '@core.modules.schemaHelper'
 
   core.modules.installer.abstractSampleData:
     abstract: true
-    arguments: [@core.modules.schemaHelper]
+    arguments:
+      - '@core.modules.schemaHelper'
 
   core.modules.schemaInstaller:
     class: ACP3\Core\Modules\SchemaInstaller
@@ -62,4 +74,4 @@ services:
   core.modules.vendors:
     class: ACP3\Core\Modules\Vendor
     arguments:
-      - @core.environment.application_path
+      - '@core.environment.application_path'

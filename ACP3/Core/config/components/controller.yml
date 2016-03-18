@@ -36,12 +36,15 @@ services:
 
   core.controller.widget:
     abstract: true
-    arguments: ['@core.context.widget']
+    arguments:
+      - '@core.context.widget'
 
   core.controller.frontend:
     abstract: true
-    arguments: ['@core.context.frontend']
+    arguments:
+      - '@core.context.frontend'
 
   core.controller.admin:
     abstract: true
-    arguments: ['@core.context.admin']
+    arguments:
+      - '@core.context.admin'
