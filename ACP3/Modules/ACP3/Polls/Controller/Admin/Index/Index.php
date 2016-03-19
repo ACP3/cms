@@ -54,7 +54,8 @@ class Index extends Core\Controller\AdminAction
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
-                'default_sort' => true
+                'default_sort' => true,
+                'default_sort_direction' => 'desc'
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('polls', 'question'),

@@ -51,6 +51,7 @@ class Index extends Core\Controller\AdminAction
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
+                'default_sort' => true
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('emoticons', 'code'),
@@ -69,8 +70,7 @@ class Index extends Core\Controller\AdminAction
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true,
-                'default_sort' => true
+                'primary' => true
             ], 10);
 
         return [

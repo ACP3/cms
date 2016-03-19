@@ -370,7 +370,7 @@ class DataGrid
     protected function fetchDbResults()
     {
         if (empty($this->results) && $this->repository instanceof DataGridRepository) {
-            $this->results = $this->repository->getAllInAcp(clone $this->columns);
+            $this->results = $this->repository->getAll(clone $this->columns);
         }
 
         return $this->results;

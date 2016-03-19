@@ -19,18 +19,19 @@ class DataGridRepository extends AbstractRepository
      *
      * @return array
      */
-    public function getAllInAcp(ColumnPriorityQueue $columns)
+    public function getAll(ColumnPriorityQueue $columns)
     {
         $columnsToSelect = $this->getColumns(clone $columns);
+        $from = $this->getFrom();
         $orderBy = $this->getOrderBy(clone $columns);
 
-        return $this->db->fetchAll("SELECT {$columnsToSelect} FROM {$this->getTableName()}{$orderBy}");
+        return $this->db->fetchAll("SELECT {$columnsToSelect} FROM {$from}{$orderBy}");
     }
 
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
      *
-     * @return mixed
+     * @return string
      */
     protected function getColumns(ColumnPriorityQueue $columns)
     {
@@ -45,6 +46,14 @@ class DataGridRepository extends AbstractRepository
     }
 
     /**
+     * @return string
+     */
+    protected function getFrom()
+    {
+        return $this->getTableName();
+    }
+
+    /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
      *
      * @return string
@@ -54,7 +63,7 @@ class DataGridRepository extends AbstractRepository
         $orderBy = '';
         foreach ($columns as $column) {
             if ($column['default_sort'] === true) {
-                $orderBy .= reset($column['fields']) . ' ';
+                $orderBy .= implode($column['default_sort_direction'] . ', ', $column['fields']) . ' ';
                 $orderBy .= strtoupper($column['default_sort_direction']);
             }
         }
