@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Seo;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\DataGridRepository
      */
     protected $dataGridRepository;
 
