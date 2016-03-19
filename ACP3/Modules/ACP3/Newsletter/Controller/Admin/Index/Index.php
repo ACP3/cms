@@ -56,7 +56,8 @@ class Index extends Core\Controller\AdminAction
                 'label' => $this->translator->t('system', 'date'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
-                'default_sort' => true
+                'default_sort' => true,
+                'default_sort_direction' => 'desc'
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'subject'),
