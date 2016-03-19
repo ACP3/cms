@@ -9,6 +9,7 @@ services:
     class: %core.wysiwyg.ckeditor.fqdn%
     arguments:
       - '@core.modules'
+      - '@core.lang'
       - '@core.environment.application_path'
     calls:
       - ['setEmoticonRepository', ['@?emoticons.model.emoticonrepository']]
