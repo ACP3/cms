@@ -53,7 +53,7 @@ services:
     class: %articles.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@articles.model.articlerepository'
+      - '@articles.model.data_grid_repository'
 
   articles.controller.frontend.index.details:
     class: %articles.controller.frontend.index.details.fqdn%

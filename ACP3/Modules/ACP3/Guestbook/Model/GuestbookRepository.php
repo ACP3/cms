@@ -67,12 +67,4 @@ class GuestbookRepository extends Core\Model\AbstractRepository implements Core\
     {
         return $this->db->fetchColumn('SELECT MAX(date) FROM ' . $this->getTableName() . ' WHERE ip = ?', [$ipAddress]);
     }
-
-    /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY `date` DESC, id DESC');
-    }
 }

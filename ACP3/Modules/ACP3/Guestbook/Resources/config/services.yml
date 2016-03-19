@@ -3,11 +3,17 @@ imports:
   - { resource: validation.yml }
 
 parameters:
+  guestbook.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\DataGridRepository'
   guestbook.model.guestbookrepository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository'
   guestbook.installer.schema.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Schema'
   guestbook.installer.migration.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Migration'
 
 services:
+  guestbook.model.data_grid_repository:
+    class: %guestbook.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
+
   guestbook.model.guestbookrepository:
     class: %guestbook.model.guestbookrepository.fqdn%
     arguments:

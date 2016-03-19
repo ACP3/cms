@@ -8,6 +8,7 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Model\DataGridRepository;
 
 /**
  * Class DataGrid
@@ -23,6 +24,10 @@ class DataGrid
      * @var \ACP3\Core\I18n\Translator
      */
     protected $translator;
+    /**
+     * @var \ACP3\Core\Model\DataGridRepository
+     */
+    protected $repository;
     /**
      * @var array
      */
@@ -85,6 +90,18 @@ class DataGrid
     public function registerColumnRenderer(ColumnRendererInterface $columnRenderer)
     {
         $this->columnRenderer[get_class($columnRenderer)] = $columnRenderer;
+
+        return $this;
+    }
+
+    /**
+     * @param \ACP3\Core\Model\DataGridRepository $repository
+     *
+     * @return $this
+     */
+    public function setRepository(DataGridRepository $repository)
+    {
+        $this->repository = $repository;
 
         return $this;
     }
@@ -211,7 +228,6 @@ class DataGrid
         $canEdit = $this->acl->hasPermission($this->resourcePathEdit);
 
         $this->addDefaultColumns($canDelete, $canEdit);
-
         $this->findPrimaryKey();
 
         return [
@@ -230,7 +246,6 @@ class DataGrid
     protected function renderTableHeader()
     {
         $header = '';
-
         foreach (clone $this->columns as $column) {
             if (!empty($column['label'])) {
                 $header .= $this->columnRenderer[HeaderColumnRenderer::class]
@@ -249,22 +264,22 @@ class DataGrid
      */
     protected function mapTableColumnsToDbFields()
     {
-        $results = '';
-        foreach ($this->results as $result) {
-            $results .= '<tr>';
+        $renderedResults = '';
+        foreach ($this->fetchDbResults() as $result) {
+            $renderedResults .= '<tr>';
             foreach (clone $this->columns as $column) {
                 if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
-                    $results .= $this->columnRenderer[$column['type']]
+                    $renderedResults .= $this->columnRenderer[$column['type']]
                         ->setIdentifier($this->identifier)
                         ->setPrimaryKey($this->primaryKey)
                         ->fetchDataAndRenderColumn($column, $result);
                 }
             }
 
-            $results .= "</tr>\n";
+            $renderedResults .= "</tr>\n";
         }
 
-        return $results;
+        return $renderedResults;
     }
 
     /**
@@ -347,5 +362,25 @@ class DataGrid
                 break;
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function fetchDbResults()
+    {
+        if (empty($this->results) && $this->repository instanceof DataGridRepository) {
+            $this->results = $this->repository->getAllInAcp(clone $this->columns);
+        }
+
+        return $this->results;
+    }
+
+    /**
+     * @return int
+     */
+    public function countDbResults()
+    {
+        return count($this->fetchDbResults());
     }
 }

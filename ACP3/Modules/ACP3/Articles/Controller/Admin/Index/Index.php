@@ -17,21 +17,23 @@ use ACP3\Modules\ACP3\Menus;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\DataGridRepository
      */
-    protected $articleRepository;
+    protected $dataGridRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
+     * Index constructor.
+     *
+     * @param \ACP3\Core\Controller\Context\AdminContext           $context
+     * @param \ACP3\Modules\ACP3\Articles\Model\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Articles\Model\ArticleRepository $articleRepository)
+        Articles\Model\DataGridRepository $dataGridRepository)
     {
         parent::__construct($context);
 
-        $this->articleRepository = $articleRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -39,12 +41,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $articles = $this->articleRepository->getAllInAcp();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($articles)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/articles/index/delete')
@@ -71,7 +71,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($articles) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

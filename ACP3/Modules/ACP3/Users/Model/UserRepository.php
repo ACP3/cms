@@ -99,7 +99,10 @@ class UserRepository extends Core\Model\AbstractRepository
      */
     public function getOneByEmail($email)
     {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE mail = ?', [$email]);
+        return $this->db->fetchAssoc(
+            'SELECT * FROM ' . $this->getTableName() . ' WHERE mail = ?',
+            [$email]
+        );
     }
 
     /**
@@ -119,14 +122,8 @@ class UserRepository extends Core\Model\AbstractRepository
     public function getAll($limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY nickname ASC, id ASC' . $limitStmt);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' ORDER BY nickname ASC');
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} ORDER BY `nickname` ASC, `id` ASC {$limitStmt}"
+        );
     }
 }

@@ -16,23 +16,23 @@ use ACP3\Modules\ACP3\Polls;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\DataGridRepository
      */
-    protected $pollRepository;
+    protected $dataGridRepository;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext    $context
-     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository $pollRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext        $context
+     * @param \ACP3\Modules\ACP3\Polls\Model\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Polls\Model\PollRepository $pollRepository
+        Polls\Model\DataGridRepository $dataGridRepository
     ) {
         parent::__construct($context);
 
-        $this->pollRepository = $pollRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -40,12 +40,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $polls = $this->pollRepository->getAllInAcp();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($polls)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/polls/index/delete')
@@ -72,7 +70,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($polls) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

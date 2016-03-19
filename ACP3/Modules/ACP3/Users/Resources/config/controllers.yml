@@ -50,7 +50,7 @@ services:
     class: %users.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@users.model.userrepository'
+      - '@users.model.data_grid_repository'
 
   users.controller.admin.index.settings:
     class: %users.controller.admin.index.settings.fqdn%

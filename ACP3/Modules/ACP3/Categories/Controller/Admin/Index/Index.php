@@ -16,21 +16,23 @@ use ACP3\Modules\ACP3\Categories;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\DataGridRepository
      */
-    protected $categoryRepository;
+    protected $dataGridRepository;
 
     /**
+     * Index constructor.
+     *
      * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Categories\Model\CategoryRepository $categoryRepository)
+        Categories\Model\DataGridRepository $dataGridRepository)
     {
         parent::__construct($context);
 
-        $this->categoryRepository = $categoryRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -38,12 +40,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $categories = $this->categoryRepository->getAllWithModuleName();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($categories)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/categories/index/delete')
@@ -75,7 +75,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($categories) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

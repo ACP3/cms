@@ -103,14 +103,6 @@ class NewsRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll('SELECT n.*, c.title AS cat FROM ' . $this->getTableName() . ' AS n, ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
-    }
-
-    /**
      * @param string $fields
      * @param string $searchTerm
      * @param string $sort

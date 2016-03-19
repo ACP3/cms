@@ -17,23 +17,23 @@ use ACP3\Modules\ACP3\Users;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\DataGridRepository
      */
-    protected $userRepository;
+    protected $dataGridRepository;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext    $context
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext        $context
+     * @param \ACP3\Modules\ACP3\Users\Model\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Users\Model\UserRepository $userRepository)
-    {
+        Users\Model\DataGridRepository $dataGridRepository
+    ) {
         parent::__construct($context);
 
-        $this->userRepository = $userRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -41,12 +41,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $users = $this->userRepository->getAllInAcp();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($users)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/users/index/delete')
@@ -78,7 +76,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($users) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

@@ -28,7 +28,7 @@ services:
     class: %guestbook.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.model.data_grid_repository'
 
   guestbook.controller.admin.index.settings:
     class: %guestbook.controller.admin.index.settings.fqdn%

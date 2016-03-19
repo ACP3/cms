@@ -5,6 +5,7 @@ imports:
 parameters:
   users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer'
   users.helpers.forms.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\Forms'
+  users.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Users\Model\DataGridRepository'
   users.model.userrepository.fqdn: 'ACP3\Modules\ACP3\Users\Model\UserRepository'
   users.installer.schema.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Schema'
   users.installer.migration.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Migration'
@@ -24,6 +25,11 @@ services:
       - '@core.acl'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
+
+  users.model.data_grid_repository:
+    class: %users.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
 
   users.model.userrepository:
     class: %users.model.userrepository.fqdn%

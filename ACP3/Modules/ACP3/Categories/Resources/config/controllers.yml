@@ -36,7 +36,7 @@ services:
     class: %categories.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@categories.model'
+      - '@categories.model.data_grid_repository'
 
   categories.controller.admin.index.settings:
     class: %categories.controller.admin.index.settings.fqdn%

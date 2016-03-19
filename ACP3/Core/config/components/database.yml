@@ -8,3 +8,8 @@ services:
       - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%'}
       - '%db_table_prefix%'
       - '%cache_driver%'
+
+  core.model.admin_repository:
+    class: ACP3\Core\Model\AdminRepository
+    arguments:
+      - '@core.db'

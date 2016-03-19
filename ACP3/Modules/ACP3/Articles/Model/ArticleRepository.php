@@ -84,15 +84,6 @@ class ArticleRepository extends Core\Model\AbstractRepository
         );
     }
 
-
-    /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `title` ASC");
-    }
-
     /**
      * @param string $fields
      * @param string $searchTerm

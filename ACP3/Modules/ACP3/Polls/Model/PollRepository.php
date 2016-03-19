@@ -92,14 +92,4 @@ class PollRepository extends Core\Model\AbstractRepository
             ['time' => $time]
         );
     }
-
-    /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll(
-            'SELECT * FROM ' . $this->getTableName() . ' ORDER BY `start` DESC, `end` DESC, `id` DESC'
-        );
-    }
 }

@@ -35,7 +35,7 @@ services:
     class: %emoticons.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.model.data_grid_repository'
 
   emoticons.controller.admin.index.settings:
     class: %emoticons.controller.admin.index.settings.fqdn%

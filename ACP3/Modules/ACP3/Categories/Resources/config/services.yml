@@ -5,6 +5,7 @@ imports:
 parameters:
   categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
+  categories.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\DataGridRepository'
   categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
   categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'
   categories.installer.migration.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Migration'
@@ -12,6 +13,11 @@ parameters:
 services:
   categories.model:
     class: %categories.model.categoryrepository.fqdn%
+    arguments:
+      - '@core.db'
+
+  categories.model.data_grid_repository:
+    class: %categories.model.data_grid_repository.fqdn%
     arguments:
       - '@core.db'
 

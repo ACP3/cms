@@ -46,7 +46,7 @@ services:
     class: %files.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@files.model.filesrepository'
+      - '@files.model.data_grid_repository'
 
   files.controller.admin.index.settings:
     class: %files.controller.admin.index.settings.fqdn%

@@ -40,12 +40,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $comments = $this->commentRepository->getCommentsGroupedByModule();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($comments)
+            ->setResults($this->commentRepository->getCommentsGroupedByModule())
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/comments/index/delete')
@@ -70,7 +68,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($comments) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

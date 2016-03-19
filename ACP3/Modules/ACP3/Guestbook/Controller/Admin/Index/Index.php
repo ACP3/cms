@@ -17,23 +17,23 @@ use ACP3\Modules\ACP3\Guestbook;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\DataGridRepository
      */
-    protected $guestbookRepository;
+    protected $dataGridRepository;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext            $context
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Guestbook\Model\GuestbookRepository $guestbookRepository
+        Guestbook\Model\DataGridRepository $dataGridRepository
     ) {
         parent::__construct($context);
 
-        $this->guestbookRepository = $guestbookRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -41,12 +41,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $guestbook = $this->guestbookRepository->getAllInAcp();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($guestbook)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/guestbook/index/delete')
@@ -57,7 +55,8 @@ class Index extends Core\Controller\AdminAction
                 'label' => $this->translator->t('system', 'date'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
-                'default_sort' => true
+                'default_sort' => true,
+                'default_sort_direction' => 'desc'
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),
@@ -83,7 +82,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($guestbook) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

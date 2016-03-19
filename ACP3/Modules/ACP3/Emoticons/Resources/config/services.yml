@@ -6,12 +6,18 @@ imports:
 parameters:
   emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
+  emoticons.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\DataGridRepository'
   emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
   emoticons.installer.sampledata.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\SampleData'
   emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
   emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'
 
 services:
+  emoticons.model.data_grid_repository:
+    class: %emoticons.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
+
   emoticons.model.emoticonrepository:
     class: %emoticons.model.emoticonrepository.fqdn%
     arguments:

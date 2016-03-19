@@ -18,23 +18,23 @@ use ACP3\Modules\ACP3\Files;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\DataGridRepository
      */
-    protected $filesRepository;
+    protected $dataGridRepository;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext     $context
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext        $context
+     * @param \ACP3\Modules\ACP3\Files\Model\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Files\Model\FilesRepository $filesRepository)
+        Files\Model\DataGridRepository $dataGridRepository)
     {
         parent::__construct($context);
 
-        $this->filesRepository = $filesRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -42,12 +42,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $files = $this->filesRepository->getAllInAcp();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($files)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/files/index/delete')
@@ -87,7 +85,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($files) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

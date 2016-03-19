@@ -50,7 +50,7 @@ services:
     class: %news.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@news.model.newsrepository'
+      - '@news.model.data_grid_repository'
 
   news.controller.admin.index.settings:
     class: %news.controller.admin.index.settings.fqdn%

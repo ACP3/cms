@@ -3,20 +3,26 @@ imports:
   - { resource: validation.yml }
 
 parameters:
-  polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
+  polls.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\DataGridRepository'
   polls.model.answerrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\AnswerRepository'
+  polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
   polls.model.voterepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\VoteRepository'
   polls.installer.schema.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Schema'
   polls.installer.migration.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Migration'
 
 services:
-  polls.model.pollrepository:
-    class: %polls.model.pollrepository.fqdn%
+  polls.model.data_grid_repository:
+    class: %polls.model.data_grid_repository.fqdn%
     arguments:
       - '@core.db'
 
   polls.model.answerrepository:
     class: %polls.model.answerrepository.fqdn%
+    arguments:
+      - '@core.db'
+
+  polls.model.pollrepository:
+    class: %polls.model.pollrepository.fqdn%
     arguments:
       - '@core.db'
 

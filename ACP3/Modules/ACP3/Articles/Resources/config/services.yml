@@ -6,6 +6,7 @@ imports:
 parameters:
   articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
+  articles.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\DataGridRepository'
   articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
   articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
   articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
@@ -29,6 +30,11 @@ services:
     arguments:
       - '@core.helpers.forms'
       - '@articles.model.articlerepository'
+
+  articles.model.data_grid_repository:
+    class: %articles.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
 
   articles.model.articlerepository:
     class: %articles.model.articlerepository.fqdn%

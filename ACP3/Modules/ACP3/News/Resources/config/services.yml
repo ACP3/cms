@@ -5,6 +5,7 @@ imports:
 
 parameters:
   news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
+  news.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\News\Model\DataGridRepository'
   news.model.newsrepository.fqdn: 'ACP3\Modules\ACP3\News\Model\NewsRepository'
   news.installer.schema.fqdn: 'ACP3\Modules\ACP3\News\Installer\Schema'
   news.installer.migration.fqdn: 'ACP3\Modules\ACP3\News\Installer\Migration'
@@ -23,6 +24,11 @@ services:
       - '@service_container'
       - '@core.environment.application_path'
       - 'news'
+
+  news.model.data_grid_repository:
+    class: %news.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
 
   news.model.newsrepository:
     class: %news.model.newsrepository.fqdn%

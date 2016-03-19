@@ -57,7 +57,6 @@ class Index extends Core\Controller\AdminAction
         if (empty($comments) === false) {
             $moduleName = $this->systemModuleRepository->getModuleNameById($id);
 
-            //Brotkrümelspur
             $this->breadcrumb->append($this->translator->t($moduleName, $moduleName));
 
             /** @var Core\Helpers\DataGrid $dataGrid */
@@ -100,7 +99,7 @@ class Index extends Core\Controller\AdminAction
 
             return [
                 'grid' => $dataGrid->render(),
-                'show_mass_delete_button' => count($comments) > 0
+                'show_mass_delete_button' => $dataGrid->countDbResults() > 0
             ];
         }
 

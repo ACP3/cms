@@ -18,21 +18,21 @@ class Index extends Core\Controller\AdminAction
     /**
      * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
-    protected $seoRepository;
+    protected $dataGridRepository;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext      $context
+     * @param \ACP3\Modules\ACP3\Seo\Model\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Seo\Model\SeoRepository $seoRepository
+        Seo\Model\DataGridRepository $dataGridRepository
     ) {
         parent::__construct($context);
 
-        $this->seoRepository = $seoRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -40,12 +40,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $seo = $this->seoRepository->getAllInAcp();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($seo)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/seo/index/delete')
@@ -80,8 +78,11 @@ class Index extends Core\Controller\AdminAction
                 'custom' => [
                     'search' => [0, 1, 2, 3, 4],
                     'replace' => [
-                        $this->translator->t('seo', 'robots_use_system_default',
-                            ['%default%' => $this->seo->getRobotsSetting()]),
+                        $this->translator->t(
+                            'seo',
+                            'robots_use_system_default',
+                            ['%default%' => $this->seo->getRobotsSetting()]
+                        ),
                         $this->translator->t('seo', 'robots_index_follow'),
                         $this->translator->t('seo', 'robots_index_nofollow'),
                         $this->translator->t('seo', 'robots_noindex_follow'),
@@ -98,7 +99,7 @@ class Index extends Core\Controller\AdminAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => count($seo) > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
 }

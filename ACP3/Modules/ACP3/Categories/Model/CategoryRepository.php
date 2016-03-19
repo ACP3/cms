@@ -65,14 +65,6 @@ class CategoryRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @return array
-     */
-    public function getAllWithModuleName()
-    {
-        return $this->db->fetchAll('SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) ORDER BY m.name ASC, c.title DESC, c.id DESC');
-    }
-
-    /**
      * @param int $categoryId
      *
      * @return mixed

@@ -104,11 +104,6 @@ class FilesRepository extends Core\Model\AbstractRepository
         );
     }
 
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll('SELECT f.*, c.title AS cat FROM ' . $this->getTableName() . ' AS f, ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\CategoryRepository::TABLE_NAME) . ' AS c WHERE f.category_id = c.id ORDER BY f.start DESC, f.end DESC, f.id DESC');
-    }
-
     /**
      * @param string $fields
      * @param string $searchTerm

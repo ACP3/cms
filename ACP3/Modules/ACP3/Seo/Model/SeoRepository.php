@@ -36,14 +36,6 @@ class SeoRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName());
-    }
-
-    /**
      * @param int $seoId
      *
      * @return array

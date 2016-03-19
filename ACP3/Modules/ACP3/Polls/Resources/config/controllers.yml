@@ -43,7 +43,7 @@ services:
     class: %polls.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@polls.model.pollrepository'
+      - '@polls.model.data_grid_repository'
 
   polls.controller.frontend.index.index:
     class: %polls.controller.frontend.index.index.fqdn%
