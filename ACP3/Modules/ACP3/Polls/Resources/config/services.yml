@@ -1,39 +1,5 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
-
-parameters:
-  polls.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\DataGridRepository'
-  polls.model.answerrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\AnswerRepository'
-  polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
-  polls.model.voterepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\VoteRepository'
-  polls.installer.schema.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Schema'
-  polls.installer.migration.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Migration'
-
-services:
-  polls.model.data_grid_repository:
-    class: %polls.model.data_grid_repository.fqdn%
-    arguments:
-      - '@core.db'
-
-  polls.model.answerrepository:
-    class: %polls.model.answerrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  polls.model.pollrepository:
-    class: %polls.model.pollrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  polls.model.voterepository:
-    class: %polls.model.voterepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  polls.installer.schema:
-    class: %polls.installer.schema.fqdn%
-
-  polls.installer.migration:
-    class: %polls.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }

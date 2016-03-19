@@ -1,0 +1,14 @@
+parameters:
+  menus.model.menurepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuRepository'
+  menus.model.menuitemrepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuItemRepository'
+
+services:
+  menus.model.menurepository:
+    class: %menus.model.menurepository.fqdn%
+    arguments:
+      - '@core.db'
+
+  menus.model.menuitemrepository:
+    class: %menus.model.menuitemrepository.fqdn%
+    arguments:
+      - '@core.db'

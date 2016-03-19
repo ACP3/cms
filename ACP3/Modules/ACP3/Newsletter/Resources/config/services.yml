@@ -1,35 +1,17 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: events.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   newsletter.helper.accountstatus.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus'
   newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer'
   newsletter.helper.sendnewsletter.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter'
   newsletter.helper.subscribe.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\Subscribe'
-  newsletter.model.newsletterrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository'
-  newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
-  newsletter.model.accounthistoryrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository'
-  newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
-  newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
 
 services:
-  newsletter.model.newsletterrepository:
-    class: %newsletter.model.newsletterrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  newsletter.model.accountrepository:
-    class: %newsletter.model.accountrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  newsletter.model.accounthistoryrepository:
-    class: %newsletter.model.accounthistoryrepository.fqdn%
-    arguments:
-      - '@core.db'
-
   newsletter.helper.accountstatus:
     class: %newsletter.helper.accountstatus.fqdn%
     arguments:
@@ -66,10 +48,3 @@ services:
       - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-
-  newsletter.installer.schema:
-    class: %newsletter.installer.schema.fqdn%
-
-  newsletter.installer.migration:
-    class: %newsletter.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration

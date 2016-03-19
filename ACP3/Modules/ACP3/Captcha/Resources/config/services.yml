@@ -1,12 +1,11 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: events.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   captcha.helpers.fqdn: 'ACP3\Modules\ACP3\Captcha\Helpers'
-  captcha.installer.schema.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Schema'
-  captcha.installer.migration.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Migration'
 
 services:
   captcha.helpers:
@@ -18,9 +17,3 @@ services:
       - '@core.session'
       - '@core.view'
       - '@core.helpers.secure'
-
-  captcha.installer.schema:
-    class: %captcha.installer.schema.fqdn%
-
-  captcha.installer.migration:
-    class: %captcha.installer.migration.fqdn%

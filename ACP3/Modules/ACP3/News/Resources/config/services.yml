@@ -1,15 +1,12 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: events.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
-  news.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\News\Model\DataGridRepository'
-  news.model.newsrepository.fqdn: 'ACP3\Modules\ACP3\News\Model\NewsRepository'
-  news.installer.schema.fqdn: 'ACP3\Modules\ACP3\News\Installer\Schema'
-  news.installer.migration.fqdn: 'ACP3\Modules\ACP3\News\Installer\Migration'
-  news.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\News\Installer\SampleData'
 
 services:
   news.cache:
@@ -24,24 +21,3 @@ services:
       - '@service_container'
       - '@core.environment.application_path'
       - 'news'
-
-  news.model.data_grid_repository:
-    class: %news.model.data_grid_repository.fqdn%
-    arguments:
-      - '@core.db'
-
-  news.model.newsrepository:
-    class: %news.model.newsrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  news.installer.schema:
-    class: %news.installer.schema.fqdn%
-
-  news.installer.migration:
-    class: %news.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration
-
-  news.installer.sampleData:
-    class: %news.installer.sampledata.fqdn%
-    parent: core.modules.installer.abstractSampleData

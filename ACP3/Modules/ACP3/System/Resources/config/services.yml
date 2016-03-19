@@ -1,26 +1,14 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
   system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
-  system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
-  system.model.settingsrepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SettingsRepository'
-  system.installer.schema.fqdn: 'ACP3\Modules\ACP3\System\Installer\Schema'
-  system.installer.migration.fqdn: 'ACP3\Modules\ACP3\System\Installer\Migration'
 
 services:
-  system.model.modulerepository:
-    class: %system.model.modulerepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  system.model.settingsrepository:
-    class: %system.model.settingsrepository.fqdn%
-    arguments:
-      - '@core.db'
-
   system.helpers.installer:
     class: %system.helpers.installer.fqdn%
     arguments:
@@ -30,10 +18,3 @@ services:
       - '@core.modules.schemaInstaller'
       - '@core.xml'
       - %core.environment%
-
-  system.installer.schema:
-    class: %system.installer.schema.fqdn%
-
-  system.installer.migration:
-    class: %system.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration

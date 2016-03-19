@@ -1,11 +1,10 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
-  search.installer.schema.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Schema'
-  search.installer.migration.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Migration'
 
 services:
   search.helpers:
@@ -15,10 +14,3 @@ services:
       - '@core.modules'
       - '@core.helpers.forms'
       - '@core.eventDispatcher'
-
-  search.installer.schema:
-    class: %search.installer.schema.fqdn%
-
-  search.installer.migration:
-    class: %search.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration

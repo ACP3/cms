@@ -1,0 +1,10 @@
+parameters:
+  categories.installer.schema.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Schema'
+  categories.installer.migration.fqdn: 'ACP3\Modules\ACP3\Categories\Installer\Migration'
+
+services:
+  categories.installer.schema:
+    class: %categories.installer.schema.fqdn%
+
+  categories.installer.migration:
+    class: %categories.installer.migration.fqdn%

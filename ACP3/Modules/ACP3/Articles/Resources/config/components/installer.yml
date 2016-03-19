@@ -1,0 +1,11 @@
+parameters:
+  articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
+  articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
+
+services:
+  articles.installer.schema:
+    class: %articles.installer.schema.fqdn%
+
+  articles.installer.migration:
+    class: %articles.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

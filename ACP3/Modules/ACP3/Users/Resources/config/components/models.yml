@@ -1,0 +1,14 @@
+parameters:
+  users.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Users\Model\DataGridRepository'
+  users.model.userrepository.fqdn: 'ACP3\Modules\ACP3\Users\Model\UserRepository'
+
+services:
+  users.model.data_grid_repository:
+    class: %users.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
+
+  users.model.userrepository:
+    class: %users.model.userrepository.fqdn%
+    arguments:
+      - '@core.db'

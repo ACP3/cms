@@ -1,15 +1,4 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
-
-parameters:
-  contact.installer.schema.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Schema'
-  contact.installer.migration.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Migration'
-
-services:
-  contact.installer.schema:
-    class: %contact.installer.schema.fqdn%
-
-  contact.installer.migration:
-    class: %contact.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }

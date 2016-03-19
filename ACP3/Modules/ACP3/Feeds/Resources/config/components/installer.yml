@@ -1,0 +1,10 @@
+parameters:
+  feeds.installer.schema.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Schema'
+  feeds.installer.migration.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Migration'
+
+services:
+  feeds.installer.schema:
+    class: %feeds.installer.schema.fqdn%
+
+  feeds.installer.migration:
+    class: %feeds.installer.migration.fqdn%

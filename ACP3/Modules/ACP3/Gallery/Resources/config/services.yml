@@ -1,15 +1,13 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   gallery.cache.fqdn: 'ACP3\Modules\ACP3\Gallery\Cache'
   gallery.helpers.fqdn: 'ACP3\Modules\ACP3\Gallery\Helpers'
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn: 'ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer'
-  gallery.model.galleryrepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\GalleryRepository'
-  gallery.model.picturerepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\PictureRepository'
-  gallery.installer.schema.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Schema'
-  gallery.installer.migration.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Migration'
 
 services:
   gallery.cache:
@@ -24,18 +22,8 @@ services:
     class: ACP3\Core\Cache
     arguments:
       - '@service_container'
-      - @core.environment.application_path
+      - '@core.environment.application_path'
       - 'gallery'
-
-  gallery.model.galleryrepository:
-    class: %gallery.model.galleryrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  gallery.model.picturerepository:
-    class: %gallery.model.picturerepository.fqdn%
-    arguments:
-      - '@core.db'
 
   gallery.helpers:
     class: %gallery.helpers.fqdn%
@@ -52,10 +40,3 @@ services:
       - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-
-  gallery.installer.schema:
-    class: %gallery.installer.schema.fqdn%
-
-  gallery.installer.migration:
-    class: %gallery.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration

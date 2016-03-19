@@ -1,0 +1,10 @@
+parameters:
+  comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'
+  comments.installer.migration.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Migration'
+
+services:
+  comments.installer.schema:
+    class: %comments.installer.schema.fqdn%
+
+  comments.installer.migration:
+    class: %comments.installer.migration.fqdn%

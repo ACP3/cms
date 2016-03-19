@@ -1,19 +1,12 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   feeds.helper.feedgenerator.fqdn: 'ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator'
-  feeds.installer.schema.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Schema'
-  feeds.installer.migration.fqdn: 'ACP3\Modules\ACP3\Feeds\Installer\Migration'
 
 services:
-  feeds.installer.schema:
-    class: %feeds.installer.schema.fqdn%
-
-  feeds.installer.migration:
-    class: %feeds.installer.migration.fqdn%
-
   feeds.helper.feedgenerator:
     class: %feeds.helper.feedgenerator.fqdn%
     arguments:

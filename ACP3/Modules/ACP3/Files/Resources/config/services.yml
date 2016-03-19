@@ -1,14 +1,12 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: events.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
-  files.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Files\Model\DataGridRepository'
-  files.model.filesrepository.fqdn: 'ACP3\Modules\ACP3\Files\Model\FilesRepository'
-  files.installer.schema.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Schema'
-  files.installer.migration.fqdn: 'ACP3\Modules\ACP3\Files\Installer\Migration'
 
 services:
   files.cache:
@@ -23,20 +21,3 @@ services:
       - '@service_container'
       - '@core.environment.application_path'
       - 'files'
-
-  files.model.data_grid_repository:
-    class: %files.model.data_grid_repository.fqdn%
-    arguments:
-      - '@core.db'
-
-  files.model.filesrepository:
-    class: %files.model.filesrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  files.installer.schema:
-    class: %files.installer.schema.fqdn%
-
-  files.installer.migration:
-    class: %files.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration

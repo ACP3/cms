@@ -1,15 +1,10 @@
+imports:
+  - { resource: components/installer.yml }
+
 parameters:
-  filemanager.installer.schema.fqdn: 'ACP3\Modules\ACP3\Filemanager\Installer\Schema'
-  filemanager.installer.migration.fqdn: 'ACP3\Modules\ACP3\Filemanager\Installer\Migration'
   filemanager.helpers.fqdn: 'ACP3\Modules\ACP3\Filemanager\Helpers'
 
 services:
-  filemanager.installer.schema:
-    class: %filemanager.installer.schema.fqdn%
-
-  filemanager.installer.migration:
-    class: %filemanager.installer.migration.fqdn%
-
   filemanager.helpers:
     class: %filemanager.helpers.fqdn%
     arguments:

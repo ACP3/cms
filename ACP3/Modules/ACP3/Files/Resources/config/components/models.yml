@@ -1,0 +1,14 @@
+parameters:
+  files.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Files\Model\DataGridRepository'
+  files.model.filesrepository.fqdn: 'ACP3\Modules\ACP3\Files\Model\FilesRepository'
+
+services:
+  files.model.data_grid_repository:
+    class: %files.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
+
+  files.model.filesrepository:
+    class: %files.model.filesrepository.fqdn%
+    arguments:
+      - '@core.db'

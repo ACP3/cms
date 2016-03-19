@@ -1,14 +1,12 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: overrides.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/overrides.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
-  seo.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\DataGridRepository'
-  seo.model.seorepository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\SeoRepository'
-  seo.installer.schema.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Schema'
-  seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
 
 services:
   seo.cache:
@@ -16,19 +14,3 @@ services:
     arguments:
       - '@core.cache.system'
       - '@seo.model.seorepository'
-
-  seo.model.data_grid_repository:
-    class: %seo.model.data_grid_repository.fqdn%
-    arguments:
-      - '@core.db'
-
-  seo.model.seorepository:
-    class: %seo.model.seorepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  seo.installer.schema:
-    class: %seo.installer.schema.fqdn%
-
-  seo.installer.migration:
-    class: %seo.installer.migration.fqdn%

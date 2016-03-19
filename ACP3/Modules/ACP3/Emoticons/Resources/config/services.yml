@@ -1,28 +1,15 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: events.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   emoticons.cache.fqdn: 'ACP3\Modules\ACP3\Emoticons\Cache'
   emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
-  emoticons.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\DataGridRepository'
-  emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
-  emoticons.installer.sampledata.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\SampleData'
-  emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
-  emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'
 
 services:
-  emoticons.model.data_grid_repository:
-    class: %emoticons.model.data_grid_repository.fqdn%
-    arguments:
-      - '@core.db'
-
-  emoticons.model.emoticonrepository:
-    class: %emoticons.model.emoticonrepository.fqdn%
-    arguments:
-      - '@core.db'
-
   emoticons.cache:
     class: %emoticons.cache.fqdn%
     arguments:
@@ -42,13 +29,3 @@ services:
     arguments:
       - '@core.view'
       - '@emoticons.cache'
-
-  emoticons.installer.schema:
-    class: %emoticons.installer.schema.fqdn%
-
-  emoticons.installer.migration:
-    class: %emoticons.installer.migration.fqdn%
-
-  emoticons.installer.sampleData:
-    class: %emoticons.installer.sampledata.fqdn%
-    parent: core.modules.installer.abstractSampleData

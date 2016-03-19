@@ -1,0 +1,10 @@
+parameters:
+  filemanager.installer.schema.fqdn: 'ACP3\Modules\ACP3\Filemanager\Installer\Schema'
+  filemanager.installer.migration.fqdn: 'ACP3\Modules\ACP3\Filemanager\Installer\Migration'
+
+services:
+  filemanager.installer.schema:
+    class: %filemanager.installer.schema.fqdn%
+
+  filemanager.installer.migration:
+    class: %filemanager.installer.migration.fqdn%

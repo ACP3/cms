@@ -1,0 +1,10 @@
+parameters:
+  captcha.installer.schema.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Schema'
+  captcha.installer.migration.fqdn: 'ACP3\Modules\ACP3\Captcha\Installer\Migration'
+
+services:
+  captcha.installer.schema:
+    class: %captcha.installer.schema.fqdn%
+
+  captcha.installer.migration:
+    class: %captcha.installer.migration.fqdn%

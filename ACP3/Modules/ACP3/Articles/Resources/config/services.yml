@@ -1,15 +1,13 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: events.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
-  articles.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\DataGridRepository'
-  articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
-  articles.installer.schema.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Schema'
-  articles.installer.migration.fqdn: 'ACP3\Modules\ACP3\Articles\Installer\Migration'
 
 services:
   articles.cache:
@@ -30,20 +28,3 @@ services:
     arguments:
       - '@core.helpers.forms'
       - '@articles.model.articlerepository'
-
-  articles.model.data_grid_repository:
-    class: %articles.model.data_grid_repository.fqdn%
-    arguments:
-      - '@core.db'
-
-  articles.model.articlerepository:
-    class: %articles.model.articlerepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  articles.installer.schema:
-    class: %articles.installer.schema.fqdn%
-
-  articles.installer.migration:
-    class: %articles.installer.migration.fqdn%
-    parent: core.modules.installer.abstractMigration

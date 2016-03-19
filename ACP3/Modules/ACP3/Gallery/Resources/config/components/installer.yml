@@ -1,0 +1,11 @@
+parameters:
+  gallery.installer.schema.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Schema'
+  gallery.installer.migration.fqdn: 'ACP3\Modules\ACP3\Gallery\Installer\Migration'
+
+services:
+  gallery.installer.schema:
+    class: %gallery.installer.schema.fqdn%
+
+  gallery.installer.migration:
+    class: %gallery.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration

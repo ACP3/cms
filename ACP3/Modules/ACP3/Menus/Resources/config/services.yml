@@ -1,6 +1,8 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb'
@@ -8,11 +10,6 @@ parameters:
   menus.helpers.menuitemslist.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList'
   menus.helpers.managemenuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem'
   menus.helpers.menuitemformfields.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields'
-  menus.model.menurepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuRepository'
-  menus.model.menuitemrepository.fqdn: 'ACP3\Modules\ACP3\Menus\Model\MenuItemRepository'
-  menus.installer.schema.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Schema'
-  menus.installer.migration.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Migration'
-  menus.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\SampleData'
   smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar'
 
 services:
@@ -60,26 +57,6 @@ services:
       - '@core.helpers.forms'
       - '@menus.helpers.menuitemslist'
       - '@menus.model.menurepository'
-
-  menus.model.menurepository:
-    class: %menus.model.menurepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  menus.model.menuitemrepository:
-    class: %menus.model.menuitemrepository.fqdn%
-    arguments:
-      - '@core.db'
-
-  menus.installer.schema:
-    class: %menus.installer.schema.fqdn%
-
-  menus.installer.migration:
-    class: %menus.installer.migration.fqdn%
-
-  menus.installer.sampleData:
-    class: %menus.installer.sampledata.fqdn%
-    parent: core.modules.installer.abstractSampleData
 
   smarty.plugin.navbar:
     class: %smarty.plugin.navbar.fqdn%

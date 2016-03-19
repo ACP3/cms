@@ -1,0 +1,14 @@
+parameters:
+  articles.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\DataGridRepository'
+  articles.model.articlerepository.fqdn: 'ACP3\Modules\ACP3\Articles\Model\ArticleRepository'
+
+services:
+  articles.model.data_grid_repository:
+    class: %articles.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'
+
+  articles.model.articlerepository:
+    class: %articles.model.articlerepository.fqdn%
+    arguments:
+      - '@core.db'

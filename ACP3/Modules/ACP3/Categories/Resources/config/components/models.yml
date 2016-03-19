@@ -1,0 +1,14 @@
+parameters:
+  categories.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\DataGridRepository'
+  categories.model.categoryrepository.fqdn: 'ACP3\Modules\ACP3\Categories\Model\CategoryRepository'
+
+services:
+  categories.model:
+    class: %categories.model.categoryrepository.fqdn%
+    arguments:
+      - '@core.db'
+
+  categories.model.data_grid_repository:
+    class: %categories.model.data_grid_repository.fqdn%
+    arguments:
+      - '@core.db'

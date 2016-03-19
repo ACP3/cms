@@ -1,12 +1,11 @@
 imports:
-  - { resource: controllers.yml }
-  - { resource: validation.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }
 
 parameters:
   comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
   comments.model.commentrepository.fqdn: 'ACP3\Modules\ACP3\Comments\Model\CommentRepository'
-  comments.installer.schema.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Schema'
-  comments.installer.migration.fqdn: 'ACP3\Modules\ACP3\Comments\Installer\Migration'
 
 services:
   comments.helpers:
@@ -19,9 +18,3 @@ services:
     class: %comments.model.commentrepository.fqdn%
     arguments:
       - '@core.db'
-
-  comments.installer.schema:
-    class: %comments.installer.schema.fqdn%
-
-  comments.installer.migration:
-    class: %comments.installer.migration.fqdn%

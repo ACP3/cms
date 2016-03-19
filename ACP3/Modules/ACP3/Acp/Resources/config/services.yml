@@ -1,13 +1,3 @@
 imports:
-  - { resource: controllers.yml }
-
-parameters:
-  acp.installer.schema.fqdn: 'ACP3\Modules\ACP3\Acp\Installer\Schema'
-  acp.installer.migration.fqdn: 'ACP3\Modules\ACP3\Acp\Installer\Migration'
-
-services:
-  acp.installer.schema:
-    class: %acp.installer.schema.fqdn%
-
-  acp.installer.migration:
-    class: %acp.installer.migration.fqdn%
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }

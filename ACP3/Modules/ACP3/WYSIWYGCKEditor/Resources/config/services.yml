@@ -1,15 +1,10 @@
+imports:
+  - { resource: components/installer.yml }
+
 parameters:
-  wysiwygckeditor.installer.schema.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer\Schema'
-  wysiwygckeditor.installer.migration.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer\Migration'
   core.wysiwyg.ckeditor.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\WYSIWYG\CKEditor'
 
 services:
-  wysiwygckeditor.installer.schema:
-    class: %wysiwygckeditor.installer.schema.fqdn%
-
-  wysiwygckeditor.installer.migration:
-    class: %wysiwygckeditor.installer.migration.fqdn%
-
   core.wysiwyg.ckeditor:
     class: %core.wysiwyg.ckeditor.fqdn%
     arguments:

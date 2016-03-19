@@ -1,0 +1,11 @@
+parameters:
+  newsletter.installer.schema.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Schema'
+  newsletter.installer.migration.fqdn: 'ACP3\Modules\ACP3\Newsletter\Installer\Migration'
+
+services:
+  newsletter.installer.schema:
+    class: %newsletter.installer.schema.fqdn%
+
+  newsletter.installer.migration:
+    class: %newsletter.installer.migration.fqdn%
+    parent: core.modules.installer.abstractMigration
