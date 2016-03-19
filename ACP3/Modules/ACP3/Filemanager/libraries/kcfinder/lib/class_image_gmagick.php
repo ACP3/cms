@@ -14,25 +14,18 @@
 
 namespace kcfinder;
 
-class class_image_gmagick extends image
-{
+class image_gmagick extends image {
 
-    public static $MIMES = array(
+    static $MIMES = array(
         //'tif' => "image/tiff"
     );
 
 
     // ABSTRACT PUBLIC METHODS
 
-    public function resize($width, $height)
-    {
-        //
-        if (!$width) {
-            $width = 1;
-        }
-        if (!$height) {
-            $height = 1;
-        }
+    public function resize($width, $height) {//
+        if (!$width) $width = 1;
+        if (!$height) $height = 1;
         try {
             $this->image->scaleImage($width, $height);
         } catch (\Exception $e) {
@@ -43,15 +36,9 @@ class class_image_gmagick extends image
         return true;
     }
 
-    public function resizeFit($width, $height, $background=false)
-    {
-        //
-        if (!$width) {
-            $width = 1;
-        }
-        if (!$height) {
-            $height = 1;
-        }
+    public function resizeFit($width, $height, $background=false) {//
+        if (!$width) $width = 1;
+        if (!$height) $height = 1;
 
         try {
             $this->image->scaleImage($width, $height, true);
@@ -65,6 +52,7 @@ class class_image_gmagick extends image
             $this->width = $w;
             $this->height = $h;
             return true;
+
         } else {
             try {
                 $this->image->setImageBackgroundColor($background);
@@ -83,57 +71,43 @@ class class_image_gmagick extends image
         }
     }
 
-    public function resizeCrop($width, $height, $offset=false)
-    {
-        if (!$width) {
-            $width = 1;
-        }
-        if (!$height) {
-            $height = 1;
-        }
+    public function resizeCrop($width, $height, $offset=false) {
+        if (!$width) $width = 1;
+        if (!$height) $height = 1;
 
         if (($this->width / $this->height) > ($width / $height)) {
             $h = $height;
             $w = ($this->width * $h) / $this->height;
             $y = 0;
             if ($offset !== false) {
-                if ($offset > 0) {
+                if ($offset > 0)
                     $offset = -$offset;
-                }
-                if (($w + $offset) <= $width) {
+                if (($w + $offset) <= $width)
                     $offset = $width - $w;
-                }
                 $x = $offset;
-            } else {
+            } else
                 $x = ($width - $w) / 2;
-            }
+
         } else {
             $w = $width;
             $h = ($this->height * $w) / $this->width;
             $x = 0;
             if ($offset !== false) {
-                if ($offset > 0) {
+                if ($offset > 0)
                     $offset = -$offset;
-                }
-                if (($h + $offset) <= $height) {
+                if (($h + $offset) <= $height)
                     $offset = $height - $h;
-                }
                 $y = $offset;
-            } else {
+            } else
                 $y = ($height - $h) / 2;
-            }
         }
 
         $x = round($x);
         $y = round($y);
         $w = round($w);
         $h = round($h);
-        if (!$w) {
-            $w = 1;
-        }
-        if (!$h) {
-            $h = 1;
-        }
+        if (!$w) $w = 1;
+        if (!$h) $h = 1;
 
         try {
             $this->image->scaleImage($w, $h);
@@ -147,8 +121,7 @@ class class_image_gmagick extends image
         return true;
     }
 
-    public function rotate($angle, $background="#000000")
-    {
+    public function rotate($angle, $background="#000000") {
         try {
             $this->image->rotateImage($background, $angle);
             $w = $this->image->getImageWidth();
@@ -161,8 +134,7 @@ class class_image_gmagick extends image
         return true;
     }
 
-    public function flipHorizontal()
-    {
+    public function flipHorizontal() {
         try {
             $this->image->flopImage();
         } catch (\Exception $e) {
@@ -171,8 +143,7 @@ class class_image_gmagick extends image
         return true;
     }
 
-    public function flipVertical()
-    {
+    public function flipVertical() {
         try {
             $this->image->flipImage();
         } catch (\Exception $e) {
@@ -181,8 +152,7 @@ class class_image_gmagick extends image
         return true;
     }
 
-    public function watermark($file, $left=false, $top=false)
-    {
+    public function watermark($file, $left=false, $top=false) {
         try {
             $wm = new \Gmagick($file);
             $w = $wm->getImageWidth();
@@ -203,9 +173,8 @@ class class_image_gmagick extends image
         if ((($x + $w) > $this->width) ||
             (($y + $h) > $this->height) ||
             ($x < 0) || ($y < 0)
-        ) {
+        )
             return false;
-        }
 
         try {
             $this->image->compositeImage($wm, 1, $x, $y);
@@ -218,8 +187,7 @@ class class_image_gmagick extends image
 
     // ABSTRACT PROTECTED METHODS
 
-    protected function getBlankImage($width, $height)
-    {
+    protected function getBlankImage($width, $height) {
         try {
             $img = new \Gmagick();
             $img->newImage($width, $height, "none");
@@ -229,12 +197,13 @@ class class_image_gmagick extends image
         return $img;
     }
 
-    protected function getImage($image, &$width, &$height)
-    {
+    protected function getImage($image, &$width, &$height) {
+
         if (is_object($image) && ($image instanceof image_gmagick)) {
             $width = $image->width;
             $height = $image->height;
             return $image->image;
+
         } elseif (is_object($image) && ($image instanceof \Gmagick)) {
             try {
                 $w = $image->getImageWidth();
@@ -245,6 +214,7 @@ class class_image_gmagick extends image
             $width = $w;
             $height = $h;
             return $image;
+
         } elseif (is_string($image)) {
             try {
                 $image = new \Gmagick($image);
@@ -256,21 +226,19 @@ class class_image_gmagick extends image
             $width = $w;
             $height = $h;
             return $image;
-        } else {
+
+        } else
             return false;
-        }
     }
 
 
     // PSEUDO-ABSTRACT STATIC METHODS
 
-    public static function available()
-    {
+    static function available() {
         return class_exists("Gmagick");
     }
 
-    public static function checkImage($file)
-    {
+    static function checkImage($file) {
         try {
             $img = new \Gmagick($file);
         } catch (\Exception $e) {
@@ -282,8 +250,7 @@ class class_image_gmagick extends image
 
     // INHERIT METHODS
 
-    public function output($type="jpeg", array $options=array())
-    {
+    public function output($type="jpeg", array $options=array()) {
         $type = strtolower($type);
         try {
             $this->image->setImageFormat($type);
@@ -291,9 +258,8 @@ class class_image_gmagick extends image
             return false;
         }
         $method = "optimize_$type";
-        if (method_exists($this, $method) && !$this->$method($options)) {
+        if (method_exists($this, $method) && !$this->$method($options))
             return false;
-        }
 
         if (!isset($options['file'])) {
             if (!headers_sent()) {
@@ -301,6 +267,7 @@ class class_image_gmagick extends image
                 header("Content-Type: $mime");
             }
             echo $this->image;
+
         } else {
             $file = $options['file'] . ".$type";
             try {
@@ -322,8 +289,7 @@ class class_image_gmagick extends image
 
     // OWN METHODS
 
-    protected function optimize_jpeg(array $options=array())
-    {
+    protected function optimize_jpeg(array $options=array()) {
         $quality = isset($options['quality']) ? $options['quality'] : self::DEFAULT_JPEG_QUALITY;
         try {
             $this->image->setCompressionQuality($quality);
@@ -332,4 +298,7 @@ class class_image_gmagick extends image
         }
         return true;
     }
+
 }
+
+?>

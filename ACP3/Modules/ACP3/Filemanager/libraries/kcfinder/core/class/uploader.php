@@ -14,10 +14,9 @@
 
 namespace kcfinder;
 
-class uploader
-{
+class uploader {
 
-    /** Release version */
+/** Release version */
     const VERSION = "3.12";
 
 /** Config session-overrided settings
@@ -91,41 +90,34 @@ class uploader
 /** Magic method which allows read-only access to protected or private class properties
   * @param string $property
   * @return mixed */
-    public function __get($property)
-    {
+    public function __get($property) {
         return property_exists($this, $property) ? $this->$property : null;
     }
 
-    public function __construct()
-    {
+    public function __construct() {
 
         // SET CMS INTEGRATION PROPERTY
         if (isset($_GET['cms']) &&
             $this->checkFilename($_GET['cms']) &&
             is_file("integration/{$_GET['cms']}.php")
-        ) {
+        )
             $this->cms = $_GET['cms'];
-        }
 
-        // LINKING UPLOADED FILE
-        if (count($_FILES)) {
-            $this->file = $_FILES['upload'];
-        }
+		// LINKING UPLOADED FILE
+        if (count($_FILES))
+            $this->file = &$_FILES[key($_FILES)];
 
         // LOAD DEFAULT CONFIGURATION
         require "conf/config.php";
 
         // SETTING UP SESSION
         if (!session_id()) {
-            if (isset($_CONFIG['_sessionLifetime'])) {
+            if (isset($_CONFIG['_sessionLifetime']))
                 ini_set('session.gc_maxlifetime', $_CONFIG['_sessionLifetime'] * 60);
-            }
-            if (isset($_CONFIG['_sessionDir'])) {
+            if (isset($_CONFIG['_sessionDir']))
                 ini_set('session.save_path', $_CONFIG['_sessionDir']);
-            }
-            if (isset($_CONFIG['_sessionDomain'])) {
+            if (isset($_CONFIG['_sessionDomain']))
                 ini_set('session.cookie_domain', $_CONFIG['_sessionDomain']);
-            }
             session_start();
         }
 
@@ -133,44 +125,39 @@ class uploader
         $this->config = $_CONFIG;
         $sessVar = "_sessionVar";
         if (isset($_CONFIG[$sessVar])) {
+
             $sessVar = $_CONFIG[$sessVar];
 
-            if (!isset($_SESSION[$sessVar])) {
+            if (!isset($_SESSION[$sessVar]))
                 $_SESSION[$sessVar] = array();
-            }
 
             $sessVar = &$_SESSION[$sessVar];
 
-            if (!is_array($sessVar)) {
+            if (!is_array($sessVar))
                 $sessVar = array();
-            }
 
-            foreach ($sessVar as $key => $val) {
-                if ((substr($key, 0, 1) != "_") && isset($_CONFIG[$key])) {
+            foreach ($sessVar as $key => $val)
+                if ((substr($key, 0, 1) != "_") && isset($_CONFIG[$key]))
                     $this->config[$key] = $val;
-                }
-            }
 
-            if (!isset($sessVar['self'])) {
+            if (!isset($sessVar['self']))
                 $sessVar['self'] = array();
-            }
 
             $this->session = &$sessVar['self'];
-        } else {
+
+        } else
             $this->session = &$_SESSION;
-        }
 
         // SECURING THE SESSION
         $stamp = array(
             'ip' => $_SERVER['REMOTE_ADDR'],
             'agent' => md5($_SERVER['HTTP_USER_AGENT'])
         );
-        if (!isset($this->session['stamp'])) {
+        if (!isset($this->session['stamp']))
             $this->session['stamp'] = $stamp;
-        } elseif (!is_array($this->session['stamp']) || ($this->session['stamp'] !== $stamp)) {
-            if ($this->session['stamp']['ip'] === $stamp['ip']) {
+        elseif (!is_array($this->session['stamp']) || ($this->session['stamp'] !== $stamp)) {
+            if ($this->session['stamp']['ip'] === $stamp['ip'])
                 session_destroy();
-            }
             die;
         }
 
@@ -179,20 +166,17 @@ class uploader
             $this->config['imageDriversPriority'] =
                 text::clearWhitespaces($this->config['imageDriversPriority']);
             $driver = image::getDriver(explode(' ', $this->config['imageDriversPriority']));
-            if ($driver !== false) {
+            if ($driver !== false)
                 $this->imageDriver = $driver;
-            }
         }
         if ((!isset($driver) || ($driver === false)) &&
             (image::getDriver(array($this->imageDriver)) === false)
-        ) {
+        )
             die("Cannot find any of the supported PHP image extensions!");
-        }
 
         // WATERMARK INIT
-        if (isset($this->config['watermark']) && is_string($this->config['watermark'])) {
+        if (isset($this->config['watermark']) && is_string($this->config['watermark']))
             $this->config['watermark'] = array('file' => $this->config['watermark']);
-        }
 
         // GET TYPE DIRECTORY
         $this->types = &$this->config['types'];
@@ -206,11 +190,9 @@ class uploader
 
         // LOAD TYPE DIRECTORY SPECIFIC CONFIGURATION IF EXISTS
         if (is_array($this->types[$this->type])) {
-            foreach ($this->types[$this->type] as $key => $val) {
-                if (in_array($key, $this->typeSettings)) {
+            foreach ($this->types[$this->type] as $key => $val)
+                if (in_array($key, $this->typeSettings))
                     $this->config[$key] = $val;
-                }
-            }
             $this->types[$this->type] = isset($this->types[$this->type]['type'])
                 ? $this->types[$this->type]['type'] : "";
         }
@@ -220,14 +202,12 @@ class uploader
         $ip = '/^' . implode('\.', array($ip, $ip, $ip, $ip)) . '$/';
         if (preg_match($ip, $_SERVER['HTTP_HOST']) ||
             preg_match('/^[^\.]+$/', $_SERVER['HTTP_HOST'])
-        ) {
+        )
             $this->config['cookieDomain'] = "";
-        } elseif (!strlen($this->config['cookieDomain'])) {
+        elseif (!strlen($this->config['cookieDomain']))
             $this->config['cookieDomain'] = $_SERVER['HTTP_HOST'];
-        }
-        if (!strlen($this->config['cookiePath'])) {
+        if (!strlen($this->config['cookiePath']))
             $this->config['cookiePath'] = "/";
-        }
 
         // UPLOAD FOLDER INIT
 
@@ -268,26 +248,26 @@ class uploader
         if (isset($_GET['CKEditorFuncNum'])) {
             $this->opener['name'] = "ckeditor";
             $this->opener['CKEditor'] = array('funcNum' => $_GET['CKEditorFuncNum']);
+
         } elseif (isset($_GET['opener'])) {
             $this->opener['name'] = $_GET['opener'];
 
             if ($_GET['opener'] == "tinymce") {
-                if (!isset($this->config['_tinyMCEPath']) || !strlen($this->config['_tinyMCEPath'])) {
+                if (!isset($this->config['_tinyMCEPath']) || !strlen($this->config['_tinyMCEPath']))
                     $this->opener['name'] = false;
-                }
+
             } elseif ($_GET['opener'] == "tinymce4") {
-                if (!isset($_GET['field'])) {
+                if (!isset($_GET['field']))
                     $this->opener['name'] = false;
-                } else {
+                else
                     $this->opener['TinyMCE'] = array('field' => $_GET['field']);
-                }
             }
-        } else {
+
+        } else
             $this->opener['name'] = false;
-        }
 
         // LOCALIZATION
-        foreach ($this->langInputNames as $key) {
+        foreach ($this->langInputNames as $key)
             if (isset($_GET[$key]) &&
                 preg_match('/^[a-z][a-z\._\-]*$/i', $_GET[$key]) &&
                 file_exists("lang/" . strtolower($_GET[$key]) . ".php")
@@ -295,16 +275,14 @@ class uploader
                 $this->lang = $_GET[$key];
                 break;
             }
-        }
         $this->localize($this->lang);
 
         // IF BROWSER IS ENABLED
         if (!$this->config['disabled']) {
 
             // TRY TO CREATE UPLOAD DIRECTORY IF NOT EXISTS
-            if (!$this->config['disabled'] && !is_dir($this->config['uploadDir'])) {
+            if (!$this->config['disabled'] && !is_dir($this->config['uploadDir']))
                 @mkdir($this->config['uploadDir'], $this->config['dirPerms']);
-            }
 
             // CHECK & MAKE DEFAULT .htaccess
             if (isset($this->config['_check4htaccess']) &&
@@ -313,41 +291,34 @@ class uploader
                 $htaccess = "{$this->config['uploadDir']}/.htaccess";
                 $original = $this->get_htaccess();
                 if (!file_exists($htaccess)) {
-                    if (!@file_put_contents($htaccess, $original)) {
+                    if (!@file_put_contents($htaccess, $original))
                         $this->backMsg("Cannot write to upload folder. {$this->config['uploadDir']}");
-                    }
                 } else {
-                    if (false === ($data = @file_get_contents($htaccess))) {
+                    if (false === ($data = @file_get_contents($htaccess)))
                         $this->backMsg("Cannot read .htaccess");
-                    }
-                    if (($data != $original) && !@file_put_contents($htaccess, $original)) {
+                    if (($data != $original) && !@file_put_contents($htaccess, $original))
                         $this->backMsg("Incorrect .htaccess file. Cannot rewrite it!");
-                    }
                 }
             }
 
             // CHECK & CREATE UPLOAD FOLDER
             if (!is_dir($this->typeDir)) {
-                if (!mkdir($this->typeDir, $this->config['dirPerms'])) {
+                if (!mkdir($this->typeDir, $this->config['dirPerms']))
                     $this->backMsg("Cannot create {dir} folder.", array('dir' => $this->type));
-                }
-            } elseif (!is_readable($this->typeDir)) {
+            } elseif (!is_readable($this->typeDir))
                 $this->backMsg("Cannot read upload folder.");
-            }
         }
     }
 
-    public function upload()
-    {
+    public function upload() {
         $config = &$this->config;
         $file = &$this->file;
         $url = $message = "";
 
         if ($config['disabled'] || !$config['access']['files']['upload']) {
-            if (isset($file['tmp_name'])) {
-                @unlink($file['tmp_name']);
-            }
+            if (isset($file['tmp_name'])) @unlink($file['tmp_name']);
             $message = $this->label("You don't have permissions to upload files.");
+
         } elseif (true === ($message = $this->checkUploadedFile())) {
             $message = "";
 
@@ -356,9 +327,9 @@ class uploader
                 (false !== ($gdir = $this->checkInputDir($_GET['dir'])))
             ) {
                 $udir = path::normalize("$dir$gdir");
-                if (substr($udir, 0, strlen($dir)) !== $dir) {
+                if (substr($udir, 0, strlen($dir)) !== $dir)
                     $message = $this->label("Unknown error.");
-                } else {
+                else {
                     $l = strlen($dir);
                     $dir = "$udir/";
                     $udir = substr($udir, $l);
@@ -366,9 +337,8 @@ class uploader
             }
 
             if (!strlen($message)) {
-                if (!is_dir(path::normalize($dir))) {
+                if (!is_dir(path::normalize($dir)))
                     @mkdir(path::normalize($dir), $this->config['dirPerms'], true);
-                }
 
                 $filename = $this->normalizeFilename($file['name']);
                 $target = file::getInexistantFilename($dir . $filename);
@@ -376,25 +346,21 @@ class uploader
                 if (!@move_uploaded_file($file['tmp_name'], $target) &&
                     !@rename($file['tmp_name'], $target) &&
                     !@copy($file['tmp_name'], $target)
-                ) {
+                )
                     $message = $this->label("Cannot move uploaded file to target folder.");
-                } else {
-                    if (function_exists('chmod')) {
+                else {
+                    if (function_exists('chmod'))
                         @chmod($target, $this->config['filePerms']);
-                    }
                     $this->makeThumb($target);
                     $url = $this->typeURL;
-                    if (isset($udir)) {
-                        $url .= "/$udir";
-                    }
+                    if (isset($udir)) $url .= "/$udir";
                     $url .= "/" . basename($target);
                     if (preg_match('/^([a-z]+)\:\/\/([^\/^\:]+)(\:(\d+))?\/(.+)$/', $url, $patt)) {
                         list($unused, $protocol, $domain, $unused, $port, $path) = $patt;
                         $base = "$protocol://$domain" . (strlen($port) ? ":$port" : "") . "/";
                         $url = $base . path::urlPathEncode($path);
-                    } else {
+                    } else
                         $url = path::urlPathEncode($url);
-                    }
                 }
             }
         }
@@ -402,79 +368,68 @@ class uploader
         if (strlen($message) &&
             isset($this->file['tmp_name']) &&
             file_exists($this->file['tmp_name'])
-        ) {
+        )
             @unlink($this->file['tmp_name']);
-        }
 
-        if (strlen($message) && method_exists($this, 'errorMsg')) {
+        if (strlen($message) && method_exists($this, 'errorMsg'))
             $this->errorMsg($message);
-        } else {
+        else
             $this->callBack($url, $message);
-        }
     }
 
-    protected function normalizeFilename($filename)
-    {
+    protected function normalizeFilename($filename) {
+
         if (isset($this->config['filenameChangeChars']) &&
             is_array($this->config['filenameChangeChars'])
-        ) {
+        )
             $filename = strtr($filename, $this->config['filenameChangeChars']);
-        }
 
-        if (isset($this->config['_normalizeFilenames']) && $this->config['_normalizeFilenames']) {
+        if (isset($this->config['_normalizeFilenames']) && $this->config['_normalizeFilenames'])
             $filename = file::normalizeFilename($filename);
-        }
 
         return $filename;
     }
 
-    protected function normalizeDirname($dirname)
-    {
+    protected function normalizeDirname($dirname) {
+
         if (isset($this->config['dirnameChangeChars']) &&
             is_array($this->config['dirnameChangeChars'])
-        ) {
+        )
             $dirname = strtr($dirname, $this->config['dirnameChangeChars']);
-        }
 
-        if (isset($this->config['_normalizeFilenames']) && $this->config['_normalizeFilenames']) {
+        if (isset($this->config['_normalizeFilenames']) && $this->config['_normalizeFilenames'])
             $dirname = file::normalizeFilename($dirname);
-        }
 
         return $dirname;
     }
 
-    protected function checkFilePath($file)
-    {
+    protected function checkFilePath($file) {
         $rPath = realpath($file);
-        if (strtoupper(substr(PHP_OS, 0, 3)) == "WIN") {
+        if (strtoupper(substr(PHP_OS, 0, 3)) == "WIN")
             $rPath = str_replace("\\", "/", $rPath);
-        }
         return (substr($rPath, 0, strlen($this->typeDir)) === $this->typeDir);
     }
 
-    protected function checkFilename($file)
-    {
+    protected function checkFilename($file) {
+
         if ((basename($file) !== $file) ||
             (
                 isset($this->config['_normalizeFilenames']) &&
                 $this->config['_normalizeFilenames'] &&
                 preg_match('/[^0-9a-z\.\- _]/si', $file)
             )
-        ) {
+        )
             return false;
-        }
 
         return true;
     }
 
-    protected function checkUploadedFile(array $aFile=null)
-    {
+    protected function checkUploadedFile(array $aFile=null) {
         $config = &$this->config;
         $file = ($aFile === null) ? $this->file : $aFile;
 
-        if (!is_array($file) || !isset($file['name'])) {
+        if (!is_array($file) || !isset($file['name']))
             return $this->label("Unknown error");
-        }
 
         if (is_array($file['name'])) {
             foreach ($file['name'] as $i => $name) {
@@ -483,9 +438,8 @@ class uploader
                     'tmp_name' => $file['tmp_name'][$i],
                     'error' => $file['error'][$i]
                 ));
-                if ($return !== true) {
+                if ($return !== true)
                     return "$name: $return";
-                }
             }
             return true;
         }
@@ -494,7 +448,7 @@ class uploader
         $typePatt = strtolower(text::clearWhitespaces($this->types[$this->type]));
 
         // CHECK FOR UPLOAD ERRORS
-        if ($file['error']) {
+        if ($file['error'])
             return
                 ($file['error'] == UPLOAD_ERR_INI_SIZE) ?
                     $this->label("The uploaded file exceeds {size} bytes.",
@@ -512,20 +466,17 @@ class uploader
                     $this->label("Failed to write file.") :
                     $this->label("Unknown error.")
             )))));
-        }
 
         // HIDDEN FILENAMES CHECK
-        elseif (substr($file['name'], 0, 1) == ".") {
+        elseif (substr($file['name'], 0, 1) == ".")
             return $this->label("File name shouldn't begins with '.'");
-        }
 
         // EXTENSION CHECK
         elseif (
             (substr($file['name'], -1) == ".") ||
             !$this->validateExtension($extension, $this->type)
-        ) {
+        )
             return $this->label("Denied file extension.");
-        }
 
         // SPECIAL DIRECTORY TYPES CHECK (e.g. *img)
         elseif (preg_match('/^\*([^ ]+)(.*)?$/s', $typePatt, $patt)) {
@@ -535,77 +486,64 @@ class uploader
                 $type = new $class();
                 $cfg = $config;
                 $cfg['filename'] = $file['name'];
-                if (strlen($params)) {
+                if (strlen($params))
                     $cfg['params'] = trim($params);
-                }
                 $response = $type->checkFile($file['tmp_name'], $cfg);
-                if ($response !== true) {
+                if ($response !== true)
                     return $this->label($response);
-                }
-            } else {
+            } else
                 return $this->label("Non-existing directory type.");
-            }
         }
 
         // IMAGE RESIZE
         $img = image::factory($this->imageDriver, $file['tmp_name']);
-        if (!$img->initError && !$this->imageResize($img, $file['tmp_name'])) {
+        if (!$img->initError && !$this->imageResize($img, $file['tmp_name']))
             return $this->label("The image is too big and/or cannot be resized.");
-        }
 
         return true;
     }
 
-    protected function checkInputDir($dir, $inclType=true, $existing=true)
-    {
+    protected function checkInputDir($dir, $inclType=true, $existing=true) {
         $dir = path::normalize($dir);
-        if (substr($dir, 0, 1) == "/") {
+        if (substr($dir, 0, 1) == "/")
             $dir = substr($dir, 1);
-        }
 
-        if ((substr($dir, 0, 1) == ".") || (substr(basename($dir), 0, 1) == ".")) {
+        if ((substr($dir, 0, 1) == ".") || (substr(basename($dir), 0, 1) == "."))
             return false;
-        }
 
         if ($inclType) {
             $first = explode("/", $dir);
             $first = $first[0];
-            if ($first != $this->type) {
+            if ($first != $this->type)
                 return false;
-            }
             $return = $this->removeTypeFromPath($dir);
         } else {
             $return = $dir;
             $dir = "{$this->type}/$dir";
         }
 
-        if (!$existing) {
+        if (!$existing)
             return $return;
-        }
 
         $path = "{$this->config['uploadDir']}/$dir";
         return (is_dir($path) && is_readable($path)) ? $return : false;
     }
 
-    protected function validateExtension($ext, $type)
-    {
+    protected function validateExtension($ext, $type) {
         $ext = trim(strtolower($ext));
-        if (!isset($this->types[$type])) {
+        if (!isset($this->types[$type]))
             return false;
-        }
 
         $exts = strtolower(text::clearWhitespaces($this->config['deniedExts']));
         if (strlen($exts)) {
             $exts = explode(" ", $exts);
-            if (in_array($ext, $exts)) {
+            if (in_array($ext, $exts))
                 return false;
-            }
         }
 
         $exts = trim($this->types[$type]);
-        if (!strlen($exts) || substr($exts, 0, 1) == "*") {
+        if (!strlen($exts) || substr($exts, 0, 1) == "*")
             return true;
-        }
 
         if (substr($exts, 0, 1) == "!") {
             $exts = explode(" ", trim(strtolower(substr($exts, 1))));
@@ -616,31 +554,26 @@ class uploader
         return in_array($ext, $exts);
     }
 
-    protected function getTypeFromPath($path)
-    {
+    protected function getTypeFromPath($path) {
         return preg_match('/^([^\/]*)\/.*$/', $path, $patt)
             ? $patt[1] : $path;
     }
 
-    protected function removeTypeFromPath($path)
-    {
+    protected function removeTypeFromPath($path) {
         return preg_match('/^[^\/]*\/(.*)$/', $path, $patt)
             ? $patt[1] : "";
     }
 
-    protected function imageResize($image, $file=null)
-    {
+    protected function imageResize($image, $file=null) {
+
         if (!($image instanceof image)) {
             $img = image::factory($this->imageDriver, $image);
-            if ($img->initError) {
-                return false;
-            }
+            if ($img->initError) return false;
             $file = $image;
-        } elseif ($file === null) {
+        } elseif ($file === null)
             return false;
-        } else {
+        else
             $img = $image;
-        }
 
         $orientation = 1;
         if (function_exists("exif_read_data")) {
@@ -662,17 +595,18 @@ class uploader
                 )
             ) &&
             ($orientation == 1)
-        ) {
+        )
             return true;
-        }
 
         // PROPORTIONAL RESIZE
         if ((!$this->config['maxImageWidth'] || !$this->config['maxImageHeight'])) {
+
             if ($this->config['maxImageWidth'] &&
                 ($this->config['maxImageWidth'] < $img->width)
             ) {
                 $width = $this->config['maxImageWidth'];
                 $height = $img->getPropHeight($width);
+
             } elseif (
                 $this->config['maxImageHeight'] &&
                 ($this->config['maxImageHeight'] < $img->height)
@@ -681,17 +615,15 @@ class uploader
                 $width = $img->getPropWidth($height);
             }
 
-            if (isset($width) && isset($height) && !$img->resize($width, $height)) {
+            if (isset($width) && isset($height) && !$img->resize($width, $height))
                 return false;
-            }
 
         // RESIZE TO FIT
         } elseif (
             $this->config['maxImageWidth'] && $this->config['maxImageHeight'] &&
             !$img->resizeFit($this->config['maxImageWidth'], $this->config['maxImageHeight'])
-        ) {
+        )
             return false;
-        }
 
         // AUTO FLIP AND ROTATE FROM EXIF
         if ((($orientation == 2) && !$img->flipHorizontal()) ||
@@ -701,15 +633,12 @@ class uploader
             (($orientation == 6) && !$img->rotate(90)) ||
             (($orientation == 7) && (!$img->flipHorizontal() || !$img->rotate(90))) ||
             (($orientation == 8) && !$img->rotate(270))
-        ) {
+        )
             return false;
-        }
-        if (($orientation >= 2) && ($orientation <= 8) && ($this->imageDriver == "imagick")) {
+        if (($orientation >= 2) && ($orientation <= 8) && ($this->imageDriver == "imagick"))
             try {
                 $img->image->setImageProperty('exif:Orientation', "1");
-            } catch (\Exception $e) {
-            }
-        }
+            } catch (\Exception $e) {}
 
         // WATERMARK
         if (isset($this->config['watermark']['file']) &&
@@ -729,62 +658,52 @@ class uploader
         ));
     }
 
-    protected function makeThumb($file, $overwrite=true)
-    {
+    protected function makeThumb($file, $overwrite=true) {
         $img = image::factory($this->imageDriver, $file);
 
         // Drop files which are not images
-        if ($img->initError) {
+        if ($img->initError)
             return true;
-        }
 
         $fimg = new fastImage($file);
         $type = $fimg->getType();
         $fimg->close();
 
-        if ($type === false) {
+        if ($type === false)
             return true;
-        }
 
         $thumb = substr($file, strlen($this->config['uploadDir']));
         $thumb = $this->config['uploadDir'] . "/" . $this->config['thumbsDir'] . "/" . $thumb;
         $thumb = path::normalize($thumb);
         $thumbDir = dirname($thumb);
-        if (!is_dir($thumbDir) && !@mkdir($thumbDir, $this->config['dirPerms'], true)) {
+        if (!is_dir($thumbDir) && !@mkdir($thumbDir, $this->config['dirPerms'], true))
             return false;
-        }
 
-        if (!$overwrite && is_file($thumb)) {
+        if (!$overwrite && is_file($thumb))
             return true;
-        }
 
         // Images with smaller resolutions than thumbnails
         if (($img->width <= $this->config['thumbWidth']) &&
             ($img->height <= $this->config['thumbHeight'])
         ) {
             // Drop only browsable types
-            if (in_array($type, array("gif", "jpeg", "png"))) {
+            if (in_array($type, array("gif", "jpeg", "png")))
                 return true;
-            }
 
         // Resize image
-        } elseif (!$img->resizeFit($this->config['thumbWidth'], $this->config['thumbHeight'])) {
+        } elseif (!$img->resizeFit($this->config['thumbWidth'], $this->config['thumbHeight']))
             return false;
-        }
 
         // Save thumbnail
         $options = array('file' => $thumb);
-        if ($type == "gif") {
+        if ($type == "gif")
             $type = "jpeg";
-        }
-        if ($type == "jpeg") {
+        if ($type == "jpeg")
             $options['quality'] = $this->config['jpegQuality'];
-        }
         return $img->output($type, $options);
     }
 
-    protected function localize($langCode)
-    {
+    protected function localize($langCode) {
         require "lang/{$langCode}.php";
         setlocale(LC_ALL, $lang['_locale']);
         $this->charset = $lang['_charset'];
@@ -799,19 +718,15 @@ class uploader
         $this->labels = $lang;
     }
 
-    protected function label($string, array $data=null)
-    {
+    protected function label($string, array $data=null) {
         $return = isset($this->labels[$string]) ? $this->labels[$string] : $string;
-        if (is_array($data)) {
-            foreach ($data as $key => $val) {
+        if (is_array($data))
+            foreach ($data as $key => $val)
                 $return = str_replace("{{$key}}", $val, $return);
-            }
-        }
         return $return;
     }
 
-    protected function backMsg($message, array $data=null)
-    {
+    protected function backMsg($message, array $data=null) {
         $message = $this->label($message, $data);
         $tmp_name = isset($this->file['tmp_name']) ? $this->file['tmp_name'] : false;
 
@@ -820,43 +735,35 @@ class uploader
                 ? $tmp_name[0]
                 : $tmp_name;
 
-            if (file_exists($tmp_name)) {
+            if (file_exists($tmp_name))
                 @unlink($tmp_name);
-            }
         }
         $this->callBack("", $message);
         die;
     }
 
-    protected function callBack($url, $message="")
-    {
+    protected function callBack($url, $message="") {
         $message = text::jsValue($message);
 
-        if ((get_class($this) == "kcfinder\\browser") && ($this->action != "browser")) {
+        if ((get_class($this) == "kcfinder\\browser") && ($this->action != "browser"))
             return;
-        }
 
         if (isset($this->opener['name'])) {
             $method = "callBack_{$this->opener['name']}";
-            if (method_exists($this, $method)) {
+            if (method_exists($this, $method))
                 $js = $this->$method($url, $message);
-            }
         }
 
-        if (!isset($js)) {
+        if (!isset($js))
             $js = $this->callBack_default($url, $message);
-        }
 
         header("Content-Type: text/html; charset={$this->charset}");
         echo "<html><body>$js</body></html>";
     }
 
-    protected function callBack_ckeditor($url, $message)
-    {
+    protected function callBack_ckeditor($url, $message) {
         $CKfuncNum = isset($this->opener['CKEditor']['funcNum']) ? $this->opener['CKEditor']['funcNum'] : 0;
-        if (!$CKfuncNum) {
-            $CKfuncNum = 0;
-        }
+        if (!$CKfuncNum) $CKfuncNum = 0;
         return "<script type='text/javascript'>
 var par = window.parent,
     op = window.opener,
@@ -871,8 +778,7 @@ if (o !== false) {
 </script>";
     }
 
-    protected function callBack_fckeditor($url, $message)
-    {
+    protected function callBack_fckeditor($url, $message) {
         $n = strlen($message) ? 1 : 0;
         return "<script type='text/javascript'>
 var par = window.parent,
@@ -888,26 +794,24 @@ if (o !== false) {
 </script>";
     }
 
-    protected function callBack_tinymce($url, $message)
-    {
+    protected function callBack_tinymce($url, $message) {
         return $this->callBack_default($url, $message);
     }
 
-    protected function callBack_tinymce4($url, $message)
-    {
+    protected function callBack_tinymce4($url, $message) {
         return $this->callBack_default($url, $message);
     }
 
-    protected function callBack_default($url, $message)
-    {
+    protected function callBack_default($url, $message) {
         return "<script type='text/javascript'>
 alert('$message');
 if (window.opener) window.close();
 </script>";
     }
 
-    protected function get_htaccess()
-    {
+    protected function get_htaccess() {
         return file_get_contents("conf/upload.htaccess");
     }
 }
+
+?>

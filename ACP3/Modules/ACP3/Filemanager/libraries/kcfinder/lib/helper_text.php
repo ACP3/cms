@@ -14,15 +14,13 @@
 
 namespace kcfinder;
 
-class helper_text
-{
+class text {
 
-    /** Replace repeated white spaces to single space
+/** Replace repeated white spaces to single space
   * @param string $string
   * @return string */
 
-    public static function clearWhitespaces($string)
-    {
+    static function clearWhitespaces($string) {
         return trim(preg_replace('/\s+/s', " ", $string));
     }
 
@@ -30,8 +28,7 @@ class helper_text
   * @param string $string
   * @return string */
 
-    public static function htmlValue($string)
-    {
+    static function htmlValue($string) {
         return
             str_replace('"', "&quot;",
             str_replace("'", '&#39;',
@@ -44,8 +41,7 @@ class helper_text
   * @param string $string
   * @return string */
 
-    public static function jsValue($string)
-    {
+    static function jsValue($string) {
         return
             preg_replace('/\r?\n/', "\\n",
             str_replace('"', "\\\"",
@@ -53,4 +49,7 @@ class helper_text
             str_replace("\\", "\\\\",
         $string))));
     }
+
 }
+
+?>

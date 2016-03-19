@@ -14,8 +14,7 @@
 
 namespace kcfinder;
 
-class minifier
-{
+class minifier {
 
     protected $config;
     protected $type = "js";
@@ -25,24 +24,19 @@ class minifier
         'css' => "text/css"
     );
 
-    public function __construct($type=null)
-    {
+    public function __construct($type=null) {
         require "conf/config.php";
         $this->config = $_CONFIG;
         $type = strtolower($type);
-        if (isset($this->mime[$type])) {
+        if (isset($this->mime[$type]))
             $this->type = $type;
-        }
-        if (isset($_CONFIG["_{$this->type}MinCmd"])) {
+        if (isset($_CONFIG["_{$this->type}MinCmd"]))
             $this->minCmd = $_CONFIG["_{$this->type}MinCmd"];
-        }
     }
 
-    public function minify($cacheFile=null, $dir=null)
-    {
-        if ($dir === null) {
+    public function minify($cacheFile=null, $dir=null) {
+        if ($dir === null)
             $dir = dirname($_SERVER['SCRIPT_FILENAME']);
-        }
 
         // MODIFICATION TIME FILES
         $mtFiles = array(
@@ -61,9 +55,8 @@ class minifier
         $mtime = 0;
         foreach (array_merge($mtFiles, $files) as $file) {
             $fmtime = filemtime($file);
-            if ($fmtime > $mtime) {
+            if ($fmtime > $mtime)
                 $mtime = $fmtime;
-            }
         }
 
         $header = "Content-Type: {$this->mime[$this->type]}";
@@ -89,12 +82,13 @@ class minifier
         // MINIFY AND JOIN SOURCE CODE
         $source = "";
         foreach ($files as $file) {
+
             if (strlen($this->minCmd) && (substr($file, 4, 1) != "_")) {
                 $cmd = str_replace("{file}", $file, $this->minCmd);
                 $source .= `$cmd`;
-            } else {
+
+            } else
                 $source .= file_get_contents($file);
-            }
         }
 
         // UPDATE SERVER-SIDE CACHE
@@ -113,5 +107,8 @@ class minifier
 
         // OUTPUT SOURCE CODE
         echo $source;
+
     }
 }
+
+?>
