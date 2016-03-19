@@ -109,6 +109,8 @@ services:
 
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG
-    arguments: ['@service_container']
+    arguments:
+      - '@core.wysiwyg.wysiwyg_factory'
+      - '@core.config'
     tags:
       - { name: core.view.extension }

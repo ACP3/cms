@@ -11,40 +11,11 @@ use ACP3\Core;
 class Textarea extends AbstractWYSIWYG
 {
     /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Helpers
-     */
-    private $emoticonsHelpers;
-
-    /**
-     * @param \ACP3\Core\Modules $modules
-     */
-    public function __construct(Core\Modules $modules)
-    {
-        $this->modules = $modules;
-    }
-
-    /**
      * @inheritdoc
      */
     public function getFriendlyName()
     {
         return 'Textarea';
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelpers
-     *
-     * @return $this
-     */
-    public function setEmoticonsHelpers(\ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelpers)
-    {
-        $this->emoticonsHelpers = $emoticonsHelpers;
-
-        return $this;
     }
 
     /**
@@ -61,16 +32,17 @@ class Textarea extends AbstractWYSIWYG
     /**
      * @inheritdoc
      */
-    public function display()
+    public function getData()
     {
-        $out = '';
-        if ($this->modules->isActive('emoticons') === true) {
-            $out .= $this->emoticonsHelpers->emoticonsList($this->id);
-        }
-        $out .= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="60" rows="6" class="form-control">';
-        $out .= $this->value;
-        $out .= '</textarea>';
-
-        return $out;
+        return [
+            'wysiwyg' => [
+                'friendly_name' => $this->getFriendlyName(),
+                'id' => $this->id,
+                'name' => $this->name,
+                'value' => $this->value,
+                'js' => '',
+                'advanced' => false
+            ]
+        ];
     }
 }

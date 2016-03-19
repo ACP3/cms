@@ -61,20 +61,15 @@ class Configuration extends Core\Controller\AdminAction
         $systemSettings = $this->config->getSettings('system');
 
         // WYSIWYG editors
-        $services = $this->container->getServiceIds();
+        $services = $this->get('core.wysiwyg.wysiwyg_factory')->getWysiwygEditors();
         $wysiwyg = [];
-        foreach ($services as $service) {
-            if (strpos($service, 'core.wysiwyg') === 0) {
-                $editor = $this->container->get($service);
-
-                if ($editor instanceof Core\WYSIWYG\AbstractWYSIWYG) {
-                    $wysiwyg[] = [
-                        'value' => $service,
-                        'selected' => $this->formsHelper->selectEntry('wysiwyg', $service, $systemSettings['wysiwyg']),
-                        'lang' => $editor->getFriendlyName()
-                    ];
-                }
-            }
+        foreach ($services as $serviceId => $editorInstance) {
+            /** @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG $editorInstance */
+            $wysiwyg[] = [
+                'value' => $serviceId,
+                'selected' => $this->formsHelper->selectEntry('wysiwyg', $serviceId, $systemSettings['wysiwyg']),
+                'lang' => $editorInstance->getFriendlyName()
+            ];
         }
 
         // Mailertyp
@@ -95,11 +90,28 @@ class Configuration extends Core\Controller\AdminAction
             'wysiwyg' => $wysiwyg,
             'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
-            'maintenance' => $this->formsHelper->yesNoCheckboxGenerator('maintenance_mode', $systemSettings['maintenance_mode']),
-            'cache_images' => $this->formsHelper->yesNoCheckboxGenerator('cache_images', $systemSettings['cache_images']),
-            'mailer_type' => $this->formsHelper->choicesGenerator('mailer_type', $mailerTypes, $systemSettings['mailer_type']),
-            'mailer_smtp_auth' => $this->formsHelper->yesNoCheckboxGenerator('mailer_smtp_auth', $systemSettings['mailer_smtp_auth']),
-            'mailer_smtp_security' => $this->formsHelper->choicesGenerator('mailer_smtp_security', $mailerSmtpSecurity, $systemSettings['mailer_smtp_security']),
+            'maintenance' => $this->formsHelper->yesNoCheckboxGenerator(
+                'maintenance_mode',
+                $systemSettings['maintenance_mode']
+            ),
+            'cache_images' => $this->formsHelper->yesNoCheckboxGenerator(
+                'cache_images',
+                $systemSettings['cache_images']
+            ),
+            'mailer_type' => $this->formsHelper->choicesGenerator(
+                'mailer_type',
+                $mailerTypes,
+                $systemSettings['mailer_type']
+            ),
+            'mailer_smtp_auth' => $this->formsHelper->yesNoCheckboxGenerator(
+                'mailer_smtp_auth',
+                $systemSettings['mailer_smtp_auth']
+            ),
+            'mailer_smtp_security' => $this->formsHelper->choicesGenerator(
+                'mailer_smtp_security',
+                $mailerSmtpSecurity,
+                $systemSettings['mailer_smtp_security']
+            ),
             'form' => array_merge($systemSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -143,9 +155,11 @@ class Configuration extends Core\Controller\AdminAction
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool,
+                return $this->redirectMessages()->setMessage(
+                    $bool,
                     $this->translator->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'),
-                    $this->request->getFullPath());
+                    $this->request->getFullPath()
+                );
             },
             $this->request->getFullPath()
         );

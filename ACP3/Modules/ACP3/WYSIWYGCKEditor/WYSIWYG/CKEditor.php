@@ -16,10 +16,6 @@ class CKEditor extends Textarea
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
@@ -41,16 +37,13 @@ class CKEditor extends Textarea
      * CKEditor constructor.
      *
      * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\View                        $view
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Modules $modules,
-        Core\View $view,
         Core\Environment\ApplicationPath $appPath
     ) {
         $this->modules = $modules;
-        $this->view = $view;
         $this->appPath = $appPath;
     }
 
@@ -100,9 +93,10 @@ class CKEditor extends Textarea
     /**
      * @inheritdoc
      */
-    public function display()
+    public function getData()
     {
         $wysiwyg = [
+            'friendly_name' => $this->getFriendlyName(),
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
@@ -114,8 +108,7 @@ class CKEditor extends Textarea
             $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
         }
 
-        $this->view->assign('wysiwyg', $wysiwyg);
-        return $this->view->fetchTemplate('system/wysiwyg.tpl');
+        return ['wysiwyg' => $wysiwyg];
     }
 
     /**

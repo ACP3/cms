@@ -1,6 +1,11 @@
+{event name="core.wysiwyg.`$wysiwyg.friendly_name|lower`.before" id=$wysiwyg.id}
 <textarea name="{$wysiwyg.name}" id="{$wysiwyg.id}" cols="60" rows="6" class="form-control">{$wysiwyg.value}</textarea>
 {javascripts}
-    {$wysiwyg.js}
+    {if is_array($wysiwyg.js)}
+        {include file="asset:`$wysiwyg.js.template`" config=$wysiwyg.js.config}
+    {else}
+        {$wysiwyg.js}
+    {/if}
 {/javascripts}
 {if $wysiwyg.advanced === true}
     <div id="page-break-form" class="modal fade" role="dialog">

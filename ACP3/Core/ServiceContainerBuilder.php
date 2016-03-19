@@ -5,6 +5,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
+use ACP3\Core\WYSIWYG\DependencyInjection\RegisterWysiwygEditorsCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -36,6 +37,7 @@ class ServiceContainerBuilder
         $containerBuilder->addCompilerPass(new RegisterSmartyPluginsPass());
         $containerBuilder->addCompilerPass(new RegisterColumnRendererPass());
         $containerBuilder->addCompilerPass(new RegisterValidationRulesPass());
+        $containerBuilder->addCompilerPass(new RegisterWysiwygEditorsCompilerPass());
 
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
         $loader->load($appPath->getClassesDir() . 'config/services.yml');

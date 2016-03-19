@@ -1,0 +1,8 @@
+services:
+  emoticons.event.on_wysiwyg_textarea_before_listener:
+    class: ACP3\Modules\ACP3\Emoticons\Event\Listener\OnWysiwygTextareaBeforeListener
+    arguments:
+      - '@core.modules'
+      - '@emoticons.helpers'
+    tags:
+      - { name: core.eventListener, event: core.wysiwyg.textarea.before, method: onWysiwygTextareaBefore }

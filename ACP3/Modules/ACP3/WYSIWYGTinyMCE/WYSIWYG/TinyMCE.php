@@ -19,10 +19,6 @@ class TinyMCE extends Core\WYSIWYG\Textarea
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
@@ -39,18 +35,15 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     /**
      * @param \ACP3\Core\Assets\MinifierInterface    $minifier
      * @param \ACP3\Core\I18n\Translator             $translator
-     * @param \ACP3\Core\View                        $view
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Assets\MinifierInterface $minifier,
         Core\I18n\Translator $translator,
-        Core\View $view,
         Core\Environment\ApplicationPath $appPath
     ) {
         $this->minifier = $minifier;
         $this->translator = $translator;
-        $this->view = $view;
         $this->appPath = $appPath;
     }
 
@@ -88,23 +81,14 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     /**
      * @inheritdoc
      */
-    public function display()
+    public function getData()
     {
-        $editor = '';
-
-        if ($this->initialized === false) {
-            $this->initialized = true;
-
-            $editor .= '<script type="text/javascript" src="' . $this->appPath->getWebRoot() . 'vendor/tinymce/tinymce/tinymce.min.js"></script>';
-        }
-
-        $editor .= $this->configure();
-
         $wysiwyg = [
+            'friendly_name' => $this->getFriendlyName(),
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'js' => $editor,
+            'js' => $this->configure(),
             'advanced' => $this->advanced,
         ];
 
@@ -112,21 +96,25 @@ class TinyMCE extends Core\WYSIWYG\Textarea
             $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
         }
 
-        $this->view->assign('wysiwyg', $wysiwyg);
-        return $this->view->fetchTemplate('system/wysiwyg.tpl');
+        return ['wysiwyg' => $wysiwyg];
     }
 
     /**
-     * @return string
+     * @return array
      */
     private function configure()
     {
         $config = [
+            'is_initialized' => $this->initialized,
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
             'content_css' => $this->minifier->getURI()
         ];
+
+        if ($this->initialized === false) {
+            $this->initialized = true;
+        }
 
         // Basic editor
         if (isset($this->config['toolbar']) && $this->config['toolbar'] === 'simple') {
@@ -148,16 +136,17 @@ class TinyMCE extends Core\WYSIWYG\Textarea
             $imagesAdvanced = 'true';
 
             if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
-                $this->view->assign('filemanager_path', $this->filemanagerHelpers->getFilemanagerPath());
+                $config['filemanager_path'] = $this->filemanagerHelpers->getFilemanagerPath();
             }
         }
 
+        $config['plugins'] = json_encode($plugins);
+        $config['toolbar'] = $toolbar;
+        $config['image_advtab'] = $imagesAdvanced;
 
-        $this->view->assign('tinymce_config', $config);
-        $this->view->assign('plugins', json_encode($plugins));
-        $this->view->assign('toolbar', $toolbar);
-        $this->view->assign('image_advtab', $imagesAdvanced);
-
-        return $this->view->fetchTemplate('WYSIWYGTinyMCE/tinymce.tpl');
+        return [
+            'template' => 'WYSIWYGTinyMCE/tinymce.tpl',
+            'config' => $config
+        ];
     }
 }

@@ -1,7 +1,8 @@
 services:
+  core.wysiwyg.wysiwyg_factory:
+    class: ACP3\Core\WYSIWYG\WysiwygFactory
+
   core.wysiwyg.textarea:
     class: ACP3\Core\WYSIWYG\Textarea
-    arguments:
-      - '@core.modules'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+    tags:
+      - { name: core.wysiwyg.editor }

@@ -15,7 +15,8 @@ services:
     arguments:
       - '@core.assets.minifier.css'
       - '@core.lang'
-      - '@core.view'
       - '@core.environment.application_path'
     calls:
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]
+    tags:
+      - { name: core.wysiwyg.editor }

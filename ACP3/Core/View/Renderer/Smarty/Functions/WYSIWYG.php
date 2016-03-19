@@ -7,7 +7,6 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class WYSIWYG
@@ -19,13 +18,25 @@ class WYSIWYG extends AbstractFunction
      * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
+    /**
+     * @var \ACP3\Core\WYSIWYG\WysiwygFactory
+     */
+    protected $wysiwygFactory;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $config;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param \ACP3\Core\WYSIWYG\WysiwygFactory $wysiwygFactory
+     * @param \ACP3\Core\Config                 $config
      */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        Core\WYSIWYG\WysiwygFactory $wysiwygFactory,
+        Core\Config $config
+    ) {
+        $this->wysiwygFactory = $wysiwygFactory;
+        $this->config = $config;
     }
 
     /**
@@ -43,20 +54,12 @@ class WYSIWYG extends AbstractFunction
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
-        $serviceId = $this->container->get('core.config')->getSettings('system')['wysiwyg'];
+        $serviceId = $this->config->getSettings('system')['wysiwyg'];
+        $wysiwyg = $this->wysiwygFactory->create($serviceId);
 
-        if ($this->container->has($serviceId) === true) {
-            /** @var Core\WYSIWYG\AbstractWYSIWYG $wysiwyg */
-            $wysiwyg = $this->container->get($serviceId);
+        $wysiwyg->setParameters($params);
+        $smarty->smarty->assign($wysiwyg->getData());
 
-            if ($wysiwyg instanceof Core\WYSIWYG\AbstractWYSIWYG) {
-                $wysiwyg->setParameters($params);
-                return $wysiwyg->display();
-            }
-
-            throw new \InvalidArgumentException(get_class($wysiwyg) . ' has to extend the AbstractWYSIWYG class');
-        }
-
-        throw new \InvalidArgumentException('Can not find wysiwyg service ' . $serviceId);
+        return $smarty->smarty->fetch('asset:System/wysiwyg.tpl');
     }
 }

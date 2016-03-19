@@ -1,16 +1,19 @@
+{if !$config.is_initialized}
+    <script type="text/javascript" src="{$ROOT_DIR}vendor/tinymce/tinymce/tinymce.min.js"></script>
+{/if}
 <script type="text/javascript">
     tinymce.init({
-        selector: '{$tinymce_config.selector}',
-        theme: '{$tinymce_config.theme}',
-        height: '{$tinymce_config.height}',
-        content_css: '{$tinymce_config.content_css}',
-        plugins: {$plugins},
-        toolbar: '{$toolbar}',
-        image_advtab: {$image_advtab},
-        {if isset($filemanager_path)}
+        selector: '{$config.selector}',
+        theme: '{$config.theme}',
+        height: '{$config.height}',
+        content_css: '{$config.content_css}',
+        plugins: {$config.plugins},
+        toolbar: '{$config.toolbar}',
+        image_advtab: {$config.image_advtab},
+        {if isset($config.filemanager_path)}
             file_browser_callback: function(field, url, type, win) {
                 tinyMCE.activeEditor.windowManager.open({
-                    file: '{$filemanager_path}browse.php?opener=tinymce4&field=' + field + '&cms=acp3&type=' + (type == "image" ? "gallery" : "files"),
+                    file: '{$config.filemanager_path}browse.php?opener=tinymce4&field=' + field + '&cms=acp3&type=' + (type == "image" ? "gallery" : "files"),
                     title: '{lang t="filemanager|filemanager"}',
                     width: 700,
                     height: 500,
