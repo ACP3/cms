@@ -17,6 +17,19 @@ use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 class ServiceContainerBuilder
 {
     /**
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
+     */
+    private static $appPath;
+    /**
+     * @var string
+     */
+    private static $appMode;
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+     */
+    private static $container;
+
+    /**
      * @param string                                           $appMode
      * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
      * @param bool                                             $includeModules
@@ -25,73 +38,66 @@ class ServiceContainerBuilder
      */
     public static function compileContainer($appMode, ApplicationPath $appPath, $includeModules = false)
     {
-        $container = new ContainerBuilder();
+        self::$appMode = $appMode;
+        self::$appPath = $appPath;
+        self::$container = new ContainerBuilder();
 
-        $container->setParameter('cache_driver', 'Array');
-        $container->setParameter('core.environment', $appMode);
-        $container->set('core.environment.application_path', $appPath);
-        $container->addCompilerPass(
+        self::$container->setParameter('cache_driver', 'Array');
+        self::$container->setParameter('core.environment', self::$appMode);
+        self::$container->set('core.environment.application_path', self::$appPath);
+        self::$container->addCompilerPass(
             new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
         );
-        $container->addCompilerPass(new RegisterSmartyPluginsPass());
-        $container->addCompilerPass(new RegisterValidationRulesPass());
+        self::$container->addCompilerPass(new RegisterSmartyPluginsPass());
+        self::$container->addCompilerPass(new RegisterValidationRulesPass());
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+        $loader = new YamlFileLoader(self::$container, new FileLocator(__DIR__));
 
-        if (self::canIncludeModules($appMode, $includeModules) === true) {
-            $loader->load($appPath->getClassesDir() . 'config/services.yml');
+        if (self::canIncludeModules($includeModules) === true) {
+            $loader->load(self::$appPath->getClassesDir() . 'config/services.yml');
         }
 
-        $loader->load('./config/services.yml');
-        if ($appMode === ApplicationMode::UPDATER) {
-            $loader->load('./config/update.yml');
+        $loader->load(self::$appPath->getInstallerClassesDir() . 'config/services.yml');
+        if (self::$appMode === ApplicationMode::UPDATER) {
+            $loader->load(self::$appPath->getInstallerClassesDir() . 'config/update.yml');
         }
 
-        self::includeModules($appMode, $appPath, $container, $loader, $includeModules);
+        self::includeModules($loader, $includeModules);
 
-        $container->compile();
+        self::$container->compile();
 
-        return $container;
+        return self::$container;
     }
 
     /**
-     * @param string  $appMode
      * @param boolean $includeModules
      *
      * @return bool
      */
-    protected static function canIncludeModules($appMode, $includeModules)
+    protected static function canIncludeModules($includeModules)
     {
-        return $appMode === ApplicationMode::UPDATER || $includeModules === true;
+        return self::$appMode === ApplicationMode::UPDATER || $includeModules === true;
     }
 
     /**
-     * @param string           $appMode
-     * @param ApplicationPath  $appPath
-     * @param ContainerBuilder $container
-     * @param YamlFileLoader   $loader
-     * @param boolean          $includeModules
+     * @param YamlFileLoader $loader
+     * @param boolean        $includeModules
      */
-    protected static function includeModules(
-        $appMode,
-        ApplicationPath $appPath,
-        ContainerBuilder $container,
-        YamlFileLoader $loader,
-        $includeModules
-    ) {
-        if (self::canIncludeModules($appMode, $includeModules) === true) {
+    protected static function includeModules(YamlFileLoader $loader, $includeModules)
+    {
+        if (self::canIncludeModules($includeModules) === true) {
             // Ugly hack to prevent request override from included ACP3 modules
-            $request = $container->get('core.request');
+            $request = self::$container->get('core.request');
 
-            $vendors = $container->get('core.modules.vendors')->getVendors();
+            $vendors = self::$container->get('core.modules.vendors')->getVendors();
             foreach ($vendors as $vendor) {
-                $namespaceModules = glob($appPath->getModulesDir() . $vendor . '/*/Resources/config/services.yml');
+                $namespaceModules = glob(self::$appPath->getModulesDir() . $vendor . '/*/Resources/config/services.yml');
                 foreach ($namespaceModules as $module) {
                     $loader->load($module);
                 }
             }
 
-            $container->set('core.request', $request);
+            self::$container->set('core.request', $request);
         }
     }
 }

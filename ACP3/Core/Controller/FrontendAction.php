@@ -57,6 +57,9 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
 
     /**
      * Helper function for initializing models, etc.
+     *
+     * @return $this
+     * @throws \ACP3\Core\Exceptions\AccessForbidden
      */
     public function preDispatch()
     {

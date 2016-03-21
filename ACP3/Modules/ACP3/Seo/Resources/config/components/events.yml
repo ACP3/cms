@@ -1,0 +1,10 @@
+services:
+  seo.events.on_front_controller_before_dispatch_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnFrontControllerBeforeDispatchListener
+    arguments:
+      - '@core.request'
+      - '@core.router'
+      - '@core.router.aliases'
+      - '@core.seo'
+    tags:
+      - { name: core.eventListener, event: core.application.front_controller.before_dispatch, method: onFrontControllerBeforeDispatch }

@@ -6,12 +6,13 @@
 
 namespace ACP3\Core\Application;
 
+use ACP3\Core\Application\Event\FrontControllerDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
-use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Exceptions;
 use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class FrontController
@@ -19,6 +20,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FrontController
 {
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -29,13 +34,16 @@ class FrontController
     protected $container;
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         RequestInterface $request,
         ContainerInterface $container
     ) {
+        $this->eventDispatcher = $eventDispatcher;
         $this->request = $request;
         $this->container = $container;
     }
@@ -49,45 +57,30 @@ class FrontController
      */
     public function dispatch($serviceId = '', array $arguments = [])
     {
-        $this->checkForUriAlias();
-
         if (empty($serviceId)) {
             $serviceId = $this->buildControllerServiceId();
         }
 
         if ($this->container->has($serviceId)) {
+            $this->eventDispatcher->dispatch(
+                'core.application.front_controller.before_dispatch',
+                new FrontControllerDispatchEvent($serviceId)
+            );
+
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
             $controller = $this->container->get($serviceId);
             $controller->preDispatch();
+            $controller->display($this->executeControllerAction($controller, $arguments));
 
-            $result = $this->executeControllerAction($controller, $arguments);
+            $this->eventDispatcher->dispatch(
+                'core.application.front_controller.after_dispatch',
+                new FrontControllerDispatchEvent($serviceId)
+            );
 
-            $controller->display($result);
             return;
         }
 
         throw new Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
-    }
-
-    /**
-     * Checks, whether there is an URI alias available for the current request.
-     * If so, set the alias as the canonical URI
-     */
-    protected function checkForUriAlias()
-    {
-        // Return early, if we are currently in the admin panel
-        if ($this->request->getArea() !== AreaEnum::AREA_ADMIN) {
-            $routerAliases = $this->container->get('core.router.aliases');
-
-            // If there is an URI alias available, set the alias as the canonical URI
-            if ($routerAliases->uriAliasExists($this->request->getQuery()) === true &&
-                $this->request->getOriginalQuery() !== $routerAliases->getUriAlias($this->request->getQuery()) . '/'
-            ) {
-                $this->container->get('core.seo')->setCanonicalUri(
-                    $this->container->get('core.router')->route($this->request->getQuery())
-                );
-            }
-        }
     }
 
     /**

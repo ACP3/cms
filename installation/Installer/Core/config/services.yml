@@ -12,8 +12,9 @@ imports:
 
 services:
   core.application.front_controller:
-    class: ACP3\Installer\Core\Application\FrontController
+    class: ACP3\Core\Application\FrontController
     arguments:
+      - '@core.eventDispatcher'
       - '@core.request'
       - '@service_container'
 
@@ -63,3 +64,8 @@ services:
     arguments:
       - '@core.environment.application_path'
       - %core.environment%
+
+  core.eventDispatcher:
+    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    arguments:
+      - '@service_container'

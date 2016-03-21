@@ -12,6 +12,9 @@ namespace ACP3\Core\Controller;
  */
 interface ActionInterface
 {
+    /**
+     * @return $this
+     */
     public function preDispatch();
 
     /**
