@@ -60,7 +60,6 @@ class OnFrontControllerBeforeDispatchListener
      */
     public function onFrontControllerBeforeDispatch(FrontControllerDispatchEvent $event)
     {
-        // Return early, if we are currently in the admin panel
         if ($this->isInFrontend($event) && $this->uriAliasExists()) {
             $this->seo->setCanonicalUri($this->router->route($this->request->getQuery()));
         }
