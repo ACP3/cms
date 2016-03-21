@@ -19,6 +19,10 @@ class FrontControllerDispatchEvent extends Event
      * @var string
      */
     private $controllerServiceId;
+    /**
+     * @var array
+     */
+    private $serviceIdParts = [];
 
     /**
      * FrontControllerDispatchEvent constructor.
@@ -28,6 +32,13 @@ class FrontControllerDispatchEvent extends Event
     public function __construct($controllerServiceId)
     {
         $this->controllerServiceId = $controllerServiceId;
+
+        $this->splitServiceIdIntoParts();
+    }
+
+    protected function splitServiceIdIntoParts()
+    {
+        $this->serviceIdParts = explode('.', $this->controllerServiceId);
     }
 
     /**
@@ -36,5 +47,29 @@ class FrontControllerDispatchEvent extends Event
     public function getControllerServiceId()
     {
         return $this->controllerServiceId;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getControllerArea()
+    {
+        return isset($this->serviceIdParts[2]) ? $this->serviceIdParts[2] : '';
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getControllerModule()
+    {
+        return isset($this->serviceIdParts[3]) ? $this->serviceIdParts[3] : '';
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getControllerAction()
+    {
+        return isset($this->serviceIdParts[4]) ? $this->serviceIdParts[4] : '';
     }
 }

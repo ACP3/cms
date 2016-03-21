@@ -45,8 +45,8 @@ class OnFrontControllerBeforeDispatchListener
         RequestInterface $request,
         RouterInterface $router,
         Aliases $aliases,
-        SEO $seo)
-    {
+        SEO $seo
+    ) {
         $this->request = $request;
         $this->seo = $seo;
         $this->router = $router;
@@ -54,18 +54,35 @@ class OnFrontControllerBeforeDispatchListener
     }
 
     /**
+     * If there is an URI alias available, set the alias as the canonical URI
+     *
      * @param \ACP3\Core\Application\Event\FrontControllerDispatchEvent $event
      */
     public function onFrontControllerBeforeDispatch(FrontControllerDispatchEvent $event)
     {
         // Return early, if we are currently in the admin panel
-        if ($this->request->getArea() !== AreaEnum::AREA_ADMIN) {
-            // If there is an URI alias available, set the alias as the canonical URI
-            if ($this->aliases->uriAliasExists($this->request->getQuery()) === true &&
-                $this->request->getOriginalQuery() !== $this->aliases->getUriAlias($this->request->getQuery()) . '/'
-            ) {
-                $this->seo->setCanonicalUri($this->router->route($this->request->getQuery()));
-            }
+        if ($this->isInFrontend($event) && $this->uriAliasExists()) {
+            $this->seo->setCanonicalUri($this->router->route($this->request->getQuery()));
         }
+    }
+
+    /**
+     * @param \ACP3\Core\Application\Event\FrontControllerDispatchEvent $event
+     *
+     * @return bool
+     */
+    private function isInFrontend(FrontControllerDispatchEvent $event)
+    {
+        return $event->getControllerArea() === AreaEnum::AREA_FRONTEND
+        && $this->request->getArea() === AreaEnum::AREA_FRONTEND;
+    }
+
+    /**
+     * @return bool
+     */
+    private function uriAliasExists()
+    {
+        return $this->aliases->uriAliasExists($this->request->getQuery()) === true
+        && $this->request->getOriginalQuery() !== $this->aliases->getUriAlias($this->request->getQuery()) . '/';
     }
 }
