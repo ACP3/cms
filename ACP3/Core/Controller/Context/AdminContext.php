@@ -14,17 +14,19 @@ use ACP3\Core;
 class AdminContext extends FrontendContext
 {
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $session;
 
     /**
+     * AdminContext constructor.
+     *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\SessionHandler                     $session
+     * @param \ACP3\Core\Session\SessionHandlerInterface    $session
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\SessionHandler $session
+        Core\Session\SessionHandlerInterface $session
     ) {
         parent::__construct(
             $context,
@@ -39,7 +41,7 @@ class AdminContext extends FrontendContext
     }
 
     /**
-     * @return \ACP3\Core\SessionHandler
+     * @return \ACP3\Core\Session\SessionHandlerInterface
      */
     public function getSession()
     {

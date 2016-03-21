@@ -18,21 +18,21 @@ class RedirectMessages
      */
     private $redirect;
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     private $sessionHandler;
 
     /**
      * RedirectMessages constructor.
      *
-     * @param \ACP3\Core\Redirect              $redirect
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * @param \ACP3\Core\Redirect                        $redirect
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      */
     public function __construct(
         Core\Redirect $redirect,
         Core\Http\RequestInterface $request,
-        Core\SessionHandler $sessionHandler
+        Core\Session\SessionHandlerInterface $sessionHandler
     ) {
         $this->redirect = $redirect;
         $this->request = $request;

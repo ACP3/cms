@@ -15,17 +15,19 @@ use ACP3\Core;
 class Image extends Core\Controller\FrontendAction
 {
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $sessionHandler;
 
     /**
+     * Image constructor.
+     *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\SessionHandler                     $sessionHandler
+     * @param \ACP3\Core\Session\SessionHandlerInterface    $sessionHandler
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\SessionHandler $sessionHandler
+        Core\Session\SessionHandlerInterface $sessionHandler
     ) {
         parent::__construct($context);
 

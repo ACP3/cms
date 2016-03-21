@@ -2,7 +2,7 @@
 namespace ACP3\Core\Authentication;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\SessionHandler;
+use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\User;
 use ACP3\Modules\ACP3\Users\Model\UserRepository;
 
@@ -17,7 +17,7 @@ class Native implements AuthenticationInterface
      */
     protected $request;
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $sessionHandler;
     /**
@@ -26,13 +26,15 @@ class Native implements AuthenticationInterface
     protected $userRepository;
 
     /**
+     * Native constructor.
+     *
      * @param \ACP3\Core\Http\RequestInterface              $request
-     * @param \ACP3\Core\SessionHandler                     $sessionHandler
+     * @param \ACP3\Core\Session\SessionHandlerInterface    $sessionHandler
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      */
     public function __construct(
         RequestInterface $request,
-        SessionHandler $sessionHandler,
+        SessionHandlerInterface $sessionHandler,
         UserRepository $userRepository)
     {
         $this->request = $request;

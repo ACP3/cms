@@ -15,7 +15,7 @@ use ACP3\Core;
 abstract class AdminAction extends Core\Controller\FrontendAction
 {
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $session;
 

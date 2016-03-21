@@ -52,7 +52,7 @@ services:
       - '@core.router'
 
   core.session:
-    class: ACP3\Installer\Core\SessionHandler
+    class: ACP3\Installer\Core\Session\SessionHandler
 
   core.view:
     class: ACP3\Core\View

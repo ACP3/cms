@@ -14,19 +14,19 @@ class FormToken
      */
     protected $request;
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $sessionHandler;
 
     /**
      * FormToken constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      */
     public function __construct(
         Core\Http\RequestInterface $request,
-        Core\SessionHandler $sessionHandler
+        Core\Session\SessionHandlerInterface $sessionHandler
     ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
@@ -41,7 +41,7 @@ class FormToken
      */
     public function renderFormToken($path = '')
     {
-        $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
+        $tokenName = Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME;
         $sessionTokens = $this->sessionHandler->get($tokenName, []);
 
         $path = empty($path) ? $this->request->getQuery() : $path;
@@ -64,7 +64,7 @@ class FormToken
     public function unsetFormToken($path = '', $token = '')
     {
         $path = empty($path) ? $this->request->getQuery() : $path;
-        $tokenName = Core\SessionHandler::XSRF_TOKEN_NAME;
+        $tokenName = Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME;
         if (empty($token) && $this->request->getPost()->has($tokenName)) {
             $token = $this->request->getPost()->get($tokenName, '');
         }

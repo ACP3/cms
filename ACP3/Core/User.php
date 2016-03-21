@@ -6,6 +6,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Country;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -51,7 +52,7 @@ class User
      */
     protected $authentication;
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $sessionHandler;
     /**
@@ -72,10 +73,12 @@ class User
     protected $appPath;
 
     /**
+     * User constructor.
+     *
      * @param \ACP3\Core\Http\RequestInterface                  $request
      * @param \ACP3\Core\Environment\ApplicationPath            $appPath
      * @param \ACP3\Core\Authentication\AuthenticationInterface $authentication
-     * @param \ACP3\Core\SessionHandler                         $sessionHandler
+     * @param \ACP3\Core\Session\SessionHandlerInterface        $sessionHandler
      * @param \ACP3\Core\Helpers\Secure                         $secureHelper
      * @param \ACP3\Core\Config                                 $config
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository     $userRepository
@@ -84,7 +87,7 @@ class User
         RequestInterface $request,
         ApplicationPath $appPath,
         AuthenticationInterface $authentication,
-        SessionHandler $sessionHandler,
+        SessionHandlerInterface $sessionHandler,
         Secure $secureHelper,
         Config $config,
         Users\Model\UserRepository $userRepository

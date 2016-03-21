@@ -115,7 +115,7 @@ services:
       - '@seo.model.seorepository'
 
   core.session:
-    class: ACP3\Core\SessionHandler
+    class: ACP3\Core\Session\SessionHandler
     arguments:
       - '@core.db'
       - '@core.environment.application_path'

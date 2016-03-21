@@ -4,13 +4,15 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Installer\Core;
+namespace ACP3\Installer\Core\Session;
+
+use ACP3\Core\Session\AbstractSessionHandler;
 
 /**
  * Class SessionHandler
  * @package ACP3\Installer\Core
  */
-class SessionHandler extends \ACP3\Core\SessionHandler
+class SessionHandler extends AbstractSessionHandler
 {
     public function __construct()
     {

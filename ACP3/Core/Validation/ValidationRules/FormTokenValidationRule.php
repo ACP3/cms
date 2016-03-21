@@ -2,7 +2,7 @@
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\SessionHandler;
+use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
 use ACP3\Core\Validation\Validator;
 
@@ -17,17 +17,19 @@ class FormTokenValidationRule extends AbstractValidationRule
      */
     protected $request;
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $sessionHandler;
 
     /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
+     * FormTokenValidationRule constructor.
+     *
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      */
     public function __construct(
         RequestInterface $request,
-        SessionHandler $sessionHandler
+        SessionHandlerInterface $sessionHandler
     ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
@@ -48,7 +50,7 @@ class FormTokenValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        $tokenName = SessionHandler::XSRF_TOKEN_NAME;
+        $tokenName = SessionHandlerInterface::XSRF_TOKEN_NAME;
         $urlQueryString = $this->request->getQuery();
         $sessionToken = $this->sessionHandler->get($tokenName);
 

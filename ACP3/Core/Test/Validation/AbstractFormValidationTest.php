@@ -8,7 +8,8 @@ namespace ACP3\Core\Test\Validation;
 
 use ACP3\Core\Http\Request;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\SessionHandler;
+use ACP3\Core\Session\SessionHandler;
+use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\Validator;
@@ -132,12 +133,13 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $requestMock
      */
-    private function setRequestMockExpectations(\PHPUnit_Framework_MockObject_MockObject$requestMock)
+    private function setRequestMockExpectations(\PHPUnit_Framework_MockObject_MockObject $requestMock)
     {
         $requestMock->expects($this->any())
             ->method('getPost')
             ->willReturn(new Request\ParameterBag(
-                    [SessionHandler::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN])
+                    [SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN]
+                )
             );
 
         $requestMock->expects($this->any())
@@ -152,7 +154,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     {
         $sessionMock->expects($this->any())
             ->method('get')
-            ->with(SessionHandler::XSRF_TOKEN_NAME)
+            ->with(SessionHandlerInterface::XSRF_TOKEN_NAME)
             ->willReturn([self::XSRF_QUERY_STRING => self::XSRF_FORM_TOKEN]);
     }
 }

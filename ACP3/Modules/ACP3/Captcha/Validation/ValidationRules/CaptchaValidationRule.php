@@ -10,7 +10,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router;
 use ACP3\Core\RouterInterface;
-use ACP3\Core\SessionHandler;
+use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\User;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
@@ -33,7 +33,7 @@ class CaptchaValidationRule extends AbstractValidationRule
      */
     protected $router;
     /**
-     * @var \ACP3\Core\SessionHandler
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
     protected $sessionHandler;
     /**
@@ -44,17 +44,17 @@ class CaptchaValidationRule extends AbstractValidationRule
     /**
      * CaptchaValidationRule constructor.
      *
-     * @param \ACP3\Core\ACL                   $acl
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\RouterInterface       $router
-     * @param \ACP3\Core\SessionHandler        $sessionHandler
-     * @param \ACP3\Core\User                  $user
+     * @param \ACP3\Core\ACL                             $acl
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\RouterInterface                 $router
+     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
+     * @param \ACP3\Core\User                            $user
      */
     public function __construct(
         ACL $acl,
         RequestInterface $request,
         RouterInterface $router,
-        SessionHandler $sessionHandler,
+        SessionHandlerInterface $sessionHandler,
         User $user
     ) {
         $this->acl = $acl;
