@@ -16,23 +16,23 @@ use ACP3\Modules\ACP3\Newsletter;
 class Index extends Core\Controller\AdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterDataGridRepository
      */
-    protected $newsletterRepository;
+    protected $dataGridRepository;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext               $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext                       $context
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterDataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Newsletter\Model\NewsletterRepository $newsletterRepository)
+        Newsletter\Model\NewsletterDataGridRepository $dataGridRepository)
     {
         parent::__construct($context);
 
-        $this->newsletterRepository = $newsletterRepository;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -40,12 +40,10 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $newsletter = $this->newsletterRepository->getAllInAcp();
-
         /** @var Core\Helpers\DataGrid $dataGrid */
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
-            ->setResults($newsletter)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->user->getEntriesPerPage())
             ->setIdentifier('#newsletter-data-grid')
             ->setResourcePathEdit('admin/newsletter/index/edit')

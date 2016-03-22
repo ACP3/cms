@@ -91,17 +91,6 @@ class AccountRepository extends AbstractRepository
     /**
      * @return array
      */
-    public function getAllAccounts()
-    {
-        return $this->db->fetchAll(
-            "SELECT * FROM {$this->getTableName()} WHERE `status` != :status ORDER BY `id` DESC",
-            ['status' => AccountStatus::ACCOUNT_STATUS_DISABLED]
-        );
-    }
-
-    /**
-     * @return array
-     */
     public function getAllActiveAccounts()
     {
         return $this->db->fetchAll(

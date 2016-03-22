@@ -50,7 +50,10 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     public function countAll($status = '')
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()}{$where}", ['status' => $status]);
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}", 
+            ['status' => $status]
+        );
     }
 
     /**
@@ -68,13 +71,5 @@ class NewsletterRepository extends Core\Model\AbstractRepository
             "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `date` DESC {$limitStmt}",
             ['status' => $status]
         );
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `date` DESC");
     }
 }

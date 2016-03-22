@@ -77,12 +77,4 @@ class GalleryRepository extends Core\Model\AbstractRepository
             ['time' => $time]
         );
     }
-
-    /**
-     * @return array
-     */
-    public function getAllInAcp()
-    {
-        return $this->db->fetchAll('SELECT g.id, g.start, g.end, g.title, COUNT(p.gallery_id) AS pictures FROM ' . $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(PictureRepository::TABLE_NAME) . ' AS p ON(g.id = p.gallery_id) GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC');
-    }
 }

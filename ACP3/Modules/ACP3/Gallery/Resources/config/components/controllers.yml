@@ -48,7 +48,7 @@ services:
     class: %gallery.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.gallery_data_grid_repository'
 
   gallery.controller.admin.index.settings:
     class: %gallery.controller.admin.index.settings.fqdn%

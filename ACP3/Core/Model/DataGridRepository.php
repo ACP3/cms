@@ -25,7 +25,10 @@ class DataGridRepository extends AbstractRepository
         $from = $this->getFrom();
         $orderBy = $this->getOrderBy(clone $columns);
 
-        return $this->db->fetchAll("SELECT {$columnsToSelect} FROM {$from}{$orderBy}");
+        return $this->db->fetchAll(
+            "SELECT {$columnsToSelect} FROM {$from}{$orderBy}",
+            $this->getParameters()
+        );
     }
 
     /**
@@ -69,5 +72,13 @@ class DataGridRepository extends AbstractRepository
         }
 
         return !empty($orderBy) ? ' ORDER BY ' . $orderBy : '';
+    }
+
+    /**
+     * @return array
+     */
+    protected function getParameters()
+    {
+        return [];
     }
 }

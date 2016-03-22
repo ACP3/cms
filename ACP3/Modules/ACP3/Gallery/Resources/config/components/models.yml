@@ -1,10 +1,16 @@
 parameters:
   gallery.model.galleryrepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\GalleryRepository'
+  gallery.model.gallery_data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\GalleryDataGridRepository'
   gallery.model.picturerepository.fqdn: 'ACP3\Modules\ACP3\Gallery\Model\PictureRepository'
 
 services:
   gallery.model.galleryrepository:
     class: %gallery.model.galleryrepository.fqdn%
+    arguments:
+      - '@core.db'
+
+  gallery.model.gallery_data_grid_repository:
+    class: %gallery.model.gallery_data_grid_repository.fqdn%
     arguments:
       - '@core.db'
 

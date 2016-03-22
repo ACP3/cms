@@ -32,7 +32,7 @@ services:
     class: %newsletter.controller.admin.accounts.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.account_data_grid_repository'
 
   newsletter.controller.admin.index.create:
     class: %newsletter.controller.admin.index.create.fqdn%
@@ -66,7 +66,7 @@ services:
     class: %newsletter.controller.admin.index.index.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model.newsletter_data_grid_repository'
 
   newsletter.controller.admin.index.send:
     class: %newsletter.controller.admin.index.send.fqdn%
