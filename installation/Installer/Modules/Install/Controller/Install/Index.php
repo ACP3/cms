@@ -7,7 +7,6 @@
 namespace ACP3\Installer\Modules\Install\Controller\Install;
 
 use ACP3\Core\Filesystem;
-use ACP3\Core\Functions;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\User;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
