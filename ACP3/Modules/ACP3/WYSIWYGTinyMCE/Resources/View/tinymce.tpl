@@ -28,4 +28,12 @@
             }
         {/if}
     });
+
+    jQuery(document).ready(function ($) {
+        $(document).on('acp3.ajaxFrom.submit.before', function () {
+            if (typeof tinymce !== "undefined") {
+                tinymce.triggerSave();
+            }
+        });
+    });
 </script>

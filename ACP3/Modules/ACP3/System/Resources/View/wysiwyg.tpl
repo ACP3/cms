@@ -1,11 +1,7 @@
 {event name="core.wysiwyg.`$wysiwyg.friendly_name|lower`.before" id=$wysiwyg.id}
 <textarea name="{$wysiwyg.name}" id="{$wysiwyg.id}" cols="60" rows="6" class="form-control">{$wysiwyg.value}</textarea>
 {javascripts}
-    {if is_array($wysiwyg.js)}
-        {include file="asset:`$wysiwyg.js.template`" config=$wysiwyg.js.config}
-    {else}
-        {$wysiwyg.js}
-    {/if}
+    {include file="asset:System/Wysiwyg/config.tpl" js=$wysiwyg.js}
 {/javascripts}
 {if $wysiwyg.advanced === true}
     <div id="page-break-form" class="modal fade" role="dialog">
@@ -29,7 +25,9 @@
         </div>
     </div>
     <div id="page-break-link" class="align-left">
-        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#page-break-form">{lang t="system|insert_page_break"}</a>
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#page-break-form">
+            {lang t="system|insert_page_break"}
+        </a>
     </div>
     {javascripts}
         <script type="text/javascript">

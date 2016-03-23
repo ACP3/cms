@@ -35,7 +35,7 @@ class CKEditor extends Textarea
     /**
      * @var bool
      */
-    private $initialized = false;
+    private $isInitialized = false;
 
     /**
      * CKEditor constructor.
@@ -159,7 +159,7 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @return string
+     * @return array
      */
     private function editor()
     {
@@ -183,7 +183,10 @@ class CKEditor extends Textarea
 
         $out .= $this->script($js);
 
-        return $out;
+        return [
+            'template' => 'WYSIWYGCKEditor/ckeditor.tpl',
+            'config' => $out
+        ];
     }
 
     /**
@@ -207,11 +210,11 @@ class CKEditor extends Textarea
      */
     private function init()
     {
-        if ($this->initialized === true) {
+        if ($this->isInitialized === true) {
             return "";
         }
 
-        $this->initialized = true;
+        $this->isInitialized = true;
         $basePath = $this->appPath->getWebRoot() . 'vendor/ckeditor/ckeditor/';
         $out = "";
 

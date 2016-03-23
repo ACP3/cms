@@ -8,7 +8,7 @@ jQuery.fn.formSubmit = function (customFormData) {
      * Displays a loading layer
      * @private
      */
-    function _showLoadingLayer($form) {
+    function showLoadingLayer($form) {
         var $loadingLayer = $('#loading-layer');
 
         if ($loadingLayer.length === 0) {
@@ -40,7 +40,7 @@ jQuery.fn.formSubmit = function (customFormData) {
      *
      * @private
      */
-    function _hideLoadingLayer() {
+    function hideLoadingLayer() {
         $('#loading-layer').stop().fadeOut();
     }
 
@@ -49,7 +49,7 @@ jQuery.fn.formSubmit = function (customFormData) {
      * @param $form
      * @private
      */
-    function _findSubmitButton($form) {
+    function findSubmitButton($form) {
         $form.find(':submit').click(function () {
             $(":submit", $(this).closest("form")).removeAttr("data-clicked");
             $(this).attr("data-clicked", "true");
@@ -63,7 +63,7 @@ jQuery.fn.formSubmit = function (customFormData) {
      * @param [customFormData]
      * @private
      */
-    function _processAjaxRequest($form, customFormData) {
+    function processAjaxRequest($form, customFormData) {
         var url = $form.attr('action') || $form.attr('href'),
             processData = (customFormData) ? true : false,
             contentType = (customFormData) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
@@ -100,13 +100,15 @@ jQuery.fn.formSubmit = function (customFormData) {
             processData: processData,
             contentType: contentType,
             beforeSend: function () {
-                _showLoadingLayer($form);
+                showLoadingLayer($form);
             },
             success: function (data) {
                 try {
                     if (data.redirect_url) {
                         window.location.href = data.redirect_url;
                     } else {
+                        hideLoadingLayer();
+
                         var $content = $('#content'),
                             offsetTop = $content.offset().top;
 
@@ -137,13 +139,12 @@ jQuery.fn.formSubmit = function (customFormData) {
                         }
                     }
                 } catch (err) {
+                    hideLoadingLayer();
+
                     if (typeof console !== "undefined") {
                         console.log(err.message);
                     }
                 }
-            },
-            complete: function () {
-                _hideLoadingLayer();
             }
         });
     }
@@ -151,22 +152,18 @@ jQuery.fn.formSubmit = function (customFormData) {
     $(this).each(function () {
         var $this = $(this);
 
-        _findSubmitButton($this);
+        findSubmitButton($this);
         $this.on('submit', function (e) {
             e.preventDefault();
 
-            if (typeof CKEDITOR !== "undefined") {
-                for (var instance in CKEDITOR.instances) {
-                    CKEDITOR.instances[instance].updateElement();
-                }
-            }
+            $(document).trigger('acp3.ajaxFrom.submit.before');
 
-            _processAjaxRequest($this, customFormData);
+            processAjaxRequest($this, customFormData);
         }).on('click', function (e) {
             if ($this.prop('tagName') === 'A') {
                 e.preventDefault();
 
-                _processAjaxRequest($this, customFormData);
+                processAjaxRequest($this, customFormData);
             }
         });
     });
