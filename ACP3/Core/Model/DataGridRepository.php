@@ -24,14 +24,14 @@ class DataGridRepository extends AbstractRepository
     {
         $queryBuilder = $this->db->getConnection()->createQueryBuilder();
         $queryBuilder
-            ->select($this->getColumns(clone $columns))
+            ->select($this->getColumns($columns))
             ->from($this->getTableName(), 'main')
             ->setParameters($this->getParameters());
 
         $this->addJoin($queryBuilder);
         $this->addWhere($queryBuilder);
         $this->addGroupBy($queryBuilder);
-        $this->setOrderBy(clone $columns, $queryBuilder);
+        $this->setOrderBy($columns, $queryBuilder);
 
         return $queryBuilder->execute()->fetchAll();
     }
@@ -44,7 +44,7 @@ class DataGridRepository extends AbstractRepository
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
         $columnsToSelect = [];
-        foreach ($gridColumns as $column) {
+        foreach (clone $gridColumns as $column) {
             if (!empty($column['fields'])) {
                 if (!is_array($column['fields'])) {
                     $column['fields'] = [$column['fields']];
@@ -94,7 +94,7 @@ class DataGridRepository extends AbstractRepository
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {
-        foreach ($gridColumns as $gridColumn) {
+        foreach (clone $gridColumns as $gridColumn) {
             if ($gridColumn['default_sort'] === true) {
                 if (!is_array($gridColumn['fields'])) {
                     $gridColumn['fields'] = [$gridColumn['fields']];
