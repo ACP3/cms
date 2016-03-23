@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Categories\Model;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Modules\ACP3\System\Model\ModuleRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Class DataGridRepository
@@ -19,30 +20,37 @@ class DataGridRepository extends \ACP3\Core\Model\DataGridRepository
     const TABLE_NAME = CategoryRepository::TABLE_NAME;
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
-     * @return string
+     * @inheritdoc
      */
-    protected function getOrderBy(ColumnPriorityQueue $columns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
-        return ' ORDER BY module ASC, c.title DESC, c.id DESC';
+        return [
+            'main.*',
+            'm.name AS module'
+        ];
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
-     * @return string
+     * @inheritdoc
      */
-    protected function getColumns(ColumnPriorityQueue $columns)
+    protected function addJoin(QueryBuilder $queryBuilder)
     {
-        return 'c.*, m.name AS module';
+        $queryBuilder->leftJoin(
+            'main',
+            $this->getTableName(ModuleRepository::TABLE_NAME),
+            'm',
+            'main.module_id = m.id'
+        );
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
-    protected function getFrom()
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {
-        return $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id)';
+        $queryBuilder
+            ->addOrderBy('module', 'ASC')
+            ->addOrderBy('main.title', 'DESC')
+            ->addOrderBy('main.id', 'DESC');
     }
 }

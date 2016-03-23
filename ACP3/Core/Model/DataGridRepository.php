@@ -7,6 +7,7 @@
 namespace ACP3\Core\Model;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Class DataGridRepository
@@ -21,31 +22,41 @@ class DataGridRepository extends AbstractRepository
      */
     public function getAll(ColumnPriorityQueue $columns)
     {
-        $columnsToSelect = $this->getColumns(clone $columns);
-        $from = $this->getFrom();
-        $orderBy = $this->getOrderBy(clone $columns);
+        $queryBuilder = $this->db->getConnection()->createQueryBuilder();
+        $queryBuilder
+            ->select($this->getColumns(clone $columns))
+            ->from($this->getTableName(), 'main')
+            ->setParameters($this->getParameters());
 
-        return $this->db->fetchAll(
-            "SELECT {$columnsToSelect} FROM {$from}{$orderBy}",
-            $this->getParameters()
-        );
+        $this->addJoin($queryBuilder);
+        $this->addWhere($queryBuilder);
+        $this->addGroupBy($queryBuilder);
+        $this->setOrderBy(clone $columns, $queryBuilder);
+
+        return $queryBuilder->execute()->fetchAll();
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
+     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
      *
-     * @return string
+     * @return array
      */
-    protected function getColumns(ColumnPriorityQueue $columns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
         $columnsToSelect = [];
-        foreach ($columns as $column) {
+        foreach ($gridColumns as $column) {
             if (!empty($column['fields'])) {
-                $columnsToSelect[] = implode(', ', $column['fields']);
+                if (!is_array($column['fields'])) {
+                    $column['fields'] = [$column['fields']];
+                }
+
+                foreach ($column['fields'] as $field) {
+                    $columnsToSelect[] = $field;
+                }
             }
         }
 
-        return implode(', ', $columnsToSelect);
+        return $columnsToSelect;
     }
 
     /**
@@ -57,21 +68,43 @@ class DataGridRepository extends AbstractRepository
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
-     * @return string
+     * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
      */
-    protected function getOrderBy(ColumnPriorityQueue $columns)
+    protected function addJoin(QueryBuilder $queryBuilder)
     {
-        $orderBy = '';
-        foreach ($columns as $column) {
-            if ($column['default_sort'] === true) {
-                $orderBy .= implode($column['default_sort_direction'] . ', ', $column['fields']) . ' ';
-                $orderBy .= strtoupper($column['default_sort_direction']);
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
+     */
+    protected function addWhere(QueryBuilder $queryBuilder)
+    {
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
+     */
+    protected function addGroupBy(QueryBuilder $queryBuilder)
+    {
+    }
+
+    /**
+     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
+     * @param \Doctrine\DBAL\Query\QueryBuilder               $queryBuilder
+     */
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
+    {
+        foreach ($gridColumns as $gridColumn) {
+            if ($gridColumn['default_sort'] === true) {
+                if (!is_array($gridColumn['fields'])) {
+                    $gridColumn['fields'] = [$gridColumn['fields']];
+                }
+
+                foreach ($gridColumn['fields'] as $field) {
+                    $queryBuilder->addOrderBy($field, strtoupper($gridColumn['default_sort_direction']));
+                }
             }
         }
-
-        return !empty($orderBy) ? ' ORDER BY ' . $orderBy : '';
     }
 
     /**

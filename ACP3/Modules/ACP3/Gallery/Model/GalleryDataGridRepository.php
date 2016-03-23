@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Model;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Model\DataGridRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Class GalleryDataGridRepository
@@ -19,30 +20,48 @@ class GalleryDataGridRepository extends DataGridRepository
     const TABLE_NAME = GalleryRepository::TABLE_NAME;
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
-     * @return string
+     * @inheritdoc
      */
-    protected function getColumns(ColumnPriorityQueue $columns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
-        return 'g.id, g.start, g.end, g.title, COUNT(p.gallery_id) AS picture';
+        return [
+            'main.id',
+            'main.start',
+            'main.end',
+            'main.title',
+            'COUNT(p.gallery_id) AS picture'
+        ];
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
-    protected function getFrom()
+    protected function addJoin(QueryBuilder $queryBuilder)
     {
-        return $this->getTableName() . ' AS g LEFT JOIN ' . $this->getTableName(PictureRepository::TABLE_NAME) . ' AS p ON(g.id = p.gallery_id) GROUP BY g.id';
+        $queryBuilder->leftJoin(
+            'main',
+            $this->getTableName(PictureRepository::TABLE_NAME),
+            'p',
+            'main.id = p.gallery_id'
+        );
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
-     * @return string
+     * @inheritdoc
      */
-    protected function getOrderBy(ColumnPriorityQueue $columns)
+    protected function addGroupBy(QueryBuilder $queryBuilder)
     {
-        return ' ORDER BY g.start DESC, g.end DESC, g.id DESC';
+        $queryBuilder->addGroupBy('main.id');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
+    {
+        $queryBuilder
+            ->addOrderBy('main.start', 'DESC')
+            ->addOrderBy('main.end', 'DESC')
+            ->addOrderBy('main.id', 'DESC');
     }
 }

@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Model;
 
 use ACP3\Core\Model\DataGridRepository;
 use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Class AccountDataGridRepository
@@ -19,15 +20,15 @@ class AccountDataGridRepository extends DataGridRepository
     const TABLE_NAME = AccountRepository::TABLE_NAME;
 
     /**
-     * @return string
+     * @inheritdoc
      */
-    protected function getFrom()
+    protected function addWhere(QueryBuilder $queryBuilder)
     {
-        return "{$this->getTableName()} WHERE `status` != :status";
+        $queryBuilder->where('`main`.`status` != :status');
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     protected function getParameters()
     {

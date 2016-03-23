@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Files\Model;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Modules\ACP3\Categories\Model\CategoryRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Class DataGridRepository
@@ -19,30 +20,37 @@ class DataGridRepository extends \ACP3\Core\Model\DataGridRepository
     const TABLE_NAME = FilesRepository::TABLE_NAME;
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
-     * @return string
+     * @inheritdoc
      */
-    protected function getOrderBy(ColumnPriorityQueue $columns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
-        return ' ORDER BY f.start DESC, f.end DESC, f.id DESC';
+        return [
+            'main.*',
+            'c.title AS cat'
+        ];
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
-     * @return string
+     * @inheritdoc
      */
-    protected function getColumns(ColumnPriorityQueue $columns)
+    protected function addJoin(QueryBuilder $queryBuilder)
     {
-        return 'f.*, c.title AS cat';
+        $queryBuilder->leftJoin(
+            'main',
+            $this->getTableName(CategoryRepository::TABLE_NAME),
+            'c',
+            'main.category_id = c.id'
+        );
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
-    protected function getFrom()
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {
-        return $this->getTableName() . ' AS f LEFT JOIN ' . $this->getTableName(CategoryRepository::TABLE_NAME) . ' AS c ON(f.category_id = c.id)';
+        $queryBuilder
+            ->addOrderBy('main.start', 'DESC')
+            ->addOrderBy('main.end', 'DESC')
+            ->addOrderBy('main.id', 'DESC');
     }
 }

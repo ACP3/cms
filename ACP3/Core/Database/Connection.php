@@ -189,15 +189,11 @@ class Connection
         $lifetime = 0,
         $cacheKey = null
     ) {
-        if ($cache === false) {
-            return $this->connection->executeQuery($query, $params, $types);
-        }
-
-        return $this->connection->executeCacheQuery(
+        return $this->connection->executeQuery(
             $query,
             $params,
             $types,
-            new QueryCacheProfile($lifetime, $cacheKey ?: md5($query))
+            $cache ? new QueryCacheProfile($lifetime, $cacheKey ?: md5($query)) : null
         );
     }
 
