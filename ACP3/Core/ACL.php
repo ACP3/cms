@@ -78,18 +78,6 @@ class ACL
     }
 
     /**
-     * Initializes the available user privileges
-     */
-    protected function getPrivileges()
-    {
-        if ($this->privileges === []) {
-            $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
-        }
-
-        return $this->privileges;
-    }
-
-    /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
      *
      * @param integer $userId
@@ -103,11 +91,8 @@ class ACL
             if ($userId == 0) {
                 $this->userRoles[$userId][] = 1; // @TODO: Add config option for this
             } else {
-                $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
-                $cUserRoles = count($userRoles);
-
-                for ($i = 0; $i < $cUserRoles; ++$i) {
-                    $this->userRoles[$userId][] = $userRoles[$i]['id'];
+                foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
+                    $this->userRoles[$userId][] = $userRole['id'];
                 }
             }
         }
@@ -183,48 +168,6 @@ class ACL
     }
 
     /**
-     * @param string $resource
-     *
-     * @return boolean
-     */
-    public function canAccessResource($resource)
-    {
-        $resourceArray = $this->splitResourcePathInArray($resource);
-
-        $area = $resourceArray[0];
-        $resource = $resourceArray[1] . '/' . $resourceArray[2] . '/' . $resourceArray[3] . '/';
-
-        // At least allow users to access the login page
-        if ($area === AreaEnum::AREA_FRONTEND && $resource === 'users/index/login/') {
-            return true;
-        } elseif (isset($this->getResources()[$area][$resource])) {
-            $module = $resourceArray[1];
-            $privilegeKey = $this->getResources()[$area][$resource]['key'];
-            return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $resource
-     *
-     * @return array
-     */
-    protected function splitResourcePathInArray($resource)
-    {
-        $resourceArray = explode('/', $resource);
-
-        if (empty($resourceArray[2]) === true) {
-            $resourceArray[2] = 'index';
-        }
-        if (empty($resourceArray[3]) === true) {
-            $resourceArray[3] = 'index';
-        }
-        return $resourceArray;
-    }
-
-    /**
      * Returns, whether the current user has given privilege
      *
      * @param string $module
@@ -242,22 +185,76 @@ class ACL
     }
 
     /**
+     * Initializes the available user privileges
+     */
+    protected function getPrivileges()
+    {
+        if ($this->privileges === []) {
+            $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
+        }
+
+        return $this->privileges;
+    }
+
+    /**
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
      *
-     * @param string $path
+     * @param string $resource
      *
      * @return boolean
      */
-    public function hasPermission($path)
+    public function hasPermission($resource)
     {
-        if (!empty($path) && $this->modules->controllerActionExists($path) === true) {
-            $pathArray = explode('/', $path);
+        if (!empty($resource) && $this->modules->controllerActionExists($resource) === true) {
+            $resourceParts = explode('/', $resource);
 
-            if ($this->modules->isActive($pathArray[1]) === true) {
-                return $this->canAccessResource($path);
+            if ($this->modules->isActive($resourceParts[1]) === true) {
+                return $this->canAccessResource($resource);
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param string $resource
+     *
+     * @return boolean
+     */
+    protected function canAccessResource($resource)
+    {
+        $resourceParts = $this->convertResourcePathToArray($resource);
+
+        $area = $resourceParts[0];
+        $resource = $resourceParts[1] . '/' . $resourceParts[2] . '/' . $resourceParts[3] . '/';
+
+        // At least allow users to access the login page
+        if ($area === AreaEnum::AREA_FRONTEND && $resource === 'users/index/login/') {
+            return true;
+        } elseif (isset($this->getResources()[$area][$resource])) {
+            $module = $resourceParts[1];
+            $privilegeKey = $this->getResources()[$area][$resource]['key'];
+            return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $resource
+     *
+     * @return array
+     */
+    protected function convertResourcePathToArray($resource)
+    {
+        $resourceArray = explode('/', $resource);
+
+        if (empty($resourceArray[2]) === true) {
+            $resourceArray[2] = 'index';
+        }
+        if (empty($resourceArray[3]) === true) {
+            $resourceArray[3] = 'index';
+        }
+        return $resourceArray;
     }
 }

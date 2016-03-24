@@ -169,8 +169,11 @@ class Modules extends Core\Controller\AdminAction
 
                     $text = $this->translator->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
-                    $text = $this->translator->t('system', 'module_disable_not_possible',
-                        ['%modules%' => implode(', ', $deps)]);
+                    $text = $this->translator->t(
+                        'system', 
+                        'module_disable_not_possible',
+                        ['%modules%' => implode(', ', $deps)]
+                    );
                 }
             } else {
                 throw new Core\Exceptions\ResultNotExists();

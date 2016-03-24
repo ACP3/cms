@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Seo\Test\Core;
 
 
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Http\Request;
 use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Core\Router;
 
@@ -73,7 +72,7 @@ class RouterTest extends \ACP3\Core\Test\RouterTest
      * @param int    $callCount
      * @param string $returnValue
      */
-    private function setUpAliasesMockExpectations($callCount = 0, $returnValue)
+    private function setUpAliasesMockExpectations($callCount, $returnValue)
     {
         $this->aliasesMock->expects($this->exactly($callCount))
             ->method('getUriAlias')
