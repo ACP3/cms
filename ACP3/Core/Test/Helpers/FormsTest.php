@@ -10,6 +10,7 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\Request;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Test\DataProvider\Helpers\CheckboxGeneratorDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\ChoicesGeneratorDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\RecordsPerPageDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\SelectEntryDataProvider;
@@ -143,5 +144,36 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     public function choicesGeneratorDataProvider()
     {
         return (new ChoicesGeneratorDataProvider())->getData();
+    }
+
+    /**
+     * @dataProvider checkboxGeneratorDataProvider
+     *
+     * @param mixed  $currentValue
+     * @param mixed  $postValue
+     * @param array  $expected
+     */
+    public function testCheckboxGenerator($currentValue, $postValue, $expected)
+    {
+        $this->setUpRequestExpectations('form_field', $postValue);
+
+        $values = [
+            'foo' => 'Lorem',
+            'bar' => 'Ipsum',
+            'baz' => 'Dolor'
+        ];
+
+        $this->assertEquals(
+            $expected,
+            $this->formsHelper->checkboxGenerator('form_field', $values, $currentValue)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function checkboxGeneratorDataProvider()
+    {
+        return (new CheckboxGeneratorDataProvider())->getData();
     }
 }
