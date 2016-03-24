@@ -154,27 +154,36 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * Setzt den Cache für die einzelnen Berechtigungen einer Rolle
      *
      * @param array $roles
-     *    Array mit den IDs der zu cachenden Rollen
      *
      * @return boolean
      */
     public function saveRulesCache(array $roles)
     {
-        // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-        $rules = $this->ruleRepository->getAllRulesByRoleIds($roles);
-        $cRules = count($rules);
         $privileges = [];
-        for ($i = 0; $i < $cRules; ++$i) {
-            $key = strtolower($rules[$i]['key']);
-            $privileges[$rules[$i]['module_name']][$key] = [
-                'id' => $rules[$i]['privilege_id'],
-                'description' => $rules[$i]['description'],
-                'permission' => $rules[$i]['permission'],
-                'access' => ($rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->getPermissionValue($key, $rules[$i]['role_id']) == 1)),
+        foreach ($this->ruleRepository->getAllRulesByRoleIds($roles) as $rule) {
+            $key = strtolower($rule['key']);
+            $privileges[$rule['module_name']][$key] = [
+                'id' => $rule['privilege_id'],
+                'description' => $rule['description'],
+                'permission' => $rule['permission'],
+                'access' => $this->hasAccess($rule, $key),
             ];
         }
 
         return $this->cache->save(static::CACHE_ID_RULES . implode(',', $roles), $privileges);
+    }
+
+    /**
+     * @param array  $rule
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function hasAccess(array $rule, $key)
+    {
+        return $rule['permission'] == Core\ACL\PermissionEnum::PERMIT_ACCESS
+        || ($rule['permission'] == Core\ACL\PermissionEnum::INHERIT_ACCESS
+            && $this->getPermissionValue($key, $rule['role_id']) == Core\ACL\PermissionEnum::PERMIT_ACCESS);
     }
 
     /**
@@ -183,13 +192,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @param string  $key
      *    Schlüssel der Privilegie
      * @param integer $roleId
-     *    ID der Rolle, dessen übergeordnete Rolle sucht werden soll
      *
      * @return integer
      */
     protected function getPermissionValue($key, $roleId)
     {
         $value = $this->roleRepository->getPermissionByKeyAndRoleId($key, $roleId);
-        return isset($value['permission']) ? $value['permission'] : 0;
+        return isset($value['permission']) ? $value['permission'] : Core\ACL\PermissionEnum::DENY_ACCESS;
     }
 }

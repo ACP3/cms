@@ -41,7 +41,7 @@ class Index extends Core\Controller\FrontendAction
      */
     public function execute($feed)
     {
-        if ($this->acl->hasPermission('frontend/' . $feed)) {
+        if ($this->acl->hasPermission('frontend/' . $feed) === true) {
             $module = $this->request->getParameters()->get('feed', '');
             $this->feedGenerator
                 ->setTitle($this->config->getSettings('seo')['title'])

@@ -70,7 +70,9 @@ class OnDisplaySearchResultsListener extends Event
      */
     public function onDisplaySearchResults(DisplaySearchResults $displaySearchResults)
     {
-        if (in_array('articles', $displaySearchResults->getModules()) && $this->acl->hasPermission('frontend/articles')) {
+        if (in_array('articles', $displaySearchResults->getModules())
+            && $this->acl->hasPermission('frontend/articles') === true
+        ) {
             $fields = $this->mapSearchAreasToFields($displaySearchResults->getAreas());
 
             $results = $this->articleRepository->getAllSearchResults(
@@ -86,11 +88,15 @@ class OnDisplaySearchResultsListener extends Event
                 $searchResults['dir'] = 'articles';
                 for ($i = 0; $i < $cResults; ++$i) {
                     $searchResults['results'][$i] = $results[$i];
-                    $searchResults['results'][$i]['hyperlink'] = $this->router->route('articles/index/details/id_' . $results[$i]['id']);
+                    $searchResults['results'][$i]['hyperlink'] = $this->router->route(
+                        'articles/index/details/id_' . $results[$i]['id']
+                    );
                 }
 
-                $displaySearchResults->addSearchResultsByModule($this->translator->t('articles', 'articles'),
-                    $searchResults);
+                $displaySearchResults->addSearchResultsByModule(
+                    $this->translator->t('articles', 'articles'),
+                    $searchResults
+                );
             }
         }
     }

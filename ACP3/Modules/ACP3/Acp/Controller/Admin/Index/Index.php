@@ -19,19 +19,27 @@ class Index extends Core\Controller\AdminAction
      */
     public function execute()
     {
-        $activeModules = $this->modules->getActiveModules();
+        return [
+            'modules' => $this->getAllowedModules()
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedModules()
+    {
         $allowedModules = [];
 
-        foreach ($activeModules as $name => $info) {
+        foreach ($this->modules->getActiveModules() as $name => $info) {
             $dir = strtolower($info['dir']);
             if ($this->acl->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
-                $allowedModules[$name]['name'] = $name;
-                $allowedModules[$name]['dir'] = $dir;
+                $allowedModules[$name] = [
+                    'name' => $name,
+                    'dir' => $dir
+                ];
             }
         }
-
-        return [
-            'modules' => $allowedModules
-        ];
+        return $allowedModules;
     }
 }

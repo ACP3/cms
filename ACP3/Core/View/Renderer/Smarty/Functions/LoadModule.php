@@ -44,7 +44,24 @@ class LoadModule extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $pathArray = explode('/', strtolower($params['module']));
+        $pathArray = $this->convertPathToArray($params['module']);
+
+        $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
+        if ($this->acl->hasPermission($path) === true) {
+            $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3]);
+
+            $this->frontController->dispatch($serviceId, isset($params['args']) ? $params['args'] : []);
+        }
+    }
+
+    /**
+     * @param string $resource
+     *
+     * @return array
+     */
+    protected function convertPathToArray($resource)
+    {
+        $pathArray = explode('/', strtolower($resource));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';
@@ -52,13 +69,6 @@ class LoadModule extends AbstractFunction
         if (empty($pathArray[3]) === true) {
             $pathArray[3] = 'index';
         }
-
-        $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
-
-        if ($this->acl->hasPermission($path)) {
-            $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3]);
-
-            $this->frontController->dispatch($serviceId, isset($params['args']) ? $params['args'] : []);
-        }
+        return $pathArray;
     }
 }

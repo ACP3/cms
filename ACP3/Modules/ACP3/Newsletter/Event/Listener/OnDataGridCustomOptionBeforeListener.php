@@ -41,7 +41,7 @@ class OnDataGridCustomOptionBeforeListener
     public function onDataGridCustomOptionBefore(CustomOptionEvent $customOptionEvent)
     {
         if ($customOptionEvent->getIdentifier() === '#newsletter-data-grid' &&
-            $this->acl->hasPermission('admin/newsletter/index/send')
+            $this->acl->hasPermission('admin/newsletter/index/send') === true
         ) {
             $dbResultRow = $customOptionEvent->getDbResultRow();
 

@@ -73,8 +73,8 @@ class CaptchaValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true &&
-            $this->user->isAuthenticated() === false
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true
+            && $this->user->isAuthenticated() === false
         ) {
             return $this->checkCaptcha($data, isset($extra['path']) ? $extra['path'] : '');
         }
@@ -86,6 +86,7 @@ class CaptchaValidationRule extends AbstractValidationRule
     {
         $index = 'captcha_' . sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
-        return preg_match('/^[a-zA-Z0-9]+$/', $input) && strtolower($input) === strtolower($this->sessionHandler->get($index, ''));
+        return preg_match('/^[a-zA-Z0-9]+$/', $input)
+        && strtolower($input) === strtolower($this->sessionHandler->get($index, ''));
     }
 }

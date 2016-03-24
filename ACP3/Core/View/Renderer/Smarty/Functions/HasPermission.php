@@ -37,8 +37,8 @@ class HasPermission extends AbstractFunction
     {
         if (isset($params['path']) === true) {
             return $this->acl->hasPermission($params['path']);
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

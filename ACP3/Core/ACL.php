@@ -93,7 +93,6 @@ class ACL
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
      *
      * @param integer $userId
-     *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
      *
      * @return array
      */
@@ -119,18 +118,14 @@ class ACL
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
      *
      * @param integer $userId
-     *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
      *
      * @return array
      */
     public function getUserRoleNames($userId)
     {
-        $userRoles = $this->userRoleRepository->getRolesByUserId($userId);
-        $cUserRoles = count($userRoles);
         $roles = [];
-
-        for ($i = 0; $i < $cUserRoles; ++$i) {
-            $roles[] = $userRoles[$i]['name'];
+        foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
+            $roles[] = $userRole['name'];
         }
         return $roles;
     }
@@ -162,8 +157,6 @@ class ACL
     }
 
     /**
-     * Returns all existing roles
-     *
      * @return array
      */
     public function getAllRoles()
@@ -172,8 +165,6 @@ class ACL
     }
 
     /**
-     * Returns all existing privileges
-     *
      * @return array
      */
     public function getAllPrivileges()
@@ -182,10 +173,7 @@ class ACL
     }
 
     /**
-     * Gibt zurück ob dem Benutzer die jeweilige Rolle zugeordnet ist
-     *
      * @param integer $roleId
-     *    ID der zu überprüfenden Rolle
      *
      * @return boolean
      */
@@ -195,23 +183,13 @@ class ACL
     }
 
     /**
-     * Gibt zurück, ob ein Benutzer berichtigt ist, eine Ressource zu betreten
-     *
      * @param string $resource
-     *    The path of a resource in the format of an internal ACP3 url
      *
      * @return boolean
      */
     public function canAccessResource($resource)
     {
-        $resourceArray = explode('/', $resource);
-
-        if (empty($resourceArray[2]) === true) {
-            $resourceArray[2] = 'index';
-        }
-        if (empty($resourceArray[3]) === true) {
-            $resourceArray[3] = 'index';
-        }
+        $resourceArray = $this->splitResourcePathInArray($resource);
 
         $area = $resourceArray[0];
         $resource = $resourceArray[1] . '/' . $resourceArray[2] . '/' . $resourceArray[3] . '/';
@@ -221,26 +199,44 @@ class ACL
             return true;
         } elseif (isset($this->getResources()[$area][$resource])) {
             $module = $resourceArray[1];
-            $key = $this->getResources()[$area][$resource]['key'];
-            return $this->userHasPrivilege($module, $key) === true || $this->user->isSuperUser() === true;
+            $privilegeKey = $this->getResources()[$area][$resource]['key'];
+            return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
         }
 
         return false;
     }
 
     /**
-     * Gibt zurück, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
+     * @param string $resource
+     *
+     * @return array
+     */
+    protected function splitResourcePathInArray($resource)
+    {
+        $resourceArray = explode('/', $resource);
+
+        if (empty($resourceArray[2]) === true) {
+            $resourceArray[2] = 'index';
+        }
+        if (empty($resourceArray[3]) === true) {
+            $resourceArray[3] = 'index';
+        }
+        return $resourceArray;
+    }
+
+    /**
+     * Returns, whether the current user has given privilege
      *
      * @param string $module
-     * @param string $key
+     * @param string $privilegeKey
      *
      * @return boolean
      */
-    public function userHasPrivilege($module, $key)
+    public function userHasPrivilege($module, $privilegeKey)
     {
-        $key = strtolower($key);
-        if (isset($this->getPrivileges()[$module][$key])) {
-            return $this->getPrivileges()[$module][$key]['access'];
+        $privilegeKey = strtolower($privilegeKey);
+        if (isset($this->getPrivileges()[$module][$privilegeKey])) {
+            return $this->getPrivileges()[$module][$privilegeKey]['access'];
         }
         return false;
     }
@@ -250,7 +246,7 @@ class ACL
      *
      * @param string $path
      *
-     * @return integer
+     * @return boolean
      */
     public function hasPermission($path)
     {
@@ -262,6 +258,6 @@ class ACL
             }
         }
 
-        return 0;
+        return false;
     }
 }
