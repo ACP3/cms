@@ -101,17 +101,17 @@ class Forms
      */
     public function choicesGenerator($formFieldName, array $values, $currentValue = '', $htmlAttribute = 'selected')
     {
-        $select = [];
+        $choices = [];
         $id = str_replace('_', '-', $formFieldName);
         foreach ($values as $value => $phrase) {
-            $select[] = [
+            $choices[] = [
                 'value' => $value,
                 'id' => ($htmlAttribute === 'checked' ? $id . '-' . $value : ''),
                 $htmlAttribute => $this->selectEntry($formFieldName, $value, $currentValue, $htmlAttribute),
                 'lang' => $phrase
             ];
         }
-        return $select;
+        return $choices;
     }
 
     /**

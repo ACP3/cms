@@ -9,6 +9,10 @@ namespace ACP3\Core\Test\DataProvider\Helpers;
 
 use ACP3\Core\Test\DataProvider\DataProviderInterface;
 
+/**
+ * Class RecordsPerPageDataProvider
+ * @package ACP3\Core\Test\DataProvider\Helpers
+ */
 class RecordsPerPageDataProvider implements DataProviderInterface
 {
     /**

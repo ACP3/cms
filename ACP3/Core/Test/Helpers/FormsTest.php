@@ -10,6 +10,7 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\Request;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Test\DataProvider\Helpers\ChoicesGeneratorDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\RecordsPerPageDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\SelectEntryDataProvider;
 
@@ -65,22 +66,6 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider recordsPerPageDataProvider
-     *
-     * @param integer $currentValue
-     * @param integer $steps
-     * @param integer $maxValue
-     * @param integer $postValue
-     * @param array   $expected
-     */
-    public function testRecordsPerPage($currentValue, $steps, $maxValue, $postValue, $expected)
-    {
-        $this->setUpRequestExpectations('entries', $postValue);
-
-        $this->assertEquals($expected, $this->formsHelper->recordsPerPage($currentValue, $steps, $maxValue));
-    }
-
-    /**
      * @param string $formFieldName
      * @param mixed  $postValue
      */
@@ -105,10 +90,58 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider recordsPerPageDataProvider
+     *
+     * @param integer $currentValue
+     * @param integer $steps
+     * @param integer $maxValue
+     * @param integer $postValue
+     * @param array   $expected
+     */
+    public function testRecordsPerPage($currentValue, $steps, $maxValue, $postValue, $expected)
+    {
+        $this->setUpRequestExpectations('entries', $postValue);
+
+        $this->assertEquals($expected, $this->formsHelper->recordsPerPage($currentValue, $steps, $maxValue));
+    }
+
+    /**
      * @return array
      */
     public function recordsPerPageDataProvider()
     {
         return (new RecordsPerPageDataProvider())->getData();
+    }
+
+    /**
+     * @dataProvider choicesGeneratorDataProvider
+     *
+     * @param mixed  $currentValue
+     * @param string $htmlAttribute
+     * @param mixed  $postValue
+     * @param array  $expected
+     */
+    public function testChoicesGenerator($currentValue, $htmlAttribute, $postValue, $expected)
+    {
+        $this->setUpRequestExpectations('form_field', $postValue);
+
+        $values = [
+            'foo' => 'Lorem',
+            'bar' => 'Ipsum',
+            'baz' => 'Dolor'
+        ];
+
+        $this->assertEquals(
+            $expected,
+            $this->formsHelper->choicesGenerator('form_field', $values, $currentValue, $htmlAttribute)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function choicesGeneratorDataProvider()
+    {
+        return (new ChoicesGeneratorDataProvider())->getData();
     }
 }
