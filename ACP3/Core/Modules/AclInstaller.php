@@ -214,7 +214,7 @@ class AclInstaller implements InstallerInterface
      */
     protected function getDefaultAclRulePermission($role, $privilege)
     {
-        $permission = 0;
+        $permission = PermissionEnum::DENY_ACCESS;
         if ($role['id'] == 1 &&
             ($privilege['id'] == PrivilegeEnum::FRONTEND_VIEW || $privilege['id'] == PrivilegeEnum::FRONTEND_CREATE)
         ) {
