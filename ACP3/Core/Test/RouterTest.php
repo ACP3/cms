@@ -21,21 +21,33 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \ACP3\Core\Router
      */
-    private $router;
+    protected $router;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $requestMock;
+    protected $requestMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $appPathMock;
+    protected $appPathMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $configMock;
+    protected $configMock;
 
     protected function setUp()
+    {
+        $this->initializeMockObjects();
+
+        $this->router = new Router(
+            $this->requestMock,
+            $this->appPathMock,
+            $this->configMock,
+            ApplicationMode::PRODUCTION
+        );
+    }
+
+    protected function initializeMockObjects()
     {
         $this->requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
@@ -49,16 +61,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['getSettings'])
             ->getMock();
-
-        $this->router = new Router(
-            $this->requestMock,
-            $this->appPathMock,
-            $this->configMock,
-            ApplicationMode::PRODUCTION
-        );
     }
 
-    public function testRouteNoModRewrite()
+    public function testRouteUseNoModRewrite()
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -70,7 +75,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->router->route($path));
     }
 
-    private function setUpRequestMockExpectations()
+    protected function setUpRequestMockExpectations()
     {
         $this->requestMock->expects($this->any())
             ->method('getProtocol')
@@ -84,7 +89,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      * @param int $callCountWebRoot
      * @param int $callCountPhpSelf
      */
-    private function setAppPathMockExpectations($callCountWebRoot, $callCountPhpSelf)
+    protected function setAppPathMockExpectations($callCountWebRoot, $callCountPhpSelf)
     {
         $this->appPathMock->expects($this->exactly($callCountWebRoot))
             ->method('getWebRoot')
@@ -98,7 +103,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      * @param int  $callCount
      * @param bool $useModRewrite
      */
-    private function setUpConfigMockExpectations($callCount = 1, $useModRewrite = false)
+    protected function setUpConfigMockExpectations($callCount = 1, $useModRewrite = false)
     {
         $this->configMock->expects($this->exactly($callCount))
             ->method('getSettings')
