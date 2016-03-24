@@ -43,7 +43,9 @@ class Aliases
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliasesCache[$path]['alias']) ? $this->aliasesCache[$path]['alias'] : ($emptyOnNoResult === true ? '' : $path);
+        return !empty($this->aliasesCache[$path]['alias'])
+            ? $this->aliasesCache[$path]['alias']
+            : ($emptyOnNoResult === true ? '' : $path);
     }
 
     /**
