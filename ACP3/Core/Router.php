@@ -76,23 +76,22 @@ class Router implements RouterInterface
 
     /**
      * @param string $path
-     * @param bool   $isAbsolute
-     * @param bool   $forceSecure
      *
      * @return string
      */
-    protected function addUriPrefix($path, $isAbsolute, $forceSecure)
+    protected function preparePath($path)
     {
-        $prefix = '';
-        // Append the current hostname to the URL
-        if ($isAbsolute === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getProtocol();
-            $prefix .= $this->request->getHostname();
+        $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
+        if ($path === 'acp/') {
+            $path = 'acp/acp/index/index/';
         }
 
-        $prefix .= $this->useModRewrite($path) ? $this->appPath->getWebRoot() : $this->appPath->getPhpSelf() . '/';
+        $prefix = 'admin/';
+        if (substr($path, 0, strlen($prefix)) == $prefix) {
+            $path = 'acp/' . substr($path, strlen($prefix));
+        }
 
-        return $prefix;
+        return $this->addControllerAndAction($path);
     }
 
     /**
@@ -121,27 +120,27 @@ class Router implements RouterInterface
      */
     protected function isAdminUri($path)
     {
-        return preg_match(self::ADMIN_PANEL_PATTERN, $path) === true;
+        return preg_match(self::ADMIN_PANEL_PATTERN, $path) != false;
     }
 
     /**
      * @param string $path
+     * @param bool   $isAbsolute
+     * @param bool   $forceSecure
      *
      * @return string
      */
-    protected function preparePath($path)
+    protected function addUriPrefix($path, $isAbsolute, $forceSecure)
     {
-        $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
-        if ($path === 'acp/') {
-            $path = 'acp/acp/index/index/';
+        $prefix = '';
+        if ($isAbsolute === true || $forceSecure === true) {
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getProtocol();
+            $prefix .= $this->request->getHostname();
         }
 
-        $prefix = 'admin/';
-        if (substr($path, 0, strlen($prefix)) == $prefix) {
-            $path = 'acp/' . substr($path, strlen($prefix));
-        }
+        $prefix .= $this->useModRewrite($path) ? $this->appPath->getWebRoot() : $this->appPath->getPhpSelf() . '/';
 
-        return $this->addControllerAndAction($path);
+        return $prefix;
     }
 
     /**
