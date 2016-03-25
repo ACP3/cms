@@ -20,6 +20,10 @@ class Create extends Core\Controller\AdminAction
      */
     protected $formTokenHelper;
     /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     */
+    protected $privilegeRepository;
+    /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
      */
     protected $resourceRepository;
@@ -40,6 +44,7 @@ class Create extends Core\Controller\AdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext                       $context
      * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository         $privilegeRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository          $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                             $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
@@ -48,6 +53,7 @@ class Create extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Permissions\Model\PrivilegeRepository $privilegeRepository,
         Permissions\Model\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
@@ -56,6 +62,7 @@ class Create extends Core\Controller\AdminAction
 
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
+        $this->privilegeRepository = $privilegeRepository;
         $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
         $this->resourceFormValidation = $resourceFormValidation;
@@ -75,7 +82,7 @@ class Create extends Core\Controller\AdminAction
             $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry('modules', $row['name']);
         }
 
-        $privileges = $this->acl->getAllPrivileges();
+        $privileges = $this->privilegeRepository->getAllPrivileges();
         $cPrivileges = count($privileges);
         for ($i = 0; $i < $cPrivileges; ++$i) {
             $privileges[$i]['selected'] = $this->formsHelper->selectEntry(

@@ -17,30 +17,44 @@ use ACP3\Modules\ACP3\Permissions;
 abstract class AbstractFormAction extends AdminAction
 {
     /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     */
+    protected $privilegeRepository;
+    /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
      */
     protected $ruleRepository;
     /**
-     * @var \ACP3\Core\Helpers\Forms
+     * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
-    protected $formsHelper;
+    protected $permissionsCache;
 
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
-     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository $ruleRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext               $context
+     * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository      $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                     $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
-        Permissions\Model\RuleRepository $ruleRepository
+        Permissions\Model\PrivilegeRepository $privilegeRepository,
+        Permissions\Model\RuleRepository $ruleRepository,
+        Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
+        $this->privilegeRepository = $privilegeRepository;
         $this->ruleRepository = $ruleRepository;
+        $this->permissionsCache = $permissionsCache;
     }
 
 
@@ -161,9 +175,9 @@ abstract class AbstractFormAction extends AdminAction
      */
     protected function fetchModulePermissions($roleId, $defaultValue = 0)
     {
-        $rules = $this->acl->getRules([$roleId]);
+        $rules = $this->permissionsCache->getRulesCache([$roleId]);
         $modules = $this->modules->getActiveModules();
-        $privileges = $this->acl->getAllPrivileges();
+        $privileges = $this->privilegeRepository->getAllPrivileges();
         $cPrivileges = count($privileges);
 
         foreach ($modules as $name => $moduleInfo) {

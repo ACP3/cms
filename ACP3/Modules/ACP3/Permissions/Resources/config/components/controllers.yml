@@ -14,6 +14,7 @@ services:
     class: %permissions.controller.admin.index.create.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@permissions.model.privilegerepository'
       - '@permissions.model.rulerepository'
       - '@core.nested_set'
       - '@core.helpers.forms'
@@ -32,6 +33,7 @@ services:
     class: %permissions.controller.admin.index.edit.fqdn%
     arguments:
       - '@core.context.admin'
+      - '@permissions.model.privilegerepository'
       - '@permissions.model.rulerepository'
       - '@core.nested_set'
       - '@core.helpers.forms'
@@ -58,6 +60,7 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@permissions.model.privilegerepository'
       - '@permissions.model.resourcerepository'
       - '@permissions.cache'
       - '@permissions.validator.resource'
@@ -75,6 +78,7 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@permissions.model.privilegerepository'
       - '@permissions.model.resourcerepository'
       - '@permissions.cache'
       - '@permissions.validator.resource'

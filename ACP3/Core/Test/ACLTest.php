@@ -149,7 +149,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->acl->hasPermission(''));
     }
 
-    public function testHasPermissionWithNotExistingResource()
+    public function testHasPermissionWithInvalidResource()
     {
         $resource = 'frontend/news/index/index/';
 
@@ -221,10 +221,11 @@ class ACLTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param int $userId
+     * @param int $callCount
      */
-    private function setUpUserMockExpectations($userId)
+    private function setUpUserMockExpectations($userId, $callCount = 1)
     {
-        $this->userMock->expects($this->once())
+        $this->userMock->expects($this->exactly($callCount))
             ->method('getUserId')
             ->willReturn($userId);
     }
@@ -284,6 +285,25 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertTrue($this->acl->hasPermission($resource));
+    }
+
+    public function testHasPermissionWithUnregisteredResource()
+    {
+        $resource = 'frontend/foo/index/details/';
+        $userId = 0;
+
+        $this->setUpUserMockExpectations($userId, 0);
+        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpPermissionsCacheMockExpectations(
+            1,
+            0,
+            [
+                0 => 1
+            ],
+            true
+        );
+
+        $this->assertFalse($this->acl->hasPermission($resource));
     }
 
     public function testHasPermissionAlwaysForSuperUser()

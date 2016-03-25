@@ -3,6 +3,7 @@ namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
+use ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository;
 
 /**
  * Class PrivilegesExistValidationRule
@@ -11,18 +12,18 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 class PrivilegesExistValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
      */
-    protected $acl;
+    protected $privilegeRepository;
 
     /**
      * PrivilegesExistValidationRule constructor.
      *
-     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
      */
-    public function __construct(ACL $acl)
+    public function __construct(PrivilegeRepository $privilegeRepository)
     {
-        $this->acl = $acl;
+        $this->privilegeRepository = $privilegeRepository;
     }
 
     /**
@@ -41,28 +42,30 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
      * Überprüft, ob die übergebenen Privilegien existieren und
      * plausible Werte enthalten
      *
-     * @param array $privileges
-     *    Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
+     * @param array $privilegeIds
      *
      * @return boolean
      */
-    public function privilegesExist(array $privileges)
+    public function privilegesExist(array $privilegeIds)
     {
-        $allPrivileges = $this->acl->getAllPrivileges();
-        $cAllPrivileges = count($allPrivileges);
+        $allPrivileges = $this->privilegeRepository->getAllPrivileges();
         $valid = false;
 
-        for ($i = 0; $i < $cAllPrivileges; ++$i) {
+        foreach ($allPrivileges as $privilege) {
             $valid = false;
-            foreach ($privileges as $module) {
-                foreach ($module as $privilegeId => $value) {
-                    if ($privilegeId == $allPrivileges[$i]['id'] && $value >= 0 && $value <= 2) {
+            foreach ($privilegeIds as $module) {
+                foreach ($module as $privilegeId => $permission) {
+                    if ($privilegeId == $privilege['id']
+                        && $permission >= ACL\PermissionEnum::DENY_ACCESS
+                        && $permission <= ACL\PermissionEnum::INHERIT_ACCESS
+                    ) {
                         $valid = true;
                         break 2;
                     }
                 }
             }
         }
+
         return $valid;
     }
 }

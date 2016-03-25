@@ -116,45 +116,11 @@ class ACL
     }
 
     /**
-     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
-     *
-     * @return array
-     */
-    public function getResources()
-    {
-        if ($this->resources === []) {
-            $this->resources = $this->permissionsCache->getResourcesCache();
-        }
-
-        return $this->resources;
-    }
-
-    /**
-     * Returns the role permissions
-     *
-     * @param array $roleIds
-     *
-     * @return array
-     */
-    public function getRules(array $roleIds)
-    {
-        return $this->permissionsCache->getRulesCache($roleIds);
-    }
-
-    /**
      * @return array
      */
     public function getAllRoles()
     {
         return $this->permissionsCache->getRolesCache();
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllPrivileges()
-    {
-        return $this->privilegeRepository->getAllPrivileges();
     }
 
     /**
@@ -177,6 +143,18 @@ class ACL
         }
 
         return $this->privileges;
+    }
+
+    /**
+     * Returns the role permissions
+     *
+     * @param array $roleIds
+     *
+     * @return array
+     */
+    protected function getRules(array $roleIds)
+    {
+        return $this->permissionsCache->getRulesCache($roleIds);
     }
 
     /**
@@ -239,6 +217,20 @@ class ACL
             $resourceArray[3] = 'index';
         }
         return $resourceArray;
+    }
+
+    /**
+     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
+     *
+     * @return array
+     */
+    protected function getResources()
+    {
+        if ($this->resources === []) {
+            $this->resources = $this->permissionsCache->getResourcesCache();
+        }
+
+        return $this->resources;
     }
 
     /**

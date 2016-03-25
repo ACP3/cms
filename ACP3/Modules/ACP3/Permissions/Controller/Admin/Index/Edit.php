@@ -27,10 +27,6 @@ class Edit extends AbstractFormAction
      */
     protected $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
-     */
-    protected $permissionsCache;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
     protected $roleFormValidation;
@@ -39,6 +35,7 @@ class Edit extends AbstractFormAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
+     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository     $privilegeRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository          $ruleRepository
      * @param \ACP3\Core\NestedSet                                         $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
@@ -49,6 +46,7 @@ class Edit extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Permissions\Model\PrivilegeRepository $privilegeRepository,
         Permissions\Model\RuleRepository $ruleRepository,
         Core\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
@@ -57,12 +55,11 @@ class Edit extends AbstractFormAction
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $ruleRepository);
+        parent::__construct($context, $formsHelper, $privilegeRepository, $ruleRepository, $permissionsCache);
 
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->roleRepository = $roleRepository;
-        $this->permissionsCache = $permissionsCache;
         $this->roleFormValidation = $roleFormValidation;
     }
 

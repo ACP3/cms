@@ -25,7 +25,7 @@ services:
   permissions.validation.validation_rules.privileges_exist_validation_rule:
     class: %permissions.validation.validation_rules.privileges_exist_validation_rule.fqdn%
     arguments:
-      - '@core.acl'
+      - '@permissions.model.privilegerepository'
     tags:
       - { name: core.validation.validation_rule }
 
