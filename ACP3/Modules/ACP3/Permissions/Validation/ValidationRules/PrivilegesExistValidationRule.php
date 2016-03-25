@@ -48,17 +48,12 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
      */
     public function privilegesExist(array $privilegeIds)
     {
-        $allPrivileges = $this->privilegeRepository->getAllPrivileges();
         $valid = false;
-
-        foreach ($allPrivileges as $privilege) {
+        foreach ($this->privilegeRepository->getAllPrivileges() as $privilege) {
             $valid = false;
             foreach ($privilegeIds as $module) {
                 foreach ($module as $privilegeId => $permission) {
-                    if ($privilegeId == $privilege['id']
-                        && $permission >= ACL\PermissionEnum::DENY_ACCESS
-                        && $permission <= ACL\PermissionEnum::INHERIT_ACCESS
-                    ) {
+                    if ($this->isValidPrivilege($privilegeId, $privilege, $permission)) {
                         $valid = true;
                         break 2;
                     }
@@ -67,5 +62,19 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
         }
 
         return $valid;
+    }
+
+    /**
+     * @param int   $privilegeId
+     * @param array $privilege
+     * @param int   $permission
+     *
+     * @return bool
+     */
+    protected function isValidPrivilege($privilegeId, array $privilege, $permission)
+    {
+        return $privilegeId == $privilege['id']
+        && $permission >= ACL\PermissionEnum::DENY_ACCESS
+        && $permission <= ACL\PermissionEnum::INHERIT_ACCESS;
     }
 }
