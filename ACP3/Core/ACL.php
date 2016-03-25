@@ -242,7 +242,7 @@ class ACL
     }
 
     /**
-     * Returns, whether the current user has given privilege
+     * Returns, whether the current user has the given privilege
      *
      * @param string $module
      * @param string $privilegeKey
