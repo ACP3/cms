@@ -161,12 +161,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
     {
         $privileges = [];
         foreach ($this->ruleRepository->getAllRulesByRoleIds($roles) as $rule) {
-            $key = strtolower($rule['key']);
-            $privileges[$rule['module_name']][$key] = [
+            $privilegeKey = strtolower($rule['key']);
+            $privileges[$rule['module_name']][$privilegeKey] = [
                 'id' => $rule['privilege_id'],
                 'description' => $rule['description'],
                 'permission' => $rule['permission'],
-                'access' => $this->hasAccess($rule, $key),
+                'access' => $this->hasAccess($rule, $privilegeKey),
             ];
         }
 
@@ -175,29 +175,28 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param array  $rule
-     * @param string $key
+     * @param string $privilegeKey
      *
      * @return bool
      */
-    protected function hasAccess(array $rule, $key)
+    protected function hasAccess(array $rule, $privilegeKey)
     {
         return $rule['permission'] == Core\ACL\PermissionEnum::PERMIT_ACCESS
         || ($rule['permission'] == Core\ACL\PermissionEnum::INHERIT_ACCESS
-            && $this->getPermissionValue($key, $rule['role_id']) == Core\ACL\PermissionEnum::PERMIT_ACCESS);
+            && $this->getPermissionValue($privilegeKey, $rule['role_id']) == Core\ACL\PermissionEnum::PERMIT_ACCESS);
     }
 
     /**
      * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle
      *
-     * @param string  $key
-     *    Schlüssel der Privilegie
+     * @param string  $privilegeKey
      * @param integer $roleId
      *
      * @return integer
      */
-    protected function getPermissionValue($key, $roleId)
+    protected function getPermissionValue($privilegeKey, $roleId)
     {
-        $value = $this->roleRepository->getPermissionByKeyAndRoleId($key, $roleId);
+        $value = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $roleId);
         return isset($value['permission']) ? $value['permission'] : Core\ACL\PermissionEnum::DENY_ACCESS;
     }
 }

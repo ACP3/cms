@@ -168,23 +168,6 @@ class ACL
     }
 
     /**
-     * Returns, whether the current user has given privilege
-     *
-     * @param string $module
-     * @param string $privilegeKey
-     *
-     * @return boolean
-     */
-    public function userHasPrivilege($module, $privilegeKey)
-    {
-        $privilegeKey = strtolower($privilegeKey);
-        if (isset($this->getPrivileges()[$module][$privilegeKey])) {
-            return $this->getPrivileges()[$module][$privilegeKey]['access'];
-        }
-        return false;
-    }
-
-    /**
      * Initializes the available user privileges
      */
     protected function getPrivileges()
@@ -256,5 +239,22 @@ class ACL
             $resourceArray[3] = 'index';
         }
         return $resourceArray;
+    }
+
+    /**
+     * Returns, whether the current user has given privilege
+     *
+     * @param string $module
+     * @param string $privilegeKey
+     *
+     * @return boolean
+     */
+    protected function userHasPrivilege($module, $privilegeKey)
+    {
+        $privilegeKey = strtolower($privilegeKey);
+        if (isset($this->getPrivileges()[$module][$privilegeKey])) {
+            return $this->getPrivileges()[$module][$privilegeKey]['access'];
+        }
+        return false;
     }
 }

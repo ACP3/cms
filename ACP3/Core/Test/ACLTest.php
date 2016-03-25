@@ -113,7 +113,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $userId
      */
-    protected function setUpUserRoleExpectation($userId)
+    private function setUpUserRoleExpectation($userId)
     {
         $returnValue = [
             [
@@ -144,11 +144,6 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->acl->getUserRoleNames($userId));
     }
 
-    public function testHasPermission()
-    {
-        $this->markTestIncomplete('TBA');
-    }
-
     public function testHasPermissionWithEmptyResource()
     {
         $this->assertFalse($this->acl->hasPermission(''));
@@ -170,20 +165,158 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     {
         $resource = 'frontend/news/index/index/';
 
-        $this->modulesMock->expects($this->once())
-            ->method('controllerActionExists')
-            ->with($resource)
-            ->willReturn(true);
-        $this->modulesMock->expects($this->once())
-            ->method('isActive')
-            ->with('news')
-            ->willReturn(false);
+        $this->setUpModulesMockExpectations($resource, 'news', true, false);
 
         $this->assertFalse($this->acl->hasPermission($resource));
     }
 
-    public function testUserHasPrivilege()
+    /**
+     * @param string $resource
+     * @param string $moduleName
+     * @param bool   $returnValueActionExists
+     * @param bool   $returnValueIsActive
+     */
+    private function setUpModulesMockExpectations(
+        $resource,
+        $moduleName,
+        $returnValueActionExists,
+        $returnValueIsActive
+    ) {
+        $this->modulesMock->expects($this->once())
+            ->method('controllerActionExists')
+            ->with($resource)
+            ->willReturn($returnValueActionExists);
+        $this->modulesMock->expects($this->once())
+            ->method('isActive')
+            ->with($moduleName)
+            ->willReturn($returnValueIsActive);
+    }
+
+    public function testHasPermissionAlwaysCanAccessUserLoginPage()
     {
-        $this->markTestIncomplete('TBA');
+        $resource = 'frontend/users/index/login/';
+
+        $this->setUpModulesMockExpectations($resource, 'users', true, true);
+
+        $this->assertTrue($this->acl->hasPermission($resource));
+    }
+
+    public function testHasPermission()
+    {
+        $resource = 'frontend/foo/index/index/';
+
+        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpPermissionsCacheMockExpectations(
+            1,
+            1,
+            [
+                0 => 1
+            ],
+            true
+        );
+
+        $this->userMock->expects($this->once())
+            ->method('getUserId')
+            ->willReturn(0);
+
+        $this->assertTrue($this->acl->hasPermission($resource));
+    }
+
+    /**
+     * @param int   $callCountResourceCache
+     * @param int   $callCountRulesCache
+     * @param array $returnValueRulesCache
+     * @param bool  $hasAccess
+     */
+    protected function setUpPermissionsCacheMockExpectations(
+        $callCountResourceCache,
+        $callCountRulesCache,
+        array $returnValueRulesCache,
+        $hasAccess
+    ) {
+        $this->permissionsCacheMock->expects($this->exactly($callCountResourceCache))
+            ->method('getResourcesCache')
+            ->willReturn([
+                'frontend' => [
+                    'foo/index/index/' => [
+                        'key' => 'view',
+                        'access' => ACL\PermissionEnum::PERMIT_ACCESS
+                    ]
+                ]
+            ]);
+
+        $this->permissionsCacheMock->expects($this->exactly($callCountRulesCache))
+            ->method('getRulesCache')
+            ->with($returnValueRulesCache)
+            ->willReturn([
+                'foo' => [
+                    'view' => [
+                        'id' => ACL\PrivilegeEnum::FRONTEND_VIEW,
+                        'description' => '',
+                        'permission' => ACL\PermissionEnum::PERMIT_ACCESS,
+                        'access' => $hasAccess,
+                    ]
+                ]
+            ]);
+    }
+
+    public function testHasPermissionWithShortResource()
+    {
+        $resource = 'frontend/foo/';
+
+        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpPermissionsCacheMockExpectations(
+            1,
+            1,
+            [
+                0 => 1
+            ],
+            true
+        );
+
+        $this->userMock->expects($this->once())
+            ->method('getUserId')
+            ->willReturn(0);
+
+        $this->assertTrue($this->acl->hasPermission($resource));
+    }
+
+    public function testHasPermissionAlwaysForSuperUser()
+    {
+        $resource = 'frontend/foo/index/index/';
+        $userId = 1;
+
+        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpUserRoleExpectation($userId);
+        $this->setUpPermissionsCacheMockExpectations(
+            1,
+            1,
+            [
+                1 => 3,
+                0 => 2
+            ],
+            false
+        );
+
+        $this->userMock->expects($this->once())
+            ->method('getUserId')
+            ->willReturn($userId);
+        $this->userMock->expects($this->once())
+            ->method('isSuperUser')
+            ->willReturn(true);
+
+        $this->assertTrue($this->acl->hasPermission($resource));
+    }
+
+    public function testUserHasRole()
+    {
+        $userId = 1;
+
+        $this->userMock->expects($this->once())
+            ->method('getUserId')
+            ->willReturn($userId);
+        $this->setUpUserRoleExpectation($userId);
+
+        $this->assertTrue($this->acl->userHasRole(2));
     }
 }

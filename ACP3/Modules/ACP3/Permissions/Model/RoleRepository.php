@@ -55,13 +55,16 @@ class RoleRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param string $key
+     * @param string $privilegeKey
      * @param int    $roleId
      *
      * @return array
      */
-    public function getPermissionByKeyAndRoleId($key, $roleId)
+    public function getPermissionByKeyAndRoleId($privilegeKey, $roleId)
     {
-        return $this->db->fetchAssoc('SELECT ru.permission FROM ' . $this->getTableName() . ' AS r, ' . $this->getTableName() . ' AS parent JOIN ' . $this->getTableName(RuleRepository::TABLE_NAME) . ' AS ru ON(parent.id = ru.role_id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . ' AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', [$roleId, $key]);
+        return $this->db->fetchAssoc(
+            'SELECT ru.permission FROM ' . $this->getTableName() . ' AS r, ' . $this->getTableName() . ' AS parent JOIN ' . $this->getTableName(RuleRepository::TABLE_NAME) . ' AS ru ON(parent.id = ru.role_id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . ' AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1',
+            [$roleId, $privilegeKey]
+        );
     }
 }
