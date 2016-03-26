@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Modules
@@ -47,8 +48,8 @@ class Modules extends Core\Controller\AdminAction
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\ModuleRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
-        Permissions\Cache $permissionsCache)
-    {
+        Permissions\Cache $permissionsCache
+    ) {
         parent::__construct($context);
 
         $this->moduleInfoCache = $moduleInfoCache;
@@ -88,44 +89,73 @@ class Modules extends Core\Controller\AdminAction
     protected function enableModule($moduleDirectory)
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($moduleDirectory);
-        if (empty($info)) {
-            $text = $this->translator->t('system', 'module_not_found');
-        } elseif ($info['protected'] === true) {
-            $text = $this->translator->t('system', 'mod_deactivate_forbidden');
-        } else {
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
-            $container = $this->installerHelper->updateServiceContainer(true);
-
-            if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-                $moduleSchema = $container->get($serviceId);
-
-                // Modulabhängigkeiten prüfen
-                $deps = $this->installerHelper->checkInstallDependencies($moduleSchema);
-
-                // Modul installieren
-                if (empty($deps)) {
-                    $bool = $this->systemModuleRepository->update(['active' => 1], ['name' => $moduleDirectory]);
-
-                    $this->renewCaches();
-                    Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'sql/container.php');
-
-                    $text = $this->translator->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
-                } else {
-                    $text = $this->translator->t(
-                        'system', 
-                        'enable_following_modules_first',
-                        ['%modules%' => implode(', ', $deps)]
-                    );
-                }
-            } else {
-                $text = $this->translator->t('system', 'module_installer_not_found');
+        try {
+            $info = $this->modules->getModuleInfo($moduleDirectory);
+            if (empty($info) || $info['protected'] === true) {
+                throw new System\Exception\ModuleInstallerException(
+                    $this->translator->t('system', 'could_not_complete_request')
+                );
             }
+
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
+            $container = $this->installerHelper->updateServiceContainer(true);
+            $this->moduleInstallerExists($container, $serviceId);
+
+            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+            $moduleSchema = $container->get($serviceId);
+
+            $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
+            $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
+
+            $bool = $this->systemModuleRepository->update(['active' => 1], ['name' => $moduleDirectory]);
+
+            $this->renewCaches();
+            $this->purgeCaches();
+
+            $text = $this->translator->t(
+                'system',
+                'mod_activate_' . ($bool !== false ? 'success' : 'error')
+            );
+        } catch (System\Exception\ModuleInstallerException $e) {
+            $text = $e->getMessage();
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param string                                                    $serviceId
+     *
+     * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
+     */
+    protected function moduleInstallerExists(ContainerInterface $container, $serviceId)
+    {
+        if ($container->has($serviceId) === false) {
+            throw new System\Exception\ModuleInstallerException(
+                $this->translator->t('system', 'module_installer_not_found')
+            );
+        }
+    }
+
+    /**
+     * @param array  $dependencies
+     * @param string $phrase
+     *
+     * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
+     */
+    protected function checkForFailedModuleDependencies(array $dependencies, $phrase)
+    {
+        if (!empty($dependencies)) {
+            throw new System\Exception\ModuleInstallerException(
+                $this->translator->t(
+                    'system',
+                    $phrase,
+                    ['%modules%' => implode(', ', $dependencies)]
+                )
+            );
+        }
     }
 
     protected function renewCaches()
@@ -133,6 +163,15 @@ class Modules extends Core\Controller\AdminAction
         $this->get('core.lang.dictionary_cache')->saveLanguageCache($this->translator->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
         $this->permissionsCache->saveResourcesCache();
+    }
+
+    protected function purgeCaches()
+    {
+        Core\Cache\Purge::doPurge([
+            $this->appPath->getCacheDir() . 'tpl_compiled',
+            $this->appPath->getCacheDir() . 'tpl_cached',
+            $this->appPath->getCacheDir() . 'sql/container.php'
+        ]);
     }
 
     /**
@@ -144,45 +183,38 @@ class Modules extends Core\Controller\AdminAction
     protected function disableModule($moduleDirectory)
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($moduleDirectory);
-        if (empty($info)) {
-            $text = $this->translator->t('system', 'module_not_found');
-        } elseif ($info['protected'] === true) {
-            $text = $this->translator->t('system', 'mod_deactivate_forbidden');
-        } else {
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
-            if ($this->container->has($serviceId) === true) {
-                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-                $moduleSchema = $this->container->get($serviceId);
-
-                // Modulabhängigkeiten prüfen
-                $deps = $this->installerHelper->checkUninstallDependencies(
-                    $moduleSchema->getModuleName(),
-                    $this->container
+        try {
+            $info = $this->modules->getModuleInfo($moduleDirectory);
+            if (empty($info) || $info['protected'] === true) {
+                throw new System\Exception\ModuleInstallerException(
+                    $text = $this->translator->t('system', 'could_not_complete_request')
                 );
-
-                if (empty($deps)) {
-                    $bool = $this->systemModuleRepository->update(['active' => 0], ['name' => $moduleDirectory]);
-
-                    $this->renewCaches();
-                    Core\Cache\Purge::doPurge([
-                        $this->appPath->getCacheDir() . 'tpl_compiled',
-                        $this->appPath->getCacheDir() . 'tpl_cached',
-                        $this->appPath->getCacheDir() . 'sql/container.php'
-                    ]);
-
-                    $text = $this->translator->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
-                } else {
-                    $text = $this->translator->t(
-                        'system', 
-                        'module_disable_not_possible',
-                        ['%modules%' => implode(', ', $deps)]
-                    );
-                }
-            } else {
-                throw new Core\Exceptions\ResultNotExists();
             }
+
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
+            $this->moduleInstallerExists($this->container, $serviceId);
+
+            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+            $moduleSchema = $this->container->get($serviceId);
+
+            $dependencies = $this->installerHelper->checkUninstallDependencies(
+                $moduleSchema->getModuleName(),
+                $this->container
+            );
+            $this->checkForFailedModuleDependencies($dependencies, 'module_disable_not_possible');
+
+            $bool = $this->systemModuleRepository->update(['active' => 0], ['name' => $moduleDirectory]);
+
+            $this->renewCaches();
+            $this->purgeCaches();
+
+            $text = $this->translator->t(
+                'system',
+                'mod_deactivate_' . ($bool !== false ? 'success' : 'error')
+            );
+        } catch (System\Exception\ModuleInstallerException $e) {
+            $text = $e->getMessage();
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
@@ -196,38 +228,36 @@ class Modules extends Core\Controller\AdminAction
     protected function installModule($moduleDirectory)
     {
         $bool = false;
-        // Nur noch nicht installierte Module berücksichtigen
-        if ($this->modules->isInstalled($moduleDirectory) === false) {
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
-            $container = $this->installerHelper->updateServiceContainer(true);
-
-            if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-                $moduleSchema = $container->get($serviceId);
-
-                // Modulabhängigkeiten prüfen
-                $deps = $this->installerHelper->checkInstallDependencies($moduleSchema);
-
-                // Modul installieren
-                if (empty($deps)) {
-                    $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
-                    $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
-
-                    $this->renewCaches();
-                    Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'sql/container.php');
-
-                    $text = $this->translator->t('system',
-                        'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
-                } else {
-                    $text = $this->translator->t('system', 'enable_following_modules_first',
-                        ['%modules%' => implode(', ', $deps)]);
-                }
-            } else {
-                $text = $this->translator->t('system', 'module_installer_not_found');
+        try {
+            if ($this->modules->isInstalled($moduleDirectory) === true) {
+                throw new System\Exception\ModuleInstallerException(
+                    $this->translator->t('system', 'module_already_installed')
+                );
             }
-        } else {
-            $text = $this->translator->t('system', 'module_already_installed');
+
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
+            $container = $this->installerHelper->updateServiceContainer(true);
+            $this->moduleInstallerExists($container, $serviceId);
+
+            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+            $moduleSchema = $container->get($serviceId);
+
+            $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
+            $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
+
+            $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
+            $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
+
+            $this->renewCaches();
+            $this->purgeCaches();
+
+            $text = $this->translator->t(
+                'system',
+                'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error')
+            );
+        } catch (System\Exception\ModuleInstallerException $e) {
+            $text = $e->getMessage();
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
@@ -241,46 +271,40 @@ class Modules extends Core\Controller\AdminAction
     protected function uninstallModule($moduleDirectory)
     {
         $bool = false;
-        $info = $this->modules->getModuleInfo($moduleDirectory);
-        // Nur installierte und Nicht-Core-Module berücksichtigen
-        if ($info['protected'] === false && $this->modules->isInstalled($moduleDirectory) === true) {
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
 
-            $container = $this->installerHelper->updateServiceContainer();
-
-            if ($container->has($serviceId) === true) {
-                /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-                $moduleSchema = $container->get($serviceId);
-
-                // Modulabhängigkeiten prüfen
-                $deps = $this->installerHelper->checkUninstallDependencies(
-                    $moduleSchema->getModuleName(),
-                    $container
+        try {
+            $info = $this->modules->getModuleInfo($moduleDirectory);
+            if ($this->modules->isInstalled($moduleDirectory) === false || $info['protected'] === true) {
+                throw new System\Exception\ModuleInstallerException(
+                    $this->translator->t('system', 'protected_module_description')
                 );
-
-                // Modul deinstallieren
-                if (empty($deps)) {
-                    $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
-                    $bool2 = $this->container->get('core.modules.aclInstaller')->uninstall($moduleSchema);
-
-                    $this->renewCaches();
-                    Core\Cache\Purge::doPurge([
-                        $this->appPath->getCacheDir() . 'tpl_compiled',
-                        $this->appPath->getCacheDir() . 'tpl_cached',
-                        $this->appPath->getCacheDir() . 'sql/container.php'
-                    ]);
-
-                    $text = $this->translator->t('system',
-                        'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
-                } else {
-                    $text = $this->translator->t('system', 'uninstall_following_modules_first',
-                        ['%modules%' => implode(', ', $deps)]);
-                }
-            } else {
-                $text = $this->translator->t('system', 'module_installer_not_found');
             }
-        } else {
-            $text = $this->translator->t('system', 'protected_module_description');
+
+            $serviceId = strtolower($moduleDirectory . '.installer.schema');
+            $container = $this->installerHelper->updateServiceContainer();
+            $this->moduleInstallerExists($container, $serviceId);
+
+            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
+            $moduleSchema = $container->get($serviceId);
+
+            $dependencies = $this->installerHelper->checkUninstallDependencies(
+                $moduleSchema->getModuleName(),
+                $container
+            );
+            $this->checkForFailedModuleDependencies($dependencies, 'uninstall_following_modules_first');
+
+            $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
+            $bool2 = $this->container->get('core.modules.aclInstaller')->uninstall($moduleSchema);
+
+            $this->renewCaches();
+            $this->purgeCaches();
+
+            $text = $this->translator->t(
+                'system',
+                'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error')
+            );
+        } catch (System\Exception\ModuleInstallerException $e) {
+            $text = $e->getMessage();
         }
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
@@ -289,7 +313,7 @@ class Modules extends Core\Controller\AdminAction
     /**
      * @return array
      */
-    private function outputPage()
+    protected function outputPage()
     {
         $this->renewCaches();
 

@@ -100,12 +100,12 @@ class Installer
         foreach ($modules as $module) {
             $moduleName = strtolower($module['dir']);
             if ($moduleName !== $moduleToBeUninstalled) {
-                $service = $moduleName . '.installer.schema';
+                $serviceId = $moduleName . '.installer.schema';
 
-                if ($container->has($service) === true) {
-                    $deps = $this->getDependencies($moduleName);
+                if ($container->has($serviceId) === true) {
+                    $dependencies = $this->getDependencies($moduleName);
 
-                    if (!empty($deps) && in_array($moduleToBeUninstalled, $deps) === true) {
+                    if (in_array($moduleToBeUninstalled, $dependencies) === true) {
                         $moduleDependencies[] = $module['name'];
                     }
                 }
@@ -143,6 +143,6 @@ class Installer
      */
     public function updateServiceContainer($allModules = false)
     {
-        return Core\ServiceContainerBuilder::compileContainer($this->environment, null, $allModules);
+        return Core\ServiceContainerBuilder::compileContainer($this->environment, $this->appPath, $allModules);
     }
 }

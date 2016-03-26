@@ -49,6 +49,7 @@
         <item key="confirm_delete">Do you really want to delete the marked entries?</item>
         <item key="confirm_delete_multiple">Do you really want to delete the {items} selected entries?</item>
         <item key="confirm_delete_single">Do you really want to delete the selected entry?</item>
+        <item key="could_not_complete_request">Because of an error the request could not complete.</item>
         <item key="create_error">While creating the entry an error has occured.</item>
         <item key="create_success">The entry has been successfully created.</item>
         <item key="critical_error_occurred_see_log">A critical error has occurred. For further details please see the log files.</item>
