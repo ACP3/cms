@@ -111,9 +111,7 @@ class Breadcrumb
      * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
      *
      * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
      * @param bool   $dbSteps
      *
      * @return $this
@@ -193,10 +191,9 @@ class Breadcrumb
      */
     private function setBreadcrumbCache()
     {
-        // Breadcrumb of the admin panel
         if ($this->request->getArea() === AreaEnum::AREA_ADMIN) {
             $this->setBreadcrumbCacheForAdmin();
-        } else { // Breadcrumb for frontend requests
+        } else {
             $this->setBreadcrumbCacheForFrontend();
         }
 
@@ -252,7 +249,6 @@ class Breadcrumb
     }
 
     /**
-     *
      * @param string $value
      *
      * @return $this
@@ -268,9 +264,7 @@ class Breadcrumb
      * Zuweisung einer neuen Stufe zur Brotkrümelspur
      *
      * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
      *
      * @return $this
      */
@@ -288,9 +282,7 @@ class Breadcrumb
      * Fügt Brotkrumen an den Anfang an
      *
      * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
      *
      * @return $this
      */

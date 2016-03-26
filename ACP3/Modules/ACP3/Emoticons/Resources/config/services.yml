@@ -20,8 +20,7 @@ services:
   emoticons.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      - '@service_container'
-      - '@core.environment.application_path'
+      - '@core.cache.cache_driver_factory'
       - 'emoticons'
 
   emoticons.helpers:

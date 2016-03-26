@@ -1,9 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Environment\ApplicationPath;
-use Symfony\Component\DependencyInjection\Container;
+use ACP3\Core\Cache\CacheDriverFactory;
 
 /**
  * Class Cache
@@ -12,13 +10,9 @@ use Symfony\Component\DependencyInjection\Container;
 class Cache
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \ACP3\Core\Cache\CacheDriverFactory
      */
-    protected $container;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
+    protected $cacheDriverFactory;
     /**
      * @var string
      */
@@ -27,44 +21,37 @@ class Cache
      * @return \Doctrine\Common\Cache\CacheProvider
      */
     protected $driver;
-    /**
-     * @var array
-     */
-    protected $retrievedCacheData = [];
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\Environment\ApplicationPath           $appPath
-     * @param  string                                          $namespace
+     * Cache constructor.
+     *
+     * @param \ACP3\Core\Cache\CacheDriverFactory $cacheDriverFactory
+     * @param string                              $namespace
      */
-    public function __construct(
-        Container $container,
-        ApplicationPath $appPath,
-        $namespace
-    ) {
-        $this->container = $container;
-        $this->appPath = $appPath;
+    public function __construct(CacheDriverFactory $cacheDriverFactory, $namespace)
+    {
+        $this->cacheDriverFactory = $cacheDriverFactory;
         $this->namespace = $namespace;
     }
 
     /**
-     * @param string $dir
+     * @param string $directory
      * @param string $cacheId
      *
      * @return bool
      */
-    public static function purge($dir, $cacheId = '')
+    public static function purge($directory, $cacheId = '')
     {
-        if (!is_file($dir) && !is_dir($dir)) {
+        if (!is_file($directory) && !is_dir($directory)) {
             return true;
         }
 
-        if (is_file($dir) === true) {
-            return @unlink($dir);
+        if (is_file($directory) === true) {
+            return @unlink($directory);
         }
 
-        foreach (Filesystem::scandir($dir) as $file) {
-            $path = "$dir/$file";
+        foreach (Filesystem::scandir($directory) as $file) {
+            $path = "$directory/$file";
 
             if (is_dir($path)) {
                 static::purge($path, $cacheId);
@@ -84,53 +71,45 @@ class Cache
     }
 
     /**
-     * @param string $id
+     * @param string $cacheId
      *
      * @return bool|array|string
      */
-    public function fetch($id)
+    public function fetch($cacheId)
     {
-        if (isset($this->retrievedCacheData[$id]) === false) {
-            $this->retrievedCacheData[$id] = $this->getDriver()->fetch($id);
-        }
-
-        return $this->retrievedCacheData[$id];
+        return $this->getDriver()->fetch($cacheId);
     }
 
     /**
-     * @param string $id
+     * @param string $cacheId
      *
      * @return bool
      */
-    public function contains($id)
+    public function contains($cacheId)
     {
-        return isset($this->retrievedCacheData[$id]) === true || $this->getDriver()->contains($id);
+        return $this->getDriver()->contains($cacheId);
     }
 
     /**
-     * @param string $id
+     * @param string $cacheId
      * @param mixed  $data
      * @param int    $lifetime
      *
      * @return bool
      */
-    public function save($id, $data, $lifetime = 0)
+    public function save($cacheId, $data, $lifetime = 0)
     {
-        $this->retrievedCacheData[$id] = $data;
-
-        return $this->getDriver()->save($id, $data, $lifetime);
+        return $this->getDriver()->save($cacheId, $data, $lifetime);
     }
 
     /**
-     * @param string $id
+     * @param string $cacheId
      *
      * @return bool
      */
-    public function delete($id)
+    public function delete($cacheId)
     {
-        unset($this->retrievedCacheData[$id]);
-
-        return $this->getDriver()->delete($id);
+        return $this->getDriver()->delete($cacheId);
     }
 
     /**
@@ -154,32 +133,8 @@ class Cache
      */
     public function getDriver()
     {
-        // Init the cache driver
         if ($this->driver === null) {
-            if ($this->container->hasParameter('cache_driver')) {
-                $driverName = $this->container->getParameter('cache_driver');
-            } else {
-                $driverName = 'Array';
-            }
-
-            // If debug mode is enabled, override the cache driver configuration
-            if ($this->container->getParameter('core.environment') === ApplicationMode::DEVELOPMENT) {
-                $driverName = 'Array';
-            }
-
-            $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
-            if (class_exists($cacheDriverPath)) {
-                if ($driverName === 'PhpFile') {
-                    $cacheDir = $this->appPath->getCacheDir() . 'sql/';
-                    $this->driver = new $cacheDriverPath($cacheDir);
-                } else {
-                    $this->driver = new $cacheDriverPath();
-                }
-
-                $this->driver->setNamespace($this->namespace);
-            } else {
-                throw new \InvalidArgumentException(sprintf('Could not find the requested cache driver "%s"!', $cacheDriverPath));
-            }
+            $this->driver = $this->cacheDriverFactory->create($this->namespace);
         }
 
         return $this->driver;

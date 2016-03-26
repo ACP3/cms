@@ -50,9 +50,14 @@ services:
   core.cache.system:
     class: ACP3\Core\Cache
     arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'system'
+
+  core.cache.cache_driver_factory:
+    class: ACP3\Core\Cache\CacheDriverFactory
+    arguments:
       - '@service_container'
       - '@core.environment.application_path'
-      - 'system'
 
   core.config:
     class: ACP3\Core\Config
