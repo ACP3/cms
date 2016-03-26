@@ -108,7 +108,7 @@ class Modules extends Core\Controller\AdminAction
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
 
-            $bool = $this->systemModuleRepository->update(['active' => 1], ['name' => $moduleDirectory]);
+            $bool = $this->saveModuleState($moduleDirectory, 1);
 
             $this->renewCaches();
             $this->purgeCaches();
@@ -204,7 +204,7 @@ class Modules extends Core\Controller\AdminAction
             );
             $this->checkForFailedModuleDependencies($dependencies, 'module_disable_not_possible');
 
-            $bool = $this->systemModuleRepository->update(['active' => 0], ['name' => $moduleDirectory]);
+            $bool = $this->saveModuleState($moduleDirectory, 0);
 
             $this->renewCaches();
             $this->purgeCaches();
@@ -333,5 +333,16 @@ class Modules extends Core\Controller\AdminAction
             'installed_modules' => $installedModules,
             'new_modules' => $newModules
         ];
+    }
+
+    /**
+     * @param string $moduleDirectory
+     * @param int    $active
+     *
+     * @return bool|int
+     */
+    protected function saveModuleState($moduleDirectory, $active)
+    {
+        return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 }
