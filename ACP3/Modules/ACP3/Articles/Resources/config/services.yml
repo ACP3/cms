@@ -1,4 +1,5 @@
 imports:
+  - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
   - { resource: components/events.yml }
   - { resource: components/installer.yml }
@@ -6,22 +7,9 @@ imports:
   - { resource: components/validation.yml }
 
 parameters:
-  articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
   articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
 
 services:
-  articles.cache:
-    class: %articles.cache.fqdn%
-    arguments:
-      - '@articles.cache.core'
-      - '@articles.model.articlerepository'
-
-  articles.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'articles'
-
   articles.helpers:
     class: %articles.helpers.fqdn%
     arguments:

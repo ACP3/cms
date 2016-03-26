@@ -105,7 +105,7 @@ class Settings extends Core\Controller\AdminAction
             if ($formData['thumbwidth'] !== $settings['thumbwidth'] || $formData['thumbheight'] !== $settings['thumbheight'] ||
                 $formData['width'] !== $settings['width'] || $formData['height'] !== $settings['height']
             ) {
-                Core\Cache::purge($this->appPath->getCacheDir() . 'images', 'gallery');
+                Core\Cache\Purge::purge($this->appPath->getCacheDir() . 'images', 'gallery');
 
                 $this->get('gallery.cache.core')->getDriver()->deleteAll();
             }

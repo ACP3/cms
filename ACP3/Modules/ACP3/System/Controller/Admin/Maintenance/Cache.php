@@ -23,33 +23,46 @@ class Cache extends Core\Controller\AdminAction
     public function execute($action = '')
     {
         if (!empty($action)) {
-            $result = false;
-            switch ($action) {
-                case 'general':
-                    $result = Core\Cache::purge($this->appPath->getCacheDir() . 'sql');
-                    $text = $this->translator->t('system',
-                        $result === true ? 'cache_type_general_delete_success' : 'cache_type_general_delete_success');
-                    break;
-                case 'images':
-                    $result = Core\Cache::purge($this->appPath->getCacheDir() . 'images');
-                    $text = $this->translator->t('system',
-                        $result === true ? 'cache_type_images_delete_success' : 'cache_type_images_delete_success');
-                    break;
-                case 'minify':
-                    $result = Core\Cache::purge($this->appPath->getUploadsDir() . 'assets');
-                    $text = $this->translator->t('system',
-                        $result === true ? 'cache_type_minify_delete_success' : 'cache_type_minify_delete_success');
-                    break;
-                case 'templates':
-                    $result = (Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled') && Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached'));
-                    $text = $this->translator->t('system',
-                        $result === true ? 'cache_type_templates_delete_success' : 'cache_type_templates_delete_success');
-                    break;
-                default:
-                    $text = $this->translator->t('system', 'cache_type_not_found');
-            }
+            list($result, $text) = $this->executePurge($action);
 
             return $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
         }
+    }
+
+    /**
+     * @param $action
+     *
+     * @return array
+     */
+    protected function executePurge($action)
+    {
+        $cacheTypes = [
+            'general' => $this->appPath->getCacheDir() . 'sql',
+            'images' => $this->appPath->getCacheDir() . 'images',
+            'minify' => $this->appPath->getUploadsDir() . 'assets',
+            'templates' => [
+                $this->appPath->getCacheDir() . 'tpl_compiled',
+                $this->appPath->getCacheDir() . 'tpl_cached'
+            ]
+        ];
+
+        $result = false;
+        switch ($action) {
+            case 'general':
+            case 'images':
+            case 'minify':
+            case 'templates':
+                $result = Core\Cache\Purge::purge($cacheTypes[$action]);
+                $text = $this->translator->t(
+                    'system',
+                    $result === true
+                        ? 'cache_type_' . $action . '_delete_success'
+                        : 'cache_type_' . $action . '_delete_error'
+                );
+                break;
+            default:
+                $text = $this->translator->t('system', 'cache_type_not_found');
+        }
+        return [$result, $text];
     }
 }

@@ -1,0 +1,15 @@
+parameters:
+  categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
+
+services:
+  categories.cache:
+    class: %categories.cache.fqdn%
+    arguments:
+      - '@categories.cache.core'
+      - '@categories.model'
+
+  categories.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'categories'

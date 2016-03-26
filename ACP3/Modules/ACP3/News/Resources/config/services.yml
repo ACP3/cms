@@ -1,22 +1,7 @@
 imports:
+  - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
   - { resource: components/events.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
-
-parameters:
-  news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
-
-services:
-  news.cache:
-    class: %news.cache.fqdn%
-    arguments:
-      - '@news.cache.core'
-      - '@news.model.newsrepository'
-
-  news.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'news'

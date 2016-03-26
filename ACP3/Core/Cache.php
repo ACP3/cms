@@ -35,42 +35,6 @@ class Cache
     }
 
     /**
-     * @param string $directory
-     * @param string $cacheId
-     *
-     * @return bool
-     */
-    public static function purge($directory, $cacheId = '')
-    {
-        if (!is_file($directory) && !is_dir($directory)) {
-            return true;
-        }
-
-        if (is_file($directory) === true) {
-            return @unlink($directory);
-        }
-
-        foreach (Filesystem::scandir($directory) as $file) {
-            $path = "$directory/$file";
-
-            if (is_dir($path)) {
-                static::purge($path, $cacheId);
-                if (empty($cacheId)) {
-                    rmdir($path);
-                }
-            } else {
-                if (!empty($cacheId) && strpos($file, $cacheId) === false) {
-                    continue;
-                }
-
-                unlink($path);
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * @param string $cacheId
      *
      * @return bool|array|string

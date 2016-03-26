@@ -1,26 +1,14 @@
 imports:
+  - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
 parameters:
-  categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
   categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
 
 services:
-  categories.cache:
-    class: %categories.cache.fqdn%
-    arguments:
-      - '@categories.cache.core'
-      - '@categories.model'
-
-  categories.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'categories'
-
   categories.helpers:
     class: %categories.helpers.fqdn%
     arguments:

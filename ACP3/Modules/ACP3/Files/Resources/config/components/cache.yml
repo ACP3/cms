@@ -1,0 +1,15 @@
+parameters:
+  files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
+
+services:
+  files.cache:
+    class: %files.cache.fqdn%
+    arguments:
+      - '@files.cache.core'
+      - '@files.model.filesrepository'
+
+  files.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'files'

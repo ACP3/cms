@@ -110,12 +110,15 @@ class Modules extends Core\Controller\AdminAction
                     $bool = $this->systemModuleRepository->update(['active' => 1], ['name' => $moduleDirectory]);
 
                     $this->renewCaches();
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
+                    Core\Cache\Purge::purge($this->appPath->getCacheDir() . 'sql/container.php');
 
                     $text = $this->translator->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
-                    $text = $this->translator->t('system', 'enable_following_modules_first',
-                        ['%modules%' => implode(', ', $deps)]);
+                    $text = $this->translator->t(
+                        'system', 
+                        'enable_following_modules_first',
+                        ['%modules%' => implode(', ', $deps)]
+                    );
                 }
             } else {
                 $text = $this->translator->t('system', 'module_installer_not_found');
@@ -163,9 +166,11 @@ class Modules extends Core\Controller\AdminAction
                     $bool = $this->systemModuleRepository->update(['active' => 0], ['name' => $moduleDirectory]);
 
                     $this->renewCaches();
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled');
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached');
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
+                    Core\Cache\Purge::purge([
+                        $this->appPath->getCacheDir() . 'tpl_compiled',
+                        $this->appPath->getCacheDir() . 'tpl_cached',
+                        $this->appPath->getCacheDir() . 'sql/container.php'
+                    ]);
 
                     $text = $this->translator->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
                 } else {
@@ -210,7 +215,7 @@ class Modules extends Core\Controller\AdminAction
                     $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
 
                     $this->renewCaches();
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
+                    Core\Cache\Purge::purge($this->appPath->getCacheDir() . 'sql/container.php');
 
                     $text = $this->translator->t('system',
                         'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));
@@ -259,9 +264,11 @@ class Modules extends Core\Controller\AdminAction
                     $bool2 = $this->container->get('core.modules.aclInstaller')->uninstall($moduleSchema);
 
                     $this->renewCaches();
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled');
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached');
-                    Core\Cache::purge($this->appPath->getCacheDir() . 'sql/container.php');
+                    Core\Cache\Purge::purge([
+                        $this->appPath->getCacheDir() . 'tpl_compiled',
+                        $this->appPath->getCacheDir() . 'tpl_cached',
+                        $this->appPath->getCacheDir() . 'sql/container.php'
+                    ]);
 
                     $text = $this->translator->t('system',
                         'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error'));

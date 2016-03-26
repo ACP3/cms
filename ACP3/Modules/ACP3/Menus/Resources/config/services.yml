@@ -1,62 +1,16 @@
 imports:
+  - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
+  - { resource: components/helpers.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
+  - { resource: components/overrides.yml }
   - { resource: components/validation.yml }
 
 parameters:
-  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb'
-  menus.cache.fqdn: 'ACP3\Modules\ACP3\Menus\Cache'
-  menus.helpers.menuitemslist.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList'
-  menus.helpers.managemenuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem'
-  menus.helpers.menuitemformfields.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields'
   smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar'
 
 services:
-  core.breadcrumb:
-    class: %core.breadcrumb.fqdn%
-    arguments:
-      - '@service_container'
-      - '@core.lang'
-      - '@core.request'
-      - '@core.router'
-      - '@core.config'
-      - '@menus.model.menuitemrepository'
-
-  menus.cache:
-    class: %menus.cache.fqdn%
-    arguments:
-      - '@menus.cache.core'
-      - '@core.lang'
-      - '@menus.model.menurepository'
-      - '@menus.model.menuitemrepository'
-
-  menus.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'menus'
-
-  menus.helpers.menuitemslist:
-    class: %menus.helpers.menuitemslist.fqdn%
-    arguments:
-      - '@core.helpers.forms'
-      - '@menus.cache'
-
-  menus.helpers.managemenuitem:
-    class: %menus.helpers.managemenuitem.fqdn%
-    arguments:
-      - '@core.helpers.secure'
-      - '@core.nested_set'
-      - '@menus.model.menuitemrepository'
-
-  menus.helpers.menuitemformfields:
-    class: %menus.helpers.menuitemformfields.fqdn%
-    arguments:
-      - '@core.helpers.forms'
-      - '@menus.helpers.menuitemslist'
-      - '@menus.model.menurepository'
-
   smarty.plugin.navbar:
     class: %smarty.plugin.navbar.fqdn%
     arguments:

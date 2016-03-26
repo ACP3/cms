@@ -1,0 +1,17 @@
+parameters:
+  menus.cache.fqdn: 'ACP3\Modules\ACP3\Menus\Cache'
+
+services:
+  menus.cache:
+    class: %menus.cache.fqdn%
+    arguments:
+      - '@menus.cache.core'
+      - '@core.lang'
+      - '@menus.model.menurepository'
+      - '@menus.model.menuitemrepository'
+
+  menus.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'menus'

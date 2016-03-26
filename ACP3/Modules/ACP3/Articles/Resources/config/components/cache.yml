@@ -1,0 +1,15 @@
+parameters:
+  articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
+
+services:
+  articles.cache:
+    class: %articles.cache.fqdn%
+    arguments:
+      - '@articles.cache.core'
+      - '@articles.model.articlerepository'
+
+  articles.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'articles'

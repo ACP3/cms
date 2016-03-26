@@ -1,29 +1,15 @@
 imports:
+  - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
 parameters:
-  gallery.cache.fqdn: 'ACP3\Modules\ACP3\Gallery\Cache'
   gallery.helpers.fqdn: 'ACP3\Modules\ACP3\Gallery\Helpers'
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn: 'ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer'
 
 services:
-  gallery.cache:
-    class: %gallery.cache.fqdn%
-    arguments:
-      - '@gallery.cache.core'
-      - '@core.environment.application_path'
-      - '@gallery.model.picturerepository'
-      - '@core.config'
-
-  gallery.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'gallery'
-
   gallery.helpers:
     class: %gallery.helpers.fqdn%
     arguments:

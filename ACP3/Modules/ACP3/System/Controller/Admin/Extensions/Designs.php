@@ -29,8 +29,8 @@ class Designs extends Core\Controller\AdminAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\XML $xml)
-    {
+        Core\XML $xml
+    ) {
         parent::__construct($context);
 
         $this->xml = $xml;
@@ -80,8 +80,10 @@ class Designs extends Core\Controller\AdminAction
             $bool = $this->config->setSettings(['design' => $design], 'system');
 
             // Template Cache leeren
-            Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_compiled');
-            Core\Cache::purge($this->appPath->getCacheDir() . 'tpl_cached');
+            Core\Cache\Purge::purge([
+                $this->appPath->getCacheDir() . 'tpl_compiled',
+                $this->appPath->getCacheDir() . 'tpl_cached'
+            ]);
         }
 
         $text = $this->translator->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
