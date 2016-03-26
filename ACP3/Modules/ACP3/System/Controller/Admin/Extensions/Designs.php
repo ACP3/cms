@@ -47,21 +47,8 @@ class Designs extends Core\Controller\AdminAction
             return $this->executePost($dir);
         }
 
-        $designs = [];
-        $path = ACP3_ROOT_DIR . 'designs/';
-        $directories = Core\Filesystem::scandir($path);
-        $countDir = count($directories);
-        for ($i = 0; $i < $countDir; ++$i) {
-            $designInfo = $this->xml->parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
-            if (!empty($designInfo)) {
-                $designs[$i] = $designInfo;
-                $designs[$i]['selected'] = $this->config->getSettings('system')['design'] === $directories[$i] ? 1 : 0;
-                $designs[$i]['dir'] = $directories[$i];
-            }
-        }
-
         return [
-            'designs' => $designs
+            'designs' => $this->getAvailableDesigns()
         ];
     }
 
@@ -89,5 +76,29 @@ class Designs extends Core\Controller\AdminAction
         $text = $this->translator->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableDesigns()
+    {
+        $designs = [];
+        $path = ACP3_ROOT_DIR . 'designs/';
+        $directories = Core\Filesystem::scandir($path);
+        foreach ($directories as $directory) {
+            $designInfo = $this->xml->parseXmlFile($path . $directory . '/info.xml', '/design');
+            if (!empty($designInfo)) {
+                $designs[] = array_merge(
+                    $designInfo,
+                    [
+                        'selected' => $this->config->getSettings('system')['design'] === $directory ? 1 : 0,
+                        'dir' => $directory
+                    ]
+                );
+            }
+        }
+
+        return $designs;
     }
 }
