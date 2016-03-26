@@ -52,7 +52,7 @@ class Cache extends Core\Controller\AdminAction
             case 'images':
             case 'minify':
             case 'templates':
-                $result = Core\Cache\Purge::purge($cacheTypes[$action]);
+                $result = Core\Cache\Purge::doPurge($cacheTypes[$action]);
                 $text = $this->translator->t(
                     'system',
                     $result === true

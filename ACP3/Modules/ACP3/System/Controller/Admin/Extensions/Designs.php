@@ -80,7 +80,7 @@ class Designs extends Core\Controller\AdminAction
             $bool = $this->config->setSettings(['design' => $design], 'system');
 
             // Template Cache leeren
-            Core\Cache\Purge::purge([
+            Core\Cache\Purge::doPurge([
                 $this->appPath->getCacheDir() . 'tpl_compiled',
                 $this->appPath->getCacheDir() . 'tpl_cached'
             ]);

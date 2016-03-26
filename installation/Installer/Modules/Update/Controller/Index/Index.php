@@ -128,7 +128,7 @@ class Index extends Core\Controller\AbstractInstallerAction
 
     protected function clearCaches()
     {
-        Cache\Purge::purge([
+        Cache\Purge::doPurge([
             $this->appPath->getCacheDir(),
             $this->appPath->getUploadsDir() . 'assets'
         ]);

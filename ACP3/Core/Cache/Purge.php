@@ -21,7 +21,7 @@ class Purge
      *
      * @return bool
      */
-    public static function purge($directory, $cacheId = '')
+    public static function doPurge($directory, $cacheId = '')
     {
         if (is_array($directory)) {
             return self::handleMultipleDirectories($directory, $cacheId);
@@ -49,7 +49,7 @@ class Purge
     protected static function handleMultipleDirectories(array $directory, $cacheId)
     {
         foreach ($directory as $item) {
-            static::purge($item, $cacheId);
+            static::doPurge($item, $cacheId);
         }
 
         return true;
@@ -65,7 +65,7 @@ class Purge
             $path = "$directory/$file";
 
             if (is_dir($path)) {
-                static::purge($path, $cacheId);
+                static::doPurge($path, $cacheId);
                 if (empty($cacheId)) {
                     rmdir($path);
                 }
