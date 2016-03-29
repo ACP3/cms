@@ -49,7 +49,6 @@ class PageBreaksTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->pageBreaks = new PageBreaks(
-            $this->seoMock,
             $this->requestMock,
             $this->routerMock,
             $this->tocMock
