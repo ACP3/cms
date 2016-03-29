@@ -8,3 +8,10 @@ services:
       - '@core.seo'
     tags:
       - { name: core.eventListener, event: core.application.front_controller.before_dispatch, method: onFrontControllerBeforeDispatch }
+
+  seo.events.on_custom_template_variable_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerCustomTemplateVariableListener
+    arguments:
+      - '@seo.helper.meta_statements'
+    tags:
+      - { name: core.eventListener, event: core.controller.custom_template_variable, method: onCustomTemplateVariable }

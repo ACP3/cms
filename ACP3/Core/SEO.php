@@ -42,17 +42,6 @@ class SEO
     }
 
     /**
-     * Returns the meta tags of the current page
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getMetaTags()
-    {
-        return $this->metaStatements->getMetaTags();
-    }
-
-    /**
      * Returns the SEO description of the given page
      *
      * @param string $path
@@ -76,19 +65,6 @@ class SEO
     public function getKeywords($path)
     {
         $this->metaStatements->getKeywords($path);
-    }
-
-    /**
-     * @param string $path
-     * @param string $key
-     * @param string $defaultValue
-     *
-     * @return string
-     * @deprecated
-     */
-    protected function getSeoInformation($path, $key, $defaultValue = '')
-    {
-        return $this->metaStatements->getSeoInformation($path, $key, $defaultValue);
     }
 
     /**

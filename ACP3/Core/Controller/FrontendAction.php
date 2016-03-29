@@ -104,7 +104,11 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
-        $this->view->assign('META', $this->seo->getMetaTags());
+
+        $this->eventDispatcher->dispatch(
+            'core.controller.custom_template_variable',
+            new Core\Controller\Event\CustomTemplateVariableEvent($this->view)
+        );
     }
 
     /**
