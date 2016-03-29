@@ -2,7 +2,7 @@
 
 {block CONTENT}
     {if !empty($articles)}
-        {$pagination}
+        {include file="asset:System/pagination.tpl" pagination=$pagination}
         {foreach $articles as $row}
             <div class="dataset-box">
                 <div class="navbar navbar-default">

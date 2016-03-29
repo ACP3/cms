@@ -93,10 +93,8 @@ services:
       - '@core.user'
       - '@core.breadcrumb'
       - '@core.lang'
-      - '@core.seo'
       - '@core.request'
       - '@core.router'
-      - '@core.view'
 
   core.redirect:
     class: ACP3\Core\Redirect

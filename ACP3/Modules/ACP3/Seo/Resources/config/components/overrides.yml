@@ -6,6 +6,16 @@ services:
       - '@core.environment.application_path'
       - '@seo.model.seorepository'
 
+  core.pagination:
+    class: ACP3\Modules\ACP3\Seo\Core\Pagination
+    arguments:
+      - '@core.user'
+      - '@core.breadcrumb'
+      - '@core.lang'
+      - '@core.request'
+      - '@core.router'
+      - '@seo.helper.meta_statements'
+
   core.router:
     class: ACP3\Modules\ACP3\Seo\Core\Router
     arguments:

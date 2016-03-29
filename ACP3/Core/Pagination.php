@@ -24,10 +24,6 @@ class Pagination
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
@@ -35,10 +31,6 @@ class Pagination
      * @var \ACP3\Core\RouterInterface
      */
     protected $router;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
     /**
      * @var int
      */
@@ -66,11 +58,11 @@ class Pagination
     /**
      * @var int
      */
-    private $totalPages = 1;
+    protected $totalPages = 1;
     /**
      * @var int
      */
-    private $currentPage = 1;
+    protected $currentPage = 1;
     /**
      * @var array
      */
@@ -82,27 +74,21 @@ class Pagination
      * @param \ACP3\Core\User                  $user
      * @param \ACP3\Core\Breadcrumb            $breadcrumb
      * @param \ACP3\Core\I18n\Translator       $translator
-     * @param \ACP3\Core\SEO                   $seo
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\RouterInterface       $router
-     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         User $user,
         Breadcrumb $breadcrumb,
         Translator $translator,
-        SEO $seo,
         RequestInterface $request,
-        RouterInterface $router,
-        View $view)
-    {
+        RouterInterface $router
+    ) {
         $this->user = $user;
         $this->breadcrumb = $breadcrumb;
         $this->translator = $translator;
-        $this->seo = $seo;
         $this->request = $request;
         $this->router = $router;
-        $this->view = $view;
 
         $this->resultsPerPage = $user->getEntriesPerPage();
     }
@@ -156,23 +142,19 @@ class Pagination
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function render()
     {
-        $output = '';
         if ($this->totalResults > $this->resultsPerPage) {
             $link = $this->router->route(($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages());
             $this->currentPage = (int)$this->request->getParameters()->get('page', 1);
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
-            $this->setMetaStatements($link);
+            $this->setMetaStatements();
             $range = $this->calculateRange();
 
-            // Erste Seite
             $this->showFirstPageLink($link, $range);
-
-            // Vorherige Seite
             $this->showPreviousPageLink($link);
 
             for ($i = (int)$range['start']; $i <= $range['end']; ++$i) {
@@ -184,44 +166,18 @@ class Pagination
                 );
             }
 
-            // Nächste Seite
             $this->showNextPageLink($link);
-
-            // Letzte Seite
             $this->showLastPageLink($link, $range);
-
-            $this->view->assign('pagination', $this->pagination);
-
-            $output = $this->view->fetchTemplate('system/pagination.tpl');
         }
 
-        return $output;
+        return $this->pagination;
     }
 
-    /**
-     * @param string $link
-     */
-    private function setMetaStatements($link)
+    protected function setMetaStatements()
     {
         if ($this->currentPage > 1) {
             $postfix = $this->translator->t('system', 'page_x', ['%page%' => $this->currentPage]);
             $this->breadcrumb->setTitlePostfix($postfix);
-        }
-
-        // Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
-        if ($this->request->getArea() !== AreaEnum::AREA_ADMIN) {
-            if ($this->currentPage - 1 > 0) {
-                // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-                $this->seo->setDescriptionPostfix($this->translator->t('system', 'page_x',
-                    ['%page%' => $this->currentPage]));
-                $this->seo->setPreviousPage($link . 'page_' . ($this->currentPage - 1) . '/');
-            }
-            if ($this->currentPage + 1 <= $this->totalPages) {
-                $this->seo->setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');
-            }
-            if ($this->request->getParameters()->get('page', 0) === 1) {
-                $this->seo->setCanonicalUri($link);
-            }
         }
     }
 

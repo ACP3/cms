@@ -5,7 +5,7 @@
         {lang t="users|users_found" args=['%count%' => $all_users]}
     </p>
     {if !empty($users)}
-        {$pagination}
+        {include file="asset:System/pagination.tpl" pagination=$pagination}
         <table class="table table-striped">
             <thead>
             <tr>

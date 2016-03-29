@@ -18,7 +18,7 @@
     {/if}
     {redirect_message}
     {if !empty($guestbook)}
-        {$pagination}
+        {include file="asset:System/pagination.tpl" pagination=$pagination}
         {foreach $guestbook as $row}
             <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
                 <header class="navbar navbar-default">
