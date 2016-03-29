@@ -1,17 +1,24 @@
 imports:
   - { resource: components/controllers.yml }
   - { resource: components/events.yml }
+  - { resource: components/helpers.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
   - { resource: components/overrides.yml }
   - { resource: components/validation.yml }
 
 parameters:
+  seo.core.router.aliases.fqdn: 'ACP3\Modules\ACP3\Seo\Core\Router\Aliases'
   seo.cache.fqdn: 'ACP3\Modules\ACP3\Seo\Cache'
 
 services:
   seo.cache:
-    class: %seo.cache.fqdn%
+    class: '%seo.cache.fqdn%'
     arguments:
       - '@core.cache.system'
       - '@seo.model.seorepository'
+
+  seo.core.router.aliases:
+    class: '%seo.core.router.aliases.fqdn%'
+    arguments:
+      - '@seo.cache'

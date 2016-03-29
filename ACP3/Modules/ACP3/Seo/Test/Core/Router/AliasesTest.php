@@ -4,19 +4,19 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core\Test\Router;
+namespace ACP3\Modules\ACP3\Seo\Test\Core\Router;
 
-use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Cache;
+use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 /**
  * Class AliasesTest
- * @package ACP3\Core\Test\Router
+ * @package ACP3\Modules\ACP3\Seo\Test\Core\Router
  */
 class AliasesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \ACP3\Core\Router\Aliases
+     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
      */
     private $aliases;
     /**

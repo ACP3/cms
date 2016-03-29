@@ -46,7 +46,7 @@ services:
     class: %menus.controller.admin.items.create.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@core.router.aliases'
+      - '@seo.core.router.aliases'
       - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
@@ -70,7 +70,7 @@ services:
     class: %menus.controller.admin.items.edit.fqdn%
     arguments:
       - '@core.context.admin'
-      - '@core.router.aliases'
+      - '@seo.core.router.aliases'
       - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'

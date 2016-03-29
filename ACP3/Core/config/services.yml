@@ -66,9 +66,6 @@ services:
       - '@system.model.modulerepository'
       - '@system.model.settingsrepository'
 
-  core.functions:
-    class: ACP3\Core\Functions
-
   core.image:
     class: ACP3\Core\Picture
     arguments:
@@ -110,14 +107,9 @@ services:
   core.seo:
     class: ACP3\Core\SEO
     arguments:
-      - '@core.lang'
-      - '@core.request'
-      - '@core.router.aliases'
-      - '@core.helpers.forms'
-      - '@core.helpers.secure'
-      - '@seo.cache'
-      - '@core.config'
-      - '@seo.model.seorepository'
+      - '@seo.helper.meta_statements'
+      - '@seo.helper.uri_alias_manager'
+      - '@seo.helper.meta_form_fields'
 
   core.session:
     class: ACP3\Core\Session\SessionHandler

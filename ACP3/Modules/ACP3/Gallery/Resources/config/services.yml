@@ -14,7 +14,7 @@ services:
     class: %gallery.helpers.fqdn%
     arguments:
       - '@core.environment.application_path'
-      - '@core.router.aliases'
+      - '@seo.core.router.aliases'
       - '@core.seo'
       - '@gallery.model.picturerepository'
 

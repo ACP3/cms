@@ -1,14 +1,9 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Helpers\Forms;
-use ACP3\Core\Helpers\Secure;
-use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
-use ACP3\Core\Router\Aliases;
-use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
-use ACP3\Modules\ACP3\Seo\Model\SeoRepository as seoRepository;
+use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
+use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class SEO
@@ -17,130 +12,55 @@ use ACP3\Modules\ACP3\Seo\Model\SeoRepository as seoRepository;
 class SEO
 {
     /**
-     * @var \ACP3\Core\Router\Aliases
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
      */
-    protected $aliases;
+    protected $metaStatements;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
-    protected $translator;
+    protected $uriAliasManager;
     /**
-     * @var \ACP3\Core\Http\RequestInterface
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
      */
-    protected $request;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    protected $secureHelper;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $config;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
-     */
-    protected $seoCache;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
-     */
-    protected $seoRepository;
+    protected $metaFormFields;
 
     /**
-     * @var string
-     */
-    protected $nextPage = '';
-    /**
-     * @var string
-     */
-    protected $previousPage = '';
-    /**
-     * @var string
-     */
-    protected $canonicalUrl = '';
-    /**
-     * @var null|array
-     */
-    protected $aliasesCache = null;
-    /**
-     * @var string
-     */
-    protected $metaDescriptionPostfix = '';
-
-    /**
-     * @param \ACP3\Core\I18n\Translator                 $translator
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\Router\Aliases                  $aliases
-     * @param \ACP3\Core\Helpers\Forms                   $formsHelper
-     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
-     * @param \ACP3\Core\Config                          $config
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * SEO constructor.
+     *
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements  $metaStatements
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields  $metaFormFields
      */
     public function __construct(
-        Translator $translator,
-        RequestInterface $request,
-        Aliases $aliases,
-        Forms $formsHelper,
-        Secure $secureHelper,
-        SeoCache $seoCache,
-        Config $config,
-        seoRepository $seoRepository)
-    {
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->aliases = $aliases;
-        $this->formsHelper = $formsHelper;
-        $this->secureHelper = $secureHelper;
-        $this->seoCache = $seoCache;
-        $this->config = $config;
-        $this->seoRepository = $seoRepository;
+        MetaStatements $metaStatements,
+        UriAliasManager $uriAliasManager,
+        MetaFormFields $metaFormFields
+    ) {
+        $this->metaStatements = $metaStatements;
+        $this->uriAliasManager = $uriAliasManager;
+        $this->metaFormFields = $metaFormFields;
     }
 
     /**
      * Returns the meta tags of the current page
      *
      * @return string
+     * @deprecated
      */
     public function getMetaTags()
     {
-        return [
-            'description' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? '' : $this->getPageDescription(),
-            'keywords' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? '' : $this->getPageKeywords(),
-            'robots' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
-            'previous_page' => $this->previousPage,
-            'next_page' => $this->nextPage,
-            'canonical' => $this->canonicalUrl,
-        ];
+        return $this->metaStatements->getMetaTags();
     }
 
     /**
      * Returns the SEO description of the current page
      *
      * @return string
+     * @deprecated
      */
     public function getPageDescription()
     {
-        $description = $this->getDescription($this->request->getUriWithoutPages());
-        if (empty($description)) {
-            $description = $this->getDescription($this->request->getFullPath());
-        }
-        if (empty($description)) {
-            $description = $this->getDescription($this->request->getModule());
-        }
-        if (empty($description)) {
-            $description = $this->config->getSettings('seo')['meta_description'];
-        }
-
-        $postfix = '';
-        if (!empty($description) && !empty($this->metaDescriptionPostfix)) {
-            $postfix .= ' - ' . $this->metaDescriptionPostfix;
-        }
-
-        return $description . $postfix;
+        return $this->metaStatements->getPageDescription();
     }
 
     /**
@@ -149,28 +69,22 @@ class SEO
      * @param string $path
      *
      * @return string
+     * @deprecated
      */
     public function getDescription($path)
     {
-        return $this->getSeoInformation($path, 'description');
+        $this->metaStatements->getDescription($path);
     }
 
     /**
      * Returns the SEO keywords of the current page
      *
      * @return string
+     * @deprecated
      */
     public function getPageKeywords()
     {
-        $keywords = $this->getKeywords($this->request->getUriWithoutPages());
-        if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->request->getFullPath());
-        }
-        if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->request->getModule());
-        }
-
-        return strtolower(!empty($keywords) ? $keywords : $this->config->getSettings('seo')['meta_keywords']);
+        return $this->metaStatements->getPageKeywords();
     }
 
     /**
@@ -179,10 +93,11 @@ class SEO
      * @param string $path
      *
      * @return string
+     * @deprecated
      */
     public function getKeywords($path)
     {
-        return $this->getSeoInformation($path, 'keywords');
+        $this->metaStatements->getKeywords($path);
     }
 
     /**
@@ -191,35 +106,22 @@ class SEO
      * @param string $defaultValue
      *
      * @return string
+     * @deprecated
      */
     protected function getSeoInformation($path, $key, $defaultValue = '')
     {
-        // Lazy load the cache
-        if ($this->aliasesCache === null) {
-            $this->aliasesCache = $this->seoCache->getCache();
-        }
-
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return !empty($this->aliasesCache[$path][$key]) ? $this->aliasesCache[$path][$key] : $defaultValue;
+        return $this->metaStatements->getSeoInformation($path, $key, $defaultValue);
     }
 
     /**
      * Returns the SEO robots setting for the current page
      *
      * @return string
+     * @deprecated
      */
     public function getPageRobotsSetting()
     {
-        $robots = $this->getRobotsSetting($this->request->getUriWithoutPages());
-        if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->request->getFullPath());
-        }
-        if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->request->getModule());
-        }
-
-        return strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
+        return $this->metaStatements->getPageRobotsSetting();
     }
 
     /**
@@ -228,39 +130,24 @@ class SEO
      * @param string $path
      *
      * @return string
+     * @deprecated
      */
     public function getRobotsSetting($path = '')
     {
-        $replace = [
-            1 => 'index,follow',
-            2 => 'index,nofollow',
-            3 => 'noindex,follow',
-            4 => 'noindex,nofollow',
-        ];
-
-        if ($path === '') {
-            return strtr($this->config->getSettings('seo')['robots'], $replace);
-        } else {
-            $robot = $this->getSeoInformation($path, 'robots', 0);
-
-            if ($robot == 0) {
-                $robot = $this->config->getSettings('seo')['robots'];
-            }
-
-            return strtr($robot, $replace);
-        }
+        return $this->metaStatements->getRobotsSetting($path);
     }
 
     /**
      * Sets a SEO description postfix for te current page
      *
-     * @param string $string
+     * @param string $postfix
      *
      * @return $this
+     * @deprecated
      */
-    public function setDescriptionPostfix($string)
+    public function setDescriptionPostfix($postfix)
     {
-        $this->metaDescriptionPostfix = $string;
+        $this->metaStatements->setDescriptionPostfix($postfix);
 
         return $this;
     }
@@ -271,10 +158,11 @@ class SEO
      * @param string $path
      *
      * @return $this
+     * @deprecated
      */
     public function setCanonicalUri($path)
     {
-        $this->canonicalUrl = $path;
+        $this->metaStatements->setCanonicalUri($path);
 
         return $this;
     }
@@ -285,10 +173,11 @@ class SEO
      * @param string $path
      *
      * @return $this
+     * @deprecated
      */
     public function setNextPage($path)
     {
-        $this->nextPage = $path;
+        $this->metaStatements->setNextPage($path);
 
         return $this;
     }
@@ -299,10 +188,11 @@ class SEO
      * @param string $path
      *
      * @return $this
+     * @deprecated
      */
     public function setPreviousPage($path)
     {
-        $this->previousPage = $path;
+        $this->metaStatements->setPreviousPage($path);
 
         return $this;
     }
@@ -313,35 +203,11 @@ class SEO
      * @param string $path
      *
      * @return array
+     * @deprecated
      */
     public function formFields($path = '')
     {
-        if (!empty($path)) {
-            $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-            $alias = $this->request->getPost()->get('alias', $this->aliases->getUriAlias($path, true));
-            $keywords = $this->request->getPost()->get('seo_keywords', $this->getKeywords($path));
-            $description = $this->request->getPost()->get('seo_description', $this->getDescription($path));
-            $robots = $this->getSeoInformation($path, 'robots', 0);
-        } else {
-            $alias = $keywords = $description = '';
-            $robots = 0;
-        }
-
-        $values = [
-            0 => $this->translator->t('seo', 'robots_use_system_default', ['%default%' => $this->getRobotsSetting()]),
-            1 => $this->translator->t('seo', 'robots_index_follow'),
-            2 => $this->translator->t('seo', 'robots_index_nofollow'),
-            3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow')
-        ];
-
-        return [
-            'alias' => $alias,
-            'keywords' => $keywords,
-            'description' => $description,
-            'robots' => $this->formsHelper->choicesGenerator('seo_robots', $values, $robots)
-        ];
+        return $this->metaFormFields->formFields($path);
     }
 
     /**
@@ -350,13 +216,11 @@ class SEO
      * @param string $path
      *
      * @return boolean
+     * @deprecated
      */
     public function deleteUriAlias($path)
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        $bool = $this->seoRepository->delete($path, 'uri');
-        return $bool !== false && $this->seoCache->saveCache() !== false;
+        return $this->uriAliasManager->deleteUriAlias($path);
     }
 
     /**
@@ -369,27 +233,10 @@ class SEO
      * @param int    $robots
      *
      * @return boolean
+     * @deprecated
      */
     public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-        $keywords = $this->secureHelper->strEncode($keywords);
-        $description = $this->secureHelper->strEncode($description);
-        $values = [
-            'alias' => $alias,
-            'keywords' => $keywords,
-            'description' => $description,
-            'robots' => (int)$robots
-        ];
-
-        // Update an existing result
-        if ($this->seoRepository->uriAliasExists($path) === true) {
-            $bool = $this->seoRepository->update($values, ['uri' => $path]);
-        } else {
-            $values['uri'] = $path;
-            $bool = $this->seoRepository->insert($values);
-        }
-
-        return $bool !== false && $this->seoCache->saveCache() !== false;
+        return $this->uriAliasManager->insertUriAlias($path, $alias, $keywords, $description, $robots);
     }
 }

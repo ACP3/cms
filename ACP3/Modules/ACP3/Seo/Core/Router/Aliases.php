@@ -1,12 +1,17 @@
 <?php
-namespace ACP3\Core\Router;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Seo\Core\Router;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 
 /**
  * Class Aliases
- * @package ACP3\Core\Router
+ * @package ACP3\Modules\ACP3\Seo\Core\Router
  */
 class Aliases
 {

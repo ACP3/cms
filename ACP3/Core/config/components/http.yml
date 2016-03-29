@@ -19,8 +19,3 @@ services:
       - '@core.environment.application_path'
       - '@core.config'
       - '%core.environment%'
-
-  core.router.aliases:
-    class: ACP3\Core\Router\Aliases
-    arguments:
-      - '@seo.cache'

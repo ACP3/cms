@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Menus;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Router\Aliases
+     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
      */
     protected $aliases;
     /**
@@ -56,7 +56,7 @@ class Create extends AbstractFormAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Core\Router\Aliases                                  $aliases
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases                 $aliases
      * @param \ACP3\Core\NestedSet                                       $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
@@ -68,7 +68,7 @@ class Create extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Router\Aliases $aliases,
+        \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases,
         Core\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,

@@ -19,7 +19,7 @@ class Helpers
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Router\Aliases
+     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
      */
     protected $aliases;
     /**
@@ -33,13 +33,13 @@ class Helpers
 
     /**
      * @param \ACP3\Core\Environment\ApplicationPath             $appPath
-     * @param \ACP3\Core\Router\Aliases                          $aliases
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases         $aliases
      * @param \ACP3\Core\SEO                                     $seo
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
-        Core\Router\Aliases $aliases,
+        \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases,
         Core\SEO $seo,
         PictureRepository $pictureRepository
     ) {

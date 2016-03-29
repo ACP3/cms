@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.request'
       - '@core.router'
-      - '@core.router.aliases'
+      - '@seo.core.router.aliases'
       - '@core.seo'
     tags:
       - { name: core.eventListener, event: core.application.front_controller.before_dispatch, method: onFrontControllerBeforeDispatch }

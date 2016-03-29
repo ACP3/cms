@@ -8,8 +8,8 @@ namespace ACP3\Modules\ACP3\Seo\Test\Core;
 
 
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Core\Router;
+use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 class RouterTest extends \ACP3\Core\Test\RouterTest
 {
