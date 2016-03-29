@@ -81,21 +81,6 @@ class SEO
     }
 
     /**
-     * Sets a SEO description postfix for te current page
-     *
-     * @param string $postfix
-     *
-     * @return $this
-     * @deprecated
-     */
-    public function setDescriptionPostfix($postfix)
-    {
-        $this->metaStatements->setDescriptionPostfix($postfix);
-
-        return $this;
-    }
-
-    /**
      * Sets the canonical URL for the current page
      *
      * @param string $path

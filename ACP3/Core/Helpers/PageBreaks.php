@@ -10,10 +10,6 @@ use ACP3\Core;
 class PageBreaks
 {
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
@@ -29,19 +25,16 @@ class PageBreaks
     /**
      * PageBreaks constructor.
      *
-     * @param \ACP3\Core\SEO                     $seo
      * @param \ACP3\Core\Http\RequestInterface   $request
      * @param \ACP3\Core\RouterInterface         $router
      * @param \ACP3\Core\Helpers\TableOfContents $tableOfContents
      */
     public function __construct(
-        Core\SEO $seo,
         Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
         TableOfContents $tableOfContents
     ) {
         $this->tableOfContents = $tableOfContents;
-        $this->seo = $seo;
         $this->request = $request;
         $this->router = $router;
     }
@@ -63,9 +56,6 @@ class PageBreaks
         $currentPage = $this->getCurrentPage($pages);
         $nextPage = !empty($pages[$currentPage]) ? $this->router->route($baseUrlPath) . 'page_' . ($currentPage + 1) . '/' : '';
         $previousPage = $currentPage > 1 ? $this->router->route($baseUrlPath) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
-
-        $this->seo->setNextPage($nextPage);
-        $this->seo->setPreviousPage($previousPage);
 
         return [
             'toc' => $this->tableOfContents->generateTOC($matches[0], $baseUrlPath),

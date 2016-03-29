@@ -11,9 +11,13 @@ use ACP3\Core\Application\Event\FrontControllerDispatchEvent;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\RouterInterface;
-use ACP3\Core\SEO;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
+use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
+/**
+ * Class OnFrontControllerBeforeDispatchListener
+ * @package ACP3\Modules\ACP3\Seo\Event\Listener
+ */
 class OnFrontControllerBeforeDispatchListener
 {
     /**
@@ -29,28 +33,28 @@ class OnFrontControllerBeforeDispatchListener
      */
     protected $aliases;
     /**
-     * @var \ACP3\Core\SEO
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
      */
-    protected $seo;
+    protected $metaStatements;
 
     /**
      * OnFrontControllerBeforeDispatchListener constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\RouterInterface                 $router
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
-     * @param \ACP3\Core\SEO                             $seo
+     * @param \ACP3\Core\Http\RequestInterface             $request
+     * @param \ACP3\Core\RouterInterface                   $router
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases   $aliases
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
         RequestInterface $request,
         RouterInterface $router,
         Aliases $aliases,
-        SEO $seo
+        MetaStatements $metaStatements
     ) {
         $this->request = $request;
-        $this->seo = $seo;
         $this->router = $router;
         $this->aliases = $aliases;
+        $this->metaStatements = $metaStatements;
     }
 
     /**
@@ -61,7 +65,7 @@ class OnFrontControllerBeforeDispatchListener
     public function onFrontControllerBeforeDispatch(FrontControllerDispatchEvent $event)
     {
         if ($this->isInFrontend($event) && $this->uriAliasExists()) {
-            $this->seo->setCanonicalUri($this->router->route($this->request->getQuery()));
+            $this->metaStatements->setCanonicalUri($this->router->route($this->request->getQuery()));
         }
     }
 

@@ -5,7 +5,7 @@ services:
       - '@core.request'
       - '@core.router'
       - '@seo.core.router.aliases'
-      - '@core.seo'
+      - '@seo.helper.meta_statements'
     tags:
       - { name: core.eventListener, event: core.application.front_controller.before_dispatch, method: onFrontControllerBeforeDispatch }
 

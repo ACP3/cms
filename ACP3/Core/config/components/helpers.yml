@@ -55,7 +55,6 @@ services:
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
     arguments:
-      - '@core.seo'
       - '@core.request'
       - '@core.router'
       - '@core.helpers.toc'

@@ -50,7 +50,7 @@ class Pagination extends \ACP3\Core\Pagination
     }
 
     /**
-     * @internal param string $link
+     * @inheritdoc
      */
     protected function setMetaStatements()
     {
