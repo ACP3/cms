@@ -246,8 +246,8 @@ class Modules extends Core\Controller\AdminAction
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
 
-            $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
-            $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
+            $bool = $container->get('core.modules.schemaInstaller')->install($moduleSchema);
+            $bool2 = $container->get('core.modules.aclInstaller')->install($moduleSchema);
 
             $this->renewCaches();
             $this->purgeCaches();

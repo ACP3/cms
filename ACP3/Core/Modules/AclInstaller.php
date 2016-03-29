@@ -92,7 +92,6 @@ class AclInstaller implements InstallerInterface
             }
         }
 
-        // Regeln für die Rollen setzen
         if ($mode === self::INSTALL_RESOURCES_AND_RULES) {
             $this->insertAclRules($schema->getModuleName());
         }
