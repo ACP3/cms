@@ -7,7 +7,7 @@ parameters:
 
 services:
   categories.controller.admin.index.create:
-    class: %categories.controller.admin.index.create.fqdn%
+    class: '%categories.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -17,14 +17,14 @@ services:
       - '@core.helpers.formToken'
 
   categories.controller.admin.index.delete:
-    class: %categories.controller.admin.index.delete.fqdn%
+    class: '%categories.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@categories.model'
       - '@categories.cache'
 
   categories.controller.admin.index.edit:
-    class: %categories.controller.admin.index.edit.fqdn%
+    class: '%categories.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@categories.model'
@@ -33,13 +33,13 @@ services:
       - '@core.helpers.formToken'
 
   categories.controller.admin.index.index:
-    class: %categories.controller.admin.index.index.fqdn%
+    class: '%categories.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@categories.model.data_grid_repository'
 
   categories.controller.admin.index.settings:
-    class: %categories.controller.admin.index.settings.fqdn%
+    class: '%categories.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@categories.validation.admin_settings_form_validation'

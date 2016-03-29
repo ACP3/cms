@@ -4,8 +4,8 @@ parameters:
 
 services:
   newsletter.installer.schema:
-    class: %newsletter.installer.schema.fqdn%
+    class: '%newsletter.installer.schema.fqdn%'
 
   newsletter.installer.migration:
-    class: %newsletter.installer.migration.fqdn%
+    class: '%newsletter.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

@@ -4,11 +4,11 @@ parameters:
 
 services:
   emoticons.model.data_grid_repository:
-    class: %emoticons.model.data_grid_repository.fqdn%
+    class: '%emoticons.model.data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   emoticons.model.emoticonrepository:
-    class: %emoticons.model.emoticonrepository.fqdn%
+    class: '%emoticons.model.emoticonrepository.fqdn%'
     arguments:
       - '@core.db'

@@ -10,7 +10,7 @@ parameters:
 
 services:
   system.helpers.installer:
-    class: %system.helpers.installer.fqdn%
+    class: '%system.helpers.installer.fqdn%'
     arguments:
       - '@core.environment.application_path'
       - '@core.modules'

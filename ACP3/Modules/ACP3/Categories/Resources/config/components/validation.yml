@@ -6,25 +6,25 @@ parameters:
 
 services:
   categories.validator:
-    class: %categories.validator.fqdn%
+    class: '%categories.validator.fqdn%'
     arguments:
       - '@core.lang'
       - '@core.validator'
       - '@categories.model'
 
   categories.validation.admin_settings_form_validation:
-    class: %categories.validation.admin_settings_form_validation.fqdn%
+    class: '%categories.validation.admin_settings_form_validation.fqdn%'
     parent: core.validator.abstract
 
   categories.validation.validation_rules.category_exists_validation_rule:
-    class: %categories.validation.validation_rules.category_exists_validation_rule.fqdn%
+    class: '%categories.validation.validation_rules.category_exists_validation_rule.fqdn%'
     arguments:
       - '@categories.helpers'
     tags:
       - { name: core.validation.validation_rule }
 
   categories.validation.validation_rules.duplicate_category_validation_rule:
-    class: %categories.validation.validation_rules.duplicate_category_validation_rule.fqdn%
+    class: '%categories.validation.validation_rules.duplicate_category_validation_rule.fqdn%'
     arguments:
       - '@categories.helpers'
     tags:

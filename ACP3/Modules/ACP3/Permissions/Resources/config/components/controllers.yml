@@ -11,7 +11,7 @@ parameters:
 
 services:
   permissions.controller.admin.index.create:
-    class: %permissions.controller.admin.index.create.fqdn%
+    class: '%permissions.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@permissions.model.privilegerepository'
@@ -23,14 +23,14 @@ services:
       - '@permissions.validator.role'
 
   permissions.controller.admin.index.delete:
-    class: %permissions.controller.admin.index.delete.fqdn%
+    class: '%permissions.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.nested_set'
       - '@permissions.cache'
 
   permissions.controller.admin.index.edit:
-    class: %permissions.controller.admin.index.edit.fqdn%
+    class: '%permissions.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@permissions.model.privilegerepository'
@@ -43,11 +43,11 @@ services:
       - '@permissions.validator.role'
 
   permissions.controller.admin.index.index:
-    class: %permissions.controller.admin.index.index.fqdn%
+    class: '%permissions.controller.admin.index.index.fqdn%'
     parent: core.controller.admin
 
   permissions.controller.admin.index.order:
-    class: %permissions.controller.admin.index.order.fqdn%
+    class: '%permissions.controller.admin.index.order.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.nested_set'
@@ -55,7 +55,7 @@ services:
       - '@permissions.cache'
 
   permissions.controller.admin.resources.create:
-    class: %permissions.controller.admin.resources.create.fqdn%
+    class: '%permissions.controller.admin.resources.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -66,14 +66,14 @@ services:
       - '@permissions.validator.resource'
 
   permissions.controller.admin.resources.delete:
-    class: %permissions.controller.admin.resources.delete.fqdn%
+    class: '%permissions.controller.admin.resources.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@permissions.model.resourcerepository'
       - '@permissions.cache'
 
   permissions.controller.admin.resources.edit:
-    class: %permissions.controller.admin.resources.edit.fqdn%
+    class: '%permissions.controller.admin.resources.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -84,7 +84,7 @@ services:
       - '@permissions.validator.resource'
 
   permissions.controller.admin.resources.index:
-    class: %permissions.controller.admin.resources.index.fqdn%
+    class: '%permissions.controller.admin.resources.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@permissions.model.resourcerepository'

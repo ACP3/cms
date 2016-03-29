@@ -3,7 +3,7 @@ parameters:
 
 services:
   gallery.cache:
-    class: %gallery.cache.fqdn%
+    class: '%gallery.cache.fqdn%'
     arguments:
       - '@gallery.cache.core'
       - '@core.environment.application_path'

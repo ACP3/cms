@@ -3,7 +3,7 @@ parameters:
 
 services:
   news.cache:
-    class: %news.cache.fqdn%
+    class: '%news.cache.fqdn%'
     arguments:
       - '@news.cache.core'
       - '@news.model.newsrepository'

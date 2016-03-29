@@ -4,8 +4,8 @@ parameters:
 
 services:
   contact.installer.schema:
-    class: %contact.installer.schema.fqdn%
+    class: '%contact.installer.schema.fqdn%'
 
   contact.installer.migration:
-    class: %contact.installer.migration.fqdn%
+    class: '%contact.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

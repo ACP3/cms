@@ -3,7 +3,7 @@ parameters:
 
 services:
   menus.cache:
-    class: %menus.cache.fqdn%
+    class: '%menus.cache.fqdn%'
     arguments:
       - '@menus.cache.core'
       - '@core.lang'

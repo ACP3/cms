@@ -6,7 +6,7 @@ parameters:
 
 services:
   core.wysiwyg.ckeditor:
-    class: %core.wysiwyg.ckeditor.fqdn%
+    class: '%core.wysiwyg.ckeditor.fqdn%'
     arguments:
       - '@core.modules'
       - '@core.lang'

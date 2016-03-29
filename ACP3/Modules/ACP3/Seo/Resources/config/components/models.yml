@@ -4,11 +4,11 @@ parameters:
 
 services:
   seo.model.data_grid_repository:
-    class: %seo.model.data_grid_repository.fqdn%
+    class: '%seo.model.data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   seo.model.seorepository:
-    class: %seo.model.seorepository.fqdn%
+    class: '%seo.model.seorepository.fqdn%'
     arguments:
       - '@core.db'

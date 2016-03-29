@@ -4,11 +4,11 @@ parameters:
 
 services:
   menus.model.menurepository:
-    class: %menus.model.menurepository.fqdn%
+    class: '%menus.model.menurepository.fqdn%'
     arguments:
       - '@core.db'
 
   menus.model.menuitemrepository:
-    class: %menus.model.menuitemrepository.fqdn%
+    class: '%menus.model.menuitemrepository.fqdn%'
     arguments:
       - '@core.db'

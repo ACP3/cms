@@ -4,11 +4,11 @@ parameters:
 
 services:
   guestbook.model.data_grid_repository:
-    class: %guestbook.model.data_grid_repository.fqdn%
+    class: '%guestbook.model.data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   guestbook.model.guestbookrepository:
-    class: %guestbook.model.guestbookrepository.fqdn%
+    class: '%guestbook.model.guestbookrepository.fqdn%'
     arguments:
       - '@core.db'

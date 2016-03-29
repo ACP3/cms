@@ -7,26 +7,26 @@ parameters:
 
 services:
   newsletter.model.newsletterrepository:
-    class: %newsletter.model.newsletterrepository.fqdn%
+    class: '%newsletter.model.newsletterrepository.fqdn%'
     arguments:
       - '@core.db'
 
   newsletter.model.newsletter_data_grid_repository:
-    class: %newsletter.model.newsletter_data_grid_repository.fqdn%
+    class: '%newsletter.model.newsletter_data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   newsletter.model.accountrepository:
-    class: %newsletter.model.accountrepository.fqdn%
+    class: '%newsletter.model.accountrepository.fqdn%'
     arguments:
       - '@core.db'
 
   newsletter.model.account_data_grid_repository:
-    class: %newsletter.model.account_data_grid_repository.fqdn%
+    class: '%newsletter.model.account_data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   newsletter.model.accounthistoryrepository:
-    class: %newsletter.model.accounthistoryrepository.fqdn%
+    class: '%newsletter.model.accounthistoryrepository.fqdn%'
     arguments:
       - '@core.db'

@@ -11,7 +11,7 @@ parameters:
 
 services:
   files.controller.admin.index.create:
-    class: %files.controller.admin.index.create.fqdn%
+    class: '%files.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -22,7 +22,7 @@ services:
       - '@categories.helpers'
 
   files.controller.admin.index.delete:
-    class: %files.controller.admin.index.delete.fqdn%
+    class: '%files.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@files.model.filesrepository'
@@ -31,7 +31,7 @@ services:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   files.controller.admin.index.edit:
-    class: %files.controller.admin.index.edit.fqdn%
+    class: '%files.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -43,13 +43,13 @@ services:
       - '@categories.helpers'
 
   files.controller.admin.index.index:
-    class: %files.controller.admin.index.index.fqdn%
+    class: '%files.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@files.model.data_grid_repository'
 
   files.controller.admin.index.settings:
-    class: %files.controller.admin.index.settings.fqdn%
+    class: '%files.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -59,7 +59,7 @@ services:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   files.controller.frontend.index.details:
-    class: %files.controller.frontend.index.details.fqdn%
+    class: '%files.controller.frontend.index.details.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -69,7 +69,7 @@ services:
       - '@categories.model'
 
   files.controller.frontend.index.files:
-    class: %files.controller.frontend.index.files.fqdn%
+    class: '%files.controller.frontend.index.files.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -77,13 +77,13 @@ services:
       - '@categories.model'
 
   files.controller.frontend.index.index:
-    class: %files.controller.frontend.index.index.fqdn%
+    class: '%files.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@categories.cache'
 
   files.controller.widget.index.index:
-    class: %files.controller.widget.index.index.fqdn%
+    class: '%files.controller.widget.index.index.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.date'

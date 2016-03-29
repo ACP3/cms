@@ -10,17 +10,17 @@ parameters:
 
 services:
   system.controller.admin.extensions.designs:
-    class: %system.controller.admin.extensions.designs.fqdn%
+    class: '%system.controller.admin.extensions.designs.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.xml'
 
   system.controller.admin.extensions.index:
-    class: %system.controller.admin.extensions.index.fqdn%
+    class: '%system.controller.admin.extensions.index.fqdn%'
     parent: core.controller.admin
 
   system.controller.admin.extensions.modules:
-    class: %system.controller.admin.extensions.modules.fqdn%
+    class: '%system.controller.admin.extensions.modules.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.modules.moduleInfoCache'
@@ -29,7 +29,7 @@ services:
       - '@permissions.cache'
 
   system.controller.admin.index.configuration:
-    class: %system.controller.admin.index.configuration.fqdn%
+    class: '%system.controller.admin.index.configuration.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -37,17 +37,17 @@ services:
       - '@system.validator.settings'
 
   system.controller.admin.index.index:
-    class: %system.controller.admin.index.index.fqdn%
+    class: '%system.controller.admin.index.index.fqdn%'
     parent: core.controller.admin
 
   system.controller.admin.maintenance.cache:
-    class: %system.controller.admin.maintenance.cache.fqdn%
+    class: '%system.controller.admin.maintenance.cache.fqdn%'
     parent: core.controller.admin
 
   system.controller.admin.maintenance.index:
-    class: %system.controller.admin.maintenance.index.fqdn%
+    class: '%system.controller.admin.maintenance.index.fqdn%'
     parent: core.controller.admin
 
   system.controller.admin.maintenance.update_check:
-    class: %system.controller.admin.maintenance.update_check.fqdn%
+    class: '%system.controller.admin.maintenance.update_check.fqdn%'
     parent: core.controller.admin

@@ -4,8 +4,8 @@ parameters:
 
 services:
   errors.installer.schema:
-    class: %errors.installer.schema.fqdn%
+    class: '%errors.installer.schema.fqdn%'
 
   errors.installer.migration:
-    class: %errors.installer.migration.fqdn%
+    class: '%errors.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

@@ -11,7 +11,7 @@ parameters:
 
 services:
   emoticons.helpers:
-    class: %emoticons.helpers.fqdn%
+    class: '%emoticons.helpers.fqdn%'
     arguments:
       - '@core.view'
       - '@emoticons.cache'

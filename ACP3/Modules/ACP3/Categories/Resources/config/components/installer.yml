@@ -4,7 +4,7 @@ parameters:
 
 services:
   categories.installer.schema:
-    class: %categories.installer.schema.fqdn%
+    class: '%categories.installer.schema.fqdn%'
 
   categories.installer.migration:
-    class: %categories.installer.migration.fqdn%
+    class: '%categories.installer.migration.fqdn%'

@@ -3,7 +3,7 @@ parameters:
 
 services:
   files.cache:
-    class: %files.cache.fqdn%
+    class: '%files.cache.fqdn%'
     arguments:
       - '@files.cache.core'
       - '@files.model.filesrepository'

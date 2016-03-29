@@ -5,12 +5,12 @@ parameters:
 
 services:
   news.installer.schema:
-    class: %news.installer.schema.fqdn%
+    class: '%news.installer.schema.fqdn%'
 
   news.installer.migration:
-    class: %news.installer.migration.fqdn%
+    class: '%news.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration
 
   news.installer.sampleData:
-    class: %news.installer.sampledata.fqdn%
+    class: '%news.installer.sampledata.fqdn%'
     parent: core.modules.installer.abstractSampleData

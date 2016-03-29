@@ -4,7 +4,7 @@ parameters:
 
 services:
   wysiwygckeditor.installer.schema:
-    class: %wysiwygckeditor.installer.schema.fqdn%
+    class: '%wysiwygckeditor.installer.schema.fqdn%'
 
   wysiwygckeditor.installer.migration:
-    class: %wysiwygckeditor.installer.migration.fqdn%
+    class: '%wysiwygckeditor.installer.migration.fqdn%'

@@ -5,16 +5,16 @@ parameters:
 
 services:
   gallery.model.galleryrepository:
-    class: %gallery.model.galleryrepository.fqdn%
+    class: '%gallery.model.galleryrepository.fqdn%'
     arguments:
       - '@core.db'
 
   gallery.model.gallery_data_grid_repository:
-    class: %gallery.model.gallery_data_grid_repository.fqdn%
+    class: '%gallery.model.gallery_data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   gallery.model.picturerepository:
-    class: %gallery.model.picturerepository.fqdn%
+    class: '%gallery.model.picturerepository.fqdn%'
     arguments:
       - '@core.db'

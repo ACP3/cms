@@ -5,15 +5,15 @@ parameters:
 
 services:
   seo.validator:
-    class: %seo.validator.fqdn%
+    class: '%seo.validator.fqdn%'
     parent: core.validator.abstract
 
   seo.validation.admin_settings_form_validation:
-    class: %seo.validation.admin_settings_form_validation.fqdn%
+    class: '%seo.validation.admin_settings_form_validation.fqdn%'
     parent: core.validator.abstract
 
   seo.validation.validation_rules.uri_alias_validation_rule:
-    class: %seo.validation.validation_rules.uri_alias_validation_rule.fqdn%
+    class: '%seo.validation.validation_rules.uri_alias_validation_rule.fqdn%'
     arguments:
       - '@core.environment.application_path'
       - '@core.validation.validation_rules.internal_uri_validation_rule'

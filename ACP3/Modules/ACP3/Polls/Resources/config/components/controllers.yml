@@ -10,7 +10,7 @@ parameters:
 
 services:
   polls.controller.admin.index.create:
-    class: %polls.controller.admin.index.create.fqdn%
+    class: '%polls.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -22,13 +22,13 @@ services:
       - '@polls.validator'
 
   polls.controller.admin.index.delete:
-    class: %polls.controller.admin.index.delete.fqdn%
+    class: '%polls.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@polls.model.pollrepository'
 
   polls.controller.admin.index.edit:
-    class: %polls.controller.admin.index.edit.fqdn%
+    class: '%polls.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -40,13 +40,13 @@ services:
       - '@polls.validator'
 
   polls.controller.admin.index.index:
-    class: %polls.controller.admin.index.index.fqdn%
+    class: '%polls.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@polls.model.data_grid_repository'
 
   polls.controller.frontend.index.index:
-    class: %polls.controller.frontend.index.index.fqdn%
+    class: '%polls.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -54,7 +54,7 @@ services:
       - '@polls.model.voterepository'
 
   polls.controller.frontend.index.result:
-    class: %polls.controller.frontend.index.result.fqdn%
+    class: '%polls.controller.frontend.index.result.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -62,7 +62,7 @@ services:
       - '@polls.model.answerrepository'
 
   polls.controller.frontend.index.vote:
-    class: %polls.controller.frontend.index.vote.fqdn%
+    class: '%polls.controller.frontend.index.vote.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -71,7 +71,7 @@ services:
       - '@polls.model.voterepository'
 
   polls.controller.widget.index.index:
-    class: %polls.controller.widget.index.index.fqdn%
+    class: '%polls.controller.widget.index.index.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.date'

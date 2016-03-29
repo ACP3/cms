@@ -16,7 +16,7 @@ parameters:
 
 services:
   gallery.controller.admin.index.create:
-    class: %gallery.controller.admin.index.create.fqdn%
+    class: '%gallery.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -25,7 +25,7 @@ services:
       - '@gallery.validator.gallery'
 
   gallery.controller.admin.index.delete:
-    class: %gallery.controller.admin.index.delete.fqdn%
+    class: '%gallery.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@gallery.cache'
@@ -34,7 +34,7 @@ services:
       - '@gallery.model.picturerepository'
 
   gallery.controller.admin.index.edit:
-    class: %gallery.controller.admin.index.edit.fqdn%
+    class: '%gallery.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -45,13 +45,13 @@ services:
       - '@gallery.validator.gallery'
 
   gallery.controller.admin.index.index:
-    class: %gallery.controller.admin.index.index.fqdn%
+    class: '%gallery.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@gallery.model.gallery_data_grid_repository'
 
   gallery.controller.admin.index.settings:
-    class: %gallery.controller.admin.index.settings.fqdn%
+    class: '%gallery.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -59,7 +59,7 @@ services:
       - '@gallery.validator.settings'
 
   gallery.controller.admin.pictures.create:
-    class: %gallery.controller.admin.pictures.create.fqdn%
+    class: '%gallery.controller.admin.pictures.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -71,7 +71,7 @@ services:
       - '@gallery.validator.picture'
 
   gallery.controller.admin.pictures.delete:
-    class: %gallery.controller.admin.pictures.delete.fqdn%
+    class: '%gallery.controller.admin.pictures.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@gallery.helpers'
@@ -79,7 +79,7 @@ services:
       - '@gallery.cache'
 
   gallery.controller.admin.pictures.edit:
-    class: %gallery.controller.admin.pictures.edit.fqdn%
+    class: '%gallery.controller.admin.pictures.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -90,7 +90,7 @@ services:
       - '@gallery.validator.picture'
 
   gallery.controller.admin.pictures.order:
-    class: %gallery.controller.admin.pictures.order.fqdn%
+    class: '%gallery.controller.admin.pictures.order.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.sort'
@@ -98,20 +98,20 @@ services:
       - '@gallery.cache'
 
   gallery.controller.frontend.index.details:
-    class: %gallery.controller.frontend.index.details.fqdn%
+    class: '%gallery.controller.frontend.index.details.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
       - '@gallery.model.picturerepository'
 
   gallery.controller.frontend.index.image:
-    class: %gallery.controller.frontend.index.image.fqdn%
+    class: '%gallery.controller.frontend.index.image.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@gallery.model.picturerepository'
 
   gallery.controller.frontend.index.index:
-    class: %gallery.controller.frontend.index.index.fqdn%
+    class: '%gallery.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -119,7 +119,7 @@ services:
       - '@gallery.model.galleryrepository'
 
   gallery.controller.frontend.index.pics:
-    class: %gallery.controller.frontend.index.pics.fqdn%
+    class: '%gallery.controller.frontend.index.pics.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -127,7 +127,7 @@ services:
       - '@gallery.cache'
 
   gallery.controller.widget.index.index:
-    class: %gallery.controller.widget.index.index.fqdn%
+    class: '%gallery.controller.widget.index.index.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.date'

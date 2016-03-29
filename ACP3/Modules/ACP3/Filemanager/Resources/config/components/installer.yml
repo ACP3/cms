@@ -4,7 +4,7 @@ parameters:
 
 services:
   filemanager.installer.schema:
-    class: %filemanager.installer.schema.fqdn%
+    class: '%filemanager.installer.schema.fqdn%'
 
   filemanager.installer.migration:
-    class: %filemanager.installer.migration.fqdn%
+    class: '%filemanager.installer.migration.fqdn%'

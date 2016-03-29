@@ -5,11 +5,11 @@ parameters:
 
 services:
   emoticons.installer.schema:
-    class: %emoticons.installer.schema.fqdn%
+    class: '%emoticons.installer.schema.fqdn%'
 
   emoticons.installer.migration:
-    class: %emoticons.installer.migration.fqdn%
+    class: '%emoticons.installer.migration.fqdn%'
 
   emoticons.installer.sampleData:
-    class: %emoticons.installer.sampledata.fqdn%
+    class: '%emoticons.installer.sampledata.fqdn%'
     parent: core.modules.installer.abstractSampleData

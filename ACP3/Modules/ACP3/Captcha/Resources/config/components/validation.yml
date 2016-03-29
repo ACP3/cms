@@ -3,7 +3,7 @@ parameters:
 
 services:
   captcha.validation.validation_rules.captcha_validation_rule:
-    class: %captcha.validation.validation_rules.captcha_validation_rule.fqdn%
+    class: '%captcha.validation.validation_rules.captcha_validation_rule.fqdn%'
     arguments:
       - '@core.acl'
       - '@core.request'

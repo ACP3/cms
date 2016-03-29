@@ -4,7 +4,7 @@ parameters:
 
 services:
   feeds.installer.schema:
-    class: %feeds.installer.schema.fqdn%
+    class: '%feeds.installer.schema.fqdn%'
 
   feeds.installer.migration:
-    class: %feeds.installer.migration.fqdn%
+    class: '%feeds.installer.migration.fqdn%'

@@ -10,7 +10,7 @@ parameters:
 
 services:
   categories.helpers:
-    class: %categories.helpers.fqdn%
+    class: '%categories.helpers.fqdn%'
     arguments:
       - '@core.acl'
       - '@core.lang'

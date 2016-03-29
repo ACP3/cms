@@ -3,7 +3,7 @@ parameters:
 
 services:
   articles.cache:
-    class: %articles.cache.fqdn%
+    class: '%articles.cache.fqdn%'
     arguments:
       - '@articles.cache.core'
       - '@articles.model.articlerepository'

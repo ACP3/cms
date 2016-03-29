@@ -13,14 +13,14 @@ parameters:
 
 services:
   newsletter.helper.accountstatus:
-    class: %newsletter.helper.accountstatus.fqdn%
+    class: '%newsletter.helper.accountstatus.fqdn%'
     arguments:
       - '@core.date'
       - '@newsletter.model.accountrepository'
       - '@newsletter.model.accounthistoryrepository'
 
   newsletter.helper.sendnewsletter:
-    class: %newsletter.helper.sendnewsletter.fqdn%
+    class: '%newsletter.helper.sendnewsletter.fqdn%'
     arguments:
       - '@core.mailer'
       - '@core.router'
@@ -28,7 +28,7 @@ services:
       - '@newsletter.model.newsletterrepository'
 
   newsletter.helper.subscribe:
-    class: %newsletter.helper.subscribe.fqdn%
+    class: '%newsletter.helper.subscribe.fqdn%'
     arguments:
       - '@core.date'
       - '@core.lang'
@@ -42,7 +42,7 @@ services:
       - '@newsletter.model.accountrepository'
 
   newsletter.helper.data_grid.column_renderer.account_status_column_renderer:
-    class: %newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn%
+    class: '%newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn%'
     arguments:
       - '@core.lang'
       - '@core.router'

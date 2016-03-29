@@ -3,7 +3,7 @@ parameters:
 
 services:
   categories.cache:
-    class: %categories.cache.fqdn%
+    class: '%categories.cache.fqdn%'
     arguments:
       - '@categories.cache.core'
       - '@categories.model'

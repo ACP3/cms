@@ -4,7 +4,7 @@ parameters:
 
 services:
   acp.installer.schema:
-    class: %acp.installer.schema.fqdn%
+    class: '%acp.installer.schema.fqdn%'
 
   acp.installer.migration:
-    class: %acp.installer.migration.fqdn%
+    class: '%acp.installer.migration.fqdn%'

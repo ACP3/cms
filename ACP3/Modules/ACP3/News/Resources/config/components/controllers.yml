@@ -11,7 +11,7 @@ parameters:
 
 services:
   news.controller.admin.index.create:
-    class: %news.controller.admin.index.create.fqdn%
+    class: '%news.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -24,7 +24,7 @@ services:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.delete:
-    class: %news.controller.admin.index.delete.fqdn%
+    class: '%news.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@news.model.newsrepository'
@@ -33,7 +33,7 @@ services:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.edit:
-    class: %news.controller.admin.index.edit.fqdn%
+    class: '%news.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -47,13 +47,13 @@ services:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.index:
-    class: %news.controller.admin.index.index.fqdn%
+    class: '%news.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@news.model.data_grid_repository'
 
   news.controller.admin.index.settings:
-    class: %news.controller.admin.index.settings.fqdn%
+    class: '%news.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -63,7 +63,7 @@ services:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.frontend.index.details:
-    class: %news.controller.frontend.index.details.fqdn%
+    class: '%news.controller.frontend.index.details.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -71,7 +71,7 @@ services:
       - '@news.cache'
 
   news.controller.frontend.index.index:
-    class: %news.controller.frontend.index.index.fqdn%
+    class: '%news.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -82,14 +82,14 @@ services:
       - '@categories.model'
 
   news.controller.widget.index.index:
-    class: %news.controller.widget.index.index.fqdn%
+    class: '%news.controller.widget.index.index.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.date'
       - '@news.model.newsrepository'
 
   news.controller.widget.index.latest:
-    class: %news.controller.widget.index.latest.fqdn%
+    class: '%news.controller.widget.index.latest.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.date'

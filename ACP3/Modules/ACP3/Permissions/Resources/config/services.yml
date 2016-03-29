@@ -10,7 +10,7 @@ parameters:
 
 services:
   permissions.cache:
-    class: %permissions.cache.fqdn%
+    class: '%permissions.cache.fqdn%'
     arguments:
       - '@core.cache.system'
       - '@permissions.model.rolerepository'
@@ -18,7 +18,7 @@ services:
       - '@permissions.model.rulerepository'
 
   permissions.helpers:
-    class: %permissions.helpers.fqdn%
+    class: '%permissions.helpers.fqdn%'
     arguments:
       - '@permissions.model.rolerepository'
       - '@permissions.model.userrolerepository'

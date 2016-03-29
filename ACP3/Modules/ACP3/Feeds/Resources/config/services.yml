@@ -8,7 +8,7 @@ parameters:
 
 services:
   feeds.helper.feedgenerator:
-    class: %feeds.helper.feedgenerator.fqdn%
+    class: '%feeds.helper.feedgenerator.fqdn%'
     arguments:
       - '@core.config'
       - '@core.router'

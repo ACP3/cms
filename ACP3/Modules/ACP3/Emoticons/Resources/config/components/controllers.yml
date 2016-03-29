@@ -7,7 +7,7 @@ parameters:
 
 services:
   emoticons.controller.admin.index.create:
-    class: %emoticons.controller.admin.index.create.fqdn%
+    class: '%emoticons.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -16,14 +16,14 @@ services:
       - '@emoticons.cache'
 
   emoticons.controller.admin.index.delete:
-    class: %emoticons.controller.admin.index.delete.fqdn%
+    class: '%emoticons.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@emoticons.model.emoticonrepository'
       - '@emoticons.cache'
 
   emoticons.controller.admin.index.edit:
-    class: %emoticons.controller.admin.index.edit.fqdn%
+    class: '%emoticons.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -32,13 +32,13 @@ services:
       - '@emoticons.cache'
 
   emoticons.controller.admin.index.index:
-    class: %emoticons.controller.admin.index.index.fqdn%
+    class: '%emoticons.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@emoticons.model.data_grid_repository'
 
   emoticons.controller.admin.index.settings:
-    class: %emoticons.controller.admin.index.settings.fqdn%
+    class: '%emoticons.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'

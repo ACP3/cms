@@ -4,8 +4,8 @@ parameters:
 
 services:
   users.installer.schema:
-    class: %users.installer.schema.fqdn%
+    class: '%users.installer.schema.fqdn%'
 
   users.installer.migration:
-    class: %users.installer.migration.fqdn%
+    class: '%users.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

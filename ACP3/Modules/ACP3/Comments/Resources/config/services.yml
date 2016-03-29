@@ -9,12 +9,12 @@ parameters:
 
 services:
   comments.helpers:
-    class: %comments.helpers.fqdn%
+    class: '%comments.helpers.fqdn%'
     arguments:
       - '@core.modules'
       - '@comments.model.commentrepository'
 
   comments.model.commentrepository:
-    class: %comments.model.commentrepository.fqdn%
+    class: '%comments.model.commentrepository.fqdn%'
     arguments:
       - '@core.db'

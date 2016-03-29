@@ -3,7 +3,7 @@ parameters:
 
 services:
   emoticons.cache:
-    class: %emoticons.cache.fqdn%
+    class: '%emoticons.cache.fqdn%'
     arguments:
       - '@emoticons.cache.core'
       - '@core.environment.application_path'

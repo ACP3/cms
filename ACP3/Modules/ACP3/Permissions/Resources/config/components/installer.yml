@@ -4,7 +4,7 @@ parameters:
 
 services:
   permissions.installer.schema:
-    class: %permissions.installer.schema.fqdn%
+    class: '%permissions.installer.schema.fqdn%'
 
   permissions.installer.migration:
-    class: %permissions.installer.migration.fqdn%
+    class: '%permissions.installer.migration.fqdn%'

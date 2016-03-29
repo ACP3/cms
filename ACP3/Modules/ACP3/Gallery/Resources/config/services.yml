@@ -11,15 +11,16 @@ parameters:
 
 services:
   gallery.helpers:
-    class: %gallery.helpers.fqdn%
+    class: '%gallery.helpers.fqdn%'
     arguments:
       - '@core.environment.application_path'
       - '@seo.core.router.aliases'
-      - '@core.seo'
       - '@gallery.model.picturerepository'
+      - '@seo.helper.meta_statements'
+      - '@seo.helper.uri_alias_manager'
 
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer:
-    class: %gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn%
+    class: '%gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn%'
     arguments:
       - '@core.lang'
       - '@core.router'

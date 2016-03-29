@@ -5,11 +5,11 @@ parameters:
 
 services:
   menus.installer.schema:
-    class: %menus.installer.schema.fqdn%
+    class: '%menus.installer.schema.fqdn%'
 
   menus.installer.migration:
-    class: %menus.installer.migration.fqdn%
+    class: '%menus.installer.migration.fqdn%'
 
   menus.installer.sampleData:
-    class: %menus.installer.sampledata.fqdn%
+    class: '%menus.installer.sampledata.fqdn%'
     parent: core.modules.installer.abstractSampleData

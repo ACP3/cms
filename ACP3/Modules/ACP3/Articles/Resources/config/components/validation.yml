@@ -4,14 +4,14 @@ parameters:
 
 services:
   articles.validator:
-    class: %articles.validator.fqdn%
+    class: '%articles.validator.fqdn%'
     arguments:
       - '@core.lang'
       - '@core.validator'
       - '@core.acl'
 
   articles.validation.validation_rules.article_exists_validation_rule:
-    class: %articles.validation.validation_rules.article_exists_validation_rule.fqdn%
+    class: '%articles.validation.validation_rules.article_exists_validation_rule.fqdn%'
     arguments:
        - '@articles.model.articlerepository'
     tags:

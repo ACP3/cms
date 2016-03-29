@@ -4,7 +4,7 @@ parameters:
 
 services:
   seo.installer.schema:
-    class: %seo.installer.schema.fqdn%
+    class: '%seo.installer.schema.fqdn%'
 
   seo.installer.migration:
-    class: %seo.installer.migration.fqdn%
+    class: '%seo.installer.migration.fqdn%'

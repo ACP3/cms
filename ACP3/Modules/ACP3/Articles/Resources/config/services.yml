@@ -11,7 +11,7 @@ parameters:
 
 services:
   articles.helpers:
-    class: %articles.helpers.fqdn%
+    class: '%articles.helpers.fqdn%'
     arguments:
       - '@core.helpers.forms'
       - '@articles.model.articlerepository'

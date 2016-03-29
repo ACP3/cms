@@ -8,13 +8,13 @@ parameters:
 
 services:
   guestbook.controller.admin.index.delete:
-    class: %guestbook.controller.admin.index.delete.fqdn%
+    class: '%guestbook.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@guestbook.model.guestbookrepository'
 
   guestbook.controller.admin.index.edit:
-    class: %guestbook.controller.admin.index.edit.fqdn%
+    class: '%guestbook.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -25,13 +25,13 @@ services:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   guestbook.controller.admin.index.index:
-    class: %guestbook.controller.admin.index.index.fqdn%
+    class: '%guestbook.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@guestbook.model.data_grid_repository'
 
   guestbook.controller.admin.index.settings:
-    class: %guestbook.controller.admin.index.settings.fqdn%
+    class: '%guestbook.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -39,7 +39,7 @@ services:
       - '@guestbook.validation.admin_settings_form_validation'
 
   guestbook.controller.frontend.index.create:
-    class: %guestbook.controller.frontend.index.create.fqdn%
+    class: '%guestbook.controller.frontend.index.create.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -52,7 +52,7 @@ services:
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
 
   guestbook.controller.frontend.index.index:
-    class: %guestbook.controller.frontend.index.index.fqdn%
+    class: '%guestbook.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.pagination'

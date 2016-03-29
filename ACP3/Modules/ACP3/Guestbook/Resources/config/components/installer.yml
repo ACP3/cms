@@ -4,8 +4,8 @@ parameters:
 
 services:
   guestbook.installer.schema:
-    class: %guestbook.installer.schema.fqdn%
+    class: '%guestbook.installer.schema.fqdn%'
 
   guestbook.installer.migration:
-    class: %guestbook.installer.migration.fqdn%
+    class: '%guestbook.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

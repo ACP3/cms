@@ -4,11 +4,11 @@ parameters:
 
 services:
   system.model.modulerepository:
-    class: %system.model.modulerepository.fqdn%
+    class: '%system.model.modulerepository.fqdn%'
     arguments:
       - '@core.db'
 
   system.model.settingsrepository:
-    class: %system.model.settingsrepository.fqdn%
+    class: '%system.model.settingsrepository.fqdn%'
     arguments:
       - '@core.db'

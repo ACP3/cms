@@ -5,15 +5,15 @@ parameters:
 
 services:
   gallery.validator.gallery:
-    class: %gallery.validator.gallery.fqdn%
+    class: '%gallery.validator.gallery.fqdn%'
     parent: core.validator.abstract
 
   gallery.validator.picture:
-    class: %gallery.validator.picture.fqdn%
+    class: '%gallery.validator.picture.fqdn%'
     parent: core.validator.abstract
 
   gallery.validator.settings:
-    class: %gallery.validator.settings.fqdn%
+    class: '%gallery.validator.settings.fqdn%'
     arguments:
       - '@core.lang'
       - '@core.validator'

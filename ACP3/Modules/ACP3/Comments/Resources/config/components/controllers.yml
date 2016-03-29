@@ -10,13 +10,13 @@ parameters:
 
 services:
   comments.controller.admin.details.delete:
-    class: %comments.controller.admin.details.delete.fqdn%
+    class: '%comments.controller.admin.details.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.details.edit:
-    class: %comments.controller.admin.details.edit.fqdn%
+    class: '%comments.controller.admin.details.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@comments.model.commentrepository'
@@ -27,26 +27,26 @@ services:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.admin.details.index:
-    class: %comments.controller.admin.details.index.fqdn%
+    class: '%comments.controller.admin.details.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@comments.model.commentrepository'
       - '@system.model.modulerepository'
 
   comments.controller.admin.index.delete:
-    class: %comments.controller.admin.index.delete.fqdn%
+    class: '%comments.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.index.index:
-    class: %comments.controller.admin.index.index.fqdn%
+    class: '%comments.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.index.settings:
-    class: %comments.controller.admin.index.settings.fqdn%
+    class: '%comments.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -54,7 +54,7 @@ services:
       - '@core.helpers.formToken'
 
   comments.controller.frontend.index.create:
-    class: %comments.controller.frontend.index.create.fqdn%
+    class: '%comments.controller.frontend.index.create.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -65,7 +65,7 @@ services:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.frontend.index.index:
-    class: %comments.controller.frontend.index.index.fqdn%
+    class: '%comments.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.pagination'

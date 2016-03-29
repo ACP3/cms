@@ -3,5 +3,5 @@ parameters:
 
 services:
   feeds.validator:
-    class: %feeds.validator.fqdn%
+    class: '%feeds.validator.fqdn%'
     parent: core.validator.abstract

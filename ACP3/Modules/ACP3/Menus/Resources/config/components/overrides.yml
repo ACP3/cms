@@ -3,7 +3,7 @@ parameters:
 
 services:
   core.breadcrumb:
-    class: %core.breadcrumb.fqdn%
+    class: '%core.breadcrumb.fqdn%'
     arguments:
       - '@service_container'
       - '@core.lang'

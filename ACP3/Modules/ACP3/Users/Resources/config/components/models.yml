@@ -4,11 +4,11 @@ parameters:
 
 services:
   users.model.data_grid_repository:
-    class: %users.model.data_grid_repository.fqdn%
+    class: '%users.model.data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   users.model.userrepository:
-    class: %users.model.userrepository.fqdn%
+    class: '%users.model.userrepository.fqdn%'
     arguments:
       - '@core.db'

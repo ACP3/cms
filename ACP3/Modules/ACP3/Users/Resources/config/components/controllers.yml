@@ -18,7 +18,7 @@ parameters:
 
 services:
   users.controller.admin.index.create:
-    class: %users.controller.admin.index.create.fqdn%
+    class: '%users.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -30,13 +30,13 @@ services:
       - '@permissions.helpers'
 
   users.controller.admin.index.delete:
-    class: %users.controller.admin.index.delete.fqdn%
+    class: '%users.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@users.model.userrepository'
 
   users.controller.admin.index.edit:
-    class: %users.controller.admin.index.edit.fqdn%
+    class: '%users.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -47,13 +47,13 @@ services:
       - '@permissions.helpers'
 
   users.controller.admin.index.index:
-    class: %users.controller.admin.index.index.fqdn%
+    class: '%users.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@users.model.data_grid_repository'
 
   users.controller.admin.index.settings:
-    class: %users.controller.admin.index.settings.fqdn%
+    class: '%users.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -61,7 +61,7 @@ services:
       - '@users.validation.admin_settings_form_validation'
 
   users.controller.frontend.account.edit:
-    class: %users.controller.frontend.account.edit.fqdn%
+    class: '%users.controller.frontend.account.edit.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
@@ -70,13 +70,13 @@ services:
       - '@users.validator.account'
 
   users.controller.frontend.account.index:
-    class: %users.controller.frontend.account.index.fqdn%
+    class: '%users.controller.frontend.account.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@users.model.userrepository'
 
   users.controller.frontend.account.settings:
-    class: %users.controller.frontend.account.settings.fqdn%
+    class: '%users.controller.frontend.account.settings.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
@@ -84,7 +84,7 @@ services:
       - '@users.validation.account_settings_form_validation'
 
   users.controller.frontend.index.forgot_pwd:
-    class: %users.controller.frontend.index.forgot_pwd.fqdn%
+    class: '%users.controller.frontend.index.forgot_pwd.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
@@ -94,22 +94,22 @@ services:
       - '@core.helpers.sendEmail'
 
   users.controller.frontend.index.index:
-    class: %users.controller.frontend.index.index.fqdn%
+    class: '%users.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.pagination'
       - '@users.model.userrepository'
 
   users.controller.frontend.index.login:
-    class: %users.controller.frontend.index.login.fqdn%
+    class: '%users.controller.frontend.index.login.fqdn%'
     parent: core.controller.frontend
 
   users.controller.frontend.index.logout:
-    class: %users.controller.frontend.index.logout.fqdn%
+    class: '%users.controller.frontend.index.logout.fqdn%'
     parent: core.controller.frontend
 
   users.controller.frontend.index.register:
-    class: %users.controller.frontend.index.register.fqdn%
+    class: '%users.controller.frontend.index.register.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -121,15 +121,15 @@ services:
       - '@core.helpers.sendEmail'
 
   users.controller.frontend.index.view_profile:
-    class: %users.controller.frontend.index.view_profile.fqdn%
+    class: '%users.controller.frontend.index.view_profile.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@users.model.userrepository'
 
   users.controller.widget.index.login:
-    class: %users.controller.widget.index.login.fqdn%
+    class: '%users.controller.widget.index.login.fqdn%'
     parent: core.controller.widget
 
   users.controller.widget.index.user_menu:
-    class: %users.controller.widget.index.user_menu.fqdn%
+    class: '%users.controller.widget.index.user_menu.fqdn%'
     parent: core.controller.widget

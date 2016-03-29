@@ -4,6 +4,9 @@ namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery\Model\PictureRepository;
+use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
+use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Helpers
@@ -23,30 +26,39 @@ class Helpers
      */
     protected $aliases;
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
     protected $pictureRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     */
+    protected $metaStatements;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
+     * Helpers constructor.
+     *
      * @param \ACP3\Core\Environment\ApplicationPath             $appPath
      * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases         $aliases
-     * @param \ACP3\Core\SEO                                     $seo
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements       $metaStatements
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager      $uriAliasManager
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
-        \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases,
-        Core\SEO $seo,
-        PictureRepository $pictureRepository
+        Aliases $aliases,
+        PictureRepository $pictureRepository,
+        MetaStatements $metaStatements,
+        UriAliasManager $uriAliasManager
     ) {
         $this->appPath = $appPath;
         $this->aliases = $aliases;
-        $this->seo = $seo;
         $this->pictureRepository = $pictureRepository;
+        $this->metaStatements = $metaStatements;
+        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -63,10 +75,10 @@ class Helpers
         if (!empty($alias)) {
             $alias .= '/img-' . $pictureId;
         }
-        $seoKeywords = $this->seo->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
-        $seoDescription = $this->seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
+        $seoKeywords = $this->metaStatements->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
+        $seoDescription = $this->metaStatements->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
-        return $this->seo->insertUriAlias(
+        return $this->uriAliasManager->insertUriAlias(
             sprintf(self::URL_KEY_PATTERN_PICTURE, $pictureId),
             $alias,
             $seoKeywords,
@@ -90,11 +102,11 @@ class Helpers
         if (!empty($alias)) {
             $alias .= '/img';
         }
-        $seoKeywords = $this->seo->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
-        $seoDescription = $this->seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
+        $seoKeywords = $this->metaStatements->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
+        $seoDescription = $this->metaStatements->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
         for ($i = 0; $i < $cPictures; ++$i) {
-            $this->seo->insertUriAlias(
+            $this->uriAliasManager->insertUriAlias(
                 sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']),
                 !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '',
                 $seoKeywords,
@@ -119,7 +131,7 @@ class Helpers
         $cPictures = count($pictures);
 
         for ($i = 0; $i < $cPictures; ++$i) {
-            $this->seo->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
+            $this->uriAliasManager->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
         }
 
         return true;

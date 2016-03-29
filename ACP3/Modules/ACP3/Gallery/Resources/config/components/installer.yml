@@ -4,8 +4,8 @@ parameters:
 
 services:
   gallery.installer.schema:
-    class: %gallery.installer.schema.fqdn%
+    class: '%gallery.installer.schema.fqdn%'
 
   gallery.installer.migration:
-    class: %gallery.installer.migration.fqdn%
+    class: '%gallery.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

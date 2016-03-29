@@ -17,25 +17,25 @@ parameters:
 
 services:
   newsletter.controller.admin.accounts.activate:
-    class: %newsletter.controller.admin.accounts.activate.fqdn%
+    class: '%newsletter.controller.admin.accounts.activate.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@newsletter.helper.accountstatus'
 
   newsletter.controller.admin.accounts.delete:
-    class: %newsletter.controller.admin.accounts.delete.fqdn%
+    class: '%newsletter.controller.admin.accounts.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@newsletter.helper.accountstatus'
 
   newsletter.controller.admin.accounts.index:
-    class: %newsletter.controller.admin.accounts.index.fqdn%
+    class: '%newsletter.controller.admin.accounts.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@newsletter.model.account_data_grid_repository'
 
   newsletter.controller.admin.index.create:
-    class: %newsletter.controller.admin.index.create.fqdn%
+    class: '%newsletter.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -46,13 +46,13 @@ services:
       - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.delete:
-    class: %newsletter.controller.admin.index.delete.fqdn%
+    class: '%newsletter.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@newsletter.model.newsletterrepository'
 
   newsletter.controller.admin.index.edit:
-    class: %newsletter.controller.admin.index.edit.fqdn%
+    class: '%newsletter.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -63,13 +63,13 @@ services:
       - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.index:
-    class: %newsletter.controller.admin.index.index.fqdn%
+    class: '%newsletter.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@newsletter.model.newsletter_data_grid_repository'
 
   newsletter.controller.admin.index.send:
-    class: %newsletter.controller.admin.index.send.fqdn%
+    class: '%newsletter.controller.admin.index.send.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@newsletter.model.newsletterrepository'
@@ -77,7 +77,7 @@ services:
       - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.settings:
-    class: %newsletter.controller.admin.index.settings.fqdn%
+    class: '%newsletter.controller.admin.index.settings.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -86,27 +86,27 @@ services:
       - '@newsletter.validation.admin_settings_form_validation'
 
   newsletter.controller.frontend.archive.details:
-    class: %newsletter.controller.frontend.archive.details.fqdn%
+    class: '%newsletter.controller.frontend.archive.details.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@newsletter.model.newsletterrepository'
 
   newsletter.controller.frontend.archive.index:
-    class: %newsletter.controller.frontend.archive.index.fqdn%
+    class: '%newsletter.controller.frontend.archive.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.pagination'
       - '@newsletter.model.newsletterrepository'
 
   newsletter.controller.frontend.index.activate:
-    class: %newsletter.controller.frontend.index.activate.fqdn%
+    class: '%newsletter.controller.frontend.index.activate.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.activate_account_form_validation'
 
   newsletter.controller.frontend.index.index:
-    class: %newsletter.controller.frontend.index.index.fqdn%
+    class: '%newsletter.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.forms'
@@ -115,7 +115,7 @@ services:
       - '@newsletter.validation.subscribe_form_validation'
 
   newsletter.controller.frontend.index.unsubscribe:
-    class: %newsletter.controller.frontend.index.unsubscribe.fqdn%
+    class: '%newsletter.controller.frontend.index.unsubscribe.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
@@ -123,7 +123,7 @@ services:
       - '@newsletter.validation.unsubscribe_form_validation'
 
   newsletter.controller.widget.index.index:
-    class: %newsletter.controller.widget.index.index.fqdn%
+    class: '%newsletter.controller.widget.index.index.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.helpers.formToken'

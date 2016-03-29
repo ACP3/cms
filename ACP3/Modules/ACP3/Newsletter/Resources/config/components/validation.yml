@@ -9,34 +9,34 @@ parameters:
 
 services:
   newsletter.validator:
-    class: %newsletter.validator.fqdn%
+    class: '%newsletter.validator.fqdn%'
     parent: core.validator.abstract
 
   newsletter.validation.activate_account_form_validation:
-    class: %newsletter.validation.activate_account_form_validation.fqdn%
+    class: '%newsletter.validation.activate_account_form_validation.fqdn%'
     parent: core.validator.abstract
 
   newsletter.validation.admin_settings_form_validation:
-    class: %newsletter.validation.admin_settings_form_validation.fqdn%
+    class: '%newsletter.validation.admin_settings_form_validation.fqdn%'
     parent: core.validator.abstract
 
   newsletter.validation.subscribe_form_validation:
-    class: %newsletter.validation.subscribe_form_validation.fqdn%
+    class: '%newsletter.validation.subscribe_form_validation.fqdn%'
     parent: core.validator.abstract
 
   newsletter.validation.unsubscribe_form_validation:
-    class: %newsletter.validation.unsubscribe_form_validation.fqdn%
+    class: '%newsletter.validation.unsubscribe_form_validation.fqdn%'
     parent: core.validator.abstract
 
   newsletter.validation.validation_rules.account_exists_validation_rule:
-    class: %newsletter.validation.validation_rules.account_exists_validation_rule.fqdn%
+    class: '%newsletter.validation.validation_rules.account_exists_validation_rule.fqdn%'
     arguments:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
-    class: %newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn%
+    class: '%newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn%'
     arguments:
       - '@newsletter.model.accountrepository'
     tags:

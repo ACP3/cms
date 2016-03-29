@@ -53,17 +53,6 @@ class SEO
     }
 
     /**
-     * Returns the SEO description of the current page
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getPageDescription()
-    {
-        return $this->metaStatements->getPageDescription();
-    }
-
-    /**
      * Returns the SEO description of the given page
      *
      * @param string $path
@@ -74,17 +63,6 @@ class SEO
     public function getDescription($path)
     {
         $this->metaStatements->getDescription($path);
-    }
-
-    /**
-     * Returns the SEO keywords of the current page
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getPageKeywords()
-    {
-        return $this->metaStatements->getPageKeywords();
     }
 
     /**
@@ -111,17 +89,6 @@ class SEO
     protected function getSeoInformation($path, $key, $defaultValue = '')
     {
         return $this->metaStatements->getSeoInformation($path, $key, $defaultValue);
-    }
-
-    /**
-     * Returns the SEO robots setting for the current page
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getPageRobotsSetting()
-    {
-        return $this->metaStatements->getPageRobotsSetting();
     }
 
     /**

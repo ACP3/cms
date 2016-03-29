@@ -4,7 +4,7 @@ parameters:
 
 services:
   search.controller.frontend.index.index:
-    class: %search.controller.frontend.index.index.fqdn%
+    class: '%search.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.forms'
@@ -12,7 +12,7 @@ services:
       - '@search.validator'
 
   search.controller.widget.index.index:
-    class: %search.controller.widget.index.index.fqdn%
+    class: '%search.controller.widget.index.index.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@search.helpers'

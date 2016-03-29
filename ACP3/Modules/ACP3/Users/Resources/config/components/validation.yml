@@ -11,44 +11,44 @@ parameters:
 
 services:
   users.validator.account:
-    class: %users.validator.account.fqdn%
+    class: '%users.validator.account.fqdn%'
     parent: core.validator.abstract
 
   users.validation.account_forgot_password_form_validation:
-    class: %users.validation.account_forgot_password_form_validation.fqdn%
+    class: '%users.validation.account_forgot_password_form_validation.fqdn%'
     parent: core.validator.abstract
 
   users.validation.account_settings_form_validation:
-    class: %users.validation.account_settings_form_validation.fqdn%
+    class: '%users.validation.account_settings_form_validation.fqdn%'
     parent: core.validator.abstract
 
   users.validation.admin_settings_form_validation:
-    class: %users.validation.admin_settings_form_validation.fqdn%
+    class: '%users.validation.admin_settings_form_validation.fqdn%'
     parent: core.validator.abstract
 
   users.validator.admin:
-    class: %users.validator.admin.fqdn%
+    class: '%users.validator.admin.fqdn%'
     parent: core.validator.abstract
 
   users.validator.register:
-    class: %users.validator.register.fqdn%
+    class: '%users.validator.register.fqdn%'
     parent: core.validator.abstract
 
   users.validation.validation_rules.account_not_exists_by_email_validation_rule:
-    class: %users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn%
+    class: '%users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn%'
     arguments:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   users.validation.validation_rules.account_not_exists_by_name_validation_rule:
-    class: %users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn%
+    class: '%users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn%'
     arguments:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   users.validation.validation_rules.icq_number_validation_rule:
-    class: %users.validation.validation_rules.icq_number_validation_rule.fqdn%
+    class: '%users.validation.validation_rules.icq_number_validation_rule.fqdn%'
     tags:
       - { name: core.validation.validation_rule }

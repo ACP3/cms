@@ -4,11 +4,11 @@ parameters:
 
 services:
   categories.model:
-    class: %categories.model.categoryrepository.fqdn%
+    class: '%categories.model.categoryrepository.fqdn%'
     arguments:
       - '@core.db'
 
   categories.model.data_grid_repository:
-    class: %categories.model.data_grid_repository.fqdn%
+    class: '%categories.model.data_grid_repository.fqdn%'
     arguments:
       - '@core.db'

@@ -6,7 +6,7 @@ parameters:
 
 services:
   core.wysiwyg.tinymce:
-    class: %core.wysiwyg.tinymce.fqdn%
+    class: '%core.wysiwyg.tinymce.fqdn%'
     arguments:
       - '@core.assets.minifier.css'
       - '@core.lang'

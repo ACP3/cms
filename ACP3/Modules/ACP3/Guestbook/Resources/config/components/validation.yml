@@ -6,22 +6,22 @@ parameters:
 
 services:
   guestbook.validator:
-    class: %guestbook.validator.fqdn%
+    class: '%guestbook.validator.fqdn%'
     parent: core.validator.abstract
 
   guestbook.validation.admin_form_validation:
-    class: %guestbook.validation.admin_form_validation.fqdn%
+    class: '%guestbook.validation.admin_form_validation.fqdn%'
     parent: core.validator.abstract
 
   guestbook.validation.admin_settings_form_validation:
-    class: %guestbook.validation.admin_settings_form_validation.fqdn%
+    class: '%guestbook.validation.admin_settings_form_validation.fqdn%'
     arguments:
       - '@core.lang'
       - '@core.validator'
       - '@core.modules'
 
   guestbook.validation.validation_rules.flood_barrier_validation_rule:
-    class: %guestbook.validation.validation_rules.flood_barrier_validation_rule.fqdn%
+    class: '%guestbook.validation.validation_rules.flood_barrier_validation_rule.fqdn%'
     arguments:
       - '@core.date'
       - '@guestbook.model.guestbookrepository'

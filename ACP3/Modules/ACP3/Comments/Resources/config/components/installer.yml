@@ -4,7 +4,7 @@ parameters:
 
 services:
   comments.installer.schema:
-    class: %comments.installer.schema.fqdn%
+    class: '%comments.installer.schema.fqdn%'
 
   comments.installer.migration:
-    class: %comments.installer.migration.fqdn%
+    class: '%comments.installer.migration.fqdn%'

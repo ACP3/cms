@@ -4,8 +4,8 @@ parameters:
 
 services:
   polls.installer.schema:
-    class: %polls.installer.schema.fqdn%
+    class: '%polls.installer.schema.fqdn%'
 
   polls.installer.migration:
-    class: %polls.installer.migration.fqdn%
+    class: '%polls.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

@@ -4,7 +4,7 @@ parameters:
 
 services:
   captcha.installer.schema:
-    class: %captcha.installer.schema.fqdn%
+    class: '%captcha.installer.schema.fqdn%'
 
   captcha.installer.migration:
-    class: %captcha.installer.migration.fqdn%
+    class: '%captcha.installer.migration.fqdn%'

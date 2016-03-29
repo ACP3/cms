@@ -8,7 +8,7 @@ parameters:
 
 services:
   search.helpers:
-    class: %search.helpers.fqdn%
+    class: '%search.helpers.fqdn%'
     arguments:
       - '@core.acl'
       - '@core.modules'

@@ -6,6 +6,6 @@ parameters:
 
 services:
   filemanager.helpers:
-    class: %filemanager.helpers.fqdn%
+    class: '%filemanager.helpers.fqdn%'
     arguments:
       - '@core.environment.application_path'

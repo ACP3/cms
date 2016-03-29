@@ -4,7 +4,7 @@ parameters:
 
 services:
   wysiwygtinymce.installer.schema:
-    class: %wysiwygtinymce.installer.schema.fqdn%
+    class: '%wysiwygtinymce.installer.schema.fqdn%'
 
   wysiwygtinymce.installer.migration:
-    class: %wysiwygtinymce.installer.migration.fqdn%
+    class: '%wysiwygtinymce.installer.migration.fqdn%'

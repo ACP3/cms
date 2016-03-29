@@ -4,9 +4,9 @@ parameters:
 
 services:
   contact.validator:
-    class: %contact.validator.fqdn%
+    class: '%contact.validator.fqdn%'
     parent: core.validator.abstract
 
   contact.validation.admin_settings_form_validation:
-    class: %contact.validation.admin_settings_form_validation.fqdn%
+    class: '%contact.validation.admin_settings_form_validation.fqdn%'
     parent: core.validator.abstract

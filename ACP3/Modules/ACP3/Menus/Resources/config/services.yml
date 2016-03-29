@@ -12,7 +12,7 @@ parameters:
 
 services:
   smarty.plugin.navbar:
-    class: %smarty.plugin.navbar.fqdn%
+    class: '%smarty.plugin.navbar.fqdn%'
     arguments:
       - '@core.request'
       - '@core.router'

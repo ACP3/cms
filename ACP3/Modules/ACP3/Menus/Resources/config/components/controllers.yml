@@ -10,7 +10,7 @@ parameters:
 
 services:
   menus.controller.admin.index.create:
-    class: %menus.controller.admin.index.create.fqdn%
+    class: '%menus.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -18,7 +18,7 @@ services:
       - '@menus.validator.menu'
 
   menus.controller.admin.index.delete:
-    class: %menus.controller.admin.index.delete.fqdn%
+    class: '%menus.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.nested_set'
@@ -27,7 +27,7 @@ services:
       - '@menus.cache'
 
   menus.controller.admin.index.edit:
-    class: %menus.controller.admin.index.edit.fqdn%
+    class: '%menus.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -36,14 +36,14 @@ services:
       - '@menus.validator.menu'
 
   menus.controller.admin.index.index:
-    class: %menus.controller.admin.index.index.fqdn%
+    class: '%menus.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@menus.helpers.menuitemslist'
       - '@menus.model.menurepository'
 
   menus.controller.admin.items.create:
-    class: %menus.controller.admin.items.create.fqdn%
+    class: '%menus.controller.admin.items.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@seo.core.router.aliases'
@@ -59,7 +59,7 @@ services:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.controller.admin.items.delete:
-    class: %menus.controller.admin.items.delete.fqdn%
+    class: '%menus.controller.admin.items.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.nested_set'
@@ -67,7 +67,7 @@ services:
       - '@menus.cache'
 
   menus.controller.admin.items.edit:
-    class: %menus.controller.admin.items.edit.fqdn%
+    class: '%menus.controller.admin.items.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@seo.core.router.aliases'
@@ -82,7 +82,7 @@ services:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.controller.admin.items.order:
-    class: %menus.controller.admin.items.order.fqdn%
+    class: '%menus.controller.admin.items.order.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.nested_set'

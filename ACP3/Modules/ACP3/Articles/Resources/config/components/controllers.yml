@@ -10,7 +10,7 @@ parameters:
 
 services:
   articles.controller.admin.index.create:
-    class: %articles.controller.admin.index.create.fqdn%
+    class: '%articles.controller.admin.index.create.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -24,7 +24,7 @@ services:
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
 
   articles.controller.admin.index.delete:
-    class: %articles.controller.admin.index.delete.fqdn%
+    class: '%articles.controller.admin.index.delete.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@articles.model.articlerepository'
@@ -34,7 +34,7 @@ services:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
 
   articles.controller.admin.index.edit:
-    class: %articles.controller.admin.index.edit.fqdn%
+    class: '%articles.controller.admin.index.edit.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -50,13 +50,13 @@ services:
       - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
 
   articles.controller.admin.index.index:
-    class: %articles.controller.admin.index.index.fqdn%
+    class: '%articles.controller.admin.index.index.fqdn%'
     arguments:
       - '@core.context.admin'
       - '@articles.model.data_grid_repository'
 
   articles.controller.frontend.index.details:
-    class: %articles.controller.frontend.index.details.fqdn%
+    class: '%articles.controller.frontend.index.details.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -65,7 +65,7 @@ services:
       - '@articles.cache'
 
   articles.controller.frontend.index.index:
-    class: %articles.controller.frontend.index.index.fqdn%
+    class: '%articles.controller.frontend.index.index.fqdn%'
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -73,7 +73,7 @@ services:
       - '@articles.model.articlerepository'
 
   articles.controller.widget.index.index:
-    class: %articles.controller.widget.index.index.fqdn%
+    class: '%articles.controller.widget.index.index.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.date'
@@ -81,7 +81,7 @@ services:
       - '@articles.cache'
 
   articles.controller.widget.index.single:
-    class: %articles.controller.widget.index.single.fqdn%
+    class: '%articles.controller.widget.index.single.fqdn%'
     arguments:
       - '@core.context.widget'
       - '@core.date'

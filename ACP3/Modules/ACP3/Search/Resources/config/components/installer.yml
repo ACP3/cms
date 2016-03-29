@@ -4,8 +4,8 @@ parameters:
 
 services:
   search.installer.schema:
-    class: %search.installer.schema.fqdn%
+    class: '%search.installer.schema.fqdn%'
 
   search.installer.migration:
-    class: %search.installer.migration.fqdn%
+    class: '%search.installer.migration.fqdn%'
     parent: core.modules.installer.abstractMigration

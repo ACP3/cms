@@ -3,6 +3,6 @@ parameters:
 
 services:
   search.validator:
-    class: %search.validator.fqdn%
+    class: '%search.validator.fqdn%'
     parent: core.validator.abstract
 

@@ -10,7 +10,7 @@ parameters:
 
 services:
   users.helpers.forms:
-    class: %users.helpers.forms.fqdn%
+    class: '%users.helpers.forms.fqdn%'
     arguments:
       - '@core.lang'
       - '@core.request'
@@ -18,7 +18,7 @@ services:
       - '@core.helpers.forms'
 
   users.helpers.data_grid.column_renderer.user_roles_column_renderer:
-    class: %users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn%
+    class: '%users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn%'
     arguments:
       - '@core.acl'
     tags:

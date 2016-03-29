@@ -9,7 +9,7 @@ parameters:
 
 services:
   captcha.helpers:
-    class: %captcha.helpers.fqdn%
+    class: '%captcha.helpers.fqdn%'
     arguments:
       - '@core.user'
       - '@core.request'

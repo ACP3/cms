@@ -3,5 +3,5 @@ parameters:
 
 services:
   acp.controller.admin.index.index:
-    class: %acp.controller.admin.index.index.fqdn%
+    class: '%acp.controller.admin.index.index.fqdn%'
     parent: core.controller.admin

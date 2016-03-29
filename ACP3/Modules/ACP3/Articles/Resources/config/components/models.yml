@@ -4,11 +4,11 @@ parameters:
 
 services:
   articles.model.data_grid_repository:
-    class: %articles.model.data_grid_repository.fqdn%
+    class: '%articles.model.data_grid_repository.fqdn%'
     arguments:
       - '@core.db'
 
   articles.model.articlerepository:
-    class: %articles.model.articlerepository.fqdn%
+    class: '%articles.model.articlerepository.fqdn%'
     arguments:
       - '@core.db'
