@@ -7,36 +7,39 @@ use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Http\Request\ParameterBag;
 use ACP3\Core\RouterInterface;
-use ACP3\Core\SEO;
 
 class PageBreaksTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var PageBreaks
      */
-    private $pageBreaks;
+    protected $pageBreaks;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $seoMock;
+    protected $requestMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $requestMock;
+    protected $routerMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $routerMock;
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $tocMock;
+    protected $tocMock;
 
     protected function setUp()
     {
-        $this->seoMock = $this->getMockBuilder(SEO::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->initializeMockObjects();
+
+        $this->pageBreaks = new PageBreaks(
+            $this->requestMock,
+            $this->routerMock,
+            $this->tocMock
+        );
+    }
+
+    protected function initializeMockObjects()
+    {
         $this->requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
             ->setMethods(['getParameters'])
@@ -47,12 +50,6 @@ class PageBreaksTest extends \PHPUnit_Framework_TestCase
         $this->tocMock = $this->getMockBuilder(TableOfContents::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        $this->pageBreaks = new PageBreaks(
-            $this->requestMock,
-            $this->routerMock,
-            $this->tocMock
-        );
     }
 
     public function splitTextIntoPagesDataProvider()
