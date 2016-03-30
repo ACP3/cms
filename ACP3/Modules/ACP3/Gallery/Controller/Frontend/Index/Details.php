@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 /**
  * Class Details
@@ -23,6 +24,10 @@ class Details extends Core\Controller\FrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
     protected $pictureRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     */
+    protected $metaStatements;
     /**
      * @var array
      */
@@ -46,6 +51,14 @@ class Details extends Core\Controller\FrontendAction
         $this->pictureRepository = $pictureRepository;
     }
 
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
+     */
+    public function setMetaStatements(MetaStatements $metaStatements)
+    {
+        $this->metaStatements = $metaStatements;
+    }
+    
     public function preDispatch()
     {
         parent::preDispatch();
@@ -71,45 +84,88 @@ class Details extends Core\Controller\FrontendAction
                 ->setTitlePrefix($picture['title'])
                 ->setTitlePostfix($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
 
-            // Bildabmessungen berechnen
-            $picture['width'] = $this->settings['width'];
-            $picture['height'] = $this->settings['height'];
-            $picInfos = @getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
-            if ($picInfos !== false) {
-                if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
-                    if ($picInfos[0] > $picInfos[1]) {
-                        $newWidth = $this->settings['width'];
-                        $newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
-                    } else {
-                        $newHeight = $this->settings['height'];
-                        $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
-                    }
-                }
+            $picture = $this->calculatePictureDimensions($picture);
 
-                $picture['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-                $picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
-            }
-
-            // Previous picture
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
-                $this->seo->setPreviousPage($this->router->route('gallery/index/details/id_' . $previousPicture));
+                $this->setPreviousPage($previousPicture);
                 $this->view->assign('picture_back', $previousPicture);
             }
 
-            // Next picture
             $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($nextPicture)) {
-                $this->seo->setNextPage($this->router->route('gallery/index/details/id_' . $nextPicture));
+                $this->setNextPage($nextPicture);
                 $this->view->assign('picture_next', $nextPicture);
             }
 
             return [
                 'picture' => $picture,
-                'comments_allowed' => $this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1
+                'comments_allowed' => $this->getCommentsAllowed($picture)
             ];
         }
 
         throw new Core\Exceptions\ResultNotExists();
+    }
+
+    /**
+     * @param array $picture
+     *
+     * @return array
+     */
+    protected function calculatePictureDimensions(array $picture)
+    {
+        $picture['width'] = $this->settings['width'];
+        $picture['height'] = $this->settings['height'];
+        $picInfos = @getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
+        if ($picInfos !== false) {
+            if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
+                if ($picInfos[0] > $picInfos[1]) {
+                    $newWidth = $this->settings['width'];
+                    $newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
+                } else {
+                    $newHeight = $this->settings['height'];
+                    $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+                }
+            }
+
+            $picture['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
+            $picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+        }
+
+        return $picture;
+    }
+
+    /**
+     * @param int $nextPicture
+     */
+    protected function setNextPage($nextPicture)
+    {
+        if ($this->metaStatements instanceof MetaStatements) {
+            $this->metaStatements->setNextPage(
+                $this->router->route(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
+            );
+        }
+    }
+
+    /**
+     * @param int $previousPicture
+     */
+    protected function setPreviousPage($previousPicture)
+    {
+        if ($this->metaStatements instanceof MetaStatements) {
+            $this->metaStatements->setPreviousPage(
+                $this->router->route(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
+            );
+        }
+    }
+
+    /**
+     * @param array $picture
+     *
+     * @return bool
+     */
+    protected function getCommentsAllowed(array $picture)
+    {
+        return $this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1;
     }
 }

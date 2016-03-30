@@ -68,64 +68,6 @@ class SEO
     }
 
     /**
-     * Returns the SEO robots settings for the given page
-     *
-     * @param string $path
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getRobotsSetting($path = '')
-    {
-        return $this->metaStatements->getRobotsSetting($path);
-    }
-
-    /**
-     * Sets the canonical URL for the current page
-     *
-     * @param string $path
-     *
-     * @return $this
-     * @deprecated
-     */
-    public function setCanonicalUri($path)
-    {
-        $this->metaStatements->setCanonicalUri($path);
-
-        return $this;
-    }
-
-    /**
-     * Sets the next page (useful for pagination)
-     *
-     * @param string $path
-     *
-     * @return $this
-     * @deprecated
-     */
-    public function setNextPage($path)
-    {
-        $this->metaStatements->setNextPage($path);
-
-        return $this;
-    }
-
-    /**
-     * Sets the previous page (useful for pagination)
-     *
-     * @param string $path
-     *
-     * @return $this
-     * @deprecated
-     */
-    public function setPreviousPage($path)
-    {
-        $this->metaStatements->setPreviousPage($path);
-
-        return $this;
-    }
-
-    /**
      * Returns the SEO form fields
      *
      * @param string $path

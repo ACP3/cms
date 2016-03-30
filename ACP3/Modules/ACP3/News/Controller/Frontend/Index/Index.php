@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
+use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 /**
  * Class Index
@@ -40,6 +41,10 @@ class Index extends AbstractAction
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
      */
     protected $categoryRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     */
+    protected $metaStatements;
 
     /**
      * Index constructor.
@@ -72,21 +77,21 @@ class Index extends AbstractAction
     }
 
     /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
+     */
+    public function setMetaStatements(MetaStatements $metaStatements)
+    {
+        $this->metaStatements = $metaStatements;
+    }
+
+    /**
      * @param int $cat
      *
      * @return array
      */
     public function execute($cat = 0)
     {
-        // Kategorie in Brotkrümelspur anzeigen
-        if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
-            $this->seo->setCanonicalUri($this->router->route('news'));
-            $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
-            $category = $this->categoryRepository->getTitleById($cat);
-            if (!empty($category)) {
-                $this->breadcrumb->append($category);
-            }
-        }
+        $this->addBreadcrumbStep($cat);
 
         $time = $this->date->getCurrentDateTime();
         $news = $this->fetchNews($cat, $time);
@@ -104,13 +109,7 @@ class Index extends AbstractAction
                     );
                 }
                 if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                    $news[$i]['text'] = $this->stringFormatter->shortenEntry(
-                        $news[$i]['text'],
-                        $this->newsSettings['readmore_chars'],
-                        50,
-                        '...<a href="' . $this->router->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->translator->t('news',
-                            'readmore') . "]</a>\n"
-                    );
+                    $news[$i]['text'] = $this->addReadMoreLink($news[$i]);
                 }
             }
         }
@@ -124,19 +123,55 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int    $cat
+     * @param int    $categoryId
      * @param string $time
      *
      * @return array
      */
-    private function fetchNews($cat, $time)
+    private function fetchNews($categoryId, $time)
     {
-        if (!empty($cat)) {
-            $news = $this->newsRepository->getAllByCategoryId($cat, $time, POS, $this->user->getEntriesPerPage());
+        if (!empty($categoryId)) {
+            $news = $this->newsRepository->getAllByCategoryId($categoryId, $time, POS, $this->user->getEntriesPerPage());
         } else {
             $news = $this->newsRepository->getAll($time, POS, $this->user->getEntriesPerPage());
         }
 
         return $news;
+    }
+
+    /**
+     * @param array $news
+     *
+     * @return string
+     */
+    protected function addReadMoreLink(array $news)
+    {
+        $readMoreLink = '...<a href="' . $this->router->route('news/details/id_' . $news['id']) . '">[';
+        $readMoreLink .= $this->translator->t('news', 'readmore') . "]</a>\n";
+
+        return $this->stringFormatter->shortenEntry(
+            $news['text'],
+            $this->newsSettings['readmore_chars'],
+            50,
+            $readMoreLink
+        );
+    }
+
+    /**
+     * @param int $cat
+     */
+    protected function addBreadcrumbStep($cat)
+    {
+        if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
+            if ($this->metaStatements instanceof MetaStatements) {
+                $this->metaStatements->setCanonicalUri($this->router->route('news'));
+            }
+
+            $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
+            $category = $this->categoryRepository->getTitleById($cat);
+            if (!empty($category)) {
+                $this->breadcrumb->append($category);
+            }
+        }
     }
 }

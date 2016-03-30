@@ -80,6 +80,8 @@ services:
       - '@news.model.newsrepository'
       - '@categories.helpers'
       - '@categories.model'
+    calls:
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   news.controller.widget.index.index:
     class: '%news.controller.widget.index.index.fqdn%'

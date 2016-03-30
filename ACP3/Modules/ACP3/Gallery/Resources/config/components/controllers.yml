@@ -103,6 +103,8 @@ services:
       - '@core.context.frontend'
       - '@core.date'
       - '@gallery.model.picturerepository'
+    calls:
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   gallery.controller.frontend.index.image:
     class: '%gallery.controller.frontend.index.image.fqdn%'

@@ -19,20 +19,27 @@ class Index extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Seo\Model\DataGridRepository
      */
     protected $dataGridRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     */
+    protected $metaStatements;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext      $context
      * @param \ACP3\Modules\ACP3\Seo\Model\DataGridRepository $dataGridRepository
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements    $metaStatements
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Seo\Model\DataGridRepository $dataGridRepository
+        Seo\Model\DataGridRepository $dataGridRepository,
+        Seo\Helper\MetaStatements $metaStatements
     ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;
+        $this->metaStatements = $metaStatements;
     }
 
     /**
@@ -81,7 +88,7 @@ class Index extends Core\Controller\AdminAction
                         $this->translator->t(
                             'seo',
                             'robots_use_system_default',
-                            ['%default%' => $this->seo->getRobotsSetting()]
+                            ['%default%' => $this->metaStatements->getRobotsSetting()]
                         ),
                         $this->translator->t('seo', 'robots_index_follow'),
                         $this->translator->t('seo', 'robots_index_nofollow'),

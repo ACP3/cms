@@ -35,6 +35,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@seo.model.data_grid_repository'
+      - '@seo.helper.meta_statements'
 
   seo.controller.admin.index.settings:
     class: '%seo.controller.admin.index.settings.fqdn%'
