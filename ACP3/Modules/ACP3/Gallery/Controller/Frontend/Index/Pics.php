@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
@@ -57,7 +58,6 @@ class Pics extends AbstractAction
     public function execute($id)
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
-            // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')
                 ->append($this->galleryRepository->getGalleryTitle($id));

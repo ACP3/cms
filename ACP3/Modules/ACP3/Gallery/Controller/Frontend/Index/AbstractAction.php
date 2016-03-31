@@ -14,6 +14,9 @@ use ACP3\Core\Controller\FrontendAction;
  */
 abstract class AbstractAction extends FrontendAction
 {
+    /**
+     * @var array
+     */
     protected $settings = [];
 
     public function preDispatch()

@@ -79,8 +79,11 @@ class Edit extends AbstractFormAction
             $this->breadcrumb
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
                 ->append($this->translator->t('gallery', 'admin_pictures_edit'))
-                ->setTitlePostfix($picture['title'] . $this->breadcrumb->getTitleSeparator() . $this->translator->t('gallery',
-                        'picture_x', ['%picture%' => $picture['pic']]));
+                ->setTitlePostfix(
+                    $picture['title']
+                    . $this->breadcrumb->getTitleSeparator()
+                    . $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']])
+                );
 
             $settings = $this->config->getSettings('gallery');
 

@@ -71,18 +71,15 @@ class Delete extends Core\Controller\AdminAction
 
                 foreach ($items as $item) {
                     if (!empty($item) && $this->galleryRepository->galleryExists($item) === true) {
-                        // Hochgeladene Bilder löschen
                         $pictures = $this->pictureRepository->getPicturesByGalleryId($item);
                         foreach ($pictures as $row) {
                             $this->galleryHelpers->removePicture($row['file']);
                         }
 
-                        // Galerie Cache löschen
                         $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
                         $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
                         $this->galleryHelpers->deletePictureAliases($item);
 
-                        // Fotogalerie mitsamt Bildern löschen
                         $bool = $this->galleryRepository->delete($item);
                     }
                 }

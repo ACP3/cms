@@ -31,9 +31,9 @@ class Settings extends Core\Controller\AdminAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                        $context
-     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -61,7 +61,8 @@ class Settings extends Core\Controller\AdminAction
         }
 
         if ($this->modules->isActive('comments') === true) {
-            $this->view->assign('comments', $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
+            $this->view->assign('comments',
+                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
         }
 
         return [
@@ -101,9 +102,10 @@ class Settings extends Core\Controller\AdminAction
 
             $bool = $this->config->setSettings($data, 'gallery');
 
-            // Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
-            if ($formData['thumbwidth'] !== $settings['thumbwidth'] || $formData['thumbheight'] !== $settings['thumbheight'] ||
-                $formData['width'] !== $settings['width'] || $formData['height'] !== $settings['height']
+            if ($formData['thumbwidth'] !== $settings['thumbwidth']
+                || $formData['thumbheight'] !== $settings['thumbheight']
+                || $formData['width'] !== $settings['width']
+                || $formData['height'] !== $settings['height']
             ) {
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'images', 'gallery');
 
