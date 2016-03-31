@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
@@ -23,6 +24,10 @@ class Edit extends AbstractAction
      */
     protected $secureHelper;
     /**
+     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
+     */
+    protected $userFormsHelper;
+    /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
     protected $userRepository;
@@ -37,6 +42,7 @@ class Edit extends AbstractAction
      * @param \ACP3\Core\Controller\Context\FrontendContext             $context
      * @param \ACP3\Core\Helpers\FormToken                              $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                    $userFormsHelper
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository             $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
@@ -44,6 +50,7 @@ class Edit extends AbstractAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
+        Users\Helpers\Forms $userFormsHelper,
         Users\Model\UserRepository $userRepository,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
@@ -51,6 +58,7 @@ class Edit extends AbstractAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
+        $this->userFormsHelper = $userFormsHelper;
         $this->userRepository = $userRepository;
         $this->accountFormValidation = $accountFormValidation;
     }
@@ -67,7 +75,7 @@ class Edit extends AbstractAction
         $user = $this->user->getUserInfo();
 
         $this->view->assign(
-            $this->get('users.helpers.forms')->fetchUserProfileFormFields(
+            $this->userFormsHelper->fetchUserProfileFormFields(
                 $user['birthday'],
                 $user['country'],
                 $user['gender']
@@ -75,7 +83,7 @@ class Edit extends AbstractAction
         );
 
         return [
-            'contact' => $this->get('users.helpers.forms')->fetchContactDetails(
+            'contact' => $this->userFormsHelper->fetchContactDetails(
                 $user['mail'],
                 $user['website'],
                 $user['icq'],
@@ -100,19 +108,19 @@ class Edit extends AbstractAction
                     ->validate($formData);
 
                 $updateValues = [
-                    'nickname' => $this->get('core.helpers.secure')->strEncode($formData['nickname']),
-                    'realname' => $this->get('core.helpers.secure')->strEncode($formData['realname']),
+                    'nickname' => $this->secureHelper->strEncode($formData['nickname']),
+                    'realname' => $this->secureHelper->strEncode($formData['realname']),
                     'gender' => (int)$formData['gender'],
                     'birthday' => $formData['birthday'],
                     'mail' => $formData['mail'],
-                    'website' => $this->get('core.helpers.secure')->strEncode($formData['website']),
+                    'website' => $this->secureHelper->strEncode($formData['website']),
                     'icq' => $formData['icq'],
-                    'skype' => $this->get('core.helpers.secure')->strEncode($formData['skype']),
-                    'street' => $this->get('core.helpers.secure')->strEncode($formData['street']),
-                    'house_number' => $this->get('core.helpers.secure')->strEncode($formData['house_number']),
-                    'zip' => $this->get('core.helpers.secure')->strEncode($formData['zip']),
-                    'city' => $this->get('core.helpers.secure')->strEncode($formData['city']),
-                    'country' => $this->get('core.helpers.secure')->strEncode($formData['country']),
+                    'skype' => $this->secureHelper->strEncode($formData['skype']),
+                    'street' => $this->secureHelper->strEncode($formData['street']),
+                    'house_number' => $this->secureHelper->strEncode($formData['house_number']),
+                    'zip' => $this->secureHelper->strEncode($formData['zip']),
+                    'city' => $this->secureHelper->strEncode($formData['city']),
+                    'country' => $this->secureHelper->strEncode($formData['country']),
                 ];
 
                 // Neues Passwort
@@ -134,8 +142,10 @@ class Edit extends AbstractAction
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool,
-                    $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
+                return $this->redirectMessages()->setMessage(
+                    $bool,
+                    $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error')
+                );
             }
         );
     }

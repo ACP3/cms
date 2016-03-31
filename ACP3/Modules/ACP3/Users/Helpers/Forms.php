@@ -201,17 +201,17 @@ class Forms
     }
 
     /**
-     * @param int $currentValue
+     * @param int $currentGender
      *
      * @return array
      */
-    protected function fetchGenderField($currentValue)
+    protected function fetchGenderField($currentGender)
     {
         $genders = [
             1 => $this->translator->t('users', 'gender_not_specified'),
             2 => $this->translator->t('users', 'gender_female'),
             3 => $this->translator->t('users', 'gender_male')
         ];
-        return $this->formsHelpers->choicesGenerator('gender', $genders, $currentValue);
+        return $this->formsHelpers->choicesGenerator('gender', $genders, $currentGender);
     }
 }

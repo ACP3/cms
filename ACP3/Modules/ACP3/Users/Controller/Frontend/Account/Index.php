@@ -35,18 +35,12 @@ class Index extends AbstractAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false) {
-            $updateValues = [
-                'draft' => $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('draft', ''), true)
-            ];
-            $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
-
-            return $this->redirectMessages()->setMessage($bool,
-                $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error'));
+            return $this->executePost();
         }
 
         $user = $this->userRepository->getOneById($this->user->getUserId());
@@ -54,5 +48,21 @@ class Index extends AbstractAction
         return [
             'draft' => $user['draft']
         ];
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executePost()
+    {
+        $updateValues = [
+            'draft' => $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('draft', ''), true)
+        ];
+        $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
+
+        return $this->redirectMessages()->setMessage(
+            $bool,
+            $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error')
+        );
     }
 }

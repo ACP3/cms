@@ -134,25 +134,25 @@ class Edit extends AbstractFormAction
 
             $updateValues = [
                 'super_user' => (int)$formData['super_user'],
-                'nickname' => $this->get('core.helpers.secure')->strEncode($formData['nickname']),
-                'realname' => $this->get('core.helpers.secure')->strEncode($formData['realname']),
+                'nickname' => $this->secureHelper->strEncode($formData['nickname']),
+                'realname' => $this->secureHelper->strEncode($formData['realname']),
                 'gender' => (int)$formData['gender'],
                 'birthday' => $formData['birthday'],
                 'birthday_display' => (int)$formData['birthday_display'],
                 'mail' => $formData['mail'],
                 'mail_display' => (int)$formData['mail_display'],
-                'website' => $this->get('core.helpers.secure')->strEncode($formData['website']),
+                'website' => $this->secureHelper->strEncode($formData['website']),
                 'icq' => $formData['icq'],
-                'skype' => $this->get('core.helpers.secure')->strEncode($formData['skype']),
-                'street' => $this->get('core.helpers.secure')->strEncode($formData['street']),
-                'house_number' => $this->get('core.helpers.secure')->strEncode($formData['house_number']),
-                'zip' => $this->get('core.helpers.secure')->strEncode($formData['zip']),
-                'city' => $this->get('core.helpers.secure')->strEncode($formData['city']),
+                'skype' => $this->secureHelper->strEncode($formData['skype']),
+                'street' => $this->secureHelper->strEncode($formData['street']),
+                'house_number' => $this->secureHelper->strEncode($formData['house_number']),
+                'zip' => $this->secureHelper->strEncode($formData['zip']),
+                'city' => $this->secureHelper->strEncode($formData['city']),
                 'address_display' => (int)$formData['address_display'],
-                'country' => $this->get('core.helpers.secure')->strEncode($formData['country']),
+                'country' => $this->secureHelper->strEncode($formData['country']),
                 'country_display' => (int)$formData['country_display'],
-                'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
-                'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
+                'date_format_long' => $this->secureHelper->strEncode($formData['date_format_long']),
+                'date_format_short' => $this->secureHelper->strEncode($formData['date_format_short']),
                 'time_zone' => $formData['date_time_zone'],
                 'language' => $formData['language'],
                 'entries' => (int)$formData['entries'],
@@ -160,7 +160,6 @@ class Edit extends AbstractFormAction
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
 
-            // Neues Passwort
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
                 $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
                 $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
@@ -170,19 +169,23 @@ class Edit extends AbstractFormAction
 
             $bool = $this->userRepository->update($updateValues, $id);
 
-            // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-            if ($id == $this->user->getUserId() && $this->request->getCookies()->has(Core\User::AUTH_NAME)) {
-                $user = $this->userRepository->getOneById($id);
-                $this->user->setRememberMeCookie(
-                    $id,
-                    $user['remember_me_token'],
-                    Core\User::REMEMBER_ME_COOKIE_LIFETIME
-                );
-            }
+            $this->updateCurrentlyLoggedInUserCookie($id);
 
             $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
+    }
+
+    protected function updateCurrentlyLoggedInUserCookie($userId)
+    {
+        if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Core\User::AUTH_NAME)) {
+            $user = $this->userRepository->getOneById($userId);
+            $this->user->setRememberMeCookie(
+                $userId,
+                $user['remember_me_token'],
+                Core\User::REMEMBER_ME_COOKIE_LIFETIME
+            );
+        }
     }
 }

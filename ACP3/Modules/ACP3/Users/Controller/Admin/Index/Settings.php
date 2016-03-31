@@ -62,9 +62,18 @@ class Settings extends Core\Controller\AdminAction
         $settings = $this->config->getSettings('users');
 
         return [
-            'languages' => $this->formsHelpers->yesNoCheckboxGenerator('language_override', $settings['language_override']),
-            'entries' => $this->formsHelpers->yesNoCheckboxGenerator('entries_override', $settings['entries_override']),
-            'registration' => $this->formsHelpers->yesNoCheckboxGenerator('enable_registration', $settings['enable_registration']),
+            'languages' => $this->formsHelpers->yesNoCheckboxGenerator(
+                'language_override',
+                $settings['language_override']
+            ),
+            'entries' => $this->formsHelpers->yesNoCheckboxGenerator(
+                'entries_override',
+                $settings['entries_override']
+            ),
+            'registration' => $this->formsHelpers->yesNoCheckboxGenerator(
+                'enable_registration',
+                $settings['enable_registration']
+            ),
             'form' => array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

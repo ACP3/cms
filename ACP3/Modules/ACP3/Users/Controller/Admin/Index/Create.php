@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -124,32 +125,32 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
-            $salt = $this->secureHelper->salt(15);
+            $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
 
             $insertValues = [
                 'id' => '',
                 'super_user' => (int)$formData['super_user'],
-                'nickname' => $this->get('core.helpers.secure')->strEncode($formData['nickname']),
+                'nickname' => $this->secureHelper->strEncode($formData['nickname']),
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                 'pwd_salt' => $salt,
-                'realname' => $this->get('core.helpers.secure')->strEncode($formData['realname']),
+                'realname' => $this->secureHelper->strEncode($formData['realname']),
                 'gender' => (int)$formData['gender'],
                 'birthday' => $formData['birthday'],
                 'birthday_display' => (int)$formData['birthday_display'],
                 'mail' => $formData['mail'],
                 'mail_display' => isset($formData['mail_display']) ? 1 : 0,
-                'website' => $this->get('core.helpers.secure')->strEncode($formData['website']),
+                'website' => $this->secureHelper->strEncode($formData['website']),
                 'icq' => $formData['icq'],
-                'skype' => $this->get('core.helpers.secure')->strEncode($formData['skype']),
-                'street' => $this->get('core.helpers.secure')->strEncode($formData['street']),
-                'house_number' => $this->get('core.helpers.secure')->strEncode($formData['house_number']),
-                'zip' => $this->get('core.helpers.secure')->strEncode($formData['zip']),
-                'city' => $this->get('core.helpers.secure')->strEncode($formData['city']),
+                'skype' => $this->secureHelper->strEncode($formData['skype']),
+                'street' => $this->secureHelper->strEncode($formData['street']),
+                'house_number' => $this->secureHelper->strEncode($formData['house_number']),
+                'zip' => $this->secureHelper->strEncode($formData['zip']),
+                'city' => $this->secureHelper->strEncode($formData['city']),
                 'address_display' => isset($formData['address_display']) ? 1 : 0,
-                'country' => $this->get('core.helpers.secure')->strEncode($formData['country']),
+                'country' => $this->secureHelper->strEncode($formData['country']),
                 'country_display' => isset($formData['country_display']) ? 1 : 0,
-                'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
-                'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
+                'date_format_long' => $this->secureHelper->strEncode($formData['date_format_long']),
+                'date_format_short' => $this->secureHelper->strEncode($formData['date_format_short']),
                 'time_zone' => $formData['date_time_zone'],
                 'language' => $formData['language'],
                 'entries' => (int)$formData['entries'],

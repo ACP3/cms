@@ -26,24 +26,38 @@ class Settings extends AbstractAction
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
      */
     protected $accountSettingsFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
+     */
+    protected $userFormsHelper;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
      * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                            $userFormsHelper
      * @param \ACP3\Modules\ACP3\Users\Model\UserRepository                     $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\Secure $secureHelper,
+        Users\Helpers\Forms $userFormsHelper,
         Users\Model\UserRepository $userRepository,
         Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
+        $this->secureHelper = $secureHelper;
+        $this->userFormsHelper = $userFormsHelper;
         $this->userRepository = $userRepository;
         $this->accountSettingsFormValidation = $accountSettingsFormValidation;
     }
@@ -115,8 +129,10 @@ class Settings extends AbstractAction
 
                 $this->formTokenHelper->unsetFormToken();
 
-                return $this->redirectMessages()->setMessage($bool,
-                    $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error'));
+                return $this->redirectMessages()->setMessage(
+                    $bool,
+                    $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error')
+                );
             }
         );
     }

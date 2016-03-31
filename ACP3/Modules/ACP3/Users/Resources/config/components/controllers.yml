@@ -66,6 +66,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
+      - '@users.helpers.forms'
       - '@users.model.userrepository'
       - '@users.validator.account'
 
@@ -80,6 +81,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@users.helpers.forms'
       - '@users.model.userrepository'
       - '@users.validation.account_settings_form_validation'
 
