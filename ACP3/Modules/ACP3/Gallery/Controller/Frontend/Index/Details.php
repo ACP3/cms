@@ -36,15 +36,15 @@ class Details extends Core\Controller\FrontendAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Gallery\Model\PictureRepository $pictureRepository)
-    {
+        Gallery\Model\PictureRepository $pictureRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -58,7 +58,7 @@ class Details extends Core\Controller\FrontendAction
     {
         $this->metaStatements = $metaStatements;
     }
-    
+
     public function preDispatch()
     {
         parent::preDispatch();
@@ -88,19 +88,19 @@ class Details extends Core\Controller\FrontendAction
 
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
-                $this->setPreviousPage($previousPicture);
-                $this->view->assign('picture_back', $previousPicture);
+                $this->setPreviousPage((int)$previousPicture);
             }
 
             $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($nextPicture)) {
-                $this->setNextPage($nextPicture);
-                $this->view->assign('picture_next', $nextPicture);
+                $this->setNextPage((int)$nextPicture);
             }
 
             return [
                 'picture' => $picture,
-                'comments_allowed' => $this->getCommentsAllowed($picture)
+                'picture_next' => $nextPicture,
+                'picture_previous' => $previousPicture,
+                'comments_allowed' => $this->isCommentsAllowed($picture)
             ];
         }
 
@@ -164,7 +164,7 @@ class Details extends Core\Controller\FrontendAction
      *
      * @return bool
      */
-    protected function getCommentsAllowed(array $picture)
+    protected function isCommentsAllowed(array $picture)
     {
         return $this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1;
     }
