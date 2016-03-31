@@ -105,9 +105,7 @@ services:
   core.seo:
     class: ACP3\Core\SEO
     arguments:
-      - '@seo.helper.meta_statements'
       - '@seo.helper.uri_alias_manager'
-      - '@seo.helper.meta_form_fields'
 
   core.session:
     class: ACP3\Core\Session\SessionHandler

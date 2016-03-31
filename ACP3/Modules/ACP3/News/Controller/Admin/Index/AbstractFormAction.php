@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\AdminAction;
 use ACP3\Modules\ACP3\Categories;
+use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 /**
  * Class AbstractFormAction
@@ -24,6 +25,10 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
+     */
+    protected $metaFormFieldsHelper;
 
     /**
      * AbstractFormAction constructor.
@@ -43,6 +48,13 @@ abstract class AbstractFormAction extends AdminAction
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
+     */
+    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
+    {
+        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
+    }
 
     /**
      * @param array $formData

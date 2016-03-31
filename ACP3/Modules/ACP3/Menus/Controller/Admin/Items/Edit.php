@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
@@ -94,8 +95,12 @@ class Edit extends AbstractFormAction
 
             $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->aliases->getUriAlias($menuItem['uri'],
                 true) : '';
-            $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
-            $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
+            $menuItem['seo_keywords'] = $this->metaStatementsHelper
+                ? $this->metaStatementsHelper->getKeywords($menuItem['uri'])
+                : '';
+            $menuItem['seo_description'] = $this->metaStatementsHelper
+                ? $this->metaStatementsHelper->getDescription($menuItem['uri'])
+                : '';
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $menuItem, $id);
@@ -108,7 +113,8 @@ class Edit extends AbstractFormAction
                 }
 
                 $this->view->assign('articles',
-                    $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
+                    $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : '')
+                );
             }
 
             $this->view->assign(
@@ -125,7 +131,9 @@ class Edit extends AbstractFormAction
                 'mode' => $this->fetchMenuItemTypes($menuItem['mode']),
                 'modules' => $this->fetchModules($menuItem),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $menuItem['target']),
-                'SEO_FORM_FIELDS' => $this->seo->formFields($menuItem['uri']),
+                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
+                    ? $this->metaFormFieldsHelper->formFields($menuItem['uri'])
+                    : [],
                 'form' => array_merge($menuItem, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];
@@ -166,19 +174,8 @@ class Edit extends AbstractFormAction
                     true
                 );
 
-                // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
-                if ($formData['mode'] != 3) {
-                    $alias = $formData['alias'] === $menuItem['alias'] ? $menuItem['alias'] : $formData['alias'];
-                    $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
-                    $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
-                    $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-                    $this->seo->insertUriAlias(
-                        $path,
-                        $formData['mode'] == 1 ? '' : $alias,
-                        $keywords,
-                        $description,
-                        (int)$formData['seo_robots']
-                    );
+                if ($this->metaStatementsHelper) {
+                    $this->updateSeoInformation($formData, $menuItem);
                 }
 
                 $this->menusCache->saveMenusCache();
@@ -190,5 +187,26 @@ class Edit extends AbstractFormAction
             },
             'acp/menus'
         );
+    }
+
+    /**
+     * @param array $formData
+     * @param array $menuItem
+     */
+    protected function updateSeoInformation(array $formData, array $menuItem)
+    {
+        if ($formData['mode'] != 3) {
+            $alias = $formData['alias'] === $menuItem['alias'] ? $menuItem['alias'] : $formData['alias'];
+            $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
+            $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
+            $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
+            $this->seo->insertUriAlias(
+                $path,
+                $formData['mode'] == 1 ? '' : $alias,
+                $keywords,
+                $description,
+                (int)$formData['seo_robots']
+            );
+        }
     }
 }

@@ -112,7 +112,9 @@ class Edit extends AbstractFormAction
                 'categories' => $this->categoriesHelpers->categoriesList('files', $file['category_id'], true),
                 'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
                 'current_file' => $file['file'],
-                'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id)),
+                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
+                    ? $this->metaFormFieldsHelper->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id))
+                    : [],
                 'form' => array_merge($file, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];

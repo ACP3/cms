@@ -11,6 +11,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
+      - '@seo.helper.meta_form_fields'
       - '@seo.model.seorepository'
       - '@seo.validator'
 
@@ -27,6 +28,7 @@ services:
       - '@core.context.admin'
       - '@core.helpers.formToken'
       - '@seo.cache'
+      - '@seo.helper.meta_form_fields'
       - '@seo.model.seorepository'
       - '@seo.validator'
 

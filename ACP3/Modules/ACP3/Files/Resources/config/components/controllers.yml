@@ -20,6 +20,8 @@ services:
       - '@files.model.filesrepository'
       - '@files.validator'
       - '@categories.helpers'
+    calls:
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   files.controller.admin.index.delete:
     class: '%files.controller.admin.index.delete.fqdn%'
@@ -41,6 +43,8 @@ services:
       - '@files.cache'
       - '@files.validator'
       - '@categories.helpers'
+    calls:
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   files.controller.admin.index.index:
     class: '%files.controller.admin.index.index.fqdn%'

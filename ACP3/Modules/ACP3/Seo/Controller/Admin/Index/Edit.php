@@ -24,6 +24,10 @@ class Edit extends Core\Controller\AdminAction
      */
     protected $seoCache;
     /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
+     */
+    protected $metaFormFieldsHelper;
+    /**
      * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
     protected $seoRepository;
@@ -38,6 +42,7 @@ class Edit extends Core\Controller\AdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext            $context
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Cache                          $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository            $seoRepository
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
@@ -45,6 +50,7 @@ class Edit extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Cache $seoCache,
+        Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Model\SeoRepository $seoRepository,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
@@ -52,6 +58,7 @@ class Edit extends Core\Controller\AdminAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->seoCache = $seoCache;
+        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
         $this->seoRepository = $seoRepository;
         $this->adminFormValidation = $adminFormValidation;
     }
@@ -74,7 +81,7 @@ class Edit extends Core\Controller\AdminAction
             }
 
             return [
-                'SEO_FORM_FIELDS' => $this->seo->formFields($seo['uri']),
+                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields($seo['uri']),
                 'form' => array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];

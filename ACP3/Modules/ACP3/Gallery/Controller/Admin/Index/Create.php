@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Create
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
  */
-class Create extends Core\Controller\AdminAction
+class Create extends AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Date
@@ -72,7 +72,7 @@ class Create extends Core\Controller\AdminAction
         ];
 
         return [
-            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

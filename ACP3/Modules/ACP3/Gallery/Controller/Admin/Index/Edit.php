@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Edit
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
  */
-class Edit extends Core\Controller\AdminAction
+class Edit extends AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Date
@@ -89,7 +89,9 @@ class Edit extends Core\Controller\AdminAction
 
             return array_merge(
                 [
-                    'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)),
+                    'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
+                        ? $this->metaFormFieldsHelper->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
+                        : [],
                     'gallery_id' => $id,
                     'form' => array_merge($gallery, $this->request->getPost()->all()),
                     'form_token' => $this->formTokenHelper->renderFormToken()

@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
+use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 /**
  * Class Edit
@@ -47,6 +48,10 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
+     */
+    protected $metaFormFieldsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
@@ -74,6 +79,14 @@ class Edit extends AbstractFormAction
         $this->articlesCache = $articlesCache;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
+     */
+    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
+    {
+        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
     }
 
     /**
@@ -118,12 +131,17 @@ class Edit extends AbstractFormAction
             }
 
             if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-                $menuItem = $this->menuItemRepository->getOneMenuItemByUri(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
+                $menuItem = $this->menuItemRepository->getOneMenuItemByUri(
+                    sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)
+                );
 
                 $options = [
                     1 => $this->translator->t('articles', 'create_menu_item')
                 ];
-                $this->view->assign('options', $this->formsHelper->checkboxGenerator('create', $options, !empty($menuItem) ? 1 : 0));
+                $this->view->assign(
+                    'options',
+                    $this->formsHelper->checkboxGenerator('create', $options, !empty($menuItem) ? 1 : 0)
+                );
 
                 $this->view->assign(
                     $this->menuItemFormFieldsHelper->createMenuItemFormFields(
@@ -137,7 +155,9 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)),
+                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
+                    ? $this->metaFormFieldsHelper->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
+                    : [],
                 'form' => array_merge($article, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];

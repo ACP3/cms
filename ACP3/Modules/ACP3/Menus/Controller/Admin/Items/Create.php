@@ -114,7 +114,7 @@ class Create extends AbstractFormAction
             'mode' => $this->fetchMenuItemTypes(),
             'modules' => $this->fetchModules(),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -149,25 +149,8 @@ class Create extends AbstractFormAction
                     true
                 );
 
-                // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
-                if ($formData['mode'] != 3) {
-                    $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-                    if ($this->aliases->uriAliasExists($formData['uri'])) {
-                        $alias = !empty($formData['alias']) ? $formData['alias'] : $this->aliases->getUriAlias($formData['uri']);
-                        $keywords = $this->seo->getKeywords($formData['uri']);
-                        $description = $this->seo->getDescription($formData['uri']);
-                    } else {
-                        $alias = $formData['alias'];
-                        $keywords = $formData['seo_keywords'];
-                        $description = $formData['seo_description'];
-                    }
-                    $this->seo->insertUriAlias(
-                        $path,
-                        $formData['mode'] == 1 ? '' : $alias,
-                        $keywords,
-                        $description,
-                        (int)$formData['seo_robots']
-                    );
+                if ($this->metaStatementsHelper) {
+                    $this->updateSeoInformation($formData);
                 }
 
                 $this->menusCache->saveMenusCache();
@@ -179,5 +162,31 @@ class Create extends AbstractFormAction
             },
             'acp/menus'
         );
+    }
+
+    /**
+     * @param array $formData
+     */
+    protected function updateSeoInformation(array $formData)
+    {
+        if ($formData['mode'] != 3) {
+            $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
+            if ($this->aliases->uriAliasExists($formData['uri'])) {
+                $alias = !empty($formData['alias']) ? $formData['alias'] : $this->aliases->getUriAlias($formData['uri']);
+                $keywords = $this->metaStatementsHelper->getKeywords($formData['uri']);
+                $description = $this->metaStatementsHelper->getDescription($formData['uri']);
+            } else {
+                $alias = $formData['alias'];
+                $keywords = $formData['seo_keywords'];
+                $description = $formData['seo_description'];
+            }
+            $this->seo->insertUriAlias(
+                $path,
+                $formData['mode'] == 1 ? '' : $alias,
+                $keywords,
+                $description,
+                (int)$formData['seo_robots']
+            );
+        }
     }
 }

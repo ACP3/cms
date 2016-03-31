@@ -20,6 +20,10 @@ class Create extends Core\Controller\AdminAction
      */
     protected $formTokenHelper;
     /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
+     */
+    protected $metaFormFieldsHelper;
+    /**
      * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
      */
     protected $seoRepository;
@@ -33,18 +37,21 @@ class Create extends Core\Controller\AdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext            $context
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository            $seoRepository
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
+        Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Model\SeoRepository $seoRepository,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
+        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
         $this->seoRepository = $seoRepository;
         $this->adminFormValidation = $adminFormValidation;
     }
@@ -59,7 +66,7 @@ class Create extends Core\Controller\AdminAction
         }
 
         return [
-            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields(),
             'form' => array_merge(['uri' => ''], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

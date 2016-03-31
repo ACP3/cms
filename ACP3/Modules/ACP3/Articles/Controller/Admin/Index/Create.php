@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
+use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 /**
  * Class Create
@@ -40,6 +41,10 @@ class Create extends AbstractFormAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
+     */
+    protected $metaFormFieldsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
@@ -64,6 +69,14 @@ class Create extends AbstractFormAction
         $this->articleRepository = $articleRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
+     */
+    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
+    {
+        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
     }
 
     /**
@@ -103,7 +116,7 @@ class Create extends AbstractFormAction
         ];
 
         return [
-            'SEO_FORM_FIELDS' => $this->seo->formFields(),
+            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

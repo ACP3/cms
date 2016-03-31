@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -59,8 +60,8 @@ class Edit extends AbstractFormAction
         News\Model\NewsRepository $newsRepository,
         News\Cache $newsCache,
         News\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers)
-    {
+        Categories\Helpers $categoriesHelpers
+    ) {
         parent::__construct($context, $formsHelper, $categoriesHelpers);
 
         $this->date = $date;
@@ -93,7 +94,9 @@ class Edit extends AbstractFormAction
                 'categories' => $this->categoriesHelpers->categoriesList('news', $news['category_id'], true),
                 'options' => $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
-                'SEO_FORM_FIELDS' => $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id)),
+                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
+                    ? $this->metaFormFieldsHelper->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
+                    : [],
                 'form' => array_merge($news, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];

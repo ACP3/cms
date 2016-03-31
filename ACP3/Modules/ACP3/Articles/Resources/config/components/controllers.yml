@@ -19,9 +19,10 @@ services:
       - '@articles.validator'
       - '@core.helpers.formToken'
     calls:
-      - ['setMenusCache', ['@?menus.cache']]
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+      - ['setMenusCache', ['@?menus.cache']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   articles.controller.admin.index.delete:
     class: '%articles.controller.admin.index.delete.fqdn%'
@@ -44,10 +45,11 @@ services:
       - '@articles.validator'
       - '@core.helpers.formToken'
     calls:
-      - ['setMenusCache', ['@?menus.cache']]
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+      - ['setMenusCache', ['@?menus.cache']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
       - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   articles.controller.admin.index.index:
     class: '%articles.controller.admin.index.index.fqdn%'

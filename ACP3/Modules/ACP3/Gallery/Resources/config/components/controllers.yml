@@ -23,6 +23,8 @@ services:
       - '@core.helpers.formToken'
       - '@gallery.model.galleryrepository'
       - '@gallery.validator.gallery'
+    calls:
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   gallery.controller.admin.index.delete:
     class: '%gallery.controller.admin.index.delete.fqdn%'
@@ -43,6 +45,8 @@ services:
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
       - '@gallery.validator.gallery'
+    calls:
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   gallery.controller.admin.index.index:
     class: '%gallery.controller.admin.index.index.fqdn%'

@@ -22,6 +22,7 @@ services:
       - '@categories.helpers'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   news.controller.admin.index.delete:
     class: '%news.controller.admin.index.delete.fqdn%'
@@ -45,6 +46,7 @@ services:
       - '@categories.helpers'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   news.controller.admin.index.index:
     class: '%news.controller.admin.index.index.fqdn%'

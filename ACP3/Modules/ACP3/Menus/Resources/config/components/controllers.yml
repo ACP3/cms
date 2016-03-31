@@ -57,6 +57,8 @@ services:
       - '@menus.validator.menuitem'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setMetaStatementsHelper', ['@?seo.helper.meta_statements']]
 
   menus.controller.admin.items.delete:
     class: '%menus.controller.admin.items.delete.fqdn%'
@@ -80,6 +82,8 @@ services:
       - '@menus.validator.menuitem'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setMetaStatementsHelper', ['@?seo.helper.meta_statements']]
 
   menus.controller.admin.items.order:
     class: '%menus.controller.admin.items.order.fqdn%'
