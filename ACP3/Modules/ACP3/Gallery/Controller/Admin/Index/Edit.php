@@ -8,6 +8,8 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
+use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 /**
  * Class Edit
@@ -24,10 +26,6 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helpers
-     */
-    protected $galleryHelpers;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
      */
     protected $galleryRepository;
@@ -39,6 +37,14 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
     protected $pictureRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
+     */
+    protected $aliases;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     */
+    protected $metaStatements;
 
     /**
      * Edit constructor.
@@ -46,7 +52,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext                  $context
      * @param \ACP3\Core\Date                                             $date
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository          $galleryRepository
      * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository          $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -55,7 +60,6 @@ class Edit extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryRepository $galleryRepository,
         Gallery\Model\PictureRepository $pictureRepository,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -64,10 +68,25 @@ class Edit extends AbstractFormAction
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->galleryHelpers = $galleryHelpers;
         $this->galleryRepository = $galleryRepository;
         $this->pictureRepository = $pictureRepository;
         $this->galleryFormValidation = $galleryFormValidation;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
+     */
+    public function setAliases(Aliases $aliases)
+    {
+        $this->aliases = $aliases;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
+     */
+    public function setMetaStatements(MetaStatements $metaStatements)
+    {
+        $this->metaStatements = $metaStatements;
     }
 
     /**
@@ -178,11 +197,43 @@ class Edit extends AbstractFormAction
 
             $this->insertUriAlias($formData, $galleryId);
 
-            $this->galleryHelpers->generatePictureAliases($galleryId);
+            $this->generatePictureAliases($galleryId);
 
             $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
+    }
+
+    /**
+     * Setzt alle Bild-Aliase einer Fotogalerie neu
+     *
+     * @param integer $galleryId
+     *
+     * @return boolean
+     */
+    protected function generatePictureAliases($galleryId)
+    {
+        if ($this->aliases && $this->metaStatements && $this->uriAliasManager) {
+            $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
+
+            $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
+            if (!empty($alias)) {
+                $alias .= '/img';
+            }
+            $seoKeywords = $this->metaStatements->getKeywords(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
+            $seoDescription = $this->metaStatements->getDescription(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
+
+            foreach ($pictures as $picture) {
+                $this->uriAliasManager->insertUriAlias(
+                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    !empty($alias) ? $alias . '-' . $picture['id'] : '',
+                    $seoKeywords,
+                    $seoDescription
+                );
+            }
+        }
+
+        return true;
     }
 }

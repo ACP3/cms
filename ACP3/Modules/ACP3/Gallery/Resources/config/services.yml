@@ -14,10 +14,6 @@ services:
     class: '%gallery.helpers.fqdn%'
     arguments:
       - '@core.environment.application_path'
-      - '@seo.core.router.aliases'
-      - '@gallery.model.picturerepository'
-      - '@seo.helper.meta_statements'
-      - '@seo.helper.uri_alias_manager'
 
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer:
     class: '%gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn%'

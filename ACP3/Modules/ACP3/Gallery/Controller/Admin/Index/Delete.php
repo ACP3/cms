@@ -97,7 +97,7 @@ class Delete extends Core\Controller\AdminAction
                             );
                         }
 
-                        $this->galleryHelpers->deletePictureAliases($item);
+                        $this->deletePictureAliases($item);
 
                         $bool = $this->galleryRepository->delete($item);
                     }
@@ -106,5 +106,24 @@ class Delete extends Core\Controller\AdminAction
                 return $bool !== false;
             }
         );
+    }
+
+    /**
+     * @param integer $galleryId
+     *
+     * @return boolean
+     */
+    protected function deletePictureAliases($galleryId)
+    {
+        if ($this->uriAliasManager) {
+            $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
+            $cPictures = count($pictures);
+
+            for ($i = 0; $i < $cPictures; ++$i) {
+                $this->uriAliasManager->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
+            }
+        }
+
+        return true;
     }
 }

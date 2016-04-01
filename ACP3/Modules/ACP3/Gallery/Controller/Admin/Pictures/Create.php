@@ -8,6 +8,9 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
+use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Create
@@ -39,6 +42,18 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
     protected $pictureRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
+     */
+    protected $aliases;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     */
+    protected $metaStatements;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * Create constructor.
@@ -70,6 +85,30 @@ class Create extends AbstractFormAction
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
         $this->pictureFormValidation = $pictureFormValidation;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
+     */
+    public function setAliases(Aliases $aliases)
+    {
+        $this->aliases = $aliases;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
+     */
+    public function setMetaStatements(MetaStatements $metaStatements)
+    {
+        $this->metaStatements = $metaStatements;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -138,7 +177,7 @@ class Create extends AbstractFormAction
                 ];
 
                 $lastId = $this->pictureRepository->insert($insertValues);
-                $bool2 = $this->galleryHelpers->generatePictureAlias($lastId);
+                $bool2 = $this->generatePictureAlias($lastId);
 
                 $this->galleryCache->saveCache($id);
 
@@ -148,5 +187,36 @@ class Create extends AbstractFormAction
             },
             'acp/gallery/index/edit/id_' . $id
         );
+    }
+
+    /**
+     * Setzt einen einzelnen Alias für ein Bild einer Fotogalerie
+     *
+     * @param integer $pictureId
+     *
+     * @return boolean
+     */
+    protected function generatePictureAlias($pictureId)
+    {
+        if ($this->aliases && $this->metaStatements && $this->uriAliasManager) {
+            $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($pictureId);
+            $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
+            if (!empty($alias)) {
+                $alias .= '/img-' . $pictureId;
+            }
+            $seoKeywords = $this->metaStatements->getKeywords(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
+                $galleryId));
+            $seoDescription = $this->metaStatements->getDescription(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
+                $galleryId));
+
+            return $this->uriAliasManager->insertUriAlias(
+                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
+                $alias,
+                $seoKeywords,
+                $seoDescription
+            );
+        }
+
+        return true;
     }
 }

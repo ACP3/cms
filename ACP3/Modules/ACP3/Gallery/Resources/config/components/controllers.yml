@@ -43,12 +43,13 @@ services:
       - '@core.context.admin'
       - '@core.date'
       - '@core.helpers.formToken'
-      - '@gallery.helpers'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
       - '@gallery.validator.gallery'
     calls:
+      - ['setAliases', ['@?seo.core.router.aliases']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   gallery.controller.admin.index.index:
     class: '%gallery.controller.admin.index.index.fqdn%'
@@ -75,6 +76,10 @@ services:
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
       - '@gallery.validator.picture'
+    calls:
+      - ['setAliases', ['@?seo.core.router.aliases']]
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.pictures.delete:
     class: '%gallery.controller.admin.pictures.delete.fqdn%'
