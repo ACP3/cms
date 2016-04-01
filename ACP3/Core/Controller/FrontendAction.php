@@ -25,10 +25,6 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      */
     protected $breadcrumb;
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
      * @var Core\Helpers\RedirectMessages
      */
     protected $redirectMessages;
@@ -50,7 +46,6 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
 
         $this->assets = $context->getAssets();
         $this->breadcrumb = $context->getBreadcrumb();
-        $this->seo = $context->getSeo();
         $this->actionHelper = $context->getActionHelper();
         $this->response = $context->getResponse();
     }

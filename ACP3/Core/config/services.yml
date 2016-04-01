@@ -102,9 +102,6 @@ services:
       - '@core.request'
       - '@core.router'
 
-  core.seo:
-    class: ACP3\Core\SEO
-
   core.session:
     class: ACP3\Core\Session\SessionHandler
     arguments:

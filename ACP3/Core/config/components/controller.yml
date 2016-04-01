@@ -29,7 +29,6 @@ services:
       - '@core.context.widget'
       - '@core.assets'
       - '@core.breadcrumb'
-      - '@core.seo'
       - '@core.modules.helper.action'
       - '@core.response'
     public: false

@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Controller\Context;
@@ -23,10 +24,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      */
     protected $breadcrumb;
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
@@ -39,7 +36,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
      * @param \ACP3\Core\Assets                           $assets
      * @param \ACP3\Core\Breadcrumb                       $breadcrumb
-     * @param \ACP3\Core\SEO                              $seo
      * @param \ACP3\Core\Modules\Helper\Action            $actionHelper
      * @param \Symfony\Component\HttpFoundation\Response  $response
      */
@@ -47,7 +43,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
         Core\Controller\Context\WidgetContext $context,
         Core\Assets $assets,
         Core\Breadcrumb $breadcrumb,
-        Core\SEO $seo,
         Core\Modules\Helper\Action $actionHelper,
         Response $response
     ) {
@@ -68,7 +63,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
 
         $this->assets = $assets;
         $this->breadcrumb = $breadcrumb;
-        $this->seo = $seo;
         $this->actionHelper = $actionHelper;
         $this->response = $response;
     }
@@ -87,14 +81,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     public function getBreadcrumb()
     {
         return $this->breadcrumb;
-    }
-
-    /**
-     * @return \ACP3\Core\SEO
-     */
-    public function getSeo()
-    {
-        return $this->seo;
     }
 
     /**

@@ -69,7 +69,6 @@ services:
     arguments:
       - '@core.breadcrumb'
       - '@core.lang'
-      - '@core.seo'
       - '@core.request'
       - '@core.router'
       - '@core.validation.validation_rules.integer_validation_rule'

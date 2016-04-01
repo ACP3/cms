@@ -18,10 +18,6 @@ class TableOfContents
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
@@ -43,7 +39,6 @@ class TableOfContents
      *
      * @param \ACP3\Core\Breadcrumb                                       $breadcrumb
      * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\SEO                                              $seo
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\RouterInterface                                  $router
      * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
@@ -52,7 +47,6 @@ class TableOfContents
     public function __construct(
         Core\Breadcrumb $breadcrumb,
         Core\I18n\Translator $translator,
-        Core\SEO $seo,
         Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
         Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
@@ -60,7 +54,6 @@ class TableOfContents
     ) {
         $this->breadcrumb = $breadcrumb;
         $this->translator = $translator;
-        $this->seo = $seo;
         $this->request = $request;
         $this->router = $router;
         $this->integerValidationRule = $integerValidationRule;
@@ -135,13 +128,13 @@ class TableOfContents
     protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
     {
         if ($customUris === true) {
-            if (is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery()) ||
-                $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0
+            if (is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
+                || $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0
             ) {
                 return true;
             }
-        } elseif (($this->integerValidationRule->isValid($this->request->getParameters()->get('page')) === false && $currentIndex === 0) ||
-            $this->request->getParameters()->get('page') === $pageNumber
+        } elseif (($this->integerValidationRule->isValid($this->request->getParameters()->get('page')) === false && $currentIndex === 0)
+            || $this->request->getParameters()->get('page') === $pageNumber
         ) {
             return true;
         }
