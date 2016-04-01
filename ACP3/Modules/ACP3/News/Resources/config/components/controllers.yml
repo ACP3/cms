@@ -32,6 +32,7 @@ services:
       - '@news.cache'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.edit:
     class: '%news.controller.admin.index.edit.fqdn%'

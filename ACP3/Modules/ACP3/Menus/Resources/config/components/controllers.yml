@@ -67,6 +67,8 @@ services:
       - '@core.nested_set'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'
+    calls:
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   menus.controller.admin.items.edit:
     class: '%menus.controller.admin.items.edit.fqdn%'

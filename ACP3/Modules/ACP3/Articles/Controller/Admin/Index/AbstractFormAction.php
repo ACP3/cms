@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Controller\AdminAction;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class AbstractFormAction
@@ -25,6 +26,10 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
      */
     protected $manageMenuItemHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
@@ -48,6 +53,14 @@ abstract class AbstractFormAction extends AdminAction
         $this->manageMenuItemHelper = $manageMenuItemHelper;
 
         return $this;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -76,6 +89,23 @@ abstract class AbstractFormAction extends AdminAction
 
             // Refresh the menu items cache
             $this->menusCache->saveMenusCache();
+        }
+    }
+
+    /**
+     * @param array $formData
+     * @param int   $articleId
+     */
+    protected function insertUriAlias(array $formData, $articleId)
+    {
+        if ($this->uriAliasManager) {
+            $this->uriAliasManager->insertUriAlias(
+                sprintf(Articles\Helpers::URL_KEY_PATTERN, $articleId),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
         }
     }
 }

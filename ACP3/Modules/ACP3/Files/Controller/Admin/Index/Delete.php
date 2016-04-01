@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Delete
@@ -29,6 +30,10 @@ class Delete extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     protected $commentsHelpers;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * Delete constructor.
@@ -61,6 +66,14 @@ class Delete extends Core\Controller\AdminAction
     }
 
     /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
+    }
+
+    /**
      * @param string $action
      *
      * @return mixed
@@ -84,7 +97,10 @@ class Delete extends Core\Controller\AdminAction
                         }
 
                         $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
-                        $this->seo->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
+
+                        if ($this->uriAliasManager) {
+                            $this->uriAliasManager->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
+                        }
                     }
                 }
 

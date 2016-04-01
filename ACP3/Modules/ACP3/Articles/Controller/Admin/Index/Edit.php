@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
@@ -69,8 +70,8 @@ class Edit extends AbstractFormAction
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
         Articles\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -168,15 +169,15 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param int   $id
+     * @param int   $articleId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $id)
+    protected function executePost(array $formData, $articleId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $articleId) {
             $this->adminFormValidation
-                ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $articleId))
                 ->validate($formData);
 
             $updateValues = [
@@ -187,19 +188,12 @@ class Edit extends AbstractFormAction
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $bool = $this->articleRepository->update($updateValues, $id);
+            $bool = $this->articleRepository->update($updateValues, $articleId);
+            
+            $this->articlesCache->saveCache($articleId);
 
-            $this->seo->insertUriAlias(
-                sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
-
-            $this->articlesCache->saveCache($id);
-
-            $this->createOrUpdateMenuItem($formData, $id);
+            $this->insertUriAlias($formData, $articleId);
+            $this->createOrUpdateMenuItem($formData, $articleId);
 
             $this->formTokenHelper->unsetFormToken();
 

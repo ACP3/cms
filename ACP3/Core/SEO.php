@@ -24,19 +24,6 @@ class SEO
     }
 
     /**
-     * Deletes the given URL alias
-     *
-     * @param string $path
-     *
-     * @return boolean
-     * @deprecated
-     */
-    public function deleteUriAlias($path)
-    {
-        return $this->uriAliasManager->deleteUriAlias($path);
-    }
-
-    /**
      * Inserts/Updates a given URL alias
      *
      * @param string $path

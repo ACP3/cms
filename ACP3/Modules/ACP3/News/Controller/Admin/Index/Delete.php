@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\News;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Delete
@@ -27,6 +28,10 @@ class Delete extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\News\Cache
      */
     protected $newsCache;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * Delete constructor.
@@ -44,6 +49,14 @@ class Delete extends Core\Controller\AdminAction
 
         $this->newsRepository = $newsRepository;
         $this->newsCache = $newsCache;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -67,7 +80,10 @@ class Delete extends Core\Controller\AdminAction
                     }
 
                     $this->newsCache->getCacheDriver()->delete(News\Cache::CACHE_ID . $item);
-                    $this->seo->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
+
+                    if ($this->uriAliasManager) {
+                        $this->uriAliasManager->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
+                    }
                 }
 
                 return $bool;

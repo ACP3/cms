@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Delete
@@ -28,6 +29,10 @@ class Delete extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
     protected $menusCache;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * Delete constructor.
@@ -51,6 +56,14 @@ class Delete extends Core\Controller\AdminAction
     }
 
     /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
+    }
+
+    /**
      * @param string $action
      *
      * @return mixed
@@ -68,7 +81,10 @@ class Delete extends Core\Controller\AdminAction
                     // URI-Alias löschen
                     $itemUri = $this->menuItemRepository->getMenuItemUriById($item);
                     $bool = $this->nestedSet->deleteNode($item, Menus\Model\MenuItemRepository::TABLE_NAME, true);
-                    $this->seo->deleteUriAlias($itemUri);
+
+                    if ($this->uriAliasManager) {
+                        $this->uriAliasManager->deleteUriAlias($itemUri);
+                    }
                 }
 
                 $this->menusCache->saveMenusCache();

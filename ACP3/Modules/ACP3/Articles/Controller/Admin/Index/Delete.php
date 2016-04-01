@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
@@ -64,7 +65,10 @@ class Delete extends AbstractFormAction
                     }
 
                     $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
-                    $this->seo->deleteUriAlias($uri);
+
+                    if ($this->uriAliasManager) {
+                        $this->uriAliasManager->deleteUriAlias($uri);
+                    }
                 }
 
                 if ($this->menusCache) {

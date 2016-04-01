@@ -60,8 +60,8 @@ class Create extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Articles\Model\ArticleRepository $articleRepository,
         Articles\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -141,20 +141,15 @@ class Create extends AbstractFormAction
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $lastId = $this->articleRepository->insert($insertValues);
+            $articleId = $this->articleRepository->insert($insertValues);
 
-            $this->seo->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
+            $this->insertUriAlias($formData, $articleId);
 
-            $this->createOrUpdateMenuItem($formData, $lastId);
+            $this->createOrUpdateMenuItem($formData, $articleId);
 
             $this->formTokenHelper->unsetFormToken();
 
-            return $lastId;
+            return $articleId;
         });
     }
 }

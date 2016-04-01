@@ -23,6 +23,7 @@ services:
       - ['setMenusCache', ['@?menus.cache']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.delete:
     class: '%articles.controller.admin.index.delete.fqdn%'
@@ -33,6 +34,7 @@ services:
     calls:
       - ['setMenusCache', ['@?menus.cache']]
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.edit:
     class: '%articles.controller.admin.index.edit.fqdn%'
@@ -50,6 +52,7 @@ services:
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
       - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.index:
     class: '%articles.controller.admin.index.index.fqdn%'

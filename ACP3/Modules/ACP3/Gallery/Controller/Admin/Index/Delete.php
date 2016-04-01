@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Delete
@@ -31,6 +32,10 @@ class Delete extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
      */
     protected $pictureRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * Delete constructor.
@@ -57,6 +62,14 @@ class Delete extends Core\Controller\AdminAction
     }
 
     /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
+    }
+
+    /**
      * @param string $action
      *
      * @return mixed
@@ -77,7 +90,13 @@ class Delete extends Core\Controller\AdminAction
                         }
 
                         $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
-                        $this->seo->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
+
+                        if ($this->uriAliasManager) {
+                            $this->uriAliasManager->deleteUriAlias(
+                                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
+                            );
+                        }
+
                         $this->galleryHelpers->deletePictureAliases($item);
 
                         $bool = $this->galleryRepository->delete($item);

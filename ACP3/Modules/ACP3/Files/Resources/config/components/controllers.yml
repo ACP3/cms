@@ -31,6 +31,7 @@ services:
       - '@files.cache'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   files.controller.admin.index.edit:
     class: '%files.controller.admin.index.edit.fqdn%'

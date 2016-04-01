@@ -34,6 +34,8 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
+    calls:
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.index.edit:
     class: '%gallery.controller.admin.index.edit.fqdn%'
@@ -81,6 +83,8 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
+    calls:
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.pictures.edit:
     class: '%gallery.controller.admin.pictures.edit.fqdn%'
