@@ -1,4 +1,13 @@
 services:
+  core.breadcrumb:
+    class: ACP3\Modules\ACP3\Seo\Core\Breadcrumb
+    arguments:
+      - '@service_container'
+      - '@core.lang'
+      - '@core.request'
+      - '@core.router'
+      - '@core.config'
+
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
     arguments:

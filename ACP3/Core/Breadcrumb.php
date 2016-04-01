@@ -7,7 +7,6 @@ use ACP3\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
- * Generates the breadcrumb and page title
  * @package ACP3\Core
  */
 class Breadcrumb
@@ -47,10 +46,6 @@ class Breadcrumb
      * @var \ACP3\Core\RouterInterface
      */
     protected $router;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    protected $config;
 
     /**
      * Breadcrumb constructor.
@@ -59,20 +54,17 @@ class Breadcrumb
      * @param \ACP3\Core\I18n\Translator                       $translator
      * @param \ACP3\Core\Http\RequestInterface                 $request
      * @param \ACP3\Core\RouterInterface                       $router
-     * @param \ACP3\Core\Config                                $config
      */
     public function __construct(
         Container $container,
         Translator $translator,
         RequestInterface $request,
-        RouterInterface $router,
-        Config $config
+        RouterInterface $router
     ) {
         $this->container = $container;
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
-        $this->config = $config;
     }
 
     /**
@@ -148,7 +140,7 @@ class Breadcrumb
      */
     public function getSiteTitle()
     {
-        return $this->config->getSettings('seo')['title'];
+        return '';
     }
 
     /**

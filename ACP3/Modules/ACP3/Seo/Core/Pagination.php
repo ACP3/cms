@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Core;
 
-use ACP3\Core\Breadcrumb;
+use ACP3\Core\Breadcrumb as CoreBreadcrumb;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
@@ -37,7 +37,7 @@ class Pagination extends \ACP3\Core\Pagination
      */
     public function __construct(
         User $user,
-        Breadcrumb $breadcrumb,
+        CoreBreadcrumb $breadcrumb,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,

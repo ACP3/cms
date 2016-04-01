@@ -45,7 +45,6 @@ services:
       - '@core.lang'
       - '@core.request'
       - '@core.router'
-      - '@core.config'
 
   core.cache.system:
     class: ACP3\Core\Cache
