@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -66,8 +67,8 @@ class Edit extends AbstractFormAction
         Files\Model\FilesRepository $filesRepository,
         Files\Cache $filesCache,
         Files\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers)
-    {
+        Categories\Helpers $categoriesHelpers
+    ) {
         parent::__construct($context, $categoriesHelpers);
 
         $this->date = $date;
@@ -108,7 +109,8 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), trim(strrchr($file['size'], ' '))),
+                'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(),
+                    trim(strrchr($file['size'], ' '))),
                 'categories' => $this->categoriesHelpers->categoriesList('files', $file['category_id'], true),
                 'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
                 'current_file' => $file['file'],
@@ -127,13 +129,13 @@ class Edit extends AbstractFormAction
      * @param array $formData
      * @param array $settings
      * @param array $dl
-     * @param int   $id
+     * @param int   $fileId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, array $dl, $id)
+    protected function executePost(array $formData, array $settings, array $dl, $fileId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $dl, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $dl, $fileId) {
             $file = [];
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
@@ -143,7 +145,7 @@ class Edit extends AbstractFormAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $fileId))
                 ->validate($formData);
 
             $updateValues = [
@@ -156,45 +158,50 @@ class Edit extends AbstractFormAction
                 'user_id' => $this->user->getUserId(),
             ];
 
-            // Falls eine neue Datei angegeben wurde, Änderungen durchführen
             if (!empty($file)) {
-                $upload = new Core\Helpers\Upload($this->appPath, 'files');
-
-                if (is_array($file) === true) {
-                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                    $newFile = $result['name'];
-                    $filesize = $result['size'];
-                } else {
-                    $formData['filesize'] = (float)$formData['filesize'];
-                    $newFile = $file;
-                    $filesize = $formData['filesize'] . ' ' . $formData['unit'];
-                }
-                // SQL Query für die Änderungen
-                $newFileSql = [
-                    'file' => $newFile,
-                    'size' => $filesize,
-                ];
-
-                $upload->removeUploadedFile($dl['file']);
+                $newFileSql = $this->updateAssociatedFile($file, $formData, $dl['file']);
 
                 $updateValues = array_merge($updateValues, $newFileSql);
             }
 
-            $bool = $this->filesRepository->update($updateValues, $id);
+            $bool = $this->filesRepository->update($updateValues, $fileId);
 
-            $this->seo->insertUriAlias(
-                sprintf(Files\Helpers::URL_KEY_PATTERN, $id),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
+            $this->insertUriAlias($formData, $fileId);
 
-            $this->filesCache->saveCache($id);
+            $this->filesCache->saveCache($fileId);
 
             $this->formTokenHelper->unsetFormToken();
 
             return $bool;
         });
+    }
+
+    /**
+     * @param string|array $file
+     * @param array        $formData
+     * @param string       $currentFileName
+     *
+     * @return array
+     */
+    protected function updateAssociatedFile($file, array $formData, $currentFileName)
+    {
+        $upload = new Core\Helpers\Upload($this->appPath, 'files');
+
+        if (is_array($file) === true) {
+            $result = $upload->moveFile($file['tmp_name'], $file['name']);
+            $newFile = $result['name'];
+            $fileSize = $result['size'];
+        } else {
+            $formData['filesize'] = (float)$formData['filesize'];
+            $newFile = $file;
+            $fileSize = $formData['filesize'] . ' ' . $formData['unit'];
+        }
+
+        $upload->removeUploadedFile($currentFileName);
+
+        return [
+            'file' => $newFile,
+            'size' => $fileSize,
+        ];
     }
 }

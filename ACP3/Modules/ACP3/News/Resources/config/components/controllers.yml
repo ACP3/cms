@@ -23,6 +23,7 @@ services:
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.delete:
     class: '%news.controller.admin.index.delete.fqdn%'
@@ -48,6 +49,7 @@ services:
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.index:
     class: '%news.controller.admin.index.index.fqdn%'

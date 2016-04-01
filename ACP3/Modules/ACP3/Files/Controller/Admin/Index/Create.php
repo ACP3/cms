@@ -155,13 +155,7 @@ class Create extends AbstractFormAction
 
             $lastId = $this->filesRepository->insert($insertValues);
 
-            $this->seo->insertUriAlias(
-                sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
+            $this->insertUriAlias($formData, $lastId);
 
             $this->formTokenHelper->unsetFormToken();
 

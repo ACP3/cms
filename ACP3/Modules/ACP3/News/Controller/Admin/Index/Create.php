@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -119,19 +120,13 @@ class Create extends AbstractFormAction
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $lastId = $this->newsRepository->insert($insertValues);
+            $newsId = $this->newsRepository->insert($insertValues);
 
-            $this->seo->insertUriAlias(
-                sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
+            $this->insertUriAlias($formData, $newsId);
 
             $this->formTokenHelper->unsetFormToken();
 
-            return $lastId;
+            return $newsId;
         });
     }
 }

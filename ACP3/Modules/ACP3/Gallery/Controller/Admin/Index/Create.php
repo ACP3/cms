@@ -98,13 +98,7 @@ class Create extends AbstractFormAction
 
             $lastId = $this->galleryRepository->insert($insertValues);
 
-            $this->seo->insertUriAlias(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
+            $this->insertUriAlias($formData, $lastId);
 
             $this->formTokenHelper->unsetFormToken();
 

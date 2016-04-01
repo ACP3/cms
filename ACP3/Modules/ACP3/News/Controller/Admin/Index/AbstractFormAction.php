@@ -9,7 +9,9 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\AdminAction;
 use ACP3\Modules\ACP3\Categories;
+use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class AbstractFormAction
@@ -29,6 +31,10 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
      */
     protected $metaFormFieldsHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * AbstractFormAction constructor.
@@ -40,8 +46,8 @@ abstract class AbstractFormAction extends AdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
-        Categories\Helpers $categoriesHelpers)
-    {
+        Categories\Helpers $categoriesHelpers
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
@@ -57,13 +63,22 @@ abstract class AbstractFormAction extends AdminAction
     }
 
     /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
+    }
+
+    /**
      * @param array $formData
      *
      * @return int
      */
     protected function fetchCategoryIdForSave(array $formData)
     {
-        return !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], 'news') : $formData['cat'];
+        return !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'],
+            'news') : $formData['cat'];
     }
 
     /**
@@ -114,5 +129,22 @@ abstract class AbstractFormAction extends AdminAction
         }
 
         return $options;
+    }
+
+    /**
+     * @param array $formData
+     * @param int   $newsId
+     */
+    protected function insertUriAlias(array $formData, $newsId)
+    {
+        if ($this->uriAliasManager) {
+            $this->uriAliasManager->insertUriAlias(
+                sprintf(News\Helpers::URL_KEY_PATTERN, $newsId),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+        }
     }
 }

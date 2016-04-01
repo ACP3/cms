@@ -31,6 +31,10 @@ class Create extends Core\Controller\AdminAction
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * Create constructor.
@@ -38,6 +42,7 @@ class Create extends Core\Controller\AdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext            $context
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager         $uriAliasManager
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository            $seoRepository
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
@@ -45,6 +50,7 @@ class Create extends Core\Controller\AdminAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
+        Seo\Helper\UriAliasManager $uriAliasManager,
         Seo\Model\SeoRepository $seoRepository,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
@@ -52,6 +58,7 @@ class Create extends Core\Controller\AdminAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->metaFormFieldsHelper = $metaFormFieldsHelper;
+        $this->uriAliasManager = $uriAliasManager;
         $this->seoRepository = $seoRepository;
         $this->adminFormValidation = $adminFormValidation;
     }
@@ -82,7 +89,7 @@ class Create extends Core\Controller\AdminAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
-            $bool = $this->seo->insertUriAlias(
+            $bool = $this->uriAliasManager->insertUriAlias(
                 $formData['uri'],
                 $formData['alias'],
                 $formData['seo_keywords'],

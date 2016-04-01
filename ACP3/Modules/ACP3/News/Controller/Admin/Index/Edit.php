@@ -108,15 +108,15 @@ class Edit extends AbstractFormAction
     /**
      * @param array $formData
      * @param array $settings
-     * @param int   $id
+     * @param int   $newsId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, $id)
+    protected function executePost(array $formData, array $settings, $newsId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $newsId) {
             $this->adminFormValidation
-                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $newsId))
                 ->validate($formData);
 
             $updateValues = [
@@ -133,17 +133,11 @@ class Edit extends AbstractFormAction
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $bool = $this->newsRepository->update($updateValues, $id);
+            $bool = $this->newsRepository->update($updateValues, $newsId);
 
-            $this->seo->insertUriAlias(
-                sprintf(News\Helpers::URL_KEY_PATTERN, $id),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
+            $this->insertUriAlias($formData, $newsId);
 
-            $this->newsCache->saveCache($id);
+            $this->newsCache->saveCache($newsId);
 
             $this->formTokenHelper->unsetFormToken();
 

@@ -104,8 +104,6 @@ services:
 
   core.seo:
     class: ACP3\Core\SEO
-    arguments:
-      - '@seo.helper.uri_alias_manager'
 
   core.session:
     class: ACP3\Core\Session\SessionHandler

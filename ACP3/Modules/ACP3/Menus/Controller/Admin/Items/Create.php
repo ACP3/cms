@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
@@ -180,12 +181,15 @@ class Create extends AbstractFormAction
                 $keywords = $formData['seo_keywords'];
                 $description = $formData['seo_description'];
             }
-            $this->seo->insertUriAlias(
-                $path,
-                $formData['mode'] == 1 ? '' : $alias,
-                $keywords,
-                $description,
-                (int)$formData['seo_robots']
+
+            $this->insertUriAlias(
+                [
+                    'alias' => $formData['mode'] == 1 ? '' : $alias,
+                    'seo_keywords' => $keywords,
+                    'seo_description' => $description,
+                    'seo_robots' => (int)$formData['seo_robots']
+                ],
+                $path
             );
         }
     }

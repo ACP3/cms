@@ -200,12 +200,15 @@ class Edit extends AbstractFormAction
             $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
             $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
             $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-            $this->seo->insertUriAlias(
-                $path,
-                $formData['mode'] == 1 ? '' : $alias,
-                $keywords,
-                $description,
-                (int)$formData['seo_robots']
+
+            $this->insertUriAlias(
+                [
+                    'alias' => $formData['mode'] == 1 ? '' : $alias,
+                    'seo_keywords' => $keywords,
+                    'seo_description' => $description,
+                    'seo_robots' => (int)$formData['seo_robots']
+                ],
+                $path
             );
         }
     }

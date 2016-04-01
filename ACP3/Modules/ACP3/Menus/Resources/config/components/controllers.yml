@@ -59,6 +59,7 @@ services:
       - ['setArticlesHelpers', ['@?articles.helpers']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
       - ['setMetaStatementsHelper', ['@?seo.helper.meta_statements']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   menus.controller.admin.items.delete:
     class: '%menus.controller.admin.items.delete.fqdn%'
@@ -86,6 +87,7 @@ services:
       - ['setArticlesHelpers', ['@?articles.helpers']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
       - ['setMetaStatementsHelper', ['@?seo.helper.meta_statements']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   menus.controller.admin.items.order:
     class: '%menus.controller.admin.items.order.fqdn%'

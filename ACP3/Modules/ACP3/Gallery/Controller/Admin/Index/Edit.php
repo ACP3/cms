@@ -156,15 +156,15 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param int   $id
+     * @param int   $galleryId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $id)
+    protected function executePost(array $formData, $galleryId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $galleryId) {
             $this->galleryFormValidation
-                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
+                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
                 ->validate($formData);
 
             $updateValues = [
@@ -174,16 +174,11 @@ class Edit extends AbstractFormAction
                 'user_id' => $this->user->getUserId(),
             ];
 
-            $bool = $this->galleryRepository->update($updateValues, $id);
+            $bool = $this->galleryRepository->update($updateValues, $galleryId);
 
-            $this->seo->insertUriAlias(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
-            $this->galleryHelpers->generatePictureAliases($id);
+            $this->insertUriAlias($formData, $galleryId);
+
+            $this->galleryHelpers->generatePictureAliases($galleryId);
 
             $this->formTokenHelper->unsetFormToken();
 

@@ -22,6 +22,7 @@ services:
       - '@categories.helpers'
     calls:
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   files.controller.admin.index.delete:
     class: '%files.controller.admin.index.delete.fqdn%'
@@ -46,6 +47,7 @@ services:
       - '@categories.helpers'
     calls:
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   files.controller.admin.index.index:
     class: '%files.controller.admin.index.index.fqdn%'

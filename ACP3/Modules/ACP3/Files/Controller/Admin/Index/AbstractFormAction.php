@@ -9,7 +9,9 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\AdminAction;
 use ACP3\Modules\ACP3\Categories;
+use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class AbstractFormAction
@@ -25,6 +27,10 @@ abstract class AbstractFormAction extends AdminAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
      */
     protected $metaFormFieldsHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * AbstractFormAction constructor.
@@ -47,6 +53,14 @@ abstract class AbstractFormAction extends AdminAction
     public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
     {
         $this->metaFormFieldsHelper = $metaFormFieldsHelper;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -83,5 +97,22 @@ abstract class AbstractFormAction extends AdminAction
             'GiB' => 'GiB',
             'TiB' => 'TiB'
         ];
+    }
+
+    /**
+     * @param array $formData
+     * @param int   $fileId
+     */
+    protected function insertUriAlias(array $formData, $fileId)
+    {
+        if ($this->uriAliasManager) {
+            $this->uriAliasManager->insertUriAlias(
+                sprintf(Files\Helpers::URL_KEY_PATTERN, $fileId),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int)$formData['seo_robots']
+            );
+        }
     }
 }

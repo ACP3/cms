@@ -12,6 +12,7 @@ services:
       - '@core.context.admin'
       - '@core.helpers.formToken'
       - '@seo.helper.meta_form_fields'
+      - '@seo.helper.uri_alias_manager'
       - '@seo.model.seorepository'
       - '@seo.validator'
 
