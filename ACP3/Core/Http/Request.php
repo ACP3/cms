@@ -5,7 +5,6 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request\ParameterBag;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Seo;
 
 /**
  * Class Request
