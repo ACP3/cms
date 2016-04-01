@@ -89,6 +89,7 @@ class Configuration extends Core\Controller\AdminAction
             'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $wysiwyg,
             'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
+            'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->formsHelper->yesNoCheckboxGenerator(
                 'maintenance_mode',
@@ -139,6 +140,7 @@ class Configuration extends Core\Controller\AdminAction
                     'flood' => (int)$formData['flood'],
                     'homepage' => $formData['homepage'],
                     'lang' => $formData['language'],
+                    'mod_rewrite' => (int)$formData['mod_rewrite'],
                     'mailer_smtp_auth' => (int)$formData['mailer_smtp_auth'],
                     'mailer_smtp_host' => $formData['mailer_smtp_host'],
                     'mailer_smtp_password' => $formData['mailer_smtp_password'],

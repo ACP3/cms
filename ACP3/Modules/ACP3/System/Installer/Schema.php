@@ -46,7 +46,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 57;
+        return 58;
     }
 
     /**
@@ -114,6 +114,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'mailer_type' => 'mail',
             'maintenance_mode' => false,
             'maintenance_message' => '',
+            'mod_rewrite' => false,
             'wysiwyg' => 'core.wysiwyg.ckeditor'
         ];
     }

@@ -174,6 +174,8 @@
         <item key="mod_description">Dieses Modul ist für die grundlegenden Einstellungen des ACP3 zuständig.</item>
         <item key="mod_installation_error">Beim Installieren des Moduls ist ein Fehler aufgetreten.</item>
         <item key="mod_installation_success">Das Modul wurde erfolgreich installiert.</item>
+        <item key="mod_rewrite">mod_rewrite verwenden</item>
+        <item key="mod_rewrite_description">Bitte nur aktivieren, wenn Sie den Apache Webserver verwenden.</item>
         <item key="mod_uninstallation_error">Beim Deinstallieren des Moduls ist ein Fehler aufgetreten.</item>
         <item key="mod_uninstallation_success">Das Modul wurde erfolgreich deinstalliert.</item>
         <item key="module">Modul</item>
@@ -251,6 +253,7 @@
         <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
         <item key="select_mailer_type">Bitte wählen Sie den zu verwendenten Mailertyp aus.</item>
         <item key="select_menu_item">Bitte wählen Sie einen der oben stehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.</item>
+        <item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht.</item>
         <item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht.</item>
         <item key="select_records_per_page">Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen.</item>
         <item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen.</item>

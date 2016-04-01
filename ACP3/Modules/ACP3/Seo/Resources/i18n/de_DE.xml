@@ -16,15 +16,12 @@
         <item key="keywords">Schlüsselwörter</item>
         <item key="keywords_separate_with_commas">Bitte mit Kommata trennen.</item>
         <item key="mod_description">Dieses Modul ist für die Verwaltung von URL-Rewrites, Schlüsselwörtern, Beschreibungen und den Robots-Einstellungen zuständig.</item>
-        <item key="mod_rewrite">mod_rewrite verwenden</item>
-        <item key="mod_rewrite_description">Bitte nur aktivieren, wenn Sie den Apache Webserver verwenden.</item>
         <item key="robots">Robots</item>
         <item key="robots_use_system_default">Systemstandard verwenden (%default%)</item>
         <item key="robots_index_follow">index, follow</item>
         <item key="robots_index_nofollow">index, nofollow</item>
         <item key="robots_noindex_follow">noindex, follow</item>
         <item key="robots_noindex_nofollow">noindex, nofollow</item>
-        <item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht.</item>
         <item key="select_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.</item>
         <item key="seo">SEO</item>
         <item key="uri">Pfad</item>

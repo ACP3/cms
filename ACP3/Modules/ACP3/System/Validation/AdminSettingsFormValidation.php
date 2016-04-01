@@ -68,6 +68,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'language',
                     'message' => $this->translator->t('system', 'select_language')
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'mod_rewrite',
+                    'message' => $this->translator->t('system', 'select_mod_rewrite'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
                 ]);
     }
 

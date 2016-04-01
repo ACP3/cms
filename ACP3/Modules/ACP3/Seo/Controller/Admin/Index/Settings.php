@@ -70,7 +70,6 @@ class Settings extends Core\Controller\AdminAction
 
         return [
             'robots' => $this->formsHelper->choicesGenerator('robots', $robots, $seoSettings['robots']),
-            'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $seoSettings['mod_rewrite']),
             'form' => array_merge($seoSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -89,7 +88,6 @@ class Settings extends Core\Controller\AdminAction
             $data = [
                 'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
                 'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
-                'mod_rewrite' => (int)$formData['mod_rewrite'],
                 'robots' => (int)$formData['robots'],
                 'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
             ];

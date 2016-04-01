@@ -30,6 +30,9 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             5 => [
                 "ALTER TABLE `{pre}seo` ENGINE = InnoDB",
+            ],
+            6 => [
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'mod_rewrite';",
             ]
         ];
     }

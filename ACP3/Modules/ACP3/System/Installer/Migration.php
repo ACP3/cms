@@ -124,6 +124,9 @@ class Migration extends Modules\Installer\AbstractMigration
             57 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'maintenance' AND `page` ='sql_export';",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'maintenance' AND `page` ='sql_import';"
+            ],
+            58 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'mod_rewrite', '0');",
             ]
         ];
     }

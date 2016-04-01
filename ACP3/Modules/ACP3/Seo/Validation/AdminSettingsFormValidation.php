@@ -33,16 +33,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [1, 2, 3, 4]
                     ]
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'mod_rewrite',
-                    'message' => $this->translator->t('seo', 'select_mod_rewrite'),
-                    'extra' => [
-                        'haystack' => [0, 1]
-                    ]
                 ]);
 
         $this->validator->validate();

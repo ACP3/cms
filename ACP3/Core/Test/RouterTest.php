@@ -107,7 +107,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $this->configMock->expects($this->exactly($callCount))
             ->method('getSettings')
-            ->with('seo')
+            ->with('system')
             ->willReturn(['mod_rewrite' => $useModRewrite]);
     }
 

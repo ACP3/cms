@@ -40,21 +40,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$mod_rewrite.0.id}" class="col-sm-2 control-label required">{lang t="seo|mod_rewrite"}</label>
-
-            <div class="col-sm-10">
-                <div class="btn-group" data-toggle="buttons">
-                    {foreach $mod_rewrite as $row}
-                        <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                            <input type="radio" name="mod_rewrite" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                            {$row.lang}
-                        </label>
-                    {/foreach}
-                </div>
-                <p class="help-block">{lang t="seo|mod_rewrite_description"}</p>
-            </div>
-        </div>
-        <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
                 <a href="{uri args="acp/seo"}" class="btn btn-default">{lang t="system|cancel"}</a>

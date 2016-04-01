@@ -153,7 +153,7 @@ class Router implements RouterInterface
     protected function useModRewrite($path)
     {
         return $this->environment === ApplicationMode::PRODUCTION &&
-        (bool)$this->config->getSettings('seo')['mod_rewrite'] === true &&
+        (bool)$this->config->getSettings('system')['mod_rewrite'] === true &&
         $this->isAdminUri($path) === false;
     }
 }
