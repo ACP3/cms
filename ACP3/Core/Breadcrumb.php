@@ -4,7 +4,7 @@ namespace ACP3\Core;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @package ACP3\Core
@@ -31,7 +31,7 @@ class Breadcrumb
     protected $breadcrumbCache = [];
 
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
     /**
@@ -50,13 +50,13 @@ class Breadcrumb
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\I18n\Translator                       $translator
-     * @param \ACP3\Core\Http\RequestInterface                 $request
-     * @param \ACP3\Core\RouterInterface                       $router
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\I18n\Translator                                $translator
+     * @param \ACP3\Core\Http\RequestInterface                          $request
+     * @param \ACP3\Core\RouterInterface                                $router
      */
     public function __construct(
-        Container $container,
+        ContainerInterface $container,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router

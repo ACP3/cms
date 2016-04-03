@@ -4,7 +4,7 @@ namespace ACP3\Modules\ACP3\Menus\Core;
 use ACP3\Core;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Menus;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Generates the breadcrumb and page title
@@ -28,22 +28,20 @@ class Breadcrumb extends Core\Breadcrumb
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\Container  $container
-     * @param \ACP3\Core\I18n\Translator                        $translator
-     * @param \ACP3\Core\Http\RequestInterface                  $request
-     * @param \ACP3\Core\RouterInterface                        $router
-     * @param \ACP3\Core\Config                                 $config
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\I18n\Translator                                $translator
+     * @param \ACP3\Core\Http\RequestInterface                          $request
+     * @param \ACP3\Core\RouterInterface                                $router
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository         $menuItemRepository
      */
     public function __construct(
-        Container $container,
+        ContainerInterface $container,
         Core\I18n\Translator $translator,
         RequestInterface $request,
         Core\RouterInterface $router,
-        Core\Config $config,
         Menus\Model\MenuItemRepository $menuItemRepository
     ) {
-        parent::__construct($container, $translator, $request, $router, $config);
+        parent::__construct($container, $translator, $request, $router);
 
         $this->menuItemRepository = $menuItemRepository;
 

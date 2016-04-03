@@ -19,7 +19,7 @@ class RewriteInternalUri
      */
     protected $controllerActionExists;
     /**
-     * @var \ACP3\Core\Http\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -36,14 +36,14 @@ class RewriteInternalUri
      *
      * @param \ACP3\Core\Environment\ApplicationPath                                   $appPath
      * @param \ACP3\Core\Modules\Helper\ControllerActionExists                         $controllerActionExists
-     * @param \ACP3\Core\Http\Request                                                  $request
+     * @param \ACP3\Core\Http\RequestInterface                                         $request
      * @param \ACP3\Core\RouterInterface                                               $router
      * @param \ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
         Core\Modules\Helper\ControllerActionExists $controllerActionExists,
-        Core\Http\Request $request,
+        Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
         UriAliasValidationRule $uriAliasValidationRule
     ) {
@@ -55,8 +55,6 @@ class RewriteInternalUri
     }
 
     /**
-     * Ersetzt interne ACP3 interne URIs in Texten mit ihren jeweiligen Aliasen
-     *
      * @param string $text
      *
      * @return string
@@ -65,42 +63,51 @@ class RewriteInternalUri
     {
         $rootDir = str_replace('/', '\/', $this->appPath->getWebRoot());
         $host = $this->request->getServer()->get('HTTP_HOST');
+        $pattern = '/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i';
+
         return preg_replace_callback(
-            '/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i',
+            $pattern,
             [$this, "rewriteInternalUriCallback"],
             $text
         );
     }
 
     /**
-     * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
-     *
      * @param array $matches
      *
      * @return string
      */
     private function rewriteInternalUriCallback(array $matches)
     {
-        if ($this->uriAliasValidationRule->isValid($matches[7]) === true) {
-            return $matches[0];
-        } else {
-            $uriArray = explode('/', $matches[7]);
-            $path = 'frontend/' . $uriArray[0];
-            if (!empty($uriArray[1])) {
-                $path .= '/' . $uriArray[1];
-            }
-            if (!empty($uriArray[2])) {
-                $path .= '/' . $uriArray[2];
-            }
-            if (!empty($uriArray[3])) {
-                $path .= '/' . $uriArray[3];
-            }
-
+        if ($this->uriAliasValidationRule->isValid($matches[7]) !== true) {
+            $resourceParts = explode('/', $matches[7]);
+            $path = $this->getResourcePath($resourceParts);
             if ($this->controllerActionExists->controllerActionExists($path) === true) {
                 return '<a' . $matches[1] . 'href="' . $this->router->route($matches[7]) . '"';
-            } else {
-                return $matches[0];
             }
         }
+
+        return $matches[0];
+    }
+
+    /**
+     * @param array $resourceParts
+     *
+     * @return string
+     */
+    private function getResourcePath(array $resourceParts)
+    {
+        $path = 'frontend/' . $resourceParts[0];
+        if (!empty($resourceParts[1])) {
+            $path .= '/' . $resourceParts[1];
+        }
+        if (!empty($resourceParts[2])) {
+            $path .= '/' . $resourceParts[2];
+        }
+        if (!empty($resourceParts[3])) {
+            $path .= '/' . $resourceParts[3];
+        }
+
+        return $path;
     }
 }

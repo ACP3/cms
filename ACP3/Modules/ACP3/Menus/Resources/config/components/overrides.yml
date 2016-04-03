@@ -9,5 +9,4 @@ services:
       - '@core.lang'
       - '@core.request'
       - '@core.router'
-      - '@core.config'
       - '@menus.model.menuitemrepository'

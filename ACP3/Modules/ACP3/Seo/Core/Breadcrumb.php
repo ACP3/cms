@@ -11,7 +11,7 @@ use ACP3\Core\Config;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\RouterInterface;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Breadcrumb
@@ -27,14 +27,14 @@ class Breadcrumb extends \ACP3\Core\Breadcrumb
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\I18n\Translator                       $translator
-     * @param \ACP3\Core\Http\RequestInterface                 $request
-     * @param \ACP3\Core\RouterInterface                       $router
-     * @param \ACP3\Core\Config                                $config
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\I18n\Translator                                $translator
+     * @param \ACP3\Core\Http\RequestInterface                          $request
+     * @param \ACP3\Core\RouterInterface                                $router
+     * @param \ACP3\Core\Config                                         $config
      */
     public function __construct(
-        Container $container,
+        ContainerInterface $container,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,

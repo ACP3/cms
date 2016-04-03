@@ -2,6 +2,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
@@ -20,7 +21,7 @@ class Date
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Http\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -37,14 +38,14 @@ class Date
      *
      * @param \ACP3\Core\Date                                          $date
      * @param \ACP3\Core\I18n\Translator                               $translator
-     * @param \ACP3\Core\Http\Request                                  $request
+     * @param \ACP3\Core\Http\RequestInterface                         $request
      * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
      * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
      */
     public function __construct(
         \ACP3\Core\Date $date,
         Translator $translator,
-        Request $request,
+        RequestInterface $request,
         Forms $formsHelper,
         DateValidationRule $dateValidationRule
     ) {
@@ -74,7 +75,7 @@ class Date
             'Australia' => \DateTimeZone::listIdentifiers(\DateTimeZone::AUSTRALIA),
             'Europe' => \DateTimeZone::listIdentifiers(\DateTimeZone::EUROPE),
             'Indian' => \DateTimeZone::listIdentifiers(\DateTimeZone::INDIAN),
-            'Pacitic' => \DateTimeZone::listIdentifiers(\DateTimeZone::PACIFIC),
+            'Pacific' => \DateTimeZone::listIdentifiers(\DateTimeZone::PACIFIC),
             'UTC' => \DateTimeZone::listIdentifiers(\DateTimeZone::UTC),
         ];
 
@@ -82,8 +83,11 @@ class Date
             $i = 0;
             foreach ($values as $row) {
                 unset($timeZones[$key][$i]);
-                $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry('date_time_zone', $row,
-                    $currentValue);
+                $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry(
+                    'date_time_zone', 
+                    $row,
+                    $currentValue
+                );
                 ++$i;
             }
         }

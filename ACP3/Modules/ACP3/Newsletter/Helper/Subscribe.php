@@ -23,7 +23,7 @@ class Subscribe
      */
     protected $mailer;
     /**
-     * @var \ACP3\Core\Http\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -57,7 +57,7 @@ class Subscribe
      * @param \ACP3\Core\Date                                       $date
      * @param \ACP3\Core\I18n\Translator                            $translator
      * @param \ACP3\Core\Mailer                                     $mailer
-     * @param \ACP3\Core\Http\Request                               $request
+     * @param \ACP3\Core\Http\RequestInterface                      $request
      * @param \ACP3\Core\RouterInterface                            $router
      * @param \ACP3\Core\Helpers\StringFormatter                    $stringFormatter
      * @param \ACP3\Core\Helpers\Secure                             $secureHelper
@@ -69,14 +69,14 @@ class Subscribe
         Core\Date $date,
         Core\I18n\Translator $translator,
         Core\Mailer $mailer,
-        Core\Http\Request $request,
+        Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Helpers\Secure $secureHelper,
         Core\Config $config,
         AccountStatus $accountStatusHelper,
-        AccountRepository $accountRepository)
-    {
+        AccountRepository $accountRepository
+    ) {
         $this->date = $date;
         $this->translator = $translator;
         $this->mailer = $mailer;
