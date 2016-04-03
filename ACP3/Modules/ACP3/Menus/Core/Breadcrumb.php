@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Breadcrumb extends Core\Breadcrumb
 {
     /**
-     * Enthält alle Schritte der Brotkrümelspur,
-     * welche sich aus der Navigationsstruktur der Website ergeben
-     *
      * @var array
      */
     protected $stepsFromDb = [];
@@ -32,6 +29,7 @@ class Breadcrumb extends Core\Breadcrumb
      * @param \ACP3\Core\I18n\Translator                                $translator
      * @param \ACP3\Core\Http\RequestInterface                          $request
      * @param \ACP3\Core\RouterInterface                                $router
+     * @param \ACP3\Core\Breadcrumb\Title                               $title
      * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository         $menuItemRepository
      */
     public function __construct(
@@ -39,9 +37,10 @@ class Breadcrumb extends Core\Breadcrumb
         Core\I18n\Translator $translator,
         RequestInterface $request,
         Core\RouterInterface $router,
+        Core\Breadcrumb\Title $title,
         Menus\Model\MenuItemRepository $menuItemRepository
     ) {
-        parent::__construct($container, $translator, $request, $router);
+        parent::__construct($container, $translator, $request, $router, $title);
 
         $this->menuItemRepository = $menuItemRepository;
 
@@ -76,9 +75,7 @@ class Breadcrumb extends Core\Breadcrumb
      * Zuweisung einer neuen Stufe zur Brotkrümelspur
      *
      * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
      *
      * @return $this
      */
@@ -96,9 +93,7 @@ class Breadcrumb extends Core\Breadcrumb
      * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
      *
      * @param string $title
-     *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
-     *    Die zum $title zugehörige ACP3-interne URI
      * @param bool   $dbSteps
      *
      * @return $this

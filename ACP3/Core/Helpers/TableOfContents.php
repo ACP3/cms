@@ -83,7 +83,7 @@ class TableOfContents
                 $toc[$i]['selected'] = $this->isCurrentPage($customUris, $page, $pageNumber, $i);
 
                 if ($toc[$i]['selected'] === true) {
-                    $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
+                    $this->breadcrumb->setPageTitlePostfix($toc[$i]['title']);
                 }
                 ++$i;
             }

@@ -38,14 +38,6 @@ services:
       - '@core.request'
       - '@service_container'
 
-  core.breadcrumb:
-    class: ACP3\Core\Breadcrumb
-    arguments:
-      - '@service_container'
-      - '@core.lang'
-      - '@core.request'
-      - '@core.router'
-
   core.cache.system:
     class: ACP3\Core\Cache
     arguments:

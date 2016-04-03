@@ -1,13 +1,12 @@
-parameters:
-  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb'
-
 services:
   core.breadcrumb:
-    class: '%core.breadcrumb.fqdn%'
+    class: ACP3\Core\Breadcrumb
     arguments:
       - '@service_container'
       - '@core.lang'
       - '@core.request'
       - '@core.router'
       - '@core.breadcrumb.title'
-      - '@menus.model.menuitemrepository'
+
+  core.breadcrumb.title:
+    class: ACP3\Core\Breadcrumb\Title

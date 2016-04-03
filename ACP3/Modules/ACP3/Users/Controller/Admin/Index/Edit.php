@@ -76,7 +76,7 @@ class Edit extends AbstractFormAction
         if ($this->userRepository->resultExists($id) === true) {
             $user = $this->user->getUserInfo($id);
 
-            $this->breadcrumb->setTitlePostfix($user['nickname']);
+            $this->breadcrumb->setPageTitlePostfix($user['nickname']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $id);

@@ -81,8 +81,8 @@ class Details extends Core\Controller\FrontendAction
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')
                 ->append($picture['title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
                 ->append($this->translator->t('gallery', 'details'))
-                ->setTitlePrefix($picture['title'])
-                ->setTitlePostfix($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
+                ->setPageTitlePrefix($picture['title'])
+                ->setPageTitlePostfix($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
 
             $picture = $this->calculatePictureDimensions($picture);
 

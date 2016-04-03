@@ -177,7 +177,7 @@ class Pagination
     {
         if ($this->currentPage > 1) {
             $postfix = $this->translator->t('system', 'page_x', ['%page%' => $this->currentPage]);
-            $this->breadcrumb->setTitlePostfix($postfix);
+            $this->breadcrumb->setPageTitlePostfix($postfix);
         }
     }
 

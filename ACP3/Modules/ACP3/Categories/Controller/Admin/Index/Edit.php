@@ -65,7 +65,7 @@ class Edit extends Core\Controller\AdminAction
         $category = $this->categoryRepository->getOneById($id);
 
         if (empty($category) === false) {
-            $this->breadcrumb->setTitlePostfix($category['title']);
+            $this->breadcrumb->setPageTitlePostfix($category['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $category, $id);

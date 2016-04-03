@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
@@ -15,15 +16,6 @@ class Breadcrumb
      * @var array
      */
     protected $steps = [];
-
-    /**
-     * @var array
-     */
-    protected $title = [
-        'separator' => '-',
-        'prefix' => '',
-        'postfix' => ''
-    ];
 
     /**
      * @var array
@@ -46,6 +38,10 @@ class Breadcrumb
      * @var \ACP3\Core\RouterInterface
      */
     protected $router;
+    /**
+     * @var \ACP3\Core\Breadcrumb\Title
+     */
+    protected $title;
 
     /**
      * Breadcrumb constructor.
@@ -54,37 +50,28 @@ class Breadcrumb
      * @param \ACP3\Core\I18n\Translator                                $translator
      * @param \ACP3\Core\Http\RequestInterface                          $request
      * @param \ACP3\Core\RouterInterface                                $router
+     * @param \ACP3\Core\Breadcrumb\Title                               $title
      */
     public function __construct(
         ContainerInterface $container,
         Translator $translator,
         RequestInterface $request,
-        RouterInterface $router
+        RouterInterface $router,
+        Title $title
     ) {
         $this->container = $container;
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setTitleSeparator($value)
-    {
-        $this->title['separator'] = $value;
-
-        return $this;
+        $this->title = $title;
     }
 
     /**
      * @return string
      */
-    public function getTitleSeparator()
+    public function getPageTitleSeparator()
     {
-        return ' ' . $this->title['separator'] . ' ';
+        return $this->title->getPageTitleSeparator();
     }
 
     /**
@@ -92,11 +79,57 @@ class Breadcrumb
      *
      * @return $this
      */
-    public function setTitlePrefix($value)
+    public function setPageTitlePostfix($value)
     {
-        $this->title['prefix'] = $value;
+        $this->title->setPageTitlePostfix($value);
 
         return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setPageTitlePrefix($value)
+    {
+        $this->title->setPageTitlePrefix($value);
+
+        return $this;
+    }
+
+    /**
+     * Returns the site title
+     *
+     * @return string
+     */
+    public function getSiteTitle()
+    {
+        return $this->title->getSiteTitle();
+    }
+
+    /**
+     * Returns the title of the current page
+     *
+     * @return string
+     */
+    public function getPageTitle()
+    {
+        if (empty($this->breadcrumbCache)) {
+            $this->setBreadcrumbCache();
+        }
+
+        return $this->title->getPageTitle();
+    }
+
+    /**
+     * Returns the title of the current page + the site title
+     *
+     * @return string
+     */
+    public function getSiteAndPageTitle()
+    {
+        return $this->title->getSiteAndPageTitle();
     }
 
     /**
@@ -134,51 +167,6 @@ class Breadcrumb
     }
 
     /**
-     * Returns the site title
-     *
-     * @return string
-     */
-    public function getSiteTitle()
-    {
-        return '';
-    }
-
-    /**
-     * Returns the title of the current page
-     *
-     * @return string
-     */
-    public function getPageTitle()
-    {
-        if (empty($this->breadcrumbCache)) {
-            $this->setBreadcrumbCache();
-        }
-
-        return $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
-    }
-
-    /**
-     * Returns the title of the current page + the site title
-     *
-     * @return string
-     */
-    public function getSiteAndPageTitle()
-    {
-        $title = $this->getPageTitle();
-
-        $separator = ' ' . $this->title['separator'] . ' ';
-        if (!empty($this->title['prefix'])) {
-            $title = $this->title['prefix'] . $separator . $title;
-        }
-        if (!empty($this->title['postfix'])) {
-            $title .= $separator . $this->title['postfix'];
-        }
-        $title .= ' | ' . $this->getSiteTitle();
-
-        return $title;
-    }
-
-    /**
      * Sets the breadcrumb cache for the current request
      */
     private function setBreadcrumbCache()
@@ -191,6 +179,8 @@ class Breadcrumb
 
         // Mark the last breadcrumb
         $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
+
+        $this->title->setPageTitle($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title']);
     }
 
     /**
@@ -200,12 +190,14 @@ class Breadcrumb
     {
         if ($this->request->getModule() !== 'acp') {
             // An postfix for the page title has been already set
-            if (!empty($this->title['postfix'])) {
-                $this->setTitlePostfix(
-                    $this->title['postfix'] . $this->getTitleSeparator() . $this->translator->t('system', 'acp')
+            if (!empty($this->title->getPageTitlePostfix())) {
+                $this->setPageTitlePostfix(
+                    $this->title->getPageTitlePostfix()
+                    . $this->getPageTitleSeparator()
+                    . $this->translator->t('system', 'acp')
                 );
             } else {
-                $this->setTitlePostfix($this->translator->t('system', 'acp'));
+                $this->setPageTitlePostfix($this->translator->t('system', 'acp'));
             }
         }
 
@@ -215,10 +207,7 @@ class Breadcrumb
 
             if ($this->request->getModule() !== 'acp') {
                 $this->append(
-                    $this->translator->t(
-                        $this->request->getModule(),
-                        $this->request->getModule()
-                    ),
+                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
                     'acp/' . $this->request->getModule()
                 );
 
@@ -227,10 +216,7 @@ class Breadcrumb
         } else { // Prepend breadcrumb steps, if there have been already some steps set
             if ($this->request->getModule() !== 'acp') {
                 $this->prepend(
-                    $this->translator->t(
-                        $this->request->getModule(),
-                        $this->request->getModule()
-                    ),
+                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
                     'acp/' . $this->request->getModule()
                 );
             }
@@ -238,18 +224,6 @@ class Breadcrumb
             $this->prepend($this->translator->t('system', 'acp'), 'acp/acp');
         }
         $this->breadcrumbCache = $this->steps;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setTitlePostfix($value)
-    {
-        $this->title['postfix'] = $value;
-
-        return $this;
     }
 
     /**

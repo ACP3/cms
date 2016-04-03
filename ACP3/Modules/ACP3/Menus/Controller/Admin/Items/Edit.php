@@ -91,7 +91,7 @@ class Edit extends AbstractFormAction
         $menuItem = $this->menuItemRepository->getOneMenuItemById($id);
 
         if (empty($menuItem) === false) {
-            $this->breadcrumb->setTitlePostfix($menuItem['title']);
+            $this->breadcrumb->setPageTitlePostfix($menuItem['title']);
 
             $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->aliases->getUriAlias($menuItem['uri'],
                 true) : '';

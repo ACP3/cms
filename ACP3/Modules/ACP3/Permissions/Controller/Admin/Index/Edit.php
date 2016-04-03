@@ -74,7 +74,7 @@ class Edit extends AbstractFormAction
         $role = $this->roleRepository->getRoleById($id);
 
         if (!empty($role)) {
-            $this->breadcrumb->setTitlePostfix($role['name']);
+            $this->breadcrumb->setPageTitlePostfix($role['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $id);

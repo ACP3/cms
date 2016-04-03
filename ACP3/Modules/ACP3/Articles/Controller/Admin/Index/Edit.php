@@ -125,7 +125,7 @@ class Edit extends AbstractFormAction
         $article = $this->articleRepository->getOneById($id);
 
         if (empty($article) === false) {
-            $this->breadcrumb->setTitlePostfix($article['title']);
+            $this->breadcrumb->setPageTitlePostfix($article['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $id);
