@@ -120,9 +120,7 @@ class Steps extends Core\Breadcrumb\Steps
     {
         parent::setBreadcrumbCacheForFrontend();
 
-        if (!empty($this->steps) && empty($this->stepsFromDb)) {
-            $this->breadcrumbCache = $this->steps;
-        } else {
+        if (!empty($this->stepsFromDb)) {
             $this->breadcrumbCache = $this->stepsFromDb;
 
             if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->steps[0]['uri']) {
