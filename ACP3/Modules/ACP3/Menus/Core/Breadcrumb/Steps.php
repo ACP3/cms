@@ -1,5 +1,10 @@
 <?php
-namespace ACP3\Modules\ACP3\Menus\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
 
 use ACP3\Core;
 use ACP3\Core\Http\RequestInterface;
@@ -7,20 +12,19 @@ use ACP3\Modules\ACP3\Menus;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Generates the breadcrumb and page title
- * @package ACP3\Modules\ACP3\Menus\Core
+ * Class Steps
+ * @package ACP3\Modules\ACP3\Menus\Core\Breadcrumb
  */
-class Breadcrumb extends Core\Breadcrumb
+class Steps extends Core\Breadcrumb\Steps
 {
-    /**
-     * @var array
-     */
-    protected $stepsFromDb = [];
-
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
      */
     protected $menuItemRepository;
+    /**
+     * @var array
+     */
+    protected $stepsFromDb = [];
 
     /**
      * Breadcrumb constructor.

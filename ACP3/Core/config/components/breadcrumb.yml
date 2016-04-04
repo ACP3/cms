@@ -1,6 +1,6 @@
 services:
   core.breadcrumb:
-    class: ACP3\Core\Breadcrumb
+    class: ACP3\Core\Breadcrumb\Steps
     arguments:
       - '@service_container'
       - '@core.lang'

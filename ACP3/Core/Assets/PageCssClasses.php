@@ -10,7 +10,7 @@ use ACP3\Core;
 class PageCssClasses
 {
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
     /**
@@ -24,11 +24,11 @@ class PageCssClasses
     protected $details;
 
     /**
-     * @param \ACP3\Core\Breadcrumb            $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Steps      $breadcrumb
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
-        Core\Breadcrumb $breadcrumb,
+        Core\Breadcrumb\Steps $breadcrumb,
         Core\Http\RequestInterface $request
     ) {
         $this->breadcrumb = $breadcrumb;

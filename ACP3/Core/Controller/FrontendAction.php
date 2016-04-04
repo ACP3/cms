@@ -21,7 +21,7 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      */
     protected $assets;
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
     /**

@@ -1,5 +1,5 @@
 parameters:
-  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb'
+  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps'
 
 services:
   core.breadcrumb:

@@ -20,7 +20,7 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      */
     protected $assets;
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
     /**
@@ -35,14 +35,14 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
      * @param \ACP3\Core\Assets                           $assets
-     * @param \ACP3\Core\Breadcrumb                       $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Steps                 $breadcrumb
      * @param \ACP3\Core\Modules\Helper\Action            $actionHelper
      * @param \Symfony\Component\HttpFoundation\Response  $response
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Assets $assets,
-        Core\Breadcrumb $breadcrumb,
+        Core\Breadcrumb\Steps $breadcrumb,
         Core\Modules\Helper\Action $actionHelper,
         Response $response
     ) {
@@ -76,7 +76,7 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\Breadcrumb
+     * @return \ACP3\Core\Breadcrumb\Steps
      */
     public function getBreadcrumb()
     {

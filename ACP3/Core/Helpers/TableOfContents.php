@@ -10,9 +10,9 @@ use ACP3\Core;
 class TableOfContents
 {
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Title
      */
-    protected $breadcrumb;
+    protected $title;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
@@ -37,7 +37,7 @@ class TableOfContents
     /**
      * TableOfContents constructor.
      *
-     * @param \ACP3\Core\Breadcrumb                                       $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Title                                 $title
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\RouterInterface                                  $router
@@ -45,14 +45,14 @@ class TableOfContents
      * @param \ACP3\Core\View                                             $view
      */
     public function __construct(
-        Core\Breadcrumb $breadcrumb,
+        Core\Breadcrumb\Title $title,
         Core\I18n\Translator $translator,
         Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
         Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
         Core\View $view
     ) {
-        $this->breadcrumb = $breadcrumb;
+        $this->title = $title;
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
@@ -83,7 +83,7 @@ class TableOfContents
                 $toc[$i]['selected'] = $this->isCurrentPage($customUris, $page, $pageNumber, $i);
 
                 if ($toc[$i]['selected'] === true) {
-                    $this->breadcrumb->setPageTitlePostfix($toc[$i]['title']);
+                    $this->title->setPageTitlePostfix($toc[$i]['title']);
                 }
                 ++$i;
             }

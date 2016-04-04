@@ -1,27 +1,23 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-use ACP3\Core\Breadcrumb\Title;
+namespace ACP3\Core\Breadcrumb;
+
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\RouterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @package ACP3\Core
+ * Class Steps
+ * @package ACP3\Core\Breadcrumb
  */
-class Breadcrumb
+class Steps
 {
-    /**
-     * @var array
-     */
-    protected $steps = [];
-
-    /**
-     * @var array
-     */
-    protected $breadcrumbCache = [];
-
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
@@ -42,6 +38,14 @@ class Breadcrumb
      * @var \ACP3\Core\Breadcrumb\Title
      */
     protected $title;
+    /**
+     * @var array
+     */
+    protected $steps = [];
+    /**
+     * @var array
+     */
+    protected $breadcrumbCache = [];
 
     /**
      * Breadcrumb constructor.
@@ -129,6 +133,10 @@ class Breadcrumb
      */
     public function getSiteAndPageTitle()
     {
+        if (empty($this->breadcrumbCache)) {
+            $this->setBreadcrumbCache();
+        }
+
         return $this->title->getSiteAndPageTitle();
     }
 
@@ -213,7 +221,7 @@ class Breadcrumb
 
                 $this->setControllerActionBreadcrumbs();
             }
-        } else { // Prepend breadcrumb steps, if there have been already some steps set
+        } else { // Prepend breadcrumb steps, if there have already been some steps set
             if ($this->request->getModule() !== 'acp') {
                 $this->prepend(
                     $this->translator->t($this->request->getModule(), $this->request->getModule()),
@@ -223,6 +231,59 @@ class Breadcrumb
 
             $this->prepend($this->translator->t('system', 'acp'), 'acp/acp');
         }
+        $this->breadcrumbCache = $this->steps;
+    }
+
+    private function setControllerActionBreadcrumbs()
+    {
+        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController() . '.index';
+        if ($this->request->getController() !== 'index' && $this->container->has($serviceId)) {
+            $this->append(
+                $this->translator->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
+                $this->request->getModuleAndController()
+            );
+        }
+        if ($this->request->getAction() !== 'index') {
+            $this->append(
+                $this->translator->t($this->request->getModule(), $this->getControllerActionTitle()),
+                $this->request->getFullPath()
+            );
+        }
+    }
+
+    /**
+     * @return string
+     */
+    private function getControllerActionTitle()
+    {
+        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getAction();
+    }
+
+    /**
+     * @return string
+     */
+    private function getControllerIndexActionTitle()
+    {
+        return $this->request->getArea() . '_' . $this->request->getController() . '_index';
+    }
+
+    /**
+     * Sets the breadcrumb steps cache for frontend action requests
+     */
+    protected function setBreadcrumbCacheForFrontend()
+    {
+        // No breadcrumb has been set yet
+        if (empty($this->steps)) {
+            if ($this->request->getModule() !== 'errors') {
+                $this->append(
+                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
+                    $this->request->getModule()
+                );
+            }
+
+            $this->setControllerActionBreadcrumbs();
+        }
+
         $this->breadcrumbCache = $this->steps;
     }
 
@@ -260,58 +321,5 @@ class Breadcrumb
         ];
         array_unshift($this->steps, $step);
         return $this;
-    }
-
-    /**
-     * Sets the breadcrumb steps cache for frontend action requests
-     */
-    protected function setBreadcrumbCacheForFrontend()
-    {
-        // No breadcrumb has been set yet
-        if (empty($this->steps)) {
-            if ($this->request->getModule() !== 'errors') {
-                $this->append(
-                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
-                    $this->request->getModule()
-                );
-            }
-
-            $this->setControllerActionBreadcrumbs();
-        }
-
-        $this->breadcrumbCache = $this->steps;
-    }
-
-    private function setControllerActionBreadcrumbs()
-    {
-        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController() . '.index';
-        if ($this->request->getController() !== 'index' && $this->container->has($serviceId)) {
-            $this->append(
-                $this->translator->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
-                $this->request->getModuleAndController()
-            );
-        }
-        if ($this->request->getAction() !== 'index') {
-            $this->append(
-                $this->translator->t($this->request->getModule(), $this->getControllerActionTitle()),
-                $this->request->getFullPath()
-            );
-        }
-    }
-
-    /**
-     * @return string
-     */
-    private function getControllerActionTitle()
-    {
-        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getAction();
-    }
-
-    /**
-     * @return string
-     */
-    private function getControllerIndexActionTitle()
-    {
-        return $this->request->getArea() . '_' . $this->request->getController() . '_index';
     }
 }

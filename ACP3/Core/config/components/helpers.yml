@@ -67,7 +67,7 @@ services:
   core.helpers.toc:
     class: ACP3\Core\Helpers\TableOfContents
     arguments:
-      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
       - '@core.lang'
       - '@core.request'
       - '@core.router'

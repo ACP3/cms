@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\Breadcrumb;
+use ACP3\Core\Breadcrumb\Steps;
 
 /**
  * Class SiteTitle
@@ -15,14 +15,14 @@ use ACP3\Core\Breadcrumb;
 class SiteTitle extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
 
     /**
-     * @param \ACP3\Core\Breadcrumb $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Steps $breadcrumb
      */
-    public function __construct(Breadcrumb $breadcrumb)
+    public function __construct(Steps $breadcrumb)
     {
         $this->breadcrumb = $breadcrumb;
     }

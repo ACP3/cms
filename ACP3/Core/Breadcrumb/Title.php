@@ -8,7 +8,7 @@ namespace ACP3\Core\Breadcrumb;
 
 /**
  * Class Title
- * @package ACP3\Core\Breadcrumb
+ * @package ACP3\Core\Breadcrumb\Breadcrumb
  */
 class Title
 {
