@@ -15,17 +15,12 @@ use ACP3\Core\Config;
 class Title extends \ACP3\Core\Breadcrumb\Title
 {
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $config;
-
-    /**
      * Title constructor.
      *
      * @param \ACP3\Core\Config $config
      */
     public function __construct(Config $config)
     {
-        $this->siteTitle = $this->config->getSettings('seo')['title'];
+        $this->siteTitle = $config->getSettings('seo')['title'];
     }
 }
