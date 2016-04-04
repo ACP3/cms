@@ -26,14 +26,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
      */
     public function __construct(Config $config)
     {
-        $this->config = $config;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSiteTitle()
-    {
-        return $this->config->getSettings('seo')['title'];
+        $this->siteTitle = $this->config->getSettings('seo')['title'];
     }
 }
