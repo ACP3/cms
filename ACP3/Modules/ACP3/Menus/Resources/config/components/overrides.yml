@@ -9,5 +9,5 @@ services:
       - '@core.lang'
       - '@core.request'
       - '@core.router'
-      - '@core.breadcrumb.title'
+      - '@core.eventDispatcher'
       - '@menus.model.menuitemrepository'

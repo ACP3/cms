@@ -92,7 +92,7 @@ class Edit extends AbstractFormAction
         if (empty($file) === false) {
             $settings = $this->config->getSettings('files');
 
-            $this->breadcrumb->setPageTitlePostfix($file['title']);
+            $this->title->setPageTitlePostfix($file['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $settings, $file, $id);

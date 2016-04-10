@@ -85,7 +85,7 @@ class Edit extends Core\Controller\AdminAction
         if (empty($guestbook) === false) {
             $settings = $this->config->getSettings('guestbook');
 
-            $this->breadcrumb->setPageTitlePostfix($guestbook['name']);
+            $this->title->setPageTitlePostfix($guestbook['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $settings, $id);

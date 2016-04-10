@@ -1,0 +1,9 @@
+services:
+  acp.event.listener.on_breadcrumb_steps_build_cache_listener:
+    class: ACP3\Modules\ACP3\Acp\Event\Listener\OnBreadcrumbStepsBuildCacheListener
+    arguments:
+      - '@core.request'
+      - '@core.breadcrumb.title'
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: core.breadcrumb.steps.build_cache, method: onBuildCache }

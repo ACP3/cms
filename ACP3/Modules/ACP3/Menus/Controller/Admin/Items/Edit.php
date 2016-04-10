@@ -91,10 +91,11 @@ class Edit extends AbstractFormAction
         $menuItem = $this->menuItemRepository->getOneMenuItemById($id);
 
         if (empty($menuItem) === false) {
-            $this->breadcrumb->setPageTitlePostfix($menuItem['title']);
+            $this->title->setPageTitlePostfix($menuItem['title']);
 
-            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->aliases->getUriAlias($menuItem['uri'],
-                true) : '';
+            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4
+                ? $this->aliases->getUriAlias($menuItem['uri'], true)
+                : '';
             $menuItem['seo_keywords'] = $this->metaStatementsHelper
                 ? $this->metaStatementsHelper->getKeywords($menuItem['uri'])
                 : '';

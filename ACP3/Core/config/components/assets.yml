@@ -40,4 +40,5 @@ services:
     class: ACP3\Core\Assets\PageCssClasses
     arguments:
       - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
       - '@core.request'

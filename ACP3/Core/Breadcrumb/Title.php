@@ -13,6 +13,11 @@ namespace ACP3\Core\Breadcrumb;
 class Title
 {
     /**
+     * @var \ACP3\Core\Breadcrumb\Steps
+     */
+    protected $steps;
+
+    /**
      * @var string
      */
     protected $pageTitle = '';
@@ -28,11 +33,20 @@ class Title
      * @var string
      */
     protected $pageTitleSeparator = '-';
-
     /**
      * @var string
      */
     protected $siteTitle = '';
+
+    /**
+     * Title constructor.
+     *
+     * @param \ACP3\Core\Breadcrumb\Steps $steps
+     */
+    public function __construct(Steps $steps)
+    {
+        $this->steps = $steps;
+    }
 
     /**
      * @return string
@@ -47,6 +61,13 @@ class Title
      */
     public function getPageTitle()
     {
+        if (empty($this->pageTitle)) {
+            $steps = $this->steps->getBreadcrumb();
+            $lastCrumb = end($steps);
+
+            $this->pageTitle = $lastCrumb['title'];
+        }
+
         return $this->pageTitle;
     }
 

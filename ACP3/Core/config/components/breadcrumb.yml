@@ -6,7 +6,9 @@ services:
       - '@core.lang'
       - '@core.request'
       - '@core.router'
-      - '@core.breadcrumb.title'
+      - '@core.eventDispatcher'
 
   core.breadcrumb.title:
     class: ACP3\Core\Breadcrumb\Title
+    arguments:
+      - '@core.breadcrumb'

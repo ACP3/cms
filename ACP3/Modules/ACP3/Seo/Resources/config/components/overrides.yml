@@ -2,6 +2,7 @@ services:
   core.breadcrumb.title:
     class: ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title
     arguments:
+      - '@core.breadcrumb'
       - '@core.config'
 
   core.helpers.pageBreaks:

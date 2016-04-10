@@ -6,11 +6,13 @@
 
 namespace ACP3\Core\Breadcrumb;
 
+use ACP3\Core\Breadcrumb\Event\BreadcrumbStepsBuildCacheEvent;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\RouterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Steps
@@ -35,9 +37,9 @@ class Steps
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Breadcrumb\Title
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected $title;
+    protected $eventDispatcher;
     /**
      * @var array
      */
@@ -50,94 +52,24 @@ class Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator                                $translator
-     * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\RouterInterface                                $router
-     * @param \ACP3\Core\Breadcrumb\Title                               $title
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param \ACP3\Core\I18n\Translator                                  $translator
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\RouterInterface                                  $router
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         ContainerInterface $container,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,
-        Title $title
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->container = $container;
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
-        $this->title = $title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPageTitleSeparator()
-    {
-        return $this->title->getPageTitleSeparator();
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setPageTitlePostfix($value)
-    {
-        $this->title->setPageTitlePostfix($value);
-
-        return $this;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setPageTitlePrefix($value)
-    {
-        $this->title->setPageTitlePrefix($value);
-
-        return $this;
-    }
-
-    /**
-     * Returns the site title
-     *
-     * @return string
-     */
-    public function getSiteTitle()
-    {
-        return $this->title->getSiteTitle();
-    }
-
-    /**
-     * Returns the title of the current page
-     *
-     * @return string
-     */
-    public function getPageTitle()
-    {
-        if (empty($this->breadcrumbCache)) {
-            $this->setBreadcrumbCache();
-        }
-
-        return $this->title->getPageTitle();
-    }
-
-    /**
-     * Returns the title of the current page + the site title
-     *
-     * @return string
-     */
-    public function getSiteAndPageTitle()
-    {
-        if (empty($this->breadcrumbCache)) {
-            $this->setBreadcrumbCache();
-        }
-
-        return $this->title->getSiteAndPageTitle();
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -179,16 +111,15 @@ class Steps
      */
     private function setBreadcrumbCache()
     {
+        $this->eventDispatcher->dispatch('core.breadcrumb.steps.build_cache', new BreadcrumbStepsBuildCacheEvent($this));
+
         if ($this->request->getArea() === AreaEnum::AREA_ADMIN) {
             $this->setBreadcrumbCacheForAdmin();
         } else {
             $this->setBreadcrumbCacheForFrontend();
         }
 
-        // Mark the last breadcrumb
         $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
-
-        $this->title->setPageTitle($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title']);
     }
 
     /**
@@ -196,20 +127,7 @@ class Steps
      */
     private function setBreadcrumbCacheForAdmin()
     {
-        if ($this->request->getModule() !== 'acp') {
-            // An postfix for the page title has been already set
-            if (!empty($this->title->getPageTitlePostfix())) {
-                $this->setPageTitlePostfix(
-                    $this->title->getPageTitlePostfix()
-                    . $this->getPageTitleSeparator()
-                    . $this->translator->t('system', 'acp')
-                );
-            } else {
-                $this->setPageTitlePostfix($this->translator->t('system', 'acp'));
-            }
-        }
-
-        // No breadcrumb has been set yet
+        // No breadcrumb steps have been set yet
         if (empty($this->steps)) {
             $this->append($this->translator->t('system', 'acp'), 'acp/acp');
 
@@ -320,6 +238,7 @@ class Steps
             'uri' => $this->router->route($path)
         ];
         array_unshift($this->steps, $step);
+
         return $this;
     }
 }

@@ -100,7 +100,7 @@ class Edit extends AbstractFormAction
         if ($this->galleryRepository->galleryExists($id) === true) {
             $gallery = $this->galleryRepository->getGalleryById($id);
 
-            $this->breadcrumb->setPageTitlePostfix($gallery['title']);
+            $this->title->setPageTitlePostfix($gallery['title']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $id);

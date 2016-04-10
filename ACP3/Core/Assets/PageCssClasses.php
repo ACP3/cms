@@ -14,6 +14,10 @@ class PageCssClasses
      */
     protected $breadcrumb;
     /**
+     * @var \ACP3\Core\Breadcrumb\Title
+     */
+    protected $title;
+    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
@@ -25,13 +29,16 @@ class PageCssClasses
 
     /**
      * @param \ACP3\Core\Breadcrumb\Steps      $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Title      $title
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
         Core\Breadcrumb\Steps $breadcrumb,
+        Core\Breadcrumb\Title $title,
         Core\Http\RequestInterface $request
     ) {
         $this->breadcrumb = $breadcrumb;
+        $this->title = $title;
         $this->request = $request;
     }
 
@@ -65,7 +72,7 @@ class PageCssClasses
                         str_replace(
                             ' ',
                             '-',
-                            strtolower($this->breadcrumb->getPageTitle())
+                            strtolower($this->title->getPageTitle())
                         ),
                         ENT_QUOTES,
                         'UTF-8'

@@ -82,7 +82,7 @@ class Edit extends AbstractFormAction
         $news = $this->newsRepository->getOneById($id);
 
         if (empty($news) === false) {
-            $this->breadcrumb->setPageTitlePostfix($news['title']);
+            $this->title->setPageTitlePostfix($news['title']);
 
             $settings = $this->config->getSettings('news');
 

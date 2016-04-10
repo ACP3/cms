@@ -74,7 +74,7 @@ class Edit extends Core\Controller\AdminAction
         $seo = $this->seoRepository->getOneById($id);
 
         if (empty($seo) === false) {
-            $this->breadcrumb->setPageTitlePostfix($seo['alias']);
+            $this->title->setPageTitlePostfix($seo['alias']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $seo['uri'], $id);

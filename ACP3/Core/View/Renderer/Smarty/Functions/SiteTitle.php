@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\Breadcrumb\Steps;
+use ACP3\Core\Breadcrumb\Title;
 
 /**
  * Class SiteTitle
@@ -15,16 +15,16 @@ use ACP3\Core\Breadcrumb\Steps;
 class SiteTitle extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Breadcrumb\Steps
+     * @var \ACP3\Core\Breadcrumb\Title
      */
-    protected $breadcrumb;
+    protected $title;
 
     /**
-     * @param \ACP3\Core\Breadcrumb\Steps $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Title $title
      */
-    public function __construct(Steps $breadcrumb)
+    public function __construct(Title $title)
     {
-        $this->breadcrumb = $breadcrumb;
+        $this->title = $title;
     }
 
     /**
@@ -35,7 +35,7 @@ class SiteTitle extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        return $this->breadcrumb->getSiteTitle();
+        return $this->title->getSiteTitle();
     }
 
     /**

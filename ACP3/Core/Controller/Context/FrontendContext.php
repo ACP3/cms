@@ -18,24 +18,29 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     /**
      * @var \ACP3\Core\Assets
      */
-    protected $assets;
+    private $assets;
     /**
      * @var \ACP3\Core\Breadcrumb\Steps
      */
-    protected $breadcrumb;
+    private $breadcrumb;
+    /**
+     * @var \ACP3\Core\Breadcrumb\Title
+     */
+    private $title;
     /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
-    protected $actionHelper;
+    private $actionHelper;
     /**
      * @var \Symfony\Component\HttpFoundation\Response
      */
-    protected $response;
+    private $response;
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
      * @param \ACP3\Core\Assets                           $assets
      * @param \ACP3\Core\Breadcrumb\Steps                 $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Title                 $title
      * @param \ACP3\Core\Modules\Helper\Action            $actionHelper
      * @param \Symfony\Component\HttpFoundation\Response  $response
      */
@@ -43,6 +48,7 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
         Core\Controller\Context\WidgetContext $context,
         Core\Assets $assets,
         Core\Breadcrumb\Steps $breadcrumb,
+        Core\Breadcrumb\Title $title,
         Core\Modules\Helper\Action $actionHelper,
         Response $response
     ) {
@@ -63,6 +69,7 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
 
         $this->assets = $assets;
         $this->breadcrumb = $breadcrumb;
+        $this->title = $title;
         $this->actionHelper = $actionHelper;
         $this->response = $response;
     }
@@ -81,6 +88,14 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     public function getBreadcrumb()
     {
         return $this->breadcrumb;
+    }
+
+    /**
+     * @return \ACP3\Core\Breadcrumb\Title
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**

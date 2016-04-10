@@ -6,6 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Core\Breadcrumb;
 
+use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Config;
 
 /**
@@ -17,10 +18,13 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     /**
      * Title constructor.
      *
-     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\Breadcrumb\Steps $steps
+     * @param \ACP3\Core\Config           $config
      */
-    public function __construct(Config $config)
+    public function __construct(Steps $steps, Config $config)
     {
+        parent::__construct($steps);
+
         $this->siteTitle = $config->getSettings('seo')['title'];
     }
 }
