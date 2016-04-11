@@ -16,6 +16,8 @@ class NotFound extends Core\Controller\FrontendAction
 {
     public function execute()
     {
+        $this->breadcrumb->append($this->translator->t('errors', 'frontend_index_not_found'));
+
         $this->response->setStatusCode(404);
     }
 }

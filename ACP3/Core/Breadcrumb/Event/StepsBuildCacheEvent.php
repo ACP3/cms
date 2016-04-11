@@ -10,7 +10,11 @@ namespace ACP3\Core\Breadcrumb\Event;
 use ACP3\Core\Breadcrumb\Steps;
 use Symfony\Component\EventDispatcher\Event;
 
-class BreadcrumbStepsBuildCacheEvent extends Event
+/**
+ * Class StepsBuildCacheEvent
+ * @package ACP3\Core\Breadcrumb\Event
+ */
+class StepsBuildCacheEvent extends Event
 {
     /**
      * @var \ACP3\Core\Breadcrumb\Steps

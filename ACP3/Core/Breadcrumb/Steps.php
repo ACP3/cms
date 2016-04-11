@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Breadcrumb;
 
-use ACP3\Core\Breadcrumb\Event\BreadcrumbStepsBuildCacheEvent;
+use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
@@ -100,7 +100,7 @@ class Steps
     public function getBreadcrumb()
     {
         if (empty($this->breadcrumbCache)) {
-            $this->setBreadcrumbCache();
+            $this->buildBreadcrumbCache();
         }
 
         return $this->breadcrumbCache;
@@ -109,47 +109,52 @@ class Steps
     /**
      * Sets the breadcrumb cache for the current request
      */
-    private function setBreadcrumbCache()
+    private function buildBreadcrumbCache()
     {
-        $this->eventDispatcher->dispatch('core.breadcrumb.steps.build_cache', new BreadcrumbStepsBuildCacheEvent($this));
+        $this->eventDispatcher->dispatch(
+            'core.breadcrumb.steps.build_cache',
+            new StepsBuildCacheEvent($this)
+        );
 
         if ($this->request->getArea() === AreaEnum::AREA_ADMIN) {
-            $this->setBreadcrumbCacheForAdmin();
+            $this->buildBreadcrumbCacheForAdmin();
         } else {
             $this->setBreadcrumbCacheForFrontend();
         }
 
+        $this->breadcrumbCache = $this->steps;
         $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
     }
 
     /**
      * Sets the breadcrumb steps cache for admin panel action requests
      */
-    private function setBreadcrumbCacheForAdmin()
+    private function buildBreadcrumbCacheForAdmin()
     {
         // No breadcrumb steps have been set yet
         if (empty($this->steps)) {
-            $this->append($this->translator->t('system', 'acp'), 'acp/acp');
+            $this->eventDispatcher->dispatch(
+                'core.breadcrumb.steps.build_admin_cache_empty_steps_before',
+                new StepsBuildCacheEvent($this)
+            );
 
-            if ($this->request->getModule() !== 'acp') {
-                $this->append(
-                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
-                    'acp/' . $this->request->getModule()
-                );
+            $this->append(
+                $this->translator->t($this->request->getModule(), $this->request->getModule()),
+                'acp/' . $this->request->getModule()
+            );
 
-                $this->setControllerActionBreadcrumbs();
-            }
+            $this->setControllerActionBreadcrumbs();
         } else { // Prepend breadcrumb steps, if there have already been some steps set
-            if ($this->request->getModule() !== 'acp') {
-                $this->prepend(
-                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
-                    'acp/' . $this->request->getModule()
-                );
-            }
+            $this->prepend(
+                $this->translator->t($this->request->getModule(), $this->request->getModule()),
+                'acp/' . $this->request->getModule()
+            );
 
-            $this->prepend($this->translator->t('system', 'acp'), 'acp/acp');
+            $this->eventDispatcher->dispatch(
+                'core.breadcrumb.steps.build_admin_cache_not_empty_steps_after',
+                new StepsBuildCacheEvent($this)
+            );
         }
-        $this->breadcrumbCache = $this->steps;
     }
 
     private function setControllerActionBreadcrumbs()
@@ -192,17 +197,13 @@ class Steps
     {
         // No breadcrumb has been set yet
         if (empty($this->steps)) {
-            if ($this->request->getModule() !== 'errors') {
-                $this->append(
-                    $this->translator->t($this->request->getModule(), $this->request->getModule()),
-                    $this->request->getModule()
-                );
-            }
+            $this->append(
+                $this->translator->t($this->request->getModule(), $this->request->getModule()),
+                $this->request->getModule()
+            );
 
             $this->setControllerActionBreadcrumbs();
         }
-
-        $this->breadcrumbCache = $this->steps;
     }
 
     /**
@@ -215,10 +216,12 @@ class Steps
      */
     public function append($title, $path = '')
     {
-        $this->steps[] = [
-            'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
-        ];
+        if (!$this->stepAlreadyExists($path)) {
+            $this->steps[] = [
+                'title' => $title,
+                'uri' => !empty($path) ? $this->router->route($path) : ''
+            ];
+        }
 
         return $this;
     }
@@ -231,14 +234,33 @@ class Steps
      *
      * @return $this
      */
-    protected function prepend($title, $path)
+    public function prepend($title, $path)
     {
-        $step = [
-            'title' => $title,
-            'uri' => $this->router->route($path)
-        ];
-        array_unshift($this->steps, $step);
+        if (!$this->stepAlreadyExists($path)) {
+            $step = [
+                'title' => $title,
+                'uri' => $this->router->route($path)
+            ];
+            array_unshift($this->steps, $step);
+        }
 
         return $this;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    private function stepAlreadyExists($path)
+    {
+        $route = $this->router->route($path);
+        foreach ($this->steps as $step) {
+            if ($step['uri'] === $route) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

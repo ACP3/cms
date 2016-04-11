@@ -16,6 +16,8 @@ class AccessForbidden extends Core\Controller\FrontendAction
 {
     public function execute()
     {
+        $this->breadcrumb->append($this->translator->t('errors', 'frontend_index_access_forbidden'));
+
         $this->response->setStatusCode(403);
     }
 }

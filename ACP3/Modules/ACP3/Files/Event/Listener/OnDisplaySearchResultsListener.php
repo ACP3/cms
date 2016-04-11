@@ -4,17 +4,15 @@ namespace ACP3\Modules\ACP3\Files\Event\Listener;
 use ACP3\Core\ACL;
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Router;
 use ACP3\Core\RouterInterface;
 use ACP3\Modules\ACP3\Files\Model\FilesRepository;
 use ACP3\Modules\ACP3\Search\Event\DisplaySearchResults;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class OnDisplaySearchResultsListener
  * @package ACP3\Modules\ACP3\Files\Event\Listener
  */
-class OnDisplaySearchResultsListener extends Event
+class OnDisplaySearchResultsListener
 {
     /**
      * @var \ACP3\Core\ACL

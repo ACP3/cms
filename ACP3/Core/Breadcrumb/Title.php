@@ -6,6 +6,9 @@
 
 namespace ACP3\Core\Breadcrumb;
 
+use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 /**
  * Class Title
  * @package ACP3\Core\Breadcrumb\Breadcrumb
@@ -16,6 +19,10 @@ class Title
      * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $steps;
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var string
@@ -41,11 +48,13 @@ class Title
     /**
      * Title constructor.
      *
-     * @param \ACP3\Core\Breadcrumb\Steps $steps
+     * @param \ACP3\Core\Breadcrumb\Steps                                 $steps
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(Steps $steps)
+    public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher)
     {
         $this->steps = $steps;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -142,6 +151,11 @@ class Title
      */
     public function getSiteAndPageTitle()
     {
+        $this->eventDispatcher->dispatch(
+            'core.breadcrumb.title.get_site_and_page_title_before',
+            new GetSiteAndPageTitleBeforeEvent($this)
+        );
+
         $title = $this->getPageTitle();
 
         $separator = $this->getPageTitleSeparator();

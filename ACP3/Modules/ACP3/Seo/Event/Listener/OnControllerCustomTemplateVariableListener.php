@@ -9,13 +9,12 @@ namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
 use ACP3\Core\Controller\Event\CustomTemplateVariableEvent;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class OnControllerCustomTemplateVariableListener
  * @package ACP3\Modules\ACP3\Seo\Event\Listener
  */
-class OnControllerCustomTemplateVariableListener extends Event
+class OnControllerCustomTemplateVariableListener
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements

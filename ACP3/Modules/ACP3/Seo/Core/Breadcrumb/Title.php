@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Core\Breadcrumb;
 
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Config;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Title
@@ -18,12 +19,13 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     /**
      * Title constructor.
      *
-     * @param \ACP3\Core\Breadcrumb\Steps $steps
-     * @param \ACP3\Core\Config           $config
+     * @param \ACP3\Core\Breadcrumb\Steps                                 $steps
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \ACP3\Core\Config                                           $config
      */
-    public function __construct(Steps $steps, Config $config)
+    public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher, Config $config)
     {
-        parent::__construct($steps);
+        parent::__construct($steps, $eventDispatcher);
 
         $this->siteTitle = $config->getSettings('seo')['title'];
     }
