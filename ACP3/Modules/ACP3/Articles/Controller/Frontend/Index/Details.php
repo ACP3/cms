@@ -66,7 +66,7 @@ class Details extends Core\Controller\FrontendAction
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $article = $this->articlesCache->getCache($id);
-
+            
             $this->breadcrumb->replaceAncestor($article['title'], '', true);
 
             return [

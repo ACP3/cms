@@ -123,7 +123,6 @@ class Steps
             $this->buildBreadcrumbCacheForFrontend();
         }
 
-        $this->breadcrumbCache = $this->steps;
         $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
     }
 
@@ -132,7 +131,6 @@ class Steps
      */
     private function buildBreadcrumbCacheForAdmin()
     {
-        // No breadcrumb steps have been set yet
         if (empty($this->steps)) {
             $this->eventDispatcher->dispatch(
                 'core.breadcrumb.steps.build_admin_cache_empty_steps_before',
@@ -156,6 +154,8 @@ class Steps
                 new StepsBuildCacheEvent($this)
             );
         }
+
+        $this->breadcrumbCache = $this->steps;
     }
 
     private function appendControllerActionBreadcrumbs()
@@ -216,6 +216,8 @@ class Steps
 
             $this->appendControllerActionBreadcrumbs();
         }
+
+        $this->breadcrumbCache = $this->steps;
     }
 
     /**
