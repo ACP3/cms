@@ -66,6 +66,18 @@ class Title
     }
 
     /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setSiteTitle($title)
+    {
+        $this->siteTitle = $title;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getPageTitle()
@@ -162,10 +174,12 @@ class Title
         if (!empty($this->pageTitlePrefix)) {
             $title = $this->pageTitlePrefix . $separator . $title;
         }
-        if (!empty($this->pageTitlePostfix)) {
-            $title .= $separator . $this->pageTitlePostfix;
+        if (!empty($this->getPageTitlePostfix())) {
+            $title .= $separator . $this->getPageTitlePostfix();
         }
-        $title .= ' | ' . $this->getSiteTitle();
+        if (!empty($this->getSiteTitle())) {
+            $title .= ' | ' . $this->getSiteTitle();
+        }
 
         return $title;
     }

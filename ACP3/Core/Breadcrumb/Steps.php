@@ -52,10 +52,10 @@ class Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
-     * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\RouterInterface                                  $router
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\RouterInterface $router
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -64,7 +64,8 @@ class Steps
         RequestInterface $request,
         RouterInterface $router,
         EventDispatcherInterface $eventDispatcher
-    ) {
+    )
+    {
         $this->container = $container;
         $this->translator = $translator;
         $this->request = $request;
@@ -77,7 +78,7 @@ class Steps
      *
      * @param string $title
      * @param string $path
-     * @param bool   $dbSteps
+     * @param bool $dbSteps
      *
      * @return $this
      */
@@ -119,7 +120,7 @@ class Steps
         if ($this->request->getArea() === AreaEnum::AREA_ADMIN) {
             $this->buildBreadcrumbCacheForAdmin();
         } else {
-            $this->setBreadcrumbCacheForFrontend();
+            $this->buildBreadcrumbCacheForFrontend();
         }
 
         $this->breadcrumbCache = $this->steps;
@@ -143,7 +144,7 @@ class Steps
                 'acp/' . $this->request->getModule()
             );
 
-            $this->setControllerActionBreadcrumbs();
+            $this->appendControllerActionBreadcrumbs();
         } else { // Prepend breadcrumb steps, if there have already been some steps set
             $this->prepend(
                 $this->translator->t($this->request->getModule(), $this->request->getModule()),
@@ -157,9 +158,9 @@ class Steps
         }
     }
 
-    private function setControllerActionBreadcrumbs()
+    private function appendControllerActionBreadcrumbs()
     {
-        $serviceId = $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController() . '.index';
+        $serviceId = $this->getControllerServiceId();
         if ($this->request->getController() !== 'index' && $this->container->has($serviceId)) {
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->getControllerIndexActionTitle()),
@@ -172,6 +173,18 @@ class Steps
                 $this->request->getFullPath()
             );
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function getControllerServiceId()
+    {
+        return $this->request->getModule()
+        . '.controller.'
+        . $this->request->getArea() . '.'
+        . $this->request->getController()
+        . '.index';
     }
 
     /**
@@ -193,16 +206,15 @@ class Steps
     /**
      * Sets the breadcrumb steps cache for frontend action requests
      */
-    protected function setBreadcrumbCacheForFrontend()
+    protected function buildBreadcrumbCacheForFrontend()
     {
-        // No breadcrumb has been set yet
         if (empty($this->steps)) {
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->request->getModule()),
                 $this->request->getModule()
             );
 
-            $this->setControllerActionBreadcrumbs();
+            $this->appendControllerActionBreadcrumbs();
         }
     }
 

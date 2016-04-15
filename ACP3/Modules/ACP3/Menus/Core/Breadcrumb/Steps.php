@@ -95,13 +95,7 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
-     *
-     * @param string $title
-     * @param string $path
-     * @param bool   $dbSteps
-     *
-     * @return $this
+     * @inheritdoc
      */
     public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
@@ -117,9 +111,9 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * Sets the breadcrumb steps cache for frontend action requests
      */
-    protected function setBreadcrumbCacheForFrontend()
+    protected function buildBreadcrumbCacheForFrontend()
     {
-        parent::setBreadcrumbCacheForFrontend();
+        parent::buildBreadcrumbCacheForFrontend();
 
         if (!empty($this->stepsFromDb)) {
             $this->breadcrumbCache = $this->stepsFromDb;
