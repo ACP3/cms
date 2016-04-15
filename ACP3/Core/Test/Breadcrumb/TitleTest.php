@@ -16,15 +16,15 @@ class TitleTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \ACP3\Core\Breadcrumb\Title
      */
-    private $title;
+    protected $title;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $stepsMock;
+    protected $stepsMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $eventDispatcherMock;
+    protected $eventDispatcherMock;
 
     protected function setUp()
     {
@@ -36,7 +36,7 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    private function initializeMockObjects()
+    protected function initializeMockObjects()
     {
         $this->stepsMock = $this->getMockBuilder(Steps::class)
             ->disableOriginalConstructor()
@@ -46,14 +46,14 @@ class TitleTest extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 
-    public function testGetSiteAndPageTitleWithEmptySiteTitle()
+    public function testGetSiteAndPageTitleWithNoCustomSiteTitle()
     {
         $this->setUpStepsExpectations(1);
 
         $this->assertEquals('Foo', $this->title->getSiteAndPageTitle());
     }
 
-    private function setUpStepsExpectations($callCount)
+    protected function setUpStepsExpectations($callCount)
     {
         $steps = [
             [
@@ -67,7 +67,7 @@ class TitleTest extends \PHPUnit_Framework_TestCase
             ->willReturn($steps);
     }
 
-    public function testGetSiteAndPageTitleWithNotEmptySiteTitle()
+    public function testGetSiteAndPageTitleWithCustomSiteTitle()
     {
         $this->setUpStepsExpectations(1);
         
