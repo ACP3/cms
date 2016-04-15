@@ -10,7 +10,11 @@
     <body>
     <div class="container-fluid">
         <h1 id="logo" class="hidden-xs">
-            <a href="{uri args=""}"><img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{site_title}"></a>
+            <a href="{uri args=""}">
+                <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                     srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                     alt="{site_title}">
+            </a>
         </h1>
         <nav id="main-navigation" class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
@@ -22,7 +26,9 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">
-                        <img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{site_title}">
+                        <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                             srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                             alt="{site_title}">
                     </a>
                 </div>
                 <div id="navbar-collapse" class="collapse navbar-collapse">

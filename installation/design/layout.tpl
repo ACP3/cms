@@ -17,7 +17,9 @@
     <body>
     <div class="container">
         <h1 id="logo" class="hidden-xs">
-            <img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{$PAGE_TITLE}">
+            <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                 srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                 alt="{$PAGE_TITLE}">
         </h1>
         <nav id="main-navigation" class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
@@ -28,7 +30,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <span class="navbar-brand hidden-sm hidden-md hidden-lg">
-                    <img src="{$DESIGN_PATH}Assets/img/logo.png" alt="{$PAGE_TITLE}">
+                    <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                         srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                         alt="{$PAGE_TITLE}">
                 </span>
             </div>
             <div id="navbar-collapse" class="collapse navbar-collapse">
