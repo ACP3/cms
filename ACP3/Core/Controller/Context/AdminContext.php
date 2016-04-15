@@ -32,6 +32,7 @@ class AdminContext extends FrontendContext
             $context,
             $context->getAssets(),
             $context->getBreadcrumb(),
+            $context->getTitle(),
             $context->getActionHelper(),
             $context->getResponse()
         );

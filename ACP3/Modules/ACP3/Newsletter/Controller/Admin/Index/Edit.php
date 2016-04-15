@@ -75,7 +75,7 @@ class Edit extends AbstractFormAction
         $newsletter = $this->newsletterRepository->getOneById($id);
 
         if (empty($newsletter) === false) {
-            $this->breadcrumb->setPageTitlePostfix($newsletter['title']);
+            $this->title->setPageTitlePostfix($newsletter['title']);
 
             $settings = $this->config->getSettings('newsletter');
 

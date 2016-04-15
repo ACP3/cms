@@ -9,13 +9,12 @@ namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 use ACP3\Core\ACL;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Captcha\Helpers;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class OnFormAfterListener
  * @package ACP3\Modules\ACP3\Captcha\Event\Listener
  */
-class OnDisplayCaptchaListener extends Event
+class OnDisplayCaptchaListener
 {
     /**
      * @var \ACP3\Core\ACL

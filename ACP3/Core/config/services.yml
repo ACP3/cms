@@ -82,7 +82,7 @@ services:
     class: ACP3\Core\Pagination
     arguments:
       - '@core.user'
-      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
       - '@core.lang'
       - '@core.request'
       - '@core.router'

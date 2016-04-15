@@ -6,12 +6,12 @@
 
 namespace ACP3\Modules\ACP3\Seo\Core;
 
-use ACP3\Core\Breadcrumb as CoreBreadcrumb;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\RouterInterface;
 use ACP3\Core\User;
+use ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 /**
@@ -28,23 +28,23 @@ class Pagination extends \ACP3\Core\Pagination
     /**
      * Pagination constructor.
      *
-     * @param \ACP3\Core\User                                $user
-     * @param \ACP3\Core\Breadcrumb                          $breadcrumb
-     * @param \ACP3\Core\I18n\Translator                     $translator
-     * @param \ACP3\Core\Http\RequestInterface               $request
-     * @param \ACP3\Core\RouterInterface                     $router
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements   $metaStatements
+     * @param \ACP3\Core\User                              $user
+     * @param \ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title $title
+     * @param \ACP3\Core\I18n\Translator                   $translator
+     * @param \ACP3\Core\Http\RequestInterface             $request
+     * @param \ACP3\Core\RouterInterface                   $router
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
         User $user,
-        CoreBreadcrumb $breadcrumb,
+        Title $title,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,
         MetaStatements $metaStatements
     ) {
 
-        parent::__construct($user, $breadcrumb, $translator, $request, $router);
+        parent::__construct($user, $title, $translator, $request, $router);
 
         $this->metaStatements = $metaStatements;
     }

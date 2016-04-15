@@ -1,5 +1,5 @@
 parameters:
-  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb'
+  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps'
 
 services:
   core.breadcrumb:
@@ -9,5 +9,5 @@ services:
       - '@core.lang'
       - '@core.request'
       - '@core.router'
-      - '@core.breadcrumb.title'
+      - '@core.eventDispatcher'
       - '@menus.model.menuitemrepository'

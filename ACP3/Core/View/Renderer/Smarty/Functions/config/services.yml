@@ -73,19 +73,22 @@ services:
 
   smarty.plugin.page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageTitle
-    arguments: ['@core.breadcrumb']
+    arguments:
+      - '@core.breadcrumb.title'
     tags:
       - { name: core.view.extension }
 
   smarty.plugin.site_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteTitle
-    arguments: ['@core.breadcrumb']
+    arguments:
+      - '@core.breadcrumb.title'
     tags:
       - { name: core.view.extension }
 
   smarty.plugin.site_and_page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteAndPageTitle
-    arguments: ['@core.breadcrumb']
+    arguments:
+      - '@core.breadcrumb.title'
     tags:
       - { name: core.view.extension }
 

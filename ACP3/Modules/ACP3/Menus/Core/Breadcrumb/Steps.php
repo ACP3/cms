@@ -1,46 +1,51 @@
 <?php
-namespace ACP3\Modules\ACP3\Menus\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
 
 use ACP3\Core;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Menus;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Generates the breadcrumb and page title
- * @package ACP3\Modules\ACP3\Menus\Core
+ * Class Steps
+ * @package ACP3\Modules\ACP3\Menus\Core\Breadcrumb
  */
-class Breadcrumb extends Core\Breadcrumb
+class Steps extends Core\Breadcrumb\Steps
 {
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     */
+    protected $menuItemRepository;
     /**
      * @var array
      */
     protected $stepsFromDb = [];
 
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
-     */
-    protected $menuItemRepository;
-
-    /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator                                $translator
-     * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\RouterInterface                                $router
-     * @param \ACP3\Core\Breadcrumb\Title                               $title
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository         $menuItemRepository
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param \ACP3\Core\I18n\Translator                                  $translator
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\RouterInterface                                  $router
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository           $menuItemRepository
      */
     public function __construct(
         ContainerInterface $container,
         Core\I18n\Translator $translator,
         RequestInterface $request,
         Core\RouterInterface $router,
-        Core\Breadcrumb\Title $title,
+        EventDispatcherInterface $eventDispatcher,
         Menus\Model\MenuItemRepository $menuItemRepository
     ) {
-        parent::__construct($container, $translator, $request, $router, $title);
+        parent::__construct($container, $translator, $request, $router, $eventDispatcher);
 
         $this->menuItemRepository = $menuItemRepository;
 
@@ -90,13 +95,7 @@ class Breadcrumb extends Core\Breadcrumb
     }
 
     /**
-     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
-     *
-     * @param string $title
-     * @param string $path
-     * @param bool   $dbSteps
-     *
-     * @return $this
+     * @inheritdoc
      */
     public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
@@ -112,13 +111,11 @@ class Breadcrumb extends Core\Breadcrumb
     /**
      * Sets the breadcrumb steps cache for frontend action requests
      */
-    protected function setBreadcrumbCacheForFrontend()
+    protected function buildBreadcrumbCacheForFrontend()
     {
-        parent::setBreadcrumbCacheForFrontend();
+        parent::buildBreadcrumbCacheForFrontend();
 
-        if (!empty($this->steps) && empty($this->stepsFromDb)) {
-            $this->breadcrumbCache = $this->steps;
-        } else {
+        if (!empty($this->stepsFromDb)) {
             $this->breadcrumbCache = $this->stepsFromDb;
 
             if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->steps[0]['uri']) {

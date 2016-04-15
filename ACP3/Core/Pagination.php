@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
@@ -16,9 +17,9 @@ class Pagination
      */
     protected $user;
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Title
      */
-    protected $breadcrumb;
+    protected $title;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
@@ -72,20 +73,20 @@ class Pagination
      * Pagination constructor.
      *
      * @param \ACP3\Core\User                  $user
-     * @param \ACP3\Core\Breadcrumb            $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Title      $title
      * @param \ACP3\Core\I18n\Translator       $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\RouterInterface       $router
      */
     public function __construct(
         User $user,
-        Breadcrumb $breadcrumb,
+        Title $title,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router
     ) {
         $this->user = $user;
-        $this->breadcrumb = $breadcrumb;
+        $this->title = $title;
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
@@ -177,7 +178,7 @@ class Pagination
     {
         if ($this->currentPage > 1) {
             $postfix = $this->translator->t('system', 'page_x', ['%page%' => $this->currentPage]);
-            $this->breadcrumb->setPageTitlePostfix($postfix);
+            $this->title->setPageTitlePostfix($postfix);
         }
     }
 

@@ -90,8 +90,9 @@ class Edit extends Core\Controller\AdminAction
                     $this->translator->t($comment['module'], $comment['module']),
                     'acp/comments/details/index/id_' . $comment['module_id']
                 )
-                ->append($this->translator->t('comments', 'admin_details_edit'))
-                ->setPageTitlePostfix($comment['name']);
+                ->append($this->translator->t('comments', 'admin_details_edit'));
+
+            $this->title->setPageTitlePostfix($comment['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost(

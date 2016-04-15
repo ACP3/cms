@@ -21,9 +21,13 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      */
     protected $assets;
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
+    /**
+     * @var \ACP3\Core\Breadcrumb\Title
+     */
+    protected $title;
     /**
      * @var Core\Helpers\RedirectMessages
      */
@@ -46,6 +50,7 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
 
         $this->assets = $context->getAssets();
         $this->breadcrumb = $context->getBreadcrumb();
+        $this->title = $context->getTitle();
         $this->actionHelper = $context->getActionHelper();
         $this->response = $context->getResponse();
     }

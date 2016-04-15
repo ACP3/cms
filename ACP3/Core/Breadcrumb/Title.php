@@ -6,12 +6,24 @@
 
 namespace ACP3\Core\Breadcrumb;
 
+use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 /**
  * Class Title
- * @package ACP3\Core\Breadcrumb
+ * @package ACP3\Core\Breadcrumb\Breadcrumb
  */
 class Title
 {
+    /**
+     * @var \ACP3\Core\Breadcrumb\Steps
+     */
+    protected $steps;
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
     /**
      * @var string
      */
@@ -28,11 +40,22 @@ class Title
      * @var string
      */
     protected $pageTitleSeparator = '-';
-
     /**
      * @var string
      */
     protected $siteTitle = '';
+
+    /**
+     * Title constructor.
+     *
+     * @param \ACP3\Core\Breadcrumb\Steps                                 $steps
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->steps = $steps;
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     /**
      * @return string
@@ -43,10 +66,29 @@ class Title
     }
 
     /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setSiteTitle($title)
+    {
+        $this->siteTitle = $title;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getPageTitle()
     {
+        if (empty($this->pageTitle)) {
+            $steps = $this->steps->getBreadcrumb();
+            $lastCrumb = end($steps);
+
+            $this->pageTitle = $lastCrumb['title'];
+        }
+
         return $this->pageTitle;
     }
 
@@ -121,16 +163,23 @@ class Title
      */
     public function getSiteAndPageTitle()
     {
+        $this->eventDispatcher->dispatch(
+            'core.breadcrumb.title.get_site_and_page_title_before',
+            new GetSiteAndPageTitleBeforeEvent($this)
+        );
+
         $title = $this->getPageTitle();
 
         $separator = $this->getPageTitleSeparator();
         if (!empty($this->pageTitlePrefix)) {
             $title = $this->pageTitlePrefix . $separator . $title;
         }
-        if (!empty($this->pageTitlePostfix)) {
-            $title .= $separator . $this->pageTitlePostfix;
+        if (!empty($this->getPageTitlePostfix())) {
+            $title .= $separator . $this->getPageTitlePostfix();
         }
-        $title .= ' | ' . $this->getSiteTitle();
+        if (!empty($this->getSiteTitle())) {
+            $title .= ' | ' . $this->getSiteTitle();
+        }
 
         return $title;
     }

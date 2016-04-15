@@ -2,6 +2,8 @@ services:
   core.breadcrumb.title:
     class: ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title
     arguments:
+      - '@core.breadcrumb'
+      - '@core.eventDispatcher'
       - '@core.config'
 
   core.helpers.pageBreaks:
@@ -16,7 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Core\Pagination
     arguments:
       - '@core.user'
-      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
       - '@core.lang'
       - '@core.request'
       - '@core.router'

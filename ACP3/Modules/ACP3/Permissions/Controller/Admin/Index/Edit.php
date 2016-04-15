@@ -74,14 +74,17 @@ class Edit extends AbstractFormAction
         $role = $this->roleRepository->getRoleById($id);
 
         if (!empty($role)) {
-            $this->breadcrumb->setPageTitlePostfix($role['name']);
+            $this->title->setPageTitlePostfix($role['name']);
 
             if ($this->request->getPost()->isEmpty() === false) {
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 
             if ($id != 1) {
-                $this->view->assign('parent', $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id']));
+                $this->view->assign(
+                    'parent',
+                    $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
+                );
             }
 
             return [

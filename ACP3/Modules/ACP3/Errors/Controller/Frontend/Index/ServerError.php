@@ -16,6 +16,8 @@ class ServerError extends Core\Controller\FrontendAction
 {
     public function execute()
     {
+        $this->breadcrumb->append($this->translator->t('errors', 'frontend_index_server_error'));
+
         $this->response->setStatusCode(500);
     }
 }
