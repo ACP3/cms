@@ -21,6 +21,8 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
     {
         $this->initializeMockObjects();
 
+        $this->setUpMenuItemRepositoryExpectations();
+
         $this->steps = new Steps(
             $this->containerMock,
             $this->translatorMock,
@@ -38,5 +40,13 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
         $this->menuItemRepositoryMock = $this->getMockBuilder(MenuItemRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
+
+    protected function setUpMenuItemRepositoryExpectations()
+    {
+        $this->menuItemRepositoryMock->expects($this->once())
+            ->method('getMenuItemsByUri')
+            ->withAnyParameters()
+            ->willReturn([]);
     }
 }
