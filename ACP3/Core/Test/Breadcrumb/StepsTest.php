@@ -20,27 +20,27 @@ class StepsTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $containerMock;
+    protected $containerMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $translatorMock;
+    protected $translatorMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $requestMock;
+    protected $requestMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $routerMock;
+    protected $routerMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $eventDispatcherMock;
+    protected $eventDispatcherMock;
     /**
      * @var \ACP3\Core\Breadcrumb\Steps
      */
-    private $steps;
+    protected $steps;
 
     protected function setUp()
     {

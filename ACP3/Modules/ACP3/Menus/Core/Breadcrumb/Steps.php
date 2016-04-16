@@ -65,13 +65,9 @@ class Steps extends Core\Breadcrumb\Steps
                 $this->request->getModuleAndController(),
                 $this->request->getModule()
             ];
-
             $items = $this->menuItemRepository->getMenuItemsByUri($in);
-            $cItems = count($items);
-
-            // Populate the breadcrumb with internal pages
-            for ($i = 0; $i < $cItems; ++$i) {
-                $this->appendFromDB($items[$i]['title'], $items[$i]['uri']);
+            foreach ($items as $item) {
+                $this->appendFromDB($item['title'], $item['uri']);
             }
         }
     }
@@ -115,10 +111,9 @@ class Steps extends Core\Breadcrumb\Steps
             $this->breadcrumbCache = $this->stepsFromDb;
 
             if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->steps[0]['uri']) {
-                $cStepsFromModules = count($this->steps);
-                for ($i = 1; $i < $cStepsFromModules; ++$i) {
-                    $this->breadcrumbCache[] = $this->steps[$i];
-                }
+                $steps = $this->steps;
+                unset($steps[0]);
+                $this->breadcrumbCache = array_merge($this->breadcrumbCache, $steps);
             }
         }
     }
