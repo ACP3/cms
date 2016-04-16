@@ -82,8 +82,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             'index',
             'index'
         );
-        $this->setUpRouterMockExpectations('acp/foo');
-        $this->setUpTranslatorMockExpectations('foo', 'foo');
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations();
 
         $expected = [
             [
@@ -95,6 +95,12 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
+    /**
+     * @param string $area
+     * @param string $moduleName
+     * @param string $controller
+     * @param string $action
+     */
     private function setUpRequestMockExpectations($area, $moduleName, $controller, $action)
     {
         $this->requestMock->expects($this->atLeastOnce())
@@ -109,6 +115,11 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->requestMock->expects($this->atLeastOnce())
             ->method('getAction')
             ->willReturn($action);
+        $this->requestMock->expects($this->any())
+            ->method('getModuleAndController')
+            ->willReturn(
+                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller
+            );
     }
 
     /**
@@ -123,19 +134,80 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             ->willReturn($serviceExists);
     }
 
-    private function setUpRouterMockExpectations($path)
+    private function setUpRouterMockExpectations()
     {
         $this->routerMock->expects($this->atLeastOnce())
             ->method('route')
-            ->with($path)
-            ->willReturn('/' . $path);
+            ->willReturnCallback(function($path) {
+                return '/' . $path;
+            });
     }
 
-    private function setUpTranslatorMockExpectations($moduleName, $phrase)
+    private function setUpTranslatorMockExpectations()
     {
         $this->translatorMock->expects($this->atLeastOnce())
             ->method('t')
-            ->with($moduleName, $phrase)
-            ->willReturn(strtoupper('{' . $moduleName . '_' . $phrase . '}'));
+            ->willReturnCallback(function($module, $phrase) {
+                return strtoupper ('{' . $module . '_' . $phrase . '}');
+            });
     }
+
+    public function testGetBreadcrumbForAdmin()
+    {
+        $this->setUpContainerMockExpectations(
+            'foo.controller.admin.details.index',
+            true
+        );
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_ADMIN,
+            'foo',
+            'details',
+            'index'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations();
+
+        $expected = [
+            [
+                'title' => '{FOO_FOO}',
+                'uri' => '/acp/foo',
+            ],
+            [
+                'title' => '{FOO_ADMIN_DETAILS_INDEX}',
+                'uri' => '/acp/foo/details',
+                'last' => true
+            ]
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+//    public function testGetBreadcrumbForAdminWithExistingSteps()
+//    {
+//        $this->markTestSkipped('To be implemented');
+//    }
+//
+//    public function testGetBreadcrumbForFrontendControllerIndex()
+//    {
+//        $this->markTestSkipped('To be implemented');
+//    }
+//
+//    public function testGetBreadcrumbForFrontendController()
+//    {
+//        $this->markTestSkipped('To be implemented');
+//    }
+//
+//    public function testGetBreadcrumbForFrontendWithExistingSteps()
+//    {
+//        $this->markTestSkipped('To be implemented');
+//    }
+//
+//    public function testAddMultipleSameSteps()
+//    {
+//        $this->markTestSkipped('To be implemented');
+//    }
+//
+//    public function testReplaceAncestor()
+//    {
+//        $this->markTestSkipped('To be implemented');
+//    }
 }
