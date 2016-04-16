@@ -106,13 +106,13 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->requestMock->expects($this->atLeastOnce())
             ->method('getArea')
             ->willReturn($area);
-        $this->requestMock->expects($this->atLeastOnce())
+        $this->requestMock->expects($this->any())
             ->method('getModule')
             ->willReturn($moduleName);
-        $this->requestMock->expects($this->atLeastOnce())
+        $this->requestMock->expects($this->any())
             ->method('getController')
             ->willReturn($controller);
-        $this->requestMock->expects($this->atLeastOnce())
+        $this->requestMock->expects($this->any())
             ->method('getAction')
             ->willReturn($action);
         $this->requestMock->expects($this->any())
@@ -143,9 +143,9 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             });
     }
 
-    private function setUpTranslatorMockExpectations()
+    private function setUpTranslatorMockExpectations($callCount = 1)
     {
-        $this->translatorMock->expects($this->atLeastOnce())
+        $this->translatorMock->expects($this->atLeast($callCount))
             ->method('t')
             ->willReturnCallback(function($module, $phrase) {
                 return strtoupper ('{' . $module . '_' . $phrase . '}');
@@ -181,33 +181,163 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-//    public function testGetBreadcrumbForAdminWithExistingSteps()
-//    {
-//        $this->markTestSkipped('To be implemented');
-//    }
-//
-//    public function testGetBreadcrumbForFrontendControllerIndex()
-//    {
-//        $this->markTestSkipped('To be implemented');
-//    }
-//
-//    public function testGetBreadcrumbForFrontendController()
-//    {
-//        $this->markTestSkipped('To be implemented');
-//    }
-//
-//    public function testGetBreadcrumbForFrontendWithExistingSteps()
-//    {
-//        $this->markTestSkipped('To be implemented');
-//    }
-//
-//    public function testAddMultipleSameSteps()
-//    {
-//        $this->markTestSkipped('To be implemented');
-//    }
-//
-//    public function testReplaceAncestor()
-//    {
-//        $this->markTestSkipped('To be implemented');
-//    }
+    public function testGetBreadcrumbForAdminWithExistingSteps()
+    {
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_ADMIN,
+            'foo',
+            'details',
+            'index'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations();
+
+        $this->steps->append('FooBarBaz', 'acp/foo/bar/baz');
+
+        $expected = [
+            [
+                'title' => '{FOO_FOO}',
+                'uri' => '/acp/foo',
+            ],
+            [
+                'title' => 'FooBarBaz',
+                'uri' => '/acp/foo/bar/baz',
+                'last' => true
+            ]
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+    public function testGetBreadcrumbForFrontendControllerIndex()
+    {
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_FRONTEND,
+            'foo',
+            'index',
+            'index'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations();
+
+        $expected = [
+            [
+                'title' => '{FOO_FOO}',
+                'uri' => '/foo',
+                'last' => true
+            ]
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+    public function testGetBreadcrumbForFrontendController()
+    {
+        $this->setUpContainerMockExpectations(
+            'foo.controller.frontend.details.index',
+            true
+        );
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_FRONTEND,
+            'foo',
+            'details',
+            'index'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations();
+
+        $expected = [
+            [
+                'title' => '{FOO_FOO}',
+                'uri' => '/foo',
+            ],
+            [
+                'title' => '{FOO_FRONTEND_DETAILS_INDEX}',
+                'uri' => '/foo/details',
+                'last' => true
+            ]
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+    public function testGetBreadcrumbForFrontendWithExistingSteps()
+    {
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_FRONTEND,
+            'foo',
+            'details',
+            'index'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations(0);
+
+        $this->steps->append('FooBarBaz', 'foo/bar/baz');
+
+        $expected = [
+            [
+                'title' => 'FooBarBaz',
+                'uri' => '/foo/bar/baz',
+                'last' => true
+            ]
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+    public function testAddMultipleSameSteps()
+    {
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_FRONTEND,
+            'foo',
+            'details',
+            'index'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations(0);
+
+        $this->steps->append('FooBarBaz', 'foo/bar/baz');
+        $this->steps->append('FooBarBaz', 'foo/bar/baz');
+        $this->steps->append('FooBarBaz', 'foo/bar/baz');
+
+        $expected = [
+            [
+                'title' => 'FooBarBaz',
+                'uri' => '/foo/bar/baz',
+                'last' => true
+            ]
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+    public function testReplaceAncestor()
+    {
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_FRONTEND,
+            'foo',
+            'details',
+            'index'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations(0);
+
+        $this->steps->append('FooBarBaz', 'foo/bar/baz');
+        $this->steps->append('FooBarBaz2', 'foo/bar/baz2');
+        $this->steps->append('FooBarBaz3', 'foo/bar/baz3');
+
+        $this->steps->replaceAncestor('Lorem Ipsum', 'lorem/ipsum/dolor');
+
+        $expected = [
+            [
+                'title' => 'FooBarBaz',
+                'uri' => '/foo/bar/baz',
+            ],
+            [
+                'title' => 'FooBarBaz2',
+                'uri' => '/foo/bar/baz2',
+            ],
+            [
+                'title' => 'Lorem Ipsum',
+                'uri' => '/lorem/ipsum/dolor',
+                'last' => true
+            ],
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
 }

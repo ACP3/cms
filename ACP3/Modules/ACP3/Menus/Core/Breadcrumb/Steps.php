@@ -86,10 +86,7 @@ class Steps extends Core\Breadcrumb\Steps
      */
     protected function appendFromDB($title, $path = '')
     {
-        $this->stepsFromDb[] = [
-            'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
-        ];
+        $this->stepsFromDb[] = $this->buildStepItem($title, $path);
 
         return $this;
     }
@@ -100,9 +97,8 @@ class Steps extends Core\Breadcrumb\Steps
     public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
         if ($dbSteps === true) {
-            $index = count($this->stepsFromDb) - (!empty($this->stepsFromDb) ? 1 : 0);
-            $this->stepsFromDb[$index]['title'] = $title;
-            $this->stepsFromDb[$index]['uri'] = !empty($path) ? $this->router->route($path) : '';
+            end($this->stepsFromDb);
+            $this->stepsFromDb[key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
         }
 
         return parent::replaceAncestor($title, $path, $dbSteps);

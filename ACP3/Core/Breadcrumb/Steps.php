@@ -64,33 +64,12 @@ class Steps
         RequestInterface $request,
         RouterInterface $router,
         EventDispatcherInterface $eventDispatcher
-    )
-    {
+    ) {
         $this->container = $container;
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
         $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
-     *
-     * @param string $title
-     * @param string $path
-     * @param bool $dbSteps
-     *
-     * @return $this
-     */
-    public function replaceAncestor($title, $path = '', $dbSteps = false)
-    {
-        if ($dbSteps === false) {
-            $index = count($this->steps) - (!empty($this->steps) ? 1 : 0);
-            $this->steps[$index]['title'] = $title;
-            $this->steps[$index]['uri'] = !empty($path) ? $this->router->route($path) : '';
-        }
-
-        return $this;
     }
 
     /**
@@ -143,7 +122,7 @@ class Steps
             );
 
             $this->appendControllerActionBreadcrumbs();
-        } else { // Prepend breadcrumb steps, if there have already been some steps set
+        } else {
             $this->prepend(
                 $this->translator->t($this->request->getModule(), $this->request->getModule()),
                 'acp/' . $this->request->getModule()
@@ -221,6 +200,38 @@ class Steps
     }
 
     /**
+     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
+     *
+     * @param string $title
+     * @param string $path
+     * @param bool $dbSteps
+     *
+     * @return $this
+     */
+    public function replaceAncestor($title, $path = '', $dbSteps = false)
+    {
+        if ($dbSteps === false) {
+            end($this->steps);
+            $this->steps[key($this->steps)] = $this->buildStepItem($title, $path);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @param string $path
+     * @return array
+     */
+    protected function buildStepItem($title, $path)
+    {
+        return [
+            'title' => $title,
+            'uri' => !empty($path) ? $this->router->route($path) : ''
+        ];
+    }
+
+    /**
      * Zuweisung einer neuen Stufe zur Brotkrümelspur
      *
      * @param string $title
@@ -231,10 +242,7 @@ class Steps
     public function append($title, $path = '')
     {
         if (!$this->stepAlreadyExists($path)) {
-            $this->steps[] = [
-                'title' => $title,
-                'uri' => !empty($path) ? $this->router->route($path) : ''
-            ];
+            $this->steps[] = $this->buildStepItem($title, $path);
         }
 
         return $this;
@@ -251,10 +259,7 @@ class Steps
     public function prepend($title, $path)
     {
         if (!$this->stepAlreadyExists($path)) {
-            $step = [
-                'title' => $title,
-                'uri' => $this->router->route($path)
-            ];
+            $step = $this->buildStepItem($title, $path);
             array_unshift($this->steps, $step);
         }
 
