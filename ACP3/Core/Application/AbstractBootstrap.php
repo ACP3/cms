@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\ErrorHandler;
 
@@ -27,7 +26,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     /**
      * @param string $appMode
      */
-    public function __construct($appMode = ApplicationMode::PRODUCTION)
+    public function __construct($appMode)
     {
         $this->appMode = $appMode;
         $this->setAppPath($appMode);

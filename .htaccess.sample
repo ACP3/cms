@@ -4,6 +4,8 @@
     </IfModule>
 </FilesMatch>
 
+#SetEnv ACP3_APPLICATION_MODE dev
+
 <IfModule mod_rewrite.c>
     Options +FollowSymlinks
     DirectoryIndex index.php

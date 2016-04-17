@@ -22,7 +22,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     public function run()
     {
-        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER && $this->startupChecks() === false) {
+        if ($this->startupChecks() === false) {
             return;
         }
 
