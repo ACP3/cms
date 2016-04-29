@@ -80,7 +80,7 @@ class Index extends AbstractAction
 
     public function execute()
     {
-        if ($this->request->getPost()->isEmpty() === false) {
+        if ($this->request->getPost()->isEmpty() === false && !$this->request->getPost()->get('languages')) {
             $this->executePost($this->request->getPost()->all());
         }
 

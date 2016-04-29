@@ -8,8 +8,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="{$INSTALLER_ROOT_DIR}design/Assets/css/style.css">
-        <link rel="stylesheet" type="text/css" href="{$INSTALLER_ROOT_DIR}Installer/Modules/Install/Resources/Assets/css/style.css">
+        <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.css">
+        <!-- STYLESHEETS -->
         <!--[if lt IE 9]>
             <script src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/html5shiv.js"></script>
         <![endif]-->
@@ -46,7 +46,11 @@
                 {/if}
                 <form action="{$REQUEST_URI}" method="post" id="languages" class="navbar-form navbar-right">
                     <div class="form-group">
-                        <select name="lang" id="lang" class="form-control" title="{lang t="install|select_language"}">
+                        <select name="lang"
+                                id="lang"
+                                class="form-control"
+                                title="{lang t="install|select_language"}"
+                                data-change-language-warning="{lang t="install|form_change_warning"}">
                             {foreach $LANGUAGES as $row}
                                 <option value="{$row.language}"{$row.selected}>{$row.name}</option>
                             {/foreach}
@@ -63,30 +67,8 @@
     </div>
     <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/jquery.min.js"></script>
     <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            var $configForm = $('#config-form');
-            if ($configForm.length > 0) {
-                $configForm.data('changed', false);
-                $configForm.find('input, select').change(function () {
-                    $configForm.data('changed', true);
-                });
-            }
-
-            // Sprachdropdown
-            $('#languages').find(':submit').hide();
-            $('#lang').change(function () {
-                var reload = true;
-                if ($configForm.length > 0 && $configForm.data('changed') == true) {
-                    reload = confirm('{lang t="install|form_change_warning"}');
-                }
-
-                if (reload === true) {
-                    $('#languages').submit();
-                }
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{$DESIGN_PATH}Assets/js/language-switcher.js"></script>
+    <!-- JAVASCRIPTS -->
     </body>
     </html>
 {/if}

@@ -9,6 +9,7 @@ imports:
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }
   - { resource: ../../Modules/Install/Resources/config/services.yml }
+  - { resource: ../../../../ACP3/Core/View/Renderer/Smarty/Blocks/config/services.yml }
 
 services:
   core.application.front_controller:

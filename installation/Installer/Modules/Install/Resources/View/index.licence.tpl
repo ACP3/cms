@@ -1,6 +1,10 @@
 {extends file="asset:layout.tpl"}
 
 {block CONTENT prepend}
+    {stylesheets}
+        <link rel="stylesheet" type="text/css" href="{$INSTALLER_ROOT_DIR}Installer/Modules/Install/Resources/Assets/css/style.css">
+    {/stylesheets}
+
     <div class="well well-sm licence">
         <h3>Table of Contents</h3>
         <ul>

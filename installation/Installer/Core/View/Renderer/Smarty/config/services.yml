@@ -14,6 +14,17 @@ services:
   smarty.resource.asset:
     class: ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
     arguments:
-      - @core.environment.application_path
+      - '@core.environment.application_path'
     tags:
       - { name: core.view.extension }
+
+  smarty.filter.move_to_bottom:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
+    tags:
+      - { name: core.view.extension }
+
+  smarty.filter.move_to_head:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
+    tags:
+      - { name: core.view.extension }
+

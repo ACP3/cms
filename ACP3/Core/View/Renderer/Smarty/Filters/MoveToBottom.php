@@ -8,8 +8,11 @@ use ACP3\Core\Http\RequestInterface;
  * Class MoveToBottom
  * @package ACP3\Core\View\Renderer\Smarty\Filters
  */
-class MoveToBottom extends AbstractFilter
+class MoveToBottom extends AbstractMoveElementFilter
 {
+    const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
+    const PLACEHOLDER = '<!-- JAVASCRIPTS -->';
+
     /**
      * @var \ACP3\Core\Assets\AbstractMinifier
      */
@@ -44,23 +47,26 @@ class MoveToBottom extends AbstractFilter
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        $pattern = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
-
-        if (strpos($tplOutput, '<!-- JAVASCRIPTS -->') !== false) {
-            $matches = [];
-            preg_match_all($pattern, $tplOutput, $matches);
-
-            // Remove placeholder comments
-            $tplOutput = preg_replace($pattern, '', $tplOutput);
-
-            $minifyJs = '';
-            if (!$this->request->isAjax()) {
-                $minifyJs = '<script type="text/javascript" src="' . $this->minifier->getURI() . '"></script>' . "\n";
-            }
-
-            return str_replace('<!-- JAVASCRIPTS -->', $minifyJs . implode("\n", array_unique($matches[1])) . "\n", $tplOutput);
+        if (strpos($tplOutput, static::PLACEHOLDER) !== false) {
+            return str_replace(
+                static::PLACEHOLDER,
+                $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
+                $this->getCleanedUpTemplateOutput($tplOutput)
+            );
         }
 
         return $tplOutput;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addElementFromMinifier()
+    {
+        $minifyJs = '';
+        if (!$this->request->isAjax()) {
+            $minifyJs = '<script type="text/javascript" src="' . $this->minifier->getURI() . '"></script>' . "\n";
+        }
+        return $minifyJs;
     }
 }
