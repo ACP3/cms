@@ -1,220 +1,185 @@
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(350deg);
+  }
+}
+@-moz-keyframes rotate {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(350deg);
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(350deg);
+  }
+}
 /* AJAX loading layer */
 #loading-layer {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.5);
-    display: none;
-    z-index: 999999;
-    position: fixed;
-    top: 0;
-    left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  display: none;
+  z-index: 999999;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
-
 #loading-layer h1 {
-    width: 100%;
-    margin: 0;
-    font-size: 26px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    text-align: center;
+  width: 100%;
+  margin: 0;
+  font-size: 26px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
 }
-
-@-webkit-keyframes rotate {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(350deg);
-    }
-}
-
-@-moz-keyframes rotate {
-    from {
-        -moz-transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(350deg);
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(350deg);
-    }
-}
-
 #loading-layer .glyphicon {
-    margin-bottom: 10px;
-    display: block;
-    -webkit-animation: rotate 2s linear infinite;
-    -moz-animation: rotate 2s linear infinite;
-    -o-animation: rotate 2s linear infinite;
-    animation: rotate 2s linear infinite;
+  margin-bottom: 10px;
+  display: block;
+  -webkit-animation: rotate 2s linear infinite;
+  -moz-animation: rotate 2s linear infinite;
+  -o-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
 }
-
-.tab-content > .tab-pane {
-    padding-top: 15px;
-}
-
-.control-label.required:after {
-    content: ' *';
-}
-
-/* Pagination */
-.pagination {
-    margin: 0 0 10px;
-}
-
-/* Datensätze */
-.table .sub-table-header {
-    background: #f6f6f6;
-    line-height: 26px;
-    font-weight: bold;
-}
-
-.table .sub-table-header.has-buttons {
-    line-height: 30px;
-}
-
-.table .sub-table-header span,
-.table .sub-table-header div {
-    font-weight: normal;
-}
-
 .dataset-box {
-    margin: 0 auto 10px;
+  margin: 0 auto 10px;
 }
-
 .dataset-box .navbar-brand {
-    height: auto;
-    margin: 0;
+  height: auto;
+  margin: 0;
 }
-
 .dataset-box small.navbar-text,
 .dataset-box .small.navbar-text {
-    margin-top: 17px;
-    margin-bottom: 16px;
+  margin-top: 17px;
+  margin-bottom: 16px;
 }
-
 .dataset-box .content {
-    margin: -8px 20px 10px;
+  margin: -8px 20px 10px;
 }
-
 .dataset-box .hyperlink {
-    margin: 8px 0 0;
-    padding: 4px;
-    background-color: #eee;
-    background-image: -moz-linear-gradient(top, #eee, #fff);
-    background-image: -ms-linear-gradient(top, #eee, #fff);
-    background-image: -webkit-linear-gradient(top, #eee, #fff);
-    background-image: -o-linear-gradient(top, #eee, #fff);
-    background-image: linear-gradient(top, #eee, #fff);
-    background-repeat: repeat-x;
-    border-top: 1px dotted #ccc;
-    line-height: 20px;
+  margin: 8px 0 0;
+  padding: 4px;
+  background-color: #eee;
+  background-image: -moz-linear-gradient(top, #eee, #fff);
+  background-image: -ms-linear-gradient(top, #eee, #fff);
+  background-image: -webkit-linear-gradient(top, #eee, #fff);
+  background-image: -o-linear-gradient(top, #eee, #fff);
+  background-image: linear-gradient(top, #eee, #fff);
+  background-repeat: repeat-x;
+  border-top: 1px dotted #ccc;
+  line-height: 20px;
 }
-
 .dataset-box .hyperlink a.download-file {
-    padding: 0 8px;
-    font-weight: bold;
-    line-height: 26px;
-    display: block;
+  padding: 0 8px;
+  font-weight: bold;
+  line-height: 26px;
+  display: block;
 }
-
 /* Table of contents */
 #toc {
-    width: 20%;
-    margin: 5px 10px 10px 0;
-    float: left;
+  width: 20%;
+  margin: 5px 10px 10px 0;
+  float: left;
 }
-
 #page-break-link {
-    margin: 5px 0;
+  margin: 5px 0;
 }
-
 /* ACP */
 #adm-list .navbar-text {
-    margin: 0;
+  margin: 0;
 }
-
 #adm-list .navbar-text a {
-    color: #333;
+  color: #333;
 }
-
 #adm-list .navbar-text .btn-link {
-    margin-left: 8px;
-    padding-left: 0;
-    padding-right: 0;
+  margin-left: 8px;
+  padding-left: 0;
+  padding-right: 0;
 }
-
 #adm-list .navbar-text .glyphicon {
-    font-size: 32px;
+  font-size: 32px;
 }
-
 #adm-list .navbar-text .glyphicon-plus:before {
-    position: relative;
-    top: -2px;
+  position: relative;
+  top: -2px;
 }
-
-#adm-list a, #adm-list input {
-    margin: 8px 0 0 8px;
-    float: right;
+#adm-list a,
+#adm-list input {
+  margin: 8px 0 0 8px;
+  float: right;
 }
-
 .datagrid .datagrid-column__mass-action {
-    width: 5%;
+  width: 5%;
 }
-
 .datagrid .datagrid-column__date-range {
-    width: 22%;
+  width: 22%;
 }
-
 .datagrid .datagrid-column__actions {
-    width: 15%;
+  width: 15%;
 }
-
+.tab-content > .tab-pane {
+  padding-top: 15px;
+}
+.control-label.required:after {
+  content: ' *';
+}
+/* Pagination */
+.pagination {
+  margin: 0 0 10px;
+}
+/* Datensätze */
+.table .sub-table-header {
+  background: #f6f6f6;
+  line-height: 26px;
+  font-weight: bold;
+}
+.table .sub-table-header .has-buttons {
+  line-height: 30px;
+}
+.table .sub-table-header span,
+.table .sub-table-header div {
+  font-weight: normal;
+}
 /* Position Bootstrap modal dialogs statically */
 .modal.static {
-    margin: 0 auto;
-    position: static;
-    display: block;
-    overflow: auto;
+  margin: 0 auto;
+  position: static;
+  display: block;
+  overflow: auto;
 }
-
 .modal.static .modal-footer {
-    margin-top: 0;
-    border-top: none;
+  margin-top: 0;
+  border-top: none;
 }
-
 .list-group-item.dropdown {
-    padding: 0;
+  padding: 0;
 }
-
 .list-group-item a {
-    padding: 10px 15px;
-    color: #555;
-    text-decoration: none;
-    display: block;
+  padding: 10px 15px;
+  color: #555;
+  text-decoration: none;
+  display: block;
 }
-
 .list-group-item a:hover {
-    background-color: #F5F5F5;
+  background-color: #F5F5F5;
 }
-
 .panel-body p:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
-
 /* Inline validation errors */
 .validation-failed {
-    margin: 15px 0 0;
+  margin: 15px 0 0;
 }
-
 /* Cache management */
 .cache-type {
-    line-height: 34px;
+  line-height: 34px;
 }
