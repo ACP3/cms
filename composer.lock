@@ -608,16 +608,16 @@
         },
         {
             "name": "mibe/feedwriter",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mibe/FeedWriter.git",
-                "reference": "d8c2814916421231ddb8513db05f182f738d55d0"
+                "reference": "73b68701f357e70659e91f74ea8680b8526e413b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/d8c2814916421231ddb8513db05f182f738d55d0",
-                "reference": "d8c2814916421231ddb8513db05f182f738d55d0",
+                "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/73b68701f357e70659e91f74ea8680b8526e413b",
+                "reference": "73b68701f357e70659e91f74ea8680b8526e413b",
                 "shasum": ""
             },
             "require": {
@@ -683,7 +683,7 @@
                 "feed",
                 "rss"
             ],
-            "time": "2015-11-11 22:56:18"
+            "time": "2016-04-17 21:37:55"
         },
         {
             "name": "monolog/monolog",
@@ -1577,16 +1577,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "4.3.10",
+            "version": "4.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "ee747f1bc97ec8380e7fd8a1ce827be5e735a10b"
+                "reference": "969503f87d04a41ad0b84b1d215a98fba13ca5a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/ee747f1bc97ec8380e7fd8a1ce827be5e735a10b",
-                "reference": "ee747f1bc97ec8380e7fd8a1ce827be5e735a10b",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/969503f87d04a41ad0b84b1d215a98fba13ca5a9",
+                "reference": "969503f87d04a41ad0b84b1d215a98fba13ca5a9",
                 "shasum": ""
             },
             "type": "component",
@@ -1619,7 +1619,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2016-04-12 13:26:22"
+            "time": "2016-04-25 02:19:14"
         }
     ],
     "packages-dev": [
