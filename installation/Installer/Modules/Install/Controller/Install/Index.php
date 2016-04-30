@@ -53,11 +53,11 @@ class Index extends AbstractAction
     protected $formValidation;
 
     /**
-     * @param \ACP3\Installer\Core\Controller\Context\InstallerContext  $context
-     * @param \ACP3\Installer\Core\Date                                 $date
-     * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
-     * @param \ACP3\Core\Helpers\Date                                   $dateHelper
-     * @param \ACP3\Installer\Modules\Install\Helpers\Install           $installHelper
+     * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
+     * @param \ACP3\Installer\Core\Date $date
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Helpers\Date $dateHelper
+     * @param \ACP3\Installer\Modules\Install\Helpers\Install $installHelper
      * @param \ACP3\Installer\Modules\Install\Validation\FormValidation $formValidation
      */
     public function __construct(
@@ -113,21 +113,12 @@ class Index extends AbstractAction
 
             $this->writeConfigFile($formData);
             $this->updateContainer();
-            $resultModules = $this->installModules();
-            $resultAcl = false;
-
-            if ($resultModules === true) {
-                $resultAcl = $this->installAclResources();
-            }
-
-            // Admin-User, Menüpunkte, News, etc. in die DB schreiben
-            if ($resultModules === true && $resultAcl === true) {
-                $this->installSampleData($formData);
-                $this->configureModules($formData);
-            }
+            $this->installModules();
+            $this->installAclResources();
+            $this->installSampleData($formData);
+            $this->configureModules($formData);
 
             $this->setTemplate('install/install.result.tpl');
-            return;
         } catch (ValidationFailedException $e) {
             $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
         } catch (\Exception $e) {
@@ -140,7 +131,6 @@ class Index extends AbstractAction
      */
     private function writeConfigFile(array $formData)
     {
-        // Systemkonfiguration erstellen
         $configParams = [
             'parameters' => [
                 'db_host' => $formData['db_host'],
@@ -169,45 +159,35 @@ class Index extends AbstractAction
     }
 
     /**
-     * @return bool
      * @throws \Exception
      */
     private function installModules()
     {
-        $bool = false;
         $modules = array_merge(['system', 'users'], Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/'));
         $alreadyInstalled = [];
 
         foreach ($modules as $module) {
             $module = strtolower($module);
             if (!in_array($module, $alreadyInstalled)) {
-                $bool = $this->installHelper->installModule($module, $this->container);
-                $alreadyInstalled[] = $module;
-                if ($bool === false) {
+                if ($this->installHelper->installModule($module, $this->container) === false) {
                     throw new \Exception("Error while installing module {$module}.");
                 }
+
+                $alreadyInstalled[] = $module;
             }
         }
-
-        return $bool;
     }
 
     /**
-     * @return bool
-     *
      * @throws \Exception
      */
     private function installAclResources()
     {
-        $bool = false;
         foreach (Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/') as $module) {
-            $bool = $this->installHelper->installResources($module, $this->container);
-            if ($bool === false) {
-                throw new \Exception("Error while installing ACL resources of the module {$module}.");
+            if ($this->installHelper->installResources($module, $this->container) === false) {
+                throw new \Exception("Error while installing ACL resources for the module {$module}.");
             }
         }
-
-        return $bool;
     }
 
     /**
@@ -295,8 +275,13 @@ class Index extends AbstractAction
     {
         foreach (Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/') as $module) {
             $module = strtolower($module);
+            $sampleDataInstallResult = $this->installHelper->installSampleData(
+                $module,
+                $this->container,
+                $this->get('core.modules.schemaHelper')
+            );
 
-            if ($this->installHelper->installSampleData($module, $this->container, $this->get('core.modules.schemaHelper')) === false) {
+            if ($sampleDataInstallResult === false) {
                 return false;
             }
         }
