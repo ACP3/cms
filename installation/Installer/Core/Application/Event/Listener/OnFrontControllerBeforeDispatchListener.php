@@ -10,6 +10,10 @@ namespace ACP3\Installer\Core\Application\Event\Listener;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Redirect;
 
+/**
+ * Class OnFrontControllerBeforeDispatchListener
+ * @package ACP3\Installer\Core\Application\Event\Listener
+ */
 class OnFrontControllerBeforeDispatchListener
 {
     /**
