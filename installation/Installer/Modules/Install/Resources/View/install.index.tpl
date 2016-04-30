@@ -126,5 +126,7 @@
             </div>
         </div>
     </form>
-    <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/System/Resources/Assets/js/forms.js"></script>
+    {javascripts}
+        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/forms.js"></script>
+    {/javascripts}
 {/block}
