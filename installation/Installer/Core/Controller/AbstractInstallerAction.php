@@ -66,11 +66,6 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     public function preDispatch()
     {
-        if ($this->request->getPost()->has('lang')) {
-            setcookie('ACP3_INSTALLER_LANG', $this->request->getPost()->get('lang', ''), time() + 3600, '/');
-            $this->redirect()->temporary($this->request->getFullPath());
-        }
-
         $this->setLanguage();
 
         // Einige Template Variablen setzen
@@ -83,9 +78,13 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
         $this->view->assign('IS_AJAX', $this->request->isAjax());
 
-        $languageInfo = simplexml_load_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml');
-        $this->view->assign('LANG_DIRECTION',
-            isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr');
+        $languageInfo = simplexml_load_file(
+            $this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml'
+        );
+        $this->view->assign(
+            'LANG_DIRECTION',
+            isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr'
+        );
         $this->view->assign('LANG', $this->translator->getShortIsoCode());
     }
 
@@ -130,7 +129,6 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     private function languagesDropdown($selectedLanguage)
     {
-        // Dropdown-Menü für die Sprachen
         $languages = [];
         $path = $this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/';
 
@@ -172,7 +170,7 @@ abstract class AbstractInstallerAction implements ActionInterface
         ) {
             $language = $cookieLocale;
         } else {
-            $language = 'en_US'; // Fallback default language
+            $language = 'en_US'; // Fallback language
 
             foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
                 $locale = str_replace('-', '_', $locale);

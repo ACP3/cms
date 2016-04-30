@@ -51,7 +51,7 @@ class Index extends Core\Controller\AbstractInstallerAction
 
     public function execute()
     {
-        if ($this->request->getPost()->isEmpty() === false) {
+        if ($this->request->getPost()->get('action') === 'confirmed') {
             $this->executePost();
         }
     }

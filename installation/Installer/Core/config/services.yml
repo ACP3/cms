@@ -19,6 +19,14 @@ services:
       - '@core.request'
       - '@service_container'
 
+  core.application.event.listener.on_front_controller_before_dispatch_listener:
+    class: ACP3\Installer\Core\Application\Event\Listener\OnFrontControllerBeforeDispatchListener
+    arguments:
+      - '@core.request'
+      - '@core.redirect'
+    tags:
+      - { name: core.eventListener, event: core.application.front_controller.before_dispatch, method: onLanguageChange }
+
   core.date:
     class: ACP3\Installer\Core\Date
     arguments:

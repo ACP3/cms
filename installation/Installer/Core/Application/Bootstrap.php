@@ -32,6 +32,21 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     }
 
     /**
+     * @inheritdoc
+     */
+    public function startupChecks()
+    {
+        // Standardzeitzone festlegen
+        date_default_timezone_set('UTC');
+
+        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
+            return $this->databaseConfigExists();
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $appMode
      */
     protected function setAppPath($appMode)
@@ -70,20 +85,5 @@ class Bootstrap extends Core\Application\AbstractBootstrap
             $this->container->get('core.logger')->critical('installer', $e->getMessage());
             $redirect->temporary('errors/index/server_error')->send();
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function startupChecks()
-    {
-        // Standardzeitzone festlegen
-        date_default_timezone_set('UTC');
-
-        if ($this->appMode === Core\Environment\ApplicationMode::UPDATER) {
-            return $this->databaseConfigExists();
-        }
-
-        return true;
     }
 }
