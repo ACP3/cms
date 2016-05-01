@@ -7,6 +7,7 @@
 namespace ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\ActionInterface;
+use ACP3\Core\Controller\DisplayActionTrait;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Redirect;
 
@@ -16,7 +17,7 @@ use ACP3\Core\Redirect;
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
-    use \ACP3\Core\Controller\DisplayActionTrait;
+    use DisplayActionTrait;
 
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -46,6 +47,10 @@ abstract class AbstractInstallerAction implements ActionInterface
      * @var \Symfony\Component\HttpFoundation\Response
      */
     protected $response;
+    /**
+     * @var string
+     */
+    private $layout = 'layout.tpl';
 
     /**
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
@@ -160,6 +165,26 @@ abstract class AbstractInstallerAction implements ActionInterface
             $this->request->getModule(),
             $this->request->getController() . '_' . $this->request->getAction())
         );
+        $this->view->assign('LAYOUT', $this->request->isAjax() ? 'ajax.tpl' : $this->getLayout());
+    }
+
+    /**
+     * @return string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param string $layout
+     * @return $this
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+
+        return $this;
     }
 
     private function setLanguage()

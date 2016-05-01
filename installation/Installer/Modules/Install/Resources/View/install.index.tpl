@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT prepend}
     {if isset($error_msg)}
@@ -14,7 +14,7 @@
             <div class="tab-content">
                 <div id="tabs-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="db-host" class="col-sm-2 control-label">{lang t="install|db_hostname"}</label>
+                        <label for="db-host" class="col-sm-2 control-label required">{lang t="install|db_hostname"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="db_host" id="db-host" value="{$form.db_host}" required>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="db-user" class="col-sm-2 control-label">{lang t="install|db_username"}</label>
+                        <label for="db-user" class="col-sm-2 control-label required">{lang t="install|db_username"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="db_user" id="db-user" value="{$form.db_user}" required>
@@ -36,7 +36,7 @@
                             <input class="form-control" type="password" name="db_password" id="db-password" value=""></div>
                     </div>
                     <div class="form-group">
-                        <label for="db-name" class="col-sm-2 control-label">{lang t="install|db_name"}</label>
+                        <label for="db-name" class="col-sm-2 control-label required">{lang t="install|db_name"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="db_name" id="db-name" value="{$form.db_name}" required>
@@ -51,27 +51,27 @@
                 </div>
                 <div id="tabs-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="user-name" class="col-sm-2 control-label">{lang t="install|nickname"}</label>
+                        <label for="user-name" class="col-sm-2 control-label required">{lang t="install|nickname"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="user_name" id="user-name" value="{$form.user_name}" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="user-pwd" class="col-sm-2 control-label">{lang t="install|pwd"}</label>
+                        <label for="user-pwd" class="col-sm-2 control-label required">{lang t="install|pwd"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="password" name="user_pwd" id="user-pwd" required></div>
                     </div>
                     <div class="form-group">
-                        <label for="user-pwd-wdh" class="col-sm-2 control-label">{lang t="install|pwd_repeat"}</label>
+                        <label for="user-pwd-wdh" class="col-sm-2 control-label required">{lang t="install|pwd_repeat"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="password" name="user_pwd_wdh" id="user-pwd-wdh" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="mail" class="col-sm-2 control-label">{lang t="install|email"}</label>
+                        <label for="mail" class="col-sm-2 control-label required">{lang t="install|email"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="mail" id="mail" value="{$form.mail}" required>
@@ -80,14 +80,14 @@
                 </div>
                 <div id="tabs-3" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="install|site_title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="install|site_title"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-format-long" class="col-sm-2 control-label">{lang t="install|date_format_long"}</label>
+                        <label for="date-format-long" class="col-sm-2 control-label required">{lang t="install|date_format_long"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required>
@@ -96,17 +96,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-format-short" class="col-sm-2 control-label">{lang t="install|date_format_short"}</label>
+                        <label for="date-format-short" class="col-sm-2 control-label required">{lang t="install|date_format_short"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-time-zone" class="col-sm-2 control-label">{lang t="install|time_zone"}</label>
+                        <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="install|time_zone"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="date_time_zone" id="date-time-zone">
+                            <select class="form-control" name="date_time_zone" id="date-time-zone" required>
                                 {foreach $time_zones as $key => $values}
                                     <optgroup label="{$key}">
                                         {foreach $values as $country => $value}
