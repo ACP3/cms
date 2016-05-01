@@ -9,7 +9,6 @@ namespace ACP3\Installer\Modules\Install\Controller\Install;
 
 use ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -58,7 +57,7 @@ class AvailableDatabases extends AbstractInstallerAction
             ];
 
             return \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-        } catch (DBALException $e) {
+        } catch (\Exception $e) {
             return null;
         }
     }

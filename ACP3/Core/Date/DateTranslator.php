@@ -88,8 +88,9 @@ class DateTranslator
     }
 
     /**
-     * @param array  $search
+     * @param array $search
      * @param string $translatorPrefix
+     * @return array
      */
     protected function cacheLocalizedDate(array $search, $translatorPrefix)
     {

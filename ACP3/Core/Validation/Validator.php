@@ -117,7 +117,9 @@ class Validator
                     $params['extra']
                 );
             } else {
-                throw new ValidationRuleNotFoundException('Can not find the validation rule with the name ' . $constraint['rule'] . '.');
+                throw new ValidationRuleNotFoundException(
+                    'Can not find the validation rule with the name ' . $constraint['rule'] . '.'
+                );
             }
         }
 

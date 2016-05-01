@@ -24,8 +24,6 @@ jQuery(document).ready(function ($) {
                 "db_password": $('#db-password').val()
             },
             function (response) {
-                $dbName.prop('disabled', false);
-
                 if (response.length > 0) {
                     for (var i = 0; i < response.length; ++i) {
                         $dbName.append('<option value="' + response[i] + '">' + response[i] + '</option>');
@@ -36,6 +34,8 @@ jQuery(document).ready(function ($) {
                     $formGroup.addClass('has-error');
                 }
             }
-        );
+        ).always(function() {
+            $dbName.prop('disabled', false);
+        });
     });
 });

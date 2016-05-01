@@ -7,7 +7,6 @@
 namespace ACP3\Installer\Modules\Install\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use Doctrine\DBAL\DBALException;
 
 /**
  * Class DatabaseConnectionValidationRule
@@ -41,7 +40,8 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
                 $db->query('USE `' . $data[$dbName] . '`');
 
                 return true;
-            } catch (DBALException $e) {
+            } catch (\Exception $e) {
+                $this->setMessage(sprintf($this->getMessage(), $e->getMessage()));
                 return false;
             }
         }
