@@ -5,9 +5,20 @@
 }
 
 .control-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   &.required {
+    position: relative;
+
     &:after {
       content: ' *';
+      position: absolute;
+      right: 5px;
+
+      @media (min-width: 768px) {
+        top: 7px;
+      }
     }
   }
 }

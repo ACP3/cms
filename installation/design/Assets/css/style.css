@@ -52,8 +52,22 @@
 .tab-content > .tab-pane {
   padding-top: 15px;
 }
+.control-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.control-label.required {
+  position: relative;
+}
 .control-label.required:after {
   content: ' *';
+  position: absolute;
+  right: 5px;
+}
+@media (min-width: 768px) {
+  .control-label.required:after {
+    top: 7px;
+  }
 }
 /* Pagination */
 .pagination {
