@@ -13,6 +13,10 @@ services:
       - '@core.context.install'
       - '@install.helpers.requirements'
 
+  install.controller.install.install.available_databases:
+    class: ACP3\Installer\Modules\Install\Controller\Install\AvailableDatabases
+    parent: core.controller.install
+
   install.controller.install.install.index:
     class: ACP3\Installer\Modules\Install\Controller\Install\Index
     arguments:
@@ -22,4 +26,3 @@ services:
       - '@core.helpers.date'
       - '@install.helpers.install'
       - '@install.validator'
-

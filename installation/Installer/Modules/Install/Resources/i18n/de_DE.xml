@@ -82,9 +82,10 @@
         <item key="pages_sidebar">Sidebar</item>
         <item key="pdo_extension">PDO-Erweiterung</item>
         <item key="php_date_function">
-            <![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP.]]></item>
+            <![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a>-Funktion von PHP.]]></item>
         <item key="php_settings">PHP Einstellungen</item>
         <item key="php_version">PHP Version</item>
+        <item key="please_select">Bitte auswählen</item>
         <item key="pwd">Passwort</item>
         <item key="pwd_repeat">Passwort wiederholen</item>
         <item key="register_globals">register_globals</item>

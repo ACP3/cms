@@ -4,7 +4,14 @@
     {if isset($error_msg)}
         {$error_msg}
     {/if}
-    <form action="{uri args="install/install"}" method="post" accept-charset="UTF-8" class="form-horizontal" id="config-form" data-ajax-form="true" data-ajax-form-loading-text="{lang t="install|loading_please_wait"}">
+    <form action="{uri args="install/install"}"
+          method="post"
+          accept-charset="UTF-8"
+          class="form-horizontal"
+          id="config-form"
+          data-available-databases-url="{uri args="install/install/available_databases"}"
+          data-ajax-form="true"
+          data-ajax-form-loading-text="{lang t="install|loading_please_wait"}">
         <div class="tabbable">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tabs-1" data-toggle="tab">{lang t="install|db_connection_settings"}</a></li>
@@ -47,7 +54,9 @@
                         <label for="db-name" class="col-sm-2 control-label required">{lang t="install|db_name"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="db_name" id="db-name" value="{$form.db_name}" required>
+                            <select class="form-control" name="db_name" id="db-name" required>
+                                <option value="">{lang t="install|please_select"}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -142,5 +151,6 @@
     </form>
     {javascripts}
         <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/forms.js"></script>
+        <script type="text/javascript" src="{$INSTALLER_ROOT_DIR}Installer/Modules/Install/Resources/Assets/js/available_databases.js"></script>
     {/javascripts}
 {/block}
