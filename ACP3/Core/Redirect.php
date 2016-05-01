@@ -93,15 +93,12 @@ class Redirect
      */
     protected function ajax($path)
     {
+        $return = [];
         if ($this->request->isAjax() === true) {
-            $return = [
-                'redirect_url' => $path
-            ];
-
-            return new JsonResponse($return);
+            $return['redirect_url'] = $path;
         }
 
-        return new JsonResponse();
+        return new JsonResponse($return);
     }
 
     /**
