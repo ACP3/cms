@@ -81,7 +81,7 @@ trait DisplayActionTrait
      * @return \ACP3\Core\View
      */
     abstract protected function getView();
-
+    
     /**
      * Gibt den Content-Type der anzuzeigenden Seiten zurück
      *

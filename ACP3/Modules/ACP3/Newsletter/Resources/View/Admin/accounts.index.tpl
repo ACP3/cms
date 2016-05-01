@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <form action="{uri args="acp/newsletter/accounts/delete"}" method="post">

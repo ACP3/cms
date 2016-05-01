@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">

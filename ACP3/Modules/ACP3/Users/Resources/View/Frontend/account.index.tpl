@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <nav id="adm-list" class="navbar navbar-default" role="navigation">

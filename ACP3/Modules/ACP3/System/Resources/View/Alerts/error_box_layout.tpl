@@ -2,5 +2,5 @@
     {block CONTENT}{/block}
     <!-- JAVASCRIPTS -->
 {else}
-    {include file="asset:layout.tpl" inline}
+    {include file="asset:`$LAYOUT`" inline}
 {/if}

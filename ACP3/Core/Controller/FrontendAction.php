@@ -40,6 +40,10 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
+    /**
+     * @var string
+     */
+    private $layout = 'layout.tpl';
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
@@ -104,11 +108,31 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
+        $this->view->assign('LAYOUT', $this->request->isAjax() ? 'system/ajax.tpl' : $this->getLayout());
 
         $this->eventDispatcher->dispatch(
             'core.controller.custom_template_variable',
             new Core\Controller\Event\CustomTemplateVariableEvent($this->view)
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param string $layout
+     * @return $this
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+
+        return $this;
     }
 
     /**
