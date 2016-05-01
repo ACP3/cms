@@ -19,7 +19,7 @@
             <![CDATA[The connection to the database failed. Details below:<br /><pre>%s</pre>]]></item>
         <item key="db_connection_settings">Database connection settings</item>
         <item key="db_hostname">Hostname</item>
-        <item key="db_hostname_description">Usually &quot;localhost&quot;.</item>
+        <item key="db_hostname_description"><![CDATA[Usually &quot;localhost&quot;]]></item>
         <item key="db_name">Database name</item>
         <item key="db_password">Password</item>
         <item key="db_table_prefix">Table prefix</item>
@@ -65,6 +65,7 @@
             Please try again in a few minutes.
         </item>
         <item key="on">on</item>
+        <item key="optional">(optional)</item>
         <item key="overview">Overview</item>
         <item key="pages_contact">Contact</item>
         <item key="pages_files">Downloads</item>

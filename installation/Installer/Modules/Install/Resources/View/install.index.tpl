@@ -17,9 +17,12 @@
                         <label for="db-host" class="col-sm-2 control-label required">{lang t="install|db_hostname"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="db_host" id="db-host" value="{$form.db_host}" required>
-
-                            <p class="help-block">{lang t="install|db_hostname_description"}</p>
+                            <input class="form-control"
+                                   type="text"
+                                   name="db_host"
+                                   id="db-host"
+                                   value="{$form.db_host}"
+                                   placeholder="{lang t="install|db_hostname_description"}" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -33,7 +36,12 @@
                         <label for="db-password" class="col-sm-2 control-label">{lang t="install|db_password"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="password" name="db_password" id="db-password" value=""></div>
+                            <input class="form-control"
+                                   type="password"
+                                   name="db_password"
+                                   id="db-password"
+                                   placeholder="{lang t="install|optional"}">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="db-name" class="col-sm-2 control-label required">{lang t="install|db_name"}</label>
@@ -46,7 +54,13 @@
                         <label for="db-pre" class="col-sm-2 control-label">{lang t="install|db_table_prefix"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="db_pre" id="db-pre" value="{$form.db_pre}"></div>
+                            <input class="form-control"
+                                   type="text"
+                                   name="db_pre"
+                                   id="db-pre"
+                                   value="{$form.db_pre}"
+                                   placeholder="{lang t="install|optional"}">
+                        </div>
                     </div>
                 </div>
                 <div id="tabs-2" class="tab-pane fade">

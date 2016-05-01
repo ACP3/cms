@@ -74,8 +74,8 @@ class Translator
      */
     public function languagePackExists($locale)
     {
-        return !preg_match('=/=',
-            $locale) && is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
+        return !preg_match('=/=', $locale)
+        && is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
     }
 
     /**

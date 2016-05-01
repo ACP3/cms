@@ -145,6 +145,10 @@
     top: 7px;
   }
 }
+input[placeholder],
+textarea[placeholder] {
+  font-style: italic;
+}
 /* Pagination */
 .pagination {
   margin: 0 0 10px;

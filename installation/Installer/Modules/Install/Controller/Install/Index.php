@@ -84,21 +84,22 @@ class Index extends AbstractAction
             $this->executePost($this->request->getPost()->all());
         }
 
-        $this->view->assign('time_zones', $this->dateHelper->getTimeZones(date_default_timezone_get()));
-
         $defaults = [
             'db_host' => 'localhost',
-            'db_pre' => 'acp3_',
+            'db_pre' => '',
             'db_user' => '',
             'db_name' => '',
-            'user_name' => 'admin',
+            'user_name' => '',
             'mail' => '',
             'date_format_long' => $this->date->getDateFormatLong(),
             'date_format_short' => $this->date->getDateFormatShort(),
             'title' => 'ACP3',
         ];
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
+        return [
+            'time_zones' => $this->dateHelper->getTimeZones(date_default_timezone_get()),
+            'form' => array_merge($defaults, $this->request->getPost()->all())
+        ];
     }
 
     /**
