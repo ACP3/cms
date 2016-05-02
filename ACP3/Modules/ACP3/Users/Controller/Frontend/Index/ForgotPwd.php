@@ -41,12 +41,12 @@ class ForgotPwd extends Core\Controller\FrontendAction
     /**
      * ForgotPwd constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                           $context
-     * @param \ACP3\Core\Helpers\FormToken                                            $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                               $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository                           $userRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
-     * @param \ACP3\Core\Helpers\SendEmail                                            $sendEmail
+     * @param \ACP3\Core\Helpers\SendEmail $sendEmail
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -95,44 +95,9 @@ class ForgotPwd extends Core\Controller\FrontendAction
             function () use ($formData) {
                 $this->accountForgotPasswordFormValidation->validate($formData);
 
-                // Neues Passwort und neuen Zufallsschlüssel erstellen
                 $newPassword = $this->secureHelper->salt(Core\User::SALT_LENGTH);
-                $host = $this->request->getHostname();
-
-                // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                if ($this->get('core.validation.validation_rules.email_validation_rule')->isValid($formData['nick_mail']) === true &&
-                    $this->userRepository->resultExistsByEmail($formData['nick_mail']) === true
-                ) {
-                    $user = $this->userRepository->getOneByEmail($formData['nick_mail']);
-                } else {
-                    $user = $this->userRepository->getOneByNickname($formData['nick_mail']);
-                }
-
-                $seoSettings = $this->config->getSettings('seo');
-
-                // E-Mail mit dem neuen Passwort versenden
-                $subject = $this->translator->t(
-                    'users',
-                    'forgot_pwd_mail_subject',
-                    [
-                        '{title}' => $seoSettings['title'],
-                        '{host}' => $host
-                    ]
-                );
-                $body = $this->translator->t(
-                    'users',
-                    'forgot_pwd_mail_message', [
-                        '{name}' => $user['nickname'],
-                        '{mail}' => $user['mail'],
-                        '{password}' => $newPassword,
-                        '{title}' => $seoSettings['title'],
-                        '{host}' => $host
-                    ]
-                );
-
-                $settings = $this->config->getSettings('users');
-                $mailIsSent = $this->sendEmail->execute(substr($user['realname'], 0, -2), $user['mail'],
-                    $settings['mail'], $subject, $body);
+                $user = $this->fetchUserByFormFieldValue($formData['nick_mail']);
+                $mailIsSent = $this->sendPasswordChangeEmail($user, $newPassword);
 
                 // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                 if ($mailIsSent === true) {
@@ -148,12 +113,70 @@ class ForgotPwd extends Core\Controller\FrontendAction
                 $this->formTokenHelper->unsetFormToken();
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $this->translator->t('users',
-                        $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'),
+                    $this->translator->t(
+                        'users',
+                        $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
+                    ),
                     $this->appPath->getWebRoot()
                 ));
             },
             $this->request->getFullPath()
+        );
+    }
+
+    /**
+     * @param string $nickNameOrEmail
+     * @return array
+     */
+    protected function fetchUserByFormFieldValue($nickNameOrEmail)
+    {
+        if ($this->get('core.validation.validation_rules.email_validation_rule')->isValid($nickNameOrEmail) === true &&
+            $this->userRepository->resultExistsByEmail($nickNameOrEmail) === true
+        ) {
+            $user = $this->userRepository->getOneByEmail($nickNameOrEmail);
+        } else {
+            $user = $this->userRepository->getOneByNickname($nickNameOrEmail);
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param array $user
+     * @param string $newPassword
+     * @return bool
+     */
+    protected function sendPasswordChangeEmail(array $user, $newPassword)
+    {
+        $host = $this->request->getHostname();
+        $seoSettings = $this->config->getSettings('seo');
+
+        $subject = $this->translator->t(
+            'users',
+            'forgot_pwd_mail_subject',
+            [
+                '{title}' => $seoSettings['title'],
+                '{host}' => $host
+            ]
+        );
+        $body = $this->translator->t(
+            'users',
+            'forgot_pwd_mail_message', [
+                '{name}' => $user['nickname'],
+                '{mail}' => $user['mail'],
+                '{password}' => $newPassword,
+                '{title}' => $seoSettings['title'],
+                '{host}' => $host
+            ]
+        );
+
+        $settings = $this->config->getSettings('users');
+        return $this->sendEmail->execute(
+            substr($user['realname'], 0, -2),
+            $user['mail'],
+            $settings['mail'],
+            $subject,
+            $body
         );
     }
 }

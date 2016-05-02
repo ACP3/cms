@@ -15,6 +15,7 @@ use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Index
@@ -81,7 +82,7 @@ class Index extends AbstractAction
     public function execute()
     {
         if ($this->request->getPost()->isEmpty() === false && !$this->request->getPost()->get('languages')) {
-            $this->executePost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $defaults = [
@@ -104,6 +105,7 @@ class Index extends AbstractAction
 
     /**
      * @param array $formData
+     * @return array|JsonResponse
      */
     private function executePost(array $formData)
     {
@@ -121,10 +123,24 @@ class Index extends AbstractAction
 
             $this->setTemplate('install/install.result.tpl');
         } catch (ValidationFailedException $e) {
-            $this->view->assign('error_msg', $this->get('core.helpers.alerts')->errorBox($e->getMessage()));
+            return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (\Exception $e) {
             $this->setTemplate('install/install.error.tpl');
         }
+    }
+
+    /**
+     * @param \Exception $exception
+     * @return array|JsonResponse
+     */
+    private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
+    {
+        $errors = $this->get('core.helpers.alerts')->errorBox($exception->getMessage());
+        if ($this->request->isAjax()) {
+            return new JsonResponse(['success' => false, 'content' => $errors]);
+        }
+
+        return ['error_msg' => $errors];
     }
 
     /**

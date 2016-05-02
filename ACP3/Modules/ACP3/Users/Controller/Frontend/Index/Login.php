@@ -22,27 +22,37 @@ class Login extends Core\Controller\FrontendAction
      */
     public function execute()
     {
-        // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($this->request->getPost()->isEmpty() === false) {
-            $result = $this->user->login(
-                $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('nickname', '')),
-                $this->request->getPost()->get('pwd', ''),
-                $this->request->getPost()->has('remember')
-            );
-            if ($result == 1) {
-                if ($this->request->getParameters()->has('redirect')) {
-                    return $this->redirect()->temporary(base64_decode($this->request->getParameters()->get('redirect')));
-                }
+            return $this->executePost();
+        }
+    }
 
-                return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+    /**
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executePost()
+    {
+        $result = $this->user->login(
+            $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('nickname', '')),
+            $this->request->getPost()->get('pwd', ''),
+            $this->request->getPost()->has('remember')
+        );
+        if ($result == 1) {
+            if ($this->request->getParameters()->has('redirect')) {
+                return $this->redirect()->temporary(
+                    base64_decode($this->request->getParameters()->get('redirect'))
+                );
             }
 
-            return [
-                'error_msg' => $this->get('core.helpers.alerts')->errorBox($this->translator->t('users',
-                    $result == -1 ? 'account_locked' : 'nickname_or_password_wrong'))
-            ];
+            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         }
+
+        return [
+            'error_msg' => $this->get('core.helpers.alerts')->errorBox(
+                $this->translator->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')
+            )
+        ];
     }
 }

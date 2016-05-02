@@ -8,6 +8,7 @@ namespace ACP3\Core\Modules\Helper;
 
 use ACP3\Core;
 use ACP3\Core\Controller\FrontendAction;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Action
@@ -83,10 +84,22 @@ class Action
                 $path
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
-            return [
-                'error_msg' => $this->alerts->errorBox($e->getMessage())
-            ];
+            return $this->renderErrorBoxOnFailedFormValidation($e);
         }
+    }
+
+    /**
+     * @param \Exception $exception
+     * @return array|JsonResponse
+     */
+    private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
+    {
+        $errors = $this->alerts->errorBox($exception->getMessage());
+        if ($this->request->isAjax()) {
+            return new JsonResponse(['success' => false, 'content' => $errors]);
+        }
+
+        return ['error_msg' => $errors];
     }
 
     /**

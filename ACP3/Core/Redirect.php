@@ -42,7 +42,7 @@ class Redirect
     public function toNewPage($url)
     {
         if ($this->request->isAjax() === true) {
-            return $this->ajax($url);
+            return $this->ajaxRedirect($url);
         }
 
         return new RedirectResponse($url);
@@ -73,7 +73,7 @@ class Redirect
         $path = $this->router->route($path, true);
 
         if ($this->request->isAjax() === true) {
-            return $this->ajax($path);
+            return $this->ajaxRedirect($path);
         }
 
         $status = 302;
@@ -85,13 +85,13 @@ class Redirect
     }
 
     /**
-     * Outputs a JSON response with redirect url
+     * Outputs a JSON response with a redirect url
      *
      * @param string $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function ajax($path)
+    protected function ajaxRedirect($path)
     {
         $return = [];
         if ($this->request->isAjax() === true) {

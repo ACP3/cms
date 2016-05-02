@@ -11,7 +11,6 @@ services:
     arguments:
       - '@core.request'
       - '@core.view'
-      - '@core.helpers.output'
 
   core.helpers.date:
     class: ACP3\Core\Helpers\Date
@@ -32,9 +31,6 @@ services:
     class: ACP3\Core\Helpers\SendEmail
     arguments:
       - '@core.mailer'
-
-  core.helpers.output:
-    class: ACP3\Core\Helpers\Output
 
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages

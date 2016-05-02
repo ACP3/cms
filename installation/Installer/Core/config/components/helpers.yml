@@ -4,7 +4,6 @@ services:
     arguments:
       - '@core.request'
       - '@core.view'
-      - '@core.helpers.output'
 
   core.helpers.date:
     class: ACP3\Core\Helpers\Date
@@ -20,9 +19,6 @@ services:
     arguments:
       - '@core.lang'
       - '@core.request'
-
-  core.helpers.output:
-    class: ACP3\Core\Helpers\Output
 
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages

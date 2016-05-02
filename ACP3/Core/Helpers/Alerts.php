@@ -10,10 +10,6 @@ use ACP3\Core;
 class Alerts
 {
     /**
-     * @var \ACP3\Core\Helpers\Output
-     */
-    protected $outputHelper;
-    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -25,16 +21,13 @@ class Alerts
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\View                  $view
-     * @param \ACP3\Core\Helpers\Output        $outputHelper
      */
     public function __construct(
         Core\Http\RequestInterface $request,
-        Core\View $view,
-        Core\Helpers\Output $outputHelper
+        Core\View $view
     ) {
         $this->request = $request;
         $this->view = $view;
-        $this->outputHelper = $outputHelper;
     }
 
     /**
@@ -141,17 +134,7 @@ class Alerts
         }
 
         $this->view->assign('CONTENT_ONLY', $contentOnly);
-        $content = $this->view->fetchTemplate($this->errorBoxContent($errors));
-
-        if ($this->request->isAjax() === true) {
-            $return = [
-                'success' => false,
-                'content' => $content,
-            ];
-
-            $this->outputHelper->outputJson($return);
-        }
-        return $content;
+        return $this->view->fetchTemplate($this->errorBoxContent($errors));
     }
 
     /**
