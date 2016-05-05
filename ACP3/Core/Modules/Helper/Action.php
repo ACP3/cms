@@ -44,11 +44,11 @@ class Action
     /**
      * Action constructor.
      *
-     * @param \ACP3\Core\I18n\Translator          $translator
-     * @param \ACP3\Core\Http\RequestInterface    $request
-     * @param \ACP3\Core\RouterInterface          $router
-     * @param \ACP3\Core\View                     $view
-     * @param \ACP3\Core\Helpers\Alerts           $alerts
+     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\RouterInterface $router
+     * @param \ACP3\Core\View $view
+     * @param \ACP3\Core\Helpers\Alerts $alerts
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
@@ -68,7 +68,7 @@ class Action
     }
 
     /**
-     * @param callable    $callback
+     * @param callable $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -104,10 +104,10 @@ class Action
 
     /**
      * @param \ACP3\Core\Controller\FrontendAction $context
-     * @param string                               $action
-     * @param callable                             $callback
-     * @param string|null                          $moduleConfirmUrl
-     * @param string|null                          $moduleIndexUrl
+     * @param string $action
+     * @param callable $callback
+     * @param string|null $moduleConfirmUrl
+     * @param string|null $moduleIndexUrl
      *
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
      * @throws \ACP3\Core\Exceptions\ResultNotExists
@@ -126,7 +126,7 @@ class Action
                 $result = $callback($items);
 
                 if (is_string($result) === false) {
-                    return $this->setRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
+                    return $this->prepareRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
                 }
             },
             $moduleConfirmUrl,
@@ -136,10 +136,10 @@ class Action
 
     /**
      * @param \ACP3\Core\Controller\FrontendAction $context
-     * @param string                               $action
-     * @param callable                             $callback
-     * @param string|null                          $moduleConfirmUrl
-     * @param string|null                          $moduleIndexUrl
+     * @param string $action
+     * @param callable $callback
+     * @param string|null $moduleConfirmUrl
+     * @param string|null $moduleIndexUrl
      *
      * @return void|string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Exceptions\ResultNotExists
@@ -151,7 +151,8 @@ class Action
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
     ) {
-        list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl);
+        list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl,
+            $moduleIndexUrl);
         $result = $this->deleteItem($action, $moduleConfirmUrl, $moduleIndexUrl);
 
         if (is_string($result)) {
@@ -164,7 +165,7 @@ class Action
     }
 
     /**
-     * @param callable    $callback
+     * @param callable $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -174,12 +175,12 @@ class Action
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
 
-            return $this->setRedirectMessageAfterPost($result, 'settings', $path);
+            return $this->prepareRedirectMessageAfterPost($result, 'settings', $path);
         }, $path);
     }
 
     /**
-     * @param callable    $callback
+     * @param callable $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -189,12 +190,12 @@ class Action
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
 
-            return $this->setRedirectMessageAfterPost($result, 'create', $path);
+            return $this->prepareRedirectMessageAfterPost($result, 'create', $path);
         });
     }
 
     /**
-     * @param callable    $callback
+     * @param callable $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -204,18 +205,18 @@ class Action
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
 
-            return $this->setRedirectMessageAfterPost($result, 'edit', $path);
+            return $this->prepareRedirectMessageAfterPost($result, 'edit', $path);
         });
     }
 
     /**
-     * @param bool|int    $result
-     * @param string      $localization
+     * @param bool|int $result
+     * @param string $localization
      * @param null|string $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function setRedirectMessageAfterPost($result, $localization, $path = null)
+    private function prepareRedirectMessageAfterPost($result, $localization, $path = null)
     {
         return $this->redirectMessages->setMessage(
             $result,
@@ -244,9 +245,9 @@ class Action
     }
 
     /**
-     * Little helper function for deleting an result set
+     * helper function for deleting a result set
      *
-     * @param string      $action
+     * @param string $action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
@@ -254,11 +255,7 @@ class Action
      */
     private function deleteItem($action, $moduleConfirmUrl = null, $moduleIndexUrl = null)
     {
-        if (is_array($this->request->getPost()->get('entries')) === true) {
-            $entries = $this->request->getPost()->get('entries');
-        } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
-            $entries = $this->request->getParameters()->get('entries');
-        }
+        $entries = $this->prepareRequestData();
 
         if (empty($entries)) {
             return $this->alerts->errorBoxContent($this->translator->t('system', 'no_entries_selected'));
@@ -273,29 +270,43 @@ class Action
             ];
 
             return $this->alerts->confirmBoxPost(
-                $this->fetchConfirmationBoxText($entries),
+                $this->prepareConfirmationBoxText($entries),
                 $data,
                 $this->router->route($moduleConfirmUrl),
                 $this->router->route($moduleIndexUrl)
             );
-        } else {
-            return is_array($entries) ? $entries : explode('|', $entries);
         }
+
+        return is_array($entries) ? $entries : explode('|', $entries);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function prepareRequestData()
+    {
+        $entries = null;
+        if (is_array($this->request->getPost()->get('entries')) === true) {
+            $entries = $this->request->getPost()->get('entries');
+        } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
+            $entries = $this->request->getParameters()->get('entries');
+        }
+
+        return $entries;
     }
 
     /**
      * @param array $entries
      *
-     * @return mixed|string
+     * @return string
      */
-    private function fetchConfirmationBoxText($entries)
+    private function prepareConfirmationBoxText(array $entries)
     {
         $entriesCount = count($entries);
-
         if ($entriesCount === 1) {
             return $this->translator->t('system', 'confirm_delete_single');
         }
 
-        return str_replace('{items}', $entriesCount, $this->translator->t('system', 'confirm_delete_multiple'));
+        return $this->translator->t('system', 'confirm_delete_multiple', ['{items}' => $entriesCount]);
     }
 }

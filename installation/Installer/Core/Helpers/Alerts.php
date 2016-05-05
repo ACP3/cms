@@ -12,7 +12,7 @@ class Alerts extends \ACP3\Core\Helpers\Alerts
     /**
      * @inheritdoc
      */
-    public function errorBox($errors, $contentOnly = true)
+    public function errorBox($errors)
     {
         $this->setErrorBoxData($errors);
 

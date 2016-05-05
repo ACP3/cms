@@ -20,7 +20,7 @@ class Alerts
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\View                  $view
+     * @param \ACP3\Core\View $view
      */
     public function __construct(
         Core\Http\RequestInterface $request,
@@ -31,12 +31,12 @@ class Alerts
     }
 
     /**
-     * Displays a confirm box
+     * Displays a confirmation box
      *
-     * @param string       $text
+     * @param string $text
      * @param string|array $forward
-     * @param string       $backward
-     * @param integer      $overlay
+     * @param string $backward
+     * @param integer $overlay
      *
      * @return string
      */
@@ -60,10 +60,10 @@ class Alerts
     }
 
     /**
-     * Displays a confirm box, where the forward button triggers a form submit using POST
+     * Displays a confirmation box, where the forward button triggers a form submit using POST
      *
      * @param string $text
-     * @param array  $data
+     * @param array $data
      * @param string $forward
      * @param string $backward
      *
@@ -89,51 +89,14 @@ class Alerts
     }
 
     /**
-     * @param string|array $errors
-     */
-    protected function setErrorBoxData($errors)
-    {
-        $hasNonIntegerKeys = false;
-
-        if (is_string($errors) && ($data = @unserialize($errors)) !== false) {
-            $errors = $data;
-        }
-
-        if (is_array($errors) === true) {
-            foreach (array_keys($errors) as $key) {
-                if (is_numeric($key) === false) {
-                    $hasNonIntegerKeys = true;
-                    break;
-                }
-            }
-        } else {
-            $errors = (array)$errors;
-        }
-
-        $this->view->assign(
-            'error_box',
-            [
-                'non_integer_keys' => $hasNonIntegerKeys,
-                'errors' => $errors
-            ]
-        );
-    }
-
-    /**
-     * Gibt eine Box mit den aufgetretenen Fehlern aus
+     * Returns the pretty printed form errors
      *
      * @param string|array $errors
-     * @param bool         $contentOnly
-     *
      * @return string
      */
-    public function errorBox($errors, $contentOnly = true)
+    public function errorBox($errors)
     {
-        if ($this->request->isAjax() === true) {
-            $contentOnly = true;
-        }
-
-        $this->view->assign('CONTENT_ONLY', $contentOnly);
+        $this->view->assign('CONTENT_ONLY', $this->request->isAjax() === true);
         return $this->view->fetchTemplate($this->errorBoxContent($errors));
     }
 
@@ -147,5 +110,47 @@ class Alerts
         $this->setErrorBoxData($errors);
 
         return 'system/alerts/error_box.tpl';
+    }
+
+    /**
+     * @param string|array $errors
+     */
+    protected function setErrorBoxData($errors)
+    {
+        $hasNonIntegerKeys = false;
+
+        $errors = $this->prepareErrorBoxData($errors);
+
+        foreach (array_keys($errors) as $key) {
+            if (is_numeric($key) === false) {
+                $hasNonIntegerKeys = true;
+                break;
+            }
+        }
+
+        $this->view->assign(
+            'error_box',
+            [
+                'non_integer_keys' => $hasNonIntegerKeys,
+                'errors' => $errors
+            ]
+        );
+    }
+
+    /**
+     * @param string|array $errors
+     * @return array
+     */
+    protected function prepareErrorBoxData($errors)
+    {
+        if (is_string($errors) && ($data = @unserialize($errors)) !== false) {
+            $errors = $data;
+        }
+
+        if (is_array($errors) === false) {
+            $errors = (array)$errors;
+        }
+        
+        return $errors;
     }
 }
