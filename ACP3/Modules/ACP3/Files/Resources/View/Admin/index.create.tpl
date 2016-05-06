@@ -25,7 +25,7 @@
                     </div>
                     {block FILES_FILE_UPLOAD}
                         <div class="form-group">
-                            <label for="file-internal" class="col-sm-2 control-label required">{lang t="files|filename"}</label>
+                            <label for="file-internal" class="col-sm-2 control-label required">{lang t="files|file"}</label>
 
                             <div class="col-sm-10">
                                 <div class="checkbox">
@@ -42,12 +42,12 @@
                     <div id="external-filesize" class="form-group">
                         <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
 
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-4">
                                     <select class="form-control" name="unit" id="unit">
                                         {foreach $units as $row}
                                             <option value="{$row.value}"{$row.selected}>{$row.value}</option>

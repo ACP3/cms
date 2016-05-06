@@ -2,10 +2,10 @@
 
 {block FILES_FILE_UPLOAD}
     <div class="form-group">
-        <label class="col-sm-2 control-label">{lang t="files|filename"}</label>
+        <label class="col-sm-2 control-label">{lang t="files|current_file"}</label>
 
         <div class="col-sm-10">
-            <input class="form-control" type="text" value="{$current_file}" disabled="disabled">
+            <div class="form-control-static">{$current_file}</div>
         </div>
     </div>
     <div class="form-group">

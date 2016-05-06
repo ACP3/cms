@@ -10,10 +10,12 @@
         <item key="admin_index_edit">Download bearbeiten</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="category_select">Bitte wählen Sie eine der untenstehenden Kategorien aus.</item>
+        <item key="current_file">Aktuelle Datei</item>
         <item key="description_to_short">Der Beschreibungstext sollte mindestens 3 Zeichen lang sein.</item>
         <item key="details">Downloads</item>
         <item key="download_file">Datei herunterladen</item>
         <item key="external_resource">Externe Quelle</item>
+        <item key="file">Datei</item>
         <item key="file_statements">Dateiangaben</item>
         <item key="filename">Dateiname</item>
         <item key="files">Downloads</item>
@@ -21,9 +23,7 @@
         <item key="latest_files">Aktuelle Downloads</item>
         <item key="mod_description">Mit diesem Modul können die Downloads verwaltet werden.</item>
         <item key="new_file">Neue Datei angeben</item>
-        <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder
-            nicht.
-        </item>
+        <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder nicht.</item>
         <item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll.</item>
         <item key="select_internal_resource">Bitte geben Sie den Pfad zur hochzuladenden Datei an.</item>
         <item key="title">Titel</item>
