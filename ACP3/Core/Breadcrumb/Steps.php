@@ -212,7 +212,7 @@ class Steps
     {
         if ($dbSteps === false) {
             end($this->steps);
-            $this->steps[key($this->steps)] = $this->buildStepItem($title, $path);
+            $this->steps[(int)key($this->steps)] = $this->buildStepItem($title, $path);
         }
 
         return $this;

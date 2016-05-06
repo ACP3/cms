@@ -94,7 +94,7 @@ class Steps extends Core\Breadcrumb\Steps
     {
         if ($dbSteps === true) {
             end($this->stepsFromDb);
-            $this->stepsFromDb[key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
+            $this->stepsFromDb[(int)key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
         }
 
         return parent::replaceAncestor($title, $path, $dbSteps);
