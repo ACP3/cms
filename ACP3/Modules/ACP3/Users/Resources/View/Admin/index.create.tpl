@@ -20,7 +20,7 @@
                         <label for="nickname" class="col-sm-2 control-label required">{lang t="users|nickname"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30">
+                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -31,10 +31,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="gender" class="col-sm-2 control-label">{lang t="users|gender"}</label>
+                        <label for="gender" class="col-sm-2 control-label required">{lang t="users|gender"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="gender" id="gender">
+                            <select class="form-control" name="gender" id="gender" required>
                                 {foreach $gender as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -52,7 +52,7 @@
                         <label for="roles" class="col-sm-2 control-label required">{lang t="permissions|roles"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="roles[]" id="roles" multiple="multiple" style="height:100px">
+                            <select class="form-control" name="roles[]" id="roles" multiple="multiple" required style="height:100px">
                                 {foreach $roles as $row}
                                     <option value="{$row.id}"{$row.selected}>{$row.name}</option>
                                 {/foreach}
@@ -243,11 +243,11 @@
                     {block PASSWORD_FIELDS}
                         <div class="form-group">
                             <label for="pwd" class="col-sm-2 control-label required">{lang t="users|pwd"}</label>
-                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd"></div>
+                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd" required></div>
                         </div>
                         <div class="form-group">
                             <label for="pwd-repeat" class="col-sm-2 control-label required">{lang t="users|pwd_repeat"}</label>
-                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd_repeat" id="pwd-repeat"></div>
+                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd_repeat" id="pwd-repeat" required></div>
                         </div>
                     {/block}
                 </div>

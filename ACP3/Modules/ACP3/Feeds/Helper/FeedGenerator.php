@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Feeds\Helper;
 
 use ACP3\Core\Config;
-use ACP3\Core\Router;
 use ACP3\Core\RouterInterface;
 use FeedWriter\ATOM;
 
@@ -51,8 +50,6 @@ class FeedGenerator
     {
         $this->config = $config;
         $this->router = $router;
-
-        $this->configure();
     }
 
     /**
@@ -79,6 +76,10 @@ class FeedGenerator
 
     protected function configure()
     {
+        if ($this->renderer) {
+            return;
+        }
+
         $this->settings = $this->config->getSettings('feeds');
 
         switch ($this->settings['feed_type']) {
@@ -121,6 +122,8 @@ class FeedGenerator
      */
     public function assign(array $items)
     {
+        $this->configure();
+
         // Check for a multidimensional array
         if (isset($items[0]) === true) {
             foreach ($items as $row) {
@@ -145,6 +148,8 @@ class FeedGenerator
      */
     public function generateFeed()
     {
+        $this->configure();
+
         $this->generateChannel();
         return $this->renderer->generateFeed();
     }
