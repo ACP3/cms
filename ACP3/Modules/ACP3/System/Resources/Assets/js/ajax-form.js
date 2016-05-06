@@ -86,7 +86,7 @@
             this.removeErrorMessageFromFormField(formField);
 
             formField
-                .closest('div')
+                .closest('div:not(.input-group)')
                 .append(
                     '<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + errorMessage + '</small>'
                 );
