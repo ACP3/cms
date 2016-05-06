@@ -19,7 +19,7 @@
                         <label for="title" class="col-sm-2 control-label required">{lang t="polls|question"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
+                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
                     {foreach $answers as $row}

@@ -20,7 +20,7 @@
                         <label for="homepage" class="col-sm-2 control-label required">{lang t="system|homepage"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="homepage" id="homepage" value="{$form.homepage}">
+                            <input class="form-control" type="text" name="homepage" id="homepage" value="{$form.homepage}" required>
 
                             <p class="help-block">{lang t="system|homepage_description"}</p>
                         </div>
@@ -29,7 +29,7 @@
                         <label for="entries" class="col-sm-2 control-label required">{lang t="system|records_per_page"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="entries" id="entries">
+                            <select class="form-control" name="entries" id="entries" required>
                                 {foreach $entries as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.value}</option>
                                 {/foreach}
@@ -40,7 +40,7 @@
                         <label for="flood" class="col-sm-2 control-label required">{lang t="system|flood_barrier"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="flood" id="flood" value="{$form.flood}" min="0">
+                            <input class="form-control" type="number" name="flood" id="flood" value="{$form.flood}" min="0" required>
 
                             <p class="help-block">{lang t="system|flood_barrier_description"}</p>
                         </div>
@@ -49,7 +49,7 @@
                         <label for="wysiwyg" class="col-sm-2 control-label required">{lang t="system|editor"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="wysiwyg" id="wysiwyg">
+                            <select class="form-control" name="wysiwyg" id="wysiwyg" required>
                                 {foreach $wysiwyg as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -60,7 +60,7 @@
                         <label for="language" class="col-sm-2 control-label required">{lang t="system|language"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="language" id="language">
+                            <select class="form-control" name="language" id="language" required>
                                 <option value="">{lang t="system|pls_select"}</option>
                                 {foreach $languages as $row}
                                     <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
@@ -89,7 +89,7 @@
                         <label for="date-format-long" class="col-sm-2 control-label required">{lang t="system|date_format_long"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20">
+                            <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required>
 
                             <p class="help-block">{lang t="system|php_date_function"}</p>
                         </div>
@@ -98,14 +98,14 @@
                         <label for="date-format-short" class="col-sm-2 control-label required">{lang t="system|date_format_short"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20">
+                            <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="date_time_zone" id="date-time-zone">
+                            <select class="form-control" name="date_time_zone" id="date-time-zone" required>
                                 {foreach $time_zones as $key => $values}
                                     <optgroup label="{$key}">
                                         {foreach $values as $country => $value}
@@ -136,7 +136,7 @@
                         <label for="maintenance-message" class="col-sm-2 control-label required">{lang t="system|maintenance_msg"}</label>
 
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="maintenance_message" id="maintenance-message" cols="50" rows="6">{$form.maintenance_message}</textarea>
+                            <textarea class="form-control" name="maintenance_message" id="maintenance-message" cols="50" rows="6" required>{$form.maintenance_message}</textarea>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                         <label for="cache-minify" class="col-sm-2 control-label required">{lang t="system|minify_cache_lifetime"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="cache_minify" id="cache-minify" value="{$form.cache_minify}" maxlength="20">
+                            <input class="form-control" type="text" name="cache_minify" id="cache-minify" value="{$form.cache_minify}" maxlength="20" required>
 
                             <p class="help-block">{lang t="system|minify_cache_lifetime_description"}</p>
                         </div>
@@ -170,7 +170,7 @@
                         <label for="mailer-type" class="col-sm-2 control-label required">{lang t="system|mailer_type"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="mailer_type" id="mailer-type">
+                            <select class="form-control" name="mailer_type" id="mailer-type" required>
                                 {foreach $mailer_type as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}

@@ -9,7 +9,7 @@
             <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="dateformat" id="date-format">
+                <select class="form-control" name="dateformat" id="date-format" required>
                     {foreach $dateformat as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}
@@ -20,7 +20,7 @@
             <label for="notify" class="col-sm-2 control-label required">{lang t="guestbook|notification"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="notify" id="notify">
+                <select class="form-control" name="notify" id="notify" required>
                     {foreach $notify as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}
@@ -31,7 +31,7 @@
             <label for="notify-email" class="col-sm-2 control-label required">{lang t="guestbook|notification_email"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="text" name="notify_email" id="notify-email" value="{$form.notify_email}">
+                <input class="form-control" type="text" name="notify_email" id="notify-email" value="{$form.notify_email}" required>
             </div>
         </div>
         <div class="form-group">

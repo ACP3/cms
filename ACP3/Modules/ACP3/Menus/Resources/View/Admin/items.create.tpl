@@ -17,7 +17,7 @@
                         <label for="mode" class="col-sm-2 control-label required">{lang t="menus|page_type"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="mode" id="mode">
+                            <select class="form-control" name="mode" id="mode" required>
                                 {foreach $mode as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}

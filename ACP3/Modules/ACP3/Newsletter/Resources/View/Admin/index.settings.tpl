@@ -8,7 +8,7 @@
         <div class="form-group">
             <label for="mail" class="col-sm-2 control-label required">{lang t="system|email_address"}</label>
             <div class="col-sm-10">
-                <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></div>
+                <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120" required></div>
         </div>
         <div class="form-group">
             <label for="mailsig" class="col-sm-2 control-label">{lang t="newsletter|mailsig"}</label>

@@ -27,7 +27,7 @@
     <label for="seo-robots" class="col-sm-2 control-label">{lang t="seo|robots"}</label>
 
     <div class="col-sm-10">
-        <select class="form-control" name="seo_robots" id="seo-robots">
+        <select class="form-control" name="seo_robots" id="seo-robots" required>
             {foreach $seo.robots as $row}
                 <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
             {/foreach}

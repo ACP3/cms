@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="parent-id" class="col-sm-2 control-label required">{lang t="permissions|superior_role"}</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="parent_id" id="parent-id">
+                                <select class="form-control" name="parent_id" id="parent-id" required>
                                     {foreach $parent as $row}
                                         <option value="{$row.id}"{$row.selected}>{$row.name}</option>
                                     {/foreach}

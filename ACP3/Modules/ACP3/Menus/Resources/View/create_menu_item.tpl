@@ -3,7 +3,7 @@
         <label for="block-id" class="col-sm-2 control-label required">{lang t="menus|menu_bar"}</label>
 
         <div class="col-sm-10">
-            <select class="form-control" name="block_id" id="block-id">
+            <select class="form-control" name="block_id" id="block-id" required>
                 {foreach $blocks as $row}
                     <option value="{$row.id}"{$row.selected}>{$row.title}</option>
                 {/foreach}

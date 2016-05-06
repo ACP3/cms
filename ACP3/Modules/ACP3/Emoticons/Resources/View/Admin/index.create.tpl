@@ -9,20 +9,20 @@
             <label for="code" class="col-sm-2 control-label required">{lang t="emoticons|code"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="text" name="code" id="code" value="{$form.code}" maxlength="10"></div>
+                <input class="form-control" type="text" name="code" id="code" value="{$form.code}" maxlength="10" required></div>
         </div>
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label required">{lang t="system|description"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="text" name="description" id="description" value="{$form.description}" maxlength="15">
+                <input class="form-control" type="text" name="description" id="description" value="{$form.description}" maxlength="15" required>
             </div>
         </div>
         {block EMOTICONS_PICTURE_UPLOAD}
             <div class="form-group">
                 <label for="picture" class="col-sm-2 control-label required">{lang t="emoticons|picture"}</label>
 
-                <div class="col-sm-10"><input type="file" name="picture" id="picture"></div>
+                <div class="col-sm-10"><input type="file" name="picture" id="picture" required></div>
             </div>
         {/block}
         <div class="form-group">

@@ -9,7 +9,7 @@
             <label for="title" class="col-sm-2 control-label required">{lang t="system|title"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
+                <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
             </div>
         </div>
         <div class="form-group">
@@ -32,7 +32,7 @@
             <label for="robots" class="col-sm-2 control-label required">{lang t="seo|robots"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="robots" id="robots">
+                <select class="form-control" name="robots" id="robots" required>
                     {foreach $robots as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}

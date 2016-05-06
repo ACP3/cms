@@ -21,12 +21,16 @@
             var that = this;
 
             this.findSubmitButton();
+            this.element.noValidate = true;
+
             $(this.element).on('submit', function (e) {
                 e.preventDefault();
 
                 $(document).trigger('acp3.ajaxFrom.submit.before');
 
-                that.processAjaxRequest();
+                if (that.preValidateForm(that.element)) {
+                    that.processAjaxRequest();
+                }
             }).on('click', function (e) {
                 if ($(this).prop('tagName') === 'A') {
                     e.preventDefault();
@@ -40,6 +44,61 @@
                 $(":submit", $(this).closest("form")).removeAttr("data-clicked");
                 $(this).attr("data-clicked", "true");
             });
+        },
+        preValidateForm: function (form) {
+            var field,
+                isValid = true;
+
+            this.removeAllPreviousErrors();
+
+            for (var i = 0; i < form.elements.length; i++) {
+                field = form.elements[i];
+
+                // ignore buttons, fieldsets, etc.
+                if (field.nodeName !== "INPUT" && field.nodeName !== "TEXTAREA" && field.nodeName !== "SELECT") {
+                    continue;
+                }
+
+                if (!field.checkValidity()) {
+                    this.addErrorDecorationToFormGroup($(field));
+                    this.addErrorMessageToFormField($(field), field.validationMessage);
+
+                    isValid = false;
+                }
+            }
+
+            this.focusTabWithFirstErrorMessage();
+
+            return isValid;
+        },
+        removeAllPreviousErrors: function () {
+            $('form .form-group.has-error')
+                .removeClass('has-error')
+                .find('.validation-failed').remove();
+        },
+        addErrorDecorationToFormGroup: function ($elem) {
+            $elem.closest('.form-group').addClass('has-error');
+        },
+        removeErrorMessageFromFormField: function ($elem) {
+            $elem.closest('div').find('.validation-failed').remove();
+        },
+        addErrorMessageToFormField: function (formField, errorMessage) {
+            this.removeErrorMessageFromFormField(formField);
+
+            formField
+                .closest('div')
+                .append(
+                    '<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + errorMessage + '</small>'
+                );
+        },
+        focusTabWithFirstErrorMessage: function () {
+            if ($('.tabbable').length > 0) {
+                var $elem = $('.tabbable .form-group.has-error:first'),
+                    tabId = $elem.closest('.tab-pane').prop('id');
+                $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
+
+                $elem.find(':input').focus();
+            }
         },
         processAjaxRequest: function () {
             var that = this,
@@ -152,28 +211,26 @@
                 .prependTo(($modalBody.length > 0 && $modalBody.is(':visible')) ? $modalBody : $form)
                 .fadeIn();
 
-            this.prettyPrintErrorMessages($($errorBox.selector));
+            this.prettyPrintResponseErrorMessages($($errorBox.selector));
         },
-        prettyPrintErrorMessages: function ($errorBox) {
-            // At first, remove all previous validation error states
-            $('form .form-group.has-error')
-                .removeClass('has-error')
-                .find('.validation-failed').remove();
+        prettyPrintResponseErrorMessages: function ($errorBox) {
+            var that = this;
 
-            // Next, highlight all input fields where the validation has failed
+            this.removeAllPreviousErrors();
+
+            // highlight all input fields where the validation has failed
             $errorBox.find('li').each(function () {
                 var $this = $(this),
                     errorClass = $this.data('error');
                 if (errorClass.length > 0) {
                     var $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
                     if ($elem.length > 0) {
-                        // Add CSS class that the validation for this entry has failed
-                        $elem.closest('div.form-group').addClass('has-error');
+                        that.addErrorDecorationToFormGroup($elem);
 
                         // Move the error message to the responsible input field(s)
                         // and remove the list item from the error box container
                         if ($elem.length == 1) {
-                            $elem.closest('div').append('<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + $this.html() + '</small>');
+                            that.addErrorMessageToFormField($elem, $this.html());
                             $this.remove();
                         }
                     }
@@ -185,19 +242,14 @@
                 $errorBox.remove();
             }
 
-            // As the last step, select the tab where the first error has occurred
-            if ($('.tabbable').length > 0) {
-                var tabId = $('.tabbable .form-group.has-error:first').closest('.tab-pane').prop('id');
-                $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
-            }
+            this.focusTabWithFirstErrorMessage();
         }
     });
 
     $.fn[pluginName] = function (options) {
         return this.each(function () {
             if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" +
-                    pluginName, new Plugin(this, options));
+                $.data(this, "plugin_" + pluginName, new Plugin(this, options));
             }
         });
     };

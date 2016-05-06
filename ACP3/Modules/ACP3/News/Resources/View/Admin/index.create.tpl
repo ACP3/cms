@@ -21,7 +21,7 @@
                         <label for="title" class="col-sm-2 control-label required">{lang t="news|title"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
+                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,7 +70,7 @@
                         <label for="link-target" class="col-sm-2 control-label">{lang t="news|target_page"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="target" id="link-target">
+                            <select class="form-control" name="target" id="link-target" required>
                                 {foreach $target as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}

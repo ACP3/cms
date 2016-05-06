@@ -9,7 +9,7 @@
             <label for="width" class="col-sm-2 control-label required">{lang t="categories|image_width"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="number" name="width" id="width" value="{$form.width}">
+                <input class="form-control" type="number" name="width" id="width" value="{$form.width}" required>
 
                 <p class="help-block">{lang t="system|statements_in_pixel"}</p>
             </div>
@@ -18,7 +18,7 @@
             <label for="height" class="col-sm-2 control-label required">{lang t="categories|image_height"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="number" name="height" id="height" value="{$form.height}">
+                <input class="form-control" type="number" name="height" id="height" value="{$form.height}" required>
 
                 <p class="help-block">{lang t="system|statements_in_pixel"}</p>
             </div>
@@ -27,7 +27,7 @@
             <label for="filesize" class="col-sm-2 control-label required">{lang t="categories|image_filesize"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}">
+                <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}" required>
 
                 <p class="help-block">{lang t="system|statements_in_byte"}</p>
             </div>

@@ -29,7 +29,7 @@
                 <label for="module" class="col-sm-2 control-label required">{lang t="categories|module"}</label>
 
                 <div class="col-sm-10">
-                    <select class="form-control" name="module" id="module">
+                    <select class="form-control" name="module" id="module" required>
                         {foreach $mod_list as $row}
                             <option value="{$row.id}"{$row.selected}>{$row.name}</option>
                         {/foreach}

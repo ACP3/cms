@@ -9,7 +9,7 @@
             <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="dateformat" id="date-format">
+                <select class="form-control" name="dateformat" id="date-format" required>
                     {foreach $dateformat as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}
@@ -20,7 +20,7 @@
             <label for="sidebar-entries" class="col-sm-2 control-label required">{lang t="system|sidebar_entries_to_display"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="sidebar" id="sidebar-entries">
+                <select class="form-control" name="sidebar" id="sidebar-entries" required>
                     {foreach $sidebar_entries as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.value}</option>
                     {/foreach}

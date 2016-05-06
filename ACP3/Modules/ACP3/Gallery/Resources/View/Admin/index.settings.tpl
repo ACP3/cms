@@ -16,7 +16,7 @@
                         <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="dateformat" id="date-format">
+                            <select class="form-control" name="dateformat" id="date-format" required>
                                 {foreach $dateformat as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -27,7 +27,7 @@
                         <label for="sidebar-entries" class="col-sm-2 control-label required">{lang t="system|sidebar_entries_to_display"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="sidebar" id="sidebar-entries">
+                            <select class="form-control" name="sidebar" id="sidebar-entries" required>
                                 {foreach $sidebar_entries as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.value}</option>
                                 {/foreach}
@@ -71,7 +71,7 @@
                         <label for="thumbwidth" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_width"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}">
+                            <input class="form-control" type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
@@ -80,7 +80,7 @@
                         <label for="thumbheight" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_height"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}">
+                            <input class="form-control" type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
@@ -89,7 +89,7 @@
                         <label for="width" class="col-sm-2 control-label required">{lang t="gallery|image_width"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="width" id="width" value="{$form.width}">
+                            <input class="form-control" type="number" name="width" id="width" value="{$form.width}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
@@ -98,7 +98,7 @@
                         <label for="height" class="col-sm-2 control-label required">{lang t="gallery|image_height"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="height" id="height" value="{$form.height}">
+                            <input class="form-control" type="number" name="height" id="height" value="{$form.height}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
