@@ -150,7 +150,7 @@
         </div>
     </form>
     {javascripts}
-        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/forms.js"></script>
+        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/ajax-form.js"></script>
         <script type="text/javascript" src="{$INSTALLER_ROOT_DIR}Installer/Modules/Install/Resources/Assets/js/available_databases.js"></script>
     {/javascripts}
 {/block}

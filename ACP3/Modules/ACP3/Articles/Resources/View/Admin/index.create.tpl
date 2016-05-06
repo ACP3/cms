@@ -61,6 +61,6 @@
     </form>
     {javascripts}
         {include_js module="articles" file="admin/acp"}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

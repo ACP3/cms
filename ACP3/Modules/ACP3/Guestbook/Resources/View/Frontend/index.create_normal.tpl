@@ -55,6 +55,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

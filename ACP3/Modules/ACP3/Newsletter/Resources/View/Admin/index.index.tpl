@@ -25,7 +25,7 @@
         {redirect_message}
         {include file="asset:system/datagrid.tpl" dataTable=$grid}
         {javascripts}
-            {include_js module="system" file="forms"}
+            {include_js module="system" file="ajax-form"}
         {/javascripts}
     </form>
 {/block}
