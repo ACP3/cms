@@ -1,8 +1,8 @@
 jQuery(document).ready(function ($) {
-    const $window = $(window);
+    var $window = $(window);
 
     $window.on('hashchange', function () {
-        const hash = location.hash,
+        var hash = location.hash,
             $link = $('a[href="' + hash + '"]'),
             $element = $(hash);
 

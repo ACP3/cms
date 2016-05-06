@@ -20,12 +20,12 @@
                         <label for="title" class="col-sm-2 control-label required">{lang t="files|title"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
+                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
                     {block FILES_FILE_UPLOAD}
                         <div class="form-group">
-                            <label for="file-internal" class="col-sm-2 control-label">{lang t="files|filename"}</label>
+                            <label for="file-internal" class="col-sm-2 control-label required">{lang t="files|filename"}</label>
 
                             <div class="col-sm-10">
                                 <div class="checkbox">
@@ -58,12 +58,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label">{lang t="system|description"}</label>
+                        <label for="text" class="col-sm-2 control-label required">{lang t="system|description"}</label>
 
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="200" toolbar="simple"}</div>
                     </div>
                     <div class="form-group">
-                        <label for="cat" class="col-sm-2 control-label">{lang t="categories|category"}</label>
+                        <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
 
                         <div class="col-sm-10">{$categories}</div>
                     </div>

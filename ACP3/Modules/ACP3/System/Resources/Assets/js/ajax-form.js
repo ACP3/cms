@@ -1,173 +1,207 @@
-/**
- * Simple AJAX form handler
- *
- * @param [customFormData]
- */
-jQuery.fn.formSubmit = function (customFormData) {
-    /**
-     * Displays a loading layer
-     * @private
-     */
-    function showLoadingLayer($form) {
-        var $loadingLayer = $('#loading-layer');
+;(function ($, window, document) {
+    "use strict";
 
-        if ($loadingLayer.length === 0) {
-            var $body = $('body'),
-                loadingText = $form.data('ajax-form-loading-text') || '',
-                windowHeight = $(window).outerHeight(true),
-                html = '<div id="loading-layer" style="height: ' + windowHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
+    var pluginName = "formSubmit",
+        defaults = {
+            targetElement: '#content',
+            customFormData: null
+        };
 
-            $(html).appendTo($body);
+    function Plugin(element, options) {
+        this.element = element;
 
-            $loadingLayer = $($loadingLayer.selector);
-
-            $loadingLayer.show();
-            var $heading = $loadingLayer.find('h1'),
-                headingHeight = $heading.height();
-
-            $heading.css({
-                marginTop: (Math.round(windowHeight / 2) - headingHeight) + 'px'
-            });
-
-            $loadingLayer.hide().fadeIn();
-        } else {
-            $loadingLayer.fadeIn();
-        }
+        this.settings = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
     }
 
-    /**
-     * Hides the loading layer
-     *
-     * @private
-     */
-    function hideLoadingLayer() {
-        $('#loading-layer').stop().fadeOut();
-    }
+    $.extend(Plugin.prototype, {
+        init: function () {
+            var that = this;
 
-    /**
-     *
-     * @param $form
-     * @private
-     */
-    function findSubmitButton($form) {
-        $form.find(':submit').click(function () {
-            $(":submit", $(this).closest("form")).removeAttr("data-clicked");
-            $(this).attr("data-clicked", "true");
-        });
-    }
-
-    /**
-     * Processes the AJAX requests
-     *
-     * @param $form
-     * @param [customFormData]
-     * @private
-     */
-    function processAjaxRequest($form, customFormData) {
-        var url = $form.attr('action') || $form.attr('href'),
-            processData = (customFormData) ? true : false,
-            contentType = (customFormData) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
-            type,
-            data;
-
-        if ($form.attr('method')) {
-            var $submitButton = $(':submit[data-clicked="true"]', $form),
-                hash = $submitButton.data('hashChange');
-
-            type = $form.attr('method').toUpperCase();
-            data = new FormData($form[0]);
-
-            if ($submitButton.length) {
-                data.append($submitButton.attr('name'), 1);
-            }
-
-            if (customFormData) {
-                for (var key in customFormData) {
-                    if (customFormData.hasOwnProperty(key)) {
-                        data.append(key, customFormData[key]);
-                    }
-                }
-            }
-        } else {
-            type = 'GET';
-            data = customFormData || {};
-        }
-
-        $.ajax({
-            url: url,
-            type: type,
-            data: data,
-            processData: processData,
-            contentType: contentType,
-            beforeSend: function () {
-                showLoadingLayer($form);
-            },
-            success: function (data) {
-                try {
-                    if (data.redirect_url) {
-                        window.location.href = data.redirect_url;
-                    } else {
-                        hideLoadingLayer();
-
-                        var $content = $('#content'),
-                            offsetTop = $content.offset().top;
-
-                        // Scroll to the beginning of the content area, if the current viewport is near the bottom
-                        if ($(document).scrollTop() > offsetTop) {
-                            $('html, body').animate(
-                                {
-                                    scrollTop: offsetTop
-                                },
-                                'fast'
-                            );
-                        }
-
-                        if (data.success === false) { // An error has occurred
-                            $('#error-box').remove();
-                            var $modalBody = $form.find('.modal-body');
-                            // Place the error messages inside the modal body for a better styling
-                            $(data.content)
-                                .hide()
-                                .prependTo(($modalBody.length > 0 && $modalBody.is(':visible')) ? $modalBody : $form)
-                                .fadeIn();
-                        } else { // The request was successful
-                            $content.html(data);
-
-                            if (hash) {
-                                location.hash = hash;
-                            }
-                        }
-                    }
-                } catch (err) {
-                    hideLoadingLayer();
-
-                    if (typeof console !== "undefined") {
-                        console.log(err.message);
-                    }
-                }
-            }
-        });
-    }
-
-    $(this).each(function () {
-        var $this = $(this);
-
-        findSubmitButton($this);
-        $this.on('submit', function (e) {
-            e.preventDefault();
-
-            $(document).trigger('acp3.ajaxFrom.submit.before');
-
-            processAjaxRequest($this, customFormData);
-        }).on('click', function (e) {
-            if ($this.prop('tagName') === 'A') {
+            this.findSubmitButton();
+            $(this.element).on('submit', function (e) {
                 e.preventDefault();
 
-                processAjaxRequest($this, customFormData);
+                $(document).trigger('acp3.ajaxFrom.submit.before');
+
+                that.processAjaxRequest();
+            }).on('click', function (e) {
+                if ($(this).prop('tagName') === 'A') {
+                    e.preventDefault();
+
+                    that.processAjaxRequest();
+                }
+            });
+        },
+        findSubmitButton: function () {
+            $(this.element).find(':submit').click(function () {
+                $(":submit", $(this).closest("form")).removeAttr("data-clicked");
+                $(this).attr("data-clicked", "true");
+            });
+        },
+        processAjaxRequest: function () {
+            var that = this,
+                $form = $(this.element),
+                hasCustomData = !$.isEmptyObject(this.settings.customFormData),
+                data = this.settings.customFormData || {};
+
+            if ($form.attr('method')) {
+                var $submitButton = $(':submit[data-clicked="true"]', $form),
+                    hash = $submitButton.data('hashChange');
+
+                data = new FormData($form[0]);
+
+                if ($submitButton.length) {
+                    data.append($submitButton.attr('name'), 1);
+                }
+
+                if (hasCustomData) {
+                    for (var key in this.settings.customFormData) {
+                        if (this.settings.customFormData.hasOwnProperty(key)) {
+                            data.append(key, this.settings.customFormData[key]);
+                        }
+                    }
+                }
+            }
+
+            $.ajax({
+                url: $form.attr('action') || $form.attr('href'),
+                type: $form.attr('method') ? $form.attr('method').toUpperCase() : 'GET',
+                data: data,
+                processData: hasCustomData,
+                contentType: (hasCustomData) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
+                beforeSend: function () {
+                    that.showLoadingLayer();
+                },
+                success: function (responseData) {
+                    try {
+                        if (responseData.redirect_url) {
+                            window.location.href = responseData.redirect_url;
+                        } else {
+                            var $content = $(that.settings.targetElement),
+                                offsetTop = $content.offset().top;
+
+                            // Scroll to the beginning of the content area, if the current viewport is near the bottom
+                            if ($(document).scrollTop() > offsetTop) {
+                                $('html, body').animate(
+                                    {
+                                        scrollTop: offsetTop
+                                    },
+                                    'fast'
+                                );
+                            }
+
+                            if (responseData.success === false) {
+                                that.handleFormErrorMessages($form, responseData.content);
+                            } else {
+                                $content.html(responseData);
+
+                                if (typeof hash !== "undefined") {
+                                    location.hash = hash;
+                                }
+                            }
+                        }
+                    } catch (err) {
+                        console.log(err.message);
+                    } finally {
+                        that.hideLoadingLayer();
+                    }
+                }
+            });
+        },
+        showLoadingLayer: function () {
+            var $loadingLayer = $('#loading-layer');
+
+            if ($loadingLayer.length === 0) {
+                var $body = $('body'),
+                    loadingText = $(this.element).data('ajax-form-loading-text') || '',
+                    windowHeight = $(window).outerHeight(true),
+                    html = '<div id="loading-layer" style="height: ' + windowHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
+
+                $(html).appendTo($body);
+
+                $loadingLayer = $($loadingLayer.selector);
+
+                $loadingLayer.show();
+                var $heading = $loadingLayer.find('h1'),
+                    headingHeight = $heading.height();
+
+                $heading.css({
+                    marginTop: (Math.round(windowHeight / 2) - headingHeight) + 'px'
+                });
+
+                $loadingLayer.hide().fadeIn();
+            } else {
+                $loadingLayer.fadeIn();
+            }
+        },
+        hideLoadingLayer: function () {
+            $('#loading-layer').stop().fadeOut();
+        },
+        handleFormErrorMessages: function ($form, errorMessagesHtml) {
+            var $errorBox = $('#error-box'),
+                $modalBody = $form.find('.modal-body');
+
+            $errorBox.remove();
+
+            // Place the error messages inside the modal body for a better styling
+            $(errorMessagesHtml)
+                .hide()
+                .prependTo(($modalBody.length > 0 && $modalBody.is(':visible')) ? $modalBody : $form)
+                .fadeIn();
+
+            this.prettyPrintErrorMessages($($errorBox.selector));
+        },
+        prettyPrintErrorMessages: function ($errorBox) {
+            // At first, remove all previous validation error states
+            $('form .form-group.has-error')
+                .removeClass('has-error')
+                .find('.validation-failed').remove();
+
+            // Next, highlight all input fields where the validation has failed
+            $errorBox.find('li').each(function () {
+                var $this = $(this),
+                    errorClass = $this.data('error');
+                if (errorClass.length > 0) {
+                    var $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
+                    if ($elem.length > 0) {
+                        // Add CSS class that the validation for this entry has failed
+                        $elem.closest('div.form-group').addClass('has-error');
+
+                        // Move the error message to the responsible input field(s)
+                        // and remove the list item from the error box container
+                        if ($elem.length == 1) {
+                            $elem.closest('div').append('<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + $this.html() + '</small>');
+                            $this.remove();
+                        }
+                    }
+                }
+            });
+
+            // if all list items have been removed, remove the error box container too
+            if ($errorBox.find('li').length == 0) {
+                $errorBox.remove();
+            }
+
+            // As the last step, select the tab where the first error has occurred
+            if ($('.tabbable').length > 0) {
+                var tabId = $('.tabbable .form-group.has-error:first').closest('.tab-pane').prop('id');
+                $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
+            }
+        }
+    });
+
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
+            if (!$.data(this, "plugin_" + pluginName)) {
+                $.data(this, "plugin_" +
+                    pluginName, new Plugin(this, options));
             }
         });
-    });
-};
+    };
+})(jQuery, window, document);
 
 jQuery(document).ready(function ($) {
     $('[data-ajax-form="true"]').formSubmit();
