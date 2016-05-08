@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class NotFound
@@ -18,6 +19,6 @@ class NotFound extends Core\Controller\FrontendAction
     {
         $this->breadcrumb->append($this->translator->t('errors', 'frontend_index_not_found'));
 
-        $this->response->setStatusCode(404);
+        $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
     }
 }

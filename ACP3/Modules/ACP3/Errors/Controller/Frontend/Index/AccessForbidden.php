@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AccessForbidden
@@ -18,6 +19,6 @@ class AccessForbidden extends Core\Controller\FrontendAction
     {
         $this->breadcrumb->append($this->translator->t('errors', 'frontend_index_access_forbidden'));
 
-        $this->response->setStatusCode(403);
+        $this->response->setStatusCode(Response::HTTP_FORBIDDEN);
     }
 }

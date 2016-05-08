@@ -7,6 +7,7 @@
 namespace ACP3\Installer\Modules\Errors\Controller\Index;
 
 use ACP3\Installer\Core\Controller\AbstractInstallerAction;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ServerError
@@ -16,6 +17,6 @@ class ServerError extends AbstractInstallerAction
 {
     public function execute()
     {
-        $this->response->setStatusCode(500);
+        $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

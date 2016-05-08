@@ -4,6 +4,7 @@ namespace ACP3\Core;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Redirect
@@ -76,9 +77,9 @@ class Redirect
             return $this->ajaxRedirect($path);
         }
 
-        $status = 302;
+        $status = Response::HTTP_FOUND;
         if ($movedPermanently === true) {
-            $status = 301;
+            $status = Response::HTTP_MOVED_PERMANENTLY;
         }
 
         return new RedirectResponse($path, $status);

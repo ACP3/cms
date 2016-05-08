@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Index
@@ -18,6 +19,6 @@ class ServerError extends Core\Controller\FrontendAction
     {
         $this->breadcrumb->append($this->translator->t('errors', 'frontend_index_server_error'));
 
-        $this->response->setStatusCode(500);
+        $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
