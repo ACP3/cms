@@ -103,7 +103,7 @@ class Bootstrap extends AbstractBootstrap
         $this->appPath
             ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
             ->setDesignPathInternal(ACP3_ROOT_DIR . $path)
-            ->setDesignPathAbsolute($this->container->get('core.request')->getDomain() . $this->appPath->getDesignPathWeb());
+            ->setDesignPathAbsolute($this->container->get('core.http.request')->getDomain() . $this->appPath->getDesignPathWeb());
     }
 
     /**
@@ -117,7 +117,7 @@ class Bootstrap extends AbstractBootstrap
         $this->container->get('core.user')->authenticate();
 
         /** @var \ACP3\Core\Http\Request $request */
-        $request = $this->container->get('core.request');
+        $request = $this->container->get('core.http.request');
 
         if ($this->maintenanceModeIsEnabled($request)) {
             return;

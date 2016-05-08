@@ -41,4 +41,4 @@ services:
     arguments:
       - '@core.breadcrumb'
       - '@core.breadcrumb.title'
-      - '@core.request'
+      - '@core.http.request'

@@ -13,7 +13,7 @@ services:
     class: '%users.helpers.forms.fqdn%'
     arguments:
       - '@core.lang'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.helpers.date'
       - '@core.helpers.forms'
 

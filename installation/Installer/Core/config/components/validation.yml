@@ -20,7 +20,7 @@ services:
   core.validation.validation_rules.form_token_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\FormTokenValidationRule
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@core.session'
     tags:
       - { name: core.validation.validation_rule }

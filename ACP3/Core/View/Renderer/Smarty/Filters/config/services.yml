@@ -1,7 +1,7 @@
 services:
   smarty.filter.move_to_bottom:
     class: ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom
-    arguments: ['@core.assets.minifier.javascript', '@core.request']
+    arguments: ['@core.assets.minifier.javascript', '@core.http.request']
     tags:
       - { name: core.view.extension }
 
@@ -13,6 +13,6 @@ services:
 
   smarty.filter.page_css_classes:
     class: ACP3\Core\View\Renderer\Smarty\Filters\PageCssClasses
-    arguments: ['@core.assets.pageCssClasses', '@core.request']
+    arguments: ['@core.assets.pageCssClasses', '@core.http.request']
     tags:
       - { name: core.view.extension }

@@ -16,13 +16,13 @@ services:
     class: ACP3\Core\Application\ControllerResolver
     arguments:
       - '@core.eventDispatcher'
-      - '@core.request'
+      - '@core.http.request'
       - '@service_container'
 
   core.application.event.listener.on_controller_resolver_before_dispatch_listener:
     class: ACP3\Installer\Core\Application\Event\Listener\OnControllerResolverBeforeDispatchListener
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@core.http.redirect_response'
     tags:
       - { name: core.eventListener, event: core.application.controller_resolver.before_dispatch, method: onLanguageChange }

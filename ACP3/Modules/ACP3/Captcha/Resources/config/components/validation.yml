@@ -6,7 +6,7 @@ services:
     class: '%captcha.validation.validation_rules.captcha_validation_rule.fqdn%'
     arguments:
       - '@core.acl'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@core.session'
       - '@core.user'

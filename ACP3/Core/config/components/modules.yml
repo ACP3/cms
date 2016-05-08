@@ -23,7 +23,7 @@ services:
     class: ACP3\Core\Modules\Helper\Action
     arguments:
       - '@core.lang'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@core.view'
       - '@core.helpers.alerts'

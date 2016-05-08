@@ -14,7 +14,7 @@ services:
   smarty.plugin.navbar:
     class: '%smarty.plugin.navbar.fqdn%'
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'

@@ -15,7 +15,7 @@ services:
       - '@core.acl'
       - '@core.lang'
       - '@core.modules'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.view'
       - '@core.helpers.forms'
       - '@core.helpers.secure'

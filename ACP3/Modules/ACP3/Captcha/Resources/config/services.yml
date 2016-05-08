@@ -12,7 +12,7 @@ services:
     class: '%captcha.helpers.fqdn%'
     arguments:
       - '@core.user'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@core.session'
       - '@core.view'

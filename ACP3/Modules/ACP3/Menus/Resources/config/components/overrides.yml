@@ -7,7 +7,7 @@ services:
     arguments:
       - '@service_container'
       - '@core.lang'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@core.eventDispatcher'
       - '@menus.model.menuitemrepository'

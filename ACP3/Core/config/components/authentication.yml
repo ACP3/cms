@@ -16,6 +16,6 @@ services:
   core.authentication.native:
     class: ACP3\Core\Authentication\Native
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@core.session'
       - '@users.model.userrepository'

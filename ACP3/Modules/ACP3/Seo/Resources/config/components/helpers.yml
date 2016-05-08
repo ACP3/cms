@@ -9,14 +9,14 @@ services:
     arguments:
       - '@seo.helper.meta_statements'
       - '@core.lang'
-      - '@core.request'
+      - '@core.http.request'
       - '@seo.core.router.aliases'
       - '@core.helpers.forms'
 
   seo.helper.meta_statements:
     class: '%seo.helper.meta_statements.fqdn%'
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@seo.cache'
       - '@core.config'
 

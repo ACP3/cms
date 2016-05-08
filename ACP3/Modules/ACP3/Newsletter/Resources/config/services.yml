@@ -33,7 +33,7 @@ services:
       - '@core.date'
       - '@core.lang'
       - '@core.mailer'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@core.helpers.stringFormatter'
       - '@core.helpers.secure'

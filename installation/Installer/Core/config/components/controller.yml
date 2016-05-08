@@ -4,10 +4,10 @@ services:
     arguments:
       - '@service_container'
       - '@core.lang'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@core.view'
-      - '@core.response'
+      - '@core.http.response'
       - '@core.environment.application_path'
     public: false
 

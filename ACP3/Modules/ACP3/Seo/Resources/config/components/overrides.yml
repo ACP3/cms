@@ -9,7 +9,7 @@ services:
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@core.helpers.toc'
       - '@seo.helper.meta_statements'
@@ -20,11 +20,11 @@ services:
       - '@core.user'
       - '@core.breadcrumb.title'
       - '@core.lang'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@seo.helper.meta_statements'
 
-  core.request_factory:
+  core.http.request_factory:
     class: ACP3\Modules\ACP3\Seo\Core\Http\RequestFactory
     arguments:
       - '@core.config'
@@ -35,7 +35,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Core\Router
     arguments:
       - '@seo.core.router.aliases'
-      - '@core.request'
+      - '@core.http.request'
       - '@core.environment.application_path'
       - '@core.config'
       - '%core.environment%'

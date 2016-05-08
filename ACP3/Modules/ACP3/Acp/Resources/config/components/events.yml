@@ -16,7 +16,7 @@ services:
   acp.event.listener.on_get_site_and_page_title_before_listener:
     class: ACP3\Modules\ACP3\Acp\Event\Listener\OnGetSiteAndPageTitleBeforeListener
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@core.lang'
     tags:
       - { name: core.eventListener, event: core.breadcrumb.title.get_site_and_page_title_before, method: execute }

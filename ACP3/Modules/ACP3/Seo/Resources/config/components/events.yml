@@ -2,7 +2,7 @@ services:
   seo.events.on_controller_resolver_before_dispatch_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerResolverBeforeDispatchListener
     arguments:
-      - '@core.request'
+      - '@core.http.request'
       - '@core.router'
       - '@seo.core.router.aliases'
       - '@seo.helper.meta_statements'
