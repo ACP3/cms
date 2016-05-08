@@ -168,7 +168,7 @@ class Index extends AbstractAction
      */
     private function updateContainer()
     {
-        $this->container = Core\ServiceContainerBuilder::compileContainer(
+        $this->container = Core\DependencyInjection\ServiceContainerBuilder::create(
             $this->container->getParameter('core.environment'),
             $this->appPath,
             true

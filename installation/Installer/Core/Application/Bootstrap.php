@@ -3,8 +3,8 @@
 namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core;
+use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use ACP3\Installer\Core\ServiceContainerBuilder;
 
 /**
  * Class Bootstrap
@@ -59,7 +59,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     public function initializeClasses()
     {
-        $this->container = ServiceContainerBuilder::compileContainer($this->appMode, $this->appPath);
+        $this->container = ServiceContainerBuilder::create($this->appMode, $this->appPath);
     }
 
     private function applyThemePaths()

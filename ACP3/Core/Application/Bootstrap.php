@@ -3,11 +3,11 @@
 namespace ACP3\Core\Application;
 
 use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
-use ACP3\Core\ServiceContainerBuilder;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -186,7 +186,7 @@ class Bootstrap extends AbstractBootstrap
         $containerConfigCache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
         if (!$containerConfigCache->isFresh()) {
-            $containerBuilder = ServiceContainerBuilder::compileContainer($this->appMode, $this->appPath);
+            $containerBuilder = ServiceContainerBuilder::create($this->appMode, $this->appPath);
 
             $dumper = new PhpDumper($containerBuilder);
             $containerConfigCache->write(
