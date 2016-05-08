@@ -67,7 +67,7 @@ class Delete extends Core\Controller\AdminAction
      * @param string $action
      *
      * @return mixed
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action = '')
     {

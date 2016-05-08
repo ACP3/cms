@@ -61,7 +61,7 @@ class Details extends Core\Controller\FrontendAction
      * @param string $action
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action = '')
     {
@@ -87,14 +87,14 @@ class Details extends Core\Controller\FrontendAction
             ];
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
      * @param array $file
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     protected function downloadFile(array $file)
     {
@@ -116,6 +116,6 @@ class Details extends Core\Controller\FrontendAction
             return $this->redirect()->toNewPage($file['file']);
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 }

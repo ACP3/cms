@@ -63,7 +63,7 @@ class Modules extends Core\Controller\AdminAction
      * @param string $dir
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '', $dir = '')
     {
@@ -178,7 +178,7 @@ class Modules extends Core\Controller\AdminAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     protected function disableModule($moduleDirectory)
     {

@@ -1,13 +1,13 @@
 services:
-  seo.events.on_front_controller_before_dispatch_listener:
-    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnFrontControllerBeforeDispatchListener
+  seo.events.on_controller_resolver_before_dispatch_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerResolverBeforeDispatchListener
     arguments:
       - '@core.request'
       - '@core.router'
       - '@seo.core.router.aliases'
       - '@seo.helper.meta_statements'
     tags:
-      - { name: core.eventListener, event: core.application.front_controller.before_dispatch, method: onFrontControllerBeforeDispatch }
+      - { name: core.eventListener, event: core.application.controller_resolver.before_dispatch, method: onFrontControllerBeforeDispatch }
 
   seo.events.on_custom_template_variable_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerCustomTemplateVariableListener

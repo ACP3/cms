@@ -55,7 +55,7 @@ class Order extends Core\Controller\AdminAction
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action)
     {
@@ -72,6 +72,6 @@ class Order extends Core\Controller\AdminAction
             return $this->redirect()->temporary('acp/menus');
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 }

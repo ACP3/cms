@@ -78,8 +78,8 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         $redirect = $this->container->get('core.redirect');
 
         try {
-            $this->container->get('core.application.front_controller')->dispatch();
-        } catch (Core\Exceptions\ControllerActionNotFound $e) {
+            $this->container->get('core.application.controller_resolver')->dispatch();
+        } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $redirect->temporary('errors/index/not_found')->send();
         } catch (\Exception $e) {
             $this->container->get('core.logger')->critical('installer', $e->getMessage());

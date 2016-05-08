@@ -53,7 +53,7 @@ class Result extends Core\Controller\FrontendAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
     {
@@ -74,6 +74,6 @@ class Result extends Core\Controller\FrontendAction
             ];
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 }

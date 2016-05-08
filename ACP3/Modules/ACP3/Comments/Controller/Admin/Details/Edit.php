@@ -78,7 +78,7 @@ class Edit extends Core\Controller\AdminAction
      * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
     {
@@ -115,7 +115,7 @@ class Edit extends Core\Controller\AdminAction
             ];
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
     /**
      * @param array $formData

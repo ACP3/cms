@@ -15,10 +15,10 @@ use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 /**
- * Class OnFrontControllerBeforeDispatchListener
+ * Class OnControllerResolverBeforeDispatchListener
  * @package ACP3\Modules\ACP3\Seo\Event\Listener
  */
-class OnFrontControllerBeforeDispatchListener
+class OnControllerResolverBeforeDispatchListener
 {
     /**
      * @var \ACP3\Core\Http\RequestInterface

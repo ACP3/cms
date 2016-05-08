@@ -8,17 +8,17 @@ namespace ACP3\Core\Application;
 
 use ACP3\Core\Application\Event\FrontControllerDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Exceptions;
-use ACP3\Core\Exceptions\ResultNotExists;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class FrontController
+ * Class ControllerResolver
  * @package ACP3\Core\Application
  */
-class FrontController
+class ControllerResolver
 {
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
@@ -52,8 +52,8 @@ class FrontController
      * @param string $serviceId
      * @param array  $arguments
      *
-     * @throws \ACP3\Core\Exceptions\ControllerActionNotFound
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function dispatch($serviceId = '', array $arguments = [])
     {
@@ -63,7 +63,7 @@ class FrontController
 
         if ($this->container->has($serviceId)) {
             $this->eventDispatcher->dispatch(
-                'core.application.front_controller.before_dispatch',
+                'core.application.controller_resolver.before_dispatch',
                 new FrontControllerDispatchEvent($serviceId)
             );
 
@@ -73,14 +73,14 @@ class FrontController
             $controller->display($this->executeControllerAction($controller, $arguments));
 
             $this->eventDispatcher->dispatch(
-                'core.application.front_controller.after_dispatch',
+                'core.application.controller_resolver.after_dispatch',
                 new FrontControllerDispatchEvent($serviceId)
             );
 
             return;
         }
 
-        throw new Exceptions\ControllerActionNotFound('Service-Id ' . $serviceId . ' was not found!');
+        throw new \ACP3\Core\Controller\Exception\ControllerActionNotFoundException('Service-Id ' . $serviceId . ' was not found!');
     }
 
     /**
@@ -88,7 +88,7 @@ class FrontController
      * @param array                                 $arguments
      *
      * @return mixed
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)
     {
@@ -99,7 +99,7 @@ class FrontController
             $arguments = $this->fetchControllerActionArguments($reflection);
 
             if ($reflection->getNumberOfRequiredParameters() > count($arguments)) {
-                throw new ResultNotExists();
+                throw new ResultNotExistsException();
             }
         }
 

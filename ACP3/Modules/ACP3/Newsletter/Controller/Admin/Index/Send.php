@@ -53,7 +53,7 @@ class Send extends Core\Controller\AdminAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
     {
@@ -81,6 +81,6 @@ class Send extends Core\Controller\AdminAction
             );
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 }

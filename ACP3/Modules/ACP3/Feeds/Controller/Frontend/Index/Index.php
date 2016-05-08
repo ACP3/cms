@@ -37,7 +37,7 @@ class Index extends Core\Controller\FrontendAction
      * @param string $feed
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($feed)
     {
@@ -56,6 +56,6 @@ class Index extends Core\Controller\FrontendAction
             return $this->response->setContent($this->feedGenerator->generateFeed());
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 }

@@ -110,7 +110,7 @@ class Action
      * @param string|null $moduleIndexUrl
      *
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
         FrontendAction $context,
@@ -142,7 +142,7 @@ class Action
      * @param string|null $moduleIndexUrl
      *
      * @return void|string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
         FrontendAction $context,
@@ -160,7 +160,7 @@ class Action
         } elseif ($action === 'confirmed' && is_array($result)) {
             return $callback($result);
         } else {
-            throw new Core\Exceptions\ResultNotExists();
+            throw new Core\Controller\Exception\ResultNotExistsException();
         }
     }
 

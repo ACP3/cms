@@ -46,7 +46,7 @@ class Delete extends Core\Controller\AdminAction
      * @param string $action
      *
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')
     {

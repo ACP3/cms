@@ -128,15 +128,15 @@ class Bootstrap extends AbstractBootstrap
         $redirect = $this->container->get('core.redirect');
 
         try {
-            $this->container->get('core.application.front_controller')->dispatch();
-        } catch (Exceptions\ResultNotExists $e) {
+            $this->container->get('core.application.controller_resolver')->dispatch();
+        } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $redirect->temporary('errors/index/not_found')->send();
-        } catch (Exceptions\UnauthorizedAccess $e) {
+        } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
             $redirectUri = base64_encode($request->getOriginalQuery());
             $redirect->temporary('users/index/login/redirect_' . $redirectUri)->send();
-        } catch (Exceptions\AccessForbidden $e) {
+        } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
             $redirect->temporary('errors/index/access_forbidden');
-        } catch (Exceptions\ControllerActionNotFound $e) {
+        } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $this->handleException($e, $redirect, 'errors/index/not_found');
         } catch (\Exception $e) {
             $this->handleException($e, $redirect, 'errors/index/server_error');

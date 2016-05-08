@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Authentication;
 
-use ACP3\Core\Exceptions\InvalidAuthenticationMethod;
+use ACP3\Core\Authentication\Exception\InvalidAuthenticationMethodException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -32,7 +32,7 @@ class AuthenticationFactory
      * @param string $authenticationMethod
      *
      * @return \ACP3\Core\Authentication\AuthenticationInterface
-     * @throws \ACP3\Core\Exceptions\InvalidAuthenticationMethod
+     * @throws \ACP3\Core\Authentication\Exception\InvalidAuthenticationMethodException
      */
     public function get($authenticationMethod)
     {
@@ -41,6 +41,6 @@ class AuthenticationFactory
             return $this->container->get($serviceId);
         }
 
-        throw new InvalidAuthenticationMethod();
+        throw new InvalidAuthenticationMethodException();
     }
 }

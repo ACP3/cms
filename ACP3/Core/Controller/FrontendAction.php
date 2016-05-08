@@ -63,14 +63,14 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      * Helper function for initializing models, etc.
      *
      * @return $this
-     * @throws \ACP3\Core\Exceptions\AccessForbidden
+     * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
     {
         $path = $this->request->getArea() . '/' . $this->request->getFullPathWithoutArea();
 
         if ($this->acl->hasPermission($path) === false) {
-            throw new Core\Exceptions\AccessForbidden();
+            throw new Core\ACL\Exception\AccessForbiddenException();
         }
 
         // Get the current resultset position

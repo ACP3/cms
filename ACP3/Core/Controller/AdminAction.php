@@ -31,12 +31,12 @@ abstract class AdminAction extends Core\Controller\FrontendAction
 
     /**
      * @return $this
-     * @throws \ACP3\Core\Exceptions\UnauthorizedAccess
+     * @throws \ACP3\Core\Authentication\Exception\UnauthorizedAccessException
      */
     public function preDispatch()
     {
         if ($this->user->isAuthenticated() === false) {
-            throw new Core\Exceptions\UnauthorizedAccess();
+            throw new Core\Authentication\Exception\UnauthorizedAccessException();
         }
 
         return parent::preDispatch();

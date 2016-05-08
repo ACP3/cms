@@ -31,8 +31,8 @@ services:
       - '@permissions.model.privilegerepository'
       - '@permissions.cache'
 
-  core.application.front_controller:
-    class: ACP3\Core\Application\FrontController
+  core.application.controller_resolver:
+    class: ACP3\Core\Application\ControllerResolver
     arguments:
       - '@core.eventDispatcher'
       - '@core.request'

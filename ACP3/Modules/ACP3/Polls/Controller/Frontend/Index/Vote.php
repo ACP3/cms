@@ -60,7 +60,7 @@ class Vote extends Core\Controller\FrontendAction
      * @param int|array $answer
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $answer)
     {
@@ -80,7 +80,7 @@ class Vote extends Core\Controller\FrontendAction
             ];
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**

@@ -2,7 +2,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Application\FrontController;
+use ACP3\Core\Application\ControllerResolver;
 
 /**
  * Class LoadModule
@@ -15,7 +15,7 @@ class LoadModule extends AbstractFunction
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Application\FrontController
+     * @var \ACP3\Core\Application\ControllerResolver
      */
     protected $frontController;
 
@@ -23,9 +23,9 @@ class LoadModule extends AbstractFunction
      * LoadModule constructor.
      *
      * @param \ACP3\Core\ACL                         $acl
-     * @param \ACP3\Core\Application\FrontController $frontController
+     * @param \ACP3\Core\Application\ControllerResolver $frontController
      */
-    public function __construct(ACL $acl, FrontController $frontController)
+    public function __construct(ACL $acl, ControllerResolver $frontController)
     {
         $this->acl = $acl;
         $this->frontController = $frontController;

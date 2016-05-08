@@ -40,7 +40,7 @@ class Image extends AbstractAction
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \ACP3\Core\Exceptions\ResultNotExists
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action = '')
     {
@@ -62,6 +62,6 @@ class Image extends AbstractAction
             return $image->sendResponse();
         }
 
-        throw new Core\Exceptions\ResultNotExists();
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 }

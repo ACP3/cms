@@ -11,10 +11,10 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Redirect;
 
 /**
- * Class OnFrontControllerBeforeDispatchListener
+ * Class OnControllerResolverBeforeDispatchListener
  * @package ACP3\Installer\Core\Application\Event\Listener
  */
-class OnFrontControllerBeforeDispatchListener
+class OnControllerResolverBeforeDispatchListener
 {
     /**
      * @var RequestInterface
