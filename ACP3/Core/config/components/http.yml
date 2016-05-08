@@ -1,4 +1,10 @@
 services:
+  core.http.redirect_response:
+    class: ACP3\Core\Http\RedirectResponse
+    arguments:
+      - '@core.request'
+      - '@core.router'
+
   core.request:
     class: ACP3\Core\Http\Request
     factory: ['@core.request_factory', create]

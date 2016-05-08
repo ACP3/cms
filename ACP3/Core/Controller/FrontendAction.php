@@ -164,10 +164,10 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
     }
 
     /**
-     * @return Core\Redirect
+     * @return \ACP3\Core\Http\RedirectResponse
      */
     public function redirect()
     {
-        return $this->get('core.redirect');
+        return $this->get('core.http.redirect_response');
     }
 }

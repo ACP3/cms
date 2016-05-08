@@ -4,10 +4,9 @@ namespace ACP3\Core\Application;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Exceptions;
+use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
-use ACP3\Core\Redirect;
 use ACP3\Core\ServiceContainerBuilder;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
@@ -124,8 +123,8 @@ class Bootstrap extends AbstractBootstrap
             return;
         }
 
-        /** @var \ACP3\Core\Redirect $redirect */
-        $redirect = $this->container->get('core.redirect');
+        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
+        $redirect = $this->container->get('core.http.redirect_response');
 
         try {
             $this->container->get('core.application.controller_resolver')->dispatch();
@@ -166,11 +165,11 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @param \Exception          $exception
-     * @param \ACP3\Core\Redirect $redirect
-     * @param string              $path
+     * @param \Exception                       $exception
+     * @param \ACP3\Core\Http\RedirectResponse $redirect
+     * @param string                           $path
      */
-    protected function handleException(\Exception $exception, Redirect $redirect, $path)
+    protected function handleException(\Exception $exception, RedirectResponse $redirect, $path)
     {
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
             $this->renderApplicationException($exception);

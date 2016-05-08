@@ -75,7 +75,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     public function outputPage()
     {
         $this->applyThemePaths();
-        $redirect = $this->container->get('core.redirect');
+        $redirect = $this->container->get('core.http.redirect_response');
 
         try {
             $this->container->get('core.application.controller_resolver')->dispatch();

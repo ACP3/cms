@@ -7,8 +7,8 @@
 namespace ACP3\Installer\Core\Application\Event\Listener;
 
 
+use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Redirect;
 
 /**
  * Class OnControllerResolverBeforeDispatchListener
@@ -21,18 +21,18 @@ class OnControllerResolverBeforeDispatchListener
      */
     private $request;
     /**
-     * @var Redirect
+     * @var RedirectResponse
      */
     private $redirect;
 
     /**
      * OnFrontControllerBeforeDispatchListener constructor.
      * @param RequestInterface $request
-     * @param Redirect $redirect
+     * @param RedirectResponse $redirect
      */
     public function __construct(
         RequestInterface $request,
-        Redirect $redirect)
+        RedirectResponse $redirect)
     {
         $this->request = $request;
         $this->redirect = $redirect;

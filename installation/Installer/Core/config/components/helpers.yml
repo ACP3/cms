@@ -23,7 +23,7 @@ services:
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages
     arguments:
-      - '@core.redirect'
+      - '@core.http.redirect_response'
       - '@core.request'
       - '@core.session'
 

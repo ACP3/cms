@@ -1,16 +1,21 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-use ACP3\Core\Http\RequestInterface;
+namespace ACP3\Core\Http;
+
+use ACP3\Core\RouterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class Redirect
- * @package ACP3\Core
+ * Class RedirectResponse
+ * @package ACP3\Core\Http
  */
-class Redirect
+class RedirectResponse
 {
     /**
      * @var \ACP3\Core\Http\RequestInterface
@@ -46,7 +51,7 @@ class Redirect
             return $this->ajaxRedirect($url);
         }
 
-        return new RedirectResponse($url);
+        return new SymfonyRedirectResponse($url);
     }
 
     /**
@@ -82,7 +87,7 @@ class Redirect
             $status = Response::HTTP_MOVED_PERMANENTLY;
         }
 
-        return new RedirectResponse($path, $status);
+        return new SymfonyRedirectResponse($path, $status);
     }
 
     /**

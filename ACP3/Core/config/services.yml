@@ -87,12 +87,6 @@ services:
       - '@core.request'
       - '@core.router'
 
-  core.redirect:
-    class: ACP3\Core\Redirect
-    arguments:
-      - '@core.request'
-      - '@core.router'
-
   core.session:
     class: ACP3\Core\Session\SessionHandler
     arguments:

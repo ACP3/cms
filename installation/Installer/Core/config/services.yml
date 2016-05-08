@@ -23,7 +23,7 @@ services:
     class: ACP3\Installer\Core\Application\Event\Listener\OnControllerResolverBeforeDispatchListener
     arguments:
       - '@core.request'
-      - '@core.redirect'
+      - '@core.http.redirect_response'
     tags:
       - { name: core.eventListener, event: core.application.controller_resolver.before_dispatch, method: onLanguageChange }
 
@@ -53,12 +53,6 @@ services:
     class: ACP3\Core\Logger
     arguments:
       - '@core.environment.application_path'
-
-  core.redirect:
-    class: ACP3\Core\Redirect
-    arguments:
-      - '@core.request'
-      - '@core.router'
 
   core.session:
     class: ACP3\Installer\Core\Session\SessionHandler

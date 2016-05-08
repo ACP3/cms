@@ -14,7 +14,7 @@ class RedirectMessages
      */
     private $request;
     /**
-     * @var \ACP3\Core\Redirect
+     * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirect;
     /**
@@ -25,12 +25,12 @@ class RedirectMessages
     /**
      * RedirectMessages constructor.
      *
-     * @param \ACP3\Core\Redirect                        $redirect
+     * @param \ACP3\Core\Http\RedirectResponse           $redirect
      * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      */
     public function __construct(
-        Core\Redirect $redirect,
+        Core\Http\RedirectResponse $redirect,
         Core\Http\RequestInterface $request,
         Core\Session\SessionHandlerInterface $sessionHandler
     ) {

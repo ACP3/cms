@@ -9,7 +9,7 @@ namespace ACP3\Installer\Core\Controller;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\DisplayActionTrait;
 use ACP3\Core\Filesystem;
-use ACP3\Core\Redirect;
+use ACP3\Core\Http\RedirectResponse;
 
 /**
  * Module Controller of the installer modules
@@ -94,11 +94,11 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @return Redirect
+     * @return RedirectResponse
      */
     public function redirect()
     {
-        return $this->get('core.redirect');
+        return $this->get('core.http.redirect_response');
     }
 
     /**
