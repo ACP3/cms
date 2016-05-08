@@ -63,18 +63,18 @@ class RedirectResponse
      */
     public function temporary($path)
     {
-        return $this->redirect($path, false);
+        return $this->redirect($path, Response::HTTP_FOUND);
     }
 
     /**
      * Redirect to an other URLs
      *
      * @param string $path
-     * @param bool   $movedPermanently
+     * @param int    $statusCode
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirect($path, $movedPermanently)
+    protected function redirect($path, $statusCode)
     {
         $path = $this->router->route($path, true);
 
@@ -82,12 +82,7 @@ class RedirectResponse
             return $this->ajaxRedirect($path);
         }
 
-        $status = Response::HTTP_FOUND;
-        if ($movedPermanently === true) {
-            $status = Response::HTTP_MOVED_PERMANENTLY;
-        }
-
-        return new SymfonyRedirectResponse($path, $status);
+        return new SymfonyRedirectResponse($path, $statusCode);
     }
 
     /**
@@ -116,6 +111,6 @@ class RedirectResponse
      */
     public function permanent($path)
     {
-        return $this->redirect($path, true);
+        return $this->redirect($path, Response::HTTP_MOVED_PERMANENTLY);
     }
 }
