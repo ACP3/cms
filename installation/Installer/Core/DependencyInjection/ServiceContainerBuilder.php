@@ -67,37 +67,34 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
 
-        if ($this->canIncludeModules($this->includeModules) === true) {
+        if ($this->canIncludeModules() === true) {
             $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
         }
 
         $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/services.yml');
-        if ($this->applicationPath === ApplicationMode::UPDATER) {
+        if ($this->applicationMode === ApplicationMode::UPDATER) {
             $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/update.yml');
         }
 
-        $this->includeModules($loader, $this->includeModules);
+        $this->includeModules($loader);
 
         $this->compile();
     }
 
     /**
-     * @param boolean $includeModules
-     *
      * @return bool
      */
-    private function canIncludeModules($includeModules)
+    private function canIncludeModules()
     {
-        return $this->applicationMode === ApplicationMode::UPDATER || $includeModules === true;
+        return $this->applicationMode === ApplicationMode::UPDATER || $this->includeModules === true;
     }
 
     /**
      * @param YamlFileLoader $loader
-     * @param boolean $includeModules
      */
-    private function includeModules(YamlFileLoader $loader, $includeModules)
+    private function includeModules(YamlFileLoader $loader)
     {
-        if ($this->canIncludeModules($includeModules) === true) {
+        if ($this->canIncludeModules() === true) {
             // Ugly hack to prevent request override from included ACP3 modules
             $request = $this->get('core.http.request');
 
