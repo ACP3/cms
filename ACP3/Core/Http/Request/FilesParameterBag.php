@@ -10,7 +10,7 @@ class FilesParameterBag extends ParameterBag
     /**
      * @inheritdoc
      */
-    public function get($key, $default = null, $deep = false)
+    public function get($key, $default = null)
     {
         return $this->has($key) ? $this->all()[$key] : [];
     }
