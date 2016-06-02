@@ -57,6 +57,9 @@ services:
       - '@system.model.modulerepository'
       - '@system.model.settingsrepository'
 
+  core.environment.application_path:
+    synthetic: true
+
   core.image:
     class: ACP3\Core\Picture
     arguments:
